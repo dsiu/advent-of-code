@@ -5,7 +5,6 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 var Belt_MapString = require("bs-platform/lib/js/belt_MapString.js");
-var Utils$AdventOfCode = require("../Utils.bs.js");
 var Day2_Data$AdventOfCode = require("./Day2_Data.bs.js");
 
 function string_to_charStr(param) {
@@ -71,15 +70,7 @@ function runDay2Part1(lines) {
 
 var test_string = "aabbbccccccddddd";
 
-console.log("------ Day2 Par1 Starts");
-
-var cs = test_string.split("");
-
-Utils$AdventOfCode.map_string_dump(Belt_Array.reduce(cs, undefined, reducer));
-
-console.log(n_char_matched_freq(3, test_string));
-
-console.log(n_char_matched_freq(3, test_string));
+console.log("------ Day2 Part1 Starts");
 
 console.log(runDay2Part1(Day2_Data$AdventOfCode.data.split("\n")));
 
@@ -87,8 +78,6 @@ console.log(runDay2Part1([
           test_string,
           test_string
         ]));
-
-console.log("------Day2 Par1 Ends");
 
 function diffOfTwoCharStr(s1, s2) {
   var s1CharStr = s1.split("");
@@ -190,8 +179,6 @@ function runDay2Part2(lines) {
 console.log("------ Day2 Part2 Starts");
 
 console.log(runDay2Part2(Day2_Data$AdventOfCode.data.split("\n")));
-
-console.log("------ Day2 Part2 ends");
 
 var data = Day2_Data$AdventOfCode.data;
 

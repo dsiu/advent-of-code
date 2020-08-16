@@ -3,39 +3,103 @@
 
 var Jest = require("@glennsl/bs-jest/src/jest.js");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
+var Belt_MapString = require("bs-platform/lib/js/belt_MapString.js");
 var Day2$AdventOfCode = require("../../../src/2018/Day2/Day2.bs.js");
 var Day2_Data$AdventOfCode = require("../../../src/2018/Day2/Day2_Data.bs.js");
 
 Jest.describe("2018 Day2", (function (param) {
         var lines = Day2_Data$AdventOfCode.data.split("\n");
         var len = lines.length;
-        Jest.test("number of lines", (function (param) {
-                return Jest.Expect.toEqual(250, Jest.Expect.expect(len));
+        Jest.describe("Part1", (function (param) {
+                Jest.test("number of lines", (function (param) {
+                        return Jest.Expect.toEqual(250, Jest.Expect.expect(len));
+                      }));
+                Jest.test("first line", (function (param) {
+                        return Jest.Expect.toEqual("crruafyzloguvxwctqmphenbkd", Jest.Expect.expect(Caml_array.caml_array_get(lines, 0)));
+                      }));
+                Jest.test("last line", (function (param) {
+                        return Jest.Expect.toEqual("hrijafyzloguvxectqmpheybkd", Jest.Expect.expect(Caml_array.caml_array_get(lines, len - 1 | 0)));
+                      }));
+                var test_string = "abbbcc";
+                Jest.test("string to char[]", (function (param) {
+                        return Jest.Expect.toEqual([
+                                    "a",
+                                    "b",
+                                    "b",
+                                    "b",
+                                    "c",
+                                    "c"
+                                  ], Jest.Expect.expect(Day2$AdventOfCode.string_to_charStr(test_string)));
+                      }));
+                Jest.test("char freq", (function (param) {
+                        var expected = Belt_MapString.set(Belt_MapString.set(Belt_MapString.set(undefined, "a", 1), "b", 3), "c", 2);
+                        return Jest.Expect.toEqual(expected, Jest.Expect.expect(Day2$AdventOfCode.char_freq(Day2$AdventOfCode.string_to_charStr(test_string))));
+                      }));
+                Jest.test("char freq match", (function (param) {
+                        return Jest.Expect.toEqual(1, Jest.Expect.expect(Day2$AdventOfCode.n_char_matched_freq(3, test_string)));
+                      }));
+                return Jest.test("threeTimesCounter", (function (param) {
+                              return Jest.Expect.toEqual(1, Jest.Expect.expect(Day2$AdventOfCode.threeTimesCounter("aabbbccccccddddd")));
+                            }));
               }));
-        Jest.test("first line", (function (param) {
-                return Jest.Expect.toEqual("crruafyzloguvxwctqmphenbkd", Jest.Expect.expect(Caml_array.caml_array_get(lines, 0)));
-              }));
-        Jest.test("last line", (function (param) {
-                return Jest.Expect.toEqual("hrijafyzloguvxectqmpheybkd", Jest.Expect.expect(Caml_array.caml_array_get(lines, len - 1 | 0)));
-              }));
-        Jest.test("string to char[]", (function (param) {
-                return Jest.Expect.toEqual([
-                            "a",
-                            "b",
-                            "c"
-                          ], Jest.Expect.expect(Day2$AdventOfCode.string_to_charStr("abc")));
-              }));
-        Jest.test("diff by 1 char strs", (function (param) {
-                return Jest.Expect.toBe(true, Jest.Expect.expect(Day2$AdventOfCode.isDiffBy1(Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))));
-              }));
-        Jest.test("diff by 5 char strs", (function (param) {
-                return Jest.Expect.toBe(true, Jest.Expect.expect(Day2$AdventOfCode.isDiffBy5(Day2$AdventOfCode.diffOfTwoCharStr("zzzzzz", "zabcde"))));
-              }));
-        return Jest.test("run part2 test", (function (param) {
-                      return Jest.Expect.toBe([], Jest.Expect.expect(Day2$AdventOfCode.runDay2Part2([
-                                          "abcdef",
-                                          "abcdee"
-                                        ])));
+        return Jest.describe("Part2", (function (param) {
+                      Jest.test("diffOfTwoCharStr", (function (param) {
+                              var expected = [
+                                {
+                                  TAG: /* Match */0,
+                                  _0: "a"
+                                },
+                                {
+                                  TAG: /* Match */0,
+                                  _0: "b"
+                                },
+                                {
+                                  TAG: /* Match */0,
+                                  _0: "c"
+                                },
+                                {
+                                  TAG: /* Match */0,
+                                  _0: "d"
+                                },
+                                {
+                                  TAG: /* Match */0,
+                                  _0: "e"
+                                },
+                                {
+                                  TAG: /* NotMatch */1,
+                                  _0: "f",
+                                  _1: "g"
+                                }
+                              ];
+                              return Jest.Expect.toEqual(expected, Jest.Expect.expect(Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg")));
+                            }));
+                      Jest.test("count true", (function (param) {
+                              return Jest.Expect.toEqual(5, Jest.Expect.expect(Day2$AdventOfCode.countTrue(Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))));
+                            }));
+                      Jest.test("count false", (function (param) {
+                              return Jest.Expect.toEqual(5, Jest.Expect.expect(Day2$AdventOfCode.countTrue(Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))));
+                            }));
+                      Jest.test("diff by 1 char strs", (function (param) {
+                              return Jest.Expect.toBe(true, Jest.Expect.expect(Day2$AdventOfCode.isDiffBy1(Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))));
+                            }));
+                      Jest.test("diff by 5 char strs", (function (param) {
+                              return Jest.Expect.toBe(true, Jest.Expect.expect(Day2$AdventOfCode.isDiffBy5(Day2$AdventOfCode.diffOfTwoCharStr("zzzzzz", "zabcde"))));
+                            }));
+                      Jest.test("run part2 test", (function (param) {
+                              return Jest.Expect.toEqual([
+                                          "abcde",
+                                          "abcde"
+                                        ], Jest.Expect.expect(Day2$AdventOfCode.runDay2Part2([
+                                                  "abcdef",
+                                                  "abcdee"
+                                                ])));
+                            }));
+                      return Jest.test("run part2", (function (param) {
+                                    return Jest.Expect.toEqual([
+                                                "srijafjzloguvlntqmphenbkd",
+                                                "srijafjzloguvlntqmphenbkd"
+                                              ], Jest.Expect.expect(Day2$AdventOfCode.runDay2Part2(Day2_Data$AdventOfCode.data.split("\n"))));
+                                  }));
                     }));
       }));
 

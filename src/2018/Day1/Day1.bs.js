@@ -11,6 +11,8 @@ function sum(x, y) {
 
 var part1 = Belt_Array.reduce(Day1_Data$AdventOfCode.data, 0, sum);
 
+console.log("------ Day1 Part1");
+
 console.log(part1);
 
 var init = {
@@ -48,7 +50,13 @@ function solve_part2(xs, _init, reducer) {
   };
 }
 
+function runDay1Part2(__x) {
+  return solve_part2(__x, init, reducer);
+}
+
 var part2_result = solve_part2(Day1_Data$AdventOfCode.data, init, reducer);
+
+console.log("------ Day1 Part2");
 
 var y = part2_result.found;
 
@@ -59,5 +67,6 @@ exports.part1 = part1;
 exports.init = init;
 exports.reducer = reducer;
 exports.solve_part2 = solve_part2;
+exports.runDay1Part2 = runDay1Part2;
 exports.part2_result = part2_result;
 /* part1 Not a pure module */

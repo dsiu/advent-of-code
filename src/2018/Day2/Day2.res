@@ -55,14 +55,9 @@ let runDay2Part1 = lines => {
 }
 
 let test_string = "aabbbccccccddddd"
-"------ Day2 Par1 Starts" |> Js.Console.log
-test_string |> string_to_charStr |> char_freq |> Utils.map_string_dump
-test_string |> n_char_matched_freq(3) |> Js.Console.log
-test_string |> threeTimesCounter |> Js.Console.log
-
+"------ Day2 Part1 Starts" |> Js.Console.log
 data |> Js.String.split("\n") |> runDay2Part1 |> Js.Console.log
 [test_string, test_string] |> runDay2Part1 |> Js.Console.log
-"------Day2 Par1 Ends" |> Js.Console.log
 
 //
 // Part2
@@ -131,19 +126,9 @@ let runDay2Part2 = (lines) => {
   findAllMatch(isDiffBy1, lines)
     -> Belt.Array.map(x => {
         diffOfTwoCharStr(x.src, x.matched[0])
-//        -> Belt.Array.keep(x => switch x { | Match(_) => true | _ => false })
-        -> Belt.Array.reduce("", (a,x) => switch x { | Match(x) => a ++ x | NotMatch(x,y) => a})
+        -> Belt.Array.reduce("", (a,x) => switch x { | Match(x) => a ++ x | NotMatch(_,_) => a})
     })
 }
 
 "------ Day2 Part2 Starts" |> Js.Console.log
-//diffOfTwoCharStr("abcdef","abcdeg") |> Js.Console.log
-//diffOfTwoCharStr("abcdef","abcdeg") |> countTrue |> Js.Console.log
-//diffOfTwoCharStr("abcdef","abcdeg") |> countFalse |> Js.Console.log
-//diffOfTwoCharStr("abcdef","abcdeg") |> isDiffBy1 |> Js.Console.log
-//diffOfTwoCharStr("abvdef","abcdeg") |> isDiffBy1 |> Js.Console.log
-//diffOfTwoCharStr("zzzzzz","zabcde") |> isDiffBy5 |> Js.Console.log
-
 data |> Js.String.split("\n") |> runDay2Part2 |> Js.Console.log
-
-"------ Day2 Part2 ends" |> Js.Console.log

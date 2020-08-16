@@ -1,42 +1,91 @@
-open Jest;
+open Jest
 open Expect
 open! Expect.Operators
+open Day2
 
 describe("2018 Day2", () => {
   let data = Day2_Data.data
   let lines = data |> Js.String.split("\n")
   let len = lines |> Array.length
 
-  test("number of lines", () => {
-    expect(len) |> toEqual(250)
-  });
+  describe("Part1", () => {
+    test("number of lines", () => {
+      expect(len) |> toEqual(250)
+    })
 
-  test("first line", () => {
-    expect(lines[0]) |> toEqual("crruafyzloguvxwctqmphenbkd")
-  });
+    test("first line", () => {
+      expect(lines[0]) |> toEqual("crruafyzloguvxwctqmphenbkd")
+    })
 
-  test("last line", () => {
-    expect(lines[len-1]) |> toEqual("hrijafyzloguvxectqmpheybkd")
-  });
+    test("last line", () => {
+      expect(lines[len - 1]) |> toEqual("hrijafyzloguvxectqmpheybkd")
+    })
 
-  test("string to char[]", () => {
-    expect("abc" |> Day2.string_to_charStr) |> toEqual(["a", "b", "c"])
+    let test_string = "abbbcc"
+
+    test("string to char[]", () => {
+      expect(test_string |> string_to_charStr) |> toEqual(["a", "b", "b", "b", "c", "c"])
+    })
+
+    test("char freq", () => {
+      let expected =
+        Belt.Map.String.empty
+        ->Belt.Map.String.set("a", 1)
+        ->Belt.Map.String.set("b", 3)
+        ->Belt.Map.String.set("c", 2)
+
+      expect(test_string |> string_to_charStr |> char_freq) |> toEqual(expected)
+    })
+
+    test("char freq match", () => {
+      expect(test_string |> n_char_matched_freq(3)) |> toEqual(1)
+    })
+
+    test("threeTimesCounter", () => {
+      let test_string = "aabbbccccccddddd"
+      expect(test_string |> threeTimesCounter) |> toEqual(1)
+    })
   })
 
-//  test("diff 2 char strs", () => {
-//    expect(Day2.diffOfTwoCharStr("abcdef","abcdeg")) |> toEqual([true, true, true, true, true, false])
-//  })
+  describe("Part2", () => {
+    test("diffOfTwoCharStr", () => {
+      let expected = [
+        Match("a"),
+        Match("b"),
+        Match("c"),
+        Match("d"),
+        Match("e"),
+        NotMatch("f", "g")
+        ]
 
-  test("diff by 1 char strs", () => {
-    expect(Day2.diffOfTwoCharStr("abcdef","abcdeg")|> Day2.isDiffBy1) |> toBe(true)
+      expect(diffOfTwoCharStr("abcdef","abcdeg")) |> toEqual(expected)
+    })
+
+    test("count true", () => {
+      expect(diffOfTwoCharStr("abcdef","abcdeg") |> countTrue) |> toEqual(5)
+    })
+
+    test("count false", () => {
+      expect(diffOfTwoCharStr("abcdef","abcdeg") |> countTrue) |> toEqual(5)
+    })
+
+    test("diff by 1 char strs", () => {
+      expect(diffOfTwoCharStr("abcdef", "abcdeg") |> isDiffBy1) |> toBe(true)
+    })
+
+    test("diff by 5 char strs", () => {
+      expect(diffOfTwoCharStr("zzzzzz", "zabcde") |> isDiffBy5) |> toBe(true)
+    })
+
+    test("run part2 test", () => {
+      expect(["abcdef", "abcdee"] |> runDay2Part2) |> toEqual(["abcde", "abcde"])
+    })
+
+    test("run part2", () => {
+      expect(data |> Js.String.split("\n") |> runDay2Part2) |> toEqual([
+        "srijafjzloguvlntqmphenbkd",
+        "srijafjzloguvlntqmphenbkd",
+      ])
+    })
   })
-
-  test("diff by 5 char strs", () => {
-      expect(Day2.diffOfTwoCharStr("zzzzzz","zabcde") |> Day2.isDiffBy5) |> toBe(true)
-  })
-
-  test("run part2 test", () => {
-    expect(["abcdef","abcdee"] |> Day2.runDay2Part2) |> toBe([])
-  })
-
 })
