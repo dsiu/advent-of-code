@@ -55,9 +55,9 @@ let runDay2Part1 = lines => {
 }
 
 let test_string = "aabbbccccccddddd"
-"------ Day2 Part1 Starts" |> Js.Console.log
-data |> Js.String.split("\n") |> runDay2Part1 |> Js.Console.log
-[test_string, test_string] |> runDay2Part1 |> Js.Console.log
+//"------ Day2 Part1 Starts" |> Js.Console.log
+//data |> Js.String.split("\n") |> runDay2Part1 |> Js.Console.log
+//[test_string, test_string] |> runDay2Part1 |> Js.Console.log
 
 //
 // Part2
@@ -142,5 +142,5 @@ let runDay2Part2 = lines => {
   })
 }
 
-"------ Day2 Part2 Starts" |> Js.Console.log
-data |> Js.String.split("\n") |> runDay2Part2 |> Js.Console.log
+//"------ Day2 Part2 Starts" |> Js.Console.log
+//data |> Js.String.split("\n") |> runDay2Part2 |> Js.Console.log

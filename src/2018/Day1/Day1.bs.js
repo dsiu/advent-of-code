@@ -11,10 +11,6 @@ function sum(x, y) {
 
 var part1 = Belt_Array.reduce(Day1_Data$AdventOfCode.data, 0, sum);
 
-console.log("------ Day1 Part1");
-
-console.log(part1);
-
 var init = {
   sum: 0,
   countMap: undefined,
@@ -55,12 +51,6 @@ function runDay1Part2(__x) {
 }
 
 var part2_result = solve_part2(Day1_Data$AdventOfCode.data, init, reducer);
-
-console.log("------ Day1 Part2");
-
-var y = part2_result.found;
-
-console.log(y !== undefined ? String(y) : "diu");
 
 exports.sum = sum;
 exports.part1 = part1;

@@ -68,17 +68,6 @@ function runDay2Part1(lines) {
   return Math.imul(result.twoTimes, result.threeTimes);
 }
 
-var test_string = "aabbbccccccddddd";
-
-console.log("------ Day2 Part1 Starts");
-
-console.log(runDay2Part1(Day2_Data$AdventOfCode.data.split("\n")));
-
-console.log(runDay2Part1([
-          test_string,
-          test_string
-        ]));
-
 function diffOfTwoCharStr(s1, s2) {
   var s1CharStr = s1.split("");
   var s2CharStr = s2.split("");
@@ -176,11 +165,9 @@ function runDay2Part2(lines) {
               }));
 }
 
-console.log("------ Day2 Part2 Starts");
-
-console.log(runDay2Part2(Day2_Data$AdventOfCode.data.split("\n")));
-
 var data = Day2_Data$AdventOfCode.data;
+
+var test_string = "aabbbccccccddddd";
 
 exports.data = data;
 exports.string_to_charStr = string_to_charStr;
@@ -202,4 +189,4 @@ exports.isDiffBy5 = isDiffBy5;
 exports.findMatch = findMatch;
 exports.findAllMatch = findAllMatch;
 exports.runDay2Part2 = runDay2Part2;
-/*  Not a pure module */
+/* No side effect */
