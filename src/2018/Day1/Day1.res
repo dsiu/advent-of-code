@@ -5,7 +5,6 @@ let part1 = Array.reduce(Day1_Data.data, 0, sum)
 "------ Day1 Part1" |> Js.Console.log
 Js.Console.log(part1)
 
-
 type record = {
   sum: int,
   countMap: Map.Int.t<int>,
@@ -56,4 +55,3 @@ Js.Console.log(
   | None => "diu"
   },
 )
-

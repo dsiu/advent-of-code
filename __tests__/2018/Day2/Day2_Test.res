@@ -55,18 +55,18 @@ describe("2018 Day2", () => {
         Match("c"),
         Match("d"),
         Match("e"),
-        NotMatch("f", "g")
-        ]
+        NotMatch("f", "g"),
+      ]
 
-      expect(diffOfTwoCharStr("abcdef","abcdeg")) |> toEqual(expected)
+      expect(diffOfTwoCharStr("abcdef", "abcdeg")) |> toEqual(expected)
     })
 
     test("count true", () => {
-      expect(diffOfTwoCharStr("abcdef","abcdeg") |> countTrue) |> toEqual(5)
+      expect(diffOfTwoCharStr("abcdef", "abcdeg") |> countTrue) |> toEqual(5)
     })
 
     test("count false", () => {
-      expect(diffOfTwoCharStr("abcdef","abcdeg") |> countTrue) |> toEqual(5)
+      expect(diffOfTwoCharStr("abcdef", "abcdeg") |> countTrue) |> toEqual(5)
     })
 
     test("diff by 1 char strs", () => {

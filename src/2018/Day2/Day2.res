@@ -68,28 +68,38 @@ type diffType =
 
 type diffs = array<diffType>
 
-let diffOfTwoCharStr = (s1, s2) : diffs => {
+let diffOfTwoCharStr = (s1, s2): diffs => {
   let s1CharStr = s1 |> string_to_charStr
   let s2CharStr = s2 |> string_to_charStr
 
   Belt.Array.mapWithIndex(s1CharStr, (i, x) => {
     let y = Belt.Array.get(s2CharStr, i)
-    switch (y) {
-      | Some(y) => x == y ? Match(x) : NotMatch(x, y)
-      | None => NotMatch(x, x)
+    switch y {
+    | Some(y) => x == y ? Match(x) : NotMatch(x, y)
+    | None => NotMatch(x, x)
     }
   })
 }
 
-let countTrue = (xs:diffs) : int => {
-  Belt.Array.keep(xs, x => switch x { | Match(_) => true | _ => false }) |> Belt.Array.length
+let countTrue = (xs: diffs): int => {
+  Belt.Array.keep(xs, x =>
+    switch x {
+    | Match(_) => true
+    | _ => false
+    }
+  ) |> Belt.Array.length
 }
 
-let countFalse = (xs:diffs) : int => {
-  Belt.Array.keep(xs, x => switch x { | NotMatch(_,_) => true | _ => false }) |> Belt.Array.length
+let countFalse = (xs: diffs): int => {
+  Belt.Array.keep(xs, x =>
+    switch x {
+    | NotMatch(_, _) => true
+    | _ => false
+    }
+  ) |> Belt.Array.length
 }
 
-let isDiffBy = (n, xs:diffs) => {
+let isDiffBy = (n, xs: diffs) => {
   countFalse(xs) == n
 }
 
@@ -98,17 +108,16 @@ let isDiffBy5 = isDiffBy(5)
 
 type matchRecord = {
   src: string,
-  matched: array<string>
+  matched: array<string>,
 }
 
 let findMatch = (lines, predicate, x) => {
-  Belt.Array.reduce(lines, {src:x, matched:[]} : matchRecord, (a: matchRecord, y) => {
+  Belt.Array.reduce(lines, ({src: x, matched: []}: matchRecord), (a: matchRecord, y) => {
     ...a,
-    matched:
-      switch (diffOfTwoCharStr(a.src, y) |> predicate) {
-        | true => Belt.Array.concat(a.matched, [y])
-        | _ => a.matched
-      }
+    matched: switch diffOfTwoCharStr(a.src, y) |> predicate {
+    | true => Belt.Array.concat(a.matched, [y])
+    | _ => a.matched
+    },
   })
 }
 
@@ -116,18 +125,21 @@ let findAllMatch = (predicate, lines) => {
   Belt.Array.reduce(lines, [], (a, x) => {
     let res = findMatch(lines, predicate, x)
     switch Array.length(res.matched) {
-      | 0 => a
-      | _ => Belt.Array.concat(a, [res])
+    | 0 => a
+    | _ => Belt.Array.concat(a, [res])
     }
   })
 }
 
-let runDay2Part2 = (lines) => {
-  findAllMatch(isDiffBy1, lines)
-    -> Belt.Array.map(x => {
-        diffOfTwoCharStr(x.src, x.matched[0])
-        -> Belt.Array.reduce("", (a,x) => switch x { | Match(x) => a ++ x | NotMatch(_,_) => a})
-    })
+let runDay2Part2 = lines => {
+  findAllMatch(isDiffBy1, lines)->Belt.Array.map(x => {
+    diffOfTwoCharStr(x.src, x.matched[0])->Belt.Array.reduce("", (a, x) =>
+      switch x {
+      | Match(x) => a ++ x
+      | NotMatch(_, _) => a
+      }
+    )
+  })
 }
 
 "------ Day2 Part2 Starts" |> Js.Console.log

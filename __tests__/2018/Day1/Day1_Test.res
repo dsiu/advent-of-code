@@ -1,4 +1,4 @@
-open Jest;
+open Jest
 open Expect
 open! Expect.Operators
 open Day1
@@ -11,4 +11,3 @@ describe("2018 Day1", () => {
     expect(part2Result.found) |> toBe(Some(75108))
   })
 })
-
