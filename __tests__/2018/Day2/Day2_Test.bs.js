@@ -18,12 +18,24 @@ Jest.describe("2018 Day2", (function (param) {
         Jest.test("last line", (function (param) {
                 return Jest.Expect.toEqual("hrijafyzloguvxectqmpheybkd", Jest.Expect.expect(Caml_array.caml_array_get(lines, len - 1 | 0)));
               }));
-        return Jest.test("string to char[]", (function (param) {
-                      return Jest.Expect.toEqual([
-                                  "a",
-                                  "b",
-                                  "c"
-                                ], Jest.Expect.expect(Day2$AdventOfCode.string_to_charStr("abc")));
+        Jest.test("string to char[]", (function (param) {
+                return Jest.Expect.toEqual([
+                            "a",
+                            "b",
+                            "c"
+                          ], Jest.Expect.expect(Day2$AdventOfCode.string_to_charStr("abc")));
+              }));
+        Jest.test("diff by 1 char strs", (function (param) {
+                return Jest.Expect.toBe(true, Jest.Expect.expect(Day2$AdventOfCode.isDiffBy1(Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))));
+              }));
+        Jest.test("diff by 5 char strs", (function (param) {
+                return Jest.Expect.toBe(true, Jest.Expect.expect(Day2$AdventOfCode.isDiffBy5(Day2$AdventOfCode.diffOfTwoCharStr("zzzzzz", "zabcde"))));
+              }));
+        return Jest.test("run part2 test", (function (param) {
+                      return Jest.Expect.toBe([], Jest.Expect.expect(Day2$AdventOfCode.runDay2Part2([
+                                          "abcdef",
+                                          "abcdee"
+                                        ])));
                     }));
       }));
 

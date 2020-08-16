@@ -23,4 +23,20 @@ describe("2018 Day2", () => {
     expect("abc" |> Day2.string_to_charStr) |> toEqual(["a", "b", "c"])
   })
 
+//  test("diff 2 char strs", () => {
+//    expect(Day2.diffOfTwoCharStr("abcdef","abcdeg")) |> toEqual([true, true, true, true, true, false])
+//  })
+
+  test("diff by 1 char strs", () => {
+    expect(Day2.diffOfTwoCharStr("abcdef","abcdeg")|> Day2.isDiffBy1) |> toBe(true)
+  })
+
+  test("diff by 5 char strs", () => {
+      expect(Day2.diffOfTwoCharStr("zzzzzz","zabcde") |> Day2.isDiffBy5) |> toBe(true)
+  })
+
+  test("run part2 test", () => {
+    expect(["abcdef","abcdee"] |> Day2.runDay2Part2) |> toBe([])
+  })
+
 })
