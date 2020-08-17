@@ -19,15 +19,24 @@ Jest.describe("2018 Day3", (function (param) {
                               ];
                               return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
                             }));
-                      return Jest.test("create claim", (function (param) {
-                                    var result = Day3$AdventOfCode.createClaim("#1 @ 669,271: 17x11");
-                                    return Jest.Expect.toEqual({
-                                                id: 1,
-                                                x: 669,
-                                                y: 271,
-                                                w: 17,
-                                                h: 11
-                                              }, Jest.Expect.expect(result));
+                      Jest.test("make claim", (function (param) {
+                              var result = Day3$AdventOfCode.makeClaim("#1 @ 669,271: 17x11");
+                              var expected = Day3$AdventOfCode.Claim.make(1, 669, 271, 17, 11);
+                              return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                            }));
+                      Jest.test("find max x", (function (param) {
+                              var result = Day3$AdventOfCode.findMaxX(Day3$AdventOfCode.allClaim([
+                                        "#1 @ 100,200: 34x56",
+                                        "#2 @ 200,300: 78x90"
+                                      ]));
+                              return Jest.Expect.toEqual(278, Jest.Expect.expect(result));
+                            }));
+                      return Jest.test("find max y", (function (param) {
+                                    var result = Day3$AdventOfCode.findMaxY(Day3$AdventOfCode.allClaim([
+                                              "#1 @ 100,200: 34x56",
+                                              "#2 @ 200,300: 78x90"
+                                            ]));
+                                    return Jest.Expect.toEqual(390, Jest.Expect.expect(result));
                                   }));
                     }));
       }));
