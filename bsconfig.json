@@ -18,7 +18,6 @@
   },
   "suffix": ".bs.js",
   "bs-dependencies": [
-//    "reason-nodejs"
   ],
   "bs-dev-dependencies": [
     "@glennsl/bs-jest"
