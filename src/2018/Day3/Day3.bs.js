@@ -122,17 +122,26 @@ function make$1(w, h) {
 }
 
 function addPoint(t, x, y, p) {
-  return Belt_MutableMapInt.update(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), x, (function (a) {
-                if (a !== undefined) {
-                  return Belt_Array.concat(a, [p]);
-                } else {
-                  return [p];
-                }
-              }));
+  Belt_MutableMapInt.update(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), y, (function (a) {
+          if (a !== undefined) {
+            return Belt_Array.concat(a, [p]);
+          } else {
+            return [p];
+          }
+        }));
+  return t;
 }
 
 function getPoint(t, x, y) {
   return Belt_Option.getExn(Belt_MutableMapInt.get(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), y));
+}
+
+function fill(t, f) {
+  return Belt_Array.reduce(Belt_Array.range(0, t.w), t, (function (acc, x) {
+                return Belt_Array.reduce(Belt_Array.range(0, t.h), t, (function (acc, y) {
+                              return addPoint(acc, x, y, Curry._2(f, x, y));
+                            }));
+              }));
 }
 
 var Fabric = {
@@ -141,7 +150,8 @@ var Fabric = {
   matrix: matrix,
   make: make$1,
   addPoint: addPoint,
-  getPoint: getPoint
+  getPoint: getPoint,
+  fill: fill
 };
 
 var lines = Day3_Data$AdventOfCode.data.split("\n");

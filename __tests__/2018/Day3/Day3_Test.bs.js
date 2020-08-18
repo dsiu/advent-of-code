@@ -31,12 +31,60 @@ Jest.describe("2018 Day3", (function (param) {
                                       ]));
                               return Jest.Expect.toEqual(278, Jest.Expect.expect(result));
                             }));
-                      return Jest.test("find max y", (function (param) {
-                                    var result = Day3$AdventOfCode.findMaxY(Day3$AdventOfCode.allClaim([
-                                              "#1 @ 100,200: 34x56",
-                                              "#2 @ 200,300: 78x90"
+                      Jest.test("find max y", (function (param) {
+                              var result = Day3$AdventOfCode.findMaxY(Day3$AdventOfCode.allClaim([
+                                        "#1 @ 100,200: 34x56",
+                                        "#2 @ 200,300: 78x90"
+                                      ]));
+                              return Jest.Expect.toEqual(390, Jest.Expect.expect(result));
+                            }));
+                      var add = function (x, y) {
+                        return x + y | 0;
+                      };
+                      var times = function (x, y) {
+                        return Math.imul(x, y);
+                      };
+                      Jest.test("fabric matrix - single value per point +", (function (param) {
+                              var test_fab = Day3$AdventOfCode.Fabric.fill(Day3$AdventOfCode.Fabric.make(10, 10), add);
+                              var result1 = Day3$AdventOfCode.Fabric.getPoint(test_fab, 1, 1);
+                              var result2 = Day3$AdventOfCode.Fabric.getPoint(test_fab, 3, 5);
+                              return Jest.Expect.toEqual([
+                                          [2],
+                                          [8]
+                                        ], Jest.Expect.expect([
+                                              result1,
+                                              result2
                                             ]));
-                                    return Jest.Expect.toEqual(390, Jest.Expect.expect(result));
+                            }));
+                      Jest.test("fabric matrix - single value per point *", (function (param) {
+                              var test_fab = Day3$AdventOfCode.Fabric.fill(Day3$AdventOfCode.Fabric.make(10, 10), times);
+                              var result1 = Day3$AdventOfCode.Fabric.getPoint(test_fab, 2, 2);
+                              var result2 = Day3$AdventOfCode.Fabric.getPoint(test_fab, 4, 6);
+                              return Jest.Expect.toEqual([
+                                          [4],
+                                          [24]
+                                        ], Jest.Expect.expect([
+                                              result1,
+                                              result2
+                                            ]));
+                            }));
+                      return Jest.test("fabric matrix - multiple value per point +/*", (function (param) {
+                                    var test_fab = Day3$AdventOfCode.Fabric.fill(Day3$AdventOfCode.Fabric.fill(Day3$AdventOfCode.Fabric.make(15, 15), add), times);
+                                    var result1 = Day3$AdventOfCode.Fabric.getPoint(test_fab, 9, 8);
+                                    var result2 = Day3$AdventOfCode.Fabric.getPoint(test_fab, 2, 5);
+                                    return Jest.Expect.toEqual([
+                                                [
+                                                  17,
+                                                  72
+                                                ],
+                                                [
+                                                  7,
+                                                  10
+                                                ]
+                                              ], Jest.Expect.expect([
+                                                    result1,
+                                                    result2
+                                                  ]));
                                   }));
                     }));
       }));

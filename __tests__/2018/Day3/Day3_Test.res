@@ -25,7 +25,7 @@ describe("2018 Day3", () => {
       let test_line1 = "#1 @ 100,200: 34x56"
       let test_line2 = "#2 @ 200,300: 78x90"
 
-      let result = [test_line1, test_line2] -> allClaim -> findMaxX
+      let result = [test_line1, test_line2]->allClaim->findMaxX
 
       expect(result) |> toEqual(278)
     })
@@ -34,9 +34,34 @@ describe("2018 Day3", () => {
       let test_line1 = "#1 @ 100,200: 34x56"
       let test_line2 = "#2 @ 200,300: 78x90"
 
-      let result = [test_line1, test_line2] -> allClaim -> findMaxY
+      let result = [test_line1, test_line2]->allClaim->findMaxY
 
       expect(result) |> toEqual(390)
+    })
+
+    let add = (x, y) => x + y
+    let times = (x, y) => x * y
+    test("fabric matrix - single value per point +", () => {
+      let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(add)
+      let result1 = test_fab->Fabric.getPoint(~x=1, ~y=1)
+      let result2 = test_fab->Fabric.getPoint(~x=3, ~y=5)
+      expect((result1, result2)) |> toEqual(([2], [8]))
+    })
+
+    test("fabric matrix - single value per point *", () => {
+      let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(times)
+      let result1 = test_fab->Fabric.getPoint(~x=2, ~y=2)
+      let result2 = test_fab->Fabric.getPoint(~x=4, ~y=6)
+      expect((result1, result2)) |> toEqual(([4], [24]))
+    })
+
+    test("fabric matrix - multiple value per point +/*", () => {
+      let test_fab = Fabric.make(~w=15, ~h=15)
+        ->Fabric.fill(add)
+        ->Fabric.fill(times)
+      let result1 = test_fab->Fabric.getPoint(~x=9, ~y=8)
+      let result2 = test_fab->Fabric.getPoint(~x=2, ~y=5)
+      expect((result1, result2)) |> toEqual(([17, 72], [7, 10]))
     })
   })
 })

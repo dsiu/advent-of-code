@@ -33,7 +33,7 @@ let claimRe = %re("/#(\d+)\s+@\s+(\d+),(\d+):\s(\d+)x(\d+)/i")
 
 // parse a string and produce array of params for claim
 let parseLine = s => {
-  switch s->Js.String.trim->Js.Re.exec(claimRe) {
+  switch s->Js.String.trim |>Js.Re.exec_(claimRe) {
   | Some(x) => Js.Re.captures(x)->Array.map(x => Js.Nullable.toOption(x)->Option.getExn)
   | None => []
   }
@@ -92,17 +92,24 @@ module Fabric = {
     ),
   }
 
-  let addPoint = (t, ~x, ~y, p) => {
-    t->matrix->Map.Int.get(x)->Option.getExn->MutableMap.Int.update(x, a => {
+  let addPoint = (t, ~x, ~y, ~p) => {
+    t->matrix->Map.Int.get(x)->Option.getExn->MutableMap.Int.update(y, a => {
       switch a {
       | Some(a) => Some(a->Array.concat([p]))
       | None => Some([p])
       }
     })
+    t
   }
 
   let getPoint = (t, ~x, ~y): array<Claim.id> => {
     t->matrix->Map.Int.get(x)->Option.getExn->MutableMap.Int.get(y)->Option.getExn
+  }
+
+  let fill = (t, f) => {
+      Array.range(0, t->w)->Array.reduce(t, (acc, x) =>
+        Array.range(0, t->h)->Array.reduce(t, (acc, y) => acc->addPoint(~x=x, ~y=y, ~p=f(x,y)))
+      )
   }
 }
 
