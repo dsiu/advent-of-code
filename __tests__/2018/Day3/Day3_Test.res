@@ -87,16 +87,8 @@ describe("2018 Day3", () => {
       expect(results) |> toEqual(4)
     })
 
-    test("Final result", () => {
-      let allClaims = data->Js.String2.split("\n")->Claims.make
-      let w = allClaims->Claims.findMaxX
-      let h = allClaims->Claims.findMaxY
-      let test_fab = Fabric.make(~w, ~h)
-      let test_fab = allClaims->Belt.Array.reduce(test_fab, (acc, i) => {
-        acc->Fabric.addClaim(i)
-      })
-      let countOverlapTwoMore = test_fab->Fabric.countOverlap(_, Fabric.twoOrMore)
-      let result = countOverlapTwoMore
+    test("Solve Part1", () => {
+      let result = solvePart1()
       expect(result) |> toEqual(118223)
     })
   })

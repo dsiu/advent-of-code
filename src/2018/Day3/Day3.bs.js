@@ -209,10 +209,19 @@ var Fabric = {
   countOverlap: countOverlap
 };
 
+function solvePart1(param) {
+  var lines = Day3_Data$AdventOfCode.data.split("\n");
+  var allClaims = lines.map(makeClaim);
+  var fab = make$2(findMax(allClaims, maxX), findMax(allClaims, maxY));
+  var __x = Belt_Array.reduce(allClaims, fab, addClaim);
+  return countOverlap(__x, twoOrMore);
+}
+
 var data = Day3_Data$AdventOfCode.data;
 
 exports.data = data;
 exports.Claim = Claim;
 exports.Claims = Claims;
 exports.Fabric = Fabric;
+exports.solvePart1 = solvePart1;
 /* No side effect */

@@ -175,3 +175,10 @@ module Fabric = {
 // let size_y = data->Js.String2.split("\n")->Claims.make->Claims.findMaxY
 //
 // let fab = Fabric.make(~w=size_x, ~h=size_y)
+
+let solvePart1 = () => {
+  let allClaims = data->Js.String2.split("\n")->Claims.make
+  let fab = Fabric.make(~w=allClaims->Claims.findMaxX, ~h=allClaims->Claims.findMaxY)
+  let fab = allClaims->Belt.Array.reduce(fab, (acc, i) => acc->Fabric.addClaim(i))
+  fab->Fabric.countOverlap(_, Fabric.twoOrMore)
+}

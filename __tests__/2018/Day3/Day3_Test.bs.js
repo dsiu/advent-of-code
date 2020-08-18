@@ -102,16 +102,9 @@ Jest.describe("2018 Day3", (function (param) {
                               var countOverlapTwoMore = Day3$AdventOfCode.Fabric.countOverlap(test_fab$1, Day3$AdventOfCode.Fabric.twoOrMore);
                               return Jest.Expect.toEqual(4, Jest.Expect.expect(countOverlapTwoMore));
                             }));
-                      return Jest.test("Final result", (function (param) {
-                                    var allClaims = Day3$AdventOfCode.Claims.make(Day3$AdventOfCode.data.split("\n"));
-                                    var w = Day3$AdventOfCode.Claims.findMaxX(allClaims);
-                                    var h = Day3$AdventOfCode.Claims.findMaxY(allClaims);
-                                    var test_fab = Day3$AdventOfCode.Fabric.make(w, h);
-                                    var test_fab$1 = Belt_Array.reduce(allClaims, test_fab, (function (acc, i) {
-                                            return Day3$AdventOfCode.Fabric.addClaim(acc, i);
-                                          }));
-                                    var countOverlapTwoMore = Day3$AdventOfCode.Fabric.countOverlap(test_fab$1, Day3$AdventOfCode.Fabric.twoOrMore);
-                                    return Jest.Expect.toEqual(118223, Jest.Expect.expect(countOverlapTwoMore));
+                      return Jest.test("Solve Part1", (function (param) {
+                                    var result = Day3$AdventOfCode.solvePart1(undefined);
+                                    return Jest.Expect.toEqual(118223, Jest.Expect.expect(result));
                                   }));
                     }));
       }));
