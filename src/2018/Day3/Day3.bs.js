@@ -3,8 +3,11 @@
 
 var Curry = require("bs-platform/lib/js/curry.js");
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
-var Caml_array = require("bs-platform/lib/js/caml_array.js");
+var Belt_MapInt = require("bs-platform/lib/js/belt_MapInt.js");
+var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 var Caml_format = require("bs-platform/lib/js/caml_format.js");
+var Caml_option = require("bs-platform/lib/js/caml_option.js");
+var Belt_MutableMapInt = require("bs-platform/lib/js/belt_MutableMapInt.js");
 var Day3_Data$AdventOfCode = require("./Day3_Data.bs.js");
 
 function id(t) {
@@ -62,11 +65,7 @@ function parseLine(s) {
   var x = claimRe.exec(s.trim());
   if (x !== null) {
     return Belt_Array.map(x, (function (x) {
-                  if (x == null) {
-                    return "";
-                  } else {
-                    return x;
-                  }
+                  return Belt_Option.getExn((x == null) ? undefined : Caml_option.some(x));
                 }));
   } else {
     return [];
@@ -75,7 +74,7 @@ function parseLine(s) {
 
 function makeClaim(x) {
   var xs = parseLine(x);
-  return make(Caml_format.caml_int_of_string(Caml_array.caml_array_get(xs, 1)), Caml_format.caml_int_of_string(Caml_array.caml_array_get(xs, 2)), Caml_format.caml_int_of_string(Caml_array.caml_array_get(xs, 3)), Caml_format.caml_int_of_string(Caml_array.caml_array_get(xs, 4)), Caml_format.caml_int_of_string(Caml_array.caml_array_get(xs, 5)));
+  return make(Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 1))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 2))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 3))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 4))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 5))));
 }
 
 function allClaim(lines) {
@@ -100,13 +99,6 @@ function findMaxY(__x) {
   return findMax(__x, maxY);
 }
 
-function make$1(w, h) {
-  return {
-          w: w,
-          h: h
-        };
-}
-
 function w$1(t) {
   return t.w;
 }
@@ -115,10 +107,41 @@ function h$1(t) {
   return t.h;
 }
 
+function matrix(t) {
+  return t.matrix;
+}
+
+function make$1(w, h) {
+  return {
+          w: w,
+          h: h,
+          matrix: Belt_Array.reduce(Belt_Array.range(0, h), undefined, (function (acc, i) {
+                  return Belt_MapInt.set(acc, i, Belt_MutableMapInt.make(undefined));
+                }))
+        };
+}
+
+function addPoint(t, x, y, p) {
+  return Belt_MutableMapInt.update(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), x, (function (a) {
+                if (a !== undefined) {
+                  return Belt_Array.concat(a, [p]);
+                } else {
+                  return [p];
+                }
+              }));
+}
+
+function getPoint(t, x, y) {
+  return Belt_Option.getExn(Belt_MutableMapInt.get(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), y));
+}
+
 var Fabric = {
-  make: make$1,
   w: w$1,
-  h: h$1
+  h: h$1,
+  matrix: matrix,
+  make: make$1,
+  addPoint: addPoint,
+  getPoint: getPoint
 };
 
 var lines = Day3_Data$AdventOfCode.data.split("\n");
@@ -133,10 +156,7 @@ var __x$1 = lines$1.map(makeClaim);
 
 var size_y = findMax(__x$1, maxY);
 
-var fab = {
-  w: size_x,
-  h: size_y
-};
+var fab = make$1(size_x, size_y);
 
 var data = Day3_Data$AdventOfCode.data;
 
