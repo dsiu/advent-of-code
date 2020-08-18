@@ -38,27 +38,6 @@ function maxY(t) {
   return t.y + t.h | 0;
 }
 
-function make(id, x, y, w, h) {
-  return {
-          id: id,
-          x: x,
-          y: y,
-          w: w,
-          h: h
-        };
-}
-
-var Claim = {
-  id: id,
-  x: x,
-  y: y,
-  w: w,
-  h: h,
-  maxX: maxX,
-  maxY: maxY,
-  make: make
-};
-
 var claimRe = /#(\d+)\s+@\s+(\d+),(\d+):\s(\d+)x(\d+)/i;
 
 function parseLine(s) {
@@ -72,17 +51,36 @@ function parseLine(s) {
   }
 }
 
+function make(id, x, y, w, h) {
+  return {
+          id: id,
+          x: x,
+          y: y,
+          w: w,
+          h: h
+        };
+}
+
 function makeClaim(x) {
   var xs = parseLine(x);
   return make(Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 1))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 2))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 3))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 4))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 5))));
 }
 
-function allClaim(lines) {
-  return lines.map(makeClaim);
-}
+var Claim = {
+  id: id,
+  x: x,
+  y: y,
+  w: w,
+  h: h,
+  maxX: maxX,
+  maxY: maxY,
+  parseLine: parseLine,
+  make: make,
+  makeClaim: makeClaim
+};
 
-function findMax(xs, f) {
-  return Belt_Array.reduce(xs, 0, (function (acc, x) {
+function findMax(t, f) {
+  return Belt_Array.reduce(t, 0, (function (acc, x) {
                 if (Curry._1(f, x) > acc) {
                   return Curry._1(f, x);
                 } else {
@@ -91,13 +89,24 @@ function findMax(xs, f) {
               }));
 }
 
-function findMaxX(__x) {
-  return findMax(__x, maxX);
+function findMaxX(t) {
+  return findMax(t, maxX);
 }
 
-function findMaxY(__x) {
-  return findMax(__x, maxY);
+function findMaxY(t) {
+  return findMax(t, maxY);
 }
+
+function make$1(lines) {
+  return lines.map(makeClaim);
+}
+
+var Claims = {
+  findMax: findMax,
+  findMaxX: findMaxX,
+  findMaxY: findMaxY,
+  make: make$1
+};
 
 function w$1(t) {
   return t.w;
@@ -111,7 +120,7 @@ function matrix(t) {
   return t.matrix;
 }
 
-function make$1(w, h) {
+function make$2(w, h) {
   return {
           w: w,
           h: h,
@@ -144,43 +153,42 @@ function fill(t, f) {
               }));
 }
 
+function addClaim(t, c) {
+  return Belt_Array.reduce(Belt_Array.range(c.x, c.x + c.w | 0), t, (function (acc, x) {
+                return Belt_Array.reduce(Belt_Array.range(c.y, c.y + c.h | 0), t, (function (acc, y) {
+                              return addPoint(acc, x, y, c.id);
+                            }));
+              }));
+}
+
 var Fabric = {
   w: w$1,
   h: h$1,
   matrix: matrix,
-  make: make$1,
+  make: make$2,
   addPoint: addPoint,
   getPoint: getPoint,
-  fill: fill
+  fill: fill,
+  addClaim: addClaim
 };
 
 var lines = Day3_Data$AdventOfCode.data.split("\n");
 
-var __x = lines.map(makeClaim);
-
-var size_x = findMax(__x, maxX);
+var size_x = findMax(lines.map(makeClaim), maxX);
 
 var lines$1 = Day3_Data$AdventOfCode.data.split("\n");
 
-var __x$1 = lines$1.map(makeClaim);
+var size_y = findMax(lines$1.map(makeClaim), maxY);
 
-var size_y = findMax(__x$1, maxY);
-
-var fab = make$1(size_x, size_y);
+var fab = make$2(size_x, size_y);
 
 var data = Day3_Data$AdventOfCode.data;
 
 exports.data = data;
 exports.Claim = Claim;
-exports.claimRe = claimRe;
-exports.parseLine = parseLine;
-exports.makeClaim = makeClaim;
-exports.allClaim = allClaim;
-exports.findMax = findMax;
-exports.findMaxX = findMaxX;
-exports.findMaxY = findMaxY;
+exports.Claims = Claims;
 exports.Fabric = Fabric;
 exports.size_x = size_x;
 exports.size_y = size_y;
 exports.fab = fab;
-/* lines Not a pure module */
+/* size_x Not a pure module */
