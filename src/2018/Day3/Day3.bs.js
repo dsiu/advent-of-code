@@ -61,8 +61,8 @@ function make(id, x, y, w, h) {
         };
 }
 
-function makeClaim(x) {
-  var xs = parseLine(x);
+function makeClaim(l) {
+  var xs = parseLine(l);
   return make(Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 1))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 2))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 3))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 4))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 5))));
 }
 
@@ -124,10 +124,22 @@ function make$2(w, h) {
   return {
           w: w,
           h: h,
-          matrix: Belt_Array.reduce(Belt_Array.range(0, h), undefined, (function (acc, i) {
+          matrix: Belt_Array.reduce(Belt_Array.range(0, w), undefined, (function (acc, i) {
                   return Belt_MapInt.set(acc, i, Belt_MutableMapInt.make(undefined));
                 }))
         };
+}
+
+function dump(t) {
+  return Belt_MapInt.forEach(t.matrix, (function (x, col) {
+                return Belt_MutableMapInt.forEach(col, (function (y, vs) {
+                              console.log("x:" + String(x) + " y:" + String(y));
+                              return Belt_Array.forEach(vs, (function (v) {
+                                            console.log("  " + String(v));
+                                            
+                                          }));
+                            }));
+              }));
 }
 
 function addPoint(t, x, y, p) {
@@ -142,7 +154,7 @@ function addPoint(t, x, y, p) {
 }
 
 function getPoint(t, x, y) {
-  return Belt_Option.getExn(Belt_MutableMapInt.get(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), y));
+  return Belt_MutableMapInt.get(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), y);
 }
 
 function fill(t, f) {
@@ -154,10 +166,31 @@ function fill(t, f) {
 }
 
 function addClaim(t, c) {
-  return Belt_Array.reduce(Belt_Array.range(c.x, c.x + c.w | 0), t, (function (acc, x) {
-                return Belt_Array.reduce(Belt_Array.range(c.y, c.y + c.h | 0), t, (function (acc, y) {
+  return Belt_Array.reduce(Belt_Array.range(c.x, (c.x + c.w | 0) - 1 | 0), t, (function (acc, x) {
+                return Belt_Array.reduce(Belt_Array.range(c.y, (c.y + c.h | 0) - 1 | 0), t, (function (acc, y) {
                               return addPoint(acc, x, y, c.id);
                             }));
+              }));
+}
+
+function twoOrMore(x) {
+  return x >= 2;
+}
+
+function oneOrMore(x) {
+  return x >= 1;
+}
+
+function countOverlap(t, f) {
+  return Belt_MapInt.reduce(t.matrix, 0, (function (acc, x, col) {
+                return acc + Belt_MutableMapInt.reduce(col, 0, (function (acc, y, vs) {
+                              var len = vs.length;
+                              if (Curry._1(f, len)) {
+                                return acc + 1 | 0;
+                              } else {
+                                return acc;
+                              }
+                            })) | 0;
               }));
 }
 
@@ -166,21 +199,15 @@ var Fabric = {
   h: h$1,
   matrix: matrix,
   make: make$2,
+  dump: dump,
   addPoint: addPoint,
   getPoint: getPoint,
   fill: fill,
-  addClaim: addClaim
+  addClaim: addClaim,
+  twoOrMore: twoOrMore,
+  oneOrMore: oneOrMore,
+  countOverlap: countOverlap
 };
-
-var lines = Day3_Data$AdventOfCode.data.split("\n");
-
-var size_x = findMax(lines.map(makeClaim), maxX);
-
-var lines$1 = Day3_Data$AdventOfCode.data.split("\n");
-
-var size_y = findMax(lines$1.map(makeClaim), maxY);
-
-var fab = make$2(size_x, size_y);
 
 var data = Day3_Data$AdventOfCode.data;
 
@@ -188,7 +215,4 @@ exports.data = data;
 exports.Claim = Claim;
 exports.Claims = Claims;
 exports.Fabric = Fabric;
-exports.size_x = size_x;
-exports.size_y = size_y;
-exports.fab = fab;
-/* size_x Not a pure module */
+/* No side effect */

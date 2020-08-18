@@ -2,7 +2,7 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.js");
-var Curry = require("bs-platform/lib/js/curry.js");
+var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Day3$AdventOfCode = require("../../../src/2018/Day3/Day3.bs.js");
 
 Jest.describe("2018 Day3", (function (param) {
@@ -87,15 +87,31 @@ Jest.describe("2018 Day3", (function (param) {
                                               result2
                                             ]));
                             }));
-                      return Jest.test("fabric add claim", (function (param) {
-                                    var allClaims = Day3$AdventOfCode.Claims.make([
-                                          "#1 @ 100,200: 34x56",
-                                          "#2 @ 200,300: 78x90"
-                                        ]);
+                      Jest.test("fabric add claim (demo case)", (function (param) {
+                              var allClaims = Day3$AdventOfCode.Claims.make([
+                                    "#1 @ 1,3: 4x4",
+                                    "#2 @ 3,1: 4x4",
+                                    "#3 @ 5,5: 2x2"
+                                  ]);
+                              var w = Day3$AdventOfCode.Claims.findMaxX(allClaims);
+                              var h = Day3$AdventOfCode.Claims.findMaxY(allClaims);
+                              var test_fab = Day3$AdventOfCode.Fabric.make(w, h);
+                              var test_fab$1 = Belt_Array.reduce(allClaims, test_fab, (function (acc, i) {
+                                      return Day3$AdventOfCode.Fabric.addClaim(acc, i);
+                                    }));
+                              var countOverlapTwoMore = Day3$AdventOfCode.Fabric.countOverlap(test_fab$1, Day3$AdventOfCode.Fabric.twoOrMore);
+                              return Jest.Expect.toEqual(4, Jest.Expect.expect(countOverlapTwoMore));
+                            }));
+                      return Jest.test("Final result", (function (param) {
+                                    var allClaims = Day3$AdventOfCode.Claims.make(Day3$AdventOfCode.data.split("\n"));
                                     var w = Day3$AdventOfCode.Claims.findMaxX(allClaims);
                                     var h = Day3$AdventOfCode.Claims.findMaxY(allClaims);
-                                    Day3$AdventOfCode.Fabric.make(w, h);
-                                    return Curry._2(Jest.Expect.Operators.$eq$eq, Jest.Expect.expect(1), 1);
+                                    var test_fab = Day3$AdventOfCode.Fabric.make(w, h);
+                                    var test_fab$1 = Belt_Array.reduce(allClaims, test_fab, (function (acc, i) {
+                                            return Day3$AdventOfCode.Fabric.addClaim(acc, i);
+                                          }));
+                                    var countOverlapTwoMore = Day3$AdventOfCode.Fabric.countOverlap(test_fab$1, Day3$AdventOfCode.Fabric.twoOrMore);
+                                    return Jest.Expect.toEqual(118223, Jest.Expect.expect(countOverlapTwoMore));
                                   }));
                     }));
       }));

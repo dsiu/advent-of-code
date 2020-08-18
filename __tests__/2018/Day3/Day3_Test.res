@@ -45,31 +45,59 @@ describe("2018 Day3", () => {
       let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(add)
       let result1 = test_fab->Fabric.getPoint(~x=1, ~y=1)
       let result2 = test_fab->Fabric.getPoint(~x=3, ~y=5)
-      expect((result1, result2)) |> toEqual(([2], [8]))
+      expect((result1, result2)) |> toEqual((Some([2]), Some([8])))
     })
 
     test("fabric matrix - single value per point *", () => {
       let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(times)
       let result1 = test_fab->Fabric.getPoint(~x=2, ~y=2)
       let result2 = test_fab->Fabric.getPoint(~x=4, ~y=6)
-      expect((result1, result2)) |> toEqual(([4], [24]))
+      expect((result1, result2)) |> toEqual((Some([4]), Some([24])))
     })
 
     test("fabric matrix - multiple value per point +/*", () => {
       let test_fab = Fabric.make(~w=15, ~h=15)->Fabric.fill(add)->Fabric.fill(times)
       let result1 = test_fab->Fabric.getPoint(~x=9, ~y=8)
       let result2 = test_fab->Fabric.getPoint(~x=2, ~y=5)
-      expect((result1, result2)) |> toEqual(([17, 72], [7, 10]))
+      expect((result1, result2)) |> toEqual((Some([17, 72]), Some([7, 10])))
     })
 
-    test("fabric add claim", () => {
-      let test_line1 = "#1 @ 100,200: 34x56"
-      let test_line2 = "#2 @ 200,300: 78x90"
-      let allClaims = [test_line1, test_line2]->Claims.make
+    test("fabric add claim (demo case)", () => {
+      let test_line1 = "#1 @ 1,3: 4x4"
+      let test_line2 = "#2 @ 3,1: 4x4"
+      let test_line3 = "#3 @ 5,5: 2x2"
+      let allClaims = [test_line1, test_line2, test_line3]->Claims.make
       let w = allClaims->Claims.findMaxX
       let h = allClaims->Claims.findMaxY
       let test_fab = Fabric.make(~w, ~h)
-      expect(1) === 1
+      let test_fab = allClaims->Belt.Array.reduce(test_fab, (acc, i) => {
+        acc->Fabric.addClaim(i)
+      })
+
+      // test_fab->Fabric.dump
+      let gp = test_fab->Fabric.getPoint
+      let countOverlapTwoMore = test_fab->Fabric.countOverlap(_, Fabric.twoOrMore)
+      let one = Some([1])
+      let two = Some([2])
+      let three = Some([3])
+      // let results = (gp(~x=1, ~y=3), gp(~x=1, ~y=4), gp(~x=3, ~y=1), gp(~x=6, ~y=5), countOverlapTwoMore)
+      let results = countOverlapTwoMore
+      let expected = (one, one, one, two, three, 4)
+
+      expect(results) |> toEqual(4)
+    })
+
+    test("Final result", () => {
+      let allClaims = data->Js.String2.split("\n")->Claims.make
+      let w = allClaims->Claims.findMaxX
+      let h = allClaims->Claims.findMaxY
+      let test_fab = Fabric.make(~w, ~h)
+      let test_fab = allClaims->Belt.Array.reduce(test_fab, (acc, i) => {
+        acc->Fabric.addClaim(i)
+      })
+      let countOverlapTwoMore = test_fab->Fabric.countOverlap(_, Fabric.twoOrMore)
+      let result = countOverlapTwoMore
+      expect(result) |> toEqual(118223)
     })
   })
 })

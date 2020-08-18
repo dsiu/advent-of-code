@@ -60,8 +60,8 @@ module Claim: Claim = {
   let make = (~id: int, ~x, ~y, ~w, ~h) => {id: id, x: x, y: y, w: w, h: h}
 
   // given a raw data line, produce a Claim.t
-  let makeClaim = x => {
-    x
+  let makeClaim = l => {
+    l
     ->parseLine
     ->(
       xs =>
@@ -112,9 +112,18 @@ module Fabric = {
   let make = (~w, ~h) => {
     w: w,
     h: h,
-    matrix: Array.range(0, h)->Array.reduce(Map.Int.empty, (acc, i) =>
+    matrix: Array.range(0, w)->Array.reduce(Map.Int.empty, (acc, i) =>
       Map.Int.set(acc, i, MutableMap.Int.make())
     ),
+  }
+
+  let dump = t => {
+    t->matrix->Map.Int.forEach((x, col) => {
+      col->MutableMap.Int.forEach((y, vs) => {
+        Js.Console.log(`x:${x->string_of_int} y:${y->string_of_int}`)
+        vs->Array.forEach(v => Js.Console.log("  " ++ v->string_of_int))
+      })
+    })
   }
 
   let addPoint = (t, ~x, ~y, ~p) => {
@@ -127,8 +136,8 @@ module Fabric = {
     t
   }
 
-  let getPoint = (t, ~x, ~y): array<Claim.id> => {
-    t->matrix->Map.Int.get(x)->Option.getExn->MutableMap.Int.get(y)->Option.getExn
+  let getPoint = (t, ~x, ~y): option<array<Claim.id>> => {
+    t->matrix->Map.Int.get(x)->Option.getExn->MutableMap.Int.get(y)
   }
 
   let fill = (t, f) => {
@@ -138,17 +147,31 @@ module Fabric = {
   }
 
   let addClaim = (t, c: Claim.t) => {
-    Array.range(c->Claim.x, c->Claim.x + c->Claim.w)->Array.reduce(t, (acc, x) =>
-      Array.range(c->Claim.y, c->Claim.y + c->Claim.h)->Array.reduce(t, (acc, y) =>
+    Array.range(c->Claim.x, c->Claim.x + c->Claim.w - 1)->Array.reduce(t, (acc, x) =>
+      Array.range(c->Claim.y, c->Claim.y + c->Claim.h - 1)->Array.reduce(t, (acc, y) =>
         acc->addPoint(~x, ~y, ~p=c->Claim.id)
       )
     )
+  }
+
+  let twoOrMore = x => x >= 2
+  let oneOrMore = x => x >= 1
+
+  let countOverlap = (t, f) => {
+    t->matrix->Map.Int.reduce(0, (acc, x, col) => {
+      // Js.Console.log("acc = " ++ acc->string_of_int)
+      acc + col->MutableMap.Int.reduce(0, (acc, y, vs) => {
+        let len = vs->Array.length
+        // Js.Console.log(`x=${x->string_of_int}, y=${y->string_of_int}, len=${len->string_of_int}`)
+        f(len) ? acc + 1 : acc
+      })
+    })
   }
 }
 
 // data -> Js.String2.split("\n") -> allClaim -> Js.Console.log
 
-let size_x = data->Js.String2.split("\n")->Claims.make->Claims.findMaxX
-let size_y = data->Js.String2.split("\n")->Claims.make->Claims.findMaxY
-
-let fab = Fabric.make(~w=size_x, ~h=size_y)
+// let size_x = data->Js.String2.split("\n")->Claims.make->Claims.findMaxX
+// let size_y = data->Js.String2.split("\n")->Claims.make->Claims.findMaxY
+//
+// let fab = Fabric.make(~w=size_x, ~h=size_y)
