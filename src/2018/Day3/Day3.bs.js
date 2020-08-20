@@ -8,6 +8,7 @@ var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 var Caml_format = require("bs-platform/lib/js/caml_format.js");
 var Caml_option = require("bs-platform/lib/js/caml_option.js");
 var Belt_MutableMapInt = require("bs-platform/lib/js/belt_MutableMapInt.js");
+var Utils$AdventOfCode = require("../Utils.bs.js");
 var Day3_Data$AdventOfCode = require("./Day3_Data.bs.js");
 
 function id(t) {
@@ -142,6 +143,18 @@ function dump(t) {
               }));
 }
 
+function twoOrMore(x) {
+  return x >= 2;
+}
+
+function oneOrMore(x) {
+  return x >= 1;
+}
+
+function isOne(x) {
+  return x === 1;
+}
+
 function addPoint(t, x, y, p) {
   Belt_MutableMapInt.update(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), y, (function (a) {
           if (a !== undefined) {
@@ -165,27 +178,64 @@ function fill(t, f) {
               }));
 }
 
-function addClaim(t, c) {
+function claimAreaIter(c, t, f) {
   return Belt_Array.reduce(Belt_Array.range(c.x, (c.x + c.w | 0) - 1 | 0), t, (function (acc, x) {
                 return Belt_Array.reduce(Belt_Array.range(c.y, (c.y + c.h | 0) - 1 | 0), t, (function (acc, y) {
-                              return addPoint(acc, x, y, c.id);
+                              return Curry._4(f, acc, x, y, c);
                             }));
               }));
 }
 
-function twoOrMore(x) {
-  return x >= 2;
+function addClaimIdToPoint(t, x, y, c) {
+  return addPoint(t, x, y, c.id);
 }
 
-function oneOrMore(x) {
-  return x >= 1;
+function addClaim(t, c) {
+  return claimAreaIter(c, t, addClaimIdToPoint);
 }
 
-function countOverlap(t, f) {
+function getClaimIdFromPointIf(t, c, x, y, c$1) {
+  var point = getPoint(t, x, y);
+  var len = Belt_Option.getExn(point).length;
+  if (len === 1) {
+    return Caml_option.some(point);
+  }
+  
+}
+
+function getClaimIdsFromArea(t, c) {
+  var cids = Utils$AdventOfCode.flattenArray(Belt_Array.reduce(Belt_Array.range(c.x, (c.x + c.w | 0) - 1 | 0), [], (function (accX, x) {
+              return Belt_Array.concat(accX, Belt_Array.reduce(Belt_Array.range(c.y, (c.y + c.h | 0) - 1 | 0), [], (function (accY, y) {
+                                var p = getPoint(t, x, y);
+                                if (p !== undefined) {
+                                  return Belt_Array.concat(accY, [p]);
+                                } else {
+                                  return accY;
+                                }
+                              })));
+            })));
+  if (Math.imul(c.w, c.h) === cids.length) {
+    return Caml_option.some(Belt_Array.get(cids, 0));
+  }
+  
+}
+
+function countNonOverlapClaim(t, xs) {
+  var reducer = function (param, param$1) {
+    var cid = getClaimIdsFromArea(t, param$1);
+    if (cid !== undefined) {
+      return Belt_Array.concat(param, [Caml_option.valFromOption(cid)]);
+    } else {
+      return param;
+    }
+  };
+  return Belt_Array.reduce(xs, [], reducer);
+}
+
+function countOverlap(t, p) {
   return Belt_MapInt.reduce(t.matrix, 0, (function (acc, x, col) {
                 return acc + Belt_MutableMapInt.reduce(col, 0, (function (acc, y, vs) {
-                              var len = vs.length;
-                              if (Curry._1(f, len)) {
+                              if (Curry._1(p, vs.length)) {
                                 return acc + 1 | 0;
                               } else {
                                 return acc;
@@ -200,12 +250,18 @@ var Fabric = {
   matrix: matrix,
   make: make$2,
   dump: dump,
+  twoOrMore: twoOrMore,
+  oneOrMore: oneOrMore,
+  isOne: isOne,
   addPoint: addPoint,
   getPoint: getPoint,
   fill: fill,
+  claimAreaIter: claimAreaIter,
+  addClaimIdToPoint: addClaimIdToPoint,
   addClaim: addClaim,
-  twoOrMore: twoOrMore,
-  oneOrMore: oneOrMore,
+  getClaimIdFromPointIf: getClaimIdFromPointIf,
+  getClaimIdsFromArea: getClaimIdsFromArea,
+  countNonOverlapClaim: countNonOverlapClaim,
   countOverlap: countOverlap
 };
 
@@ -213,9 +269,39 @@ function solvePart1(param) {
   var lines = Day3_Data$AdventOfCode.data.split("\n");
   var allClaims = lines.map(makeClaim);
   var fab = make$2(findMax(allClaims, maxX), findMax(allClaims, maxY));
-  var __x = Belt_Array.reduce(allClaims, fab, addClaim);
-  return countOverlap(__x, twoOrMore);
+  var fab$1 = Belt_Array.reduce(allClaims, fab, (function (acc, i) {
+          return claimAreaIter(i, acc, addClaimIdToPoint);
+        }));
+  return countOverlap(fab$1, twoOrMore);
 }
+
+function solvePart2(param) {
+  var lines = Day3_Data$AdventOfCode.data.split("\n");
+  var allClaims = lines.map(makeClaim);
+  var fab = make$2(findMax(allClaims, maxX), findMax(allClaims, maxY));
+  var fab$1 = Belt_Array.reduce(allClaims, fab, (function (acc, i) {
+          return claimAreaIter(i, acc, addClaimIdToPoint);
+        }));
+  return countNonOverlapClaim(fab$1, allClaims);
+}
+
+var allClaims = [
+    "#3 @ 1,3: 4x4",
+    "#7 @ 3,1: 4x4",
+    "#11 @ 5,5: 2x2"
+  ].map(makeClaim);
+
+var w$2 = findMax(allClaims, maxX);
+
+var h$2 = findMax(allClaims, maxY);
+
+var test_fab = make$2(w$2, h$2);
+
+var test_fab$1 = Belt_Array.reduce(allClaims, test_fab, (function (acc, i) {
+        return claimAreaIter(i, acc, addClaimIdToPoint);
+      }));
+
+var solvePart2Demo = undefined === (countNonOverlapClaim(test_fab$1, allClaims), undefined);
 
 var data = Day3_Data$AdventOfCode.data;
 
@@ -224,4 +310,6 @@ exports.Claim = Claim;
 exports.Claims = Claims;
 exports.Fabric = Fabric;
 exports.solvePart1 = solvePart1;
-/* No side effect */
+exports.solvePart2 = solvePart2;
+exports.solvePart2Demo = solvePart2Demo;
+/* solvePart2Demo Not a pure module */

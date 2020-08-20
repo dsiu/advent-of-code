@@ -87,9 +87,29 @@ describe("2018 Day3", () => {
       expect(results) |> toEqual(4)
     })
 
-    test("Solve Part1", () => {
+    test("solve Part1", () => {
       let result = solvePart1()
       expect(result) |> toEqual(118223)
+    })
+
+    test("part 2 (demo case)", () => {
+      let test_line1 = "#3 @ 1,3: 4x4"
+      let test_line2 = "#7 @ 3,1: 4x4"
+      let test_line3 = "#11 @ 5,5: 2x2"
+      let allClaims = [test_line1, test_line2, test_line3]->Claims.make
+      let w = allClaims->Claims.findMaxX
+      let h = allClaims->Claims.findMaxY
+      let test_fab = Fabric.make(~w, ~h)
+      let test_fab = allClaims->Belt.Array.reduce(test_fab, (acc, i) => {
+        acc->Fabric.addClaim(i)
+      })
+      let result = test_fab->Fabric.countNonOverlapClaim(allClaims)
+      expect(result) |> toEqual([Some(11)])
+    })
+
+    test("solve part2", () => {
+      let result = solvePart2()
+      expect(result) |> toEqual([Some(412)])
     })
   })
 })

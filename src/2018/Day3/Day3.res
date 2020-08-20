@@ -126,7 +126,11 @@ module Fabric = {
     })
   }
 
-  let addPoint = (t, ~x, ~y, ~p) => {
+  let twoOrMore = x => x >= 2
+  let oneOrMore = x => x >= 1
+  let isOne = x => x === 1
+
+  let addPoint = (t, ~x, ~y, p) => {
     t->matrix->Map.Int.get(x)->Option.getExn->MutableMap.Int.update(y, a => {
       switch a {
       | Some(a) => Some(a->Array.concat([p]))
@@ -142,28 +146,77 @@ module Fabric = {
 
   let fill = (t, f) => {
     Array.range(0, t->w)->Array.reduce(t, (acc, x) =>
-      Array.range(0, t->h)->Array.reduce(t, (acc, y) => acc->addPoint(~x, ~y, ~p=f(x, y)))
+      Array.range(0, t->h)->Array.reduce(t, (acc, y) => acc->addPoint(~x, ~y, f(x, y)))
     )
   }
 
-  let addClaim = (t, c: Claim.t) => {
+  let claimAreaIter = (c: Claim.t, t, f) => {
+    // should use each
     Array.range(c->Claim.x, c->Claim.x + c->Claim.w - 1)->Array.reduce(t, (acc, x) =>
       Array.range(c->Claim.y, c->Claim.y + c->Claim.h - 1)->Array.reduce(t, (acc, y) =>
-        acc->addPoint(~x, ~y, ~p=c->Claim.id)
+        f(acc, ~x, ~y, c)
       )
     )
   }
 
-  let twoOrMore = x => x >= 2
-  let oneOrMore = x => x >= 1
+  // add claim
+  let addClaimIdToPoint = (t, ~x, ~y, c: Claim.t) => {
+    t->addPoint(~x, ~y, c->Claim.id)
+  }
 
-  let countOverlap = (t, f) => {
+  let addClaim = (t, c: Claim.t) => {
+    claimAreaIter(c, t, addClaimIdToPoint)
+  }
+
+  let getClaimIdFromPointIf = (t, c, ~x, ~y, c: Claim.t) => {
+    let point = t->getPoint(~x, ~y)
+    let len = point->Option.getExn->Array.length
+    isOne(len) ? Some(point) : None
+  }
+
+  // count nonoverlap
+  let getClaimIdsFromArea = (t, c: Claim.t) => {
+    let cids =
+      Array.range(c->Claim.x, c->Claim.x + c->Claim.w - 1) ->Array.reduce([], (accX, x) =>
+        Array.range(c->Claim.y, c->Claim.y + c->Claim.h - 1)->Array.reduce([], (accY, y) =>
+          switch t->getPoint(~x, ~y) {
+          | Some(p) => {
+//              Js.Console.log(`x: ${x->string_of_int} y: ${y->string_of_int}`)
+//              Js.Console.log("point")
+//              Js.Console.log(p)
+              accY->Array.concat([p])
+            }
+          | None => accY
+          }
+        )
+        |> Array.concat(accX)
+      )
+      ->Utils.flattenArray
+
+//    Js.Console.log("cids")
+//    Js.Console.log(cids)
+
+    (c->Claim.w * c->Claim.h) == cids->Array.length ? Some(cids[0]) : None
+  }
+
+  // returns [Claim.id]
+  let countNonOverlapClaim = (t, xs: Claims.t) => {
+    let r = (t, acc, c) => {
+      let cid = t->getClaimIdsFromArea(c)
+      switch cid {
+        | Some(c) => acc->Array.concat([c])
+        | None => acc
+      }
+    }
+    let reducer = r(t)
+    xs->Array.reduce([], reducer)
+  }
+
+  // returns count:int
+  let countOverlap = (t, p) => {
     t->matrix->Map.Int.reduce(0, (acc, x, col) => {
-      // Js.Console.log("acc = " ++ acc->string_of_int)
       acc + col->MutableMap.Int.reduce(0, (acc, y, vs) => {
-        let len = vs->Array.length
-        // Js.Console.log(`x=${x->string_of_int}, y=${y->string_of_int}, len=${len->string_of_int}`)
-        f(len) ? acc + 1 : acc
+        p(vs->Array.length) ? acc + 1 : acc
       })
     })
   }
@@ -180,5 +233,29 @@ let solvePart1 = () => {
   let allClaims = data->Js.String2.split("\n")->Claims.make
   let fab = Fabric.make(~w=allClaims->Claims.findMaxX, ~h=allClaims->Claims.findMaxY)
   let fab = allClaims->Belt.Array.reduce(fab, (acc, i) => acc->Fabric.addClaim(i))
-  fab->Fabric.countOverlap(_, Fabric.twoOrMore)
+  fab->Fabric.countOverlap(Fabric.twoOrMore)
 }
+
+let solvePart2 = () => {
+  let allClaims = data->Js.String2.split("\n")->Claims.make
+  let fab = Fabric.make(~w=allClaims->Claims.findMaxX, ~h=allClaims->Claims.findMaxY)
+  let fab = allClaims->Belt.Array.reduce(fab, (acc, i) => acc->Fabric.addClaim(i))
+  fab->Fabric.countNonOverlapClaim(allClaims)
+}
+
+let solvePart2Demo = () == {
+      let test_line1 = "#3 @ 1,3: 4x4"
+      let test_line2 = "#7 @ 3,1: 4x4"
+      let test_line3 = "#11 @ 5,5: 2x2"
+      let allClaims = [test_line1, test_line2, test_line3]->Claims.make
+      let w = allClaims->Claims.findMaxX
+      let h = allClaims->Claims.findMaxY
+      let test_fab = Fabric.make(~w, ~h)
+      let test_fab = allClaims->Belt.Array.reduce(test_fab, (acc, i) => {
+        acc->Fabric.addClaim(i)
+      })
+      let result = test_fab->Fabric.countNonOverlapClaim(allClaims)
+      // result->Js.Console.log
+    }
+
+// solvePart2() |> Js.Console.log
