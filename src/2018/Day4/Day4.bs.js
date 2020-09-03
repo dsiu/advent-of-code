@@ -71,7 +71,6 @@ function findLaziestGuard(gAtt) {
 }
 
 function tallySleptPerMin(dr) {
-  console.log("tallySleptPerMin");
   return Belt_MutableMapString.reduce(dr, Belt_MutableMapInt.make(undefined), (function (a, k, hr) {
                 Belt_MutableSetInt.forEach(hr, (function (m) {
                         return Belt_MutableMapInt.update(a, m, (function (prev) {
@@ -94,20 +93,37 @@ function perGuardMostSleptMin(gAtt) {
   console.log("debug: perGuardMostSleptMin");
   return Belt_MutableMapInt.map(Belt_MutableMapInt.map(gAtt, tallySleptPerMin), (function (t) {
                 return Belt_MutableMapInt.reduce(t, [
-                              -1,
-                              -1
-                            ], (function (a, k, v) {
-                                console.log(a);
-                                console.log("k:" + String(k) + ", v:" + String(v));
-                                if (v > a[1]) {
-                                  return [
-                                          k,
-                                          v
-                                        ];
-                                } else {
-                                  return a;
-                                }
-                              }))[0];
+                            -1,
+                            -1
+                          ], (function (a, k, v) {
+                              if (v > a[1]) {
+                                return [
+                                        k,
+                                        v
+                                      ];
+                              } else {
+                                return a;
+                              }
+                            }));
+              }));
+}
+
+function busiestMin(gAtt) {
+  return Belt_MutableMapInt.reduce(perGuardMostSleptMin(gAtt), [
+              -1,
+              [
+                -1,
+                -1
+              ]
+            ], (function (a, k, v) {
+                if (v[1] > a[1][1]) {
+                  return [
+                          k,
+                          v
+                        ];
+                } else {
+                  return a;
+                }
               }));
 }
 
@@ -134,6 +150,7 @@ var GuardAttendance = {
   tallySleptPerMin: tallySleptPerMin,
   perGuardTallySleptPerMin: perGuardTallySleptPerMin,
   perGuardMostSleptMin: perGuardMostSleptMin,
+  busiestMin: busiestMin,
   dump: dump
 };
 
@@ -155,7 +172,7 @@ function unboxBeginLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            143,
+            151,
             6
           ],
           Error: new Error()
@@ -181,7 +198,7 @@ function unboxAsleepLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            148,
+            156,
             6
           ],
           Error: new Error()
@@ -206,7 +223,7 @@ function unboxAwakeLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            153,
+            161,
             6
           ],
           Error: new Error()
@@ -355,25 +372,47 @@ console.log("=== dump perGuardMostSleptMin");
 
 var laziestMins = perGuardMostSleptMin(gAtt);
 
-Utils$AdventOfCode.map_int_int_dump(laziestMins);
+Belt_MutableMapInt.forEach(laziestMins, (function (k, v) {
+        console.log("key:" + String(k));
+        console.log(v);
+        
+      }));
 
-console.log("=== dump gid x lazest min");
+console.log("=== part1 - dump gid x lazest min");
 
 var laziestGid = laziest[0];
 
-var laziestMin = Belt_MutableMapInt.get(laziestMins, laziestGid);
+var match$1 = Belt_Option.getExn(Belt_MutableMapInt.get(laziestMins, laziestGid));
+
+var laziestMin = match$1[0];
 
 console.log(laziestGid);
 
-console.log(Belt_Option.getExn(laziestMin));
+console.log(laziestMin);
 
-console.log(Math.imul(laziestGid, Belt_Option.getExn(laziestMin)));
+console.log(Math.imul(laziestGid, laziestMin));
+
+console.log("=== part2 - dump gid x busy min");
+
+var match$2 = busiestMin(gAtt);
+
+var busy_min = match$2[1];
+
+var busy_guy = match$2[0];
+
+console.log(busy_guy);
+
+var which_busy_min = busy_min[0];
+
+console.log(Math.imul(busy_guy, which_busy_min));
 
 var data = Day4_Data$AdventOfCode.data;
 
 var testData = Day4_Data_Test$AdventOfCode.data;
 
 var totalMins = laziest[1];
+
+var how_many = busy_min[1];
 
 exports.data = data;
 exports.testData = testData;
@@ -398,4 +437,8 @@ exports.laziestMins = laziestMins;
 exports.laziestGid = laziestGid;
 exports.totalMins = totalMins;
 exports.laziestMin = laziestMin;
+exports.busy_guy = busy_guy;
+exports.busy_min = busy_min;
+exports.which_busy_min = which_busy_min;
+exports.how_many = how_many;
 /* sortLines Not a pure module */

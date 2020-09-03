@@ -70,7 +70,7 @@ module GuardAttendance = {
   }
 
   let tallySleptPerMin = dr => {
-    Js.Console.log("tallySleptPerMin")
+//    Js.Console.log("tallySleptPerMin")
     dr->MutableMap.String.reduce(MutableMap.Int.make(), (a, k, hr) => {
       hr->MutableSet.Int.forEach(m => {
         a->MutableMap.Int.update(m, prev => {
@@ -94,13 +94,21 @@ module GuardAttendance = {
     Js.Console.log("debug: perGuardMostSleptMin")
 
     gAtt->perGuardTallySleptPerMin->MutableMap.Int.map(t => {
-      let (which, how_many) = t->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
-        Js.Console.log(a)
-        Js.Console.log(`k:${k->string_of_int}, v:${v->string_of_int}`)
-        let (which, how_many) = a
+      t->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
+//        Js.Console.log(a)
+//        Js.Console.log(`k:${k->string_of_int}, v:${v->string_of_int}`)
+        let (which_min, how_many) = a
         v > how_many ? (k,v) : a
       })
-      which
+    })
+  }
+
+  let busiestMin = gAtt => {
+    gAtt->perGuardMostSleptMin->MutableMap.Int.reduce((-1, (-1, -1)), (a, k, v) => {
+      let (guard, busyMin) = a
+      let (which_min, how_many) = busyMin
+      let (next_which_min, next_how_many) = v
+      next_how_many > how_many ? (k, v) : a
     })
   }
 
@@ -241,12 +249,22 @@ gAtt->GuardAttendance.perGuardTallySleptPerMin->MutableMap.Int.forEach((k, v) =>
 
 Js.Console.log("=== dump perGuardMostSleptMin")
 let laziestMins = gAtt->GuardAttendance.perGuardMostSleptMin
-laziestMins->Utils.map_int_int_dump
+laziestMins->MutableMap.Int.forEach((k, v) => {
+               Js.Console.log(`key:${k->string_of_int}`)
+               Js.Console.log(v)
+             })
 
-Js.Console.log("=== dump gid x lazest min")
+Js.Console.log("=== part1 - dump gid x lazest min")
 let (laziestGid, totalMins) = laziest
-let laziestMin = laziestMins->MutableMap.Int.get(laziestGid)
+let (laziestMin, how_many) = laziestMins->MutableMap.Int.get(laziestGid)->Option.getExn
 Js.Console.log(laziestGid)
-Js.Console.log(laziestMin->Option.getExn)
-Js.Console.log(laziestGid * laziestMin->Option.getExn)
+Js.Console.log(laziestMin)
+Js.Console.log(laziestGid * laziestMin)
+
+
+Js.Console.log("=== part2 - dump gid x busy min")
+let (busy_guy, busy_min) = gAtt->GuardAttendance.busiestMin
+Js.Console.log(busy_guy)
+let (which_busy_min, how_many) = busy_min
+Js.Console.log(busy_guy * which_busy_min)
 // 1217
