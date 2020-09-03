@@ -2,23 +2,227 @@
 'use strict';
 
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
+var Belt_Range = require("bs-platform/lib/js/belt_Range.js");
 var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
+var Caml_format = require("bs-platform/lib/js/caml_format.js");
 var Caml_option = require("bs-platform/lib/js/caml_option.js");
+var Belt_MutableMapInt = require("bs-platform/lib/js/belt_MutableMapInt.js");
+var Belt_MutableSetInt = require("bs-platform/lib/js/belt_MutableSetInt.js");
+var Utils$AdventOfCode = require("../Utils.bs.js");
 var Belt_SortArrayString = require("bs-platform/lib/js/belt_SortArrayString.js");
+var Belt_MutableMapString = require("bs-platform/lib/js/belt_MutableMapString.js");
 var Day4_Data$AdventOfCode = require("./Day4_Data.bs.js");
+var Day4_Data_Test$AdventOfCode = require("./Day4_Data_Test.bs.js");
 
-var claimRe = /#(\d+)\s+@\s+(\d+),(\d+):\s(\d+)x(\d+)/i;
+function insertHourRec(hr, from_min, to_min) {
+  Belt_Range.forEach(from_min, to_min, (function (i) {
+          return Belt_MutableSetInt.add(hr, i);
+        }));
+  return Caml_option.some(hr);
+}
 
-var guardBeginsRe = /\[(.*)\]\s+Guard\s+#(\d+)\s+begins shift/i;
+function insertDayRec(dr, date, from_min, to_min) {
+  Belt_MutableMapString.update(dr, date, (function (hr) {
+          if (hr !== undefined) {
+            return insertHourRec(Caml_option.valFromOption(hr), from_min, to_min);
+          } else {
+            return insertHourRec(Belt_MutableSetInt.make(undefined), from_min, to_min);
+          }
+        }));
+  return Caml_option.some(dr);
+}
 
-var guardAsleepRe = /\[(.*)\]\s+falls asleep/i;
+function insertGuardRec(gAtt, gid, date, from_min, to_min) {
+  return Belt_MutableMapInt.update(gAtt, gid, (function (dr) {
+                if (dr !== undefined) {
+                  return insertDayRec(Caml_option.valFromOption(dr), date, from_min, to_min);
+                } else {
+                  return insertDayRec(Belt_MutableMapString.make(undefined), date, from_min, to_min);
+                }
+              }));
+}
 
-var guardWakeRe = /\[(.*)\]\s+wakes up/i;
+var minsSleptPerHourRec = Belt_MutableSetInt.size;
+
+function minsSleptTotal(dr) {
+  return Belt_MutableMapString.reduce(dr, 0, (function (a, k, hr) {
+                return a + Belt_MutableSetInt.size(hr) | 0;
+              }));
+}
+
+function perGuardMinsSlept(gAtt) {
+  return Belt_MutableMapInt.map(gAtt, minsSleptTotal);
+}
+
+function findLaziestGuard(gAtt) {
+  return Belt_MutableMapInt.reduce(Belt_MutableMapInt.map(gAtt, minsSleptTotal), [
+              -1,
+              -1
+            ], (function (a, k, v) {
+                if (v > a[1]) {
+                  return [
+                          k,
+                          v
+                        ];
+                } else {
+                  return a;
+                }
+              }));
+}
+
+function tallySleptPerMin(dr) {
+  console.log("tallySleptPerMin");
+  return Belt_MutableMapString.reduce(dr, Belt_MutableMapInt.make(undefined), (function (a, k, hr) {
+                Belt_MutableSetInt.forEach(hr, (function (m) {
+                        return Belt_MutableMapInt.update(a, m, (function (prev) {
+                                      if (prev !== undefined) {
+                                        return prev + 1 | 0;
+                                      } else {
+                                        return 1;
+                                      }
+                                    }));
+                      }));
+                return a;
+              }));
+}
+
+function perGuardTallySleptPerMin(gAtt) {
+  return Belt_MutableMapInt.map(gAtt, tallySleptPerMin);
+}
+
+function perGuardMostSleptMin(gAtt) {
+  console.log("debug: perGuardMostSleptMin");
+  return Belt_MutableMapInt.map(Belt_MutableMapInt.map(gAtt, tallySleptPerMin), (function (t) {
+                return Belt_MutableMapInt.reduce(t, [
+                              -1,
+                              -1
+                            ], (function (a, k, v) {
+                                console.log(a);
+                                console.log("k:" + String(k) + ", v:" + String(v));
+                                if (v > a[1]) {
+                                  return [
+                                          k,
+                                          v
+                                        ];
+                                } else {
+                                  return a;
+                                }
+                              }))[0];
+              }));
+}
+
+function dump(gAtt) {
+  return Belt_MutableMapInt.forEach(gAtt, (function (gid, drs) {
+                console.log("gid:" + String(gid));
+                return Belt_MutableMapString.forEach(drs, (function (date, hr) {
+                              console.log("  date:" + date);
+                              console.log("    Set Size:" + String(Belt_MutableSetInt.size(hr)));
+                              console.log(Belt_MutableSetInt.toArray(hr));
+                              
+                            }));
+              }));
+}
+
+var GuardAttendance = {
+  insertHourRec: insertHourRec,
+  insertDayRec: insertDayRec,
+  insertGuardRec: insertGuardRec,
+  minsSleptPerHourRec: minsSleptPerHourRec,
+  minsSleptTotal: minsSleptTotal,
+  perGuardMinsSlept: perGuardMinsSlept,
+  findLaziestGuard: findLaziestGuard,
+  tallySleptPerMin: tallySleptPerMin,
+  perGuardTallySleptPerMin: perGuardTallySleptPerMin,
+  perGuardMostSleptMin: perGuardMostSleptMin,
+  dump: dump
+};
+
+var guardBeginsRe = /\[(.*)\s+(\d\d):(\d\d)\]\s+Guard\s+#(\d+)\s+begins shift/i;
+
+var guardAsleepRe = /\[(.*)\s+(\d\d):(\d\d)\]\s+falls asleep/i;
+
+var guardWakeRe = /\[(.*)\s+(\d\d):(\d\d)\]\s+wakes up/i;
 
 function parseRegexResult(r) {
   return Belt_Array.map(r, (function (x) {
                 return Belt_Option.getExn((x == null) ? undefined : Caml_option.some(x));
               }));
+}
+
+function unboxBeginLine(l) {
+  if (l.length !== 5) {
+    throw {
+          RE_EXN_ID: "Match_failure",
+          _1: [
+            "Day4.res",
+            143,
+            6
+          ],
+          Error: new Error()
+        };
+  }
+  var raw = l[0];
+  var date = l[1];
+  var h = l[2];
+  var m = l[3];
+  var gid = l[4];
+  return {
+          raw: raw,
+          date: date,
+          h: Caml_format.caml_int_of_string(h),
+          m: Caml_format.caml_int_of_string(m),
+          gid: Caml_format.caml_int_of_string(gid)
+        };
+}
+
+function unboxAsleepLine(l) {
+  if (l.length !== 4) {
+    throw {
+          RE_EXN_ID: "Match_failure",
+          _1: [
+            "Day4.res",
+            148,
+            6
+          ],
+          Error: new Error()
+        };
+  }
+  var raw = l[0];
+  var date = l[1];
+  var h = l[2];
+  var m = l[3];
+  return {
+          raw: raw,
+          date: date,
+          h: Caml_format.caml_int_of_string(h),
+          m: Caml_format.caml_int_of_string(m),
+          gid: -1
+        };
+}
+
+function unboxAwakeLine(l) {
+  if (l.length !== 4) {
+    throw {
+          RE_EXN_ID: "Match_failure",
+          _1: [
+            "Day4.res",
+            153,
+            6
+          ],
+          Error: new Error()
+        };
+  }
+  var raw = l[0];
+  var date = l[1];
+  var h = l[2];
+  var m = l[3];
+  return {
+          raw: raw,
+          date: date,
+          h: Caml_format.caml_int_of_string(h),
+          m: Caml_format.caml_int_of_string(m),
+          gid: -1
+        };
 }
 
 function parseLine(l) {
@@ -39,7 +243,10 @@ function parseLine(l) {
             Error: new Error()
           };
     }
-    return parseRegexResult(match);
+    return {
+            TAG: /* Begin */0,
+            _0: unboxBeginLine(parseRegexResult(match))
+          };
   }
   if (match$1 !== null) {
     if (match$2 !== null) {
@@ -48,10 +255,16 @@ function parseLine(l) {
             Error: new Error()
           };
     }
-    return parseRegexResult(match$1);
+    return {
+            TAG: /* Asleep */1,
+            _0: unboxAsleepLine(parseRegexResult(match$1))
+          };
   }
   if (match$2 !== null) {
-    return parseRegexResult(match$2);
+    return {
+            TAG: /* Awake */2,
+            _0: unboxAwakeLine(parseRegexResult(match$2))
+          };
   }
   throw {
         RE_EXN_ID: "Not_found",
@@ -59,18 +272,130 @@ function parseLine(l) {
       };
 }
 
+function processBegin(a, lr) {
+  return {
+          state: /* AtBegin */0,
+          gid: lr.gid,
+          sleptSince: -1,
+          gAtt: a.gAtt
+        };
+}
+
+function processAsleep(a, lr) {
+  return {
+          state: /* AtAsleep */1,
+          gid: a.gid,
+          sleptSince: lr.m,
+          gAtt: a.gAtt
+        };
+}
+
+function processAwake(a, lr) {
+  insertGuardRec(a.gAtt, a.gid, lr.date, a.sleptSince, lr.m - 1 | 0);
+  return {
+          state: /* AtAwake */2,
+          gid: a.gid,
+          sleptSince: -1,
+          gAtt: a.gAtt
+        };
+}
+
+function parseRecReducer(a, x) {
+  var lr = parseLine(x);
+  switch (lr.TAG | 0) {
+    case /* Begin */0 :
+        return processBegin(a, lr._0);
+    case /* Asleep */1 :
+        return processAsleep(a, lr._0);
+    case /* Awake */2 :
+        return processAwake(a, lr._0);
+    
+  }
+}
+
 var sortLines = Belt_SortArrayString.stableSort(Day4_Data$AdventOfCode.data.split("\n"));
 
-console.log(Belt_Array.map(sortLines, parseLine));
+console.log(sortLines);
+
+var initState_gAtt = Belt_MutableMapInt.make(undefined);
+
+var initState = {
+  state: /* AtBegin */0,
+  gid: 0,
+  sleptSince: 0,
+  gAtt: initState_gAtt
+};
+
+var match = Belt_Array.reduce(sortLines, initState, parseRecReducer);
+
+var gAtt = match.gAtt;
+
+console.log("=== dump GuardAttendance");
+
+dump(gAtt);
+
+console.log("=== dump perGuardMinsSlept");
+
+Utils$AdventOfCode.map_int_int_dump(Belt_MutableMapInt.map(gAtt, minsSleptTotal));
+
+console.log("=== dump findLaziestGuard");
+
+var laziest = findLaziestGuard(gAtt);
+
+console.log(laziest);
+
+console.log("=== dump perGuardTallySleptPerMin");
+
+Belt_MutableMapInt.forEach(Belt_MutableMapInt.map(gAtt, tallySleptPerMin), (function (k, v) {
+        console.log("key:" + String(k));
+        return Utils$AdventOfCode.map_int_int_dump(v);
+      }));
+
+console.log("=== dump perGuardMostSleptMin");
+
+var laziestMins = perGuardMostSleptMin(gAtt);
+
+Utils$AdventOfCode.map_int_int_dump(laziestMins);
+
+console.log("=== dump gid x lazest min");
+
+var laziestGid = laziest[0];
+
+var laziestMin = Belt_MutableMapInt.get(laziestMins, laziestGid);
+
+console.log(laziestGid);
+
+console.log(Belt_Option.getExn(laziestMin));
+
+console.log(Math.imul(laziestGid, Belt_Option.getExn(laziestMin)));
 
 var data = Day4_Data$AdventOfCode.data;
 
+var testData = Day4_Data_Test$AdventOfCode.data;
+
+var totalMins = laziest[1];
+
 exports.data = data;
-exports.claimRe = claimRe;
+exports.testData = testData;
+exports.GuardAttendance = GuardAttendance;
 exports.guardBeginsRe = guardBeginsRe;
 exports.guardAsleepRe = guardAsleepRe;
 exports.guardWakeRe = guardWakeRe;
 exports.parseRegexResult = parseRegexResult;
+exports.unboxBeginLine = unboxBeginLine;
+exports.unboxAsleepLine = unboxAsleepLine;
+exports.unboxAwakeLine = unboxAwakeLine;
 exports.parseLine = parseLine;
+exports.processBegin = processBegin;
+exports.processAsleep = processAsleep;
+exports.processAwake = processAwake;
+exports.parseRecReducer = parseRecReducer;
 exports.sortLines = sortLines;
+exports.initState = initState;
+exports.gAtt = gAtt;
+exports.laziest = laziest;
+exports.laziestMins = laziestMins;
+exports.laziestGid = laziestGid;
+exports.totalMins = totalMins;
+exports.laziestMin = laziestMin;
 /* sortLines Not a pure module */
