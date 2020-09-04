@@ -8,7 +8,6 @@ open Belt
 
 module Attendance = {
   // record for mins slept
-
   type hourRec = MutableSet.Int.t
 
   // {"1518-08-17": {hourRec}}
@@ -50,7 +49,7 @@ module Attendance = {
     })
   }
 
-  let minsSleptPerHourRec = hr => hr->MutableSet.Int.size
+  let minsSleptPerHourRec = MutableSet.Int.size
 
   let minsSleptTotal = dr => {
     dr->MutableMap.String.reduce(0, (a, k, hr) => {
@@ -58,9 +57,7 @@ module Attendance = {
     })
   }
 
-  let perGuardMinsSlept = gAtt => {
-    gAtt->MutableMap.Int.map(minsSleptTotal)
-  }
+  let perGuardMinsSlept = MutableMap.Int.map(_, minsSleptTotal)
 
   let findLaziestGuard = gAtt => {
     gAtt->perGuardMinsSlept->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
@@ -74,26 +71,19 @@ module Attendance = {
     dr->MutableMap.String.reduce(MutableMap.Int.make(), (a, k, hr) => {
       hr->MutableSet.Int.forEach(m => {
         a->MutableMap.Int.update(m, prev => {
-          let t = switch prev {
+          switch prev {
           | Some(prev) => Some(prev + 1)
           | None => Some(1)
           }
-
-          // Js.Console.log(`m:${m->string_of_int} t:${t->Option.getExn->string_of_int}`)
-          t
         })
       })
       a
     })
   }
 
-  let perGuardTallySleptPerMin = gAtt => {
-    gAtt->MutableMap.Int.map(tallySleptPerMin)
-  }
+  let perGuardTallySleptPerMin = MutableMap.Int.map(_, tallySleptPerMin)
 
   let perGuardMostSleptMin = gAtt => {
-//    Js.Console.log("debug: perGuardMostSleptMin")
-
     gAtt->perGuardTallySleptPerMin->MutableMap.Int.map(t => {
       t->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
         // Js.Console.log(a)
@@ -125,102 +115,90 @@ module Attendance = {
   }
 }
 
-// guardIds -> date -> wake/sleep
-//
-let guardBeginsRe = %re("/\[(.*)\s+(\d\d):(\d\d)\]\s+Guard\s+#(\d+)\s+begins shift/i")
-let guardAsleepRe = %re("/\[(.*)\s+(\d\d):(\d\d)\]\s+falls asleep/i")
-let guardWakeRe = %re("/\[(.*)\s+(\d\d):(\d\d)\]\s+wakes up/i")
+module Parser = {
+  // guardIds -> date -> wake/sleep
+  //
+  let guardBeginsRe = %re("/\[(.*)\s+(\d\d):(\d\d)\]\s+Guard\s+#(\d+)\s+begins shift/i")
+  let guardAsleepRe = %re("/\[(.*)\s+(\d\d):(\d\d)\]\s+falls asleep/i")
+  let guardWakeRe = %re("/\[(.*)\s+(\d\d):(\d\d)\]\s+wakes up/i")
 
-let parseRegexResult = r => {
-  Js.Re.captures(r)->Array.map(x => Js.Nullable.toOption(x)->Option.getExn)
-}
-
-type recType<'a> =
-  | Begin('a)
-  | Asleep('a)
-  | Awake('a)
-
-type lineRec = {
-  raw: string,
-  date: string,
-  h: int,
-  m: int,
-  gid: int,
-}
-
-let unboxBeginLine = l => {
-  let [raw, date, h, m, gid] = l
-  {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: gid->int_of_string}
-}
-
-let unboxAsleepLine = l => {
-  let [raw, date, h, m] = l
-  {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: -1}
-}
-
-let unboxAwakeLine = l => {
-  let [raw, date, h, m] = l
-  {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: -1}
-}
-
-let parseLine = l => {
-  let trimmed = l->Js.String.trim
-  switch (
-    trimmed |> Js.Re.exec_(guardBeginsRe),
-    trimmed |> Js.Re.exec_(guardAsleepRe),
-    trimmed |> Js.Re.exec_(guardWakeRe),
-  ) {
-  | (Some(x), None, None) => Begin(parseRegexResult(x) |> unboxBeginLine)
-  | (None, Some(x), None) => Asleep(parseRegexResult(x) |> unboxAsleepLine)
-  | (None, None, Some(x)) => Awake(parseRegexResult(x) |> unboxAwakeLine)
-  | (_, _, _) => raise(Not_found)
+  let parseRegexResult = r => {
+    Js.Re.captures(r)->Array.map(x => Js.Nullable.toOption(x)->Option.getExn)
   }
-}
 
-type rstate =
-  | AtBegin
-  | AtAsleep
-  | AtAwake
+  type recType<'a> =
+    | Begin('a)
+    | Asleep('a)
+    | Awake('a)
 
-type rresult = {
-  state: rstate,
-  gid: int,
-  sleptSince: int,
-  gAtt: Attendance.t,
-}
+  type lineRec = {
+    raw: string,
+    date: string,
+    h: int,
+    m: int,
+    gid: int,
+  }
 
-let processBegin = (a: rresult, lr: lineRec) => {
-  // Js.Console.log("Begin")
-  // Js.Console.log(lr)
-  let {raw, date, h, m, gid} = lr
-  {...a, state: AtBegin, gid: gid, sleptSince: -1}
-}
+  let unboxBeginLine = l => {
+    let [raw, date, h, m, gid] = l
+    {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: gid->int_of_string}
+  }
 
-let processAsleep = (a: rresult, lr) => {
-  // Js.Console.log("Asleep")
-  // Js.Console.log(lr)
-  let {raw, date, h, m, gid} = lr
-  {...a, state: AtAsleep, sleptSince: m}
-}
+  let unboxAsleepLine = l => {
+    let [raw, date, h, m] = l
+    {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: -1}
+  }
 
-let processAwake = (a: rresult, lr) => {
-  // Js.Console.log("Awake")
-  // Js.Console.log(lr)
-  let {raw, date, h, m} = lr
-  let {sleptSince, gAtt, gid} = a
+  let unboxAwakeLine = l => {
+    let [raw, date, h, m] = l
+    {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: -1}
+  }
 
-  Attendance.insertGuardRec(gAtt, gid, date, sleptSince, m - 1)
-  // insert record to Attendance
-  {...a, state: AtAwake, sleptSince: -1}
-}
+  let parseLine = l => {
+    let trimmed = l->Js.String.trim
+    switch (
+      trimmed |> Js.Re.exec_(guardBeginsRe),
+      trimmed |> Js.Re.exec_(guardAsleepRe),
+      trimmed |> Js.Re.exec_(guardWakeRe),
+    ) {
+    | (Some(x), None, None) => Begin(x->parseRegexResult->unboxBeginLine)
+    | (None, Some(x), None) => Asleep(x->parseRegexResult->unboxAsleepLine)
+    | (None, None, Some(x)) => Awake(x->parseRegexResult->unboxAwakeLine)
+    | (_, _, _) => raise(Not_found)
+    }
+  }
 
-let parseRecReducer = (a, x) => {
-  let lr = parseLine(x)
+  type rstate =
+    | AtBegin
+    | AtAsleep
+    | AtAwake
 
-  switch lr {
-  | Begin(d) => processBegin(a, d)
-  | Asleep(d) => processAsleep(a, d)
-  | Awake(d) => processAwake(a, d)
+  type rresult = {
+    state: rstate,
+    gid: int,
+    sleptSince: int,
+    gAtt: Attendance.t,
+  }
+
+  let processLineReducer = (a: rresult, x) => {
+    switch x->parseLine {
+    | Begin(d) => {
+        let {raw, date, h, m, gid} = d
+        {...a, state: AtBegin, gid: gid, sleptSince: -1}
+      }
+    | Asleep(d) => {
+        let {raw, date, h, m, gid} = d
+        {...a, state: AtAsleep, sleptSince: m}
+      }
+    | Awake(d) => {
+        let {raw, date, h, m} = d
+        let {sleptSince, gAtt, gid} = a
+
+        Attendance.insertGuardRec(gAtt, gid, date, sleptSince, m - 1)
+        // insert record to Attendance
+        {...a, state: AtAwake, sleptSince: -1}
+      }
+    }
   }
 }
 
@@ -230,8 +208,13 @@ let solvePart1 = data => {
   let sortLines = data->Js.String2.split("\n")->SortArray.String.stableSort
   // sortLines->Js.Console.log
 
-  let initState = {state: AtBegin, gid: 0, sleptSince: 0, gAtt: MutableMap.Int.make()}
-  let {gAtt} = sortLines->Array.reduce(initState, parseRecReducer)
+  let initState: Parser.rresult = {
+    state: AtBegin,
+    gid: 0,
+    sleptSince: 0,
+    gAtt: MutableMap.Int.make(),
+  }
+  let {gAtt}: Parser.rresult = sortLines->Array.reduce(initState, Parser.processLineReducer)
   // Js.Console.log("=== dump Attendance")
   // gAtt->Attendance.dump
 
@@ -243,41 +226,48 @@ let solvePart1 = data => {
   // laziest->Js.Console.log
 
   // Js.Console.log("=== dump perGuardTallySleptPerMin")
-//  gAtt->Attendance.perGuardTallySleptPerMin->MutableMap.Int.forEach((k, v) => {
-//    Js.Console.log(`key:${k->string_of_int}`)
-//    v->Utils.map_int_int_dump
-//  })
+  // gAtt->Attendance.perGuardTallySleptPerMin->MutableMap.Int.forEach((k, v) => {
+  // Js.Console.log(`key:${k->string_of_int}`)
+  // v->Utils.map_int_int_dump
+  // })
 
   // Js.Console.log("=== dump perGuardMostSleptMin")
   let laziestMins = gAtt->Attendance.perGuardMostSleptMin
-//  laziestMins->MutableMap.Int.forEach((k, v) => {
-//    Js.Console.log(`key:${k->string_of_int}`)
-//    Js.Console.log(v)
-//  })
+  // laziestMins->MutableMap.Int.forEach((k, v) => {
+  // Js.Console.log(`key:${k->string_of_int}`)
+  // Js.Console.log(v)
+  // })
 
-//  Js.Console.log("=== part1 - dump gid x lazest min")
+  // Js.Console.log("=== part1 - dump gid x lazest min")
   let (laziestGid, totalMins) = laziest
   let (laziestMin, how_many) = laziestMins->MutableMap.Int.get(laziestGid)->Option.getExn
   // Js.Console.log(laziestGid)
   // Js.Console.log(laziestMin)
   let part1Answer = laziestGid * laziestMin
-//  Js.Console.log(part1Answer)
+
+  // Js.Console.log(part1Answer)
   part1Answer
 }
 
 let solvePart2 = data => {
-//  Js.Console.log("=== part2 - dump gid x busy min")
+  // Js.Console.log("=== part2 - dump gid x busy min")
   let sortLines = data->Js.String2.split("\n")->SortArray.String.stableSort
   // sortLines->Js.Console.log
 
-  let initState = {state: AtBegin, gid: 0, sleptSince: 0, gAtt: MutableMap.Int.make()}
-  let {gAtt} = sortLines->Array.reduce(initState, parseRecReducer)
+  let initState: Parser.rresult = {
+    state: AtBegin,
+    gid: 0,
+    sleptSince: 0,
+    gAtt: MutableMap.Int.make(),
+  }
+  let {gAtt}: Parser.rresult = sortLines->Array.reduce(initState, Parser.processLineReducer)
   let (busy_guy, busy_min) = gAtt->Attendance.busiestMin
-//  Js.Console.log(busy_guy)
+  // Js.Console.log(busy_guy)
   let (which_busy_min, how_many) = busy_min
 
   let part2Answer = busy_guy * which_busy_min
-//  Js.Console.log(part2Answer)
+
+  // Js.Console.log(part2Answer)
   part2Answer
 }
 // 1217

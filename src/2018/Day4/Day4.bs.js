@@ -41,16 +41,14 @@ function insertGuardRec(gAtt, gid, date, from_min, to_min) {
               }));
 }
 
-var minsSleptPerHourRec = Belt_MutableSetInt.size;
-
 function minsSleptTotal(dr) {
   return Belt_MutableMapString.reduce(dr, 0, (function (a, k, hr) {
                 return a + Belt_MutableSetInt.size(hr) | 0;
               }));
 }
 
-function perGuardMinsSlept(gAtt) {
-  return Belt_MutableMapInt.map(gAtt, minsSleptTotal);
+function perGuardMinsSlept(__x) {
+  return Belt_MutableMapInt.map(__x, minsSleptTotal);
 }
 
 function findLaziestGuard(gAtt) {
@@ -84,8 +82,8 @@ function tallySleptPerMin(dr) {
               }));
 }
 
-function perGuardTallySleptPerMin(gAtt) {
-  return Belt_MutableMapInt.map(gAtt, tallySleptPerMin);
+function perGuardTallySleptPerMin(__x) {
+  return Belt_MutableMapInt.map(__x, tallySleptPerMin);
 }
 
 function perGuardMostSleptMin(gAtt) {
@@ -141,7 +139,7 @@ var Attendance = {
   insertHourRec: insertHourRec,
   insertDayRec: insertDayRec,
   insertGuardRec: insertGuardRec,
-  minsSleptPerHourRec: minsSleptPerHourRec,
+  minsSleptPerHourRec: Belt_MutableSetInt.size,
   minsSleptTotal: minsSleptTotal,
   perGuardMinsSlept: perGuardMinsSlept,
   findLaziestGuard: findLaziestGuard,
@@ -170,8 +168,8 @@ function unboxBeginLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            152,
-            6
+            143,
+            8
           ],
           Error: new Error()
         };
@@ -196,8 +194,8 @@ function unboxAsleepLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            157,
-            6
+            148,
+            8
           ],
           Error: new Error()
         };
@@ -221,8 +219,8 @@ function unboxAwakeLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            162,
-            6
+            153,
+            8
           ],
           Error: new Error()
         };
@@ -287,46 +285,47 @@ function parseLine(l) {
       };
 }
 
-function processBegin(a, lr) {
-  return {
-          state: /* AtBegin */0,
-          gid: lr.gid,
-          sleptSince: -1,
-          gAtt: a.gAtt
-        };
-}
-
-function processAsleep(a, lr) {
-  return {
-          state: /* AtAsleep */1,
-          gid: a.gid,
-          sleptSince: lr.m,
-          gAtt: a.gAtt
-        };
-}
-
-function processAwake(a, lr) {
-  insertGuardRec(a.gAtt, a.gid, lr.date, a.sleptSince, lr.m - 1 | 0);
-  return {
-          state: /* AtAwake */2,
-          gid: a.gid,
-          sleptSince: -1,
-          gAtt: a.gAtt
-        };
-}
-
-function parseRecReducer(a, x) {
-  var lr = parseLine(x);
-  switch (lr.TAG | 0) {
+function processLineReducer(a, x) {
+  var d = parseLine(x);
+  switch (d.TAG | 0) {
     case /* Begin */0 :
-        return processBegin(a, lr._0);
+        return {
+                state: /* AtBegin */0,
+                gid: d._0.gid,
+                sleptSince: -1,
+                gAtt: a.gAtt
+              };
     case /* Asleep */1 :
-        return processAsleep(a, lr._0);
+        return {
+                state: /* AtAsleep */1,
+                gid: a.gid,
+                sleptSince: d._0.m,
+                gAtt: a.gAtt
+              };
     case /* Awake */2 :
-        return processAwake(a, lr._0);
+        var d$1 = d._0;
+        insertGuardRec(a.gAtt, a.gid, d$1.date, a.sleptSince, d$1.m - 1 | 0);
+        return {
+                state: /* AtAwake */2,
+                gid: a.gid,
+                sleptSince: -1,
+                gAtt: a.gAtt
+              };
     
   }
 }
+
+var Parser = {
+  guardBeginsRe: guardBeginsRe,
+  guardAsleepRe: guardAsleepRe,
+  guardWakeRe: guardWakeRe,
+  parseRegexResult: parseRegexResult,
+  unboxBeginLine: unboxBeginLine,
+  unboxAsleepLine: unboxAsleepLine,
+  unboxAwakeLine: unboxAwakeLine,
+  parseLine: parseLine,
+  processLineReducer: processLineReducer
+};
 
 function solvePart1(data) {
   var sortLines = Belt_SortArrayString.stableSort(data.split("\n"));
@@ -337,7 +336,7 @@ function solvePart1(data) {
     sleptSince: 0,
     gAtt: initState_gAtt
   };
-  var match = Belt_Array.reduce(sortLines, initState, parseRecReducer);
+  var match = Belt_Array.reduce(sortLines, initState, processLineReducer);
   var gAtt = match.gAtt;
   var laziest = findLaziestGuard(gAtt);
   var laziestMins = perGuardMostSleptMin(gAtt);
@@ -355,7 +354,7 @@ function solvePart2(data) {
     sleptSince: 0,
     gAtt: initState_gAtt
   };
-  var match = Belt_Array.reduce(sortLines, initState, parseRecReducer);
+  var match = Belt_Array.reduce(sortLines, initState, processLineReducer);
   var match$1 = busiestMin(match.gAtt);
   return Math.imul(match$1[0], match$1[1][0]);
 }
@@ -367,18 +366,7 @@ var testData = Day4_Data_Test$AdventOfCode.data;
 exports.data = data;
 exports.testData = testData;
 exports.Attendance = Attendance;
-exports.guardBeginsRe = guardBeginsRe;
-exports.guardAsleepRe = guardAsleepRe;
-exports.guardWakeRe = guardWakeRe;
-exports.parseRegexResult = parseRegexResult;
-exports.unboxBeginLine = unboxBeginLine;
-exports.unboxAsleepLine = unboxAsleepLine;
-exports.unboxAwakeLine = unboxAwakeLine;
-exports.parseLine = parseLine;
-exports.processBegin = processBegin;
-exports.processAsleep = processAsleep;
-exports.processAwake = processAwake;
-exports.parseRecReducer = parseRecReducer;
+exports.Parser = Parser;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
 /* No side effect */
