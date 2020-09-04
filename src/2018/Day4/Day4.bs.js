@@ -8,7 +8,6 @@ var Caml_format = require("bs-platform/lib/js/caml_format.js");
 var Caml_option = require("bs-platform/lib/js/caml_option.js");
 var Belt_MutableMapInt = require("bs-platform/lib/js/belt_MutableMapInt.js");
 var Belt_MutableSetInt = require("bs-platform/lib/js/belt_MutableSetInt.js");
-var Utils$AdventOfCode = require("../Utils.bs.js");
 var Belt_SortArrayString = require("bs-platform/lib/js/belt_SortArrayString.js");
 var Belt_MutableMapString = require("bs-platform/lib/js/belt_MutableMapString.js");
 var Day4_Data$AdventOfCode = require("./Day4_Data.bs.js");
@@ -90,7 +89,6 @@ function perGuardTallySleptPerMin(gAtt) {
 }
 
 function perGuardMostSleptMin(gAtt) {
-  console.log("debug: perGuardMostSleptMin");
   return Belt_MutableMapInt.map(Belt_MutableMapInt.map(gAtt, tallySleptPerMin), (function (t) {
                 return Belt_MutableMapInt.reduce(t, [
                             -1,
@@ -139,7 +137,7 @@ function dump(gAtt) {
               }));
 }
 
-var GuardAttendance = {
+var Attendance = {
   insertHourRec: insertHourRec,
   insertDayRec: insertDayRec,
   insertGuardRec: insertGuardRec,
@@ -172,7 +170,7 @@ function unboxBeginLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            151,
+            152,
             6
           ],
           Error: new Error()
@@ -198,7 +196,7 @@ function unboxAsleepLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            156,
+            157,
             6
           ],
           Error: new Error()
@@ -223,7 +221,7 @@ function unboxAwakeLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            161,
+            162,
             6
           ],
           Error: new Error()
@@ -330,93 +328,45 @@ function parseRecReducer(a, x) {
   }
 }
 
-var sortLines = Belt_SortArrayString.stableSort(Day4_Data$AdventOfCode.data.split("\n"));
+function solvePart1(data) {
+  var sortLines = Belt_SortArrayString.stableSort(data.split("\n"));
+  var initState_gAtt = Belt_MutableMapInt.make(undefined);
+  var initState = {
+    state: /* AtBegin */0,
+    gid: 0,
+    sleptSince: 0,
+    gAtt: initState_gAtt
+  };
+  var match = Belt_Array.reduce(sortLines, initState, parseRecReducer);
+  var gAtt = match.gAtt;
+  var laziest = findLaziestGuard(gAtt);
+  var laziestMins = perGuardMostSleptMin(gAtt);
+  var laziestGid = laziest[0];
+  var match$1 = Belt_Option.getExn(Belt_MutableMapInt.get(laziestMins, laziestGid));
+  return Math.imul(laziestGid, match$1[0]);
+}
 
-console.log(sortLines);
-
-var initState_gAtt = Belt_MutableMapInt.make(undefined);
-
-var initState = {
-  state: /* AtBegin */0,
-  gid: 0,
-  sleptSince: 0,
-  gAtt: initState_gAtt
-};
-
-var match = Belt_Array.reduce(sortLines, initState, parseRecReducer);
-
-var gAtt = match.gAtt;
-
-console.log("=== dump GuardAttendance");
-
-dump(gAtt);
-
-console.log("=== dump perGuardMinsSlept");
-
-Utils$AdventOfCode.map_int_int_dump(Belt_MutableMapInt.map(gAtt, minsSleptTotal));
-
-console.log("=== dump findLaziestGuard");
-
-var laziest = findLaziestGuard(gAtt);
-
-console.log(laziest);
-
-console.log("=== dump perGuardTallySleptPerMin");
-
-Belt_MutableMapInt.forEach(Belt_MutableMapInt.map(gAtt, tallySleptPerMin), (function (k, v) {
-        console.log("key:" + String(k));
-        return Utils$AdventOfCode.map_int_int_dump(v);
-      }));
-
-console.log("=== dump perGuardMostSleptMin");
-
-var laziestMins = perGuardMostSleptMin(gAtt);
-
-Belt_MutableMapInt.forEach(laziestMins, (function (k, v) {
-        console.log("key:" + String(k));
-        console.log(v);
-        
-      }));
-
-console.log("=== part1 - dump gid x lazest min");
-
-var laziestGid = laziest[0];
-
-var match$1 = Belt_Option.getExn(Belt_MutableMapInt.get(laziestMins, laziestGid));
-
-var laziestMin = match$1[0];
-
-console.log(laziestGid);
-
-console.log(laziestMin);
-
-console.log(Math.imul(laziestGid, laziestMin));
-
-console.log("=== part2 - dump gid x busy min");
-
-var match$2 = busiestMin(gAtt);
-
-var busy_min = match$2[1];
-
-var busy_guy = match$2[0];
-
-console.log(busy_guy);
-
-var which_busy_min = busy_min[0];
-
-console.log(Math.imul(busy_guy, which_busy_min));
+function solvePart2(data) {
+  var sortLines = Belt_SortArrayString.stableSort(data.split("\n"));
+  var initState_gAtt = Belt_MutableMapInt.make(undefined);
+  var initState = {
+    state: /* AtBegin */0,
+    gid: 0,
+    sleptSince: 0,
+    gAtt: initState_gAtt
+  };
+  var match = Belt_Array.reduce(sortLines, initState, parseRecReducer);
+  var match$1 = busiestMin(match.gAtt);
+  return Math.imul(match$1[0], match$1[1][0]);
+}
 
 var data = Day4_Data$AdventOfCode.data;
 
 var testData = Day4_Data_Test$AdventOfCode.data;
 
-var totalMins = laziest[1];
-
-var how_many = busy_min[1];
-
 exports.data = data;
 exports.testData = testData;
-exports.GuardAttendance = GuardAttendance;
+exports.Attendance = Attendance;
 exports.guardBeginsRe = guardBeginsRe;
 exports.guardAsleepRe = guardAsleepRe;
 exports.guardWakeRe = guardWakeRe;
@@ -429,16 +379,6 @@ exports.processBegin = processBegin;
 exports.processAsleep = processAsleep;
 exports.processAwake = processAwake;
 exports.parseRecReducer = parseRecReducer;
-exports.sortLines = sortLines;
-exports.initState = initState;
-exports.gAtt = gAtt;
-exports.laziest = laziest;
-exports.laziestMins = laziestMins;
-exports.laziestGid = laziestGid;
-exports.totalMins = totalMins;
-exports.laziestMin = laziestMin;
-exports.busy_guy = busy_guy;
-exports.busy_min = busy_min;
-exports.which_busy_min = which_busy_min;
-exports.how_many = how_many;
-/* sortLines Not a pure module */
+exports.solvePart1 = solvePart1;
+exports.solvePart2 = solvePart2;
+/* No side effect */

@@ -6,7 +6,7 @@ open Belt
 // data structures
 //
 
-module GuardAttendance = {
+module Attendance = {
   // record for mins slept
 
   type hourRec = MutableSet.Int.t
@@ -70,7 +70,7 @@ module GuardAttendance = {
   }
 
   let tallySleptPerMin = dr => {
-//    Js.Console.log("tallySleptPerMin")
+    // Js.Console.log("tallySleptPerMin")
     dr->MutableMap.String.reduce(MutableMap.Int.make(), (a, k, hr) => {
       hr->MutableSet.Int.forEach(m => {
         a->MutableMap.Int.update(m, prev => {
@@ -78,7 +78,8 @@ module GuardAttendance = {
           | Some(prev) => Some(prev + 1)
           | None => Some(1)
           }
-//          Js.Console.log(`m:${m->string_of_int} t:${t->Option.getExn->string_of_int}`)
+
+          // Js.Console.log(`m:${m->string_of_int} t:${t->Option.getExn->string_of_int}`)
           t
         })
       })
@@ -91,14 +92,14 @@ module GuardAttendance = {
   }
 
   let perGuardMostSleptMin = gAtt => {
-    Js.Console.log("debug: perGuardMostSleptMin")
+//    Js.Console.log("debug: perGuardMostSleptMin")
 
     gAtt->perGuardTallySleptPerMin->MutableMap.Int.map(t => {
       t->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
-//        Js.Console.log(a)
-//        Js.Console.log(`k:${k->string_of_int}, v:${v->string_of_int}`)
+        // Js.Console.log(a)
+        // Js.Console.log(`k:${k->string_of_int}, v:${v->string_of_int}`)
         let (which_min, how_many) = a
-        v > how_many ? (k,v) : a
+        v > how_many ? (k, v) : a
       })
     })
   }
@@ -185,7 +186,7 @@ type rresult = {
   state: rstate,
   gid: int,
   sleptSince: int,
-  gAtt: GuardAttendance.t,
+  gAtt: Attendance.t,
 }
 
 let processBegin = (a: rresult, lr: lineRec) => {
@@ -208,8 +209,8 @@ let processAwake = (a: rresult, lr) => {
   let {raw, date, h, m} = lr
   let {sleptSince, gAtt, gid} = a
 
-  GuardAttendance.insertGuardRec(gAtt, gid, date, sleptSince, m - 1)
-  // insert record to GuardAttendance
+  Attendance.insertGuardRec(gAtt, gid, date, sleptSince, m - 1)
+  // insert record to Attendance
   {...a, state: AtAwake, sleptSince: -1}
 }
 
@@ -225,46 +226,58 @@ let parseRecReducer = (a, x) => {
 
 // ==============================
 
-let sortLines = data->Js.String2.split("\n")->SortArray.String.stableSort
-sortLines->Js.Console.log
-// sortLines->Array.map(parseLine)->Js.Console.log
+let solvePart1 = data => {
+  let sortLines = data->Js.String2.split("\n")->SortArray.String.stableSort
+  // sortLines->Js.Console.log
 
-let initState = {state: AtBegin, gid: 0, sleptSince: 0, gAtt: MutableMap.Int.make()}
-let {gAtt} = sortLines->Array.reduce(initState, parseRecReducer)
-Js.Console.log("=== dump GuardAttendance")
-gAtt->GuardAttendance.dump
+  let initState = {state: AtBegin, gid: 0, sleptSince: 0, gAtt: MutableMap.Int.make()}
+  let {gAtt} = sortLines->Array.reduce(initState, parseRecReducer)
+  // Js.Console.log("=== dump Attendance")
+  // gAtt->Attendance.dump
 
-Js.Console.log("=== dump perGuardMinsSlept")
-gAtt->GuardAttendance.perGuardMinsSlept->Utils.map_int_int_dump
+  // Js.Console.log("=== dump perGuardMinsSlept")
+  // gAtt->Attendance.perGuardMinsSlept->Utils.map_int_int_dump
 
-Js.Console.log("=== dump findLaziestGuard")
-let laziest = gAtt->GuardAttendance.findLaziestGuard
-laziest->Js.Console.log
+  // Js.Console.log("=== dump findLaziestGuard")
+  let laziest = gAtt->Attendance.findLaziestGuard
+  // laziest->Js.Console.log
 
-Js.Console.log("=== dump perGuardTallySleptPerMin")
-gAtt->GuardAttendance.perGuardTallySleptPerMin->MutableMap.Int.forEach((k, v) => {
-  Js.Console.log(`key:${k->string_of_int}`)
-  v->Utils.map_int_int_dump
-})
+  // Js.Console.log("=== dump perGuardTallySleptPerMin")
+//  gAtt->Attendance.perGuardTallySleptPerMin->MutableMap.Int.forEach((k, v) => {
+//    Js.Console.log(`key:${k->string_of_int}`)
+//    v->Utils.map_int_int_dump
+//  })
 
-Js.Console.log("=== dump perGuardMostSleptMin")
-let laziestMins = gAtt->GuardAttendance.perGuardMostSleptMin
-laziestMins->MutableMap.Int.forEach((k, v) => {
-               Js.Console.log(`key:${k->string_of_int}`)
-               Js.Console.log(v)
-             })
+  // Js.Console.log("=== dump perGuardMostSleptMin")
+  let laziestMins = gAtt->Attendance.perGuardMostSleptMin
+//  laziestMins->MutableMap.Int.forEach((k, v) => {
+//    Js.Console.log(`key:${k->string_of_int}`)
+//    Js.Console.log(v)
+//  })
 
-Js.Console.log("=== part1 - dump gid x lazest min")
-let (laziestGid, totalMins) = laziest
-let (laziestMin, how_many) = laziestMins->MutableMap.Int.get(laziestGid)->Option.getExn
-Js.Console.log(laziestGid)
-Js.Console.log(laziestMin)
-Js.Console.log(laziestGid * laziestMin)
+//  Js.Console.log("=== part1 - dump gid x lazest min")
+  let (laziestGid, totalMins) = laziest
+  let (laziestMin, how_many) = laziestMins->MutableMap.Int.get(laziestGid)->Option.getExn
+  // Js.Console.log(laziestGid)
+  // Js.Console.log(laziestMin)
+  let part1Answer = laziestGid * laziestMin
+//  Js.Console.log(part1Answer)
+  part1Answer
+}
 
+let solvePart2 = data => {
+//  Js.Console.log("=== part2 - dump gid x busy min")
+  let sortLines = data->Js.String2.split("\n")->SortArray.String.stableSort
+  // sortLines->Js.Console.log
 
-Js.Console.log("=== part2 - dump gid x busy min")
-let (busy_guy, busy_min) = gAtt->GuardAttendance.busiestMin
-Js.Console.log(busy_guy)
-let (which_busy_min, how_many) = busy_min
-Js.Console.log(busy_guy * which_busy_min)
+  let initState = {state: AtBegin, gid: 0, sleptSince: 0, gAtt: MutableMap.Int.make()}
+  let {gAtt} = sortLines->Array.reduce(initState, parseRecReducer)
+  let (busy_guy, busy_min) = gAtt->Attendance.busiestMin
+//  Js.Console.log(busy_guy)
+  let (which_busy_min, how_many) = busy_min
+
+  let part2Answer = busy_guy * which_busy_min
+//  Js.Console.log(part2Answer)
+  part2Answer
+}
 // 1217
