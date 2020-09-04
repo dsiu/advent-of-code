@@ -286,27 +286,50 @@ function parseLine(l) {
 }
 
 function processLineReducer(a, x) {
+  var state = a.state;
   var d = parseLine(x);
   switch (d.TAG | 0) {
     case /* Begin */0 :
         return {
-                state: /* AtBegin */0,
+                state: /* AtBegin */1,
                 gid: d._0.gid,
                 sleptSince: -1,
                 gAtt: a.gAtt
               };
     case /* Asleep */1 :
+        if (!(state === /* AtAwake */3 || state === /* AtBegin */1)) {
+          throw {
+                RE_EXN_ID: "Assert_failure",
+                _1: [
+                  "Day4.res",
+                  194,
+                  8
+                ],
+                Error: new Error()
+              };
+        }
         return {
-                state: /* AtAsleep */1,
+                state: /* AtAsleep */2,
                 gid: a.gid,
                 sleptSince: d._0.m,
                 gAtt: a.gAtt
               };
     case /* Awake */2 :
         var d$1 = d._0;
+        if (state !== /* AtAsleep */2) {
+          throw {
+                RE_EXN_ID: "Assert_failure",
+                _1: [
+                  "Day4.res",
+                  200,
+                  8
+                ],
+                Error: new Error()
+              };
+        }
         insertGuardRec(a.gAtt, a.gid, d$1.date, a.sleptSince, d$1.m - 1 | 0);
         return {
-                state: /* AtAwake */2,
+                state: /* AtAwake */3,
                 gid: a.gid,
                 sleptSince: -1,
                 gAtt: a.gAtt
@@ -331,7 +354,7 @@ function solvePart1(data) {
   var sortLines = Belt_SortArrayString.stableSort(data.split("\n"));
   var initState_gAtt = Belt_MutableMapInt.make(undefined);
   var initState = {
-    state: /* AtBegin */0,
+    state: /* AtInit */0,
     gid: 0,
     sleptSince: 0,
     gAtt: initState_gAtt
@@ -349,7 +372,7 @@ function solvePart2(data) {
   var sortLines = Belt_SortArrayString.stableSort(data.split("\n"));
   var initState_gAtt = Belt_MutableMapInt.make(undefined);
   var initState = {
-    state: /* AtBegin */0,
+    state: /* AtInit */0,
     gid: 0,
     sleptSince: 0,
     gAtt: initState_gAtt

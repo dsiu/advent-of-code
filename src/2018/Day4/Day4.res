@@ -169,6 +169,7 @@ module Parser = {
   }
 
   type rstate =
+    | AtInit
     | AtBegin
     | AtAsleep
     | AtAwake
@@ -181,16 +182,22 @@ module Parser = {
   }
 
   let processLineReducer = (a: rresult, x) => {
+    let {state} = a
+
     switch x->parseLine {
     | Begin(d) => {
         let {raw, date, h, m, gid} = d
+
         {...a, state: AtBegin, gid: gid, sleptSince: -1}
       }
     | Asleep(d) => {
+        assert (state === AtAwake || state === AtBegin)
         let {raw, date, h, m, gid} = d
+
         {...a, state: AtAsleep, sleptSince: m}
       }
     | Awake(d) => {
+        assert (state === AtAsleep)
         let {raw, date, h, m} = d
         let {sleptSince, gAtt, gid} = a
 
@@ -209,7 +216,7 @@ let solvePart1 = data => {
   // sortLines->Js.Console.log
 
   let initState: Parser.rresult = {
-    state: AtBegin,
+    state: AtInit,
     gid: 0,
     sleptSince: 0,
     gAtt: MutableMap.Int.make(),
@@ -255,7 +262,7 @@ let solvePart2 = data => {
   // sortLines->Js.Console.log
 
   let initState: Parser.rresult = {
-    state: AtBegin,
+    state: AtInit,
     gid: 0,
     sleptSince: 0,
     gAtt: MutableMap.Int.make(),
