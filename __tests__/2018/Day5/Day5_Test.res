@@ -52,6 +52,7 @@ describe("2018 Day5", () => {
       expect(result) |> toEqual(expected)
     })
 
+    // answer: 11814
     // test("Solve Part 1 - Data list", () => {
     // let result = charList->defuse->List.toArray->Js.Array2.joinWith(_, "")
     // // dabAcCaCBAcCcaDA
@@ -60,23 +61,32 @@ describe("2018 Day5", () => {
     // })
     //
     test("Solve Part 1 - Data array", () => {
-      let result = charArray->defuse_array->Js.Array2.joinWith(_, "")
-      // dabAcCaCBAcCcaDA
-      let expected = Day5_Data.result
+      let result = charArray->defuse_array->Js.Array2.joinWith(_, "")->Js.String.length
+
+      let expected = Day5_Data.result->Js.String.length
       expect(result) |> toEqual(expected)
     })
   })
 
   describe("Part 2", () => {
+    test("notIsLetterAndUpper", () => {
+      let result = (
+        testCharArray->Array.keep(notIsLetterAndUpper("a")),
+        testCharArray->Array.keep(notIsLetterAndUpper("b")),
+      )
+      let expected = ("dbcCCBcCcD"->Js.String2.split(""), "daAcCaCAcCcaDA"->Js.String2.split(""))
+      expect(result) |> toEqual(expected)
+    })
+
     test("Solve Part 2 - testData", () => {
-      let result = Day5.solvePart2(testData)
-      let expected = 4455
+      let result = Day5.solvePart2(aTod, testCharArray)
+      let expected = 4
       expect(result) |> toEqual(expected)
     })
 
     test("Solve Part 2 - Data", () => {
-      let result = Day5.solvePart2(data)
-      let expected = 4455
+      let result = Day5.solvePart2(aToz, charArray)
+      let expected = 4282
       expect(result) |> toEqual(expected)
     })
   })

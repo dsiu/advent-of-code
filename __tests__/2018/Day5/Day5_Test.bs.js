@@ -3,6 +3,7 @@
 
 var Jest = require("@glennsl/bs-jest/src/jest.js");
 var Belt_List = require("bs-platform/lib/js/belt_List.js");
+var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Day5$AdventOfCode = require("../../../src/2018/Day5/Day5.bs.js");
 var Day5_Data$AdventOfCode = require("../../../src/2018/Day5/Day5_Data.bs.js");
 var Day5_Data_Test$AdventOfCode = require("../../../src/2018/Day5/Day5_Data_Test.bs.js");
@@ -74,18 +75,38 @@ Jest.describe("2018 Day5", (function (param) {
                         return Jest.Expect.toEqual("dabCBAcaDA", Jest.Expect.expect(result));
                       }));
                 return Jest.test("Solve Part 1 - Data array", (function (param) {
-                              var result = Day5$AdventOfCode.defuse_array(charArray).join("");
-                              return Jest.Expect.toEqual(Day5_Data$AdventOfCode.result, Jest.Expect.expect(result));
+                              var result = Day5$AdventOfCode.defuse_array(charArray).join("").length;
+                              var expected = Day5_Data$AdventOfCode.result.length;
+                              return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
                             }));
               }));
         return Jest.describe("Part 2", (function (param) {
+                      Jest.test("notIsLetterAndUpper", (function (param) {
+                              var result_0 = Belt_Array.keep(testCharArray, (function (param) {
+                                      return Day5$AdventOfCode.notIsLetterAndUpper("a", param);
+                                    }));
+                              var result_1 = Belt_Array.keep(testCharArray, (function (param) {
+                                      return Day5$AdventOfCode.notIsLetterAndUpper("b", param);
+                                    }));
+                              var result = [
+                                result_0,
+                                result_1
+                              ];
+                              var expected_0 = "dbcCCBcCcD".split("");
+                              var expected_1 = "daAcCaCAcCcaDA".split("");
+                              var expected = [
+                                expected_0,
+                                expected_1
+                              ];
+                              return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                            }));
                       Jest.test("Solve Part 2 - testData", (function (param) {
-                              var result = Day5$AdventOfCode.solvePart2(Day5_Data_Test$AdventOfCode.data);
-                              return Jest.Expect.toEqual(4455, Jest.Expect.expect(result));
+                              var result = Day5$AdventOfCode.solvePart2(Day5$AdventOfCode.aTod, testCharArray);
+                              return Jest.Expect.toEqual(4, Jest.Expect.expect(result));
                             }));
                       return Jest.test("Solve Part 2 - Data", (function (param) {
-                                    var result = Day5$AdventOfCode.solvePart2(Day5_Data$AdventOfCode.data);
-                                    return Jest.Expect.toEqual(4455, Jest.Expect.expect(result));
+                                    var result = Day5$AdventOfCode.solvePart2(Day5$AdventOfCode.aToz, charArray);
+                                    return Jest.Expect.toEqual(4282, Jest.Expect.expect(result));
                                   }));
                     }));
       }));

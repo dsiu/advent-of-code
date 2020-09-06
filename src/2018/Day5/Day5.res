@@ -7,6 +7,9 @@ let log = Js.Console.log
 let charArray = data->Js.String2.split("")
 let charList = charArray->List.fromArray
 
+let testCharArray = testData->Js.String2.split("")
+let testCharList = testCharArray->List.fromArray
+
 // charList -> List.forEach(Console.log)
 // da bA cC aC BA cC ca DA
 let groupByN = (l, n) => {
@@ -91,7 +94,64 @@ let rec defuse_array = l => {
   }
 }
 
+let isLetterAndUpper = (which, c) => {
+  let u = which->Js.String2.toUpperCase
+  let l = which->Js.String2.toLowerCase
+  // log(`which=${which}`)
+  // log(`u=${u} l=${l}`)
+  // log(`c=${c}`)
+  c == u || c == l
+}
+
+let notIsLetterAndUpper = (which, c) => {!(c->isLetterAndUpper(which))}
+
+let aToz = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+]
+let aTod = ["a", "b", "c", "d"]
+
+let makeATozData = (letters, data) => {
+  letters->Array.reduce(Map.String.empty, (a, c) => {
+    let v = data->Array.keep(notIsLetterAndUpper(c))
+    // log(`c=${c}`)
+    // v->log
+    a->Map.String.set(c, v)
+  })
+}
+
 // fuse(list{"a", "a"})->Utils.list_dump
 
 let solvePart1 = d => 240
-let solvePart2 = d => 4455
+let solvePart2 = (polymars, d) => {
+  makeATozData(polymars, d)
+  ->Map.String.map(defuse_array)
+  ->Map.String.map(Array.length)
+  ->Map.String.reduce(Js.Int.max, (a, k, v) => {
+    v < a ? v : a
+  })
+}
