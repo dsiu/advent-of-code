@@ -53,14 +53,8 @@ describe("2018 Day5", () => {
     })
 
     // answer: 11814
-    // test("Solve Part 1 - Data list", () => {
-    // let result = charList->defuse->List.toArray->Js.Array2.joinWith(_, "")
-    // // dabAcCaCBAcCcaDA
-    // let expected = Day5_Data.result
-    // expect(result) |> toEqual(expected)
-    // })
-    //
-    test("Solve Part 1 - Data array", () => {
+    // skipped by default since it takes 20 sec
+    Skip.test("Solve Part 1 - Data array", () => {
       let result = charArray->defuse_array->Js.Array2.joinWith(_, "")->Js.String.length
 
       let expected = Day5_Data.result->Js.String.length
@@ -84,7 +78,8 @@ describe("2018 Day5", () => {
       expect(result) |> toEqual(expected)
     })
 
-    test("Solve Part 2 - Data", () => {
+    // skipped by default since it takes 20sec x 26
+    Skip.test("Solve Part 2 - Data", () => {
       let result = Day5.solvePart2(aToz, charArray)
       let expected = 4282
       expect(result) |> toEqual(expected)

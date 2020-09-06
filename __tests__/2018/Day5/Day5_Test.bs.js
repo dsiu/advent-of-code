@@ -74,7 +74,7 @@ Jest.describe("2018 Day5", (function (param) {
                         var result = Day5$AdventOfCode.defuse_array(testCharArray).join("");
                         return Jest.Expect.toEqual("dabCBAcaDA", Jest.Expect.expect(result));
                       }));
-                return Jest.test("Solve Part 1 - Data array", (function (param) {
+                return Jest.Skip.test("Solve Part 1 - Data array", (function (param) {
                               var result = Day5$AdventOfCode.defuse_array(charArray).join("").length;
                               var expected = Day5_Data$AdventOfCode.result.length;
                               return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
@@ -104,7 +104,7 @@ Jest.describe("2018 Day5", (function (param) {
                               var result = Day5$AdventOfCode.solvePart2(Day5$AdventOfCode.aTod, testCharArray);
                               return Jest.Expect.toEqual(4, Jest.Expect.expect(result));
                             }));
-                      return Jest.test("Solve Part 2 - Data", (function (param) {
+                      return Jest.Skip.test("Solve Part 2 - Data", (function (param) {
                                     var result = Day5$AdventOfCode.solvePart2(Day5$AdventOfCode.aToz, charArray);
                                     return Jest.Expect.toEqual(4282, Jest.Expect.expect(result));
                                   }));
