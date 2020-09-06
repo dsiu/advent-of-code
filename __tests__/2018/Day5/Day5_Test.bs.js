@@ -18,55 +18,34 @@ var charList = Belt_List.fromArray(charArray);
 Jest.describe("2018 Day5", (function (param) {
         Jest.describe("Part 1", (function (param) {
                 Jest.test("fuse", (function (param) {
-                        var result_0 = Day5$AdventOfCode.fuse({
-                              hd: "a",
-                              tl: {
-                                hd: "b",
-                                tl: /* [] */0
-                              }
-                            });
-                        var result_1 = Day5$AdventOfCode.fuse({
-                              hd: "a",
-                              tl: {
-                                hd: "A",
-                                tl: /* [] */0
-                              }
-                            });
-                        var result_2 = Day5$AdventOfCode.fuse({
-                              hd: "a",
-                              tl: {
-                                hd: "B",
-                                tl: /* [] */0
-                              }
-                            });
-                        var result_3 = Day5$AdventOfCode.fuse({
-                              hd: "c",
-                              tl: {
-                                hd: "C",
-                                tl: /* [] */0
-                              }
-                            });
-                        var result_4 = Day5$AdventOfCode.fuse({
-                              hd: "D",
-                              tl: {
-                                hd: "d",
-                                tl: /* [] */0
-                              }
-                            });
-                        var result_5 = Day5$AdventOfCode.fuse({
-                              hd: "E",
-                              tl: {
-                                hd: "Z",
-                                tl: /* [] */0
-                              }
-                            });
-                        var result_6 = Day5$AdventOfCode.fuse({
-                              hd: "A",
-                              tl: {
-                                hd: "a",
-                                tl: /* [] */0
-                              }
-                            });
+                        var result_0 = Day5$AdventOfCode.fuse([
+                              "a",
+                              "b"
+                            ]);
+                        var result_1 = Day5$AdventOfCode.fuse([
+                              "a",
+                              "A"
+                            ]);
+                        var result_2 = Day5$AdventOfCode.fuse([
+                              "a",
+                              "B"
+                            ]);
+                        var result_3 = Day5$AdventOfCode.fuse([
+                              "c",
+                              "C"
+                            ]);
+                        var result_4 = Day5$AdventOfCode.fuse([
+                              "D",
+                              "d"
+                            ]);
+                        var result_5 = Day5$AdventOfCode.fuse([
+                              "E",
+                              "Z"
+                            ]);
+                        var result_6 = Day5$AdventOfCode.fuse([
+                              "A",
+                              "a"
+                            ]);
                         var result = [
                           result_0,
                           result_1,
@@ -86,16 +65,16 @@ Jest.describe("2018 Day5", (function (param) {
                                     true
                                   ], Jest.Expect.expect(result));
                       }));
-                Jest.test("Solve Part 1 - testData", (function (param) {
+                Jest.test("Solve Part 1 - testData list", (function (param) {
                         var result = Belt_List.toArray(Day5$AdventOfCode.defuse(testCharList)).join("");
                         return Jest.Expect.toEqual("dabCBAcaDA", Jest.Expect.expect(result));
                       }));
-                Jest.test("Solve Part 1 - testData fast", (function (param) {
-                        var result = Belt_List.toArray(Day5$AdventOfCode.defuse_fast(testCharList)).join("");
+                Jest.test("Solve Part 1 - testData array", (function (param) {
+                        var result = Day5$AdventOfCode.defuse_array(testCharArray).join("");
                         return Jest.Expect.toEqual("dabCBAcaDA", Jest.Expect.expect(result));
                       }));
-                return Jest.test("Solve Part 1 - Data", (function (param) {
-                              var result = Belt_List.toArray(Day5$AdventOfCode.defuse_fast(charList)).join("");
+                return Jest.test("Solve Part 1 - Data array", (function (param) {
+                              var result = Day5$AdventOfCode.defuse_array(charArray).join("");
                               return Jest.Expect.toEqual(Day5_Data$AdventOfCode.result, Jest.Expect.expect(result));
                             }));
               }));

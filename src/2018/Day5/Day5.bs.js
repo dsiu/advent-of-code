@@ -2,6 +2,7 @@
 'use strict';
 
 var Belt_List = require("bs-platform/lib/js/belt_List.js");
+var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 var Day5_Data$AdventOfCode = require("./Day5_Data.bs.js");
 var Day5_Data_Test$AdventOfCode = require("./Day5_Data_Test.bs.js");
@@ -45,11 +46,9 @@ function groupBy3(__x) {
   return groupByN(__x, 3);
 }
 
-var charList2 = groupByN(charList, 2);
-
 function fuse(pair) {
-  var a = Belt_Option.getExn(Belt_List.get(pair, 0));
-  var b = Belt_Option.getExn(Belt_List.get(pair, 1));
+  var b = pair[1];
+  var a = pair[0];
   if (a !== b) {
     if (a === b.toLowerCase() && b === a.toUpperCase()) {
       return true;
@@ -63,114 +62,74 @@ function fuse(pair) {
   }
 }
 
-function defuse(_l) {
-  while(true) {
-    var l = _l;
-    var match = Belt_List.reduce(l, [
-          /* [] */0,
-          "",
-          false
-        ], (function (a, x) {
-            var defused = a[2];
-            var cur = a[1];
-            var r = a[0];
-            if (cur.length !== 1) {
-              return [
-                      r,
-                      x,
-                      defused
-                    ];
-            }
-            var pair_1 = {
-              hd: x,
-              tl: /* [] */0
-            };
-            var pair = {
-              hd: cur,
-              tl: pair_1
-            };
-            var fused = fuse(pair);
-            if (defused || !fused) {
-              return [
-                      Belt_List.add(r, cur),
-                      x,
-                      defused
-                    ];
-            } else {
-              return [
-                      r,
-                      "",
-                      true
-                    ];
-            }
-          }));
-    var cur = match[1];
-    var r = match[0];
-    var tailed = cur.length === 1 ? Belt_List.add(r, cur) : r;
-    if (!match[2]) {
-      return Belt_List.reverse(tailed);
-    }
-    _l = Belt_List.reverse(tailed);
-    continue ;
-  };
-}
-
 function findPairIndex(l) {
   var match = Belt_List.reduceWithIndex(l, [
         "",
         false,
+        false,
         -1
       ], (function (a, x, i) {
-          var found = a[1];
-          if (found) {
+          if (a[2]) {
             return a;
-          }
-          var last = a[0];
-          if (!found && last.length === 0) {
+          } else if (a[1] && fuse([
+                  a[0],
+                  x
+                ])) {
+            return [
+                    "",
+                    false,
+                    true,
+                    i - 1 | 0
+                  ];
+          } else {
             return [
                     x,
+                    true,
                     false,
                     -1
                   ];
           }
-          if (!found && last.length > 0) {
-            if (fuse({
-                    hd: last,
-                    tl: {
-                      hd: x,
-                      tl: /* [] */0
-                    }
-                  })) {
-              return [
-                      "",
-                      true,
-                      i - 1 | 0
-                    ];
-            } else {
-              return [
-                      x,
-                      false,
-                      -1
-                    ];
-            }
-          }
-          throw {
-                RE_EXN_ID: "Match_failure",
-                _1: [
-                  "Day5.res",
-                  78,
-                  2
-                ],
-                Error: new Error()
-              };
         }));
-  if (match[1]) {
-    return match[2];
+  if (match[2]) {
+    return match[3];
   }
   
 }
 
-function defuse_fast(_l) {
+function findPairIndex_array(l) {
+  var _i = 0;
+  var len = l.length;
+  var _last;
+  var _has_last = false;
+  while(true) {
+    var has_last = _has_last;
+    var last = _last;
+    var i = _i;
+    var x = Belt_Array.get(l, i);
+    var cont = i < len;
+    if (!cont) {
+      return ;
+    }
+    if (has_last) {
+      if (fuse([
+              Belt_Option.getExn(last),
+              Belt_Option.getExn(x)
+            ])) {
+        return i - 1 | 0;
+      }
+      _has_last = true;
+      _last = x;
+      _i = i + 1 | 0;
+      continue ;
+    }
+    _has_last = true;
+    _last = x;
+    _i = i + 1 | 0;
+    continue ;
+  };
+}
+
+function defuse(_l) {
   while(true) {
     var l = _l;
     var i = findPairIndex(l);
@@ -180,6 +139,20 @@ function defuse_fast(_l) {
     var h = Belt_Option.getExn(Belt_List.take(l, i));
     var t = Belt_Option.getExn(Belt_List.drop(l, i + 2 | 0));
     _l = Belt_List.concat(h, t);
+    continue ;
+  };
+}
+
+function defuse_array(_l) {
+  while(true) {
+    var l = _l;
+    var i = findPairIndex_array(l);
+    if (i === undefined) {
+      return l;
+    }
+    var h = Belt_Array.slice(l, 0, i);
+    var t = Belt_Array.sliceToEnd(l, i + 2 | 0);
+    _l = Belt_Array.concat(h, t);
     continue ;
   };
 }
@@ -204,11 +177,11 @@ exports.charList = charList;
 exports.groupByN = groupByN;
 exports.groupBy2 = groupBy2;
 exports.groupBy3 = groupBy3;
-exports.charList2 = charList2;
 exports.fuse = fuse;
-exports.defuse = defuse;
 exports.findPairIndex = findPairIndex;
-exports.defuse_fast = defuse_fast;
+exports.findPairIndex_array = findPairIndex_array;
+exports.defuse = defuse;
+exports.defuse_array = defuse_array;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
 /* charArray Not a pure module */

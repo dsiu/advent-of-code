@@ -22,12 +22,12 @@ let groupByN = (l, n) => {
 let groupBy2 = groupByN(_, 2)
 let groupBy3 = groupByN(_, 3)
 
-let charList2 = charList->groupBy2
+// let charList2 = charList->groupBy2
 
 let fuse = pair => {
-  let a = pair->List.get(0)->Option.getExn
-  let b = pair->List.get(1)->Option.getExn
-
+  // let a = pair->List.get(0)->Option.getExn
+  // let b = pair->List.get(1)->Option.getExn
+  let (a, b) = pair
   open Js
   a !== b &&
     ((a === b->String2.toLowerCase && b === a->String2.toUpperCase) ||
@@ -36,74 +36,58 @@ let fuse = pair => {
     : false
 }
 
-let rec defuse = l => {
-  // r {b c ...rest}
-  // l is the
-  let (r, cur, defused) = l->List.reduce((list{}, "", false), (a, x) => {
-    let (r, cur, defused) = a
-//    log(`cur:${cur} x:${x} defused:${defused->string_of_bool}`)
-    cur->Js.String2.length == 2 - 1 // 1
-      ? {
-          let pair = list{cur, x}
-          let fused = fuse(pair)
-          defused
-            ? {
-//                log(`  Defused: put cur:${cur} to r x:${x} to cur`)
-                (r->List.add(cur), x, defused)
-              }
-            : fused // fused!!
-            ? {
-//              log(`  NOT defused and cur+x is fused!: clear cur and x`)
-              (r, "", true)
-            }
-            : {
-//                log(`  NOT defused and cur+x doesn't match!: put cur:${cur} to r  x:${x} to cur`)
-                (r->List.add(cur), x, defused)
-              }
-        }
-      : {
-//          log(`  stash x:${x} to cur`)
-          (r, x, defused)  // tail condition...didn't put last x into r
-        }
-  })
-//  log("--> again")
-  // check left over cur, tail condition
-  let tailed = cur->Js.String2.length == 1 ? r->List.add(cur): r
-  !defused ? tailed->List.reverse : tailed->List.reverse->defuse
+let findPairIndex = l => {
+  let (last, has_last, found, founded_idx) =
+    l->List.reduceWithIndex(("", false, false, -1), (a, x, i) => {
+      switch a {
+      | (_, _, true, _) => a
+      | (last, false, false, _) => (x, true, false, -1)
+      | (last, true, false, _) => fuse((last, x)) ? ("", false, true, i - 1) : (x, true, false, -1)
+      }
+    })
+  found ? Some(founded_idx) : None
 }
 
-
-let findPairIndex = l => {
-  let (last, found, founded_idx) = l->List.reduceWithIndex(("", false, -1), (a, x, i) => {
-  switch a {
-    | (last, found, founded_idx) when found => a
-    | (last, found, founded_idx) when (! found && last->Js.String2.length === 0) => {
-      (x, false, -1)
-    }
-    | (last, found, founded_idx) when (! found && last->Js.String2.length > 0) => {
-        fuse(list{last, x}) ?
-          ("", true, i-1)
-          : (x, false, -1)
+let findPairIndex_array = l => {
+  let rec helper = (l, i, len, last, has_last) => {
+    let x = l->Array.get(i)
+    let cont = i < len
+    switch (last, has_last, cont) {
+    | (_, _, false) => None
+    | (last, false, ture) => helper(l, i + 1, len, x, true)
+    | (last, true, true) =>
+      fuse((last->Option.getExn, x->Option.getExn)) ? Some(i - 1) : helper(l, i + 1, len, x, true)
     }
   }
-  })
-  found? Some(founded_idx) : None
+
+  helper(l, 0, l->Array.length, None, false)
 }
 
-//i=3, remove d, e
-//[0,1,2,3,4,5,6]
-//[a,b,c,d,e,f,g]
-//h=[a,b,c] List.take(3)
-//t=[f,g] List.drop(5)
+// i=3, remove d, e
+// [0,1,2,3,4,5,6]
+// [a,b,c,d,e,f,g]
+// h=[a,b,c] List.take(3)
+// t=[f,g] List.drop(5)
 
-let rec defuse_fast = l => {
-    switch findPairIndex(l) {
-    | Some(i) => {
+let rec defuse = l => {
+  switch findPairIndex(l) {
+  | Some(i) => {
       let h = l->List.take(i)->Option.getExn
-      let t = l->List.drop(i+2)->Option.getExn
-      List.concat(h,t)->defuse_fast
+      let t = l->List.drop(i + 2)->Option.getExn
+      List.concat(h, t)->defuse
     }
-    | None => l
+  | None => l
+  }
+}
+
+let rec defuse_array = l => {
+  switch findPairIndex_array(l) {
+  | Some(i) => {
+      let h = l->Array.slice(~offset=0, ~len=i)
+      let t = l->Array.sliceToEnd(i + 2)
+      Array.concat(h, t)->defuse_array
+    }
+  | None => l
   }
 }
 
@@ -111,9 +95,3 @@ let rec defuse_fast = l => {
 
 let solvePart1 = d => 240
 let solvePart2 = d => 4455
-
-//let result = charList->defuse_fast->List.toArray->Js.Array2.joinWith(_, "")
-//log(result)
-
-//Day5_Data.result -> Js.String2.length -> log
-

@@ -18,13 +18,13 @@ describe("2018 Day5", () => {
   describe("Part 1", () => {
     test("fuse", () => {
       let result = (
-        fuse(list{"a", "b"}),
-        fuse(list{"a", "A"}),
-        fuse(list{"a", "B"}),
-        fuse(list{"c", "C"}),
-        fuse(list{"D", "d"}),
-        fuse(list{"E", "Z"}),
-        fuse(list{"A", "a"}),
+        fuse(("a", "b")),
+        fuse(("a", "A")),
+        fuse(("a", "B")),
+        fuse(("c", "C")),
+        fuse(("D", "d")),
+        fuse(("E", "Z")),
+        fuse(("A", "a")),
       )
       let expected = (false, true, false, true, true, false, true)
       expect(result) |> toEqual(expected)
@@ -38,26 +38,33 @@ describe("2018 Day5", () => {
     // expect(result) |> toEqual(expected)
     // })
 
-    test("Solve Part 1 - testData", () => {
+    test("Solve Part 1 - testData list", () => {
       let result = testCharList->defuse->List.toArray->Js.Array2.joinWith(_, "")
       // dabAcCaCBAcCcaDA
       let expected = "dabCBAcaDA"
       expect(result) |> toEqual(expected)
     })
 
-    test("Solve Part 1 - testData fast", () => {
-      let result = testCharList->defuse_fast->List.toArray->Js.Array2.joinWith(_, "")
+    test("Solve Part 1 - testData array", () => {
+      let result = testCharArray->defuse_array->Js.Array2.joinWith(_, "")
       // dabAcCaCBAcCcaDA
       let expected = "dabCBAcaDA"
       expect(result) |> toEqual(expected)
     })
 
-    test("Solve Part 1 - Data", () => {
-      let result = charList->defuse_fast->List.toArray->Js.Array2.joinWith(_, "")
+    // test("Solve Part 1 - Data list", () => {
+    // let result = charList->defuse->List.toArray->Js.Array2.joinWith(_, "")
+    // // dabAcCaCBAcCcaDA
+    // let expected = Day5_Data.result
+    // expect(result) |> toEqual(expected)
+    // })
+    //
+    test("Solve Part 1 - Data array", () => {
+      let result = charArray->defuse_array->Js.Array2.joinWith(_, "")
       // dabAcCaCBAcCcaDA
       let expected = Day5_Data.result
       expect(result) |> toEqual(expected)
-     })
+    })
   })
 
   describe("Part 2", () => {
