@@ -17,6 +17,7 @@ let char_freq = (cs: charStrArray): charStrFreqMap => {
   Belt.Array.reduce(cs, Belt.Map.String.empty, reducer)
 }
 
+@@warning("-27")
 let countMatchFreq = (freq: int, m: charStrFreqMap): int => {
   Belt.Map.String.reduce(m, 0, (acc, key, v) => {
     v == freq ? acc + 1 : acc

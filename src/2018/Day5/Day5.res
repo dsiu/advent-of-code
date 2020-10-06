@@ -1,7 +1,10 @@
 let data = Day5_Data.data
 let testData = Day5_Data_Test.data
 open Belt
-open Utils
+//open Utils
+
+@@warning("-27")
+
 let log = Js.Console.log
 
 let charArray = data->Js.String2.split("")

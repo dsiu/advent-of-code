@@ -1,3 +1,5 @@
+@@warning("-27")
+
 open Belt
 open Utils
 let log = Js.Console.log
@@ -23,7 +25,8 @@ module Coord = {
 
   let dist = (a: t, b: t) => {
     let d = (b.x - a.x)->Js.Math.abs_int + (b.y - a.y)->Js.Math.abs_int
-//    (`from ${a.x->Int.toString},${a.y->Int.toString} to ${b.x->Int.toString},${b.y->Int.toString} = ${d->Int.toString}`)->log
+
+    //    (`from ${a.x->Int.toString},${a.y->Int.toString} to ${b.x->Int.toString},${b.y->Int.toString} = ${d->Int.toString}`)->log
     d
   }
 
@@ -74,17 +77,17 @@ module Map = {
     "makeCellShortest"->log
     open Map.Int
     let dists = distsFromLocs(at, locs)
-    " " -> log
+    " "->log
     "dists --> "->log
-//    dists->dump_mapInt_of_int
+    //    dists->dump_mapInt_of_int
     let minDist = dists->findMinDists
     (`at ${at.x->Int.toString},${at.y->Int.toString} | minDist:${minDist->Int.toString}`)->log
     //    (`from ${a.x->Int.toString},${a.y->Int.toString} to ${b.x->Int.toString},${b.y->Int.toString} = ${d->Int.toString}`)->log
     let onlyMins = dists->keepOnly(~value=minDist)
-    "onlyMins -->" ->log
+    "onlyMins -->"->log
     onlyMins->dump_mapInt_of_int
 
-    assert(onlyMins->size > 0)
+    assert (onlyMins->size > 0)
     onlyMins->size > 1 ? -1 : onlyMins->reduce(Js.Int.min, (a, k, v) => k)
   }
 
@@ -101,8 +104,8 @@ module Map = {
   }
 
   let fill = t => {
-//    "fill"->log
-//    t->log
+    //    "fill"->log
+    //    t->log
     open Map.Int
     let filled = t.grid->reduce(Map.Int.empty, (a, kx, x) => {
       a->set(kx, x->reduce(Map.Int.empty, (a, ky, y) => {
@@ -128,7 +131,9 @@ module Map = {
       h: maxXY->Coord.y - 1,
       maxXY: maxXY,
       minXY: minXY,
-    }->alloc->fill
+    }
+    ->alloc
+    ->fill
   }
 
   let countCellWith = (~value, t) => {
@@ -149,9 +154,9 @@ module Map = {
   }
 
   let findAreas = t => {
-//    t->getNonInfLoc->Map.Int.mapWithKey((k,v) => {
-//      t->countCellWith(~value=k)
-//    })
+    //    t->getNonInfLoc->Map.Int.mapWithKey((k,v) => {
+    //      t->countCellWith(~value=k)
+    //    })
     t.locs->Map.Int.mapWithKey((k, v) => {
       t->countCellWith(~value=k)
     })
@@ -165,10 +170,9 @@ module Map = {
   let dump = t => {
     "dump"->log
     open Map.Int
-   "x, y, v"->log
+    "x, y, v"->log
     t->grid->forEach((kx, vx) => {
       vx->forEach((ky, vy) => {
-
         (kx, ky, vy)->log
         // vy->Utils.map_int_dump
       })

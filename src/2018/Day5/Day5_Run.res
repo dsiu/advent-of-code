@@ -1,6 +1,3 @@
-open Day5
-open Belt
-
 //dabAcCaCBAcCcaDA
 //let result = charList->defuse->List.toArray->Js.Array2.joinWith(_, "")
 //log(result)
@@ -14,5 +11,5 @@ open Belt
 // Day5_Data.result -> Js.String2.length -> log
 
 //let result = solvePart2(aToz, charArray)
-let result = solvePart2(aTod, testCharArray)
-result->log
+let result = Day5.solvePart2(Day5.aTod, Day5.testCharArray);
+result->Utils.log;

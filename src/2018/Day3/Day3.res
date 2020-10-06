@@ -93,6 +93,7 @@ module Claims = {
   }
 }
 
+@@warning("-27")
 module Fabric = {
   type w = int
   type h = int
@@ -168,6 +169,7 @@ module Fabric = {
     claimAreaIter(c, t, addClaimIdToPoint)
   }
 
+@@warning("-27")
   let getClaimIdFromPointIf = (t, c, ~x, ~y, c: Claim.t) => {
     let point = t->getPoint(~x, ~y)
     let len = point->Option.getExn->Array.length
@@ -212,6 +214,7 @@ module Fabric = {
     xs->Array.reduce([], reducer)
   }
 
+  @@warning("-27")
   // returns count:int
   let countOverlap = (t, p) => {
     t->matrix->Map.Int.reduce(0, (acc, x, col) => {
@@ -243,6 +246,7 @@ let solvePart2 = () => {
   fab->Fabric.countNonOverlapClaim(allClaims)
 }
 
+@@warning("-26")
 let solvePart2Demo = () == {
       let test_line1 = "#3 @ 1,3: 4x4"
       let test_line2 = "#7 @ 3,1: 4x4"

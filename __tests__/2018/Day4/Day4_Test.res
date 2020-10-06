@@ -1,6 +1,7 @@
 open Jest
 open Expect
 open! Expect.Operators
+@@warning("-33")
 open Day4
 
 let data = Day4_Data.data

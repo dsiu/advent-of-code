@@ -1,5 +1,5 @@
-open Belt
-open Utils
+//open Belt
+//open Utils
 open Day6
 let log = Js.Console.log
 let data = Day6_Data.data
