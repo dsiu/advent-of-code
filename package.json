@@ -14,8 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "@glennsl/bs-jest": "^0.5.1",
-    "bs-platform": "^8.3.0",
-    "jest": "^26.5.0"
+    "bs-platform": "^8.3.1",
+    "jest": "^26.5.3"
   },
   "jest": {
     "testMatch": [
