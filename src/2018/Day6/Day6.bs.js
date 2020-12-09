@@ -101,8 +101,8 @@ function grid(t) {
   return t.grid;
 }
 
-function distsFromLocs(at, locs) {
-  return Belt_MapInt.reduce(locs, undefined, (function (a, k, v) {
+function distsFromLocs(at, pins) {
+  return Belt_MapInt.reduce(pins, undefined, (function (a, k, v) {
                 return Belt_MapInt.set(a, k, dist(at, v));
               }));
 }
@@ -123,9 +123,9 @@ function keepOnly(value, xs) {
               }));
 }
 
-function makeCellShortest(at, locs) {
+function makeCellShortest(at, pins) {
   console.log("makeCellShortest");
-  var dists = distsFromLocs(at, locs);
+  var dists = distsFromLocs(at, pins);
   console.log(" ");
   console.log("dists --> ");
   var minDist = findMinDists(dists);
@@ -161,7 +161,7 @@ function alloc(t) {
                           })));
         }));
   return {
-          locs: t.locs,
+          pins: t.pins,
           grid: filled,
           w: t.w,
           h: t.h,
@@ -176,11 +176,11 @@ function fill(t) {
                             return Belt_MapInt.set(a, ky, makeCellShortest({
                                             x: kx,
                                             y: ky
-                                          }, t.locs));
+                                          }, t.pins));
                           })));
         }));
   return {
-          locs: t.locs,
+          pins: t.pins,
           grid: filled,
           w: t.w,
           h: t.h,
@@ -194,17 +194,17 @@ function make$1(xs) {
   var minXY$1 = minXY(xs);
   console.log(maxXY$1);
   console.log(minXY$1);
-  var locsMap = Belt_Array.reduceWithIndex(xs, undefined, (function (a, x, i) {
+  var pinsMap = Belt_Array.reduceWithIndex(xs, undefined, (function (a, x, i) {
           return Belt_MapInt.set(a, i, x);
         }));
   Utils$AdventOfCode.dump_mapInt_of((function (c) {
           return String(c.x) + " " + String(c.y);
-        }), locsMap);
+        }), pinsMap);
   return fill(alloc({
-                  locs: locsMap,
+                  pins: pinsMap,
                   grid: undefined,
-                  w: maxXY$1.x - 1 | 0,
-                  h: maxXY$1.y - 1 | 0,
+                  w: maxXY$1.x + 1 | 0,
+                  h: maxXY$1.y + 1 | 0,
                   maxXY: maxXY$1,
                   minXY: minXY$1
                 }));
@@ -221,14 +221,14 @@ function getNonInfLoc(t) {
   var maxXY = t.maxXY;
   console.log("getNonInfLoc");
   console.log(t);
-  return Belt_MapInt.keep(t.locs, (function (k, v) {
+  return Belt_MapInt.keep(t.pins, (function (k, v) {
                 console.log(v);
                 return !(v.x === maxXY.x || v.x === minXY.x || v.y === minXY.y || v.y === minXY.y);
               }));
 }
 
 function findAreas(t) {
-  return Belt_MapInt.mapWithKey(t.locs, (function (k, v) {
+  return Belt_MapInt.mapWithKey(t.pins, (function (k, v) {
                 return countCellWith(k, t);
               }));
 }

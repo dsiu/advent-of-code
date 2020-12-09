@@ -2,11 +2,21 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
+var Day6$AdventOfCode = require("../../../src/2018/Day6/Day6.bs.js");
 var Day6_Data$AdventOfCode = require("../../../src/2018/Day6/Day6_Data.bs.js");
 var Day6_Data_Test$AdventOfCode = require("../../../src/2018/Day6/Day6_Data_Test.bs.js");
 
 Jest.describe("2018 Day6", (function (param) {
         Jest.describe("Part 1", (function (param) {
+                Jest.test("Parse Coord", (function (param) {
+                        var result = [
+                          Day6$AdventOfCode.Coord.make(1, 2),
+                          Day6$AdventOfCode.Coord.make(3, 4),
+                          Day6$AdventOfCode.Coord.make(5, 6)
+                        ];
+                        var expected = Day6$AdventOfCode.Coord.parseCoords("1,2\n      3,4\n      5,6".split("\n"));
+                        return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                      }));
                 return Jest.Skip.test("Solve Part 1", (function (param) {
                               return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
                             }));

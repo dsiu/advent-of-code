@@ -49,7 +49,7 @@ module Map = {
   type h = int
 
   type t = {
-    locs: Map.Int.t<Coord.t>,
+    pins: Map.Int.t<Coord.t>, // Int=location id;
     grid: col,
     w: w,
     h: h,
@@ -61,8 +61,8 @@ module Map = {
   let h = t => t.h
   let grid = t => t.grid
 
-  let distsFromLocs = (at, locs) => {
-    locs->Map.Int.reduce(Map.Int.empty, (a, k, v) => {
+  let distsFromLocs = (at, pins) => {
+    pins->Map.Int.reduce(Map.Int.empty, (a, k, v) => {
       a->Map.Int.set(k, Coord.dist(at, v))
     })
   }
@@ -73,10 +73,10 @@ module Map = {
 
   let keepOnly = (~value, xs) => xs->Map.Int.keep((k, v) => {v === value})
 
-  let makeCellShortest = (at, locs) => {
+  let makeCellShortest = (at, pins) => {
     "makeCellShortest"->log
     open Map.Int
-    let dists = distsFromLocs(at, locs)
+    let dists = distsFromLocs(at, pins)
     " "->log
     "dists --> "->log
     //    dists->dump_mapInt_of_int
@@ -109,7 +109,7 @@ module Map = {
     open Map.Int
     let filled = t.grid->reduce(Map.Int.empty, (a, kx, x) => {
       a->set(kx, x->reduce(Map.Int.empty, (a, ky, y) => {
-          a->set(ky, makeCellShortest(Coord.make(~x=kx, ~y=ky), t.locs))
+          a->set(ky, makeCellShortest(Coord.make(~x=kx, ~y=ky), t.pins))
         }))
     })
     {...t, grid: filled}
@@ -122,13 +122,13 @@ module Map = {
     maxXY->log
     minXY->log
     // s->log
-    let locsMap = xs->Array.reduceWithIndex(empty, (a, x, i) => {a->set(i, x)})
-    dump_mapInt_of(c => c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString)(locsMap)
+    let pinsMap = xs->Array.reduceWithIndex(empty, (a, x, i) => {a->set(i, x)})
+    dump_mapInt_of(c => c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString)(pinsMap)
     {
-      locs: locsMap,
+      pins: pinsMap,
       grid: empty,
-      w: maxXY->Coord.x - 1,
-      h: maxXY->Coord.y - 1,
+      w: maxXY->Coord.x + 1,
+      h: maxXY->Coord.y + 1,
       maxXY: maxXY,
       minXY: minXY,
     }
@@ -144,10 +144,10 @@ module Map = {
   }
 
   let getNonInfLoc = t => {
-    let {locs, w, h, minXY, maxXY} = t
+    let {pins, w, h, minXY, maxXY} = t
     "getNonInfLoc"->log
     t->log
-    locs->Map.Int.keep((k, v) => {
+    pins->Map.Int.keep((k, v) => {
       v->log
       !(v.x === maxXY.x || v.x === minXY.x || v.y === minXY.y || v.y === minXY.y)
     })
@@ -157,7 +157,7 @@ module Map = {
     //    t->getNonInfLoc->Map.Int.mapWithKey((k,v) => {
     //      t->countCellWith(~value=k)
     //    })
-    t.locs->Map.Int.mapWithKey((k, v) => {
+    t.pins->Map.Int.mapWithKey((k, v) => {
       t->countCellWith(~value=k)
     })
   }
