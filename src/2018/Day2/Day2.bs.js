@@ -98,20 +98,20 @@ function diffOfTwoCharStr(s1, s2) {
 
 function countTrue(xs) {
   return Belt_Array.keep(xs, (function (x) {
-                if (x.TAG) {
-                  return false;
-                } else {
+                if (x.TAG === /* Match */0) {
                   return true;
+                } else {
+                  return false;
                 }
               })).length;
 }
 
 function countFalse(xs) {
   return Belt_Array.keep(xs, (function (x) {
-                if (x.TAG) {
-                  return true;
-                } else {
+                if (x.TAG === /* Match */0) {
                   return false;
+                } else {
+                  return true;
                 }
               })).length;
 }
@@ -156,10 +156,10 @@ function findAllMatch(predicate, lines) {
 function runDay2Part2(lines) {
   return Belt_Array.map(findAllMatch(isDiffBy1, lines), (function (x) {
                 return Belt_Array.reduce(diffOfTwoCharStr(x.src, Caml_array.get(x.matched, 0)), "", (function (a, x) {
-                              if (x.TAG) {
-                                return a;
-                              } else {
+                              if (x.TAG === /* Match */0) {
                                 return a + x._0;
+                              } else {
+                                return a;
                               }
                             }));
               }));

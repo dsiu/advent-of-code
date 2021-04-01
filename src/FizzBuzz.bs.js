@@ -21,21 +21,21 @@ function handle(n, divisor, label) {
 }
 
 function ifUnhandledDo(result, f) {
-  if (result.TAG) {
+  if (result.TAG === /* Unhandled */0) {
+    return Curry._1(f, result._0);
+  } else {
     return {
             TAG: /* Handled */1,
             _0: result._0
           };
-  } else {
-    return Curry._1(f, result._0);
   }
 }
 
 function lastStep(x) {
-  if (x.TAG) {
-    return Utils$AdventOfCode.log(x._0);
-  } else {
+  if (x.TAG === /* Unhandled */0) {
     return Utils$AdventOfCode.log(String(x._0));
+  } else {
+    return Utils$AdventOfCode.log(x._0);
   }
 }
 

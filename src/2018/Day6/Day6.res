@@ -112,7 +112,7 @@ module Map = {
           a->set(ky, makeCellShortest(Coord.make(~x=kx, ~y=ky), t.pins))
         }))
     })
-    {...t, grid: filled}
+    {...t,grid: filled}
   }
 
   let make = xs => {

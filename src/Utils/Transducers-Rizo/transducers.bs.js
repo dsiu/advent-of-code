@@ -59,7 +59,7 @@ function transduce(param, f, r0, param$1) {
       var match$1 = Curry._3(step, s, r, match[0]);
       var r$1 = match$1[1];
       var s$1 = match$1[0];
-      if (r$1.TAG) {
+      if (r$1.TAG !== /* Continue */0) {
         return [
                 s$1,
                 r$1._0
