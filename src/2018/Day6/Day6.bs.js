@@ -139,7 +139,7 @@ function makeCellShortest(at, pins) {
           RE_EXN_ID: "Assert_failure",
           _1: [
             "Day6.res",
-            90,
+            94,
             4
           ],
           Error: new Error()

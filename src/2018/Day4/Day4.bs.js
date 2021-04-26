@@ -168,7 +168,7 @@ function unboxBeginLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            143,
+            149,
             8
           ],
           Error: new Error()
@@ -194,7 +194,7 @@ function unboxAsleepLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            148,
+            154,
             8
           ],
           Error: new Error()
@@ -219,7 +219,7 @@ function unboxAwakeLine(l) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "Day4.res",
-            153,
+            159,
             8
           ],
           Error: new Error()
@@ -302,7 +302,7 @@ function processLineReducer(a, x) {
                 RE_EXN_ID: "Assert_failure",
                 _1: [
                   "Day4.res",
-                  194,
+                  200,
                   8
                 ],
                 Error: new Error()
@@ -321,7 +321,7 @@ function processLineReducer(a, x) {
                 RE_EXN_ID: "Assert_failure",
                 _1: [
                   "Day4.res",
-                  200,
+                  206,
                   8
                 ],
                 Error: new Error()

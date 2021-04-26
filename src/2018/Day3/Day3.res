@@ -119,7 +119,9 @@ module Fabric = {
   }
 
   let dump = t => {
-    t->matrix->Map.Int.forEach((x, col) => {
+    t
+    ->matrix
+    ->Map.Int.forEach((x, col) => {
       col->MutableMap.Int.forEach((y, vs) => {
         Js.Console.log(`x:${x->string_of_int} y:${y->string_of_int}`)
         vs->Array.forEach(v => Js.Console.log("  " ++ v->string_of_int))
@@ -132,7 +134,11 @@ module Fabric = {
   let isOne = x => x === 1
 
   let addPoint = (t, ~x, ~y, p) => {
-    t->matrix->Map.Int.get(x)->Option.getExn->MutableMap.Int.update(y, a => {
+    t
+    ->matrix
+    ->Map.Int.get(x)
+    ->Option.getExn
+    ->MutableMap.Int.update(y, a => {
       switch a {
       | Some(a) => Some(a->Array.concat([p]))
       | None => Some([p])
@@ -169,7 +175,7 @@ module Fabric = {
     claimAreaIter(c, t, addClaimIdToPoint)
   }
 
-@@warning("-27")
+  @@warning("-27")
   let getClaimIdFromPointIf = (t, c, ~x, ~y, c: Claim.t) => {
     let point = t->getPoint(~x, ~y)
     let len = point->Option.getExn->Array.length
@@ -179,26 +185,26 @@ module Fabric = {
   // count nonoverlap
   let getClaimIdsFromArea = (t, c: Claim.t) => {
     let cids =
-      Array.range(c->Claim.x, c->Claim.x + c->Claim.w - 1) ->Array.reduce([], (accX, x) =>
+      Array.range(c->Claim.x, c->Claim.x + c->Claim.w - 1)
+      ->Array.reduce([], (accX, x) =>
         Array.range(c->Claim.y, c->Claim.y + c->Claim.h - 1)->Array.reduce([], (accY, y) =>
           switch t->getPoint(~x, ~y) {
-          | Some(p) => {
-//              Js.Console.log(`x: ${x->string_of_int} y: ${y->string_of_int}`)
-//              Js.Console.log("point")
-//              Js.Console.log(p)
-              accY->Array.concat([p])
-            }
+          | Some(
+              p,
+            ) => //              Js.Console.log(`x: ${x->string_of_int} y: ${y->string_of_int}`)
+            //              Js.Console.log("point")
+            //              Js.Console.log(p)
+            accY->Array.concat([p])
           | None => accY
           }
-        )
-        |> Array.concat(accX)
+        ) |> Array.concat(accX)
       )
       ->Utils.flattenArray
 
-//    Js.Console.log("cids")
-//    Js.Console.log(cids)
+    //    Js.Console.log("cids")
+    //    Js.Console.log(cids)
 
-    (c->Claim.w * c->Claim.h) == cids->Array.length ? Some(cids[0]) : None
+    c->Claim.w * c->Claim.h == cids->Array.length ? Some(cids[0]) : None
   }
 
   // returns [Claim.id]
@@ -206,8 +212,8 @@ module Fabric = {
     let r = (t, acc, c) => {
       let cid = t->getClaimIdsFromArea(c)
       switch cid {
-        | Some(c) => acc->Array.concat([c])
-        | None => acc
+      | Some(c) => acc->Array.concat([c])
+      | None => acc
       }
     }
     let reducer = r(t)
@@ -217,8 +223,11 @@ module Fabric = {
   @@warning("-27")
   // returns count:int
   let countOverlap = (t, p) => {
-    t->matrix->Map.Int.reduce(0, (acc, x, col) => {
-      acc + col->MutableMap.Int.reduce(0, (acc, y, vs) => {
+    t
+    ->matrix
+    ->Map.Int.reduce(0, (acc, x, col) => {
+      acc +
+      col->MutableMap.Int.reduce(0, (acc, y, vs) => {
         p(vs->Array.length) ? acc + 1 : acc
       })
     })
@@ -247,7 +256,8 @@ let solvePart2 = () => {
 }
 
 @@warning("-26")
-let solvePart2Demo = () == {
+let solvePart2Demo =
+  () == {
       let test_line1 = "#3 @ 1,3: 4x4"
       let test_line2 = "#7 @ 3,1: 4x4"
       let test_line3 = "#11 @ 5,5: 2x2"
@@ -259,7 +269,7 @@ let solvePart2Demo = () == {
         acc->Fabric.addClaim(i)
       })
       let result = test_fab->Fabric.countNonOverlapClaim(allClaims)
-      // result->Js.Console.log
     }
+  // result->Js.Console.log
 
 // solvePart2() |> Js.Console.log

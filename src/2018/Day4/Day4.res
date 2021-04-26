@@ -60,7 +60,9 @@ module Attendance = {
   let perGuardMinsSlept = MutableMap.Int.map(_, minsSleptTotal)
 
   let findLaziestGuard = gAtt => {
-    gAtt->perGuardMinsSlept->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
+    gAtt
+    ->perGuardMinsSlept
+    ->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
       let (gid, minSlept) = a
       v > minSlept ? (k, v) : a
     })
@@ -84,7 +86,9 @@ module Attendance = {
   let perGuardTallySleptPerMin = MutableMap.Int.map(_, tallySleptPerMin)
 
   let perGuardMostSleptMin = gAtt => {
-    gAtt->perGuardTallySleptPerMin->MutableMap.Int.map(t => {
+    gAtt
+    ->perGuardTallySleptPerMin
+    ->MutableMap.Int.map(t => {
       t->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
         // Js.Console.log(a)
         // Js.Console.log(`k:${k->string_of_int}, v:${v->string_of_int}`)
@@ -95,7 +99,9 @@ module Attendance = {
   }
 
   let busiestMin = gAtt => {
-    gAtt->perGuardMostSleptMin->MutableMap.Int.reduce((-1, (-1, -1)), (a, k, v) => {
+    gAtt
+    ->perGuardMostSleptMin
+    ->MutableMap.Int.reduce((-1, (-1, -1)), (a, k, v) => {
       let (guard, busyMin) = a
       let (which_min, how_many) = busyMin
       let (next_which_min, next_how_many) = v

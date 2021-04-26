@@ -43,14 +43,17 @@ let fuse = pair => {
 }
 
 let findPairIndex = l => {
-  let (last, has_last, found, founded_idx) =
-    l->List.reduceWithIndex(("", false, false, -1), (a, x, i) => {
-      switch a {
-      | (_, _, true, _) => a
-      | (last, false, false, _) => (x, true, false, -1)
-      | (last, true, false, _) => fuse((last, x)) ? ("", false, true, i - 1) : (x, true, false, -1)
-      }
-    })
+  let (last, has_last, found, founded_idx) = l->List.reduceWithIndex(("", false, false, -1), (
+    a,
+    x,
+    i,
+  ) => {
+    switch a {
+    | (_, _, true, _) => a
+    | (last, false, false, _) => (x, true, false, -1)
+    | (last, true, false, _) => fuse((last, x)) ? ("", false, true, i - 1) : (x, true, false, -1)
+    }
+  })
   found ? Some(founded_idx) : None
 }
 

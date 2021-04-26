@@ -31,9 +31,13 @@ module Coord = {
   }
 
   let parse = l => {
-    l->Js.String2.trim->Js.String2.split(",")->Array.map(x => {
+    l
+    ->Js.String2.trim
+    ->Js.String2.split(",")
+    ->Array.map(x => {
       x->Js.String2.trim->Int.fromString->Option.getExn
-    })->makeFromArray
+    })
+    ->makeFromArray
   }
 
   let parseCoords = Array.map(_, parse)
@@ -81,7 +85,7 @@ module Map = {
     "dists --> "->log
     //    dists->dump_mapInt_of_int
     let minDist = dists->findMinDists
-    (`at ${at.x->Int.toString},${at.y->Int.toString} | minDist:${minDist->Int.toString}`)->log
+    `at ${at.x->Int.toString},${at.y->Int.toString} | minDist:${minDist->Int.toString}`->log
     //    (`from ${a.x->Int.toString},${a.y->Int.toString} to ${b.x->Int.toString},${b.y->Int.toString} = ${d->Int.toString}`)->log
     let onlyMins = dists->keepOnly(~value=minDist)
     "onlyMins -->"->log
@@ -95,10 +99,13 @@ module Map = {
     // "alloc"->log
     // (t.w, t.h)->log
     let filled = Array.range(0, t.w - 1)->Array.reduce(Map.Int.empty, (a, x) => {
-      a->Map.Int.set(x, Array.range(0, t.h - 1)->Array.reduce(Map.Int.empty, (b, y) => {
+      a->Map.Int.set(
+        x,
+        Array.range(0, t.h - 1)->Array.reduce(Map.Int.empty, (b, y) => {
           // b->Map.Int.set(y, Map.Int.empty)
           b->Map.Int.set(y, -1)
-        }))
+        }),
+      )
     })
     {...t, grid: filled}
   }
@@ -108,11 +115,14 @@ module Map = {
     //    t->log
     open Map.Int
     let filled = t.grid->reduce(Map.Int.empty, (a, kx, x) => {
-      a->set(kx, x->reduce(Map.Int.empty, (a, ky, y) => {
+      a->set(
+        kx,
+        x->reduce(Map.Int.empty, (a, ky, y) => {
           a->set(ky, makeCellShortest(Coord.make(~x=kx, ~y=ky), t.pins))
-        }))
+        }),
+      )
     })
-    {...t,grid: filled}
+    {...t, grid: filled}
   }
 
   let make = xs => {
@@ -171,7 +181,9 @@ module Map = {
     "dump"->log
     open Map.Int
     "x, y, v"->log
-    t->grid->forEach((kx, vx) => {
+    t
+    ->grid
+    ->forEach((kx, vx) => {
       vx->forEach((ky, vy) => {
         (kx, ky, vy)->log
         // vy->Utils.map_int_dump
