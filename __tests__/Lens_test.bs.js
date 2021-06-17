@@ -2,7 +2,7 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var List = require("@rescript/std/lib/js/list.js");
+var List = require("rescript/lib/js/list.js");
 var Lens$Rationale = require("rationale/src/Lens.bs.js");
 
 var record = {

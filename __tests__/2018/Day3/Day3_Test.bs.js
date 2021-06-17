@@ -2,7 +2,7 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var Belt_Array = require("@rescript/std/lib/js/belt_Array.js");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Day3$AdventOfCode = require("../../../src/2018/Day3/Day3.bs.js");
 
 Jest.describe("2018 Day3", (function (param) {

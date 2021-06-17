@@ -2,8 +2,8 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var Caml_array = require("@rescript/std/lib/js/caml_array.js");
-var Belt_MapString = require("@rescript/std/lib/js/belt_MapString.js");
+var Caml_array = require("rescript/lib/js/caml_array.js");
+var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
 var Day2$AdventOfCode = require("../../../src/2018/Day2/Day2.bs.js");
 var Day2_Data$AdventOfCode = require("../../../src/2018/Day2/Day2_Data.bs.js");
 
