@@ -15,8 +15,8 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.7.0",
     "bs-platform": "^9.0.2",
-    "jest": "^26.6.3",
-    "rescript": "^9.1.1"
+    "jest": "^27.0.4",
+    "rescript": "^9.1.4"
   },
   "jest": {
     "testMatch": [
@@ -25,7 +25,6 @@
     ]
   },
   "dependencies": {
-    "@rescript/std": "^9.0.1",
     "rationale": "^0.2.0"
   }
 }
