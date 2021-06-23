@@ -2,8 +2,8 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var Belt_List = require("bs-platform/lib/js/belt_List.js");
-var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
+var Belt_List = require("rescript/lib/js/belt_List.js");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Day5$AdventOfCode = require("../../../src/2018/Day5/Day5.bs.js");
 var Day5_Data$AdventOfCode = require("../../../src/2018/Day5/Day5_Data.bs.js");
 var Day5_Data_Test$AdventOfCode = require("../../../src/2018/Day5/Day5_Data_Test.bs.js");

@@ -2,6 +2,5 @@
 <project version="4">
   <component name="ReasonSettings">
     <option name="formatColumnWidth" value="80" />
-    <option name="isBsEnabled" value="false" />
   </component>
 </project>

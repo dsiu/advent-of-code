@@ -2,19 +2,18 @@
   "name": "advent-of-code",
   "version": "0.1.0",
   "scripts": {
-    "build": "rescript build",
+    "build": "rescript",
+    "clean": "rescript clean -with-deps",
     "start": "rescript build -w",
-    "clean": "rescript clean",
     "reformat": "./scripts/reformat.sh"
   },
   "keywords": [
-    "BuckleScript"
+    "rescript"
   ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@glennsl/bs-jest": "^0.7.0",
-    "bs-platform": "^9.0.2",
     "jest": "^27.0.4",
     "rescript": "^9.1.4"
   },
