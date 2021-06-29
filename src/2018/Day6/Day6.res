@@ -66,9 +66,10 @@ module LandingMap = {
   let grid = t => t.grid
 
   let distsFromPins = (at, pins) => {
-    pins->Map.Int.reduce(Map.Int.empty, (a, k, v) => {
-      a->Map.Int.set(k, Coord.dist(at, v))
-    })
+    //    pins->Map.Int.reduce(Map.Int.empty, (a, k, v) => {
+    //      a->Map.Int.set(k, Coord.dist(at, v))
+    //    })
+    pins->Map.Int.map(v => {Coord.dist(at, v)})
   }
 
   let findMinDists = Map.Int.reduce(_, Js.Int.max, (a, k, v) => {
@@ -78,38 +79,39 @@ module LandingMap = {
   let keepOnly = (~value, xs) => xs->Map.Int.keep((k, v) => {v === value})
 
   let makeCellShortest = (at, pins) => {
-    " "->log
+    //    " "->log
 
-    `at ${at->Coord.x->Int.toString},${at->Coord.y->Int.toString}`->log
+    //    `at ${at->Coord.x->Int.toString},${at->Coord.y->Int.toString}`->log
 
     let dists = at->distsFromPins(pins)
-    dists->dump_mapInt_of_int
+    //    dists->dump_mapInt_of_int
 
     let minDist = dists->findMinDists
-    `minDist:${minDist->Int.toString}`->log
+    //    `minDist:${minDist->Int.toString}`->log
 
     //    (`from ${a.x->Int.toString},${a.y->Int.toString} to ${b.x->Int.toString},${b.y->Int.toString} = ${d->Int.toString}`)->log
     let onlyMins = dists->keepOnly(~value=minDist)
-    "onlyMins: "->log
-    onlyMins->dump_mapInt_of_int
+    //    "onlyMins: "->log
+    //    onlyMins->dump_mapInt_of_int
 
     open Map.Int
     assert (onlyMins->size > 0)
 
     let ret = onlyMins->size > 1 ? -1 : onlyMins->reduce(Js.Int.min, (a, k, v) => k)
-    ret->log
+
+    //    ret->log
     ret
   }
 
   let alloc = t => {
     // "alloc"->log
     // (t.w, t.h)->log
-    let filled = Array.range(0, t.w - 1)->Array.reduce(Map.Int.empty, (a, x) => {
+    let filled = Array.range(0, t.w)->Array.reduce(Map.Int.empty, (a, x) => {
       a->Map.Int.set(
         x,
-        Array.range(0, t.h - 1)->Array.reduce(Map.Int.empty, (b, y) => {
+        Array.range(0, t.h)->Array.reduce(Map.Int.empty, (b, y) => {
           // b->Map.Int.set(y, Map.Int.empty)
-          b->Map.Int.set(y, -1)
+          b->Map.Int.set(y, -99)
         }),
       )
     })
@@ -117,8 +119,6 @@ module LandingMap = {
   }
 
   let fill = t => {
-    //    "fill"->log
-    //    t->log
     open Map.Int
     let filled = t.grid->reduce(Map.Int.empty, (a, kx, x) => {
       a->set(
@@ -143,8 +143,8 @@ module LandingMap = {
     {
       pins: pinsMap,
       grid: empty,
-      w: maxBound->Coord.x + 1,
-      h: maxBound->Coord.y + 1,
+      w: maxBound->Coord.x,
+      h: maxBound->Coord.y,
       maxBound: maxBound,
       minBound: minBound,
     }
@@ -152,17 +152,17 @@ module LandingMap = {
     ->fill
   }
 
-  let countCellWith = (~value, t) => {
+  let countCellWith = (~pinId, t) => {
     open Map.Int
     t.grid->reduce(0, (a, kx, x) => {
-      a + x->keepOnly(~value)->size
+      a + x->keepOnly(~value=pinId)->size
     })
   }
 
   let getNonInfPin = t => {
     let {pins, w, h, maxBound, minBound} = t
     pins->Map.Int.keep((k, v) => {
-      !(v.x === maxBound.x || v.x === minBound.x || v.y === minBound.y || v.y === minBound.y)
+      !(v.x === maxBound.x || v.x === minBound.x || v.y === maxBound.y || v.y === minBound.y)
     })
   }
 
@@ -171,7 +171,7 @@ module LandingMap = {
     //      t->countCellWith(~value=k)
     //    })
     t.pins->Map.Int.mapWithKey((k, v) => {
-      t->countCellWith(~value=k)
+      t->countCellWith(~pinId=k)
     })
   }
 
@@ -205,26 +205,27 @@ let solvePart1 = data => {
   let map = data->Js.String2.split("\n")->Coord.parseCoords->LandingMap.make
   let areas = map->LandingMap.findLandingAreasOfPins
 
-  map->LandingMap.dump
+  //  map->LandingMap.dump
 
-  " ========= landing areas"->log
+  ` ========= landing areas (size = ${areas->Map.Int.size->Int.toString})`->log
   areas->dump_mapInt_of_int
 
-  " ======== target pins"->log
   let targetPins = map->LandingMap.getNonInfPin
+  ` ======== target pins (size = ${targetPins->Map.Int.size->Int.toString})`->log
   targetPins->dump_mapInt_of(c => {c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString})
 
   open Map.Int
-  let (targetPin, maxArea) =
+  let maxArea =
     areas
     ->keep((k, v) => {
       targetPins->has(k)
     })
-    ->maximum
-    ->Option.getExn
+    ->Map.Int.reduce(Js.Int.min, (a, k, v) => {
+      v > a ? v : a
+    })
 
   " ======== answer"->log
 
-  `targetPin = ${targetPin->Int.toString}`->log
+  //  `targetPin = ${targetPin->Int.toString}`->log
   `maxArea = ${maxArea->Int.toString}`->log
 }

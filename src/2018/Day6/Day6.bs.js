@@ -103,8 +103,8 @@ function grid(t) {
 }
 
 function distsFromPins(at, pins) {
-  return Belt_MapInt.reduce(pins, undefined, (function (a, k, v) {
-                return Belt_MapInt.set(a, k, dist(at, v));
+  return Belt_MapInt.map(pins, (function (v) {
+                return dist(at, v);
               }));
 }
 
@@ -125,39 +125,33 @@ function keepOnly(value, xs) {
 }
 
 function makeCellShortest(at, pins) {
-  console.log(" ");
-  var prim = "at " + String(at.x) + "," + String(at.y);
-  console.log(prim);
   var dists = distsFromPins(at, pins);
-  Utils$AdventOfCode.dump_mapInt_of_int(dists);
   var minDist = findMinDists(dists);
-  var prim$1 = "minDist:" + String(minDist);
-  console.log(prim$1);
   var onlyMins = keepOnly(minDist, dists);
-  console.log("onlyMins: ");
-  Utils$AdventOfCode.dump_mapInt_of_int(onlyMins);
   if (Belt_MapInt.size(onlyMins) <= 0) {
     throw {
           RE_EXN_ID: "Assert_failure",
           _1: [
             "Day6.res",
-            97,
+            98,
             4
           ],
           Error: new Error()
         };
   }
-  var ret = Belt_MapInt.size(onlyMins) > 1 ? -1 : Belt_MapInt.reduce(onlyMins, Js_int.min, (function (a, k, v) {
-            return k;
-          }));
-  console.log(ret);
-  return ret;
+  if (Belt_MapInt.size(onlyMins) > 1) {
+    return -1;
+  } else {
+    return Belt_MapInt.reduce(onlyMins, Js_int.min, (function (a, k, v) {
+                  return k;
+                }));
+  }
 }
 
 function alloc(t) {
-  var filled = Belt_Array.reduce(Belt_Array.range(0, t.w - 1 | 0), undefined, (function (a, x) {
-          return Belt_MapInt.set(a, x, Belt_Array.reduce(Belt_Array.range(0, t.h - 1 | 0), undefined, (function (b, y) {
-                            return Belt_MapInt.set(b, y, -1);
+  var filled = Belt_Array.reduce(Belt_Array.range(0, t.w), undefined, (function (a, x) {
+          return Belt_MapInt.set(a, x, Belt_Array.reduce(Belt_Array.range(0, t.h), undefined, (function (b, y) {
+                            return Belt_MapInt.set(b, y, -99);
                           })));
         }));
   return {
@@ -203,16 +197,16 @@ function make$1(xs) {
   return fill(alloc({
                   pins: pinsMap,
                   grid: undefined,
-                  w: maxBound.x + 1 | 0,
-                  h: maxBound.y + 1 | 0,
+                  w: maxBound.x,
+                  h: maxBound.y,
                   maxBound: maxBound,
                   minBound: minBound
                 }));
 }
 
-function countCellWith(value, t) {
+function countCellWith(pinId, t) {
   return Belt_MapInt.reduce(t.grid, 0, (function (a, kx, x) {
-                return a + Belt_MapInt.size(keepOnly(value, x)) | 0;
+                return a + Belt_MapInt.size(keepOnly(pinId, x)) | 0;
               }));
 }
 
@@ -220,7 +214,7 @@ function getNonInfPin(t) {
   var minBound = t.minBound;
   var maxBound = t.maxBound;
   return Belt_MapInt.keep(t.pins, (function (k, v) {
-                return !(v.x === maxBound.x || v.x === minBound.x || v.y === minBound.y || v.y === minBound.y);
+                return !(v.x === maxBound.x || v.x === minBound.x || v.y === maxBound.y || v.y === minBound.y);
               }));
 }
 
@@ -277,22 +271,27 @@ var LandingMap = {
 function solvePart1(data) {
   var map = make$1(Belt_Array.map(data.split("\n"), parse));
   var areas = findLandingAreasOfPins(map);
-  dump(map);
-  console.log(" ========= landing areas");
+  var prim = " ========= landing areas (size = " + String(Belt_MapInt.size(areas)) + ")";
+  console.log(prim);
   Utils$AdventOfCode.dump_mapInt_of_int(areas);
-  console.log(" ======== target pins");
   var targetPins = getNonInfPin(map);
+  var prim$1 = " ======== target pins (size = " + String(Belt_MapInt.size(targetPins)) + ")";
+  console.log(prim$1);
   Utils$AdventOfCode.dump_mapInt_of(targetPins, (function (c) {
           return String(c.x) + " " + String(c.y);
         }));
-  var match = Belt_Option.getExn(Belt_MapInt.maximum(Belt_MapInt.keep(areas, (function (k, v) {
-                  return Belt_MapInt.has(targetPins, k);
-                }))));
+  var maxArea = Belt_MapInt.reduce(Belt_MapInt.keep(areas, (function (k, v) {
+              return Belt_MapInt.has(targetPins, k);
+            })), Js_int.min, (function (a, k, v) {
+          if (v > a) {
+            return v;
+          } else {
+            return a;
+          }
+        }));
   console.log(" ======== answer");
-  var prim = "targetPin = " + String(match[0]);
-  console.log(prim);
-  var prim$1 = "maxArea = " + String(match[1]);
-  console.log(prim$1);
+  var prim$2 = "maxArea = " + String(maxArea);
+  console.log(prim$2);
   
 }
 
