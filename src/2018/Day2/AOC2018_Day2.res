@@ -1,4 +1,4 @@
-let data = Day2_Data.data
+let data = AOC2018_Day2_Data.data
 
 let string_to_charStr = Js.String.split("")
 

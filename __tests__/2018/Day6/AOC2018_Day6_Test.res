@@ -3,10 +3,10 @@ open Expect
 open! Expect.Operators
 @@warning("-33")
 open Belt
-open Day6
+open AOC2018_Day6
 
-let data = Day6_Data.data
-let testData = Day6_Data_Test.data
+let data = AOC2018_Day6_Data.data
+let testData = AOC2018_Day6_Data_Test.data
 
 describe("2018 Day6", () => {
   describe("Part 1", () => {

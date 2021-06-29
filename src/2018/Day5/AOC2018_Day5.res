@@ -1,5 +1,5 @@
-let data = Day5_Data.data
-let testData = Day5_Data_Test.data
+let data = AOC2018_Day5_Data.data
+let testData = AOC2018_Day5_Data_Test.data
 open Belt
 //open Utils
 

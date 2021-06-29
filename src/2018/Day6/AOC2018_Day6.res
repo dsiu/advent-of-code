@@ -3,8 +3,8 @@
 open Belt
 open Utils
 let log = Js.Console.log
-let data = Day6_Data.data
-let testData = Day6_Data_Test.data
+let data = AOC2018_Day6_Data.data
+let testData = AOC2018_Day6_Data_Test.data
 
 module Coord = {
   type t = {x: int, y: int}

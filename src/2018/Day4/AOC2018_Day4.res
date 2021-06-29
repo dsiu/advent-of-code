@@ -1,5 +1,5 @@
-let data = Day4_Data.data
-let testData = Day4_Data_Test.data
+let data = AOC2018_Day4_Data.data
+let testData = AOC2018_Day4_Data_Test.data
 open Belt
 @@warning("-27-8")
 //

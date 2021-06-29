@@ -11,5 +11,5 @@
 // Day5_Data.result -> Js.String2.length -> log
 
 //let result = solvePart2(aToz, charArray)
-let result = Day5.solvePart2(Day5.aTod, Day5.testCharArray)
+let result = AOC2018_Day5.solvePart2(AOC2018_Day5.aTod, AOC2018_Day5.testCharArray)
 result->Utils.log

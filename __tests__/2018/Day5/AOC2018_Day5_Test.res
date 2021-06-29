@@ -2,10 +2,10 @@ open Jest
 open Expect
 open! Expect.Operators
 open Belt
-open Day5
+open AOC2018_Day5
 
-let data = Day5_Data.data
-let testData = Day5_Data_Test.data
+let data = AOC2018_Day5_Data.data
+let testData = AOC2018_Day5_Data_Test.data
 // dabAcCaCBAcCcaDA
 
 let testCharArray = testData->Js.String2.split("")
@@ -57,7 +57,7 @@ describe("2018 Day5", () => {
     Skip.test("Solve Part 1 - Data array", () => {
       let result = charArray->defuse_array->Js.Array2.joinWith(_, "")->Js.String.length
 
-      let expected = Day5_Data.result->Js.String.length
+      let expected = AOC2018_Day5_Data.result->Js.String.length
       expect(result) |> toEqual(expected)
     })
   })
@@ -73,14 +73,14 @@ describe("2018 Day5", () => {
     })
 
     test("Solve Part 2 - testData", () => {
-      let result = Day5.solvePart2(aTod, testCharArray)
+      let result = AOC2018_Day5.solvePart2(aTod, testCharArray)
       let expected = 4
       expect(result) |> toEqual(expected)
     })
 
     // skipped by default since it takes 20sec x 26
     Skip.test("Solve Part 2 - Data", () => {
-      let result = Day5.solvePart2(aToz, charArray)
+      let result = AOC2018_Day5.solvePart2(aToz, charArray)
       let expected = 4282
       expect(result) |> toEqual(expected)
     })

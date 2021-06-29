@@ -1,7 +1,7 @@
 open Belt
 
 let sum = (x, y) => x + y
-let part1 = Array.reduce(Day1_Data.data, 0, sum)
+let part1 = Array.reduce(AOC2018_Day1_Data.data, 0, sum)
 //"------ Day1 Part1" |> Js.Console.log
 //Js.Console.log(part1)
 
@@ -46,7 +46,7 @@ let rec solve_part2 = (xs, init, reducer) => {
 }
 
 let runDay1Part2 = solve_part2(_, init, reducer)
-let part2_result = runDay1Part2(Day1_Data.data)
+let part2_result = runDay1Part2(AOC2018_Day1_Data.data)
 
 //"------ Day1 Part2" |> Js.Console.log
 //Js.Console.log(

@@ -1,10 +1,10 @@
 open Jest
 open Expect
 open! Expect.Operators
-open Day2
+open AOC2018_Day2
 
 describe("2018 Day2", () => {
-  let data = Day2_Data.data
+  let data = AOC2018_Day2_Data.data
   let lines = data |> Js.String.split("\n")
   let len = lines |> Array.length
 

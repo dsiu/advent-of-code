@@ -1,4 +1,4 @@
-let data = Day3_Data.data
+let data = AOC2018_Day3_Data.data
 open Belt
 
 module type Claim = {
@@ -189,9 +189,8 @@ module Fabric = {
       ->Array.reduce([], (accX, x) =>
         Array.range(c->Claim.y, c->Claim.y + c->Claim.h - 1)->Array.reduce([], (accY, y) =>
           switch t->getPoint(~x, ~y) {
-          | Some(
-              p,
-            ) => //              Js.Console.log(`x: ${x->string_of_int} y: ${y->string_of_int}`)
+          | Some(p) =>
+            //              Js.Console.log(`x: ${x->string_of_int} y: ${y->string_of_int}`)
             //              Js.Console.log("point")
             //              Js.Console.log(p)
             accY->Array.concat([p])
@@ -270,6 +269,6 @@ let solvePart2Demo =
       })
       let result = test_fab->Fabric.countNonOverlapClaim(allClaims)
     }
-  // result->Js.Console.log
+// result->Js.Console.log
 
 // solvePart2() |> Js.Console.log
