@@ -27,7 +27,7 @@ function dump_mapString_of_int(param) {
               }), param);
 }
 
-function dump_mapInt_of(f, m) {
+function dump_mapInt_of(m, f) {
   return Belt_MapInt.forEach(m, (function (k, v) {
                 var prim = "key:" + String(k) + ", val:" + Curry._1(f, v);
                 console.log(prim);
@@ -35,10 +35,10 @@ function dump_mapInt_of(f, m) {
               }));
 }
 
-function dump_mapInt_of_int(param) {
-  return dump_mapInt_of((function (prim) {
+function dump_mapInt_of_int(__x) {
+  return dump_mapInt_of(__x, (function (prim) {
                 return String(prim);
-              }), param);
+              }));
 }
 
 function dump_mutableMapInt_of(f, m) {

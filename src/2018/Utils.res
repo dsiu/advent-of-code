@@ -10,11 +10,11 @@ let dump_mapString_of = (f, m) =>
 let dump_mapString_of_int = dump_mapString_of(Int.toString)
 
 // map int
-let dump_mapInt_of = (f, m) =>
+let dump_mapInt_of = (m, f) =>
   Map.Int.forEach(m, (k, v) => {
     log(`key:${k->Int.toString}, val:${f(v)}`)
   })
-let dump_mapInt_of_int = dump_mapInt_of(Int.toString)
+let dump_mapInt_of_int = dump_mapInt_of(_, Int.toString)
 
 // mutable map int
 let dump_mutableMapInt_of = (f, m) =>

@@ -10,13 +10,9 @@ function log(prim) {
   
 }
 
-var map = Day6$AdventOfCode.$$Map.make(Day6$AdventOfCode.Coord.parseCoords(Day6_Data_Test$AdventOfCode.data.split("\n")));
+var part1 = Day6$AdventOfCode.solvePart1(Day6_Data_Test$AdventOfCode.data);
 
-var areas = Day6$AdventOfCode.$$Map.findAreas(map);
-
-console.log(" ========= ");
-
-Day6$AdventOfCode.$$Map.dump(map);
+console.log(part1);
 
 var data = Day6_Data$AdventOfCode.data;
 
@@ -25,6 +21,5 @@ var testData = Day6_Data_Test$AdventOfCode.data;
 exports.log = log;
 exports.data = data;
 exports.testData = testData;
-exports.map = map;
-exports.areas = areas;
-/* map Not a pure module */
+exports.part1 = part1;
+/* part1 Not a pure module */

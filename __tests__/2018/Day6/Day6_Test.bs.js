@@ -9,13 +9,29 @@ var Day6_Data_Test$AdventOfCode = require("../../../src/2018/Day6/Day6_Data_Test
 Jest.describe("2018 Day6", (function (param) {
         Jest.describe("Part 1", (function (param) {
                 Jest.test("Parse Coord", (function (param) {
-                        var result = [
+                        var expected = [
                           Day6$AdventOfCode.Coord.make(1, 2),
                           Day6$AdventOfCode.Coord.make(3, 4),
                           Day6$AdventOfCode.Coord.make(5, 6)
                         ];
-                        var expected = Day6$AdventOfCode.Coord.parseCoords("1,2\n      3,4\n      5,6".split("\n"));
+                        var result = Day6$AdventOfCode.Coord.parseCoords("1,2\n      3,4\n      5,6".split("\n"));
                         return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                      }));
+                Jest.test("maxXY", (function (param) {
+                        var expected = Day6$AdventOfCode.Coord.make(5, 8);
+                        var result = Day6$AdventOfCode.Coord.maxXY(Day6$AdventOfCode.Coord.parseCoords("0,2\n      3,8\n      5,6".split("\n")));
+                        return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                      }));
+                Jest.test("minXY", (function (param) {
+                        var expected = Day6$AdventOfCode.Coord.make(0, 1);
+                        var result = Day6$AdventOfCode.Coord.minXY(Day6$AdventOfCode.Coord.parseCoords("0,2\n          3,8\n          5,1".split("\n")));
+                        return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                      }));
+                Jest.test("dist", (function (param) {
+                        var a = Day6$AdventOfCode.Coord.make(1, 1);
+                        var b = Day6$AdventOfCode.Coord.make(14, 27);
+                        var result = Day6$AdventOfCode.Coord.dist(a, b);
+                        return Jest.Expect.toEqual(39, Jest.Expect.expect(result));
                       }));
                 return Jest.Skip.test("Solve Part 1", (function (param) {
                               return Jest.Expect.toEqual(1, Jest.Expect.expect(1));

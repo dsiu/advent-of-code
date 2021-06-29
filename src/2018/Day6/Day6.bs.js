@@ -7,6 +7,7 @@ var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_MapInt = require("rescript/lib/js/belt_MapInt.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
+var Caml_splice_call = require("rescript/lib/js/caml_splice_call.js");
 var Utils$AdventOfCode = require("../Utils.bs.js");
 var Day6_Data$AdventOfCode = require("./Day6_Data.bs.js");
 var Day6_Data_Test$AdventOfCode = require("./Day6_Data_Test.bs.js");
@@ -101,7 +102,7 @@ function grid(t) {
   return t.grid;
 }
 
-function distsFromLocs(at, pins) {
+function distsFromPins(at, pins) {
   return Belt_MapInt.reduce(pins, undefined, (function (a, k, v) {
                 return Belt_MapInt.set(a, k, dist(at, v));
               }));
@@ -124,34 +125,33 @@ function keepOnly(value, xs) {
 }
 
 function makeCellShortest(at, pins) {
-  console.log("makeCellShortest");
-  var dists = distsFromLocs(at, pins);
   console.log(" ");
-  console.log("dists --> ");
-  var minDist = findMinDists(dists);
-  var prim = "at " + String(at.x) + "," + String(at.y) + " | minDist:" + String(minDist);
+  var prim = "at " + String(at.x) + "," + String(at.y);
   console.log(prim);
+  var dists = distsFromPins(at, pins);
+  Utils$AdventOfCode.dump_mapInt_of_int(dists);
+  var minDist = findMinDists(dists);
+  var prim$1 = "minDist:" + String(minDist);
+  console.log(prim$1);
   var onlyMins = keepOnly(minDist, dists);
-  console.log("onlyMins -->");
+  console.log("onlyMins: ");
   Utils$AdventOfCode.dump_mapInt_of_int(onlyMins);
   if (Belt_MapInt.size(onlyMins) <= 0) {
     throw {
           RE_EXN_ID: "Assert_failure",
           _1: [
             "Day6.res",
-            94,
+            97,
             4
           ],
           Error: new Error()
         };
   }
-  if (Belt_MapInt.size(onlyMins) > 1) {
-    return -1;
-  } else {
-    return Belt_MapInt.reduce(onlyMins, Js_int.min, (function (a, k, v) {
-                  return k;
-                }));
-  }
+  var ret = Belt_MapInt.size(onlyMins) > 1 ? -1 : Belt_MapInt.reduce(onlyMins, Js_int.min, (function (a, k, v) {
+            return k;
+          }));
+  console.log(ret);
+  return ret;
 }
 
 function alloc(t) {
@@ -165,8 +165,8 @@ function alloc(t) {
           grid: filled,
           w: t.w,
           h: t.h,
-          maxXY: t.maxXY,
-          minXY: t.minXY
+          maxBound: t.maxBound,
+          minBound: t.minBound
         };
 }
 
@@ -184,29 +184,29 @@ function fill(t) {
           grid: filled,
           w: t.w,
           h: t.h,
-          maxXY: t.maxXY,
-          minXY: t.minXY
+          maxBound: t.maxBound,
+          minBound: t.minBound
         };
 }
 
 function make$1(xs) {
-  var maxXY$1 = maxXY(xs);
-  var minXY$1 = minXY(xs);
-  console.log(maxXY$1);
-  console.log(minXY$1);
+  var maxBound = maxXY(xs);
+  var minBound = minXY(xs);
+  console.log(maxBound);
+  console.log(minBound);
   var pinsMap = Belt_Array.reduceWithIndex(xs, undefined, (function (a, x, i) {
           return Belt_MapInt.set(a, i, x);
         }));
-  Utils$AdventOfCode.dump_mapInt_of((function (c) {
+  Utils$AdventOfCode.dump_mapInt_of(pinsMap, (function (c) {
           return String(c.x) + " " + String(c.y);
-        }), pinsMap);
+        }));
   return fill(alloc({
                   pins: pinsMap,
                   grid: undefined,
-                  w: maxXY$1.x + 1 | 0,
-                  h: maxXY$1.y + 1 | 0,
-                  maxXY: maxXY$1,
-                  minXY: minXY$1
+                  w: maxBound.x + 1 | 0,
+                  h: maxBound.y + 1 | 0,
+                  maxBound: maxBound,
+                  minBound: minBound
                 }));
 }
 
@@ -216,18 +216,15 @@ function countCellWith(value, t) {
               }));
 }
 
-function getNonInfLoc(t) {
-  var minXY = t.minXY;
-  var maxXY = t.maxXY;
-  console.log("getNonInfLoc");
-  console.log(t);
+function getNonInfPin(t) {
+  var minBound = t.minBound;
+  var maxBound = t.maxBound;
   return Belt_MapInt.keep(t.pins, (function (k, v) {
-                console.log(v);
-                return !(v.x === maxXY.x || v.x === minXY.x || v.y === minXY.y || v.y === minXY.y);
+                return !(v.x === maxBound.x || v.x === minBound.x || v.y === minBound.y || v.y === minBound.y);
               }));
 }
 
-function findAreas(t) {
+function findLandingAreasOfPins(t) {
   return Belt_MapInt.mapWithKey(t.pins, (function (k, v) {
                 return countCellWith(k, t);
               }));
@@ -239,26 +236,30 @@ function getMaxArea(m) {
               }));
 }
 
+function numToChar(xs) {
+  return Belt_Array.map(xs, (function (x) {
+                if (x !== -1) {
+                  return String.fromCharCode(97 + x | 0);
+                } else {
+                  return ".";
+                }
+              }));
+}
+
 function dump(t) {
   console.log("dump");
   console.log("x, y, v");
   return Belt_MapInt.forEach(t.grid, (function (kx, vx) {
-                return Belt_MapInt.forEach(vx, (function (ky, vy) {
-                              console.log([
-                                    kx,
-                                    ky,
-                                    vy
-                                  ]);
-                              
-                            }));
+                Caml_splice_call.spliceApply(console.log, [numToChar(Belt_MapInt.valuesToArray(vx))]);
+                
               }));
 }
 
-var $$Map = {
+var LandingMap = {
   w: w,
   h: h,
   grid: grid,
-  distsFromLocs: distsFromLocs,
+  distsFromPins: distsFromPins,
   findMinDists: findMinDists,
   keepOnly: keepOnly,
   makeCellShortest: makeCellShortest,
@@ -266,11 +267,34 @@ var $$Map = {
   fill: fill,
   make: make$1,
   countCellWith: countCellWith,
-  getNonInfLoc: getNonInfLoc,
-  findAreas: findAreas,
+  getNonInfPin: getNonInfPin,
+  findLandingAreasOfPins: findLandingAreasOfPins,
   getMaxArea: getMaxArea,
+  numToChar: numToChar,
   dump: dump
 };
+
+function solvePart1(data) {
+  var map = make$1(Belt_Array.map(data.split("\n"), parse));
+  var areas = findLandingAreasOfPins(map);
+  dump(map);
+  console.log(" ========= landing areas");
+  Utils$AdventOfCode.dump_mapInt_of_int(areas);
+  console.log(" ======== target pins");
+  var targetPins = getNonInfPin(map);
+  Utils$AdventOfCode.dump_mapInt_of(targetPins, (function (c) {
+          return String(c.x) + " " + String(c.y);
+        }));
+  var match = Belt_Option.getExn(Belt_MapInt.maximum(Belt_MapInt.keep(areas, (function (k, v) {
+                  return Belt_MapInt.has(targetPins, k);
+                }))));
+  console.log(" ======== answer");
+  var prim = "targetPin = " + String(match[0]);
+  console.log(prim);
+  var prim$1 = "maxArea = " + String(match[1]);
+  console.log(prim$1);
+  
+}
 
 var data = Day6_Data$AdventOfCode.data;
 
@@ -280,5 +304,6 @@ exports.log = log;
 exports.data = data;
 exports.testData = testData;
 exports.Coord = Coord;
-exports.$$Map = $$Map;
+exports.LandingMap = LandingMap;
+exports.solvePart1 = solvePart1;
 /* No side effect */
