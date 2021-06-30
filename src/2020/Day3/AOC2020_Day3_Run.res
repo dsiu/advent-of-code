@@ -3,7 +3,7 @@ let data = AOC2020_Day3_Data.data
 let testData = AOC2020_Day3_Data_Test.data
 
 //let part1 = AOC2020_Day3.solvePart1(testData)
-let part1 = AOC2020_Day2.solvePart1(data)
+let part1 = AOC2020_Day3.solvePart1(data)
 "Part 1 Result"->log
 part1->log
 
