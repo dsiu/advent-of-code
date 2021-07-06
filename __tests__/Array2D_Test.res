@@ -80,7 +80,7 @@ describe("Array2D - keep / map", () => {
 
   test("map - int", () => {
     let result = a->Array2D.map(x => {x * 2})
-    let expected = [[4, 10], [12, 14]]
+    let expected = [[8, 10], [12, 14]]
 
     open Expect
     open! Expect.Operators

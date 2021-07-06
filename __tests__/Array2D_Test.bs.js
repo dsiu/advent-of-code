@@ -168,7 +168,7 @@ Jest.describe("Array2D - keep / map", (function (param) {
                             }));
                       var expected = [
                         [
-                          4,
+                          8,
                           10
                         ],
                         [
