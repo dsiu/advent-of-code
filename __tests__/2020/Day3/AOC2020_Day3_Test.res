@@ -39,7 +39,6 @@ describe("2020 Day3", () => {
   })
 
   test("Part 2 - Solve", () => {
-    open ReScriptJs.Js
     let result = solvePart2(data)
     let expected = "3064612320"
     expect(result) |> toBe(expected)

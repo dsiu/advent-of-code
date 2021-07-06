@@ -2,28 +2,137 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Curry = require("rescript/lib/js/curry.js");
+var AOC2020_Day4$AdventOfCode = require("../../../src/2020/Day4/AOC2020_Day4.bs.js");
 var AOC2020_Day4_Data$AdventOfCode = require("../../../src/2020/Day4/AOC2020_Day4_Data.bs.js");
 var AOC2020_Day4_Data_Test$AdventOfCode = require("../../../src/2020/Day4/AOC2020_Day4_Data_Test.bs.js");
 
 Jest.describe("2020 Day4", (function (param) {
         Jest.test("Part 1 - Test Data", (function (param) {
-                Belt_Array.map(AOC2020_Day4_Data_Test$AdventOfCode.data.split("\n\n"), (function (prim) {
-                        return prim.trim();
-                      }));
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
+                var result = AOC2020_Day4$AdventOfCode.solvePart1(AOC2020_Day4_Data_Test$AdventOfCode.data);
+                return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
-                Belt_Array.map(AOC2020_Day4_Data$AdventOfCode.data.split("\n"), (function (prim) {
-                        return prim.trim();
-                      }));
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
+                var result = AOC2020_Day4$AdventOfCode.solvePart1(AOC2020_Day4_Data$AdventOfCode.data);
+                return Jest.Expect.toEqual(206, Jest.Expect.expect(result));
+              }));
+        Jest.test("validators yr", (function (param) {
+                var yr = function (__x) {
+                  return AOC2020_Day4$AdventOfCode.Passport.validateStringAsInt(__x, (function (__x) {
+                                return AOC2020_Day4$AdventOfCode.Passport.between(__x, 1920, 2002);
+                              }));
+                };
+                var result = [
+                  yr("1970"),
+                  yr("2010"),
+                  yr("2002")
+                ];
+                var expected = [
+                  true,
+                  false,
+                  true
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+              }));
+        Jest.test("validators hgt", (function (param) {
+                var hgt = AOC2020_Day4$AdventOfCode.Passport.hgtValidator;
+                var result = [
+                  Curry._1(hgt, "149cm"),
+                  Curry._1(hgt, "193cm"),
+                  Curry._1(hgt, "160cm"),
+                  Curry._1(hgt, "59in"),
+                  Curry._1(hgt, "78in"),
+                  Curry._1(hgt, "60in"),
+                  Curry._1(hgt, "cm"),
+                  Curry._1(hgt, "cm161"),
+                  Curry._1(hgt, "in"),
+                  Curry._1(hgt, "in64")
+                ];
+                var expected = [
+                  false,
+                  true,
+                  true,
+                  true,
+                  false,
+                  true,
+                  false,
+                  false,
+                  false,
+                  false
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+              }));
+        Jest.test("validators hcl", (function (param) {
+                var hcl = AOC2020_Day4$AdventOfCode.Passport.hclValidator;
+                var result = [
+                  Curry._1(hcl, "#123456"),
+                  Curry._1(hcl, "6543218"),
+                  Curry._1(hcl, "#abcdef"),
+                  Curry._1(hcl, "#abcdefg"),
+                  Curry._1(hcl, "#1234567"),
+                  Curry._1(hcl, "#ab12cg"),
+                  Curry._1(hcl, "#ab12ce")
+                ];
+                var expected = [
+                  true,
+                  false,
+                  true,
+                  false,
+                  false,
+                  false,
+                  true
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+              }));
+        Jest.test("validators ecl", (function (param) {
+                var ecl = AOC2020_Day4$AdventOfCode.Passport.eclValidator;
+                var result = [
+                  Curry._1(ecl, "amb"),
+                  Curry._1(ecl, "blu"),
+                  Curry._1(ecl, "brn"),
+                  Curry._1(ecl, "gry"),
+                  Curry._1(ecl, "grn"),
+                  Curry._1(ecl, "hzl"),
+                  Curry._1(ecl, "oth"),
+                  Curry._1(ecl, "blue"),
+                  Curry._1(ecl, ""),
+                  Curry._1(ecl, "black")
+                ];
+                var expected = [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+              }));
+        Jest.test("validators pid", (function (param) {
+                var pv = AOC2020_Day4$AdventOfCode.Passport.pidValidator;
+                var result = [
+                  Curry._1(pv, "123456789"),
+                  Curry._1(pv, "000011112"),
+                  Curry._1(pv, "1234567890"),
+                  Curry._1(pv, "aaaabbbbcc"),
+                  Curry._1(pv, "x23456789")
+                ];
+                var expected = [
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
-                      Belt_Array.map(AOC2020_Day4_Data$AdventOfCode.data.split("\n"), (function (prim) {
-                              return prim.trim();
-                            }));
-                      return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
+                      var result = AOC2020_Day4$AdventOfCode.solvePart2(AOC2020_Day4_Data$AdventOfCode.data);
+                      return Jest.Expect.toEqual(123, Jest.Expect.expect(result));
                     }));
       }));
 
