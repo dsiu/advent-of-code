@@ -27,6 +27,12 @@ function dump_mapString_of_int(param) {
               }), param);
 }
 
+function dump_mapString_of_string(param) {
+  return dump_mapString_of((function (a) {
+                return a;
+              }), param);
+}
+
 function dump_mapInt_of(m, f) {
   return Belt_MapInt.forEach(m, (function (k, v) {
                 var prim = "key:" + String(k) + ", val:" + Curry._1(f, v);
@@ -66,6 +72,7 @@ function flattenArray(arr) {
 exports.log = log;
 exports.dump_mapString_of = dump_mapString_of;
 exports.dump_mapString_of_int = dump_mapString_of_int;
+exports.dump_mapString_of_string = dump_mapString_of_string;
 exports.dump_mapInt_of = dump_mapInt_of;
 exports.dump_mapInt_of_int = dump_mapInt_of_int;
 exports.dump_mutableMapInt_of = dump_mutableMapInt_of;

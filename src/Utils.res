@@ -8,6 +8,7 @@ let dump_mapString_of = (f, m) =>
   })
 
 let dump_mapString_of_int = dump_mapString_of(Int.toString)
+let dump_mapString_of_string = dump_mapString_of(a => a)
 
 // map int
 let dump_mapInt_of = (m, f) =>
