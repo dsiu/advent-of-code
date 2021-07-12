@@ -2,7 +2,7 @@
 'use strict';
 
 
-var data = "";
+var data = "BFFFBBFRRR\nFFFBBBFRRR\nBBFFBBFRLL";
 
 exports.data = data;
 /* No side effect */

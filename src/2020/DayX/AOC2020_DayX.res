@@ -4,7 +4,7 @@ let log = Js.Console.log
 
 let parse = data =>
   data
-  ->Js.String2.split("\n\n")
+  ->Js.String2.split("\n")
   ->Array.map(x => {
     x->Js.String2.trim->Js.String2.replaceByRe(%re("/(\\r\\n|\\r|\\n|\\s)+/g"), " ")
   })

@@ -9,7 +9,7 @@ function log(prim) {
 }
 
 function parse(data) {
-  return Belt_Array.map(data.split("\n\n"), (function (x) {
+  return Belt_Array.map(data.split("\n"), (function (x) {
                 return x.trim().replace(/(\r\n|\r|\n|\s)+/g, " ");
               }));
 }
