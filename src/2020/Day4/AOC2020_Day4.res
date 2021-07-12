@@ -1,6 +1,5 @@
 open Belt
 let log = Js.Console.log
-open Utils
 
 module Passport = {
   type t = Map.String.t<string>
