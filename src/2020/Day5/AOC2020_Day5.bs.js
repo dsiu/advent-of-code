@@ -27,10 +27,10 @@ function replace(src, from, to_) {
 }
 
 function get(t) {
-  return Belt_Array.map(t.raw.split(""), (function (c) {
-                var __x = replace(c, t.zero, "0");
-                return replace(__x, t.one, "1");
-              }));
+  return parseInt(Belt_Array.map(t.raw.split(""), (function (c) {
+                      var __x = replace(c, t.zero, "0");
+                      return replace(__x, t.one, "1");
+                    })).join(""), 2);
 }
 
 var BitString = {
