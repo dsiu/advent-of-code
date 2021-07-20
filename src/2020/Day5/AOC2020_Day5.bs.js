@@ -3,6 +3,8 @@
 
 var Caml_obj = require("rescript/lib/js/caml_obj.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
+var Belt_SortArrayInt = require("rescript/lib/js/belt_SortArrayInt.js");
 
 function log(prim) {
   console.log(prim);
@@ -54,35 +56,58 @@ function getColumn(t) {
   return get(t.column);
 }
 
+function getSeatId(t) {
+  return (get(t.row) << 3) + get(t.column) | 0;
+}
+
 var BoardingPass = {
   make: make$1,
   getRow: getRow,
-  getColumn: getColumn
+  getColumn: getColumn,
+  getSeatId: getSeatId
 };
 
 function parse(data) {
-  return data.split("\n");
+  return Belt_Array.map(data.split("\n"), (function (prim) {
+                return prim.trim();
+              }));
+}
+
+function maxReducer(a, x) {
+  if (Caml_obj.caml_greaterthan(x, a)) {
+    return x;
+  } else {
+    return a;
+  }
+}
+
+function findGap(a, x) {
+  if ((x - a | 0) === 1) {
+    return x;
+  } else {
+    return a;
+  }
 }
 
 function solvePart1(data) {
-  var passes = Belt_Array.map(data.split("\n"), make$1);
-  console.log("rows");
-  var prim = Belt_Array.map(passes, getRow);
-  console.log(prim);
-  console.log("columns");
-  var prim$1 = Belt_Array.map(passes, getColumn);
-  console.log(prim$1);
-  return 1;
+  var passes = Belt_Array.map(parse(data), make$1);
+  return Belt_Array.reduce(Belt_Array.map(passes, getSeatId), 0, maxReducer);
 }
 
 function solvePart2(data) {
-  return 2;
+  var passes = Belt_Array.map(parse(data), make$1);
+  var seatIds = Belt_Array.map(passes, getSeatId);
+  var sortedSeatIds = Belt_SortArrayInt.stableSort(seatIds);
+  var init = Belt_Option.getExn(Belt_Array.get(sortedSeatIds, 0)) - 1 | 0;
+  return Belt_Array.reduce(sortedSeatIds, init, findGap) + 1 | 0;
 }
 
 exports.log = log;
 exports.BitString = BitString;
 exports.BoardingPass = BoardingPass;
 exports.parse = parse;
+exports.maxReducer = maxReducer;
+exports.findGap = findGap;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
 /* No side effect */

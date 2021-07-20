@@ -36,20 +36,31 @@ module BoardingPass = {
 
   let getRow = t => t.row->BitString.get
   let getColumn = t => t.column->BitString.get
+  let getSeatId = t => t->getRow * 8 + t->getColumn
 }
 
-let parse = data => data->Js.String2.split("\n")
+let parse = data => data->Js.String2.split("\n")->Array.map(Js.String2.trim)
+
+let maxReducer = (a, x) => x > a ? x : a
+let findGap = (a, x) => x - a == 1 ? x : a
 
 let solvePart1 = data => {
   let passes = data->parse->Array.map(BoardingPass.make)
-  "rows"->log
-  passes->Array.map(BoardingPass.getRow)->log
-  "columns"->log
-  passes->Array.map(BoardingPass.getColumn)->log
-  1
+  //  "rows"->log
+  //  passes->Array.map(BoardingPass.getRow)->log
+  //  "columns"->log
+  //  passes->Array.map(BoardingPass.getColumn)->log
+  //  "seatIds"->log
+  let seatIds = passes->Array.map(BoardingPass.getSeatId)
+  seatIds->Array.reduce(_, 0, maxReducer)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let passes = data->parse->Array.map(BoardingPass.make)
+  let seatIds = passes->Array.map(BoardingPass.getSeatId)
+  let sortedSeatIds = seatIds->Belt.SortArray.Int.stableSort
+  //  "sortedSeatIds"->log
+  //  sortedSeatIds->log
+  let init = sortedSeatIds->Array.get(0)->Option.getExn - 1
+  sortedSeatIds->Array.reduce(_, init, findGap) + 1
 }

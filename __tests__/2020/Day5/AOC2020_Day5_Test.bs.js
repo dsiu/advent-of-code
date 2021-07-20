@@ -9,15 +9,15 @@ var AOC2020_Day5_Data_Test$AdventOfCode = require("../../../src/2020/Day5/AOC202
 Jest.describe("2020 Day5", (function (param) {
         Jest.test("Part 1 - Test Data", (function (param) {
                 var result = AOC2020_Day5$AdventOfCode.solvePart1(AOC2020_Day5_Data_Test$AdventOfCode.data);
-                return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual(820, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2020_Day5$AdventOfCode.solvePart1(AOC2020_Day5_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(206, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual(908, Jest.Expect.expect(result));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2020_Day5$AdventOfCode.solvePart2(AOC2020_Day5_Data$AdventOfCode.data);
-                      return Jest.Expect.toEqual(123, Jest.Expect.expect(result));
+                      return Jest.Expect.toEqual(619, Jest.Expect.expect(result));
                     }));
       }));
 

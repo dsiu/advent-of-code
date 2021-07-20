@@ -10,21 +10,21 @@ let testData = AOC2020_Day5_Data_Test.data
 describe("2020 Day5", () => {
   test("Part 1 - Test Data", () => {
     let result = AOC2020_Day5.solvePart1(testData)
-    let expected = 2
+    let expected = 820
 
     expect(result) |> toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2020_Day5.solvePart1(data)
-    let expected = 206
+    let expected = 908
 
     expect(result) |> toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_Day5.solvePart2(data)
-    let expected = 123
+    let expected = 619
 
     expect(result) |> toEqual(expected)
   })
