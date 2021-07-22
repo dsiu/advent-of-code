@@ -2,6 +2,7 @@
 'use strict';
 
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 
 function log(prim) {
@@ -9,12 +10,55 @@ function log(prim) {
   
 }
 
-var Rules = {};
+var nodeRe = /(.*)\s+bags/i;
+
+function parseNode(s) {
+  var x = nodeRe.exec(s);
+  if (x !== null) {
+    return Belt_Option.getExn(Belt_Array.get(x, 0));
+  }
+  throw {
+        RE_EXN_ID: "Not_found",
+        Error: new Error()
+      };
+}
+
+var leafRe = /(.*)\s+bags/i;
+
+function parseLeaf(s) {
+  var x = leafRe.exec(s);
+  if (x !== null) {
+    return Belt_Option.getExn(Belt_Array.get(x, 0));
+  }
+  throw {
+        RE_EXN_ID: "Not_found",
+        Error: new Error()
+      };
+}
+
+function addRule(l) {
+  var node = parseNode(Belt_Option.getExn(Belt_Array.get(l, 0)));
+  var leaf = parseLeaf(Belt_Option.getExn(Belt_Array.get(l, 1)));
+  Utils$AdventOfCode.log(node);
+  Utils$AdventOfCode.log(leaf);
+  return [
+          node,
+          leaf
+        ];
+}
+
+var Rules = {
+  nodeRe: nodeRe,
+  parseNode: parseNode,
+  leafRe: leafRe,
+  parseLeaf: parseLeaf,
+  addRule: addRule
+};
 
 function parseLine(l) {
-  return Belt_Array.map(l.trim().split("contain", 2), (function (prim) {
-                return prim.trim();
-              }));
+  return addRule(Belt_Array.map(l.trim().split("contain", 2), (function (prim) {
+                    return prim.trim();
+                  })));
 }
 
 function parse(data) {
