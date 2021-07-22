@@ -1,18 +1,21 @@
 open Belt
 let log = Js.Console.log
-//open Utils
+open Utils
 
-//let parseLine = l =>
+module Rules = {
+  type t = {
+    count: int,
+    bag: string,
+  }
+}
 
-let parse = data =>
-  data
-  ->Js.String2.split("\n")
-  ->Array.map(x => {
-    x->Js.String2.trim->Js.String2.replaceByRe(%re("/(\\r\\n|\\r|\\n|\\s)+/g"), " ")
-  })
+let parseLine = l =>
+  l->Js.String2.trim->Js.String2.splitAtMost(_, "contain", ~limit=2)->Array.map(Js.String2.trim)
+
+let parse = data => data->splitNewline->Array.map(parseLine)
 
 let solvePart1 = data => {
-  data->ignore
+  data->parse->log
   1
 }
 
