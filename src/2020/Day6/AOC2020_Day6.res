@@ -1,14 +1,8 @@
 open Belt
 let log = Js.Console.log
-//open Utils
+open Utils
 
 // probably move these split functions to util?
-let splitChars = Js.String2.split(_, "")
-let splitNewline = Js.String2.split(_, "\n")
-let splitDoubleNewline = Js.String2.split(_, "\n\n")
-let sum = (a, x) => a + x
-let sumIntArray = Array.reduce(_, 0, sum)
-let join = Js.Array2.joinWith(_, "")
 
 let parsePart1 = x => x->splitNewline->Array.map(Js.String2.trim)->join->splitChars
 

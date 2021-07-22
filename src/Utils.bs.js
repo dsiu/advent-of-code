@@ -65,8 +65,28 @@ function dump_list(__x) {
   return Belt_List.forEach(__x, log);
 }
 
-function flattenArray(arr) {
-  return Belt_Array.reduce(arr, [], Belt_Array.concat);
+function splitChars(__x) {
+  return __x.split("");
+}
+
+function splitNewline(__x) {
+  return __x.split("\n");
+}
+
+function splitDoubleNewline(__x) {
+  return __x.split("\n\n");
+}
+
+function sum(a, x) {
+  return a + x | 0;
+}
+
+function sumIntArray(__x) {
+  return Belt_Array.reduce(__x, 0, sum);
+}
+
+function join(__x) {
+  return __x.join("");
 }
 
 exports.log = log;
@@ -78,5 +98,10 @@ exports.dump_mapInt_of_int = dump_mapInt_of_int;
 exports.dump_mutableMapInt_of = dump_mutableMapInt_of;
 exports.dump_mutableMapInt_of_int = dump_mutableMapInt_of_int;
 exports.dump_list = dump_list;
-exports.flattenArray = flattenArray;
+exports.splitChars = splitChars;
+exports.splitNewline = splitNewline;
+exports.splitDoubleNewline = splitDoubleNewline;
+exports.sum = sum;
+exports.sumIntArray = sumIntArray;
+exports.join = join;
 /* No side effect */

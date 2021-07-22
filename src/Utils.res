@@ -26,3 +26,13 @@ let dump_mutableMapInt_of_int = dump_mutableMapInt_of(Int.toString)
 
 // list
 let dump_list = List.forEach(_, log)
+
+// strings
+let splitChars = Js.String2.split(_, "")
+let splitNewline = Js.String2.split(_, "\n")
+let splitDoubleNewline = Js.String2.split(_, "\n\n")
+
+// array
+let sum = (a, x) => a + x
+let sumIntArray = Array.reduce(_, 0, sum)
+let join = Js.Array2.joinWith(_, "")

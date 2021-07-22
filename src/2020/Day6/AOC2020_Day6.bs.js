@@ -3,40 +3,17 @@
 
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_SetString = require("rescript/lib/js/belt_SetString.js");
+var Utils$AdventOfCode = require("../../Utils.bs.js");
 
 function log(prim) {
   console.log(prim);
   
 }
 
-function splitChars(__x) {
-  return __x.split("");
-}
-
-function splitNewline(__x) {
-  return __x.split("\n");
-}
-
-function splitDoubleNewline(__x) {
-  return __x.split("\n\n");
-}
-
-function sum(a, x) {
-  return a + x | 0;
-}
-
-function sumIntArray(__x) {
-  return Belt_Array.reduce(__x, 0, sum);
-}
-
-function join(__x) {
-  return __x.join("");
-}
-
 function parsePart1(x) {
-  return Belt_Array.map(x.split("\n"), (function (prim) {
-                    return prim.trim();
-                  })).join("").split("");
+  return Utils$AdventOfCode.splitChars(Utils$AdventOfCode.join(Belt_Array.map(Utils$AdventOfCode.splitNewline(x), (function (prim) {
+                        return prim.trim();
+                      }))));
 }
 
 function countUnique(x) {
@@ -44,33 +21,27 @@ function countUnique(x) {
 }
 
 function parse(data, f) {
-  return Belt_Array.map(data.split("\n\n"), f);
+  return Belt_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), f);
 }
 
-var filled = Belt_SetString.fromArray("abcdefghijklmnopqrstuvwxyz".split(""));
+var filled = Belt_SetString.fromArray(Utils$AdventOfCode.splitChars("abcdefghijklmnopqrstuvwxyz"));
 
 function parsePart2(x) {
-  var __x = Belt_Array.map(Belt_Array.map(Belt_Array.map(x.split("\n"), (function (prim) {
+  var __x = Belt_Array.map(Belt_Array.map(Belt_Array.map(Utils$AdventOfCode.splitNewline(x), (function (prim) {
                   return prim.trim();
-                })), splitChars), Belt_SetString.fromArray);
+                })), Utils$AdventOfCode.splitChars), Belt_SetString.fromArray);
   return Belt_SetString.size(Belt_Array.reduce(__x, filled, Belt_SetString.intersect));
 }
 
 function solvePart1(data) {
-  return Belt_Array.reduce(Belt_Array.map(Belt_Array.map(data.split("\n\n"), parsePart1), countUnique), 0, sum);
+  return Utils$AdventOfCode.sumIntArray(Belt_Array.map(Belt_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), parsePart1), countUnique));
 }
 
 function solvePart2(data) {
-  return Belt_Array.reduce(Belt_Array.map(data.split("\n\n"), parsePart2), 0, sum);
+  return Utils$AdventOfCode.sumIntArray(Belt_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), parsePart2));
 }
 
 exports.log = log;
-exports.splitChars = splitChars;
-exports.splitNewline = splitNewline;
-exports.splitDoubleNewline = splitDoubleNewline;
-exports.sum = sum;
-exports.sumIntArray = sumIntArray;
-exports.join = join;
 exports.parsePart1 = parsePart1;
 exports.countUnique = countUnique;
 exports.parse = parse;
