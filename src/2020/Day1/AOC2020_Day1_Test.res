@@ -4,11 +4,11 @@ open! Expect.Operators
 open AOC2020_Day1
 
 let data = AOC2020_Day1_Data.data
-let testData = AOC2020_Day1_Data_Sample.data
+let sampleData = AOC2020_Day1_Data_Sample.data
 
 describe("2020 Day1", () => {
   test("Part 1 - Test Data", () => {
-    let result = solvePart1(testData)
+    let result = solvePart1(sampleData)
     let expected = [514579, 514579]
 
     expect(result) |> toEqual(expected)

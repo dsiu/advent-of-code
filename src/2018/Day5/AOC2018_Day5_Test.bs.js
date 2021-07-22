@@ -66,11 +66,11 @@ Jest.describe("2018 Day5", (function (param) {
                                     true
                                   ], Jest.Expect.expect(result));
                       }));
-                Jest.test("Solve Part 1 - testData list", (function (param) {
+                Jest.test("Solve Part 1 - sampleData list", (function (param) {
                         var result = Belt_List.toArray(AOC2018_Day5$AdventOfCode.defuse(testCharList)).join("");
                         return Jest.Expect.toEqual("dabCBAcaDA", Jest.Expect.expect(result));
                       }));
-                Jest.test("Solve Part 1 - testData array", (function (param) {
+                Jest.test("Solve Part 1 - sampleData array", (function (param) {
                         var result = AOC2018_Day5$AdventOfCode.defuse_array(testCharArray).join("");
                         return Jest.Expect.toEqual("dabCBAcaDA", Jest.Expect.expect(result));
                       }));
@@ -100,7 +100,7 @@ Jest.describe("2018 Day5", (function (param) {
                               ];
                               return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
                             }));
-                      Jest.test("Solve Part 2 - testData", (function (param) {
+                      Jest.test("Solve Part 2 - sampleData", (function (param) {
                               var result = AOC2018_Day5$AdventOfCode.solvePart2(AOC2018_Day5$AdventOfCode.aTod, testCharArray);
                               return Jest.Expect.toEqual(4, Jest.Expect.expect(result));
                             }));
@@ -113,10 +113,10 @@ Jest.describe("2018 Day5", (function (param) {
 
 var data = AOC2018_Day5_Data$AdventOfCode.data;
 
-var testData = AOC2018_Day5_Data_Sample$AdventOfCode.data;
+var sampleData = AOC2018_Day5_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
-exports.testData = testData;
+exports.sampleData = sampleData;
 exports.testCharArray = testCharArray;
 exports.testCharList = testCharList;
 exports.charArray = charArray;

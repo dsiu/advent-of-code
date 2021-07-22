@@ -4,7 +4,7 @@ open Belt
 open Utils
 let log = Js.Console.log
 let data = AOC2018_Day6_Data.data
-let testData = AOC2018_Day6_Data_Sample.data
+let sampleData = AOC2018_Day6_Data_Sample.data
 
 module Coord = {
   type t = {x: int, y: int}

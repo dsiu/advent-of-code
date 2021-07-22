@@ -5,10 +5,10 @@ open Belt
 open AOC2018_Day5
 
 let data = AOC2018_Day5_Data.data
-let testData = AOC2018_Day5_Data_Sample.data
+let sampleData = AOC2018_Day5_Data_Sample.data
 // dabAcCaCBAcCcaDA
 
-let testCharArray = testData->Js.String2.split("")
+let testCharArray = sampleData->Js.String2.split("")
 let testCharList = testCharArray->List.fromArray
 
 let charArray = data->Js.String2.split("")
@@ -38,14 +38,14 @@ describe("2018 Day5", () => {
     // expect(result) |> toEqual(expected)
     // })
 
-    test("Solve Part 1 - testData list", () => {
+    test("Solve Part 1 - sampleData list", () => {
       let result = testCharList->defuse->List.toArray->Js.Array2.joinWith(_, "")
       // dabAcCaCBAcCcaDA
       let expected = "dabCBAcaDA"
       expect(result) |> toEqual(expected)
     })
 
-    test("Solve Part 1 - testData array", () => {
+    test("Solve Part 1 - sampleData array", () => {
       let result = testCharArray->defuse_array->Js.Array2.joinWith(_, "")
       // dabAcCaCBAcCcaDA
       let expected = "dabCBAcaDA"
@@ -72,7 +72,7 @@ describe("2018 Day5", () => {
       expect(result) |> toEqual(expected)
     })
 
-    test("Solve Part 2 - testData", () => {
+    test("Solve Part 2 - sampleData", () => {
       let result = AOC2018_Day5.solvePart2(aTod, testCharArray)
       let expected = 4
       expect(result) |> toEqual(expected)

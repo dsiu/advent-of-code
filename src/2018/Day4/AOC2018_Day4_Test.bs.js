@@ -8,7 +8,7 @@ var AOC2018_Day4_Data_Sample$AdventOfCode = require("./AOC2018_Day4_Data_Sample.
 
 Jest.describe("2018 Day4", (function (param) {
         Jest.describe("Part 1", (function (param) {
-                Jest.test("Solve Part 1 - testData", (function (param) {
+                Jest.test("Solve Part 1 - sampleData", (function (param) {
                         var result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data_Sample$AdventOfCode.data);
                         return Jest.Expect.toEqual(240, Jest.Expect.expect(result));
                       }));
@@ -18,7 +18,7 @@ Jest.describe("2018 Day4", (function (param) {
                             }));
               }));
         return Jest.describe("Part 2", (function (param) {
-                      Jest.test("Solve Part 2 - testData", (function (param) {
+                      Jest.test("Solve Part 2 - sampleData", (function (param) {
                               var result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data_Sample$AdventOfCode.data);
                               return Jest.Expect.toEqual(4455, Jest.Expect.expect(result));
                             }));
@@ -31,8 +31,8 @@ Jest.describe("2018 Day4", (function (param) {
 
 var data = AOC2018_Day4_Data$AdventOfCode.data;
 
-var testData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
+var sampleData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
-exports.testData = testData;
+exports.sampleData = sampleData;
 /*  Not a pure module */

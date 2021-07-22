@@ -5,12 +5,12 @@ open! Expect.Operators
 open AOC2018_Day4
 
 let data = AOC2018_Day4_Data.data
-let testData = AOC2018_Day4_Data_Sample.data
+let sampleData = AOC2018_Day4_Data_Sample.data
 
 describe("2018 Day4", () => {
   describe("Part 1", () => {
-    test("Solve Part 1 - testData", () => {
-      let result = AOC2018_Day4.solvePart1(testData)
+    test("Solve Part 1 - sampleData", () => {
+      let result = AOC2018_Day4.solvePart1(sampleData)
       let expected = 240
       expect(result) |> toEqual(expected)
     })
@@ -23,8 +23,8 @@ describe("2018 Day4", () => {
   })
 
   describe("Part 2", () => {
-    test("Solve Part 2 - testData", () => {
-      let result = AOC2018_Day4.solvePart2(testData)
+    test("Solve Part 2 - sampleData", () => {
+      let result = AOC2018_Day4.solvePart2(sampleData)
       let expected = 4455
       expect(result) |> toEqual(expected)
     })

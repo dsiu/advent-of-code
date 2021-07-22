@@ -6,11 +6,11 @@ open AOC2020_Day3
 open Belt
 
 let data = AOC2020_Day3_Data.data
-let testData = AOC2020_Day3_Data_Sample.data
+let sampleData = AOC2020_Day3_Data_Sample.data
 
 describe("2020 Day3", () => {
   //  test("Part 1 - TreeMap make", () => {
-  //    let parsed = testData->Js.String2.split("\n")->Array.map(Js.String2.trim)
+  //    let parsed = sampleData->Js.String2.split("\n")->Array.map(Js.String2.trim)
   //    let result = TreeMap.make(parsed)
   //
   //    let expected0 = "..##......."->Js.String2.split("")
@@ -22,7 +22,7 @@ describe("2020 Day3", () => {
   //  })
 
   test("Part 1 - Test Data", () => {
-    let parsed = testData->Js.String2.split("\n")->Array.map(Js.String2.trim)
+    let parsed = sampleData->Js.String2.split("\n")->Array.map(Js.String2.trim)
     let result = parsed->TreeMap.make->TreeMap.walk((3, 1))
 
     let expected = 7

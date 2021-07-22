@@ -23,8 +23,8 @@ Jest.describe("2020 Day5", (function (param) {
 
 var data = AOC2020_Day5_Data$AdventOfCode.data;
 
-var testData = AOC2020_Day5_Data_Sample$AdventOfCode.data;
+var sampleData = AOC2020_Day5_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
-exports.testData = testData;
+exports.sampleData = sampleData;
 /*  Not a pure module */

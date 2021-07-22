@@ -1,5 +1,5 @@
 let data = AOC2018_Day5_Data.data
-let testData = AOC2018_Day5_Data_Sample.data
+let sampleData = AOC2018_Day5_Data_Sample.data
 open Belt
 //open Utils
 
@@ -10,7 +10,7 @@ let log = Js.Console.log
 let charArray = data->Js.String2.split("")
 let charList = charArray->List.fromArray
 
-let testCharArray = testData->Js.String2.split("")
+let testCharArray = sampleData->Js.String2.split("")
 let testCharList = testCharArray->List.fromArray
 
 // charList -> List.forEach(Console.log)

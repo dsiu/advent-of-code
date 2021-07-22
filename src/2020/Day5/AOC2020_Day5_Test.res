@@ -5,11 +5,11 @@ open! Expect.Operators
 //open Belt
 
 let data = AOC2020_Day5_Data.data
-let testData = AOC2020_Day5_Data_Sample.data
+let sampleData = AOC2020_Day5_Data_Sample.data
 
 describe("2020 Day5", () => {
   test("Part 1 - Test Data", () => {
-    let result = AOC2020_Day5.solvePart1(testData)
+    let result = AOC2020_Day5.solvePart1(sampleData)
     let expected = 820
 
     expect(result) |> toEqual(expected)

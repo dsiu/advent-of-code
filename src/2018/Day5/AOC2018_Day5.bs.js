@@ -240,10 +240,10 @@ function solvePart2(polymars, d) {
 
 var data = AOC2018_Day5_Data$AdventOfCode.data;
 
-var testData = AOC2018_Day5_Data_Sample$AdventOfCode.data;
+var sampleData = AOC2018_Day5_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
-exports.testData = testData;
+exports.sampleData = sampleData;
 exports.log = log;
 exports.charArray = charArray;
 exports.charList = charList;

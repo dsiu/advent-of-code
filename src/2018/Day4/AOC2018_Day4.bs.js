@@ -384,10 +384,10 @@ function solvePart2(data) {
 
 var data = AOC2018_Day4_Data$AdventOfCode.data;
 
-var testData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
+var sampleData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
-exports.testData = testData;
+exports.sampleData = sampleData;
 exports.Attendance = Attendance;
 exports.Parser = Parser;
 exports.solvePart1 = solvePart1;

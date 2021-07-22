@@ -16,10 +16,10 @@ console.log(part1);
 
 var data = AOC2020_Day1_Data$AdventOfCode.data;
 
-var testData = AOC2020_Day1_Data_Sample$AdventOfCode.data;
+var sampleData = AOC2020_Day1_Data_Sample$AdventOfCode.data;
 
 exports.log = log;
 exports.data = data;
-exports.testData = testData;
+exports.sampleData = sampleData;
 exports.part1 = part1;
 /* part1 Not a pure module */

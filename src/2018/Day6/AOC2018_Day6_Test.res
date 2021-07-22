@@ -6,7 +6,7 @@ open Belt
 open AOC2018_Day6
 
 let data = AOC2018_Day6_Data.data
-let testData = AOC2018_Day6_Data_Sample.data
+let sampleData = AOC2018_Day6_Data_Sample.data
 
 describe("2018 Day6", () => {
   describe("Part 1", () => {
