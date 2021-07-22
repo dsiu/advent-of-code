@@ -76,8 +76,8 @@ let solvePart2 = data => {
     let ss = BigInt.fromInt(s)
     let ret = BigInt.mul(a, ss)
 
-    let itos = Js.Int.toString
-    let bitos = BigInt.toString
+    //    let itos = Js.Int.toString
+    //    let bitos = BigInt.toString
 
     //    `a=${a->bitos} s=${s->itos} a*s=${ret->bitos}`->log
     ret
