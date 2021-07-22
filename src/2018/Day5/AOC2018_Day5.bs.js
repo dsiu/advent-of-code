@@ -7,7 +7,7 @@ var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
 var AOC2018_Day5_Data$AdventOfCode = require("./AOC2018_Day5_Data.bs.js");
-var AOC2018_Day5_Data_Test$AdventOfCode = require("./AOC2018_Day5_Data_Test.bs.js");
+var AOC2018_Day5_Data_Sample$AdventOfCode = require("./AOC2018_Day5_Data_Sample.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -18,7 +18,7 @@ var charArray = AOC2018_Day5_Data$AdventOfCode.data.split("");
 
 var charList = Belt_List.fromArray(charArray);
 
-var testCharArray = AOC2018_Day5_Data_Test$AdventOfCode.data.split("");
+var testCharArray = AOC2018_Day5_Data_Sample$AdventOfCode.data.split("");
 
 var testCharList = Belt_List.fromArray(testCharArray);
 
@@ -240,7 +240,7 @@ function solvePart2(polymars, d) {
 
 var data = AOC2018_Day5_Data$AdventOfCode.data;
 
-var testData = AOC2018_Day5_Data_Test$AdventOfCode.data;
+var testData = AOC2018_Day5_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
 exports.testData = testData;

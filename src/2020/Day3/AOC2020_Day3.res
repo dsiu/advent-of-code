@@ -67,7 +67,7 @@ let solvePart2 = data => {
   let tm = TreeMap.make(parsed)
   let slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
   let trees = slopes->Array.map(s => tm->TreeMap.walk(_, s))
-  trees->log
+  //  trees->log
 
   open ReScriptJs.Js
   let acc = BigInt.fromInt(1)
@@ -79,7 +79,7 @@ let solvePart2 = data => {
     let itos = Js.Int.toString
     let bitos = BigInt.toString
 
-    `a=${a->bitos} s=${s->itos} a*s=${ret->bitos}`->log
+    //    `a=${a->bitos} s=${s->itos} a*s=${ret->bitos}`->log
     ret
   })
   ->BigInt.toString

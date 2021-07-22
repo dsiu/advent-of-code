@@ -41,7 +41,7 @@ module Password = {
 
 let solvePart1 = data => {
   let pws = data->Js.String2.split("\n")->Array.map(s => s->Js.String2.trim->Password.make)
-  pws->Js.Console.log
+  //  pws->Js.Console.log
   pws->Array.keep(Password.isValidPart1)->Array.size
 }
 let solvePart2 = data => {

@@ -52,7 +52,6 @@ function solvePart1(data) {
   var pws = Belt_Array.map(data.split("\n"), (function (s) {
           return make(s.trim());
         }));
-  console.log(pws);
   return Belt_Array.keep(pws, isValidPart1).length;
 }
 

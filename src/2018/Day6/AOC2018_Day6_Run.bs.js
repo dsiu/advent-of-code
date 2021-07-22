@@ -3,20 +3,20 @@
 
 var AOC2018_Day6$AdventOfCode = require("./AOC2018_Day6.bs.js");
 var AOC2018_Day6_Data$AdventOfCode = require("./AOC2018_Day6_Data.bs.js");
-var AOC2018_Day6_Data_Test$AdventOfCode = require("./AOC2018_Day6_Data_Test.bs.js");
+var AOC2018_Day6_Data_Sample$AdventOfCode = require("./AOC2018_Day6_Data_Sample.bs.js");
 
 function log(prim) {
   console.log(prim);
   
 }
 
-var part1 = AOC2018_Day6$AdventOfCode.solvePart1(AOC2018_Day6_Data_Test$AdventOfCode.data);
+var part1 = AOC2018_Day6$AdventOfCode.solvePart1(AOC2018_Day6_Data_Sample$AdventOfCode.data);
 
 console.log(part1);
 
 var data = AOC2018_Day6_Data$AdventOfCode.data;
 
-var testData = AOC2018_Day6_Data_Test$AdventOfCode.data;
+var testData = AOC2018_Day6_Data_Sample$AdventOfCode.data;
 
 exports.log = log;
 exports.data = data;

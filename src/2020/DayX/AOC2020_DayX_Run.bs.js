@@ -3,7 +3,7 @@
 
 var AOC2020_DayX$AdventOfCode = require("./AOC2020_DayX.bs.js");
 var AOC2020_DayX_Data$AdventOfCode = require("./AOC2020_DayX_Data.bs.js");
-var AOC2020_DayX_Data_Test$AdventOfCode = require("./AOC2020_DayX_Data_Test.bs.js");
+var AOC2020_DayX_Data_Sample$AdventOfCode = require("./AOC2020_DayX_Data_Sample.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -24,7 +24,7 @@ console.log(part2);
 
 var data = AOC2020_DayX_Data$AdventOfCode.data;
 
-var testData = AOC2020_DayX_Data_Test$AdventOfCode.data;
+var testData = AOC2020_DayX_Data_Sample$AdventOfCode.data;
 
 exports.log = log;
 exports.data = data;

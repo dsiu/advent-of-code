@@ -19,8 +19,8 @@
   },
   "jest": {
     "testMatch": [
-      "<rootDir>/**/*.test.(js|jsx|ts|tsx)",
-      "<rootDir>/__tests__/**/*.(js|jsx|ts|tsx)"
+      "<rootDir>/**/**/*.test.(js|jsx|ts|tsx)",
+      "<rootDir>/**/*_Test.bs.js"
     ]
   },
   "dependencies": {

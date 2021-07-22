@@ -1,6 +1,6 @@
 let log = Js.Console.log
 let data = AOC2020_DayX_Data.data
-let testData = AOC2020_DayX_Data_Test.data
+let testData = AOC2020_DayX_Data_Sample.data
 
 //let part1 = AOC2020_DayX.solvePart1(testData)
 let part1 = AOC2020_DayX.solvePart1(data)

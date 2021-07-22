@@ -152,14 +152,10 @@ function solvePart2(data) {
   var trees = Belt_Array.map(slopes, (function (s) {
           return walk(tm, s);
         }));
-  console.log(trees);
   var acc = BigInt(1);
   return Belt_Array.reduce(trees, acc, (function (a, s) {
                   var ss = BigInt(s);
-                  var ret = a * ss;
-                  var prim = "a=" + a.toString() + " s=" + s.toString() + " a*s=" + ret.toString();
-                  console.log(prim);
-                  return ret;
+                  return a * ss;
                 })).toString();
 }
 

@@ -5,7 +5,7 @@ var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Array2D$AdventOfCode = require("../src/Array2D.bs.js");
 var AOC2020_Day4_Data$AdventOfCode = require("../src/2020/Day4/AOC2020_Day4_Data.bs.js");
-var AOC2020_Day4_Data_Test$AdventOfCode = require("../src/2020/Day4/AOC2020_Day4_Data_Test.bs.js");
+var AOC2020_Day4_Data_Sample$AdventOfCode = require("../src/2020/Day4/AOC2020_Day4_Data_Sample.bs.js");
 
 Jest.describe("Array2D - make / set / get", (function (param) {
         Jest.test("make - int", (function (param) {
@@ -182,7 +182,7 @@ Jest.describe("Array2D - keep / map", (function (param) {
 
 var data = AOC2020_Day4_Data$AdventOfCode.data;
 
-var testData = AOC2020_Day4_Data_Test$AdventOfCode.data;
+var testData = AOC2020_Day4_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
 exports.testData = testData;

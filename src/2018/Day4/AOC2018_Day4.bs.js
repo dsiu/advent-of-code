@@ -11,7 +11,7 @@ var Belt_MutableSetInt = require("rescript/lib/js/belt_MutableSetInt.js");
 var Belt_SortArrayString = require("rescript/lib/js/belt_SortArrayString.js");
 var Belt_MutableMapString = require("rescript/lib/js/belt_MutableMapString.js");
 var AOC2018_Day4_Data$AdventOfCode = require("./AOC2018_Day4_Data.bs.js");
-var AOC2018_Day4_Data_Test$AdventOfCode = require("./AOC2018_Day4_Data_Test.bs.js");
+var AOC2018_Day4_Data_Sample$AdventOfCode = require("./AOC2018_Day4_Data_Sample.bs.js");
 
 function insertHourRec(hr, from_min, to_min) {
   Belt_Range.forEach(from_min, to_min, (function (i) {
@@ -384,7 +384,7 @@ function solvePart2(data) {
 
 var data = AOC2018_Day4_Data$AdventOfCode.data;
 
-var testData = AOC2018_Day4_Data_Test$AdventOfCode.data;
+var testData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
 exports.testData = testData;

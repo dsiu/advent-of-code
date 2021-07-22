@@ -2,7 +2,7 @@ open Jest
 open Belt
 
 let data = AOC2020_Day4_Data.data
-let testData = AOC2020_Day4_Data_Test.data
+let testData = AOC2020_Day4_Data_Sample.data
 
 describe("Array2D - make / set / get", () => {
   open Expect
