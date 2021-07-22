@@ -26,7 +26,3 @@ let dump_mutableMapInt_of_int = dump_mutableMapInt_of(Int.toString)
 
 // list
 let dump_list = List.forEach(_, log)
-
-// array
-let flattenArray = (arr: array<array<'a>>): array<'a> =>
-  arr->Array.reduce([], (acc, x) => acc->Array.concat(x))

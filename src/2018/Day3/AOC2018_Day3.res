@@ -198,8 +198,8 @@ module Fabric = {
           }
         ) |> Array.concat(accX)
       )
-      ->Utils.flattenArray
-
+      //      ->Utils.flattenArray
+      ->Belt.Array.concatMany
     //    Js.Console.log("cids")
     //    Js.Console.log(cids)
 

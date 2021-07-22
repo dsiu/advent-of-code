@@ -8,7 +8,6 @@ var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_format = require("rescript/lib/js/caml_format.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 var Belt_MutableMapInt = require("rescript/lib/js/belt_MutableMapInt.js");
-var Utils$AdventOfCode = require("../../Utils.bs.js");
 var AOC2018_Day3_Data$AdventOfCode = require("./AOC2018_Day3_Data.bs.js");
 
 function id(t) {
@@ -204,7 +203,7 @@ function getClaimIdFromPointIf(t, c, x, y, c$1) {
 }
 
 function getClaimIdsFromArea(t, c) {
-  var cids = Utils$AdventOfCode.flattenArray(Belt_Array.reduce(Belt_Array.range(c.x, (c.x + c.w | 0) - 1 | 0), [], (function (accX, x) {
+  var cids = Belt_Array.concatMany(Belt_Array.reduce(Belt_Array.range(c.x, (c.x + c.w | 0) - 1 | 0), [], (function (accX, x) {
               return Belt_Array.concat(accX, Belt_Array.reduce(Belt_Array.range(c.y, (c.y + c.h | 0) - 1 | 0), [], (function (accY, y) {
                                 var p = getPoint(t, x, y);
                                 if (p !== undefined) {
