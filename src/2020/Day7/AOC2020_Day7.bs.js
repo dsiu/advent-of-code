@@ -21,6 +21,18 @@ function count(t) {
   return t.count;
 }
 
+function isEmpty(t) {
+  if (t.count === 0) {
+    return t.color === "";
+  } else {
+    return false;
+  }
+}
+
+function colorEq(t, color) {
+  return t.color === color;
+}
+
 function make(count, color) {
   return {
           count: count,
@@ -36,6 +48,8 @@ var empty = {
 var Bag = {
   color: color,
   count: count,
+  isEmpty: isEmpty,
+  colorEq: colorEq,
   make: make,
   empty: empty
 };
@@ -102,7 +116,43 @@ function addRule(t, l) {
   return addNode(t, node, leaf);
 }
 
+function getBag(t, b) {
+  return Belt_MapString.get(t, b.color);
+}
+
+function doesThisBagContain(t, srcColor, match) {
+  var leaf = Belt_Option.getExn(Belt_MapString.get(t, srcColor));
+  return Belt_Array.reduce(leaf, [], (function (a, x) {
+                if (isEmpty(x)) {
+                  return a;
+                }
+                var color = match.color;
+                if (x.color === color) {
+                  return Belt_Array.concat(a, [srcColor]);
+                } else {
+                  return Belt_Array.concat(a, doesThisBagContain(t, x.color, match));
+                }
+              }));
+}
+
+function whichBagContains(t, match) {
+  return Belt_MapString.reduce(t, [], (function (a, k, v) {
+                var ret = doesThisBagContain(t, k, match);
+                if (ret.length !== 0) {
+                  return Belt_Array.concat(a, [k]);
+                } else {
+                  return a;
+                }
+              }));
+}
+
 var Rules = {
+  set: Belt_MapString.set,
+  get: Belt_MapString.get,
+  forEach: Belt_MapString.forEach,
+  reduce: Belt_MapString.reduce,
+  map: Belt_MapString.map,
+  mapWithKey: Belt_MapString.mapWithKey,
   numBagRe: numBagRe,
   justBagRe: justBagRe,
   parseBag: parseBag,
@@ -114,6 +164,9 @@ var Rules = {
   parseLeaf: parseLeaf,
   addNode: addNode,
   addRule: addRule,
+  getBag: getBag,
+  doesThisBagContain: doesThisBagContain,
+  whichBagContains: whichBagContains,
   make: undefined
 };
 
@@ -134,7 +187,13 @@ function solvePart1(data) {
           Utils$AdventOfCode.log(k);
           return Utils$AdventOfCode.log(v);
         }));
-  return 1;
+  Utils$AdventOfCode.log("result");
+  var result = whichBagContains(newRules, {
+        count: 0,
+        color: "shiny gold"
+      });
+  Utils$AdventOfCode.log(result);
+  return result.length;
 }
 
 function solvePart2(data) {

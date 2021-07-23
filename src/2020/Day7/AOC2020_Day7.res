@@ -12,12 +12,22 @@ module Bag = {
   let color = t => t.color
   let count = t => t.count
 
+  let isEmpty = t => t.count == 0 && t.color == ""
+
+  let colorEq = (t, color) => t.color == color
   let make = (count, color): t => {count: count, color: color}
 
   let empty: t = {count: 0, color: ""}
 }
+
 module Rules = {
   type t = Map.String.t<array<Bag.t>>
+  let set = Map.String.set
+  let get = Map.String.get
+  let forEach = Map.String.forEach
+  let reduce = Map.String.reduce
+  let map = Map.String.map
+  let mapWithKey = Map.String.mapWithKey
 
   let numBagRe = %re("/\D*(\d+)\s+([\w\s]+)\s+bag[s]*.*/i")
   let justBagRe = %re("/([\w\s]+)\s+bag[s]*.*/i")
@@ -42,7 +52,6 @@ module Rules = {
   let parseJustBag = parseBag(_, justBagRe, ~numIndex=0, ~bagIndex=1)
 
   let nodeRe = %re("/(.*)\s+bags/i")
-
   let parseNode = s => {
     switch s->Js.Re.exec_(nodeRe, _) {
     | Some(x) => x->Js.Re.captures->Array.get(0)->Option.getExn
@@ -51,7 +60,6 @@ module Rules = {
   }
 
   let leafRe = %re("/(.*)\s+bags/i")
-
   let parseLeaf = s => {
     switch s->Js.Re.exec_(leafRe, _) {
     | Some(x) => x->Js.Re.captures->Array.get(0)->Option.getExn
@@ -60,7 +68,7 @@ module Rules = {
   }
 
   let addNode = (t, node, leaf): t => {
-    t->Map.String.set(node->Bag.color, leaf)
+    t->set(node->Bag.color, leaf)
   }
 
   let addRule = (t, l): t => {
@@ -69,6 +77,32 @@ module Rules = {
     //    node->log
     //    leaf->log
     t->addNode(node, leaf)
+  }
+
+  let getBag = (t, b) => t->get(b->Bag.color)
+
+  let rec doesThisBagContain = (t, srcColor, match) => {
+    let leaf = t->get(srcColor)->Option.getExn
+    leaf->Array.reduce([], (a, x) => {
+      switch x->Bag.isEmpty {
+      | true => a
+      | false =>
+        switch x->Bag.colorEq(match->Bag.color) {
+        | true => a->Array.concat([srcColor])
+        | false => a->Array.concat(t->doesThisBagContain(x->Bag.color, match))
+        }
+      }
+    })
+  }
+
+  let whichBagContains = (t, match) => {
+    t->reduce([], (a, k, v) => {
+      let ret = t->doesThisBagContain(k, match)
+      switch ret->Array.size > 0 {
+      | true => a->Array.concat([k])
+      | false => a
+      }
+    })
   }
 
   let make = Map.String.empty
@@ -84,11 +118,16 @@ let solvePart1 = data => {
   let parsed = data->parse
   let newRules = parsed->Array.reduce(rules, (a, x) => {Rules.addRule(a, x)})
   //  newRules->Map.String.get("light red")->log
-  newRules->Map.String.forEach((k, v) => {
+  newRules->Rules.forEach((k, v) => {
     k->log
     v->log
   })
-  1
+
+  "result"->log
+  let result = newRules->Rules.whichBagContains(Bag.make(0, "shiny gold"))
+  result->log
+
+  result->Array.size
 }
 
 let solvePart2 = data => {
