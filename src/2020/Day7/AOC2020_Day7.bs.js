@@ -146,6 +146,21 @@ function whichBagContains(t, match) {
               }));
 }
 
+function countBagsInside(t, bag) {
+  var leaf = Belt_Option.getExn(Belt_MapString.get(t, bag.color));
+  return Belt_Array.reduce(leaf, 1, (function (a, x) {
+                if (isEmpty(x)) {
+                  return a;
+                } else {
+                  return a + Math.imul(x.count, countBagsInside(t, x)) | 0;
+                }
+              }));
+}
+
+function howManyBagsIn(t, match) {
+  return countBagsInside(t, match) - 1 | 0;
+}
+
 var Rules = {
   set: Belt_MapString.set,
   get: Belt_MapString.get,
@@ -167,6 +182,8 @@ var Rules = {
   getBag: getBag,
   doesThisBagContain: doesThisBagContain,
   whichBagContains: whichBagContains,
+  countBagsInside: countBagsInside,
+  howManyBagsIn: howManyBagsIn,
   make: undefined
 };
 
@@ -183,21 +200,19 @@ function parse(data) {
 function solvePart1(data) {
   var parsed = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
   var newRules = Belt_Array.reduce(parsed, undefined, addRule);
-  Belt_MapString.forEach(newRules, (function (k, v) {
-          Utils$AdventOfCode.log(k);
-          return Utils$AdventOfCode.log(v);
-        }));
-  Utils$AdventOfCode.log("result");
-  var result = whichBagContains(newRules, {
-        count: 0,
-        color: "shiny gold"
-      });
-  Utils$AdventOfCode.log(result);
-  return result.length;
+  return whichBagContains(newRules, {
+              count: 0,
+              color: "shiny gold"
+            }).length;
 }
 
 function solvePart2(data) {
-  return 2;
+  var parsed = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
+  var newRules = Belt_Array.reduce(parsed, undefined, addRule);
+  return howManyBagsIn(newRules, {
+              count: 0,
+              color: "shiny gold"
+            });
 }
 
 exports.log = log;

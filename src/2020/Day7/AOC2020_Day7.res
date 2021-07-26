@@ -95,6 +95,7 @@ module Rules = {
     })
   }
 
+  // part 1
   let whichBagContains = (t, match) => {
     t->reduce([], (a, k, v) => {
       let ret = t->doesThisBagContain(k, match)
@@ -103,6 +104,20 @@ module Rules = {
       | false => a
       }
     })
+  }
+
+  let rec countBagsInside = (t, bag) => {
+    let leaf = t->getBag(bag)->Option.getExn
+    leaf->Array.reduce(1, (a, x) => {
+      switch x->Bag.isEmpty {
+      | true => a
+      | false => a + x->Bag.count * t->countBagsInside(x)
+      }
+    })
+  }
+  // part 2
+  let howManyBagsIn = (t, match) => {
+    t->countBagsInside(match) - 1
   }
 
   let make = Map.String.empty
@@ -118,19 +133,23 @@ let solvePart1 = data => {
   let parsed = data->parse
   let newRules = parsed->Array.reduce(rules, (a, x) => {Rules.addRule(a, x)})
   //  newRules->Map.String.get("light red")->log
-  newRules->Rules.forEach((k, v) => {
-    k->log
-    v->log
-  })
+  //  newRules->Rules.forEach((k, v) => {
+  //    k->log
+  //    v->log
+  //  })
 
-  "result"->log
+  //  "result"->log
   let result = newRules->Rules.whichBagContains(Bag.make(0, "shiny gold"))
-  result->log
+  //  result->log
 
   result->Array.size
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let rules = Rules.make
+  let parsed = data->parse
+  let newRules = parsed->Array.reduce(rules, (a, x) => {Rules.addRule(a, x)})
+  //  "result"->log
+  let result = newRules->Rules.howManyBagsIn(Bag.make(0, "shiny gold"))
+  result
 }
