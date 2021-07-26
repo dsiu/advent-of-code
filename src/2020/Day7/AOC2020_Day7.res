@@ -98,6 +98,7 @@ module Rules = {
   // part 1
   let whichBagContains = (t, match) => {
     t->reduce([], (a, k, v) => {
+      v->ignore // value isn't used
       let ret = t->doesThisBagContain(k, match)
       switch ret->Array.size > 0 {
       | true => a->Array.concat([k])
