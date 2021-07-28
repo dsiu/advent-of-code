@@ -2,20 +2,38 @@
 'use strict';
 
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Utils$AdventOfCode = require("../../Utils.bs.js");
 
 function log(prim) {
   console.log(prim);
   
 }
 
+function make(op, arg) {
+  console.log([
+        op,
+        arg
+      ]);
+  return 1;
+}
+
+var Instruction = {
+  make: make
+};
+
+function parseLine(l) {
+  var x = l.trim().split(" ");
+  var op = Belt_Array.get(x, 0);
+  var arg = Belt_Array.get(x, 1);
+  return make(op, arg);
+}
+
 function parse(data) {
-  return Belt_Array.map(data.split("\n"), (function (x) {
-                return x.trim().replace(/(\r\n|\r|\n|\s)+/g, " ");
-              }));
+  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
 }
 
 function solvePart1(data) {
-  return 1;
+  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
 }
 
 function solvePart2(data) {
@@ -23,6 +41,8 @@ function solvePart2(data) {
 }
 
 exports.log = log;
+exports.Instruction = Instruction;
+exports.parseLine = parseLine;
 exports.parse = parse;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
