@@ -2,28 +2,28 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var AOC2020_DayX$AdventOfCode = require("../DayX/AOC2020_DayX.bs.js");
-var AOC2020_DayX_Data$AdventOfCode = require("../DayX/AOC2020_DayX_Data.bs.js");
-var AOC2020_DayX_Data_Sample$AdventOfCode = require("../DayX/AOC2020_DayX_Data_Sample.bs.js");
+var AOC2020_Day8$AdventOfCode = require("./AOC2020_Day8.bs.js");
+var AOC2020_Day8_Data$AdventOfCode = require("./AOC2020_Day8_Data.bs.js");
+var AOC2020_Day8_Data_Sample$AdventOfCode = require("./AOC2020_Day8_Data_Sample.bs.js");
 
-Jest.describe("2020 DayX", (function (param) {
-        Jest.test("Part 1 - Test Data", (function (param) {
-                var result = AOC2020_DayX$AdventOfCode.solvePart1(AOC2020_DayX_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(result));
+Jest.describe("2020 Day8", (function (param) {
+        Jest.test("Part 1 - Sample Data", (function (param) {
+                var result = AOC2020_Day8$AdventOfCode.solvePart1(AOC2020_Day8_Data_Sample$AdventOfCode.data);
+                return Jest.Expect.toEqual(5, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
-                var result = AOC2020_DayX$AdventOfCode.solvePart1(AOC2020_DayX_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(result));
+                var result = AOC2020_Day8$AdventOfCode.solvePart1(AOC2020_Day8_Data$AdventOfCode.data);
+                return Jest.Expect.toEqual(1394, Jest.Expect.expect(result));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
-                      var result = AOC2020_DayX$AdventOfCode.solvePart2(AOC2020_DayX_Data$AdventOfCode.data);
+                      var result = AOC2020_Day8$AdventOfCode.solvePart2(AOC2020_Day8_Data$AdventOfCode.data);
                       return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
                     }));
       }));
 
-var data = AOC2020_DayX_Data$AdventOfCode.data;
+var data = AOC2020_Day8_Data$AdventOfCode.data;
 
-var sampleData = AOC2020_DayX_Data_Sample$AdventOfCode.data;
+var sampleData = AOC2020_Day8_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
 exports.sampleData = sampleData;
