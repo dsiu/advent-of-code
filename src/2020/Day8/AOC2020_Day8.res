@@ -14,6 +14,8 @@ module Instruction = {
   let opcode = t => t.opcode
   let arg = t => t.arg
 
+  let setOpcode = (t, opcode) => {...t, opcode: opcode}
+
   exception Invalid(string)
 
   let make = (op, arg) => {
@@ -42,6 +44,7 @@ module Machine = {
   let pc = t => t.pc
   let accumulator = t => t.accumulator
   let executed = t => t.executed
+  let state = t => t.state
 
   let getCurrentInstruction = t => t->program->Array.get(t->pc)->Option.getExn
 
@@ -103,7 +106,34 @@ let solvePart1 = data => {
   m->Machine.execute->Machine.accumulator
 }
 
+let genPatched = p => {
+  p->Array.reduceWithIndex([], (a, x, i) => {
+    switch x->Instruction.opcode {
+    | #NOP =>
+      // return a copy of original program with patch
+      let patched = p->Array.copy
+      patched->Array.set(i, x->Instruction.setOpcode(#JMP))->ignore
+      a->Array.concat([patched])
+    | #JMP => {
+        // return a copy of original program with patch
+        let patched = p->Array.copy
+        patched->Array.set(i, x->Instruction.setOpcode(#NOP))->ignore
+        a->Array.concat([patched])
+      }
+    | _ => a
+    }
+  })
+}
+
 let solvePart2 = data => {
-  data->ignore
-  2
+  let p = data->parse
+  let patched = p->genPatched
+  let rans = patched->Array.map(x => {x->Machine.make(_)->Machine.execute})
+  let res = rans->Array.keep(x => {
+    switch x->Machine.state {
+    | #DONE => true
+    | _ => false
+    }
+  })
+  res[0]->Option.getExn->Machine.accumulator
 }

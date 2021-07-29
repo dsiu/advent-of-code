@@ -17,7 +17,7 @@ Jest.describe("2020 Day8", (function (param) {
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2020_Day8$AdventOfCode.solvePart2(AOC2020_Day8_Data$AdventOfCode.data);
-                      return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
+                      return Jest.Expect.toEqual(1626, Jest.Expect.expect(result));
                     }));
       }));
 

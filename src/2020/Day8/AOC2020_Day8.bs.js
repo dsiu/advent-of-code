@@ -21,6 +21,13 @@ function arg(t) {
   return t.arg;
 }
 
+function setOpcode(t, opcode) {
+  return {
+          opcode: opcode,
+          arg: t.arg
+        };
+}
+
 var Invalid = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day8-AdventOfCode.Instruction.Invalid");
 
 function make(op, arg) {
@@ -63,6 +70,7 @@ function make(op, arg) {
 var Instruction = {
   opcode: opcode,
   arg: arg,
+  setOpcode: setOpcode,
   Invalid: Invalid,
   make: make
 };
@@ -81,6 +89,10 @@ function accumulator(t) {
 
 function executed(t) {
   return t.executed;
+}
+
+function state(t) {
+  return t.state;
 }
 
 function getCurrentInstruction(t) {
@@ -185,6 +197,7 @@ var Machine = {
   pc: pc,
   accumulator: accumulator,
   executed: executed,
+  state: state,
   getCurrentInstruction: getCurrentInstruction,
   make: make$1,
   hasExecuted: hasExecuted,
@@ -210,8 +223,34 @@ function solvePart1(data) {
   return execute(m).accumulator;
 }
 
+function genPatched(p) {
+  return Belt_Array.reduceWithIndex(p, [], (function (a, x, i) {
+                var match = x.opcode;
+                if (match === "JMP") {
+                  var patched = p.slice(0);
+                  Belt_Array.set(patched, i, setOpcode(x, "NOP"));
+                  return Belt_Array.concat(a, [patched]);
+                }
+                if (match !== "NOP") {
+                  return a;
+                }
+                var patched$1 = p.slice(0);
+                Belt_Array.set(patched$1, i, setOpcode(x, "JMP"));
+                return Belt_Array.concat(a, [patched$1]);
+              }));
+}
+
 function solvePart2(data) {
-  return 2;
+  var p = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
+  var patched = genPatched(p);
+  var rans = Belt_Array.map(patched, (function (x) {
+          return execute(make$1(x));
+        }));
+  var res = Belt_Array.keep(rans, (function (x) {
+          var match = x.state;
+          return match === "DONE";
+        }));
+  return Belt_Option.getExn(Belt_Array.get(res, 0)).accumulator;
 }
 
 exports.log = log;
@@ -220,5 +259,6 @@ exports.Machine = Machine;
 exports.parseLine = parseLine;
 exports.parse = parse;
 exports.solvePart1 = solvePart1;
+exports.genPatched = genPatched;
 exports.solvePart2 = solvePart2;
 /* No side effect */
