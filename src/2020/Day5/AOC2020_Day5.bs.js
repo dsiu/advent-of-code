@@ -3,7 +3,6 @@
 
 var Caml_obj = require("rescript/lib/js/caml_obj.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
-var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Belt_SortArrayInt = require("rescript/lib/js/belt_SortArrayInt.js");
 
 function log(prim) {
@@ -98,7 +97,7 @@ function solvePart2(data) {
   var passes = Belt_Array.map(parse(data), make$1);
   var seatIds = Belt_Array.map(passes, getSeatId);
   var sortedSeatIds = Belt_SortArrayInt.stableSort(seatIds);
-  var init = Belt_Option.getExn(Belt_Array.get(sortedSeatIds, 0)) - 1 | 0;
+  var init = Belt_Array.getExn(sortedSeatIds, 0) - 1 | 0;
   return Belt_Array.reduce(sortedSeatIds, init, findGap) + 1 | 0;
 }
 

@@ -90,8 +90,8 @@ let parseLine = l => {
   ->Js.String2.split(_, " ")
   ->(
     x => {
-      let op = x[0]->Option.getExn
-      let arg = x[1]->Option.getExn
+      let op = x->Array.getExn(0)
+      let arg = x->Array.getExn(1)
       Instruction.make(op, arg)
     }
   )

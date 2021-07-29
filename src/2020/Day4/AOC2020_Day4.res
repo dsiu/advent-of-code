@@ -10,7 +10,7 @@ module Passport = {
   let kvStrToMap = xs => {
     xs->Array.reduce(Map.String.empty, (a, s) => {
       let kvs = s->Js.String2.split(":")
-      a->Map.String.set(kvs[0]->Option.getExn, kvs[1]->Option.getExn)
+      a->Map.String.set(kvs->Array.getExn(0), kvs->Array.getExn(1))
     })
   }
 
@@ -94,8 +94,8 @@ module Passport = {
     switch s->Js.Re.exec_(hgtRe, _) {
     | Some(x) => {
         let a = x->Js.Re.captures
-        let h = a[1]->Option.getExn->Js.Nullable.toOption->Option.getExn
-        let u = a[2]->Option.getExn->Js.Nullable.toOption->Option.getExn
+        let h = a->Array.getExn(1)->Js.Nullable.toOption->Option.getExn
+        let u = a->Array.getExn(2)->Js.Nullable.toOption->Option.getExn
         switch (u, Int.fromString(h)) {
         | ("cm", Some(h)) => h->between(_, 150, 193)
         | ("in", Some(h)) => h->between(_, 56, 76)

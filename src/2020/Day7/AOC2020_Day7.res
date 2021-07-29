@@ -73,8 +73,8 @@ module Rules = {
   }
 
   let addRule = (t, l): t => {
-    let node = l[0]->Option.getExn->parseJustBag
-    let leaf = l[1]->Option.getExn->Js.String2.split(_, ",")->Array.map(parseNumBag)
+    let node = l->Array.get(0)->parseJustBag
+    let leaf = l->Array.get(1)->->Js.String2.split(_, ",")->Array.map(parseNumBag)
     //    node->log
     //    leaf->log
     t->addNode(node, leaf)
@@ -83,7 +83,7 @@ module Rules = {
   let getBag = (t, b) => t->getExn(b->Bag.color)
 
   let rec doesThisBagContain = (t, srcColor, match) => {
-    let leaf = t->get(srcColor)->Option.getExn
+    let leaf = t->getExn(srcColor)
     leaf->Array.reduce([], (a, x) => {
       switch x->Bag.isEmpty {
       | true => a

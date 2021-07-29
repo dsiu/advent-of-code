@@ -209,8 +209,8 @@ var Machine = {
 
 function parseLine(l) {
   var x = l.trim().split(" ");
-  var op = Belt_Option.getExn(Belt_Array.get(x, 0));
-  var arg = Belt_Option.getExn(Belt_Array.get(x, 1));
+  var op = Belt_Array.getExn(x, 0);
+  var arg = Belt_Array.getExn(x, 1);
   return make(op, arg);
 }
 

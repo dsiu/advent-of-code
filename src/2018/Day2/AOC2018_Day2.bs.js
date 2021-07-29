@@ -142,26 +142,24 @@ function findMatch(lines, predicate, x) {
 }
 
 function findAllMatch(predicate, lines) {
-  return Belt_Array.reduce(lines, [], (function (a, x) {
+  return Belt_Array.keepMap(lines, (function (x) {
                 var res = findMatch(lines, predicate, x);
                 var match = res.matched.length;
                 if (match !== 0) {
-                  return Belt_Array.concat(a, [res]);
-                } else {
-                  return a;
+                  return res;
                 }
+                
               }));
 }
 
 function runDay2Part2(lines) {
   return Belt_Array.map(findAllMatch(isDiffBy1, lines), (function (x) {
-                return Belt_Array.reduce(diffOfTwoCharStr(x.src, Caml_array.get(x.matched, 0)), "", (function (a, x) {
-                              if (x.TAG === /* Match */0) {
-                                return a + x._0;
-                              } else {
-                                return a;
-                              }
-                            }));
+                return Belt_Array.keepMap(diffOfTwoCharStr(x.src, Caml_array.get(x.matched, 0)), (function (x) {
+                                if (x.TAG === /* Match */0) {
+                                  return x._0;
+                                }
+                                
+                              })).join("");
               }));
 }
 

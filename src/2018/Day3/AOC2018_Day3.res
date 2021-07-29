@@ -136,8 +136,7 @@ module Fabric = {
   let addPoint = (t, ~x, ~y, p) => {
     t
     ->matrix
-    ->Map.Int.get(x)
-    ->Option.getExn
+    ->Map.Int.getExn(x)
     ->MutableMap.Int.update(y, a => {
       switch a {
       | Some(a) => Some(a->Array.concat([p]))

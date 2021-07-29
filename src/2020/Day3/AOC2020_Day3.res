@@ -23,7 +23,7 @@ module TreeMap = {
   let isTree = c => {c == "#"}
 
   let make = (xs: array<string>) => {
-    let x = xs[0]->Option.getExn->Js.String2.length
+    let x = xs->Array.getExn(0)->Js.String2.length
     let y = xs->Array.length
     let ret = Array2D.make((x, y), "")
 

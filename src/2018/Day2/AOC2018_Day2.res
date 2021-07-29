@@ -123,23 +123,25 @@ let findMatch = (lines, predicate, x) => {
 }
 
 let findAllMatch = (predicate, lines) => {
-  Belt.Array.reduce(lines, [], (a, x) => {
+  Belt.Array.keepMap(lines, x => {
     let res = findMatch(lines, predicate, x)
     switch Array.length(res.matched) {
-    | 0 => a
-    | _ => Belt.Array.concat(a, [res])
+    | 0 => None
+    | _ => Some(res)
     }
   })
 }
 
 let runDay2Part2 = lines => {
   findAllMatch(isDiffBy1, lines)->Belt.Array.map(x => {
-    diffOfTwoCharStr(x.src, x.matched[0])->Belt.Array.reduce("", (a, x) =>
+    diffOfTwoCharStr(x.src, x.matched[0])
+    ->Belt.Array.keepMap(x => {
       switch x {
-      | Match(x) => a ++ x
-      | NotMatch(_, _) => a
+      | Match(x) => Some(x)
+      | NotMatch(_, _) => None
       }
-    )
+    })
+    ->Js.Array2.joinWith("")
   })
 }
 
