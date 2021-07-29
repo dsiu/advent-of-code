@@ -8,7 +8,7 @@ let data = AOC2020_DayX_Data.data
 let sampleData = AOC2020_DayX_Data_Sample.data
 
 describe("2020 DayX", () => {
-  test("Part 1 - Test Data", () => {
+  test("Part 1 - Sample Data", () => {
     let result = AOC2020_DayX.solvePart1(sampleData)
     let expected = 1
 
