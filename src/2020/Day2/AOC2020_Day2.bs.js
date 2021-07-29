@@ -19,10 +19,10 @@ function make(s) {
             return Belt_Option.getExn((x == null) ? undefined : Caml_option.some(x));
           })) : [];
   return {
-          min: Belt_Option.getExn(Belt_Int.fromString(Belt_Option.getExn(Belt_Array.get(args, 1)))),
-          max: Belt_Option.getExn(Belt_Int.fromString(Belt_Option.getExn(Belt_Array.get(args, 2)))),
-          char: Belt_Option.getExn(Belt_Array.get(args, 3)),
-          input: Belt_Option.getExn(Belt_Array.get(args, 4))
+          min: Belt_Option.getExn(Belt_Int.fromString(Belt_Array.getExn(args, 1))),
+          max: Belt_Option.getExn(Belt_Int.fromString(Belt_Array.getExn(args, 2))),
+          char: Belt_Array.getExn(args, 3),
+          input: Belt_Array.getExn(args, 4)
         };
 }
 

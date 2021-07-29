@@ -14,7 +14,7 @@ module Coord = {
 
   let make = (~x, ~y) => {x: x, y: y}
   let makeFromArray = xs => {
-    make(~x=xs->Array.get(0)->Option.getExn, ~y=xs->Array.get(1)->Option.getExn)
+    make(~x=xs->Array.getExn(0), ~y=xs->Array.getExn(1))
   }
 
   // Coords utils

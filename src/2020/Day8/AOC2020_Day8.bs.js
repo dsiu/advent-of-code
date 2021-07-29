@@ -96,7 +96,7 @@ function state(t) {
 }
 
 function getCurrentInstruction(t) {
-  return Belt_Option.getExn(Belt_Array.get(t.program, t.pc));
+  return Belt_Array.getExn(t.program, t.pc);
 }
 
 function make$1(program) {

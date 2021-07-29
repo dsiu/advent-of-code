@@ -20,10 +20,10 @@ module Password = {
     | None => []
     }
     {
-      min: args->Array.get(1)->Option.getExn->Int.fromString->Option.getExn,
-      max: args->Array.get(2)->Option.getExn->Int.fromString->Option.getExn,
-      char: args->Array.get(3)->Option.getExn,
-      input: args->Array.get(4)->Option.getExn,
+      min: args->Array.getExn(1)->Int.fromString->Option.getExn,
+      max: args->Array.getExn(2)->Int.fromString->Option.getExn,
+      char: args->Array.getExn(3),
+      input: args->Array.getExn(4),
     }
   }
 

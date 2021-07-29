@@ -63,7 +63,7 @@ function make(id, x, y, w, h) {
 
 function makeClaim(l) {
   var xs = parseLine(l);
-  return make(Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 1))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 2))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 3))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 4))), Caml_format.caml_int_of_string(Belt_Option.getExn(Belt_Array.get(xs, 5))));
+  return make(Caml_format.caml_int_of_string(Belt_Array.getExn(xs, 1)), Caml_format.caml_int_of_string(Belt_Array.getExn(xs, 2)), Caml_format.caml_int_of_string(Belt_Array.getExn(xs, 3)), Caml_format.caml_int_of_string(Belt_Array.getExn(xs, 4)), Caml_format.caml_int_of_string(Belt_Array.getExn(xs, 5)));
 }
 
 var Claim = {

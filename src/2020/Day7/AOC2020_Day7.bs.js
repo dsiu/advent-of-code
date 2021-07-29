@@ -67,8 +67,8 @@ function parseBag(s, r, numIndex, bagIndex) {
             return Belt_Option.getExn((z == null) ? undefined : Caml_option.some(z));
           })) : [];
   return {
-          count: numIndex === 0 ? 0 : Belt_Option.getExn(Belt_Int.fromString(Belt_Option.getExn(Belt_Array.get(c, numIndex)))),
-          color: Belt_Option.getExn(Belt_Array.get(c, bagIndex))
+          count: numIndex === 0 ? 0 : Belt_Option.getExn(Belt_Int.fromString(Belt_Array.getExn(c, numIndex))),
+          color: Belt_Array.getExn(c, bagIndex)
         };
 }
 
@@ -85,7 +85,7 @@ var nodeRe = /(.*)\s+bags/i;
 function parseNode(s) {
   var x = nodeRe.exec(s);
   if (x !== null) {
-    return Belt_Option.getExn(Belt_Array.get(x, 0));
+    return Belt_Array.getExn(x, 0);
   }
   throw {
         RE_EXN_ID: "Not_found",
@@ -98,7 +98,7 @@ var leafRe = /(.*)\s+bags/i;
 function parseLeaf(s) {
   var x = leafRe.exec(s);
   if (x !== null) {
-    return Belt_Option.getExn(Belt_Array.get(x, 0));
+    return Belt_Array.getExn(x, 0);
   }
   throw {
         RE_EXN_ID: "Not_found",
@@ -117,7 +117,7 @@ function addRule(t, l) {
 }
 
 function getBag(t, b) {
-  return Belt_MapString.get(t, b.color);
+  return Belt_MapString.getExn(t, b.color);
 }
 
 function doesThisBagContain(t, srcColor, match) {
@@ -147,7 +147,7 @@ function whichBagContains(t, match) {
 }
 
 function countBagsInside(t, bag) {
-  var leaf = Belt_Option.getExn(Belt_MapString.get(t, bag.color));
+  var leaf = Belt_MapString.getExn(t, bag.color);
   return Belt_Array.reduce(leaf, 1, (function (a, x) {
                 if (isEmpty(x)) {
                   return a;
@@ -164,6 +164,7 @@ function howManyBagsIn(t, match) {
 var Rules = {
   set: Belt_MapString.set,
   get: Belt_MapString.get,
+  getExn: Belt_MapString.getExn,
   forEach: Belt_MapString.forEach,
   reduce: Belt_MapString.reduce,
   map: Belt_MapString.map,

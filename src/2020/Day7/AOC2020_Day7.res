@@ -24,6 +24,7 @@ module Rules = {
   type t = Map.String.t<array<Bag.t>>
   let set = Map.String.set
   let get = Map.String.get
+  let getExn = Map.String.getExn
   let forEach = Map.String.forEach
   let reduce = Map.String.reduce
   let map = Map.String.map
@@ -41,8 +42,8 @@ module Rules = {
         | None => []
         }
         Bag.make(
-          numIndex == 0 ? 0 : c->Array.get(numIndex)->Option.getExn->Int.fromString->Option.getExn,
-          c->Array.get(bagIndex)->Option.getExn,
+          numIndex == 0 ? 0 : c->Array.getExn(numIndex)->Int.fromString->Option.getExn,
+          c->Array.getExn(bagIndex),
         )
       }
     }
@@ -54,7 +55,7 @@ module Rules = {
   let nodeRe = %re("/(.*)\s+bags/i")
   let parseNode = s => {
     switch s->Js.Re.exec_(nodeRe, _) {
-    | Some(x) => x->Js.Re.captures->Array.get(0)->Option.getExn
+    | Some(x) => x->Js.Re.captures->Array.getExn(0)
     | None => raise(Not_found)
     }
   }
@@ -62,7 +63,7 @@ module Rules = {
   let leafRe = %re("/(.*)\s+bags/i")
   let parseLeaf = s => {
     switch s->Js.Re.exec_(leafRe, _) {
-    | Some(x) => x->Js.Re.captures->Array.get(0)->Option.getExn
+    | Some(x) => x->Js.Re.captures->Array.getExn(0)
     | None => raise(Not_found)
     }
   }
@@ -79,7 +80,7 @@ module Rules = {
     t->addNode(node, leaf)
   }
 
-  let getBag = (t, b) => t->get(b->Bag.color)
+  let getBag = (t, b) => t->getExn(b->Bag.color)
 
   let rec doesThisBagContain = (t, srcColor, match) => {
     let leaf = t->get(srcColor)->Option.getExn
@@ -108,7 +109,7 @@ module Rules = {
   }
 
   let rec countBagsInside = (t, bag) => {
-    let leaf = t->getBag(bag)->Option.getExn
+    let leaf = t->getBag(bag)
     leaf->Array.reduce(1, (a, x) => {
       switch x->Bag.isEmpty {
       | true => a

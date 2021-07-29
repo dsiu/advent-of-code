@@ -61,6 +61,6 @@ let solvePart2 = data => {
   let sortedSeatIds = seatIds->Belt.SortArray.Int.stableSort
   //  "sortedSeatIds"->log
   //  sortedSeatIds->log
-  let init = sortedSeatIds->Array.get(0)->Option.getExn - 1
+  let init = sortedSeatIds->Array.getExn(0) - 1
   sortedSeatIds->Array.reduce(_, init, findGap) + 1
 }

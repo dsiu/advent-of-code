@@ -66,11 +66,11 @@ module Claim: Claim = {
     ->(
       xs =>
         make(
-          ~id=xs->Array.get(1)->Option.getExn->int_of_string,
-          ~x=xs->Array.get(2)->Option.getExn->int_of_string,
-          ~y=xs->Array.get(3)->Option.getExn->int_of_string,
-          ~w=xs->Array.get(4)->Option.getExn->int_of_string,
-          ~h=xs->Array.get(5)->Option.getExn->int_of_string,
+          ~id=xs->Array.getExn(1)->int_of_string,
+          ~x=xs->Array.getExn(2)->int_of_string,
+          ~y=xs->Array.getExn(3)->int_of_string,
+          ~w=xs->Array.getExn(4)->int_of_string,
+          ~h=xs->Array.getExn(5)->int_of_string,
         )
     )
   }

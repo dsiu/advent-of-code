@@ -46,7 +46,7 @@ module Machine = {
   let executed = t => t.executed
   let state = t => t.state
 
-  let getCurrentInstruction = t => t->program->Array.get(t->pc)->Option.getExn
+  let getCurrentInstruction = t => t->program->Array.getExn(t->pc)
 
   let make = program => {
     program: program,

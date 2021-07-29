@@ -34,8 +34,8 @@ function make(x, y) {
 
 function makeFromArray(xs) {
   return {
-          x: Belt_Option.getExn(Belt_Array.get(xs, 0)),
-          y: Belt_Option.getExn(Belt_Array.get(xs, 1))
+          x: Belt_Array.getExn(xs, 0),
+          y: Belt_Array.getExn(xs, 1)
         };
 }
 
