@@ -1,12 +1,12 @@
 open Belt
 let log = Js.Console.log
-//open Utils
+open Utils
 
 let parse = data =>
   data
-  ->Js.String2.split("\n")
+  ->splitNewline
   ->Array.map(x => {
-    x->Js.String2.trim->Js.String2.replaceByRe(%re("/(\\r\\n|\\r|\\n|\\s)+/g"), " ")
+    x->Js.String2.trim
   })
 
 let solvePart1 = data => {
