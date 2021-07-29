@@ -2,7 +2,6 @@
 'use strict';
 
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
-var Utils$AdventOfCode = require("../../Utils.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -10,8 +9,8 @@ function log(prim) {
 }
 
 function parse(data) {
-  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                return x.trim();
+  return Belt_Array.map(data.split("\n"), (function (x) {
+                return x.trim().replace(/(\r\n|\r|\n|\s)+/g, " ");
               }));
 }
 
