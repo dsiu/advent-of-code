@@ -73,8 +73,8 @@ module Rules = {
   }
 
   let addRule = (t, l): t => {
-    let node = l->Array.get(0)->parseJustBag
-    let leaf = l->Array.get(1)->->Js.String2.split(_, ",")->Array.map(parseNumBag)
+    let node = l->Array.getExn(0)->parseJustBag
+    let leaf = l->Array.getExn(1)->Js.String2.split(_, ",")->Array.map(parseNumBag)
     //    node->log
     //    leaf->log
     t->addNode(node, leaf)

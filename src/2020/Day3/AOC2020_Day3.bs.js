@@ -42,7 +42,7 @@ function isTree(c) {
 }
 
 function make(xs) {
-  var x = Belt_Option.getExn(Belt_Array.get(xs, 0)).length;
+  var x = Belt_Array.getExn(xs, 0).length;
   var y = xs.length;
   var ret = Array2D$AdventOfCode.make([
         x,

@@ -111,8 +111,8 @@ function addNode(t, node, leaf) {
 }
 
 function addRule(t, l) {
-  var node = parseJustBag(Belt_Option.getExn(Belt_Array.get(l, 0)));
-  var leaf = Belt_Array.map(Belt_Option.getExn(Belt_Array.get(l, 1)).split(","), parseNumBag);
+  var node = parseJustBag(Belt_Array.getExn(l, 0));
+  var leaf = Belt_Array.map(Belt_Array.getExn(l, 1).split(","), parseNumBag);
   return addNode(t, node, leaf);
 }
 
@@ -121,7 +121,7 @@ function getBag(t, b) {
 }
 
 function doesThisBagContain(t, srcColor, match) {
-  var leaf = Belt_Option.getExn(Belt_MapString.get(t, srcColor));
+  var leaf = Belt_MapString.getExn(t, srcColor);
   return Belt_Array.reduce(leaf, [], (function (a, x) {
                 if (isEmpty(x)) {
                   return a;

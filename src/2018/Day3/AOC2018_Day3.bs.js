@@ -155,7 +155,7 @@ function isOne(x) {
 }
 
 function addPoint(t, x, y, p) {
-  Belt_MutableMapInt.update(Belt_Option.getExn(Belt_MapInt.get(t.matrix, x)), y, (function (a) {
+  Belt_MutableMapInt.update(Belt_MapInt.getExn(t.matrix, x), y, (function (a) {
           if (a !== undefined) {
             return Belt_Array.concat(a, [p]);
           } else {

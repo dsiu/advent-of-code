@@ -29,7 +29,7 @@ var optionalFields = ["cid"];
 function kvStrToMap(xs) {
   return Belt_Array.reduce(xs, undefined, (function (a, s) {
                 var kvs = s.split(":");
-                return Belt_MapString.set(a, Belt_Option.getExn(Belt_Array.get(kvs, 0)), Belt_Option.getExn(Belt_Array.get(kvs, 1)));
+                return Belt_MapString.set(a, Belt_Array.getExn(kvs, 0), Belt_Array.getExn(kvs, 1));
               }));
 }
 
@@ -179,8 +179,8 @@ function hgtValidator(s) {
   if (x === null) {
     return false;
   }
-  var h = Belt_Option.getExn(Caml_option.nullable_to_opt(Belt_Option.getExn(Belt_Array.get(x, 1))));
-  var u = Belt_Option.getExn(Caml_option.nullable_to_opt(Belt_Option.getExn(Belt_Array.get(x, 2))));
+  var h = Belt_Option.getExn(Caml_option.nullable_to_opt(Belt_Array.getExn(x, 1)));
+  var u = Belt_Option.getExn(Caml_option.nullable_to_opt(Belt_Array.getExn(x, 2)));
   var match = Belt_Int.fromString(h);
   switch (u) {
     case "cm" :
