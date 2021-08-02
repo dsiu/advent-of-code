@@ -114,12 +114,11 @@ let genPatched = p => {
       let patched = p->Array.copy
       patched->Array.set(i, x->Instruction.setOpcode(#JMP))->ignore
       a->Array.concat([patched])
-    | #JMP => {
-        // return a copy of original program with patch
-        let patched = p->Array.copy
-        patched->Array.set(i, x->Instruction.setOpcode(#NOP))->ignore
-        a->Array.concat([patched])
-      }
+    | #JMP =>
+      // return a copy of original program with patch
+      let patched = p->Array.copy
+      patched->Array.set(i, x->Instruction.setOpcode(#NOP))->ignore
+      a->Array.concat([patched])
     | _ => a
     }
   })
