@@ -64,6 +64,7 @@ let parse = data =>
 let solvePart1 = data => {
   let xmax = Xmax.make(data->parse, 5)
   xmax->Result.getExn->log
+  %raw("Xmax")->consoleDir
   xmax->Result.getExn->Xmax.isCodeValid(14)->Result.getExn
 }
 

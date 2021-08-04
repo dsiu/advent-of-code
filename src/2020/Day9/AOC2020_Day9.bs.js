@@ -86,6 +86,7 @@ function parse(data) {
 function solvePart1(data) {
   var xmax = make(parse(data), 5);
   Utils$AdventOfCode.log(Belt_Result.getExn(xmax));
+  console.dir(Xmax);
   return Belt_Result.getExn(isCodeValid(Belt_Result.getExn(xmax), 14));
 }
 

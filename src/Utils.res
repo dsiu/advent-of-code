@@ -1,5 +1,8 @@
 open Belt
+
+// Logging
 let log = Js.Console.log
+@val @scope("console") external consoleDir: 'a => unit = "dir"
 
 // map string
 let dump_mapString_of = (f, m) =>
