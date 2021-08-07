@@ -80,6 +80,18 @@ module Xmax = {
     }
     t->findInvalidInner(t->runLength)
   }
+
+  // sum up elements of array from begin to end (inclusive)
+  let sumRange = (xs, ~offset, ~len) => {
+    let elems = xs->Array.slice(~offset, ~len)
+    let total = ref(0)
+    elems->Array.forEach(x => total := total.contents + x)
+    total.contents
+  }
+
+  //  let findContiguousSet = (t, badCode) => {
+  //    let inner =
+  //  }
 }
 
 let parse = data =>
@@ -100,9 +112,10 @@ let solvePart1 = (data, preambleSize) => {
 
 let solvePart2 = (data, preambleSize) => {
   let xmax = Xmax.make(data->parse, preambleSize)->Result.getExn
+  xmax->log
+
   let badCode = xmax->Xmax.findInvalidCode->Option.getExn
   badCode->log
-  let preambles = xmax->Xmax.preambles
-  preambles->log
+  xmax->Xmax.codes->Xmax.sumRange(~offset=0, ~len=2)->log
   2
 }

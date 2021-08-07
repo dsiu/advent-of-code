@@ -108,6 +108,18 @@ function findInvalidCode(t) {
   };
 }
 
+function sumRange(xs, offset, len) {
+  var elems = Belt_Array.slice(xs, offset, len);
+  var total = {
+    contents: 0
+  };
+  Belt_Array.forEach(elems, (function (x) {
+          total.contents = total.contents + x | 0;
+          
+        }));
+  return total.contents;
+}
+
 var Xmax = {
   codes: codes,
   getCode: getCode,
@@ -120,7 +132,8 @@ var Xmax = {
   isSumOf: isSumOf,
   findSumOf: findSumOf,
   isCodeValid: isCodeValid,
-  findInvalidCode: findInvalidCode
+  findInvalidCode: findInvalidCode,
+  sumRange: sumRange
 };
 
 function parse(data) {
@@ -136,10 +149,10 @@ function solvePart1(data, preambleSize) {
 
 function solvePart2(data, preambleSize) {
   var xmax = Belt_Result.getExn(make(parse(data), preambleSize));
+  Utils$AdventOfCode.log(xmax);
   var badCode = Belt_Option.getExn(findInvalidCode(xmax));
   Utils$AdventOfCode.log(badCode);
-  var preambles$1 = preambles(xmax);
-  Utils$AdventOfCode.log(preambles$1);
+  Utils$AdventOfCode.log(sumRange(xmax.codes, 0, 2));
   return 2;
 }
 
