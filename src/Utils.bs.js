@@ -89,6 +89,18 @@ function join(__x) {
   return __x.join("");
 }
 
+function sumRange(xs, offset, len) {
+  var elems = Belt_Array.slice(xs, offset, len);
+  var total = {
+    contents: 0
+  };
+  Belt_Array.forEach(elems, (function (x) {
+          total.contents = total.contents + x | 0;
+          
+        }));
+  return total.contents;
+}
+
 exports.log = log;
 exports.dump_mapString_of = dump_mapString_of;
 exports.dump_mapString_of_int = dump_mapString_of_int;
@@ -104,4 +116,5 @@ exports.splitDoubleNewline = splitDoubleNewline;
 exports.sum = sum;
 exports.sumIntArray = sumIntArray;
 exports.join = join;
+exports.sumRange = sumRange;
 /* No side effect */

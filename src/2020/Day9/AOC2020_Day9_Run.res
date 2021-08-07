@@ -9,4 +9,4 @@ let sampleData = AOC2020_Day9_Data_Sample.data
 
 let part2 = AOC2020_Day9.solvePart2(data, 25)
 "Part 2 Result"->log
-part2->log
+//part2->log

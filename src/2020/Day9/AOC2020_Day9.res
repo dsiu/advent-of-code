@@ -17,9 +17,7 @@ module Xmax = {
   let runLength = t => t.runLength
   let preambles = t => t->codes->Array.slice(~offset=0, ~len=t->runLength)
 
-  type makeResult = Result.t<t, xmaxError>
-
-  let make = (codes, runLength): makeResult => {
+  let make = (codes, runLength): Result.t<'a, xmaxError> => {
     //    runLength->log
     //    codes->Array.size->log
     switch codes->Array.size > runLength {
@@ -28,28 +26,27 @@ module Xmax = {
     }
   }
 
-  // is sum sum of x with one of xs
-  // if so, return array of matches
-  let isSumofWith = (xs, x, ~sum) => {
+  // return array of matches if ~sum is sum of x with one of xs
+  let isSumofWith = (xs, x, ~sum): array<int> => {
     xs->Array.keep(a => {
       a != x && a + x == sum
     })
   }
 
   // is sum sum of 2 elem in xs
-  let isSumOf = (xs, sum) => {
+  let isSumOf = (xs, sum): array<int> => {
     xs->Array.keep(a => {
       xs->isSumofWith(a, ~sum)->Array.size > 0
     })
   }
 
-  let findSumOf = (xs, sum) => {
+  let findSumOf = (xs, sum): option<array<int>> => {
     let sumArray = xs->isSumOf(sum)
     sumArray->Array.size == 0 ? None : Some(sumArray)
   }
 
   // is code at index i (0-base) a valid code
-  let isCodeValid = (t, i) => {
+  let isCodeValid = (t, i): Result.t<'a, xmaxError> => {
     let lastSet = t->codes->Array.slice(~offset=i - t->runLength, ~len=t->runLength)
     let c = t->getCode(i)
     switch c {
@@ -81,17 +78,13 @@ module Xmax = {
     t->findInvalidInner(t->runLength)
   }
 
-  // sum up elements of array from begin to end (inclusive)
-  let sumRange = (xs, ~offset, ~len) => {
-    let elems = xs->Array.slice(~offset, ~len)
-    let total = ref(0)
-    elems->Array.forEach(x => total := total.contents + x)
-    total.contents
-  }
+  let findContiguousSetAt = (xs, )
 
-  //  let findContiguousSet = (t, badCode) => {
-  //    let inner =
-  //  }
+  let findContiguousSet = (t, badCode) => {
+      let inner = (xs, ~index, badCode) => {
+
+      }
+  }
 }
 
 let parse = data =>
@@ -116,6 +109,6 @@ let solvePart2 = (data, preambleSize) => {
 
   let badCode = xmax->Xmax.findInvalidCode->Option.getExn
   badCode->log
-  xmax->Xmax.codes->Xmax.sumRange(~offset=0, ~len=2)->log
+  xmax->Xmax.codes->Utils.sumRange(~offset=0, ~len=3)->log
   2
 }

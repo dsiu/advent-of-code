@@ -14,8 +14,6 @@ var part2 = AOC2020_Day9$AdventOfCode.solvePart2(AOC2020_Day9_Data$AdventOfCode.
 
 console.log("Part 2 Result");
 
-console.log(part2);
-
 var data = AOC2020_Day9_Data$AdventOfCode.data;
 
 var sampleData = AOC2020_Day9_Data_Sample$AdventOfCode.data;

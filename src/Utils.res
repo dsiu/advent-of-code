@@ -39,3 +39,11 @@ let splitDoubleNewline = Js.String2.split(_, "\n\n")
 let sum = (a, x) => a + x
 let sumIntArray = Array.reduce(_, 0, sum)
 let join = Js.Array2.joinWith(_, "")
+
+// sum up elements of array from ~offset with ~len (same as Array.slice)
+let sumRange = (xs, ~offset, ~len) => {
+  let elems = xs->Array.slice(~offset, ~len)
+  let total = ref(0)
+  elems->Array.forEach(x => total := total.contents + x)
+  total.contents
+}
