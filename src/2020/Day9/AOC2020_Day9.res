@@ -69,21 +69,44 @@ module Xmax = {
         : switch t->isCodeValid(i) {
           | Ok(sumOk) =>
             switch sumOk {
-            | Some(sums) => t->findInvalidInner(i + 1)
+            | Some(sums) => {
+                sums->ignore
+                t->findInvalidInner(i + 1)
+              }
             | None => Some(t->getCodeExn(i)) // report bad code index
             }
-          | Error(e) => None
+          | Error(e) => {
+              e->ignore
+              None
+            }
           }
     }
     t->findInvalidInner(t->runLength)
   }
 
-  let findContiguousSetAt = (xs, )
+  let findContiguousSetAt = (xs, ~start, badCode): option<int> => {
+    let rec inner = (xs, ~offset, ~len, badCode) => {
+      switch xs->sumRange(~offset, ~len) {
+      | s if s === badCode => Some(len)
+      | s if s < badCode => xs->inner(~offset, ~len=len + 1, badCode)
+      | _ => None
+      }
+    }
+    xs->inner(~offset=start, ~len=1, badCode)
+  }
 
   let findContiguousSet = (t, badCode) => {
-      let inner = (xs, ~index, badCode) => {
-
+    let rec inner = (xs, ~start, badCode) => {
+      switch start <= xs->Array.size {
+      | true =>
+        switch xs->findContiguousSetAt(~start, badCode) {
+        | Some(len) => xs->Array.slice(~offset=start, ~len)->Some
+        | None => xs->inner(~start=start + 1, badCode)
+        }
+      | false => None
       }
+    }
+    t->codes->inner(~start=0, badCode)
   }
 }
 
@@ -105,10 +128,15 @@ let solvePart1 = (data, preambleSize) => {
 
 let solvePart2 = (data, preambleSize) => {
   let xmax = Xmax.make(data->parse, preambleSize)->Result.getExn
-  xmax->log
+  //  xmax->log
 
   let badCode = xmax->Xmax.findInvalidCode->Option.getExn
-  badCode->log
-  xmax->Xmax.codes->Utils.sumRange(~offset=0, ~len=3)->log
-  2
+  //  badCode->log
+
+  //  xmax->Xmax.codes->Utils.sumRange(~offset=0, ~len=3)->log
+  let sorted = xmax->Xmax.findContiguousSet(badCode)->Option.getExn->SortArray.Int.stableSort
+  //  sorted->log
+  let min = sorted[0]->Option.getExn
+  let max = sorted[sorted->Array.size - 1]->Option.getExn
+  min + max
 }

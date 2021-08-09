@@ -5,6 +5,7 @@ var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Belt_Result = require("rescript/lib/js/belt_Result.js");
+var Belt_SortArrayInt = require("rescript/lib/js/belt_SortArrayInt.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 
 function codes(t) {
@@ -108,6 +109,39 @@ function findInvalidCode(t) {
   };
 }
 
+function findContiguousSetAt(xs, start, badCode) {
+  var _len = 1;
+  while(true) {
+    var len = _len;
+    var s = Utils$AdventOfCode.sumRange(xs, start, len);
+    if (s === badCode) {
+      return len;
+    }
+    if (s >= badCode) {
+      return ;
+    }
+    _len = len + 1 | 0;
+    continue ;
+  };
+}
+
+function findContiguousSet(t, badCode) {
+  var xs = t.codes;
+  var _start = 0;
+  while(true) {
+    var start = _start;
+    if (start > xs.length) {
+      return ;
+    }
+    var len = findContiguousSetAt(xs, start, badCode);
+    if (len !== undefined) {
+      return Belt_Array.slice(xs, start, len);
+    }
+    _start = start + 1 | 0;
+    continue ;
+  };
+}
+
 var Xmax = {
   codes: codes,
   getCode: getCode,
@@ -120,7 +154,9 @@ var Xmax = {
   isSumOf: isSumOf,
   findSumOf: findSumOf,
   isCodeValid: isCodeValid,
-  findInvalidCode: findInvalidCode
+  findInvalidCode: findInvalidCode,
+  findContiguousSetAt: findContiguousSetAt,
+  findContiguousSet: findContiguousSet
 };
 
 function parse(data) {
@@ -136,11 +172,11 @@ function solvePart1(data, preambleSize) {
 
 function solvePart2(data, preambleSize) {
   var xmax = Belt_Result.getExn(make(parse(data), preambleSize));
-  Utils$AdventOfCode.log(xmax);
   var badCode = Belt_Option.getExn(findInvalidCode(xmax));
-  Utils$AdventOfCode.log(badCode);
-  Utils$AdventOfCode.log(Utils$AdventOfCode.sumRange(xmax.codes, 0, 3));
-  return 2;
+  var sorted = Belt_SortArrayInt.stableSort(Belt_Option.getExn(findContiguousSet(xmax, badCode)));
+  var min = Belt_Option.getExn(Belt_Array.get(sorted, 0));
+  var max = Belt_Option.getExn(Belt_Array.get(sorted, sorted.length - 1 | 0));
+  return min + max | 0;
 }
 
 var log = Utils$AdventOfCode.log;
