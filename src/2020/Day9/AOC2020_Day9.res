@@ -18,12 +18,9 @@ module Xmax = {
   let preambles = t => t->codes->Array.slice(~offset=0, ~len=t->runLength)
 
   let make = (codes, runLength): Result.t<'a, xmaxError> => {
-    //    runLength->log
-    //    codes->Array.size->log
-    switch codes->Array.size > runLength {
-    | true => Ok({codes: codes, runLength: runLength})
-    | false => Error(InvalidRunLength)
-    }
+    codes->Array.size > runLength
+      ? Ok({codes: codes, runLength: runLength})
+      : Error(InvalidRunLength)
   }
 
   // return array of matches if ~sum is sum of x with one of xs
@@ -48,40 +45,26 @@ module Xmax = {
   // is code at index i (0-base) a valid code
   let isCodeValid = (t, i): Result.t<'a, xmaxError> => {
     let lastSet = t->codes->Array.slice(~offset=i - t->runLength, ~len=t->runLength)
-    let c = t->getCode(i)
-    switch c {
-    | Some(code) =>
-      //      "isCodeValid looking at code"->log
-      //      code->log
-      //      "lastSet"->log
-      //      lastSet->log
-      findSumOf(lastSet, code)->Ok
+    switch t->getCode(i) {
+    | Some(code) => findSumOf(lastSet, code)->Ok
     | None => Error(InvalidIndex)
     }
   }
 
   let findInvalidCode = t => {
-    let rec findInvalidInner = (t, i) => {
-      //      "i"->log
-      //      i->log
-      i >= t->codeSize
-        ? None
-        : switch t->isCodeValid(i) {
+    let rec inner = (t, i) => {
+      i < t->codeSize
+        ? switch t->isCodeValid(i) {
           | Ok(sumOk) =>
             switch sumOk {
-            | Some(sums) => {
-                sums->ignore
-                t->findInvalidInner(i + 1)
-              }
+            | Some(_) => t->inner(i + 1)
             | None => Some(t->getCodeExn(i)) // report bad code index
             }
-          | Error(e) => {
-              e->ignore
-              None
-            }
+          | Error(_) => None
           }
+        : None
     }
-    t->findInvalidInner(t->runLength)
+    t->inner(t->runLength)
   }
 
   let findContiguousSetAt = (xs, ~start, badCode): option<int> => {
@@ -97,14 +80,12 @@ module Xmax = {
 
   let findContiguousSet = (t, badCode) => {
     let rec inner = (xs, ~start, badCode) => {
-      switch start <= xs->Array.size {
-      | true =>
-        switch xs->findContiguousSetAt(~start, badCode) {
-        | Some(len) => xs->Array.slice(~offset=start, ~len)->Some
-        | None => xs->inner(~start=start + 1, badCode)
-        }
-      | false => None
-      }
+      start <= xs->Array.size
+        ? switch xs->findContiguousSetAt(~start, badCode) {
+          | Some(len) => xs->Array.slice(~offset=start, ~len)->Some
+          | None => xs->inner(~start=start + 1, badCode)
+          }
+        : None
     }
     t->codes->inner(~start=0, badCode)
   }
