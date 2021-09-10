@@ -47,3 +47,13 @@ let sumRange = (xs, ~offset, ~len) => {
   elems->Array.forEach(x => total := total.contents + x)
   total.contents
 }
+
+let maxIntInArray = xs => {
+  let sorted = xs->SortArray.Int.stableSort
+  sorted->Array.getExn(sorted->Array.length - 1)
+}
+
+let minIntInArray = xs => {
+  let sorted = xs->SortArray.Int.stableSort
+  sorted->Array.getExn(0)
+}

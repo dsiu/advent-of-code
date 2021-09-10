@@ -6,6 +6,7 @@ var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_MapInt = require("rescript/lib/js/belt_MapInt.js");
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
+var Belt_SortArrayInt = require("rescript/lib/js/belt_SortArrayInt.js");
 var Belt_MutableMapInt = require("rescript/lib/js/belt_MutableMapInt.js");
 
 function log(prim) {
@@ -101,6 +102,16 @@ function sumRange(xs, offset, len) {
   return total.contents;
 }
 
+function maxIntInArray(xs) {
+  var sorted = Belt_SortArrayInt.stableSort(xs);
+  return Belt_Array.getExn(sorted, sorted.length - 1 | 0);
+}
+
+function minIntInArray(xs) {
+  var sorted = Belt_SortArrayInt.stableSort(xs);
+  return Belt_Array.getExn(sorted, 0);
+}
+
 exports.log = log;
 exports.dump_mapString_of = dump_mapString_of;
 exports.dump_mapString_of_int = dump_mapString_of_int;
@@ -117,4 +128,6 @@ exports.sum = sum;
 exports.sumIntArray = sumIntArray;
 exports.join = join;
 exports.sumRange = sumRange;
+exports.maxIntInArray = maxIntInArray;
+exports.minIntInArray = minIntInArray;
 /* No side effect */
