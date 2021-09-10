@@ -14,14 +14,16 @@ let filled = {
   "abcdefghijklmnopqrstuvwxyz"->splitChars->Set.String.fromArray
 }
 
-let parsePart2 = x =>
+let parsePart2 = x => {
+  let {map, reduce} = module(Belt.Array)
   x
   ->splitNewline
-  ->Array.map(Js.String2.trim)
-  ->Array.map(splitChars)
-  ->Array.map(Set.String.fromArray)
-  ->Array.reduce(_, filled, Set.String.intersect)
+  ->map(Js.String2.trim)
+  ->map(splitChars)
+  ->map(Set.String.fromArray)
+  ->reduce(_, filled, Set.String.intersect)
   ->Set.String.size
+}
 
 let solvePart1 = data => {
   let part1Parser = parse(_, parsePart1)
