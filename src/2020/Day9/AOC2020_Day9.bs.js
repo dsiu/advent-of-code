@@ -76,11 +76,11 @@ function findSumOf(xs, sum) {
 
 function isCodeValid(t, i) {
   var lastSet = Belt_Array.slice(t.codes, i - t.runLength | 0, t.runLength);
-  var c = Belt_Array.get(t.codes, i);
-  if (c !== undefined) {
+  var code = Belt_Array.get(t.codes, i);
+  if (code !== undefined) {
     return {
             TAG: /* Ok */0,
-            _0: findSumOf(lastSet, c)
+            _0: findSumOf(lastSet, code)
           };
   } else {
     return {
