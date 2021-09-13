@@ -11,7 +11,7 @@ Jest.describe("Array2D - make / set / get", (function (param) {
         Jest.test("make - int", (function (param) {
                 var a = Array2D$AdventOfCode.make([
                       2,
-                      2
+                      3
                     ], -1);
                 [
                   Array2D$AdventOfCode.set(a, [
@@ -23,22 +23,32 @@ Jest.describe("Array2D - make / set / get", (function (param) {
                         1
                       ], 5),
                   Array2D$AdventOfCode.set(a, [
-                        1,
-                        0
+                        0,
+                        2
                       ], 6),
                   Array2D$AdventOfCode.set(a, [
                         1,
+                        0
+                      ], 7),
+                  Array2D$AdventOfCode.set(a, [
+                        1,
                         1
-                      ], 7)
+                      ], 8),
+                  Array2D$AdventOfCode.set(a, [
+                        1,
+                        2
+                      ], 9)
                 ];
                 var expected = [
                   [
                     4,
-                    5
+                    5,
+                    6
                   ],
                   [
-                    6,
-                    7
+                    7,
+                    8,
+                    9
                   ]
                 ];
                 return Jest.Expect.toEqual(expected, Jest.Expect.expect(a));
@@ -46,7 +56,7 @@ Jest.describe("Array2D - make / set / get", (function (param) {
         Jest.test("make - string", (function (param) {
                 var a = Array2D$AdventOfCode.make([
                       2,
-                      2
+                      3
                     ], "");
                 [
                   Array2D$AdventOfCode.set(a, [
@@ -58,22 +68,32 @@ Jest.describe("Array2D - make / set / get", (function (param) {
                         1
                       ], "b"),
                   Array2D$AdventOfCode.set(a, [
-                        1,
-                        0
+                        0,
+                        2
                       ], "c"),
                   Array2D$AdventOfCode.set(a, [
                         1,
+                        0
+                      ], "d"),
+                  Array2D$AdventOfCode.set(a, [
+                        1,
                         1
-                      ], "d")
+                      ], "e"),
+                  Array2D$AdventOfCode.set(a, [
+                        1,
+                        2
+                      ], "f")
                 ];
                 var expected = [
                   [
                     "a",
-                    "b"
+                    "b",
+                    "c"
                   ],
                   [
-                    "c",
-                    "d"
+                    "d",
+                    "e",
+                    "f"
                   ]
                 ];
                 return Jest.Expect.toEqual(expected, Jest.Expect.expect(a));
@@ -132,7 +152,7 @@ Jest.describe("Array2D - make / set / get", (function (param) {
 Jest.describe("Array2D - keep / map", (function (param) {
         var a = Array2D$AdventOfCode.make([
               2,
-              2
+              3
             ], -1);
         [
           Array2D$AdventOfCode.set(a, [
@@ -144,36 +164,62 @@ Jest.describe("Array2D - keep / map", (function (param) {
                 1
               ], 5),
           Array2D$AdventOfCode.set(a, [
-                1,
-                0
+                0,
+                2
               ], 6),
           Array2D$AdventOfCode.set(a, [
                 1,
+                0
+              ], 7),
+          Array2D$AdventOfCode.set(a, [
+                1,
                 1
-              ], 7)
+              ], 8),
+          Array2D$AdventOfCode.set(a, [
+                1,
+                2
+              ], 9)
         ];
-        Jest.test("keep - int", (function (param) {
-                var result = Array2D$AdventOfCode.keep(a, (function (x) {
-                        return 0 === x % 2;
+        Jest.test("map - int", (function (param) {
+                var result = Array2D$AdventOfCode.map(a, (function (x) {
+                        return (x << 1);
                       }));
                 var expected = [
-                  [4],
-                  [6]
+                  [
+                    8,
+                    10,
+                    12
+                  ],
+                  [
+                    14,
+                    16,
+                    18
+                  ]
                 ];
                 return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
               }));
-        return Jest.test("map - int", (function (param) {
-                      var result = Array2D$AdventOfCode.map(a, (function (x) {
-                              return (x << 1);
-                            }));
+        Jest.test("getXEquals - int", (function (param) {
+                var result = Array2D$AdventOfCode.getXEquals(a, 1);
+                var expected = [
+                  7,
+                  8,
+                  9
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+              }));
+        return Jest.test("getYEquals - int", (function (param) {
+                      var result = [
+                        Array2D$AdventOfCode.getYEquals(a, 0),
+                        Array2D$AdventOfCode.getYEquals(a, 2)
+                      ];
                       var expected = [
                         [
-                          8,
-                          10
+                          4,
+                          7
                         ],
                         [
-                          12,
-                          14
+                          6,
+                          9
                         ]
                       ];
                       return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));

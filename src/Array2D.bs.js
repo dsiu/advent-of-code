@@ -10,6 +10,14 @@ function make(param, e) {
               }));
 }
 
+function lengthX(t) {
+  return t.length;
+}
+
+function lengthY(t) {
+  return Belt_Array.getExn(t, 0).length;
+}
+
 function set(t, param, e) {
   var x = Belt_Array.get(t, param[0]);
   if (x !== undefined) {
@@ -27,10 +35,16 @@ function get(t, param) {
   
 }
 
-function keep(t, f) {
-  return Belt_Array.map(t, (function (__x) {
-                return Belt_Array.keep(__x, f);
-              }));
+var getXEquals = Belt_Array.get;
+
+function getYEquals(t, y) {
+  var ret = Belt_Array.reduce(t, [], (function (a, ys) {
+          return Belt_Array.concat(a, [Belt_Array.getExn(ys, y)]);
+        }));
+  if (ret.length === t.length) {
+    return ret;
+  }
+  
 }
 
 function map(t, f) {
@@ -40,8 +54,11 @@ function map(t, f) {
 }
 
 exports.make = make;
+exports.lengthX = lengthX;
+exports.lengthY = lengthY;
 exports.set = set;
 exports.get = get;
-exports.keep = keep;
+exports.getXEquals = getXEquals;
+exports.getYEquals = getYEquals;
 exports.map = map;
 /* No side effect */
