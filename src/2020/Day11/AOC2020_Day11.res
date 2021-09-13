@@ -20,6 +20,10 @@ module SeatMap = {
     }
   }
 
+  let getSurrendings = (t, (x, y)) => {
+    [-1, 0, 1]
+  }
+
   let make = (xs: array<string>) => {
     let x = xs->Array.getExn(0)->Js.String2.length
     let y = xs->Array.length

@@ -42,3 +42,13 @@ let getYEquals = (t, y) => {
 let map = (t, f) => {
   t->Array.map(x => x->Array.map(f))
 }
+
+let mapWithIndex = (t, f) => {
+  t->Array.mapWithIndex((i, ys) => {
+    ys->Array.mapWithIndex((j, e) => f((i, j), e))
+  })
+}
+
+let slice = (t, ~offset: (x, y), ~lenX, ~lenY) => {
+
+}

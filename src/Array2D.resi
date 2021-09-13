@@ -17,3 +17,5 @@ let getYEquals: (t<'a>, int) => option<array<'a>>
 //let keep: (t<'a>, 'a => bool) => t<'a>
 
 let map: (t<'a>, 'a => 'b) => t<'b>
+
+let mapWithIndex: (t<'a>, ((int, int), 'a) => 'b) => t<'b>

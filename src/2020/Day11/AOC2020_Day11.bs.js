@@ -35,6 +35,14 @@ var SeatStatus = {
   make: make
 };
 
+function getSurrendings(t, param) {
+  return [
+          -1,
+          0,
+          1
+        ];
+}
+
 function make$1(xs) {
   var x = Belt_Array.getExn(xs, 0).length;
   var y = xs.length;
@@ -64,6 +72,7 @@ function dump(t) {
 var SeatMap = {
   InvalidStatus: InvalidStatus,
   SeatStatus: SeatStatus,
+  getSurrendings: getSurrendings,
   make: make$1,
   dump: dump
 };
