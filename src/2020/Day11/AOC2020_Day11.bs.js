@@ -2,6 +2,8 @@
 'use strict';
 
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
+var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 var Array2D$AdventOfCode = require("../../Array2D.bs.js");
 
@@ -10,31 +12,70 @@ function log(prim) {
   
 }
 
-var SeatStatus = {};
+var InvalidStatus = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day11-AdventOfCode.SeatMap.InvalidStatus");
 
-function make(xs) {
+function make(c) {
+  switch (c) {
+    case "#" :
+        return "#";
+    case "." :
+        return ".";
+    case "L" :
+        return "L";
+    default:
+      throw {
+            RE_EXN_ID: InvalidStatus,
+            _1: c,
+            Error: new Error()
+          };
+  }
+}
+
+var SeatStatus = {
+  make: make
+};
+
+function make$1(xs) {
   var x = Belt_Array.getExn(xs, 0).length;
   var y = xs.length;
-  Array2D$AdventOfCode.make([
+  var ret = Array2D$AdventOfCode.make([
         x,
         y
-      ], /* Floor */2);
+      ], ".");
+  Belt_Array.forEachWithIndex(xs, (function (y, ys) {
+          return Belt_Array.forEachWithIndex(Utils$AdventOfCode.splitChars(ys), (function (x, c) {
+                        Array2D$AdventOfCode.set(ret, [
+                              x,
+                              y
+                            ], make(c));
+                        
+                      }));
+        }));
+  return ret;
+}
+
+function dump(t) {
+  for(var y = 0 ,y_finish = Array2D$AdventOfCode.lengthY(t); y < y_finish; ++y){
+    Utils$AdventOfCode.log(Utils$AdventOfCode.join(Belt_Option.getExn(Array2D$AdventOfCode.getYEquals(t, y))));
+  }
   
 }
 
 var SeatMap = {
+  InvalidStatus: InvalidStatus,
   SeatStatus: SeatStatus,
-  make: make
+  make: make$1,
+  dump: dump
 };
 
 function parse(data) {
-  return make(Belt_Array.map(data.split("\n"), (function (prim) {
+  return make$1(Belt_Array.map(data.split("\n"), (function (prim) {
                     return prim.trim();
                   })));
 }
 
 function solvePart1(data) {
-  Utils$AdventOfCode.log(parse(data));
+  dump(parse(data));
   return 1;
 }
 
