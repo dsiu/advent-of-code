@@ -10,7 +10,7 @@ let sampleData = AOC2020_Day10_Data_Sample.data
 describe("2020 Day10", () => {
   test("Part 1 - Sample Data", () => {
     let result = AOC2020_Day10.solvePart1(sampleData)
-    let expected = 220
+    let expected = 35
 
     expect(result) |> toEqual(expected)
   })

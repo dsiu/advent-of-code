@@ -9,7 +9,7 @@ var AOC2020_Day10_Data_Sample$AdventOfCode = require("./AOC2020_Day10_Data_Sampl
 Jest.describe("2020 Day10", (function (param) {
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2020_Day10$AdventOfCode.solvePart1(AOC2020_Day10_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(220, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual(35, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2020_Day10$AdventOfCode.solvePart1(AOC2020_Day10_Data$AdventOfCode.data);
