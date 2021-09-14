@@ -3,6 +3,7 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
 
 function make(param, e) {
   var y = param[1];
@@ -65,6 +66,16 @@ function mapWithIndex(t, f) {
               }));
 }
 
+function crop(t, param, lenX, lenY) {
+  var y = param[1];
+  var x = param[0];
+  var ret = [];
+  for(var i = x ,i_finish = x + lenX | 0; i < i_finish; ++i){
+    ret = Belt_Array.concat(ret, [Belt_Array.slice(Belt_Option.getExn(Belt_Array.get(t, i)), y, lenY)]);
+  }
+  return ret;
+}
+
 exports.make = make;
 exports.lengthX = lengthX;
 exports.lengthY = lengthY;
@@ -74,4 +85,5 @@ exports.getXEquals = getXEquals;
 exports.getYEquals = getYEquals;
 exports.map = map;
 exports.mapWithIndex = mapWithIndex;
+exports.crop = crop;
 /* No side effect */

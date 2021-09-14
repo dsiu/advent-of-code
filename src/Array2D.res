@@ -49,6 +49,13 @@ let mapWithIndex = (t, f) => {
   })
 }
 
-let slice = (t, ~offset: (x, y), ~lenX, ~lenY) => {
-
+let crop = (t, (x, y), ~lenX, ~lenY) => {
+  let ret = ref([])
+  for i in x to x + lenX - 1 {
+    ret.contents = Array.concat(
+      ret.contents,
+      [t->getXEquals(i)->Option.getExn->Array.slice(~offset=y, ~len=lenY)],
+    )
+  }
+  ret.contents
 }
