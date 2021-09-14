@@ -64,7 +64,8 @@ function make$1(xs) {
 
 function dump(t) {
   for(var y = 0 ,y_finish = Array2D$AdventOfCode.lengthY(t); y < y_finish; ++y){
-    Utils$AdventOfCode.log(Utils$AdventOfCode.join(Belt_Option.getExn(Array2D$AdventOfCode.getYEquals(t, y))));
+    var prim = Utils$AdventOfCode.join(Belt_Option.getExn(Array2D$AdventOfCode.getYEquals(t, y)));
+    console.log(prim);
   }
   
 }

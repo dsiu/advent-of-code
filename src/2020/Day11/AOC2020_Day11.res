@@ -1,6 +1,6 @@
 open Belt
 let log = Js.Console.log
-open Utils
+//open Utils
 
 module SeatMap = {
   type t
@@ -29,6 +29,7 @@ module SeatMap = {
     let y = xs->Array.length
     let ret = Array2D.make((x, y), #".")
 
+    open Utils
     xs->Array.forEachWithIndex((y, ys) => {
       ys
       ->splitChars
@@ -42,7 +43,7 @@ module SeatMap = {
 
   let dump = t => {
     for y in 0 to t->Array2D.lengthY - 1 {
-      t->Array2D.getYEquals(y)->Option.getExn->join->log
+      t->Array2D.getYEquals(y)->Option.getExn->Utils.join->log
     }
   }
 }
