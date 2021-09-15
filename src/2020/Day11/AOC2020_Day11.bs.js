@@ -35,12 +35,95 @@ var SeatStatus = {
   make: make
 };
 
-function getSurrendings(t, param) {
+function isValidCoord(param, lenX, lenY) {
+  var y = param[1];
+  var x = param[0];
+  if (x >= 0 && x <= (lenX - 1 | 0) && y >= 0) {
+    return y <= (lenY - 1 | 0);
+  } else {
+    return false;
+  }
+}
+
+function adjCoords(param) {
+  var y = param[1];
+  var x = param[0];
   return [
-          -1,
-          0,
-          1
+          [
+            x - 1 | 0,
+            y - 1 | 0
+          ],
+          [
+            x,
+            y - 1 | 0
+          ],
+          [
+            x + 1 | 0,
+            y - 1 | 0
+          ],
+          [
+            x - 1 | 0,
+            y
+          ],
+          [
+            x + 1 | 0,
+            y
+          ],
+          [
+            x - 1 | 0,
+            y + 1 | 0
+          ],
+          [
+            x,
+            y + 1 | 0
+          ],
+          [
+            x + 1 | 0,
+            y + 1 | 0
+          ]
         ];
+}
+
+function getAdjacents(t, param) {
+  var lenX = Array2D$AdventOfCode.lengthX(t);
+  var lenY = Array2D$AdventOfCode.lengthY(t);
+  var validAdjs = Belt_Array.keep(adjCoords([
+            param[0],
+            param[1]
+          ]), (function (__x) {
+          return isValidCoord(__x, lenX, lenY);
+        }));
+  return Belt_Array.map(validAdjs, (function (param) {
+                return Array2D$AdventOfCode.get(t, param);
+              }));
+}
+
+function isSeatEq(s, toBe) {
+  console.log("s", s);
+  console.log("toBe", toBe);
+  if (Belt_Option.isSome(s)) {
+    return Belt_Option.getExn(s) === toBe;
+  } else {
+    return false;
+  }
+}
+
+function countSeat(xs, seatStatus) {
+  return Belt_Array.keep(xs, (function (__x) {
+                return isSeatEq(__x, seatStatus);
+              })).length;
+}
+
+function countEmptySeat(__x) {
+  return countSeat(__x, "L");
+}
+
+function countFloor(__x) {
+  return countSeat(__x, ".");
+}
+
+function countOccupiedSeat(__x) {
+  return countSeat(__x, "#");
 }
 
 function make$1(xs) {
@@ -73,7 +156,14 @@ function dump(t) {
 var SeatMap = {
   InvalidStatus: InvalidStatus,
   SeatStatus: SeatStatus,
-  getSurrendings: getSurrendings,
+  isValidCoord: isValidCoord,
+  adjCoords: adjCoords,
+  getAdjacents: getAdjacents,
+  isSeatEq: isSeatEq,
+  countSeat: countSeat,
+  countEmptySeat: countEmptySeat,
+  countFloor: countFloor,
+  countOccupiedSeat: countOccupiedSeat,
   make: make$1,
   dump: dump
 };
@@ -85,7 +175,14 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  dump(parse(data));
+  var seats = parse(data);
+  var adj = getAdjacents(seats, [
+        2,
+        0
+      ]);
+  console.log(adj);
+  var prim = countSeat(adj, "L");
+  console.log(prim);
   return 1;
 }
 

@@ -71,7 +71,7 @@ function crop(t, param, lenX, lenY) {
   var x = param[0];
   var ret = [];
   for(var i = x ,i_finish = x + lenX | 0; i < i_finish; ++i){
-    ret = Belt_Array.concat(ret, [Belt_Array.slice(Belt_Option.getExn(Belt_Array.get(t, i)), y, lenY)]);
+    ret = Belt_Array.concat(ret, [Belt_Array.slice(Belt_Option.getWithDefault(Belt_Array.get(t, i), []), y, lenY)]);
   }
   return ret;
 }

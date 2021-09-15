@@ -54,7 +54,7 @@ let crop = (t, (x, y), ~lenX, ~lenY) => {
   for i in x to x + lenX - 1 {
     ret.contents = Array.concat(
       ret.contents,
-      [t->getXEquals(i)->Option.getExn->Array.slice(~offset=y, ~len=lenY)],
+      [t->getXEquals(i)->Option.getWithDefault([])->Array.slice(~offset=y, ~len=lenY)],
     )
   }
   ret.contents

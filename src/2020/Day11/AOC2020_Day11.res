@@ -3,8 +3,6 @@ let log = Js.Console.log
 //open Utils
 
 module SeatMap = {
-  type t
-
   exception InvalidStatus(string)
 
   module SeatStatus = {
@@ -20,9 +18,47 @@ module SeatMap = {
     }
   }
 
-  let getSurrendings = (t, (x, y)) => {
-    [-1, 0, 1]
+  type t = Array2D.t<SeatStatus.t>
+
+  let isValidCoord = ((x, y), ~lenX, ~lenY) => {
+    x >= 0 && x <= lenX - 1 && y >= 0 && y <= lenY - 1
   }
+
+  let adjCoords = ((x, y)) => {
+    [
+      (x - 1, y - 1),
+      (x, y - 1),
+      (x + 1, y - 1),
+      (x - 1, y),
+      (x + 1, y),
+      (x - 1, y + 1),
+      (x, y + 1),
+      (x + 1, y + 1),
+    ]
+  }
+
+  let getAdjacents = (t, (x, y)) => {
+    let lenX = t->Array2D.lengthX
+    let lenY = t->Array2D.lengthY
+
+    let validAdjs = (x, y)->adjCoords->Array.keep(isValidCoord(_, ~lenX, ~lenY))
+
+    validAdjs->Array.map(t->Array2D.get)
+  }
+
+  let isSeatEq = (s, toBe) => {
+    Js.log2("s", s)
+    Js.log2("toBe", toBe)
+    s->Option.isSome && s->Option.getExn === toBe
+  }
+
+  let countSeat = (xs, seatStatus: SeatStatus.t) => {
+    xs->Array.keep(isSeatEq(_, seatStatus))->Array.length
+  }
+
+  let countEmptySeat = countSeat(_, #L)
+  let countFloor = countSeat(_, #".")
+  let countOccupiedSeat = countSeat(_, #"#")
 
   let make = (xs: array<string>) => {
     let x = xs->Array.getExn(0)->Js.String2.length
@@ -54,7 +90,10 @@ let parse = data => {
 }
 
 let solvePart1 = data => {
-  data->parse->SeatMap.dump
+  let seats = data->parse
+  let adj = seats->SeatMap.getAdjacents((2, 0))
+  adj->log
+  adj->SeatMap.countEmptySeat->log
   1
 }
 
