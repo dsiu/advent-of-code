@@ -76,6 +76,22 @@ function crop(t, param, len_x, len_y) {
   return ret;
 }
 
+function eq(t, u) {
+  if (!(t.length === u.length && Belt_Array.getExn(t, 0).length === Belt_Array.getExn(u, 0).length)) {
+    return false;
+  }
+  var ret = [];
+  for(var i = 0 ,i_finish = t.length; i < i_finish; ++i){
+    ret = Belt_Array.concat(ret, [Belt_Array.eq(Belt_Option.getWithDefault(Belt_Array.get(t, i), []), Belt_Option.getWithDefault(Belt_Array.get(u, i), []), (function (a, b) {
+                  return a === b;
+                }))]);
+  }
+  console.log(ret);
+  return Belt_Array.every(ret, (function (a) {
+                return a === true;
+              }));
+}
+
 exports.make = make;
 exports.lengthX = lengthX;
 exports.lengthY = lengthY;
@@ -86,4 +102,5 @@ exports.getYEquals = getYEquals;
 exports.map = map;
 exports.mapWithIndex = mapWithIndex;
 exports.crop = crop;
+exports.eq = eq;
 /* No side effect */

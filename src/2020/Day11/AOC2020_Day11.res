@@ -129,6 +129,22 @@ let solvePart1 = data => {
   "iter_5"->log
   iter_5->SeatMap.dump
 
+  let iter_6 = iter_5->SeatMap.iterate
+  "iter_6"->log
+  iter_6->SeatMap.dump
+
+  let iter_7 = iter_6->SeatMap.iterate
+  "iter_7"->log
+  iter_7->SeatMap.dump
+
+  "iter_4 vs iter_5"->log
+  Array2D.eq(iter_4, iter_5)->log
+
+  "iter_5 vs iter_6"->log
+  Array2D.eq(iter_5, iter_6)->log
+
+  "iter_6 vs iter_7"->log
+  Array2D.eq(iter_6, iter_7)->log
   1
 }
 

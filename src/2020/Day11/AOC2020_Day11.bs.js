@@ -218,6 +218,21 @@ function solvePart1(data) {
   var iter_5 = iterate(iter_4);
   console.log("iter_5");
   dump(iter_5);
+  var iter_6 = iterate(iter_5);
+  console.log("iter_6");
+  dump(iter_6);
+  var iter_7 = iterate(iter_6);
+  console.log("iter_7");
+  dump(iter_7);
+  console.log("iter_4 vs iter_5");
+  var prim = Array2D$AdventOfCode.eq(iter_4, iter_5);
+  console.log(prim);
+  console.log("iter_5 vs iter_6");
+  var prim$1 = Array2D$AdventOfCode.eq(iter_5, iter_6);
+  console.log(prim$1);
+  console.log("iter_6 vs iter_7");
+  var prim$2 = Array2D$AdventOfCode.eq(iter_6, iter_7);
+  console.log(prim$2);
   return 1;
 }
 
