@@ -62,23 +62,8 @@ let crop = (t, (x, y), ~len_x, ~len_y) => {
 
 let eq = (t, u) => {
   t->lengthX === u->lengthX &&
-  t->lengthY === u->lengthY && {
-    let ret = ref([])
-    for i in 0 to t->lengthX - 1 {
-      ret.contents = Array.concat(
-        ret.contents,
-        [
-          Array.eq(
-            t->getXEquals(i)->Option.getWithDefault([]),
-            u->getXEquals(i)->Option.getWithDefault([]),
-            (a, b) => {
-              a === b
-            },
-          ),
-        ],
-      )
-    }
-    ret.contents->Js.log
-    ret.contents->Array.every(a => a === true)
-  }
+  t->lengthY === u->lengthY &&
+  Array.reduceReverse2(t, u, true, (c, a, b) => {
+    c && Array.eq(a, b, (a, b) => {a === b})
+  })
 }
