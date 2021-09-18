@@ -66,12 +66,12 @@ function mapWithIndex(t, f) {
               }));
 }
 
-function crop(t, param, lenX, lenY) {
+function crop(t, param, len_x, len_y) {
   var y = param[1];
   var x = param[0];
   var ret = [];
-  for(var i = x ,i_finish = x + lenX | 0; i < i_finish; ++i){
-    ret = Belt_Array.concat(ret, [Belt_Array.slice(Belt_Option.getWithDefault(Belt_Array.get(t, i), []), y, lenY)]);
+  for(var i = x ,i_finish = x + len_x | 0; i < i_finish; ++i){
+    ret = Belt_Array.concat(ret, [Belt_Array.slice(Belt_Option.getWithDefault(Belt_Array.get(t, i), []), y, len_y)]);
   }
   return ret;
 }

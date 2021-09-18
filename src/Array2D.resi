@@ -20,4 +20,4 @@ let map: (t<'a>, 'a => 'b) => t<'b>
 
 let mapWithIndex: (t<'a>, ((int, int), 'a) => 'b) => t<'b>
 
-let crop: (t<'a>, (int, int), ~lenX: int, ~lenY: int) => t<'a>
+let crop: (t<'a>, (int, int), ~len_x: int, ~len_y: int) => t<'a>

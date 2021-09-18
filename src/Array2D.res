@@ -49,12 +49,12 @@ let mapWithIndex = (t, f) => {
   })
 }
 
-let crop = (t, (x, y), ~lenX, ~lenY) => {
+let crop = (t, (x, y), ~len_x, ~len_y) => {
   let ret = ref([])
-  for i in x to x + lenX - 1 {
+  for i in x to x + len_x - 1 {
     ret.contents = Array.concat(
       ret.contents,
-      [t->getXEquals(i)->Option.getWithDefault([])->Array.slice(~offset=y, ~len=lenY)],
+      [t->getXEquals(i)->Option.getWithDefault([])->Array.slice(~offset=y, ~len=len_y)],
     )
   }
   ret.contents

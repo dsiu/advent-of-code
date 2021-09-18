@@ -35,11 +35,11 @@ var SeatStatus = {
   make: make
 };
 
-function isValidCoord(param, lenX, lenY) {
+function isValidCoord(param, len_x, len_y) {
   var y = param[1];
   var x = param[0];
-  if (x >= 0 && x <= (lenX - 1 | 0) && y >= 0) {
-    return y <= (lenY - 1 | 0);
+  if (x >= 0 && x <= (len_x - 1 | 0) && y >= 0) {
+    return y <= (len_y - 1 | 0);
   } else {
     return false;
   }
@@ -85,24 +85,21 @@ function adjCoords(param) {
 }
 
 function getAdjacents(t, param) {
-  var lenX = Array2D$AdventOfCode.lengthX(t);
-  var lenY = Array2D$AdventOfCode.lengthY(t);
-  var validAdjs = Belt_Array.keep(adjCoords([
-            param[0],
-            param[1]
-          ]), (function (__x) {
-          return isValidCoord(__x, lenX, lenY);
-        }));
-  return Belt_Array.map(validAdjs, (function (param) {
+  var len_x = Array2D$AdventOfCode.lengthX(t);
+  var len_y = Array2D$AdventOfCode.lengthY(t);
+  return Belt_Array.map(Belt_Array.keep(adjCoords([
+                      param[0],
+                      param[1]
+                    ]), (function (__x) {
+                    return isValidCoord(__x, len_x, len_y);
+                  })), (function (param) {
                 return Array2D$AdventOfCode.get(t, param);
               }));
 }
 
-function isSeatEq(s, toBe) {
-  console.log("s", s);
-  console.log("toBe", toBe);
+function isSeatEq(s, to_be) {
   if (Belt_Option.isSome(s)) {
-    return Belt_Option.getExn(s) === toBe;
+    return Belt_Option.getExn(s) === to_be;
   } else {
     return false;
   }
@@ -124,6 +121,32 @@ function countFloor(__x) {
 
 function countOccupiedSeat(__x) {
   return countSeat(__x, "#");
+}
+
+function transform(s, adjacents) {
+  var occupied_seats = countSeat(adjacents, "#");
+  if (s === ".") {
+    return ".";
+  } else if (s === "L") {
+    if (occupied_seats === 0) {
+      return "#";
+    } else {
+      return "L";
+    }
+  } else if (occupied_seats >= 4) {
+    return "L";
+  } else {
+    return "#";
+  }
+}
+
+function iterate(t) {
+  return Array2D$AdventOfCode.mapWithIndex(t, (function (param, s) {
+                return transform(s, getAdjacents(t, [
+                                param[0],
+                                param[1]
+                              ]));
+              }));
 }
 
 function make$1(xs) {
@@ -164,6 +187,8 @@ var SeatMap = {
   countEmptySeat: countEmptySeat,
   countFloor: countFloor,
   countOccupiedSeat: countOccupiedSeat,
+  transform: transform,
+  iterate: iterate,
   make: make$1,
   dump: dump
 };
@@ -176,13 +201,23 @@ function parse(data) {
 
 function solvePart1(data) {
   var seats = parse(data);
-  var adj = getAdjacents(seats, [
-        2,
-        0
-      ]);
-  console.log(adj);
-  var prim = countSeat(adj, "L");
-  console.log(prim);
+  console.log("seats");
+  dump(seats);
+  var iter_1 = iterate(seats);
+  console.log("iter_1");
+  dump(iter_1);
+  var iter_2 = iterate(iter_1);
+  console.log("iter_2");
+  dump(iter_2);
+  var iter_3 = iterate(iter_2);
+  console.log("iter_3");
+  dump(iter_3);
+  var iter_4 = iterate(iter_3);
+  console.log("iter_4");
+  dump(iter_4);
+  var iter_5 = iterate(iter_4);
+  console.log("iter_5");
+  dump(iter_5);
   return 1;
 }
 

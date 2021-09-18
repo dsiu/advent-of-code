@@ -118,7 +118,7 @@ describe("Array2D - keep / map / getXYEquals / crop", () => {
   })
 
   test("corp 1 - int", () => {
-    let result = a->Array2D.crop((1, 2), ~lenX=1, ~lenY=2)
+    let result = a->Array2D.crop((1, 2), ~len_x=1, ~len_y=2)
     let expected = [[891, 97]]
 
     open Expect
@@ -127,7 +127,7 @@ describe("Array2D - keep / map / getXYEquals / crop", () => {
   })
 
   test("corp 2 - int", () => {
-    let result = a->Array2D.crop((1, 1), ~lenX=2, ~lenY=2)
+    let result = a->Array2D.crop((1, 1), ~len_x=2, ~len_y=2)
     let expected = [[559, 891], [514, 982]]
 
     open Expect
