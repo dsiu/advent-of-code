@@ -2,11 +2,109 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var AOC2020_Day11$AdventOfCode = require("./AOC2020_Day11.bs.js");
 var AOC2020_Day11_Data$AdventOfCode = require("./AOC2020_Day11_Data.bs.js");
 var AOC2020_Day11_Data_Sample$AdventOfCode = require("./AOC2020_Day11_Data_Sample.bs.js");
 
 Jest.describe("2020 Day11", (function (param) {
+        var seats = AOC2020_Day11$AdventOfCode.parse(AOC2020_Day11_Data_Sample$AdventOfCode.data);
+        Jest.describe("SeatMap", (function (param) {
+                return Jest.test("SeatMap - getAdjacents", (function (param) {
+                              var result = [
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      0,
+                                      0
+                                    ]),
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      1,
+                                      0
+                                    ]),
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      2,
+                                      0
+                                    ]),
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      9,
+                                      0
+                                    ]),
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      2,
+                                      1
+                                    ]),
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      0,
+                                      9
+                                    ]),
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      8,
+                                      9
+                                    ]),
+                                AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
+                                      9,
+                                      9
+                                    ])
+                              ];
+                              var expected = Belt_Array.map([
+                                    [
+                                      ".",
+                                      "L",
+                                      "L"
+                                    ],
+                                    [
+                                      "L",
+                                      "L",
+                                      "L",
+                                      "L",
+                                      "L"
+                                    ],
+                                    [
+                                      ".",
+                                      "L",
+                                      "L",
+                                      "L",
+                                      "L"
+                                    ],
+                                    [
+                                      "L",
+                                      "L",
+                                      "L"
+                                    ],
+                                    [
+                                      ".",
+                                      "L",
+                                      "L",
+                                      "L",
+                                      "L",
+                                      ".",
+                                      "L",
+                                      "."
+                                    ],
+                                    [
+                                      "L",
+                                      ".",
+                                      "."
+                                    ],
+                                    [
+                                      "L",
+                                      ".",
+                                      "L",
+                                      ".",
+                                      "L"
+                                    ],
+                                    [
+                                      ".",
+                                      "L",
+                                      "L"
+                                    ]
+                                  ], (function (__x) {
+                                      return Belt_Array.map(__x, (function (x) {
+                                                    return x;
+                                                  }));
+                                    }));
+                              return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                            }));
+              }));
         Jest.test("Part 1 - Sample Data", (function (param) {
                 return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
               }));
