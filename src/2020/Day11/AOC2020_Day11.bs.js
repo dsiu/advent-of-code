@@ -93,21 +93,17 @@ function getAdjacents(t, param) {
                     ]), (function (__x) {
                     return isValidCoord(__x, len_x, len_y);
                   })), (function (param) {
-                return Array2D$AdventOfCode.get(t, param);
+                return Array2D$AdventOfCode.getExn(t, param);
               }));
 }
 
 function isSeatEq(s, to_be) {
-  if (Belt_Option.isSome(s)) {
-    return Belt_Option.getExn(s) === to_be;
-  } else {
-    return false;
-  }
+  return s === to_be;
 }
 
 function countSeat(xs, seatStatus) {
   return Belt_Array.keep(xs, (function (__x) {
-                return isSeatEq(__x, seatStatus);
+                return __x === seatStatus;
               })).length;
 }
 
@@ -147,6 +143,18 @@ function iterate(t) {
                                 param[1]
                               ]));
               }));
+}
+
+function stabilize(_t) {
+  while(true) {
+    var t = _t;
+    var t_next = iterate(t);
+    if (Array2D$AdventOfCode.eq(t, t_next)) {
+      return t;
+    }
+    _t = t_next;
+    continue ;
+  };
 }
 
 function make$1(xs) {
@@ -189,6 +197,8 @@ var SeatMap = {
   countOccupiedSeat: countOccupiedSeat,
   transform: transform,
   iterate: iterate,
+  isStabilized: Array2D$AdventOfCode.eq,
+  stabilize: stabilize,
   make: make$1,
   dump: dump
 };
@@ -201,39 +211,8 @@ function parse(data) {
 
 function solvePart1(data) {
   var seats = parse(data);
-  console.log("seats");
-  dump(seats);
-  var iter_1 = iterate(seats);
-  console.log("iter_1");
-  dump(iter_1);
-  var iter_2 = iterate(iter_1);
-  console.log("iter_2");
-  dump(iter_2);
-  var iter_3 = iterate(iter_2);
-  console.log("iter_3");
-  dump(iter_3);
-  var iter_4 = iterate(iter_3);
-  console.log("iter_4");
-  dump(iter_4);
-  var iter_5 = iterate(iter_4);
-  console.log("iter_5");
-  dump(iter_5);
-  var iter_6 = iterate(iter_5);
-  console.log("iter_6");
-  dump(iter_6);
-  var iter_7 = iterate(iter_6);
-  console.log("iter_7");
-  dump(iter_7);
-  console.log("iter_4 vs iter_5");
-  var prim = Array2D$AdventOfCode.eq(iter_4, iter_5);
-  console.log(prim);
-  console.log("iter_5 vs iter_6");
-  var prim$1 = Array2D$AdventOfCode.eq(iter_5, iter_6);
-  console.log(prim$1);
-  console.log("iter_6 vs iter_7");
-  var prim$2 = Array2D$AdventOfCode.eq(iter_6, iter_7);
-  console.log(prim$2);
-  return 1;
+  var result = stabilize(seats);
+  return countSeat(Array2D$AdventOfCode.flatten(result), "#");
 }
 
 function solvePart2(data) {

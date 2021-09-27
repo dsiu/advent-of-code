@@ -2,7 +2,6 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var AOC2020_Day11$AdventOfCode = require("./AOC2020_Day11.bs.js");
 var AOC2020_Day11_Data$AdventOfCode = require("./AOC2020_Day11_Data.bs.js");
 var AOC2020_Day11_Data_Sample$AdventOfCode = require("./AOC2020_Day11_Data_Sample.bs.js");
@@ -45,63 +44,59 @@ Jest.describe("2020 Day11", (function (param) {
                                       9
                                     ])
                               ];
-                              var expected = Belt_Array.map([
-                                    [
-                                      ".",
-                                      "L",
-                                      "L"
-                                    ],
-                                    [
-                                      "L",
-                                      "L",
-                                      "L",
-                                      "L",
-                                      "L"
-                                    ],
-                                    [
-                                      ".",
-                                      "L",
-                                      "L",
-                                      "L",
-                                      "L"
-                                    ],
-                                    [
-                                      "L",
-                                      "L",
-                                      "L"
-                                    ],
-                                    [
-                                      ".",
-                                      "L",
-                                      "L",
-                                      "L",
-                                      "L",
-                                      ".",
-                                      "L",
-                                      "."
-                                    ],
-                                    [
-                                      "L",
-                                      ".",
-                                      "."
-                                    ],
-                                    [
-                                      "L",
-                                      ".",
-                                      "L",
-                                      ".",
-                                      "L"
-                                    ],
-                                    [
-                                      ".",
-                                      "L",
-                                      "L"
-                                    ]
-                                  ], (function (__x) {
-                                      return Belt_Array.map(__x, (function (x) {
-                                                    return x;
-                                                  }));
-                                    }));
+                              var expected = [
+                                [
+                                  ".",
+                                  "L",
+                                  "L"
+                                ],
+                                [
+                                  "L",
+                                  "L",
+                                  "L",
+                                  "L",
+                                  "L"
+                                ],
+                                [
+                                  ".",
+                                  "L",
+                                  "L",
+                                  "L",
+                                  "L"
+                                ],
+                                [
+                                  "L",
+                                  "L",
+                                  "L"
+                                ],
+                                [
+                                  ".",
+                                  "L",
+                                  "L",
+                                  "L",
+                                  "L",
+                                  ".",
+                                  "L",
+                                  "."
+                                ],
+                                [
+                                  "L",
+                                  ".",
+                                  "."
+                                ],
+                                [
+                                  "L",
+                                  ".",
+                                  "L",
+                                  ".",
+                                  "L"
+                                ],
+                                [
+                                  ".",
+                                  "L",
+                                  "L"
+                                ]
+                              ];
                               return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
                             }));
               }));

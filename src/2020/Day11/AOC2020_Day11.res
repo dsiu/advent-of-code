@@ -41,11 +41,11 @@ module SeatMap = {
     let len_x = t->Array2D.lengthX
     let len_y = t->Array2D.lengthY
 
-    (x, y)->adjCoords->Array.keep(isValidCoord(_, ~len_x, ~len_y))->Array.map(t->Array2D.get)
+    (x, y)->adjCoords->Array.keep(isValidCoord(_, ~len_x, ~len_y))->Array.map(t->Array2D.getExn)
   }
 
-  let isSeatEq = (s: option<SeatStatus.t>, to_be: SeatStatus.t) => {
-    s->Option.isSome && s->Option.getExn === to_be
+  let isSeatEq = (s: SeatStatus.t, to_be: SeatStatus.t) => {
+    s === to_be
   }
 
   let countSeat = (xs, seatStatus: SeatStatus.t) => {
@@ -70,6 +70,13 @@ module SeatMap = {
     t->Array2D.mapWithIndex(((x, y), s) => {
       s->transform(t->getAdjacents((x, y)))
     })
+  }
+
+  let isStabilized = Array2D.eq
+
+  let rec stabilize = (t): t => {
+    let t_next = t->iterate
+    isStabilized(t, t_next) ? t : t_next->stabilize
   }
 
   let make = (xs: array<string>) => {
@@ -103,49 +110,10 @@ let parse = data => {
 
 let solvePart1 = data => {
   let seats = data->parse
-
-  //  let adj = seats->SeatMap.getAdjacents((2, 0))
-  //  adj->log
-  //  adj->SeatMap.countEmptySeat->log
-  "seats"->log
-  seats->SeatMap.dump
-  let iter_1 = seats->SeatMap.iterate
-  "iter_1"->log
-  iter_1->SeatMap.dump
-
-  let iter_2 = iter_1->SeatMap.iterate
-  "iter_2"->log
-  iter_2->SeatMap.dump
-
-  let iter_3 = iter_2->SeatMap.iterate
-  "iter_3"->log
-  iter_3->SeatMap.dump
-
-  let iter_4 = iter_3->SeatMap.iterate
-  "iter_4"->log
-  iter_4->SeatMap.dump
-
-  let iter_5 = iter_4->SeatMap.iterate
-  "iter_5"->log
-  iter_5->SeatMap.dump
-
-  let iter_6 = iter_5->SeatMap.iterate
-  "iter_6"->log
-  iter_6->SeatMap.dump
-
-  let iter_7 = iter_6->SeatMap.iterate
-  "iter_7"->log
-  iter_7->SeatMap.dump
-
-  "iter_4 vs iter_5"->log
-  Array2D.eq(iter_4, iter_5)->log
-
-  "iter_5 vs iter_6"->log
-  Array2D.eq(iter_5, iter_6)->log
-
-  "iter_6 vs iter_7"->log
-  Array2D.eq(iter_6, iter_7)->log
-  1
+  let result = seats->SeatMap.stabilize
+  let result_flat = result->Array2D.flatten
+  //  result->SeatMap.dump
+  result_flat->SeatMap.countOccupiedSeat
 }
 
 let solvePart2 = data => {

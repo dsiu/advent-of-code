@@ -24,6 +24,10 @@ let get = (t, (x, y)) => {
   }
 }
 
+let getExn = (t, (x, y)) => {
+  t->Array.getExn(x)->Array.getExn(y)
+}
+
 let getXEquals = (t, x) => {
   t->Array.get(x)
 }
@@ -47,6 +51,14 @@ let mapWithIndex = (t, f) => {
   t->Array.mapWithIndex((i, ys) => {
     ys->Array.mapWithIndex((j, e) => f((i, j), e))
   })
+}
+
+let flatten = t => {
+  let ret = ref([])
+  for i in 0 to t->lengthX - 1 {
+    ret.contents = Array.concat(ret.contents, t->getXEquals(i)->Option.getWithDefault([]))
+  }
+  ret.contents
 }
 
 let crop = (t, (x, y), ~len_x, ~len_y) => {

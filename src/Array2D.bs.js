@@ -37,6 +37,10 @@ function get(t, param) {
   
 }
 
+function getExn(t, param) {
+  return Belt_Array.getExn(Belt_Array.getExn(t, param[0]), param[1]);
+}
+
 var getXEquals = Belt_Array.get;
 
 function getYEquals(t, y) {
@@ -64,6 +68,14 @@ function mapWithIndex(t, f) {
                                         ], e);
                             }));
               }));
+}
+
+function flatten(t) {
+  var ret = [];
+  for(var i = 0 ,i_finish = t.length; i < i_finish; ++i){
+    ret = Belt_Array.concat(ret, Belt_Option.getWithDefault(Belt_Array.get(t, i), []));
+  }
+  return ret;
 }
 
 function crop(t, param, len_x, len_y) {
@@ -97,10 +109,12 @@ exports.lengthX = lengthX;
 exports.lengthY = lengthY;
 exports.set = set;
 exports.get = get;
+exports.getExn = getExn;
 exports.getXEquals = getXEquals;
 exports.getYEquals = getYEquals;
 exports.map = map;
 exports.mapWithIndex = mapWithIndex;
+exports.flatten = flatten;
 exports.crop = crop;
 exports.eq = eq;
 /* No side effect */

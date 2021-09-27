@@ -10,6 +10,8 @@ let set: (t<'a>, (int, int), 'a) => bool
 
 let get: (t<'a>, (int, int)) => option<'a>
 
+let getExn: (t<'a>, (int, int)) => 'a
+
 let getXEquals: (t<'a>, int) => option<array<'a>>
 
 let getYEquals: (t<'a>, int) => option<array<'a>>
@@ -19,6 +21,8 @@ let getYEquals: (t<'a>, int) => option<array<'a>>
 let map: (t<'a>, 'a => 'b) => t<'b>
 
 let mapWithIndex: (t<'a>, ((int, int), 'a) => 'b) => t<'b>
+
+let flatten: t<'a> => array<'a>
 
 let crop: (t<'a>, (int, int), ~len_x: int, ~len_y: int) => t<'a>
 

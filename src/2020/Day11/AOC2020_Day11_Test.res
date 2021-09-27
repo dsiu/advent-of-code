@@ -2,7 +2,7 @@ open Jest
 open Expect
 open! Expect.Operators
 
-open Belt
+//open Belt
 
 let data = AOC2020_Day11_Data.data
 let sampleData = AOC2020_Day11_Data_Sample.data
@@ -23,17 +23,17 @@ describe("2020 Day11", () => {
         seats->SeatMap.getAdjacents((8, 9)),
         seats->SeatMap.getAdjacents((9, 9)),
       ]
-      let expected =
-        [
-          [#".", #L, #L],
-          [#L, #L, #L, #L, #L],
-          [#".", #L, #L, #L, #L],
-          [#L, #L, #L],
-          [#".", #L, #L, #L, #L, #".", #L, #"."],
-          [#L, #".", #"."],
-          [#L, #".", #L, #".", #L],
-          [#".", #L, #L],
-        ]->Array.map(Array.map(_, x => x->Some))
+      let expected = [
+        [#".", #L, #L],
+        [#L, #L, #L, #L, #L],
+        [#".", #L, #L, #L, #L],
+        [#L, #L, #L],
+        [#".", #L, #L, #L, #L, #".", #L, #"."],
+        [#L, #".", #"."],
+        [#L, #".", #L, #".", #L],
+        [#".", #L, #L],
+      ]
+      //        ->Array.map(Array.map(_, x => x->Some))
       expect(result) |> toEqual(expected)
     })
   })
