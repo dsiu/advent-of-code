@@ -46,80 +46,6 @@ function isValidCoord(param, len_x, len_y) {
   }
 }
 
-function adjCoords(param) {
-  var y = param[1];
-  var x = param[0];
-  return [
-          [
-            x - 1 | 0,
-            y - 1 | 0
-          ],
-          [
-            x,
-            y - 1 | 0
-          ],
-          [
-            x + 1 | 0,
-            y - 1 | 0
-          ],
-          [
-            x - 1 | 0,
-            y
-          ],
-          [
-            x + 1 | 0,
-            y
-          ],
-          [
-            x - 1 | 0,
-            y + 1 | 0
-          ],
-          [
-            x,
-            y + 1 | 0
-          ],
-          [
-            x + 1 | 0,
-            y + 1 | 0
-          ]
-        ];
-}
-
-function getAdjacents(t, param) {
-  var len_x = Array2D$AdventOfCode.lengthX(t);
-  var len_y = Array2D$AdventOfCode.lengthY(t);
-  return Belt_Array.map(Belt_Array.keep(adjCoords([
-                      param[0],
-                      param[1]
-                    ]), (function (__x) {
-                    return isValidCoord(__x, len_x, len_y);
-                  })), (function (param) {
-                return Array2D$AdventOfCode.getExn(t, param);
-              }));
-}
-
-function isSeatEq(s, to_be) {
-  return s === to_be;
-}
-
-function countSeat(xs, seatStatus) {
-  return Belt_Array.keep(xs, (function (__x) {
-                return __x === seatStatus;
-              })).length;
-}
-
-function countEmptySeat(__x) {
-  return countSeat(__x, "L");
-}
-
-function countFloor(__x) {
-  return countSeat(__x, ".");
-}
-
-function countOccupiedSeat(__x) {
-  return countSeat(__x, "#");
-}
-
 function north(param) {
   return [
           param[0],
@@ -203,6 +129,52 @@ function stepSW(__x) {
   return stepFunc(__x, southWest);
 }
 
+function adjCoords(c) {
+  return [
+          stepFunc(c, northWest),
+          stepFunc(c, north),
+          stepFunc(c, northEast),
+          stepFunc(c, west),
+          stepFunc(c, east),
+          stepFunc(c, southWest),
+          stepFunc(c, south),
+          stepFunc(c, southEast)
+        ];
+}
+
+function getAdjacents(t, param) {
+  return Belt_Array.map(Belt_Array.keep(adjCoords([
+                      param[0],
+                      param[1]
+                    ]), (function (param) {
+                    return Array2D$AdventOfCode.isValidXY(t, param);
+                  })), (function (param) {
+                return Array2D$AdventOfCode.getExn(t, param);
+              }));
+}
+
+function isSeatEq(s, to_be) {
+  return s === to_be;
+}
+
+function countSeat(xs, seatStatus) {
+  return Belt_Array.keep(xs, (function (__x) {
+                return __x === seatStatus;
+              })).length;
+}
+
+function countEmptySeat(__x) {
+  return countSeat(__x, "L");
+}
+
+function countFloor(__x) {
+  return countSeat(__x, ".");
+}
+
+function countOccupiedSeat(__x) {
+  return countSeat(__x, "#");
+}
+
 function transform(s, adjacents) {
   var occupied_seats = countSeat(adjacents, "#");
   if (s === ".") {
@@ -220,7 +192,7 @@ function transform(s, adjacents) {
   }
 }
 
-function iterate(t) {
+function iteratePart1(t) {
   return Array2D$AdventOfCode.mapWithIndex(t, (function (param, s) {
                 return transform(s, getAdjacents(t, [
                                 param[0],
@@ -232,7 +204,7 @@ function iterate(t) {
 function stabilize(_t) {
   while(true) {
     var t = _t;
-    var t_next = iterate(t);
+    var t_next = iteratePart1(t);
     if (Array2D$AdventOfCode.eq(t, t_next)) {
       return t;
     }
@@ -272,13 +244,6 @@ var SeatMap = {
   InvalidStatus: InvalidStatus,
   SeatStatus: SeatStatus,
   isValidCoord: isValidCoord,
-  adjCoords: adjCoords,
-  getAdjacents: getAdjacents,
-  isSeatEq: isSeatEq,
-  countSeat: countSeat,
-  countEmptySeat: countEmptySeat,
-  countFloor: countFloor,
-  countOccupiedSeat: countOccupiedSeat,
   north: north,
   east: east,
   south: south,
@@ -296,8 +261,15 @@ var SeatMap = {
   stepNW: stepNW,
   stepSE: stepSE,
   stepSW: stepSW,
+  adjCoords: adjCoords,
+  getAdjacents: getAdjacents,
+  isSeatEq: isSeatEq,
+  countSeat: countSeat,
+  countEmptySeat: countEmptySeat,
+  countFloor: countFloor,
+  countOccupiedSeat: countOccupiedSeat,
   transform: transform,
-  iterate: iterate,
+  iteratePart1: iteratePart1,
   isStabilized: Array2D$AdventOfCode.eq,
   stabilize: stabilize,
   make: make$1,

@@ -10,6 +10,13 @@ let lengthX = t => t->Array.length
 
 let lengthY = t => t->Array.getExn(0)->Array.length
 
+let isValidXY = (t, (x, y)) => {
+  let len_x = t->lengthX
+  let len_y = t->lengthY
+
+  x >= 0 && x <= len_x - 1 && y >= 0 && y <= len_y - 1
+}
+
 let set = (t, (x, y), e: 'a) => {
   switch t->Array.get(x) {
   | Some(x) => x->Array.set(y, e)

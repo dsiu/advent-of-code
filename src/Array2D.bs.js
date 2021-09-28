@@ -20,6 +20,18 @@ function lengthY(t) {
   return Belt_Array.getExn(t, 0).length;
 }
 
+function isValidXY(t, param) {
+  var y = param[1];
+  var x = param[0];
+  var len_x = t.length;
+  var len_y = Belt_Array.getExn(t, 0).length;
+  if (x >= 0 && x <= (len_x - 1 | 0) && y >= 0) {
+    return y <= (len_y - 1 | 0);
+  } else {
+    return false;
+  }
+}
+
 function set(t, param, e) {
   var x = Belt_Array.get(t, param[0]);
   if (x !== undefined) {
@@ -107,6 +119,7 @@ function eq(t, u) {
 exports.make = make;
 exports.lengthX = lengthX;
 exports.lengthY = lengthY;
+exports.isValidXY = isValidXY;
 exports.set = set;
 exports.get = get;
 exports.getExn = getExn;

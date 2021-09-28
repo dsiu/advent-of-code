@@ -24,38 +24,6 @@ module SeatMap = {
     x >= 0 && x <= len_x - 1 && y >= 0 && y <= len_y - 1
   }
 
-  let adjCoords = ((x, y)) => {
-    [
-      (x - 1, y - 1),
-      (x, y - 1),
-      (x + 1, y - 1),
-      (x - 1, y),
-      (x + 1, y),
-      (x - 1, y + 1),
-      (x, y + 1),
-      (x + 1, y + 1),
-    ]
-  }
-
-  let getAdjacents = (t, (x, y)) => {
-    let len_x = t->Array2D.lengthX
-    let len_y = t->Array2D.lengthY
-
-    (x, y)->adjCoords->Array.keep(isValidCoord(_, ~len_x, ~len_y))->Array.map(t->Array2D.getExn)
-  }
-
-  let isSeatEq = (s: SeatStatus.t, to_be: SeatStatus.t) => {
-    s === to_be
-  }
-
-  let countSeat = (xs, seatStatus: SeatStatus.t) => {
-    xs->Array.keep(isSeatEq(_, seatStatus))->Array.length
-  }
-
-  let countEmptySeat = countSeat(_, #L)
-  let countFloor = countSeat(_, #".")
-  let countOccupiedSeat = countSeat(_, #"#")
-
   let north = ((x, y)) => {(x, y - 1)}
   let east = ((x, y)) => {(x + 1, y)}
   let south = ((x, y)) => {(x, y + 1)}
@@ -76,6 +44,26 @@ module SeatMap = {
   let stepSE = stepFunc(_, southEast)
   let stepSW = stepFunc(_, southWest)
 
+  let adjCoords = c => {
+    [c->stepNW, c->stepN, c->stepNE, c->stepW, c->stepE, c->stepSW, c->stepS, c->stepSE]
+  }
+
+  let getAdjacents = (t, (x, y)) => {
+    (x, y)->adjCoords->Array.keep(Array2D.isValidXY(t))->Array.map(t->Array2D.getExn)
+  }
+
+  let isSeatEq = (s: SeatStatus.t, to_be: SeatStatus.t) => {
+    s === to_be
+  }
+
+  let countSeat = (xs, seatStatus: SeatStatus.t) => {
+    xs->Array.keep(isSeatEq(_, seatStatus))->Array.length
+  }
+
+  let countEmptySeat = countSeat(_, #L)
+  let countFloor = countSeat(_, #".")
+  let countOccupiedSeat = countSeat(_, #"#")
+
   let transform = (s: SeatStatus.t, adjacents) => {
     let occupied_seats = adjacents->countOccupiedSeat
     switch s {
@@ -86,7 +74,7 @@ module SeatMap = {
     }
   }
 
-  let iterate = t => {
+  let iteratePart1 = t => {
     t->Array2D.mapWithIndex(((x, y), s) => {
       s->transform(t->getAdjacents((x, y)))
     })
@@ -95,7 +83,7 @@ module SeatMap = {
   let isStabilized = Array2D.eq
 
   let rec stabilize = (t): t => {
-    let t_next = t->iterate
+    let t_next = t->iteratePart1
     isStabilized(t, t_next) ? t : t_next->stabilize
   }
 

@@ -6,6 +6,8 @@ let lengthX: t<'a> => int
 
 let lengthY: t<'a> => int
 
+let isValidXY: (t<'a>, (int, int)) => bool
+
 let set: (t<'a>, (int, int), 'a) => bool
 
 let get: (t<'a>, (int, int)) => option<'a>
