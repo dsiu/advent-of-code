@@ -13,15 +13,16 @@ describe("2020 Day11", () => {
 
   describe("SeatMap", () => {
     test("SeatMap - getAdjacents", () => {
+      open SeatMap
       let result = [
-        seats->SeatMap.getAdjacents((0, 0)),
-        seats->SeatMap.getAdjacents((1, 0)),
-        seats->SeatMap.getAdjacents((2, 0)),
-        seats->SeatMap.getAdjacents((9, 0)),
-        seats->SeatMap.getAdjacents((2, 1)),
-        seats->SeatMap.getAdjacents((0, 9)),
-        seats->SeatMap.getAdjacents((8, 9)),
-        seats->SeatMap.getAdjacents((9, 9)),
+        seats->getAdjacents((0, 0)),
+        seats->getAdjacents((1, 0)),
+        seats->getAdjacents((2, 0)),
+        seats->getAdjacents((9, 0)),
+        seats->getAdjacents((2, 1)),
+        seats->getAdjacents((0, 9)),
+        seats->getAdjacents((8, 9)),
+        seats->getAdjacents((9, 9)),
       ]
       let expected = [
         [#".", #L, #L],
@@ -33,23 +34,55 @@ describe("2020 Day11", () => {
         [#L, #".", #L, #".", #L],
         [#".", #L, #L],
       ]
-      //        ->Array.map(Array.map(_, x => x->Some))
+      expect(result) |> toEqual(expected)
+    })
+  })
+  describe("Step Functions", () => {
+    let init = (4, 4)
+    test("Single Step", () => {
+      open SeatMap
+
+      let result = [
+        init->stepN,
+        init->stepE,
+        init->stepS,
+        init->stepW,
+        init->stepNE,
+        init->stepNW,
+        init->stepSE,
+        init->stepSW,
+      ]
+      let expected = [(4, 3), (5, 4), (4, 5), (3, 4), (5, 3), (3, 3), (5, 5), (3, 5)]
+
+      expect(result) |> toEqual(expected)
+    })
+
+    test("Multiple Step", () => {
+      open SeatMap
+
+      let result = [
+        init->stepN->stepN,
+        init->stepE->stepE,
+        init->stepS->stepW,
+        init->stepNE->stepSW,
+        init->stepNW->stepSE,
+      ]
+      let expected = [(4, 2), (6, 4), (3, 5), (4, 4), (4, 4)]
+
       expect(result) |> toEqual(expected)
     })
   })
 
   test("Part 1 - Sample Data", () => {
-    //    let result = AOC2020_Day11.solvePart1(sampleData)
-    let result = 1
-    let expected = 1
+    let result = AOC2020_Day11.solvePart1(sampleData)
+    let expected = 37
 
     expect(result) |> toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
-    //    let result = AOC2020_Day11.solvePart1(data)
-    let result = 1
-    let expected = 1
+    let result = AOC2020_Day11.solvePart1(data)
+    let expected = 2270
 
     expect(result) |> toEqual(expected)
   })

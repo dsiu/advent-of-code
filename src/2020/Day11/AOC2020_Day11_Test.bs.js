@@ -100,11 +100,98 @@ Jest.describe("2020 Day11", (function (param) {
                               return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
                             }));
               }));
+        Jest.describe("Step Functions", (function (param) {
+                var init = [
+                  4,
+                  4
+                ];
+                Jest.test("Single Step", (function (param) {
+                        var result = [
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepN(init),
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepE(init),
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepS(init),
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepW(init),
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepNE(init),
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepNW(init),
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepSE(init),
+                          AOC2020_Day11$AdventOfCode.SeatMap.stepSW(init)
+                        ];
+                        var expected = [
+                          [
+                            4,
+                            3
+                          ],
+                          [
+                            5,
+                            4
+                          ],
+                          [
+                            4,
+                            5
+                          ],
+                          [
+                            3,
+                            4
+                          ],
+                          [
+                            5,
+                            3
+                          ],
+                          [
+                            3,
+                            3
+                          ],
+                          [
+                            5,
+                            5
+                          ],
+                          [
+                            3,
+                            5
+                          ]
+                        ];
+                        return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                      }));
+                return Jest.test("Multiple Step", (function (param) {
+                              var result = [
+                                AOC2020_Day11$AdventOfCode.SeatMap.stepN(AOC2020_Day11$AdventOfCode.SeatMap.stepN(init)),
+                                AOC2020_Day11$AdventOfCode.SeatMap.stepE(AOC2020_Day11$AdventOfCode.SeatMap.stepE(init)),
+                                AOC2020_Day11$AdventOfCode.SeatMap.stepW(AOC2020_Day11$AdventOfCode.SeatMap.stepS(init)),
+                                AOC2020_Day11$AdventOfCode.SeatMap.stepSW(AOC2020_Day11$AdventOfCode.SeatMap.stepNE(init)),
+                                AOC2020_Day11$AdventOfCode.SeatMap.stepSE(AOC2020_Day11$AdventOfCode.SeatMap.stepNW(init))
+                              ];
+                              var expected = [
+                                [
+                                  4,
+                                  2
+                                ],
+                                [
+                                  6,
+                                  4
+                                ],
+                                [
+                                  3,
+                                  5
+                                ],
+                                [
+                                  4,
+                                  4
+                                ],
+                                [
+                                  4,
+                                  4
+                                ]
+                              ];
+                              return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                            }));
+              }));
         Jest.test("Part 1 - Sample Data", (function (param) {
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
+                var result = AOC2020_Day11$AdventOfCode.solvePart1(AOC2020_Day11_Data_Sample$AdventOfCode.data);
+                return Jest.Expect.toEqual(37, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
+                var result = AOC2020_Day11$AdventOfCode.solvePart1(AOC2020_Day11_Data$AdventOfCode.data);
+                return Jest.Expect.toEqual(2270, Jest.Expect.expect(result));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2020_Day11$AdventOfCode.solvePart2(AOC2020_Day11_Data$AdventOfCode.data);
