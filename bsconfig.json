@@ -9,6 +9,10 @@
       "type": "dev"
     },
     {
+      "dir": "interop",
+      "type": "dev"
+    },
+    {
       "dir": "__tests__",
       "subdirs": true,
       "type": "dev"

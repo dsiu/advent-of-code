@@ -1,6 +1,4 @@
-open Jest
-open Expect
-open! Expect.Operators
+open Jest2
 
 //open Belt
 
@@ -12,64 +10,53 @@ describe("2020 Day11", () => {
   let seats = sampleData->parse
 
   describe("SeatMap", () => {
-    test("SeatMap - getAdjacents", () => {
-      open SeatMap
-      let result = [
-        seats->getAdjacents((0, 0)),
-        seats->getAdjacents((1, 0)),
-        seats->getAdjacents((2, 0)),
-        seats->getAdjacents((9, 0)),
-        seats->getAdjacents((2, 1)),
-        seats->getAdjacents((0, 9)),
-        seats->getAdjacents((8, 9)),
-        seats->getAdjacents((9, 9)),
-      ]
-      let expected = [
-        [#".", #L, #L],
-        [#L, #L, #L, #L, #L],
-        [#".", #L, #L, #L, #L],
-        [#L, #L, #L],
-        [#".", #L, #L, #L, #L, #".", #L, #"."],
-        [#L, #".", #"."],
-        [#L, #".", #L, #".", #L],
-        [#".", #L, #L],
-      ]
-      expect(result) |> toEqual(expected)
+    open SeatMap
+    let getAdj_tests = [
+      (seats->getAdjacents((0, 0)), [#".", #L, #L]),
+      (seats->getAdjacents((1, 0)), [#L, #L, #L, #L, #L]),
+      (seats->getAdjacents((2, 0)), [#".", #L, #L, #L, #L]),
+      (seats->getAdjacents((9, 0)), [#L, #L, #L]),
+      (seats->getAdjacents((2, 1)), [#".", #L, #L, #L, #L, #".", #L, #"."]),
+      (seats->getAdjacents((0, 9)), [#L, #".", #"."]),
+      (seats->getAdjacents((8, 9)), [#L, #".", #L, #".", #L]),
+      (seats->getAdjacents((9, 9)), [#".", #L, #L]),
+    ]
+
+    testEach2("getAdjacents", getAdj_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
     })
   })
+
   describe("Step Functions", () => {
+    open SeatMap
+
     let init = (4, 4)
-    test("Single Step", () => {
-      open SeatMap
 
-      let result = [
-        init->stepN,
-        init->stepE,
-        init->stepS,
-        init->stepW,
-        init->stepNE,
-        init->stepNW,
-        init->stepSE,
-        init->stepSW,
-      ]
-      let expected = [(4, 3), (5, 4), (4, 5), (3, 4), (5, 3), (3, 3), (5, 5), (3, 5)]
+    let singleStep_tests = [
+      (init->stepN, (4, 3)),
+      (init->stepE, (5, 4)),
+      (init->stepS, (4, 5)),
+      (init->stepW, (3, 4)),
+      (init->stepNE, (5, 3)),
+      (init->stepNW, (3, 3)),
+      (init->stepSE, (5, 5)),
+      (init->stepSW, (3, 5)),
+    ]
 
-      expect(result) |> toEqual(expected)
+    testEach2("Single Step", singleStep_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
     })
 
-    test("Multiple Step", () => {
-      open SeatMap
+    let multipleStep_test = [
+      (init->stepN->stepN, (4, 2)),
+      (init->stepE->stepE, (6, 4)),
+      (init->stepS->stepW, (3, 5)),
+      (init->stepNE->stepSW, (4, 4)),
+      (init->stepNW->stepSE, (4, 4)),
+    ]
 
-      let result = [
-        init->stepN->stepN,
-        init->stepE->stepE,
-        init->stepS->stepW,
-        init->stepNE->stepSW,
-        init->stepNW->stepSE,
-      ]
-      let expected = [(4, 2), (6, 4), (3, 5), (4, 4), (4, 4)]
-
-      expect(result) |> toEqual(expected)
+    testEach2("Multiple Step", multipleStep_test, (result, expected) => {
+      expect(result)->toEqual(expected)
     })
   })
 
@@ -77,20 +64,20 @@ describe("2020 Day11", () => {
     let result = AOC2020_Day11.solvePart1(sampleData)
     let expected = 37
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2020_Day11.solvePart1(data)
     let expected = 2270
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_Day11.solvePart2(data)
     let expected = 2
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })

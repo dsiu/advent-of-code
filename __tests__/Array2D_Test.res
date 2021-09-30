@@ -1,12 +1,12 @@
-open Jest
+open Jest2
 open Belt
 
 let data = AOC2020_Day4_Data.data
 let testData = AOC2020_Day4_Data_Sample.data
 
 describe("Array2D - make / set / get", () => {
-  open Expect
-  open! Expect.Operators
+  //  open Expect
+  //  open! Expect.Operators
 
   test("make - int", () => {
     let a = Array2D.make((2, 3), -1)
@@ -21,7 +21,7 @@ describe("Array2D - make / set / get", () => {
     let result = a
     let expected = [[4, 5, 6], [7, 8, 9]]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("make - string", () => {
@@ -39,7 +39,7 @@ describe("Array2D - make / set / get", () => {
     let expected = [["a", "b", "c"], ["d", "e", "f"]]
     //    let result = [true, true, true, true]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("get - string", () => {
@@ -60,7 +60,7 @@ describe("Array2D - make / set / get", () => {
     let expected = ["e", "f", "g", "h"]
     //    let result = [true, true, true, true]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })
 
@@ -87,51 +87,43 @@ describe("Array2D - keep / map / getXYEquals / crop", () => {
   //
   //    open Expect
   //    open! Expect.Operators
-  //    expect(result) |> toEqual(expected)
+  //    expect(result)->toEqual(expected)
+
   //  })
 
   test("map - int", () => {
     let result = a->Array2D.map(x => {x * 2})
     let expected = [[710, 808, 640, 1488], [1814, 1118, 1782, 194], [1414, 1028, 1964, 1752]]
 
-    open Expect
-    open! Expect.Operators
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
-  test("getXEquals - int", () => {
-    let result = a->Array2D.getXEquals(1)
-    let expected = Some([907, 559, 891, 97])
+  let getXEquals_tests = [
+    (a->Array2D.getXEquals(0), Some([355, 404, 320, 744])),
+    (a->Array2D.getXEquals(1), Some([907, 559, 891, 97])),
+    (a->Array2D.getXEquals(2), Some([707, 514, 982, 876])),
+  ]
 
-    open Expect
-    open! Expect.Operators
-    expect(result) |> toEqual(expected)
+  testEach2("getXEquals", getXEquals_tests, (result, expected) => {
+    expect(result)->toEqual(expected)
   })
 
-  test("getYEquals - int", () => {
-    let result = [a->Array2D.getYEquals(0), a->Array2D.getYEquals(2)]
-    let expected = [Some([355, 907, 707]), Some([320, 891, 982])]
+  let getYEquals_tests = [
+    (a->Array2D.getYEquals(0), Some([355, 907, 707])),
+    (a->Array2D.getYEquals(1), Some([404, 559, 514])),
+    (a->Array2D.getYEquals(2), Some([320, 891, 982])),
+  ]
 
-    open Expect
-    open! Expect.Operators
-    expect(result) |> toEqual(expected)
+  testEach2("getYEquals", getYEquals_tests, (result, expected) => {
+    expect(result)->toEqual(expected)
   })
 
-  test("corp 1 - int", () => {
-    let result = a->Array2D.crop((1, 2), ~len_x=1, ~len_y=2)
-    let expected = [[891, 97]]
+  let crop_tests = [
+    (a->Array2D.crop((1, 2), ~len_x=1, ~len_y=2), [[891, 97]]),
+    (a->Array2D.crop((1, 1), ~len_x=2, ~len_y=2), [[559, 891], [514, 982]]),
+  ]
 
-    open Expect
-    open! Expect.Operators
-    expect(result) |> toEqual(expected)
-  })
-
-  test("corp 2 - int", () => {
-    let result = a->Array2D.crop((1, 1), ~len_x=2, ~len_y=2)
-    let expected = [[559, 891], [514, 982]]
-
-    open Expect
-    open! Expect.Operators
-    expect(result) |> toEqual(expected)
+  testEach2("crop", crop_tests, (result, expected) => {
+    expect(result)->toEqual(expected)
   })
 })
