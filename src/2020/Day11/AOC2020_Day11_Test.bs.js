@@ -224,6 +224,205 @@ describe("2020 Day11", (function () {
                               
                             }));
               }));
+        describe("next seat given a direction", (function () {
+                var map = AOC2020_Day11$AdventOfCode.parse(".......#.\n                 ...#.....\n                 .#.......\n                 .........\n                 ..#L....#\n                 ....#....\n                 .........\n                 #........\n                 ...#.....");
+                var init_1 = [
+                  3,
+                  4
+                ];
+                var nextSeat_test1 = [
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    "#"
+                  ]
+                ];
+                Jest2$AdventOfCode.testEach2("test 1", nextSeat_test1, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var init_2 = [
+                  3,
+                  5
+                ];
+                var nextSeat_test2 = [
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    "L"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    undefined
+                  ]
+                ];
+                Jest2$AdventOfCode.testEach2("test 2", nextSeat_test2, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var init_3 = [
+                  0,
+                  0
+                ];
+                var nextSeat_test3 = [
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    undefined
+                  ]
+                ];
+                Jest2$AdventOfCode.testEach2("test 3", nextSeat_test3, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var init_4 = [
+                  4,
+                  4
+                ];
+                var nextSeat_test4 = [
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    "L"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    undefined
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    undefined
+                  ]
+                ];
+                Jest2$AdventOfCode.testEach2("test 4", nextSeat_test4, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var map_2 = AOC2020_Day11$AdventOfCode.parse(".............\n                  .L.L.#.#.#.#.\n                  .............");
+                var nextSeat_test5 = [
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map_2, [
+                          1,
+                          1
+                        ], AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    "L"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map_2, [
+                          3,
+                          1
+                        ], AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    "#"
+                  ],
+                  [
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map_2, [
+                          3,
+                          1
+                        ], AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    "L"
+                  ]
+                ];
+                return Jest2$AdventOfCode.testEach2("test 5", nextSeat_test5, (function (result, expected) {
+                              expect(result).toEqual(expected);
+                              
+                            }));
+              }));
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart1(AOC2020_Day11_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(37);

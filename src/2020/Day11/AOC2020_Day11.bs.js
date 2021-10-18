@@ -4,6 +4,7 @@
 var Curry = require("rescript/lib/js/curry.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
+var Caml_option = require("rescript/lib/js/caml_option.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 var Array2D$AdventOfCode = require("../../Array2D.bs.js");
@@ -130,26 +131,29 @@ function stepSW(__x) {
 }
 
 function adjCoords(c) {
-  return [
-          stepFunc(c, northWest),
-          stepFunc(c, north),
-          stepFunc(c, northEast),
-          stepFunc(c, west),
-          stepFunc(c, east),
-          stepFunc(c, southWest),
-          stepFunc(c, south),
-          stepFunc(c, southEast)
-        ];
+  return Belt_Array.map([
+              stepNW,
+              stepN,
+              stepNE,
+              stepW,
+              stepE,
+              stepSW,
+              stepS,
+              stepSE
+            ], (function (f) {
+                return Curry._1(f, c);
+              }));
 }
 
 function getAdjacents(t, param) {
-  return Belt_Array.map(Belt_Array.keep(adjCoords([
-                      param[0],
-                      param[1]
-                    ]), (function (param) {
-                    return Array2D$AdventOfCode.isValidXY(t, param);
-                  })), (function (param) {
-                return Array2D$AdventOfCode.getExn(t, param);
+  return Belt_Array.keepMap(adjCoords([
+                  param[0],
+                  param[1]
+                ]), (function (c) {
+                if (Array2D$AdventOfCode.isValidXY(t, c)) {
+                  return Caml_option.some(Array2D$AdventOfCode.getExn(t, c));
+                }
+                
               }));
 }
 
@@ -190,6 +194,25 @@ function transform(s, adjacents) {
   } else {
     return "#";
   }
+}
+
+function nextSeatIn(t, _param, step) {
+  while(true) {
+    var param = _param;
+    var c = Curry._1(step, [
+          param[0],
+          param[1]
+        ]);
+    if (!Array2D$AdventOfCode.isValidXY(t, c)) {
+      return ;
+    }
+    var seat = Belt_Option.getExn(Array2D$AdventOfCode.get(t, c));
+    if (seat !== ".") {
+      return seat;
+    }
+    _param = c;
+    continue ;
+  };
 }
 
 function iteratePart1(t) {
@@ -269,6 +292,7 @@ var SeatMap = {
   countFloor: countFloor,
   countOccupiedSeat: countOccupiedSeat,
   transform: transform,
+  nextSeatIn: nextSeatIn,
   iteratePart1: iteratePart1,
   isStabilized: Array2D$AdventOfCode.eq,
   stabilize: stabilize,

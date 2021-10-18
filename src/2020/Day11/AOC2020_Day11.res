@@ -6,6 +6,9 @@ module SeatMap = {
   exception InvalidStatus(string)
 
   module SeatStatus = {
+    // L = Empty
+    // # = Occupied
+    // . = Floor
     type t = [#L | #"." | #"#"]
 
     let make = c => {
@@ -45,11 +48,15 @@ module SeatMap = {
   let stepSW = stepFunc(_, southWest)
 
   let adjCoords = c => {
-    [c->stepNW, c->stepN, c->stepNE, c->stepW, c->stepE, c->stepSW, c->stepS, c->stepSE]
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => c->f)
   }
 
   let getAdjacents = (t, (x, y)) => {
-    (x, y)->adjCoords->Array.keep(Array2D.isValidXY(t))->Array.map(t->Array2D.getExn)
+    (x, y)
+    ->adjCoords
+    ->Array.keepMap(c => {
+      t->Array2D.isValidXY(c) ? Some(t->Array2D.getExn(c)) : None
+    })
   }
 
   let isSeatEq = (s: SeatStatus.t, to_be: SeatStatus.t) => {
@@ -74,10 +81,20 @@ module SeatMap = {
     }
   }
 
+  let rec nextSeatIn = (t, (x, y), step) => {
+    let c = (x, y)->step
+    t->Array2D.isValidXY(c)
+      ? {
+          switch t->Array2D.get(c)->Option.getExn {
+          | #"." => nextSeatIn(t, c, step)
+          | seat => Some(seat)
+          }
+        }
+      : None
+  }
+
   let iteratePart1 = t => {
-    t->Array2D.mapWithIndex(((x, y), s) => {
-      s->transform(t->getAdjacents((x, y)))
-    })
+    t->Array2D.mapWithIndex(((x, y), s) => s->transform(t->getAdjacents((x, y))))
   }
 
   let isStabilized = Array2D.eq
