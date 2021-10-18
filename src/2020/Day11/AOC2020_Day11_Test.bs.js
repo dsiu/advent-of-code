@@ -287,11 +287,11 @@ describe("2020 Day11", (function () {
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
@@ -299,11 +299,11 @@ describe("2020 Day11", (function () {
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
-                    undefined
+                    "."
                   ]
                 ];
                 Jest2$AdventOfCode.testEach2("test 2", nextSeat_test2, (function (result, expected) {
@@ -317,7 +317,7 @@ describe("2020 Day11", (function () {
                 var nextSeat_test3 = [
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
@@ -329,23 +329,23 @@ describe("2020 Day11", (function () {
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
-                    undefined
+                    "."
                   ]
                 ];
                 Jest2$AdventOfCode.testEach2("test 3", nextSeat_test3, (function (result, expected) {
@@ -359,7 +359,7 @@ describe("2020 Day11", (function () {
                 var nextSeat_test4 = [
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
@@ -375,19 +375,19 @@ describe("2020 Day11", (function () {
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
-                    undefined
+                    "."
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
-                    undefined
+                    "."
                   ]
                 ];
                 Jest2$AdventOfCode.testEach2("test 4", nextSeat_test4, (function (result, expected) {
@@ -435,7 +435,7 @@ describe("2020 Day11", (function () {
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart2(AOC2020_Day11_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(2042);
                 
               }));
         

@@ -71,7 +71,7 @@ module SeatMap = {
   let countFloor = countSeat(_, #".")
   let countOccupiedSeat = countSeat(_, #"#")
 
-  let transform = (s: SeatStatus.t, adjacents) => {
+  let transformPart1 = (s: SeatStatus.t, adjacents) => {
     let occupied_seats = adjacents->countOccupiedSeat
     switch s {
     | #L => occupied_seats == 0 ? #"#" : #L
@@ -81,28 +81,51 @@ module SeatMap = {
     }
   }
 
+  let iteratePart1 = t => {
+    t->Array2D.mapWithIndex(((x, y), s) => s->transformPart1(t->getAdjacents((x, y))))
+  }
+
+  // part 2
   let rec nextSeatIn = (t, (x, y), step) => {
     let c = (x, y)->step
     t->Array2D.isValidXY(c)
       ? {
           switch t->Array2D.get(c)->Option.getExn {
           | #"." => nextSeatIn(t, c, step)
-          | seat => Some(seat)
+          | seat => seat
           }
         }
-      : None
+      : #"."
   }
 
-  let iteratePart1 = t => {
-    t->Array2D.mapWithIndex(((x, y), s) => s->transform(t->getAdjacents((x, y))))
+  let getDirectionals = (t, c) => {
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f =>
+      t->nextSeatIn(c, f)
+    )
+  }
+
+  let transformPart2 = (s: SeatStatus.t, directionals) => {
+    let occupied_seats = directionals->countOccupiedSeat
+    switch s {
+    | #L => occupied_seats == 0 ? #"#" : #L
+    | #"#" => occupied_seats >= 5 ? #L : #"#"
+    | #"." => #"."
+    }
+  }
+
+  let iteratePart2 = t => {
+    t->Array2D.mapWithIndex(((x, y), s) => s->transformPart2(t->getDirectionals((x, y))))
   }
 
   let isStabilized = Array2D.eq
 
-  let rec stabilize = (t): t => {
-    let t_next = t->iteratePart1
-    isStabilized(t, t_next) ? t : t_next->stabilize
+  let rec stabilize = (t, solver): t => {
+    let t_next = t->solver
+    isStabilized(t, t_next) ? t : t_next->stabilize(solver)
   }
+
+  let solvePart1 = stabilize(_, iteratePart1)
+  let solvePart2 = stabilize(_, iteratePart2)
 
   let make = (xs: array<string>) => {
     let x = xs->Array.getExn(0)->Js.String2.length
@@ -135,13 +158,16 @@ let parse = data => {
 
 let solvePart1 = data => {
   let seats = data->parse
-  let result = seats->SeatMap.stabilize
+  let result = seats->SeatMap.solvePart1
   let result_flat = result->Array2D.flatten
   //  result->SeatMap.dump
   result_flat->SeatMap.countOccupiedSeat
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let seats = data->parse
+  let result = seats->SeatMap.solvePart2
+  let result_flat = result->Array2D.flatten
+  //  result->SeatMap.dump
+  result_flat->SeatMap.countOccupiedSeat
 }

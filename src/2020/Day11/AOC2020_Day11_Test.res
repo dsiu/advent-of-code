@@ -76,14 +76,14 @@ describe("2020 Day11", () => {
     let init_1 = (3, 4)
 
     let nextSeat_test1 = [
-      (map->nextSeatIn(init_1, stepN), Some(#"#")),
-      (map->nextSeatIn(init_1, stepE), Some(#"#")),
-      (map->nextSeatIn(init_1, stepS), Some(#"#")),
-      (map->nextSeatIn(init_1, stepW), Some(#"#")),
-      (map->nextSeatIn(init_1, stepNE), Some(#"#")),
-      (map->nextSeatIn(init_1, stepNW), Some(#"#")),
-      (map->nextSeatIn(init_1, stepSE), Some(#"#")),
-      (map->nextSeatIn(init_1, stepSW), Some(#"#")),
+      (map->nextSeatIn(init_1, stepN), #"#"),
+      (map->nextSeatIn(init_1, stepE), #"#"),
+      (map->nextSeatIn(init_1, stepS), #"#"),
+      (map->nextSeatIn(init_1, stepW), #"#"),
+      (map->nextSeatIn(init_1, stepNE), #"#"),
+      (map->nextSeatIn(init_1, stepNW), #"#"),
+      (map->nextSeatIn(init_1, stepSE), #"#"),
+      (map->nextSeatIn(init_1, stepSW), #"#"),
     ]
 
     testEach2("test 1", nextSeat_test1, (result, expected) => {
@@ -92,14 +92,14 @@ describe("2020 Day11", () => {
 
     let init_2 = (3, 5)
     let nextSeat_test2 = [
-      (map->nextSeatIn(init_2, stepN), Some(#L)),
-      (map->nextSeatIn(init_2, stepE), Some(#"#")),
-      (map->nextSeatIn(init_2, stepS), Some(#"#")),
-      (map->nextSeatIn(init_2, stepW), None),
-      (map->nextSeatIn(init_2, stepNE), None),
-      (map->nextSeatIn(init_2, stepNW), Some(#"#")),
-      (map->nextSeatIn(init_2, stepSE), None),
-      (map->nextSeatIn(init_2, stepSW), None),
+      (map->nextSeatIn(init_2, stepN), #L),
+      (map->nextSeatIn(init_2, stepE), #"#"),
+      (map->nextSeatIn(init_2, stepS), #"#"),
+      (map->nextSeatIn(init_2, stepW), #"."),
+      (map->nextSeatIn(init_2, stepNE), #"."),
+      (map->nextSeatIn(init_2, stepNW), #"#"),
+      (map->nextSeatIn(init_2, stepSE), #"."),
+      (map->nextSeatIn(init_2, stepSW), #"."),
     ]
 
     testEach2("test 2", nextSeat_test2, (result, expected) => {
@@ -108,14 +108,14 @@ describe("2020 Day11", () => {
 
     let init_3 = (0, 0)
     let nextSeat_test3 = [
-      (map->nextSeatIn(init_3, stepN), None),
-      (map->nextSeatIn(init_3, stepE), Some(#"#")),
-      (map->nextSeatIn(init_3, stepS), Some(#"#")),
-      (map->nextSeatIn(init_3, stepW), None),
-      (map->nextSeatIn(init_3, stepNE), None),
-      (map->nextSeatIn(init_3, stepNW), None),
-      (map->nextSeatIn(init_3, stepSE), None),
-      (map->nextSeatIn(init_3, stepSW), None),
+      (map->nextSeatIn(init_3, stepN), #"."),
+      (map->nextSeatIn(init_3, stepE), #"#"),
+      (map->nextSeatIn(init_3, stepS), #"#"),
+      (map->nextSeatIn(init_3, stepW), #"."),
+      (map->nextSeatIn(init_3, stepNE), #"."),
+      (map->nextSeatIn(init_3, stepNW), #"."),
+      (map->nextSeatIn(init_3, stepSE), #"."),
+      (map->nextSeatIn(init_3, stepSW), #"."),
     ]
 
     testEach2("test 3", nextSeat_test3, (result, expected) => {
@@ -125,14 +125,14 @@ describe("2020 Day11", () => {
     let init_4 = (4, 4)
 
     let nextSeat_test4 = [
-      (map->nextSeatIn(init_4, stepN), None),
-      (map->nextSeatIn(init_4, stepE), Some(#"#")),
-      (map->nextSeatIn(init_4, stepS), Some(#"#")),
-      (map->nextSeatIn(init_4, stepW), Some(#L)),
-      (map->nextSeatIn(init_4, stepNE), None),
-      (map->nextSeatIn(init_4, stepNW), None),
-      (map->nextSeatIn(init_4, stepSE), None),
-      (map->nextSeatIn(init_4, stepSW), None),
+      (map->nextSeatIn(init_4, stepN), #"."),
+      (map->nextSeatIn(init_4, stepE), #"#"),
+      (map->nextSeatIn(init_4, stepS), #"#"),
+      (map->nextSeatIn(init_4, stepW), #L),
+      (map->nextSeatIn(init_4, stepNE), #"."),
+      (map->nextSeatIn(init_4, stepNW), #"."),
+      (map->nextSeatIn(init_4, stepSE), #"."),
+      (map->nextSeatIn(init_4, stepSW), #"."),
     ]
 
     testEach2("test 4", nextSeat_test4, (result, expected) => {
@@ -144,9 +144,9 @@ describe("2020 Day11", () => {
                   .............`
     let map_2 = data_2->parse
     let nextSeat_test5 = [
-      (map_2->nextSeatIn((1, 1), stepE), Some(#L)),
-      (map_2->nextSeatIn((3, 1), stepE), Some(#"#")),
-      (map_2->nextSeatIn((3, 1), stepW), Some(#L)),
+      (map_2->nextSeatIn((1, 1), stepE), #L),
+      (map_2->nextSeatIn((3, 1), stepE), #"#"),
+      (map_2->nextSeatIn((3, 1), stepW), #L),
     ]
 
     testEach2("test 5", nextSeat_test5, (result, expected) => {
@@ -170,7 +170,7 @@ describe("2020 Day11", () => {
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_Day11.solvePart2(data)
-    let expected = 2
+    let expected = 2042
 
     expect(result)->toEqual(expected)
   })

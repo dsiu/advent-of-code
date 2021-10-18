@@ -179,7 +179,7 @@ function countOccupiedSeat(__x) {
   return countSeat(__x, "#");
 }
 
-function transform(s, adjacents) {
+function transformPart1(s, adjacents) {
   var occupied_seats = countSeat(adjacents, "#");
   if (s === ".") {
     return ".";
@@ -196,6 +196,15 @@ function transform(s, adjacents) {
   }
 }
 
+function iteratePart1(t) {
+  return Array2D$AdventOfCode.mapWithIndex(t, (function (param, s) {
+                return transformPart1(s, getAdjacents(t, [
+                                param[0],
+                                param[1]
+                              ]));
+              }));
+}
+
 function nextSeatIn(t, _param, step) {
   while(true) {
     var param = _param;
@@ -204,7 +213,7 @@ function nextSeatIn(t, _param, step) {
           param[1]
         ]);
     if (!Array2D$AdventOfCode.isValidXY(t, c)) {
-      return ;
+      return ".";
     }
     var seat = Belt_Option.getExn(Array2D$AdventOfCode.get(t, c));
     if (seat !== ".") {
@@ -215,25 +224,65 @@ function nextSeatIn(t, _param, step) {
   };
 }
 
-function iteratePart1(t) {
+function getDirectionals(t, c) {
+  return Belt_Array.map([
+              stepNW,
+              stepN,
+              stepNE,
+              stepW,
+              stepE,
+              stepSW,
+              stepS,
+              stepSE
+            ], (function (f) {
+                return nextSeatIn(t, c, f);
+              }));
+}
+
+function transformPart2(s, directionals) {
+  var occupied_seats = countSeat(directionals, "#");
+  if (s === ".") {
+    return ".";
+  } else if (s === "L") {
+    if (occupied_seats === 0) {
+      return "#";
+    } else {
+      return "L";
+    }
+  } else if (occupied_seats >= 5) {
+    return "L";
+  } else {
+    return "#";
+  }
+}
+
+function iteratePart2(t) {
   return Array2D$AdventOfCode.mapWithIndex(t, (function (param, s) {
-                return transform(s, getAdjacents(t, [
+                return transformPart2(s, getDirectionals(t, [
                                 param[0],
                                 param[1]
                               ]));
               }));
 }
 
-function stabilize(_t) {
+function stabilize(_t, solver) {
   while(true) {
     var t = _t;
-    var t_next = iteratePart1(t);
+    var t_next = Curry._1(solver, t);
     if (Array2D$AdventOfCode.eq(t, t_next)) {
       return t;
     }
     _t = t_next;
     continue ;
   };
+}
+
+function solvePart1(__x) {
+  return stabilize(__x, iteratePart1);
+}
+
+function solvePart2(__x) {
+  return stabilize(__x, iteratePart2);
 }
 
 function make$1(xs) {
@@ -291,11 +340,16 @@ var SeatMap = {
   countEmptySeat: countEmptySeat,
   countFloor: countFloor,
   countOccupiedSeat: countOccupiedSeat,
-  transform: transform,
-  nextSeatIn: nextSeatIn,
+  transformPart1: transformPart1,
   iteratePart1: iteratePart1,
+  nextSeatIn: nextSeatIn,
+  getDirectionals: getDirectionals,
+  transformPart2: transformPart2,
+  iteratePart2: iteratePart2,
   isStabilized: Array2D$AdventOfCode.eq,
   stabilize: stabilize,
+  solvePart1: solvePart1,
+  solvePart2: solvePart2,
   make: make$1,
   dump: dump
 };
@@ -306,19 +360,21 @@ function parse(data) {
                   })));
 }
 
-function solvePart1(data) {
+function solvePart1$1(data) {
   var seats = parse(data);
-  var result = stabilize(seats);
+  var result = stabilize(seats, iteratePart1);
   return countSeat(Array2D$AdventOfCode.flatten(result), "#");
 }
 
-function solvePart2(data) {
-  return 2;
+function solvePart2$1(data) {
+  var seats = parse(data);
+  var result = stabilize(seats, iteratePart2);
+  return countSeat(Array2D$AdventOfCode.flatten(result), "#");
 }
 
 exports.log = log;
 exports.SeatMap = SeatMap;
 exports.parse = parse;
-exports.solvePart1 = solvePart1;
-exports.solvePart2 = solvePart2;
+exports.solvePart1 = solvePart1$1;
+exports.solvePart2 = solvePart2$1;
 /* No side effect */
