@@ -2,7 +2,7 @@
 'use strict';
 
 
-var data = "";
+var data = "F10\n            N3\n            F7\n            R90\n            F11";
 
 exports.data = data;
 /* No side effect */
