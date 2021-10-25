@@ -10,61 +10,45 @@ module Ship = {
     facing: facing,
   }
 
+  let rotateLeft = (t, degree) => {}
+  let rotateRight = (t, degree) => {}
+
   let make = {coord: {x: 0, y: 0}, facing: #E}
 
   module Instruction = {
     exception InvalidStatus(string)
 
-    module Direction = {
-      type t = [#North(int) | #East(int) | #South(int) | #West(int)]
+    type t = [
+      | #North(int)
+      | #East(int)
+      | #South(int)
+      | #West(int)
+      | #Left(int)
+      | #Right(int)
+      | #Forward(int)
+    ]
 
-      let execute = (ship, s, n) => {
-        switch s {
-        | "N" => {...ship, coord: {...ship.coord, y: ship.coord.y - n}}
-        | "E" => {...ship, coord: {...ship.coord, y: ship.coord.y - n}}
-        | "S" => {...ship, coord: {...ship.coord, y: ship.coord.y - n}}
-        | "W" => {...ship, coord: {...ship.coord, y: ship.coord.y - n}}
-        | _ => raise(InvalidStatus(s))
-        }
+    let execute = (ship, s) => {
+      switch s {
+      | #North(n) => {...ship, coord: {...ship.coord, y: ship.coord.y - n}}
+      | #East(n) => {...ship, coord: {...ship.coord, x: ship.coord.x + n}}
+      | #South(n) => {...ship, coord: {...ship.coord, y: ship.coord.y + n}}
+      | #West(n) => {...ship, coord: {...ship.coord, x: ship.coord.x - n}}
+      | #Left(n) => ship // todo
+      | #Right(n) => ship // todo
+      | #Forward(n) => ship // todo
       }
     }
-
-    module Rotation = {
-      type t = [#Left(int) | #Right(int)]
-
-      let execute = (ship, s, n) => {
-        switch s {
-        | "L" => ship // todo
-        | "R" => ship // todo
-        | _ => raise(InvalidStatus(s))
-        }
-      }
-    }
-
-    module Move = {
-      type t = [#Forward(int)]
-
-      let execute = (ship, s, n) => {
-        switch s {
-        | "F" => ship // todo
-        | _ => raise(InvalidStatus(s))
-        }
-      }
-    }
-
-    type t = Direction(string, int) | Rotation(string, int) | Move(string, int)
 
     let make = (s, n) => {
       switch s {
-      | "N"
-      | "E"
-      | "S"
-      | "W" =>
-        Direction(s, n)
-      | "L"
-      | "R" =>
-        Rotation(s, n)
-      | "F" => Move(s, n)
+      | "N" => #North(n)
+      | "E" => #East(n)
+      | "S" => #South(n)
+      | "W" => #West(n)
+      | "L" => #Left(n)
+      | "R" => #Right(n)
+      | "F" => #Forward(n)
       | _ => raise(InvalidStatus(s))
       }
     }
@@ -72,11 +56,7 @@ module Ship = {
 
   let execute = (ship, ops) => {
     ops->Array.reduce(ship, (acc, op) => {
-      switch op {
-      | Instruction.Direction(s, n) => Instruction.Direction.execute(ship, s, n)
-      | Instruction.Rotation(s, n) => Instruction.Rotation.execute(ship, s, n)
-      | Instruction.Move(s, n) => Instruction.Move.execute(ship, s, n)
-      }
+      Instruction.execute(acc, op)
     })
   }
 }
