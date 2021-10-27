@@ -83,6 +83,37 @@ module Ship = {
     {...t, wayPoint: t.wayPoint->m(direction, n)}
   }
 
+  let relDirection = (a, b) => {
+    let xDir = switch b.x - a.x {
+    | 0 => None
+    | x =>
+      if x > 0 {
+        Some(#E)
+      } else {
+        Some(#E)
+      }
+    }
+
+    let yDir = switch b.y - a.y {
+    | 0 => None
+    | y =>
+      if y > 0 {
+        Some(#N)
+      } else {
+        Some(#S)
+      }
+    }
+
+    [xDir, yDir]
+  }
+
+    let forwardWP = (t, n) => {
+      let moves = relDirection(t.coord, t.wayPoint)
+      moves->Array.reduce(t, (a, m) => {
+        a->move(m->Option.getExn, n*)
+      })
+    }
+
   let make = {coord: {x: 0, y: 0}, facing: #E, wayPoint: {x: 10, y: 1}}
 
   module Instruction = {
@@ -104,7 +135,7 @@ module Ship = {
       | #West(n) => ship->move(#W, n)
       | #Left(n) => ship->rotateLeft(n)
       | #Right(n) => ship->rotateRight(n)
-      | #Forward(n) => ship->move(ship.facing, n) // todo
+      | #Forward(n) => ship->move(ship.facing, n)
       }
     }
 
@@ -116,7 +147,7 @@ module Ship = {
       | #West(n) => ship->moveWP(#W, n)
       | #Left(n) => ship->rotateLeft(n)
       | #Right(n) => ship->rotateRight(n)
-      | #Forward(n) => ship->move(ship.facing, n) // todo
+      | #Forward(n) => ship->forwardWP(ship, n)
       }
     }
 
