@@ -12,100 +12,304 @@ function log(prim) {
   
 }
 
+var InvalidStatus = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day12-AdventOfCode.InvalidStatus");
+
+function flip180(facing) {
+  if (facing === "N") {
+    return "S";
+  } else if (facing === "S") {
+    return "N";
+  } else if (facing === "W") {
+    return "E";
+  } else {
+    return "W";
+  }
+}
+
+function l90(facing) {
+  if (facing === "N") {
+    return "W";
+  } else if (facing === "S") {
+    return "E";
+  } else if (facing === "W") {
+    return "S";
+  } else {
+    return "N";
+  }
+}
+
+function r90(facing) {
+  if (facing === "N") {
+    return "E";
+  } else if (facing === "S") {
+    return "W";
+  } else if (facing === "W") {
+    return "N";
+  } else {
+    return "S";
+  }
+}
+
+function rotateLeft(t, degree) {
+  var match = t.facing;
+  var exit = 0;
+  if (degree >= 90) {
+    if (degree >= 270) {
+      if (degree === 360) {
+        return t;
+      }
+      if (degree >= 271) {
+        throw {
+              RE_EXN_ID: InvalidStatus,
+              _1: String(degree),
+              Error: new Error()
+            };
+      }
+      exit = 3;
+    } else if (degree !== 180) {
+      if (degree >= 91) {
+        throw {
+              RE_EXN_ID: InvalidStatus,
+              _1: String(degree),
+              Error: new Error()
+            };
+      }
+      exit = 1;
+    } else {
+      exit = 2;
+    }
+  } else if (degree !== -270) {
+    if (degree !== -180) {
+      if (degree !== -90) {
+        throw {
+              RE_EXN_ID: InvalidStatus,
+              _1: String(degree),
+              Error: new Error()
+            };
+      }
+      exit = 3;
+    } else {
+      exit = 2;
+    }
+  } else {
+    exit = 1;
+  }
+  switch (exit) {
+    case 1 :
+        return {
+                coord: t.coord,
+                facing: l90(match),
+                wayPoint: t.wayPoint
+              };
+    case 2 :
+        return {
+                coord: t.coord,
+                facing: flip180(match),
+                wayPoint: t.wayPoint
+              };
+    case 3 :
+        return {
+                coord: t.coord,
+                facing: r90(match),
+                wayPoint: t.wayPoint
+              };
+    
+  }
+}
+
+function rotateRight(t, degree) {
+  var match = t.facing;
+  var exit = 0;
+  if (degree >= 90) {
+    if (degree >= 270) {
+      if (degree === 360) {
+        return t;
+      }
+      if (degree >= 271) {
+        throw {
+              RE_EXN_ID: InvalidStatus,
+              _1: String(degree),
+              Error: new Error()
+            };
+      }
+      exit = 3;
+    } else if (degree !== 180) {
+      if (degree >= 91) {
+        throw {
+              RE_EXN_ID: InvalidStatus,
+              _1: String(degree),
+              Error: new Error()
+            };
+      }
+      exit = 1;
+    } else {
+      exit = 2;
+    }
+  } else if (degree !== -270) {
+    if (degree !== -180) {
+      if (degree !== -90) {
+        throw {
+              RE_EXN_ID: InvalidStatus,
+              _1: String(degree),
+              Error: new Error()
+            };
+      }
+      exit = 3;
+    } else {
+      exit = 2;
+    }
+  } else {
+    exit = 1;
+  }
+  switch (exit) {
+    case 1 :
+        return {
+                coord: t.coord,
+                facing: r90(match),
+                wayPoint: t.wayPoint
+              };
+    case 2 :
+        return {
+                coord: t.coord,
+                facing: flip180(match),
+                wayPoint: t.wayPoint
+              };
+    case 3 :
+        return {
+                coord: t.coord,
+                facing: l90(match),
+                wayPoint: t.wayPoint
+              };
+    
+  }
+}
+
+function m(point, facing, n) {
+  if (facing === "N") {
+    return {
+            x: point.x,
+            y: point.y - n | 0
+          };
+  } else if (facing === "S") {
+    return {
+            x: point.x,
+            y: point.y + n | 0
+          };
+  } else if (facing === "W") {
+    return {
+            x: point.x - n | 0,
+            y: point.y
+          };
+  } else {
+    return {
+            x: point.x + n | 0,
+            y: point.y
+          };
+  }
+}
+
+function move(t, direction, n) {
+  return {
+          coord: m(t.coord, direction, n),
+          facing: t.facing,
+          wayPoint: t.wayPoint
+        };
+}
+
+function moveWP(t, direction, n) {
+  return {
+          coord: t.coord,
+          facing: t.facing,
+          wayPoint: m(t.wayPoint, direction, n)
+        };
+}
+
 var make = {
   coord: {
     x: 0,
     y: 0
   },
-  facing: "E"
-};
-
-var InvalidStatus = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day12-AdventOfCode.Ship.Instruction.InvalidStatus");
-
-function execute(ship, s, n) {
-  switch (s) {
-    case "E" :
-    case "N" :
-    case "S" :
-    case "W" :
-        break;
-    default:
-      throw {
-            RE_EXN_ID: InvalidStatus,
-            _1: s,
-            Error: new Error()
-          };
+  facing: "E",
+  wayPoint: {
+    x: 10,
+    y: 1
   }
-  var init = ship.coord;
-  return {
-          coord: {
-            x: init.x,
-            y: ship.coord.y - n | 0
-          },
-          facing: ship.facing
-        };
-}
-
-var Direction = {
-  execute: execute
 };
 
-function execute$1(ship, s, n) {
-  switch (s) {
-    case "L" :
-    case "R" :
-        return ship;
-    default:
-      throw {
-            RE_EXN_ID: InvalidStatus,
-            _1: s,
-            Error: new Error()
-          };
+function execute(ship, s) {
+  var variant = s.NAME;
+  if (variant === "South") {
+    return move(ship, "S", s.VAL);
+  } else if (variant === "East") {
+    return move(ship, "E", s.VAL);
+  } else if (variant === "Left") {
+    return rotateLeft(ship, s.VAL);
+  } else if (variant === "North") {
+    return move(ship, "N", s.VAL);
+  } else if (variant === "Forward") {
+    return move(ship, ship.facing, s.VAL);
+  } else if (variant === "West") {
+    return move(ship, "W", s.VAL);
+  } else {
+    return rotateRight(ship, s.VAL);
   }
 }
 
-var Rotation = {
-  execute: execute$1
-};
-
-function execute$2(ship, s, n) {
-  if (s === "F") {
-    return ship;
+function executeWithWayPoint(ship, s) {
+  var variant = s.NAME;
+  if (variant === "South") {
+    return moveWP(ship, "S", s.VAL);
+  } else if (variant === "East") {
+    return moveWP(ship, "E", s.VAL);
+  } else if (variant === "Left") {
+    return rotateLeft(ship, s.VAL);
+  } else if (variant === "North") {
+    return moveWP(ship, "N", s.VAL);
+  } else if (variant === "Forward") {
+    return move(ship, ship.facing, s.VAL);
+  } else if (variant === "West") {
+    return moveWP(ship, "W", s.VAL);
+  } else {
+    return rotateRight(ship, s.VAL);
   }
-  throw {
-        RE_EXN_ID: InvalidStatus,
-        _1: s,
-        Error: new Error()
-      };
 }
-
-var Move = {
-  execute: execute$2
-};
 
 function make$1(s, n) {
   switch (s) {
+    case "E" :
+        return {
+                NAME: "East",
+                VAL: n
+              };
     case "F" :
         return {
-                TAG: /* Move */2,
-                _0: s,
-                _1: n
+                NAME: "Forward",
+                VAL: n
               };
     case "L" :
+        return {
+                NAME: "Left",
+                VAL: n
+              };
+    case "N" :
+        return {
+                NAME: "North",
+                VAL: n
+              };
     case "R" :
         return {
-                TAG: /* Rotation */1,
-                _0: s,
-                _1: n
+                NAME: "Right",
+                VAL: n
               };
-    case "E" :
-    case "N" :
     case "S" :
+        return {
+                NAME: "South",
+                VAL: n
+              };
     case "W" :
         return {
-                TAG: /* Direction */0,
-                _0: s,
-                _1: n
+                NAME: "West",
+                VAL: n
               };
     default:
       throw {
@@ -117,31 +321,32 @@ function make$1(s, n) {
 }
 
 var Instruction = {
-  InvalidStatus: InvalidStatus,
-  Direction: Direction,
-  Rotation: Rotation,
-  Move: Move,
+  execute: execute,
+  executeWithWayPoint: executeWithWayPoint,
   make: make$1
 };
 
-function execute$3(ship, ops) {
-  return Belt_Array.reduce(ops, ship, (function (acc, op) {
-                switch (op.TAG | 0) {
-                  case /* Direction */0 :
-                      return execute(ship, op._0, op._1);
-                  case /* Rotation */1 :
-                      return execute$1(ship, op._0, op._1);
-                  case /* Move */2 :
-                      return execute$2(ship, op._0, op._1);
-                  
-                }
-              }));
+function execute$1(ship, ops) {
+  return Belt_Array.reduce(ops, ship, execute);
+}
+
+function executeWithWayPoint$1(ship, ops) {
+  return Belt_Array.reduce(ops, ship, executeWithWayPoint);
 }
 
 var Ship = {
+  flip180: flip180,
+  l90: l90,
+  r90: r90,
+  rotateLeft: rotateLeft,
+  rotateRight: rotateRight,
+  m: m,
+  move: move,
+  moveWP: moveWP,
   make: make,
   Instruction: Instruction,
-  execute: execute$3
+  execute: execute$1,
+  executeWithWayPoint: executeWithWayPoint$1
 };
 
 function parse(data) {
@@ -160,16 +365,32 @@ function solvePart1(data) {
   var ops = Belt_Array.map(parse(data), (function (param) {
           return make$1(param[0], param[1]);
         }));
-  var prim = execute$3(make, ops);
-  console.log(prim);
-  return 1;
+  var done = execute$1(make, ops);
+  console.log(done);
+  return Belt_Array.reduce(Belt_Array.map([
+                  done.coord.x,
+                  done.coord.y
+                ], (function (prim) {
+                    return Math.abs(prim);
+                  })), 0, Utils$AdventOfCode.sum);
 }
 
 function solvePart2(data) {
-  return 2;
+  var ops = Belt_Array.map(parse(data), (function (param) {
+          return make$1(param[0], param[1]);
+        }));
+  var done = executeWithWayPoint$1(make, ops);
+  console.log(done);
+  return Belt_Array.reduce(Belt_Array.map([
+                  done.coord.x,
+                  done.coord.y
+                ], (function (prim) {
+                    return Math.abs(prim);
+                  })), 0, Utils$AdventOfCode.sum);
 }
 
 exports.log = log;
+exports.InvalidStatus = InvalidStatus;
 exports.Ship = Ship;
 exports.parse = parse;
 exports.solvePart1 = solvePart1;

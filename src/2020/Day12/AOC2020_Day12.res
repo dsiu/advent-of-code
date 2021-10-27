@@ -2,22 +2,90 @@ open Belt
 open Utils
 let log = Js.Console.log
 
+exception InvalidStatus(string)
+
 module Ship = {
   type facing = [#N | #E | #S | #W]
   type point = {x: int, y: int}
   type t = {
     coord: point,
     facing: facing,
+    wayPoint: point,
   }
 
-  let rotateLeft = (t, degree) => {}
-  let rotateRight = (t, degree) => {}
+  let flip180 = facing => {
+    switch facing {
+    | #N => #S
+    | #E => #W
+    | #S => #N
+    | #W => #E
+    }
+  }
 
-  let make = {coord: {x: 0, y: 0}, facing: #E}
+  let l90 = facing => {
+    switch facing {
+    | #N => #W
+    | #E => #N
+    | #S => #E
+    | #W => #S
+    }
+  }
+
+  let r90 = facing => {
+    switch facing {
+    | #N => #E
+    | #E => #S
+    | #S => #W
+    | #W => #N
+    }
+  }
+
+  let rotateLeft = (t, degree) => {
+    switch (t.facing, degree) {
+    | (d, 90)
+    | (d, -270) => {...t, facing: d->l90}
+    | (d, -90)
+    | (d, 270) => {...t, facing: d->r90}
+    | (d, 180)
+    | (d, -180) => {...t, facing: d->flip180}
+    | (_, 360) => t
+    | (_, _) => InvalidStatus(degree->Int.toString)->raise
+    }
+  }
+
+  let rotateRight = (t, degree) => {
+    switch (t.facing, degree) {
+    | (d, 90)
+    | (d, -270) => {...t, facing: d->r90}
+    | (d, -90)
+    | (d, 270) => {...t, facing: d->l90}
+    | (d, 180)
+    | (d, -180) => {...t, facing: d->flip180}
+    | (_, 360) => t
+    | (_, _) => InvalidStatus(degree->Int.toString)->raise
+    }
+  }
+
+  let m = (point, facing, n) => {
+    switch facing {
+    | #N => {...point, y: point.y - n}
+    | #E => {...point, x: point.x + n}
+    | #S => {...point, y: point.y + n}
+    | #W => {...point, x: point.x - n}
+    }
+  }
+
+  let move = (t, direction, n) => {
+    {...t, coord: t.coord->m(direction, n)}
+  }
+
+  let moveWP = (t, direction, n) => {
+    {...t, wayPoint: t.wayPoint->m(direction, n)}
+  }
+
+  let make = {coord: {x: 0, y: 0}, facing: #E, wayPoint: {x: 10, y: 1}}
 
   module Instruction = {
-    exception InvalidStatus(string)
-
     type t = [
       | #North(int)
       | #East(int)
@@ -30,13 +98,25 @@ module Ship = {
 
     let execute = (ship, s) => {
       switch s {
-      | #North(n) => {...ship, coord: {...ship.coord, y: ship.coord.y - n}}
-      | #East(n) => {...ship, coord: {...ship.coord, x: ship.coord.x + n}}
-      | #South(n) => {...ship, coord: {...ship.coord, y: ship.coord.y + n}}
-      | #West(n) => {...ship, coord: {...ship.coord, x: ship.coord.x - n}}
-      | #Left(n) => ship // todo
-      | #Right(n) => ship // todo
-      | #Forward(n) => ship // todo
+      | #North(n) => ship->move(#N, n)
+      | #East(n) => ship->move(#E, n)
+      | #South(n) => ship->move(#S, n)
+      | #West(n) => ship->move(#W, n)
+      | #Left(n) => ship->rotateLeft(n)
+      | #Right(n) => ship->rotateRight(n)
+      | #Forward(n) => ship->move(ship.facing, n) // todo
+      }
+    }
+
+    let executeWithWayPoint = (ship, s) => {
+      switch s {
+      | #North(n) => ship->moveWP(#N, n)
+      | #East(n) => ship->moveWP(#E, n)
+      | #South(n) => ship->moveWP(#S, n)
+      | #West(n) => ship->moveWP(#W, n)
+      | #Left(n) => ship->rotateLeft(n)
+      | #Right(n) => ship->rotateRight(n)
+      | #Forward(n) => ship->move(ship.facing, n) // todo
       }
     }
 
@@ -59,6 +139,12 @@ module Ship = {
       Instruction.execute(acc, op)
     })
   }
+
+  let executeWithWayPoint = (ship, ops) => {
+    ops->Array.reduce(ship, (acc, op) => {
+      Instruction.executeWithWayPoint(acc, op)
+    })
+  }
 }
 
 let parse = data =>
@@ -74,11 +160,15 @@ let parse = data =>
 let solvePart1 = data => {
   let ops = data->parse->Array.map(((code, n)) => {Ship.Instruction.make(code, n)})
   let ship = Ship.make
-  ship->Ship.execute(ops)->log
-  1
+  let done = ship->Ship.execute(ops)
+  done->log
+  [done.coord.x, done.coord.y]->Array.map(Js.Math.abs_int)->Array.reduce(0, sum)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let ops = data->parse->Array.map(((code, n)) => {Ship.Instruction.make(code, n)})
+  let ship = Ship.make
+  let done = ship->Ship.executeWithWayPoint(ops)
+  done->log
+  [done.coord.x, done.coord.y]->Array.map(Js.Math.abs_int)->Array.reduce(0, sum)
 }
