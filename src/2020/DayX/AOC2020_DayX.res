@@ -1,6 +1,6 @@
 open Belt
-let log = Js.Console.log
 open Utils
+let log = Js.Console.log
 
 let parse = data =>
   data
