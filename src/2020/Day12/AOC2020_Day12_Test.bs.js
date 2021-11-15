@@ -15,9 +15,13 @@ Jest.describe("2020 Day12", (function (param) {
                 var result = AOC2020_Day12$AdventOfCode.solvePart1(AOC2020_Day12_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(1010, Jest.Expect.expect(result));
               }));
+        Jest.test("Part 2 - Sample Data", (function (param) {
+                var result = AOC2020_Day12$AdventOfCode.solvePart2(AOC2020_Day12_Data_Sample$AdventOfCode.data);
+                return Jest.Expect.toEqual(286, Jest.Expect.expect(result));
+              }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2020_Day12$AdventOfCode.solvePart2(AOC2020_Day12_Data$AdventOfCode.data);
-                      return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
+                      return Jest.Expect.toEqual(52742, Jest.Expect.expect(result));
                     }));
       }));
 

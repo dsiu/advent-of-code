@@ -10,8 +10,10 @@ module Ship = {
   type t = {
     coord: point,
     facing: facing,
-    wayPoint: point,
+    wayPoint: point, // relative to ship coord
   }
+
+  let make = {coord: {x: 0, y: 0}, facing: #E, wayPoint: {x: 10, y: 1}}
 
   let flip180 = facing => {
     switch facing {
@@ -40,7 +42,7 @@ module Ship = {
     }
   }
 
-  let rotateLeft = (t, degree) => {
+  let rotateShipLeft = (t, degree) => {
     switch (t.facing, degree) {
     | (d, 90)
     | (d, -270) => {...t, facing: d->l90}
@@ -53,7 +55,7 @@ module Ship = {
     }
   }
 
-  let rotateRight = (t, degree) => {
+  let rotateShipRight = (t, degree) => {
     switch (t.facing, degree) {
     | (d, 90)
     | (d, -270) => {...t, facing: d->r90}
@@ -66,55 +68,70 @@ module Ship = {
     }
   }
 
-  let m = (point, facing, n) => {
+  let move = (point, facing, n) => {
     switch facing {
-    | #N => {...point, y: point.y - n}
+    | #N => {...point, y: point.y + n}
     | #E => {...point, x: point.x + n}
-    | #S => {...point, y: point.y + n}
+    | #S => {...point, y: point.y - n}
     | #W => {...point, x: point.x - n}
     }
   }
 
-  let move = (t, direction, n) => {
-    {...t, coord: t.coord->m(direction, n)}
+  let moveShip = (t, direction, n) => {
+    {...t, coord: t.coord->move(direction, n)}
   }
 
-  let moveWP = (t, direction, n) => {
-    {...t, wayPoint: t.wayPoint->m(direction, n)}
+  let moveWayPoint = (t, direction, n) => {
+    {...t, wayPoint: t.wayPoint->move(direction, n)}
   }
 
-  let relDirection = (a, b) => {
-    let xDir = switch b.x - a.x {
-    | 0 => None
-    | x =>
-      if x > 0 {
-        Some(#E)
-      } else {
-        Some(#E)
-      }
-    }
-
-    let yDir = switch b.y - a.y {
-    | 0 => None
-    | y =>
-      if y > 0 {
-        Some(#N)
-      } else {
-        Some(#S)
-      }
-    }
-
-    [xDir, yDir]
+  let moveShipTowardWayPoint = (t, n) => {
+    {...t, coord: {x: t.coord.x + t.wayPoint.x * n, y: t.coord.y + t.wayPoint.y * n}}
   }
 
-    let forwardWP = (t, n) => {
-      let moves = relDirection(t.coord, t.wayPoint)
-      moves->Array.reduce(t, (a, m) => {
-        a->move(m->Option.getExn, n*)
-      })
-    }
+  let l90WayPoint = t => {
+    {...t, wayPoint: {x: -t.wayPoint.y, y: t.wayPoint.x}}
+  }
 
-  let make = {coord: {x: 0, y: 0}, facing: #E, wayPoint: {x: 10, y: 1}}
+  let r90WayPoint = t => {
+    {...t, wayPoint: {x: t.wayPoint.y, y: -t.wayPoint.x}}
+  }
+
+  let flip180WayPoint = t => {
+    {...t, wayPoint: {x: -t.wayPoint.x, y: -t.wayPoint.y}}
+  }
+
+  let rotateWayPointLeft = (t, degree) => {
+    switch degree {
+    | 90
+    | -270 =>
+      t->l90WayPoint
+    | -90
+    | 270 =>
+      t->r90WayPoint
+    | 180
+    | -180 =>
+      t->flip180WayPoint
+    | 360 => t
+    | _ => InvalidStatus(degree->Int.toString)->raise
+    }
+  }
+
+  let rotateWayPointRight = (t, degree) => {
+    switch degree {
+    | 90
+    | -270 =>
+      t->r90WayPoint
+    | -90
+    | 270 =>
+      t->l90WayPoint
+    | 180
+    | -180 =>
+      t->flip180WayPoint
+    | 360 => t
+    | _ => InvalidStatus(degree->Int.toString)->raise
+    }
+  }
 
   module Instruction = {
     type t = [
@@ -129,25 +146,25 @@ module Ship = {
 
     let execute = (ship, s) => {
       switch s {
-      | #North(n) => ship->move(#N, n)
-      | #East(n) => ship->move(#E, n)
-      | #South(n) => ship->move(#S, n)
-      | #West(n) => ship->move(#W, n)
-      | #Left(n) => ship->rotateLeft(n)
-      | #Right(n) => ship->rotateRight(n)
-      | #Forward(n) => ship->move(ship.facing, n)
+      | #North(n) => ship->moveShip(#N, n)
+      | #East(n) => ship->moveShip(#E, n)
+      | #South(n) => ship->moveShip(#S, n)
+      | #West(n) => ship->moveShip(#W, n)
+      | #Left(n) => ship->rotateShipLeft(n)
+      | #Right(n) => ship->rotateShipRight(n)
+      | #Forward(n) => ship->moveShip(ship.facing, n)
       }
     }
 
     let executeWithWayPoint = (ship, s) => {
       switch s {
-      | #North(n) => ship->moveWP(#N, n)
-      | #East(n) => ship->moveWP(#E, n)
-      | #South(n) => ship->moveWP(#S, n)
-      | #West(n) => ship->moveWP(#W, n)
-      | #Left(n) => ship->rotateLeft(n)
-      | #Right(n) => ship->rotateRight(n)
-      | #Forward(n) => ship->forwardWP(ship, n)
+      | #North(n) => ship->moveWayPoint(#N, n)
+      | #East(n) => ship->moveWayPoint(#E, n)
+      | #South(n) => ship->moveWayPoint(#S, n)
+      | #West(n) => ship->moveWayPoint(#W, n)
+      | #Left(n) => ship->rotateWayPointLeft(n)
+      | #Right(n) => ship->rotateWayPointRight(n)
+      | #Forward(n) => ship->moveShipTowardWayPoint(n)
       }
     }
 
@@ -165,17 +182,14 @@ module Ship = {
     }
   }
 
-  let execute = (ship, ops) => {
+  let execute = (ship, ops, algo) => {
     ops->Array.reduce(ship, (acc, op) => {
-      Instruction.execute(acc, op)
+      algo(acc, op)
     })
   }
 
-  let executeWithWayPoint = (ship, ops) => {
-    ops->Array.reduce(ship, (acc, op) => {
-      Instruction.executeWithWayPoint(acc, op)
-    })
-  }
+  let part1Algo = Instruction.execute
+  let part2Algo = Instruction.executeWithWayPoint
 }
 
 let parse = data =>
@@ -188,18 +202,14 @@ let parse = data =>
     (code, n)
   })
 
-let solvePart1 = data => {
+let solve = (data, algo) => {
   let ops = data->parse->Array.map(((code, n)) => {Ship.Instruction.make(code, n)})
   let ship = Ship.make
-  let done = ship->Ship.execute(ops)
-  done->log
+  let done = ship->Ship.execute(ops, algo)
+  //  done->log
   [done.coord.x, done.coord.y]->Array.map(Js.Math.abs_int)->Array.reduce(0, sum)
 }
 
-let solvePart2 = data => {
-  let ops = data->parse->Array.map(((code, n)) => {Ship.Instruction.make(code, n)})
-  let ship = Ship.make
-  let done = ship->Ship.executeWithWayPoint(ops)
-  done->log
-  [done.coord.x, done.coord.y]->Array.map(Js.Math.abs_int)->Array.reduce(0, sum)
-}
+let solvePart1 = solve(_, Ship.part1Algo)
+
+let solvePart2 = solve(_, Ship.part2Algo)
