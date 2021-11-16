@@ -29,6 +29,13 @@ let mulInv = (a, b) => {
   }
 }
 
+//
+// Suppose we have a system of congruences:
+//    x = 5 mod 4
+//    x = 3 mod 5
+//    x = 7 mod 11
+//   The solution is: ' + crt([5,3,7], [4,5,11]
+//
 let crt = (rem, num) => {
   let sum = ref(0)
   let prod = num->Array.reduce(1, (a, c) => a * c)
@@ -42,12 +49,18 @@ let crt = (rem, num) => {
   mod(sum.contents, prod)
 }
 
-open ReScriptJs.Js
+//
+// BigInt version of crt
+//
+let big_zero = ReScriptJs.Js.BigInt.fromInt(0)
+let big_one = ReScriptJs.Js.BigInt.fromInt(1)
+let add = ReScriptJs.Js.BigInt.add
+let sub = ReScriptJs.Js.BigInt.sub
+let mul = ReScriptJs.Js.BigInt.mul
+let div = ReScriptJs.Js.BigInt.div
+let mod = ReScriptJs.Js.BigInt.mod
 
-let big_zero = BigInt.fromInt(0)
-let big_one = BigInt.fromInt(1)
-
-let mulInvBigInt = (a: BigInt.t, b: BigInt.t) => {
+let mulInvBigInt = (a: ReScriptJs.Js.BigInt.t, b: ReScriptJs.Js.BigInt.t) => {
   let b0 = b
   let (x0, x1) = (ref(big_zero), ref(big_one))
 
@@ -58,19 +71,19 @@ let mulInvBigInt = (a: BigInt.t, b: BigInt.t) => {
 
     // need to coerce to prevent using caml
     while %raw(`aa > big_one`) {
-      let q = BigInt.div(aa.contents, bb.contents)
-      let c = BigInt.mod(aa.contents, bb.contents)
+      let q = div(aa.contents, bb.contents)
+      let c = mod(aa.contents, bb.contents)
 
       aa.contents = bb.contents
       bb.contents = c
 
       let tmp = x0.contents
-      x0.contents = BigInt.sub(x1.contents, BigInt.mul(q, x0.contents))
+      x0.contents = sub(x1.contents, mul(q, x0.contents))
       x1.contents = tmp
     }
     // need to coerce to prevent using caml
     if %raw(`x1 < big_zero`) {
-      x1.contents = BigInt.add(x1.contents, b0)
+      x1.contents = add(x1.contents, b0)
     }
     x1.contents
   }
@@ -78,14 +91,14 @@ let mulInvBigInt = (a: BigInt.t, b: BigInt.t) => {
 
 let crtBigInt = (rem, num) => {
   let sum = ref(big_zero)
-  let prod = num->Belt.Array.reduce(big_one, (a, c) => BigInt.mul(a, c))
+  let prod = num->Array.reduce(big_one, (a, c) => mul(a, c))
 
-  for i in 0 to num->Belt.Array.length - 1 {
+  for i in 0 to num->Array.length - 1 {
     let (ni, ri) = (num[i]->Option.getExn, rem[i]->Option.getExn)
-    let p = BigInt.div(prod, ni)
+    let p = div(prod, ni)
 
-    sum.contents = BigInt.add(sum.contents, BigInt.mul(BigInt.mul(ri, p), mulInvBigInt(p, ni)))
+    sum.contents = add(sum.contents, mul(mul(ri, p), mulInvBigInt(p, ni)))
   }
 
-  BigInt.mod(sum.contents, prod)
+  mod(sum.contents, prod)
 }

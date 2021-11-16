@@ -47,6 +47,26 @@ var big_zero = BigInt(0);
 
 var big_one = BigInt(1);
 
+function add(prim0, prim1) {
+  return prim0 + prim1;
+}
+
+function sub(prim0, prim1) {
+  return prim0 - prim1;
+}
+
+function mul(prim0, prim1) {
+  return prim0 * prim1;
+}
+
+function div(prim0, prim1) {
+  return prim0 / prim1;
+}
+
+function mod(prim0, prim1) {
+  return prim0 % prim1;
+}
+
 function mulInvBigInt(a, b) {
   var x0 = big_zero;
   var x1 = big_one;
@@ -76,8 +96,8 @@ function crtBigInt(rem, num) {
           return a * c;
         }));
   for(var i = 0 ,i_finish = num.length; i < i_finish; ++i){
-    var ni = Belt_Option.getExn(num[i]);
-    var ri = Belt_Option.getExn(rem[i]);
+    var ni = Belt_Option.getExn(Belt_Array.get(num, i));
+    var ri = Belt_Option.getExn(Belt_Array.get(rem, i));
     var p = prod / ni;
     sum = sum + ri * p * mulInvBigInt(p, ni);
   }
@@ -88,6 +108,11 @@ exports.mulInv = mulInv;
 exports.crt = crt;
 exports.big_zero = big_zero;
 exports.big_one = big_one;
+exports.add = add;
+exports.sub = sub;
+exports.mul = mul;
+exports.div = div;
+exports.mod = mod;
 exports.mulInvBigInt = mulInvBigInt;
 exports.crtBigInt = crtBigInt;
 /* big_zero Not a pure module */
