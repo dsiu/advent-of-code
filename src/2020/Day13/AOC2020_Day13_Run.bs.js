@@ -16,7 +16,7 @@ console.log("Part 1 Result");
 
 console.log(part1);
 
-var part2 = AOC2020_Day13$AdventOfCode.solvePart2(AOC2020_Day13_Data_Sample$AdventOfCode.data);
+var part2 = AOC2020_Day13$AdventOfCode.solvePart2(AOC2020_Day13_Data$AdventOfCode.data);
 
 console.log("Part 2 Result");
 
@@ -26,9 +26,12 @@ var data = AOC2020_Day13_Data$AdventOfCode.data;
 
 var sampleData = AOC2020_Day13_Data_Sample$AdventOfCode.data;
 
+var sampleData2 = AOC2020_Day13_Data_Sample$AdventOfCode.data2;
+
 exports.log = log;
 exports.data = data;
 exports.sampleData = sampleData;
+exports.sampleData2 = sampleData2;
 exports.part1 = part1;
 exports.part2 = part2;
 /* part1 Not a pure module */

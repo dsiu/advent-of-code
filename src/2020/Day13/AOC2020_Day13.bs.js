@@ -6,6 +6,7 @@ var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Caml_int32 = require("rescript/lib/js/caml_int32.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
+var ChineseRemainder$AdventOfCode = require("../../ChineseRemainder.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -56,14 +57,16 @@ function parse(data) {
         ];
 }
 
-function solvePart2(xs) {
-  var _time = 1;
+function solvePart2BruteForce(xs) {
+  var big_zero = BigInt(0);
+  var big_one = BigInt(1);
+  var _time = BigInt("100000000000000");
   while(true) {
     var time = _time;
-    if (Belt_Array.reduce(xs, true, (function(time){
+    if (Belt_Array.reduceU(xs, true, (function(time){
           return function (acc, param) {
             if (acc) {
-              return Caml_int32.mod_(time, param[0] + param[1] | 0) === 0;
+              return (time + param[1]) % param[0] === big_zero;
             } else {
               return false;
             }
@@ -71,27 +74,41 @@ function solvePart2(xs) {
           }(time)))) {
       return time;
     }
-    _time = time + 1 | 0;
+    _time = time + big_one;
     continue ;
   };
+}
+
+function part2(xs) {
+  var rem = {
+    contents: []
+  };
+  var num = {
+    contents: []
+  };
+  Belt_Array.forEach(xs, (function (param) {
+          var bus = param[0];
+          rem.contents = Belt_Array.concat(rem.contents, [bus - param[1]]);
+          num.contents = Belt_Array.concat(num.contents, [bus]);
+          
+        }));
+  return ChineseRemainder$AdventOfCode.crtBigInt(rem.contents, num.contents);
 }
 
 function parse2(data) {
   var lines = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
           return x.trim();
         }));
-  var bus_list = Belt_Array.reduceWithIndex(Belt_Option.getExn(Belt_Array.get(lines, 1)).split(","), [], (function (acc, x, i) {
-          if (x !== "x") {
-            return Belt_Array.concat(acc, [[
-                          Belt_Option.getExn(Belt_Int.fromString(x)),
-                          i
-                        ]]);
-          } else {
-            return acc;
-          }
-        }));
-  console.log(bus_list);
-  return bus_list;
+  return Belt_Array.reduceWithIndex(Belt_Option.getExn(Belt_Array.get(lines, 1)).split(","), [], (function (acc, x, i) {
+                if (x !== "x") {
+                  return Belt_Array.concat(acc, [[
+                                BigInt(x),
+                                BigInt(i)
+                              ]]);
+                } else {
+                  return acc;
+                }
+              }));
 }
 
 function solvePart1(data) {
@@ -99,18 +116,16 @@ function solvePart1(data) {
   return Math.imul(match[0], match[1]);
 }
 
-function solvePart2$1(data) {
-  console.log("----");
-  var prim = solvePart2(parse2(data));
-  console.log(prim);
-  console.log("----");
-  return 2;
+function solvePart2(data) {
+  return part2(parse2(data));
 }
 
 exports.log = log;
 exports.findEarliestBus = findEarliestBus;
 exports.parse = parse;
+exports.solvePart2BruteForce = solvePart2BruteForce;
+exports.part2 = part2;
 exports.parse2 = parse2;
 exports.solvePart1 = solvePart1;
-exports.solvePart2 = solvePart2$1;
-/* No side effect */
+exports.solvePart2 = solvePart2;
+/* ChineseRemainder-AdventOfCode Not a pure module */
