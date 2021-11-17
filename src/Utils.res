@@ -26,6 +26,9 @@ let dump_mutableMapInt_of = (f, m) =>
     log(`key:${k->Int.toString}, val:${v->f}`)
   })
 let dump_mutableMapInt_of_int = dump_mutableMapInt_of(Int.toString)
+let dump_mutableMapInt_of_int_as_unsigned = dump_mutableMapInt_of(x => {
+  x->asr(0)->Int.toString
+})
 let dump_mutableMapInt_of_int_base2 = dump_mutableMapInt_of(x =>
   x->Js.Int.toStringWithRadix(~radix=2)
 )

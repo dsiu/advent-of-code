@@ -2,7 +2,7 @@
 'use strict';
 
 
-var data = "";
+var data = "mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X\n                        mem[8] = 11\n                        mem[7] = 101\n                        mem[8] = 0";
 
 exports.data = data;
 /* No side effect */

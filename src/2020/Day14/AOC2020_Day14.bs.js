@@ -6,12 +6,17 @@ var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Pervasives = require("rescript/lib/js/pervasives.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
+var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Belt_MutableMapInt = require("rescript/lib/js/belt_MutableMapInt.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 
 function log(prim) {
   console.log(prim);
   
+}
+
+function base2(__x) {
+  return __x.toString(2);
 }
 
 function onlyXto1(c) {
@@ -54,50 +59,22 @@ function makeZeroMask(__x) {
   return makeMask(__x, only0to1);
 }
 
-function make(param) {
-  var mask = param[0];
+function make(str) {
   return {
-          mask: mask,
-          mask_passthur: makeMask(mask, onlyXto1),
-          mask_one: makeMask(mask, only1to1),
-          mask_zero: makeMask(mask, only0to1),
-          instructions: Belt_Array.map(param[1], (function (x) {
-                  return {
-                          address: Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(x, 1), Belt_Int.fromString)),
-                          value: Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(x, 2), Belt_Int.fromString))
-                        };
-                }))
+          mask: str.slice(7),
+          mask_passthur: makeMask(str, onlyXto1),
+          mask_one: makeMask(str, only1to1),
+          mask_zero: makeMask(str, only0to1)
         };
 }
 
-function base2(__x) {
-  return __x.toString(2);
-}
-
-function run(t) {
-  var mem = Belt_MutableMapInt.make(undefined);
-  Belt_Array.forEach(t.instructions, (function (i) {
-          return Belt_MutableMapInt.update(mem, i.address, (function (v) {
-                        return (t.mask_passthur ^ i.value | t.mask_one) & Pervasives.lnot(t.mask_zero);
-                      }));
-        }));
-  return mem;
-}
-
 function dump(t) {
-  console.log("dump");
+  console.log("=== Mask dump ===");
   console.log(t.mask);
-  var prim = t.mask_passthur.toString(2);
-  console.log(prim);
-  var prim$1 = t.mask_one.toString(2);
-  console.log(prim$1);
-  var prim$2 = t.mask_zero.toString(2);
-  console.log(prim$2);
-  console.log(t.instructions);
   
 }
 
-var Program = {
+var Mask = {
   onlyXto1: onlyXto1,
   only1to1: only1to1,
   only0to1: only0to1,
@@ -106,34 +83,114 @@ var Program = {
   makeOneMask: makeOneMask,
   makeZeroMask: makeZeroMask,
   make: make,
-  base2: base2,
-  run: run,
   dump: dump
 };
 
-function parse(data) {
-  var lines = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-          return x.trim();
-        }));
-  var mask_line = Belt_Option.getExn(Belt_Array.get(lines, 0)).slice(7);
-  var program_lines = Belt_Array.sliceToEnd(lines, 1);
+function make$1(str) {
   var prog_line_re = /mem\[(\d+)\]\s*=\s*(\d+)/i;
-  var instructions = Belt_Array.map(program_lines, (function (x) {
-          return Belt_Array.map(Belt_Option.getExn(Caml_option.null_to_opt(prog_line_re.exec(x))), (function (l) {
-                        return Belt_Option.getExn((l == null) ? undefined : Caml_option.some(l));
+  var parsed = Belt_Array.map(Belt_Option.getExn(Caml_option.null_to_opt(prog_line_re.exec(str))), (function (l) {
+          return Belt_Option.getExn((l == null) ? undefined : Caml_option.some(l));
+        }));
+  return {
+          address: Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(parsed, 1), Belt_Int.fromString)),
+          value: Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(parsed, 2), Belt_Int.fromString))
+        };
+}
+
+function dump$1(t) {
+  console.log("=== Memory dump ===");
+  console.log(t);
+  
+}
+
+var Memory = {
+  make: make$1,
+  dump: dump$1
+};
+
+var InvalidInstruction = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day14-AdventOfCode.Program.InvalidInstruction");
+
+function parseInstructions(lines) {
+  return Belt_Array.map(lines, (function (l) {
+                var match = l.substring(0, 4);
+                switch (match) {
+                  case "mask" :
+                      return {
+                              TAG: /* Mask */0,
+                              _0: make(l)
+                            };
+                  case "mem[" :
+                      return {
+                              TAG: /* Mem */1,
+                              _0: make$1(l)
+                            };
+                  default:
+                    throw {
+                          RE_EXN_ID: InvalidInstruction,
+                          _1: l,
+                          Error: new Error()
+                        };
+                }
+              }));
+}
+
+function make$2(instructions) {
+  return {
+          instructions: parseInstructions(instructions),
+          memory: Belt_MutableMapInt.make(undefined)
+        };
+}
+
+function run(t) {
+  var cur_m = {
+    contents: make("mask = 11110000XXXX")
+  };
+  Belt_Array.forEach(t.instructions, (function (x) {
+          if (x.TAG === /* Mask */0) {
+            cur_m.contents = x._0;
+            return dump(cur_m.contents);
+          }
+          var i = x._0;
+          return Belt_MutableMapInt.update(t.memory, i.address, (function (v) {
+                        dump$1(i);
+                        (cur_m.contents.mask_passthur & i.value | cur_m.contents.mask_one) & Pervasives.lnot(cur_m.contents.mask_zero);
+                        return (ret>>>0);
                       }));
         }));
-  return [
-          mask_line,
-          instructions
-        ];
+  return t.memory;
+}
+
+function dump$2(t) {
+  console.log("=== Program dump ===");
+  console.log(t.instructions);
+  return Utils$AdventOfCode.dump_mutableMapInt_of_int(t.memory);
+}
+
+var Program = {
+  Mask: Mask,
+  Memory: Memory,
+  InvalidInstruction: InvalidInstruction,
+  parseInstructions: parseInstructions,
+  make: make$2,
+  run: run,
+  dump: dump$2
+};
+
+function parse(data) {
+  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+                return x.trim();
+              }));
 }
 
 function solvePart1(data) {
-  var prog = make(parse(data));
-  dump(prog);
-  Utils$AdventOfCode.dump_mutableMapInt_of_int_base2(run(prog));
-  return 1;
+  var prog = make$2(parse(data));
+  dump$2(prog);
+  var result = run(prog);
+  console.log("=== part 1 result dump ===");
+  Utils$AdventOfCode.dump_mutableMapInt_of_int_as_unsigned(result);
+  return Belt_MutableMapInt.reduce(result, 0, (function (a, k, v) {
+                return a + v | 0;
+              }));
 }
 
 function solvePart2(data) {
@@ -141,6 +198,7 @@ function solvePart2(data) {
 }
 
 exports.log = log;
+exports.base2 = base2;
 exports.Program = Program;
 exports.parse = parse;
 exports.solvePart1 = solvePart1;

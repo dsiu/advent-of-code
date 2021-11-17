@@ -62,6 +62,12 @@ function dump_mutableMapInt_of_int(param) {
               }), param);
 }
 
+function dump_mutableMapInt_of_int_as_unsigned(param) {
+  return dump_mutableMapInt_of((function (x) {
+                return String((x >> 0));
+              }), param);
+}
+
 function dump_mutableMapInt_of_int_base2(param) {
   return dump_mutableMapInt_of((function (x) {
                 return x.toString(2);
@@ -126,6 +132,7 @@ exports.dump_mapInt_of = dump_mapInt_of;
 exports.dump_mapInt_of_int = dump_mapInt_of_int;
 exports.dump_mutableMapInt_of = dump_mutableMapInt_of;
 exports.dump_mutableMapInt_of_int = dump_mutableMapInt_of_int;
+exports.dump_mutableMapInt_of_int_as_unsigned = dump_mutableMapInt_of_int_as_unsigned;
 exports.dump_mutableMapInt_of_int_base2 = dump_mutableMapInt_of_int_base2;
 exports.dump_list = dump_list;
 exports.splitChars = splitChars;

@@ -10,14 +10,14 @@ let sampleData = AOC2020_Day14_Data_Sample.data
 describe("2020 Day14", () => {
   test("Part 1 - Sample Data", () => {
     let result = AOC2020_Day14.solvePart1(sampleData)
-    let expected = 1
+    let expected = 165
 
     expect(result) |> toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2020_Day14.solvePart1(data)
-    let expected = 1
+    let expected = 1761973972
 
     expect(result) |> toEqual(expected)
   })
