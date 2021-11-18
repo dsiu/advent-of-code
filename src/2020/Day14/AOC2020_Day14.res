@@ -137,17 +137,16 @@ module Program = {
           i->Memory.dump
           v->ignore
           //          let m = cur_m.contents
-          let ret = ref(
+          let ret =
             land(cur_m.contents.mask_passthur, i.value)
             ->lor(cur_m.contents.mask_one)
-            ->land(cur_m.contents.mask_zero->lnot),
-          )
-          let ret2 = ret.contents
-          let ret2 = %raw(`ret>>>0`)
-          Some(ret2) // HACK, need to make int unsigned!!!!
+            ->land(cur_m.contents.mask_zero->lnot)
+
+          Some(ret->Utils.int32ToUint32)
         })
       }
     })
+
     t.memory
   }
 
@@ -219,9 +218,13 @@ let solvePart1 = data => {
   let result = prog->Program.run
   "=== part 1 result dump ==="->log
   //  result->Utils.dump_mutableMapInt_of_int_base2
-  result->Utils.dump_mutableMapInt_of_int_as_unsigned
-  let answer = result->MutableMap.Int.reduce(0, (a, k, v) => {a + v})
-  answer
+  result->Utils.dump_mutableMapInt_of_int
+  open ReScriptJs.Js
+  let answer = result->MutableMap.Int.reduce(BigInt.fromInt(0), (a, k, v) => {
+    k->ignore
+    v->BigInt.fromInt->BigInt.add(a)
+  })
+  answer->BigInt.toString
 }
 
 let solvePart2 = data => {

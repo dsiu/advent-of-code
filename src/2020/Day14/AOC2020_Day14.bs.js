@@ -153,8 +153,8 @@ function run(t) {
           var i = x._0;
           return Belt_MutableMapInt.update(t.memory, i.address, (function (v) {
                         dump$1(i);
-                        (cur_m.contents.mask_passthur & i.value | cur_m.contents.mask_one) & Pervasives.lnot(cur_m.contents.mask_zero);
-                        return (ret>>>0);
+                        var ret = (cur_m.contents.mask_passthur & i.value | cur_m.contents.mask_one) & Pervasives.lnot(cur_m.contents.mask_zero);
+                        return Utils$AdventOfCode.int32ToUint32(ret);
                       }));
         }));
   return t.memory;
@@ -187,10 +187,10 @@ function solvePart1(data) {
   dump$2(prog);
   var result = run(prog);
   console.log("=== part 1 result dump ===");
-  Utils$AdventOfCode.dump_mutableMapInt_of_int_as_unsigned(result);
-  return Belt_MutableMapInt.reduce(result, 0, (function (a, k, v) {
-                return a + v | 0;
-              }));
+  Utils$AdventOfCode.dump_mutableMapInt_of_int(result);
+  return Belt_MutableMapInt.reduce(result, BigInt(0), (function (a, k, v) {
+                  return BigInt(v) + a;
+                })).toString();
 }
 
 function solvePart2(data) {
