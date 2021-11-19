@@ -17,9 +17,8 @@ describe("2020 Day14", () => {
   })
 
   test("Part 1 - Solve", () => {
-    //    let result = AOC2020_Day14.solvePart1(data)
-    let result = 165
-    let expected = 1761973972
+    let result = AOC2020_Day14.solvePart1(data)
+    let expected = Int64.of_string("17765746710228")
 
     expect(result) |> toEqual(expected)
   })

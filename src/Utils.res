@@ -19,6 +19,7 @@ let dump_mapInt_of = (m, f) =>
     log(`key:${k->Int.toString}, val:${f(v)}`)
   })
 let dump_mapInt_of_int = dump_mapInt_of(_, Int.toString)
+let dump_mapInt_of_int64 = dump_mapInt_of(_, Int64.to_string)
 
 // mutable map int
 let dump_mutableMapInt_of = (f, m) =>
@@ -26,6 +27,8 @@ let dump_mutableMapInt_of = (f, m) =>
     log(`key:${k->Int.toString}, val:${v->f}`)
   })
 let dump_mutableMapInt_of_int = dump_mutableMapInt_of(Int.toString)
+let dump_mutableMapInt_of_int64 = dump_mutableMapInt_of(Int64.to_string)
+
 let dump_mutableMapInt_of_int_base2 = dump_mutableMapInt_of(x =>
   x->Js.Int.toStringWithRadix(~radix=2)
 )

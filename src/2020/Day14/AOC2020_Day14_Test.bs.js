@@ -2,6 +2,7 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
+var Caml_format = require("rescript/lib/js/caml_format.js");
 var AOC2020_Day14$AdventOfCode = require("./AOC2020_Day14.bs.js");
 var AOC2020_Day14_Data$AdventOfCode = require("./AOC2020_Day14_Data.bs.js");
 var AOC2020_Day14_Data_Sample$AdventOfCode = require("./AOC2020_Day14_Data_Sample.bs.js");
@@ -11,7 +12,9 @@ Jest.describe("2020 Day14", (function (param) {
                 return Jest.Expect.toEqual(165, Jest.Expect.expect(165));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
-                return Jest.Expect.toEqual(1761973972, Jest.Expect.expect(165));
+                var result = AOC2020_Day14$AdventOfCode.solvePart1(AOC2020_Day14_Data$AdventOfCode.data);
+                var expected = Caml_format.caml_int64_of_string("17765746710228");
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2020_Day14$AdventOfCode.solvePart2(AOC2020_Day14_Data$AdventOfCode.data);

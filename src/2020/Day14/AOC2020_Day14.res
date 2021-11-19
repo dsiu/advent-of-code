@@ -12,9 +12,9 @@ module Program = {
   module Mask = {
     type t = {
       mask: string,
-      mask_passthur: int,
-      mask_one: int,
-      mask_zero: int,
+      mask_passthur: Int64.t,
+      mask_one: Int64.t,
+      mask_zero: Int64.t,
     }
 
     let onlyXto1 = c => {
@@ -40,7 +40,8 @@ module Program = {
 
     let makeMask = (m, f) => {
       // xx1xx0xx -> 110110xx
-      m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith("")->parseInt(~x=_, ~base=2)
+      //      m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith("")->parseInt(~x=_, ~base=2)
+      ("0b" ++ m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith(""))->Int64.of_string
     }
 
     let makePassThurMask = makeMask(_, onlyXto1)
@@ -71,7 +72,7 @@ module Program = {
   module Memory = {
     type t = {
       address: int,
-      value: int,
+      value: Int64.t,
     }
 
     let make = str => {
@@ -86,7 +87,7 @@ module Program = {
 
       {
         address: parsed[1]->Option.flatMap(Int.fromString)->Option.getExn,
-        value: parsed[2]->Option.flatMap(Int.fromString)->Option.getExn,
+        value: parsed[2]->Option.flatMap(x => {x->Int64.of_string->Some})->Option.getExn,
       }
     }
 
@@ -96,7 +97,7 @@ module Program = {
     }
   }
 
-  type memory_space = MutableMap.Int.t<int>
+  type memory_space = MutableMap.Int.t<Int64.t>
 
   type instruction = Mask(Mask.t) | Mem(Memory.t)
 
@@ -136,13 +137,11 @@ module Program = {
         t.memory->MutableMap.Int.update(i.address, v => {
           i->Memory.dump
           v->ignore
-          //          let m = cur_m.contents
           let ret =
-            land(cur_m.contents.mask_passthur, i.value)
-            ->lor(cur_m.contents.mask_one)
-            ->land(cur_m.contents.mask_zero->lnot)
-
-          Some(ret->Utils.int32ToUint32)
+            Int64.logand(cur_m.contents.mask_passthur, i.value)
+            ->Int64.logor(cur_m.contents.mask_one)
+            ->Int64.logand(cur_m.contents.mask_zero->Int64.lognot)
+          Some(ret)
         })
       }
     })
@@ -176,7 +175,7 @@ module Program = {
   let dump = t => {
     "=== Program dump ==="->log
     t.instructions->log
-    t.memory->Utils.dump_mutableMapInt_of_int
+    t.memory->Utils.dump_mutableMapInt_of_int64
   }
 }
 
@@ -216,15 +215,15 @@ let solvePart1 = data => {
   let prog = data->parse->Program.make
   prog->Program.dump
   let result = prog->Program.run
-  "=== part 1 result dump ==="->log
-  //  result->Utils.dump_mutableMapInt_of_int_base2
-  result->Utils.dump_mutableMapInt_of_int
-  open ReScriptJs.Js
-  let answer = result->MutableMap.Int.reduce(BigInt.fromInt(0), (a, k, v) => {
+  //  "=== part 1 result dump ==="->log
+  //  result->Utils.dump_mutableMapInt_of_int64
+  //  open ReScriptJs.Js
+  let answer = result->MutableMap.Int.reduce(Int64.of_int(0), (a, k, v) => {
     k->ignore
-    v->BigInt.fromInt->BigInt.add(a)
+    Int64.add(v, a)
   })
-  answer->BigInt.toString
+  answer->Int64.to_string->log
+  answer
 }
 
 let solvePart2 = data => {
