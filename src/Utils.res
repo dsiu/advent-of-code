@@ -69,3 +69,22 @@ let int32ToUint32 = x => {
   open Js.TypedArray2
   Uint32Array.make([x])->Uint32Array.unsafe_get(0)
 }
+
+// power set
+let rec subsets = l => {
+  switch l {
+  | list{} => list{}
+  | list{x, ...xs} =>
+    switch x {
+    | list{} => list{}
+    | _ => subsets(xs)->List.map(ss => {list{ss, list{x, ...ss}}->List.flatten})
+    }
+  }
+}
+
+//const subsets = ([x, ...xs]) =>
+//  x == undefined
+//    ? [[]]
+//    : subsets (xs) .flatMap (ss => [ss, [x, ...ss]])
+//
+//console .log (subsets ([1, 2, 3]))

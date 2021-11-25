@@ -131,6 +131,29 @@ function int32ToUint32(x) {
   return new Uint32Array([x])[0];
 }
 
+function subsets(l) {
+  if (!l) {
+    return /* [] */0;
+  }
+  var x = l.hd;
+  if (x) {
+    return Belt_List.map(subsets(l.tl), (function (ss) {
+                  return Belt_List.flatten({
+                              hd: ss,
+                              tl: {
+                                hd: {
+                                  hd: x,
+                                  tl: ss
+                                },
+                                tl: /* [] */0
+                              }
+                            });
+                }));
+  } else {
+    return /* [] */0;
+  }
+}
+
 exports.log = log;
 exports.dump_mapString_of = dump_mapString_of;
 exports.dump_mapString_of_int = dump_mapString_of_int;
@@ -153,4 +176,5 @@ exports.sumRange = sumRange;
 exports.maxIntInArray = maxIntInArray;
 exports.minIntInArray = minIntInArray;
 exports.int32ToUint32 = int32ToUint32;
+exports.subsets = subsets;
 /* No side effect */
