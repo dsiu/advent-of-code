@@ -70,18 +70,6 @@ let int32ToUint32 = x => {
   Uint32Array.make([x])->Uint32Array.unsafe_get(0)
 }
 
-// power set
-let rec subsets = l => {
-  switch l {
-  | list{} => list{}
-  | list{x, ...xs} =>
-    switch x {
-    | list{} => list{}
-    | _ => subsets(xs)->List.map(ss => {list{ss, list{x, ...ss}}->List.flatten})
-    }
-  }
-}
-
 //const subsets = ([x, ...xs]) =>
 //  x == undefined
 //    ? [[]]

@@ -2,23 +2,54 @@
 'use strict';
 
 var Belt_List = require("rescript/lib/js/belt_List.js");
-var Utils$AdventOfCode = require("./Utils.bs.js");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
 
-var a = {
-  hd: {
-    hd: 1,
-    tl: {
-      hd: 2,
-      tl: {
-        hd: 3,
-        tl: /* [] */0
-      }
-    }
-  },
-  tl: /* [] */0
-};
+function powerset(set) {
+  if (!set) {
+    return {
+            hd: /* [] */0,
+            tl: /* [] */0
+          };
+  }
+  var x = set.hd;
+  var rest = powerset(set.tl);
+  var rest_map = Belt_List.map(rest, (function (it) {
+          return {
+                  hd: x,
+                  tl: it
+                };
+        }));
+  return Belt_List.concat(rest, rest_map);
+}
 
-console.log(Belt_List.toArray(Utils$AdventOfCode.subsets(a)));
+function powerset_array_with_list(xs) {
+  return Belt_List.toArray(Belt_List.map(powerset(Belt_List.fromArray(xs)), Belt_List.toArray));
+}
 
-exports.a = a;
+function powerset_array(set) {
+  var match = set.length;
+  if (match === 0) {
+    return [[]];
+  }
+  var x = Belt_Array.getExn(set, 0);
+  var xs = Belt_Array.sliceToEnd(set, 1);
+  var rest = powerset_array(xs);
+  var rest_map = Belt_Array.map(rest, (function (it) {
+          return Belt_Array.concat([x], it);
+        }));
+  return Belt_Array.concat(rest, rest_map);
+}
+
+var b = [
+  "a",
+  "b",
+  "c"
+];
+
+console.log(powerset_array(b));
+
+exports.powerset = powerset;
+exports.powerset_array_with_list = powerset_array_with_list;
+exports.powerset_array = powerset_array;
+exports.b = b;
 /*  Not a pure module */
