@@ -69,10 +69,3 @@ let int32ToUint32 = x => {
   open Js.TypedArray2
   Uint32Array.make([x])->Uint32Array.unsafe_get(0)
 }
-
-//const subsets = ([x, ...xs]) =>
-//  x == undefined
-//    ? [[]]
-//    : subsets (xs) .flatMap (ss => [ss, [x, ...ss]])
-//
-//console .log (subsets ([1, 2, 3]))

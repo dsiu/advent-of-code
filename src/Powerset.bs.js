@@ -4,7 +4,7 @@
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 
-function powerset(set) {
+function powerset_list(set) {
   if (!set) {
     return {
             hd: /* [] */0,
@@ -12,7 +12,7 @@ function powerset(set) {
           };
   }
   var x = set.hd;
-  var rest = powerset(set.tl);
+  var rest = powerset_list(set.tl);
   var rest_map = Belt_List.map(rest, (function (it) {
           return {
                   hd: x,
@@ -23,7 +23,7 @@ function powerset(set) {
 }
 
 function powerset_array_with_list(xs) {
-  return Belt_List.toArray(Belt_List.map(powerset(Belt_List.fromArray(xs)), Belt_List.toArray));
+  return Belt_List.toArray(Belt_List.map(powerset_list(Belt_List.fromArray(xs)), Belt_List.toArray));
 }
 
 function powerset_array(set) {
@@ -40,16 +40,7 @@ function powerset_array(set) {
   return Belt_Array.concat(rest, rest_map);
 }
 
-var b = [
-  "a",
-  "b",
-  "c"
-];
-
-console.log(powerset_array(b));
-
-exports.powerset = powerset;
+exports.powerset_list = powerset_list;
 exports.powerset_array_with_list = powerset_array_with_list;
 exports.powerset_array = powerset_array;
-exports.b = b;
-/*  Not a pure module */
+/* No side effect */
