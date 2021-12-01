@@ -15,15 +15,15 @@ let mulInv = (a, b) => {
       let q = Js.Math.floor_int(aa.contents->Js.Int.toFloat /. bb.contents->Js.Int.toFloat)
 
       let c = mod(aa.contents, bb.contents)
-      aa.contents = bb.contents
-      bb.contents = c
+      aa := bb.contents
+      bb := c
 
       let tmp = x0.contents
-      x0.contents = x1.contents - q * x0.contents
-      x1.contents = tmp
+      x0 := x1.contents - q * x0.contents
+      x1 := tmp
     }
     if x1.contents < 0 {
-      x1.contents = x1.contents + b0
+      x1 := x1.contents + b0
     }
     x1.contents
   }
@@ -43,7 +43,7 @@ let crt = (rem, num) => {
     let (ni, ri) = (num[i]->Option.getExn, rem[i]->Option.getExn)
     let p = Js.Math.floor_int(prod->Js.Int.toFloat /. ni->Js.Int.toFloat)
 
-    sum.contents = sum.contents + ri * p * mulInv(p, ni)
+    sum := sum.contents + ri * p * mulInv(p, ni)
   }
 
   mod(sum.contents, prod)
@@ -74,16 +74,16 @@ let mulInvBigInt = (a: ReScriptJs.Js.BigInt.t, b: ReScriptJs.Js.BigInt.t) => {
       let q = div(aa.contents, bb.contents)
       let c = mod(aa.contents, bb.contents)
 
-      aa.contents = bb.contents
-      bb.contents = c
+      aa := bb.contents
+      bb := c
 
       let tmp = x0.contents
-      x0.contents = sub(x1.contents, mul(q, x0.contents))
-      x1.contents = tmp
+      x0 := sub(x1.contents, mul(q, x0.contents))
+      x1 := tmp
     }
     // need to coerce to prevent using caml
     if %raw(`x1 < big_zero`) {
-      x1.contents = add(x1.contents, b0)
+      x1 := add(x1.contents, b0)
     }
     x1.contents
   }
@@ -97,7 +97,7 @@ let crtBigInt = (rem, num) => {
     let (ni, ri) = (num[i]->Option.getExn, rem[i]->Option.getExn)
     let p = div(prod, ni)
 
-    sum.contents = add(sum.contents, mul(mul(ri, p), mulInvBigInt(p, ni)))
+    sum := add(sum.contents, mul(mul(ri, p), mulInvBigInt(p, ni)))
   }
 
   mod(sum.contents, prod)

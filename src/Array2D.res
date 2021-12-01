@@ -63,7 +63,7 @@ let mapWithIndex = (t, f) => {
 let flatten = t => {
   let ret = ref([])
   for i in 0 to t->lengthX - 1 {
-    ret.contents = Array.concat(ret.contents, t->getXEquals(i)->Option.getWithDefault([]))
+    ret := Array.concat(ret.contents, t->getXEquals(i)->Option.getWithDefault([]))
   }
   ret.contents
 }
@@ -71,10 +71,11 @@ let flatten = t => {
 let crop = (t, (x, y), ~len_x, ~len_y) => {
   let ret = ref([])
   for i in x to x + len_x - 1 {
-    ret.contents = Array.concat(
-      ret.contents,
-      [t->getXEquals(i)->Option.getWithDefault([])->Array.slice(~offset=y, ~len=len_y)],
-    )
+    ret :=
+      Array.concat(
+        ret.contents,
+        [t->getXEquals(i)->Option.getWithDefault([])->Array.slice(~offset=y, ~len=len_y)],
+      )
   }
   ret.contents
 }
