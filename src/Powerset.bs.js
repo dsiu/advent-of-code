@@ -4,7 +4,11 @@
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 
-function powerset_list(set) {
+function flatMapList(xs, f) {
+  return Belt_List.reduce(Belt_List.map(xs, f), /* [] */0, Belt_List.concat);
+}
+
+function powerset_list_map(set) {
   if (!set) {
     return {
             hd: /* [] */0,
@@ -12,35 +16,88 @@ function powerset_list(set) {
           };
   }
   var x = set.hd;
-  var rest = powerset_list(set.tl);
-  var rest_map = Belt_List.map(rest, (function (it) {
+  var tail_powersets = powerset_list_map(set.tl);
+  var with_x = Belt_List.map(tail_powersets, (function (it) {
           return {
                   hd: x,
                   tl: it
                 };
         }));
-  return Belt_List.concat(rest, rest_map);
+  return Belt_List.concat(tail_powersets, with_x);
+}
+
+function powerset_list_flatMap(set) {
+  if (!set) {
+    return {
+            hd: /* [] */0,
+            tl: /* [] */0
+          };
+  }
+  var x = set.hd;
+  var tail_powersets = powerset_list_flatMap(set.tl);
+  return flatMapList(tail_powersets, (function (it) {
+                return {
+                        hd: Belt_List.concat({
+                              hd: x,
+                              tl: /* [] */0
+                            }, it),
+                        tl: /* [] */0
+                      };
+              }));
 }
 
 function powerset_array_with_list(xs) {
-  return Belt_List.toArray(Belt_List.map(powerset_list(Belt_List.fromArray(xs)), Belt_List.toArray));
+  return Belt_List.toArray(Belt_List.map(powerset_list_map(Belt_List.fromArray(xs)), Belt_List.toArray));
 }
 
-function powerset_array(set) {
+function flatMapArray(xs, f) {
+  return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
+}
+
+function powerset_array_map(set) {
   var match = set.length;
   if (match === 0) {
     return [[]];
   }
   var x = Belt_Array.getExn(set, 0);
   var xs = Belt_Array.sliceToEnd(set, 1);
-  var rest = powerset_array(xs);
-  var rest_map = Belt_Array.map(rest, (function (it) {
+  var tail_powersets = powerset_array_map(xs);
+  var with_x = Belt_Array.map(tail_powersets, (function (it) {
           return Belt_Array.concat([x], it);
         }));
-  return Belt_Array.concat(rest, rest_map);
+  return Belt_Array.concat(tail_powersets, with_x);
 }
 
+function powerset_array_flatMap(set) {
+  var match = set.length;
+  if (match === 0) {
+    return [[]];
+  }
+  var x = Belt_Array.getExn(set, 0);
+  var xs = Belt_Array.sliceToEnd(set, 1);
+  var tail_powersets = powerset_array_flatMap(xs);
+  return flatMapArray(tail_powersets, (function (it) {
+                return [Belt_Array.concat([x], it)];
+              }));
+}
+
+var List;
+
+var powerset_list = powerset_list_flatMap;
+
+var $$Array;
+
+var powerset_array = powerset_array_flatMap;
+
+exports.List = List;
+exports.flatMapList = flatMapList;
+exports.powerset_list_map = powerset_list_map;
+exports.powerset_list_flatMap = powerset_list_flatMap;
 exports.powerset_list = powerset_list;
 exports.powerset_array_with_list = powerset_array_with_list;
+exports.$$Array = $$Array;
+exports.flatMapArray = flatMapArray;
+exports.powerset_array_map = powerset_array_map;
+exports.powerset_array_flatMap = powerset_array_flatMap;
 exports.powerset_array = powerset_array;
 /* No side effect */
