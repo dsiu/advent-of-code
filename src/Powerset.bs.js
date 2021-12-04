@@ -3,12 +3,9 @@
 
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var FP$AdventOfCode = require("./FP.bs.js");
 
-function flatMapList(xs, f) {
-  return Belt_List.reduce(Belt_List.map(xs, f), /* [] */0, Belt_List.concat);
-}
-
-function powerset_list_map(set) {
+function powersetListMap_(set) {
   if (!set) {
     return {
             hd: /* [] */0,
@@ -16,7 +13,7 @@ function powerset_list_map(set) {
           };
   }
   var x = set.hd;
-  var tail_powersets = powerset_list_map(set.tl);
+  var tail_powersets = powersetListMap_(set.tl);
   var with_x = Belt_List.map(tail_powersets, (function (it) {
           return {
                   hd: x,
@@ -26,7 +23,7 @@ function powerset_list_map(set) {
   return Belt_List.concat(tail_powersets, with_x);
 }
 
-function powerset_list_flatMap(set) {
+function powersetListFlatMap_(set) {
   if (!set) {
     return {
             hd: /* [] */0,
@@ -34,70 +31,76 @@ function powerset_list_flatMap(set) {
           };
   }
   var x = set.hd;
-  var tail_powersets = powerset_list_flatMap(set.tl);
-  return flatMapList(tail_powersets, (function (it) {
+  var tail_powersets = powersetListFlatMap_(set.tl);
+  return FP$AdventOfCode.flatMapList(tail_powersets, (function (it) {
                 return {
-                        hd: Belt_List.concat({
-                              hd: x,
-                              tl: /* [] */0
-                            }, it),
-                        tl: /* [] */0
+                        hd: it,
+                        tl: {
+                          hd: Belt_List.concat({
+                                hd: x,
+                                tl: /* [] */0
+                              }, it),
+                          tl: /* [] */0
+                        }
                       };
               }));
 }
 
-function powerset_array_with_list(xs) {
-  return Belt_List.toArray(Belt_List.map(powerset_list_map(Belt_List.fromArray(xs)), Belt_List.toArray));
+function powersetArrayWithList_(xs) {
+  return Belt_List.toArray(Belt_List.map(powersetListMap_(Belt_List.fromArray(xs)), Belt_List.toArray));
 }
 
-function flatMapArray(xs, f) {
-  return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
-}
-
-function powerset_array_map(set) {
+function powersetArrayMap_(set) {
   var match = set.length;
   if (match === 0) {
     return [[]];
   }
   var x = Belt_Array.getExn(set, 0);
   var xs = Belt_Array.sliceToEnd(set, 1);
-  var tail_powersets = powerset_array_map(xs);
+  var tail_powersets = powersetArrayMap_(xs);
   var with_x = Belt_Array.map(tail_powersets, (function (it) {
           return Belt_Array.concat([x], it);
         }));
   return Belt_Array.concat(tail_powersets, with_x);
 }
 
-function powerset_array_flatMap(set) {
+function powersetArrayFlatMap_(set) {
   var match = set.length;
   if (match === 0) {
     return [[]];
   }
   var x = Belt_Array.getExn(set, 0);
   var xs = Belt_Array.sliceToEnd(set, 1);
-  var tail_powersets = powerset_array_flatMap(xs);
-  return flatMapArray(tail_powersets, (function (it) {
-                return [Belt_Array.concat([x], it)];
+  var tail_powersets = powersetArrayFlatMap_(xs);
+  return FP$AdventOfCode.flatMapArray(tail_powersets, (function (it) {
+                return [
+                        it,
+                        Belt_Array.concat([x], it)
+                      ];
               }));
 }
 
 var List;
 
-var powerset_list = powerset_list_flatMap;
+var flatMapList = FP$AdventOfCode.flatMapList;
+
+var powersetList = powersetListFlatMap_;
 
 var $$Array;
 
-var powerset_array = powerset_array_flatMap;
+var flatMapArray = FP$AdventOfCode.flatMapArray;
+
+var powersetArray = powersetArrayFlatMap_;
 
 exports.List = List;
+exports.powersetListMap_ = powersetListMap_;
 exports.flatMapList = flatMapList;
-exports.powerset_list_map = powerset_list_map;
-exports.powerset_list_flatMap = powerset_list_flatMap;
-exports.powerset_list = powerset_list;
-exports.powerset_array_with_list = powerset_array_with_list;
+exports.powersetListFlatMap_ = powersetListFlatMap_;
+exports.powersetList = powersetList;
+exports.powersetArrayWithList_ = powersetArrayWithList_;
 exports.$$Array = $$Array;
+exports.powersetArrayMap_ = powersetArrayMap_;
 exports.flatMapArray = flatMapArray;
-exports.powerset_array_map = powerset_array_map;
-exports.powerset_array_flatMap = powerset_array_flatMap;
-exports.powerset_array = powerset_array;
+exports.powersetArrayFlatMap_ = powersetArrayFlatMap_;
+exports.powersetArray = powersetArray;
 /* No side effect */

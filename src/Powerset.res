@@ -10,71 +10,90 @@
 
 module List = Belt.List
 
-let flatMapList: (List.t<'a>, 'a => List.t<'b>) => List.t<'b> = (xs, f) => {
-  List.reduce(List.map(xs, f), list{}, List.concat)
-}
-
+//
 // powerset with map (easier to understand)
 // ref: https://gist.github.com/JadenGeller/6174b3461a34465791c5
-let rec powerset_list_map = set => {
+//
+let rec powersetListMap_ = set => {
   switch set {
   | list{} => list{list{}}
   | list{x, ...xs} => {
-      let tail_powersets = xs->powerset_list_map
-      let with_x = Belt.List.map(tail_powersets, it => list{x, ...it})
-      Belt.List.concat(tail_powersets, with_x)
+      let tail_powersets = xs->powersetListMap_
+      let with_x = List.map(tail_powersets, it => list{x, ...it})
+      List.concat(tail_powersets, with_x)
     }
   }
 }
 
-let rec powerset_list_flatMap = set => {
+let flatMapList = FP.flatMapList
+
+let rec powersetListFlatMap_ = set => {
   switch set {
   | list{} => list{list{}}
   | list{x, ...xs} => {
-      let tail_powersets = xs->powerset_list_flatMap
-      tail_powersets->flatMapList(it => list{List.concat(list{x}, it)})
+      let tail_powersets = xs->powersetListFlatMap_
+      tail_powersets->flatMapList(it => list{it, List.concat(list{x}, it)})
     }
   }
 }
 
-let powerset_list = powerset_list_flatMap
+let powersetList = powersetListFlatMap_
 
-let powerset_array_with_list = xs => {
-  xs->Belt.List.fromArray->powerset_list_map->Belt.List.map(Belt.List.toArray)->Belt.List.toArray
+let powersetArrayWithList_ = xs => {
+  xs->List.fromArray->powersetListMap_->List.map(List.toArray)->List.toArray
 }
 
+//
+// powerset with map (easier to understand)
+//
 module Array = Belt.Array
 
-let flatMapArray: (array<'a>, 'a => array<'b>) => array<'b> = (xs, f) => {
-  Array.reduce(Array.map(xs, f), [], Array.concat)
-}
-
-// powerset with map (easier to understand)
-let rec powerset_array_map = set => {
+let rec powersetArrayMap_ = set => {
   switch set->Array.size {
   | 0 => [[]]
   | _ => {
       let x = set->Array.getExn(0)
       let xs = set->Array.sliceToEnd(1)
-      let tail_powersets = xs->powerset_array_map
+      let tail_powersets = xs->powersetArrayMap_
       let with_x = tail_powersets->Array.map(it => Array.concat([x], it))
       Array.concat(tail_powersets, with_x)
     }
   }
 }
 
+//
 // powerset with flatmap
 // ref: https://gist.github.com/JadenGeller/6174b3461a34465791c5
-let rec powerset_array_flatMap = set => {
+//
+
+let flatMapArray = FP.flatMapArray
+
+let rec powersetArrayFlatMap_ = set => {
   switch set->Array.size {
   | 0 => [[]]
   | _ => {
       let x = set->Array.getExn(0)
       let xs = set->Array.sliceToEnd(1)
-      let tail_powersets = xs->powerset_array_flatMap
-      tail_powersets->flatMapArray(it => [Array.concat([x], it)])
+      let tail_powersets = xs->powersetArrayFlatMap_
+      tail_powersets->flatMapArray(it => [it, Array.concat([x], it)])
     }
   }
 }
 
-let powerset_array = powerset_array_flatMap
+let powersetArray = powersetArrayFlatMap_
+
+//let a = [1, 2, 3]
+//"array ====="->Js.log
+//a->powerset_array_map->Js.log
+//a->powerset_array_flatMap->Js.log
+//
+//let b = list{1, 2, 3}
+//"list ====="->Js.log
+//b->powerset_list_map->List.map(x => x->List.toArray)->List.toArray->Js.log
+//b->powerset_list_flatMap->List.map(x => x->List.toArray)->List.toArray->Js.log
+
+//let a = [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+//a->Js.log
+//a->Array.map(Belt.SortArray.stableSortBy(_, (a, b) => b - a))->Belt.SortArray.stableSortBy((a,b) => {
+//  let a.size
+//})->Js.log
