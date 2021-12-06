@@ -10,6 +10,7 @@ var Caml_option = require("rescript/lib/js/caml_option.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 var Belt_MutableMapString = require("rescript/lib/js/belt_MutableMapString.js");
+var Powerset$AdventOfCode = require("../../Powerset.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -67,7 +68,7 @@ function makeZeroMask(__x) {
 function make(str) {
   return {
           mask: str.slice(7),
-          mask_passthur: makeMask(str, onlyXto1),
+          mask_x: makeMask(str, onlyXto1),
           mask_one: makeMask(str, only1to1),
           mask_zero: makeMask(str, only0to1)
         };
@@ -75,7 +76,7 @@ function make(str) {
 
 function dump(t) {
   console.log("=== Mask dump ===");
-  console.log(t.mask);
+  console.log(t);
   
 }
 
@@ -147,6 +148,10 @@ function make$2(instructions) {
         };
 }
 
+function part1Algo(mask, mem_value) {
+  return Caml_int64.and_(Caml_int64.or_(Caml_int64.and_(Caml_format.caml_int64_of_string("0b" + mask.mask_x), mem_value), Caml_format.caml_int64_of_string("0b" + mask.mask_one)), Int64.lognot(Caml_format.caml_int64_of_string("0b" + mask.mask_zero)));
+}
+
 function run(t) {
   var cur_m = {
     contents: make("mask = 11110000XXXX")
@@ -154,15 +159,37 @@ function run(t) {
   Belt_Array.forEach(t.instructions, (function (x) {
           if (x.TAG === /* Mask */0) {
             cur_m.contents = x._0;
-            return dump(cur_m.contents);
+            return ;
           }
-          var i = x._0;
-          return Belt_MutableMapString.update(t.memory, Int64.to_string(i.address), (function (v) {
-                        dump$1(i);
-                        return Caml_int64.and_(Caml_int64.or_(Caml_int64.and_(Caml_format.caml_int64_of_string("0b" + cur_m.contents.mask_passthur), i.value), Caml_format.caml_int64_of_string("0b" + cur_m.contents.mask_one)), Int64.lognot(Caml_format.caml_int64_of_string("0b" + cur_m.contents.mask_zero)));
+          var mem = x._0;
+          return Belt_MutableMapString.update(t.memory, Int64.to_string(mem.address), (function (v) {
+                        dump$1(mem);
+                        return part1Algo(cur_m.contents, mem.value);
                       }));
         }));
   return t.memory;
+}
+
+function bit_1_index(m) {
+  var xs = Utils$AdventOfCode.splitChars(m);
+  var len = xs.length;
+  return Belt_Array.reduceWithIndex(xs, [], (function (a, x, i) {
+                if (x === "1") {
+                  return Belt_Array.concat(a, [(len - 1 | 0) - i | 0]);
+                } else {
+                  return a;
+                }
+              }));
+}
+
+function decode_memory(mask, mem_address, mem_value) {
+  Caml_format.caml_int64_of_string("0b" + mask.mask_x);
+  Caml_format.caml_int64_of_string("0b" + mask.mask_zero);
+  var mask_one = Caml_format.caml_int64_of_string("0b" + mask.mask_one);
+  var pos = bit_1_index(mask.mask_x);
+  Powerset$AdventOfCode.powersetArray(pos);
+  Int64.to_string(Caml_int64.or_(mem_address, mask_one));
+  
 }
 
 function dump$2(t) {
@@ -177,7 +204,10 @@ var Program = {
   InvalidInstruction: InvalidInstruction,
   parseInstructions: parseInstructions,
   make: make$2,
+  part1Algo: part1Algo,
   run: run,
+  bit_1_index: bit_1_index,
+  decode_memory: decode_memory,
   dump: dump$2
 };
 

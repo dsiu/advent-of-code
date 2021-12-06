@@ -12,7 +12,7 @@ module Program = {
   module Mask = {
     type t = {
       mask: string,
-      mask_passthur: string,
+      mask_x: string,
       mask_one: string,
       mask_zero: string,
     }
@@ -53,7 +53,7 @@ module Program = {
       // str = "mask = 11100XX0000X1101X1010100X1010001XX0X"
       {
         mask: str->Js.String2.sliceToEnd(~from="mask = "->String.length),
-        mask_passthur: str->makePassThurMask,
+        mask_x: str->makePassThurMask,
         mask_one: str->makeOneMask,
         mask_zero: str->makeZeroMask,
       }
@@ -61,7 +61,7 @@ module Program = {
 
     let dump = t => {
       "=== Mask dump ==="->log
-      t.mask->log
+      t->log
     }
   }
 
@@ -123,28 +123,49 @@ module Program = {
     }
   }
 
+  // part 1: change memory value based on mask
+  let part1Algo = (mask: Mask.t, mem_value) => {
+    Int64.logand(mask.mask_x->Mask.int64FromBitString, mem_value)
+    ->Int64.logor(mask.mask_one->Mask.int64FromBitString)
+    ->Int64.logand(mask.mask_zero->Mask.int64FromBitString->Int64.lognot)
+  }
+
   let run = t => {
     let cur_m = ref(Mask.make("mask = 11110000XXXX"))
     t.instructions->Array.forEach(x => {
       switch x {
-      | Mask(m) => {
-          cur_m := m
-          cur_m.contents->Mask.dump
-        }
-      | Mem(i) =>
-        t.memory->MutableMap.String.update(i.address->Int64.to_string, v => {
-          i->Memory.dump
+      | Mask(mask) => cur_m := mask
+      // cur_m.contents->Mask.dum
+      | Mem(mem) =>
+        t.memory->MutableMap.String.update(mem.address->Int64.to_string, v => {
+          mem->Memory.dump
           v->ignore
-          let ret =
-            Int64.logand(cur_m.contents.mask_passthur->Mask.int64FromBitString, i.value)
-            ->Int64.logor(cur_m.contents.mask_one->Mask.int64FromBitString)
-            ->Int64.logand(cur_m.contents.mask_zero->Mask.int64FromBitString->Int64.lognot)
-          Some(ret)
+          part1Algo(cur_m.contents, mem.value)->Some
         })
       }
     })
 
     t.memory
+  }
+
+  let bit_1_index = m => {
+    let xs = m->Utils.splitChars
+    let len = xs->Array.length
+
+    xs->Belt.Array.reduceWithIndex([], (a, x, i) => {
+      x == "1" ? Array.concat(a, [len - 1 - i]) : a
+    })
+  }
+
+  let decode_memory = (mask: Mask.t, mem_address, mem_value) => {
+    let mask_x = mask.mask_x->Mask.int64FromBitString
+    let mask_zero = mask.mask_zero->Mask.int64FromBitString
+    let mask_one = mask.mask_one->Mask.int64FromBitString
+
+    let pos = mask.mask_x->bit_1_index
+    let enum = pos->Powerset.powersetArray
+
+    let a = Int64.logor(mem_address, mask_one)->Int64.to_string
   }
 
   let dump = t => {

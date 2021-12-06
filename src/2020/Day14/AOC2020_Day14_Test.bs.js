@@ -2,6 +2,7 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
+var Curry = require("rescript/lib/js/curry.js");
 var Caml_format = require("rescript/lib/js/caml_format.js");
 var AOC2020_Day14$AdventOfCode = require("./AOC2020_Day14.bs.js");
 var AOC2020_Day14_Data$AdventOfCode = require("./AOC2020_Day14_Data.bs.js");
@@ -9,12 +10,20 @@ var AOC2020_Day14_Data_Sample$AdventOfCode = require("./AOC2020_Day14_Data_Sampl
 
 Jest.describe("2020 Day14", (function (param) {
         Jest.test("Part 1 - Sample Data", (function (param) {
-                return Jest.Expect.toEqual(165, Jest.Expect.expect(165));
+                var result = AOC2020_Day14$AdventOfCode.solvePart1(AOC2020_Day14_Data_Sample$AdventOfCode.data);
+                var expected = Caml_format.caml_int64_of_string("165");
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2020_Day14$AdventOfCode.solvePart1(AOC2020_Day14_Data$AdventOfCode.data);
                 var expected = Caml_format.caml_int64_of_string("17765746710228");
                 return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+              }));
+        Jest.test("Part 2 - Mem Address Decoder", (function (param) {
+                Curry._1(AOC2020_Day14$AdventOfCode.Program.Mask.make, "000000000000000000000000000000X1001X");
+                Caml_format.caml_int64_of_string("0u42");
+                Caml_format.caml_int64_of_string("0u100");
+                return Jest.Expect.toEqual("21", Jest.Expect.expect("21"));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2020_Day14$AdventOfCode.solvePart2(AOC2020_Day14_Data$AdventOfCode.data);
