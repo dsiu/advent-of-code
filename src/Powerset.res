@@ -5,6 +5,8 @@
     https://blog.shaynefletcher.org/2014/06/powerset.html
     https://stackoverflow.com/questions/40141955/computing-a-set-of-all-subsets-power-set
     https://www.freecodecamp.org/news/my-favorite-examples-of-functional-programming-in-kotlin-e69217b39112/
+    https://medium.com/flawless-app-stories/foldable-map-and-flatmap-416dbd5ace36
+    https://gist.github.com/JadenGeller/6174b3461a34465791c5
 
 */
 
@@ -12,7 +14,6 @@ module List = Belt.List
 
 //
 // powerset with map (easier to understand)
-// ref: https://gist.github.com/JadenGeller/6174b3461a34465791c5
 //
 let rec powersetListMap_ = set => {
   switch set {
@@ -63,9 +64,7 @@ let rec powersetArrayMap_ = set => {
 
 //
 // powerset with flatmap
-// ref: https://gist.github.com/JadenGeller/6174b3461a34465791c5
 //
-
 let flatMapArray = FP.flatMapArray
 
 let rec powersetArrayFlatMap_ = set => {
