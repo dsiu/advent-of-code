@@ -9,6 +9,7 @@ var Belt_MapInt = require("rescript/lib/js/belt_MapInt.js");
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
 var Belt_SortArrayInt = require("rescript/lib/js/belt_SortArrayInt.js");
 var Belt_MutableMapInt = require("rescript/lib/js/belt_MutableMapInt.js");
+var Belt_MutableMapString = require("rescript/lib/js/belt_MutableMapString.js");
 
 function log(prim) {
   console.log(prim);
@@ -77,6 +78,24 @@ function dump_mutableMapInt_of_int_base2(param) {
               }), param);
 }
 
+function dump_mutableMapString_of(f, m) {
+  return Belt_MutableMapString.forEach(m, (function (k, v) {
+                var prim = "key:" + k + ", val:" + Curry._1(f, v);
+                console.log(prim);
+                
+              }));
+}
+
+function dump_mutableMapString_of_int(param) {
+  return dump_mutableMapString_of((function (prim) {
+                return String(prim);
+              }), param);
+}
+
+function dump_mutableMapString_of_int64(param) {
+  return dump_mutableMapString_of(Int64.to_string, param);
+}
+
 function dump_list(__x) {
   return Belt_List.forEach(__x, log);
 }
@@ -142,6 +161,9 @@ exports.dump_mutableMapInt_of = dump_mutableMapInt_of;
 exports.dump_mutableMapInt_of_int = dump_mutableMapInt_of_int;
 exports.dump_mutableMapInt_of_int64 = dump_mutableMapInt_of_int64;
 exports.dump_mutableMapInt_of_int_base2 = dump_mutableMapInt_of_int_base2;
+exports.dump_mutableMapString_of = dump_mutableMapString_of;
+exports.dump_mutableMapString_of_int = dump_mutableMapString_of_int;
+exports.dump_mutableMapString_of_int64 = dump_mutableMapString_of_int64;
 exports.dump_list = dump_list;
 exports.splitChars = splitChars;
 exports.splitNewline = splitNewline;

@@ -12,9 +12,9 @@ module Program = {
   module Mask = {
     type t = {
       mask: string,
-      mask_passthur: Int64.t,
-      mask_one: Int64.t,
-      mask_zero: Int64.t,
+      mask_passthur: string,
+      mask_one: string,
+      mask_zero: string,
     }
 
     let onlyXto1 = c => {
@@ -39,15 +39,14 @@ module Program = {
     }
 
     let makeMask = (m, f) => {
-      // xx1xx0xx -> 110110xx
-      //      m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith("")->parseInt(~x=_, ~base=2)
-      ("0b" ++ m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith(""))->Int64.of_string
+      //      ("0b" ++ m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith(""))->Int64.of_string
+      m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith("")
     }
 
+    let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
+
     let makePassThurMask = makeMask(_, onlyXto1)
-
     let makeOneMask = makeMask(_, only1to1)
-
     let makeZeroMask = makeMask(_, only0to1)
 
     let make = str => {
@@ -63,15 +62,12 @@ module Program = {
     let dump = t => {
       "=== Mask dump ==="->log
       t.mask->log
-      //      t.mask_passthur->base2->log
-      //      t.mask_one->base2->log
-      //      t.mask_zero->base2->log
     }
   }
 
   module Memory = {
     type t = {
-      address: int,
+      address: Int64.t,
       value: Int64.t,
     }
 
@@ -86,8 +82,8 @@ module Program = {
         ->Array.map(l => l->Js.Nullable.toOption->Option.getExn)
 
       {
-        address: parsed[1]->Option.flatMap(Int.fromString)->Option.getExn,
-        value: parsed[2]->Option.flatMap(x => {x->Int64.of_string->Some})->Option.getExn,
+        address: parsed[1]->Option.map(Int64.of_string)->Option.getExn,
+        value: parsed[2]->Option.map(Int64.of_string)->Option.getExn,
       }
     }
 
@@ -97,7 +93,9 @@ module Program = {
     }
   }
 
-  type memory_space = MutableMap.Int.t<Int64.t>
+  // map key is the address in Int64.  It should be MutableMap.Int64.t but it isn't implemented in ReScript.
+  // So, let's use Int64 as string as map key here
+  type memory_space = MutableMap.String.t<Int64.t>
 
   type instruction = Mask(Mask.t) | Mem(Memory.t)
 
@@ -121,7 +119,7 @@ module Program = {
   let make = instructions => {
     {
       instructions: instructions->parseInstructions,
-      memory: MutableMap.Int.make(),
+      memory: MutableMap.String.make(),
     }
   }
 
@@ -134,13 +132,13 @@ module Program = {
           cur_m.contents->Mask.dump
         }
       | Mem(i) =>
-        t.memory->MutableMap.Int.update(i.address, v => {
+        t.memory->MutableMap.String.update(i.address->Int64.to_string, v => {
           i->Memory.dump
           v->ignore
           let ret =
-            Int64.logand(cur_m.contents.mask_passthur, i.value)
-            ->Int64.logor(cur_m.contents.mask_one)
-            ->Int64.logand(cur_m.contents.mask_zero->Int64.lognot)
+            Int64.logand(cur_m.contents.mask_passthur->Mask.int64FromBitString, i.value)
+            ->Int64.logor(cur_m.contents.mask_one->Mask.int64FromBitString)
+            ->Int64.logand(cur_m.contents.mask_zero->Mask.int64FromBitString->Int64.lognot)
           Some(ret)
         })
       }
@@ -149,33 +147,10 @@ module Program = {
     t.memory
   }
 
-  //  instructions: instructions->Array.map(x => {
-  //          {
-  //            address: x[1]->Option.flatMap(Int.fromString)->Option.getExn,
-  //            value: x[2]->Option.flatMap(Int.fromString)->Option.getExn,
-  //          }
-  //        }),
-
-  //  let run = t => {
-  //    let mem = MutableMap.Int.make()
-  //    t.instructions->Array.forEach(i => {
-  //      mem->MutableMap.Int.update(i.address, v => {
-  //        v->ignore
-  //        let ret = land(t.mask_passthur, i.value)->lor(t.mask_one)->land(t.mask_zero->lnot)
-  //        Some(ret)
-  //      })
-  //    })
-  //    mem
-  //  }
-
-  //  let run = t => {
-  //    _
-  //  }
-
   let dump = t => {
     "=== Program dump ==="->log
     t.instructions->log
-    t.memory->Utils.dump_mutableMapInt_of_int64
+    t.memory->Utils.dump_mutableMapString_of_int64
   }
 }
 
@@ -187,30 +162,6 @@ let parse = data => {
   })
 }
 
-//let parse = data => {
-//  let lines =
-//    data
-//    ->splitNewline
-//    ->Array.map(x => {
-//      x->Js.String2.trim
-//    })
-//
-//  let mask_line = lines[0]->Option.getExn->Js.String2.sliceToEnd(~from="mask = "->String.length)
-//  let program_lines = lines->Array.sliceToEnd(1)
-//
-//  let prog_line_re = %re("/mem\[(\d+)\]\s*=\s*(\d+)/i")
-//  let instructions = program_lines->Array.map(x => {
-//    prog_line_re
-//    ->Js.Re.exec_(_, x)
-//    ->Option.getExn
-//    ->Js.Re.captures
-//    ->Array.map(l => l->Js.Nullable.toOption->Option.getExn)
-//    //->Js.Nullable.toOption->Option.getExn)
-//  })
-//
-//  (mask_line, instructions)
-//}
-
 let solvePart1 = data => {
   let prog = data->parse->Program.make
   prog->Program.dump
@@ -218,7 +169,7 @@ let solvePart1 = data => {
   //  "=== part 1 result dump ==="->log
   //  result->Utils.dump_mutableMapInt_of_int64
   //  open ReScriptJs.Js
-  let answer = result->MutableMap.Int.reduce(Int64.of_int(0), (a, k, v) => {
+  let answer = result->MutableMap.String.reduce(Int64.of_int(0), (a, k, v) => {
     k->ignore
     Int64.add(v, a)
   })

@@ -2,15 +2,14 @@
 'use strict';
 
 var Int64 = require("rescript/lib/js/int64.js");
-var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Caml_int64 = require("rescript/lib/js/caml_int64.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_format = require("rescript/lib/js/caml_format.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
-var Belt_MutableMapInt = require("rescript/lib/js/belt_MutableMapInt.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
+var Belt_MutableMapString = require("rescript/lib/js/belt_MutableMapString.js");
 
 function log(prim) {
   console.log(prim);
@@ -46,7 +45,11 @@ function only0to1(c) {
 }
 
 function makeMask(m, f) {
-  return Caml_format.caml_int64_of_string("0b" + Belt_Array.map(Utils$AdventOfCode.splitChars(m), f).join(""));
+  return Belt_Array.map(Utils$AdventOfCode.splitChars(m), f).join("");
+}
+
+function int64FromBitString(str) {
+  return Caml_format.caml_int64_of_string("0b" + str);
 }
 
 function makePassThurMask(__x) {
@@ -81,6 +84,7 @@ var Mask = {
   only1to1: only1to1,
   only0to1: only0to1,
   makeMask: makeMask,
+  int64FromBitString: int64FromBitString,
   makePassThurMask: makePassThurMask,
   makeOneMask: makeOneMask,
   makeZeroMask: makeZeroMask,
@@ -94,10 +98,8 @@ function make$1(str) {
           return Belt_Option.getExn((l == null) ? undefined : Caml_option.some(l));
         }));
   return {
-          address: Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(parsed, 1), Belt_Int.fromString)),
-          value: Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(parsed, 2), (function (x) {
-                      return Caml_format.caml_int64_of_string(x);
-                    })))
+          address: Belt_Option.getExn(Belt_Option.map(Belt_Array.get(parsed, 1), Caml_format.caml_int64_of_string)),
+          value: Belt_Option.getExn(Belt_Option.map(Belt_Array.get(parsed, 2), Caml_format.caml_int64_of_string))
         };
 }
 
@@ -141,7 +143,7 @@ function parseInstructions(lines) {
 function make$2(instructions) {
   return {
           instructions: parseInstructions(instructions),
-          memory: Belt_MutableMapInt.make(undefined)
+          memory: Belt_MutableMapString.make(undefined)
         };
 }
 
@@ -155,9 +157,9 @@ function run(t) {
             return dump(cur_m.contents);
           }
           var i = x._0;
-          return Belt_MutableMapInt.update(t.memory, i.address, (function (v) {
+          return Belt_MutableMapString.update(t.memory, Int64.to_string(i.address), (function (v) {
                         dump$1(i);
-                        return Caml_int64.and_(Caml_int64.or_(Caml_int64.and_(cur_m.contents.mask_passthur, i.value), cur_m.contents.mask_one), Int64.lognot(cur_m.contents.mask_zero));
+                        return Caml_int64.and_(Caml_int64.or_(Caml_int64.and_(Caml_format.caml_int64_of_string("0b" + cur_m.contents.mask_passthur), i.value), Caml_format.caml_int64_of_string("0b" + cur_m.contents.mask_one)), Int64.lognot(Caml_format.caml_int64_of_string("0b" + cur_m.contents.mask_zero)));
                       }));
         }));
   return t.memory;
@@ -166,7 +168,7 @@ function run(t) {
 function dump$2(t) {
   console.log("=== Program dump ===");
   console.log(t.instructions);
-  return Utils$AdventOfCode.dump_mutableMapInt_of_int64(t.memory);
+  return Utils$AdventOfCode.dump_mutableMapString_of_int64(t.memory);
 }
 
 var Program = {
@@ -189,7 +191,7 @@ function solvePart1(data) {
   var prog = make$2(parse(data));
   dump$2(prog);
   var result = run(prog);
-  var answer = Belt_MutableMapInt.reduce(result, Caml_int64.zero, (function (a, k, v) {
+  var answer = Belt_MutableMapString.reduce(result, Caml_int64.zero, (function (a, k, v) {
           return Caml_int64.add(v, a);
         }));
   var prim = Int64.to_string(answer);

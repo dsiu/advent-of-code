@@ -33,6 +33,14 @@ let dump_mutableMapInt_of_int_base2 = dump_mutableMapInt_of(x =>
   x->Js.Int.toStringWithRadix(~radix=2)
 )
 
+// mutable map string
+let dump_mutableMapString_of = (f, m) =>
+  MutableMap.String.forEach(m, (k, v) => {
+    log(`key:${k}, val:${v->f}`)
+  })
+let dump_mutableMapString_of_int = dump_mutableMapString_of(Int.toString)
+let dump_mutableMapString_of_int64 = dump_mutableMapString_of(Int64.to_string)
+
 // list
 let dump_list = List.forEach(_, log)
 
