@@ -6,6 +6,7 @@ var Int64 = require("rescript/lib/js/int64.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_MapInt = require("rescript/lib/js/belt_MapInt.js");
+var Caml_format = require("rescript/lib/js/caml_format.js");
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
 var Belt_SortArrayInt = require("rescript/lib/js/belt_SortArrayInt.js");
 var Belt_MutableMapInt = require("rescript/lib/js/belt_MutableMapInt.js");
@@ -150,6 +151,14 @@ function int32ToUint32(x) {
   return new Uint32Array([x])[0];
 }
 
+function base2(__x) {
+  return __x.toString(2);
+}
+
+function int64FromBitString(str) {
+  return Caml_format.caml_int64_of_string("0b" + str);
+}
+
 exports.log = log;
 exports.dump_mapString_of = dump_mapString_of;
 exports.dump_mapString_of_int = dump_mapString_of_int;
@@ -175,4 +184,6 @@ exports.sumRange = sumRange;
 exports.maxIntInArray = maxIntInArray;
 exports.minIntInArray = minIntInArray;
 exports.int32ToUint32 = int32ToUint32;
+exports.base2 = base2;
+exports.int64FromBitString = int64FromBitString;
 /* No side effect */

@@ -2,10 +2,6 @@ open Belt
 let log = Js.Console.log
 //open Utils
 
-//@scope("Math") @val
-@val
-external parseInt: (~x: string, ~base: int) => int = "parseInt"
-
 module BitString = {
   type t = {nBits: int, zero: string, one: string, raw: string}
 
@@ -23,7 +19,7 @@ module BitString = {
     ->Js.String2.split("")
     ->Array.map(c => c->replace(_, t.zero, "0")->replace(_, t.one, "1"))
     ->Js.Array2.joinWith(_, "")
-    ->parseInt(~x=_, ~base=2)
+    ->Utils.parseInt(~x=_, ~base=2)
   }
 }
 

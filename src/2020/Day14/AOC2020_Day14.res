@@ -2,19 +2,16 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-//@scope("Math") @val
-@val
-external parseInt: (~x: string, ~base: int) => int = "parseInt"
-
-let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
+let toInt64 = Utils.int64FromBitString
 
 module Program = {
   module Mask = {
     type t = {
       mask: string,
-      mask_x: string,
-      mask_one: string,
-      mask_zero: string,
+      mask_x: Int64.t,
+      mask_x_str: string, // need to keep the string for easy parsing of bits
+      mask_one: Int64.t,
+      mask_zero: Int64.t,
     }
 
     let onlyXto1 = c => {
@@ -39,11 +36,8 @@ module Program = {
     }
 
     let makeMask = (m, f) => {
-      //      ("0b" ++ m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith(""))->Int64.of_string
       m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith("")
     }
-
-    let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
 
     let makePassThurMask = makeMask(_, onlyXto1)
     let makeOneMask = makeMask(_, only1to1)
@@ -53,9 +47,10 @@ module Program = {
       // str = "mask = 11100XX0000X1101X1010100X1010001XX0X"
       {
         mask: str->Js.String2.sliceToEnd(~from="mask = "->String.length),
-        mask_x: str->makePassThurMask,
-        mask_one: str->makeOneMask,
-        mask_zero: str->makeZeroMask,
+        mask_x: str->makePassThurMask->toInt64,
+        mask_x_str: str->makePassThurMask,
+        mask_one: str->makeOneMask->toInt64,
+        mask_zero: str->makeZeroMask->toInt64,
       }
     }
 
@@ -97,7 +92,7 @@ module Program = {
   // So, let's use Int64 as string as map key here
   type memory_space = MutableMap.String.t<Int64.t>
 
-  type instruction = Mask(Mask.t) | Mem(Memory.t)
+  type instruction = MaskOp(Mask.t) | MemOp(Memory.t)
 
   type t = {
     instructions: array<instruction>,
@@ -106,11 +101,11 @@ module Program = {
 
   exception InvalidInstruction(string)
 
-  let parseInstructions = lines => {
+  let parse = lines => {
     lines->Array.map(l => {
       switch l->Js.String2.substring(~from=0, ~to_=4) {
-      | "mem[" => l->Memory.make->Mem
-      | "mask" => l->Mask.make->Mask
+      | "mem[" => l->Memory.make->MemOp
+      | "mask" => l->Mask.make->MaskOp
       | _ => raise(InvalidInstruction(l))
       }
     })
@@ -118,26 +113,26 @@ module Program = {
 
   let make = instructions => {
     {
-      instructions: instructions->parseInstructions,
+      instructions: instructions->parse,
       memory: MutableMap.String.make(),
     }
   }
 
   // part 1: change memory value based on mask
   let decodeMemory = (mask: Mask.t, mem_value) => {
-    Int64.logand(mask.mask_x->Mask.int64FromBitString, mem_value)
-    ->Int64.logor(mask.mask_one->Mask.int64FromBitString)
-    ->Int64.logand(mask.mask_zero->Mask.int64FromBitString->Int64.lognot)
+    Int64.logand(mask.mask_x, mem_value)
+    ->Int64.logor(mask.mask_one)
+    ->Int64.logand(mask.mask_zero->Int64.lognot)
   }
 
   let part1Algo = (space: memory_space, mask: Mask.t, mem: Memory.t) => {
     space->MutableMap.String.update(mem.address->Int64.to_string, v => {
-      //      mem->Memory.dump
       v->ignore
       decodeMemory(mask, mem.value)->Some
     })
   }
 
+  // return indexes (lsb=0) of 1 as if string is a binary string
   let bit1Index = m => {
     let xs = m->Utils.splitChars
     let len = xs->Array.length
@@ -148,16 +143,13 @@ module Program = {
   }
 
   let decodeAddress = (mask: Mask.t, mem_address) => {
-    let mask_x = mask.mask_x->Mask.int64FromBitString
-    let mask_one = mask.mask_one->Mask.int64FromBitString
-
     let int64_0 = Int64.of_int(0)
     let int64_1 = Int64.of_int(1)
 
-    let pos_mask = mask_x->Int64.lognot
-    let base = Int64.logand(Int64.logor(mem_address, mask_one), pos_mask)
+    let pos_mask = mask.mask_x->Int64.lognot
+    let base = Int64.logand(Int64.logor(mem_address, mask.mask_one), pos_mask)
 
-    let pos = mask.mask_x->bit1Index
+    let pos = mask.mask_x_str->bit1Index
     let all_pos = pos->Powerset.powersetArray
 
     let decoded_addresses = all_pos->Array.map(pos => {
@@ -167,14 +159,12 @@ module Program = {
       Int64.logor(base, m)->Int64.to_string
     })
     decoded_addresses
-    //    (base->Int64.to_string, all_pos, )
   }
 
   let part2Algo = (space: memory_space, mask: Mask.t, mem: Memory.t) => {
     let addresses = decodeAddress(mask, mem.address)
     addresses->Array.forEach(addr => {
       space->MutableMap.String.update(addr, v => {
-        //        mem->Memory.dump
         v->ignore
         mem.value->Some
       })
@@ -185,9 +175,8 @@ module Program = {
     let cur_m = ref(Mask.make("mask = 11110000XXXX"))
     t.instructions->Array.forEach(x => {
       switch x {
-      | Mask(mask) => cur_m := mask
-      // cur_m.contents->Mask.dum
-      | Mem(mem) => algo(t.memory, cur_m.contents, mem)
+      | MaskOp(mask) => cur_m := mask
+      | MemOp(mem) => algo(t.memory, cur_m.contents, mem)
       }
     })
 
@@ -224,7 +213,6 @@ let solvePart1 = data => {
   //  "=== part 1 result dump ==="->log
   //  result->Utils.dump_mutableMapInt_of_int64
   let answer = result->memoryToAnswer
-  answer->Int64.to_string->log
   answer
 }
 
@@ -235,6 +223,5 @@ let solvePart2 = data => {
   //  "=== part 2 result dump ==="->log
   //  result->Utils.dump_mutableMapInt_of_int64
   let answer = result->memoryToAnswer
-  answer->Int64.to_string->log
   answer
 }

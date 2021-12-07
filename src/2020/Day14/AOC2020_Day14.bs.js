@@ -18,10 +18,6 @@ function log(prim) {
   
 }
 
-function base2(__x) {
-  return __x.toString(2);
-}
-
 function onlyXto1(c) {
   if (c === "X") {
     return "1";
@@ -50,10 +46,6 @@ function makeMask(m, f) {
   return Belt_Array.map(Utils$AdventOfCode.splitChars(m), f).join("");
 }
 
-function int64FromBitString(str) {
-  return Caml_format.caml_int64_of_string("0b" + str);
-}
-
 function makePassThurMask(__x) {
   return makeMask(__x, onlyXto1);
 }
@@ -69,9 +61,10 @@ function makeZeroMask(__x) {
 function make(str) {
   return {
           mask: str.slice(7),
-          mask_x: makeMask(str, onlyXto1),
-          mask_one: makeMask(str, only1to1),
-          mask_zero: makeMask(str, only0to1)
+          mask_x: Utils$AdventOfCode.int64FromBitString(makeMask(str, onlyXto1)),
+          mask_x_str: makeMask(str, onlyXto1),
+          mask_one: Utils$AdventOfCode.int64FromBitString(makeMask(str, only1to1)),
+          mask_zero: Utils$AdventOfCode.int64FromBitString(makeMask(str, only0to1))
         };
 }
 
@@ -86,7 +79,6 @@ var Mask = {
   only1to1: only1to1,
   only0to1: only0to1,
   makeMask: makeMask,
-  int64FromBitString: int64FromBitString,
   makePassThurMask: makePassThurMask,
   makeOneMask: makeOneMask,
   makeZeroMask: makeZeroMask,
@@ -118,18 +110,18 @@ var Memory = {
 
 var InvalidInstruction = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day14-AdventOfCode.Program.InvalidInstruction");
 
-function parseInstructions(lines) {
+function parse(lines) {
   return Belt_Array.map(lines, (function (l) {
                 var match = l.substring(0, 4);
                 switch (match) {
                   case "mask" :
                       return {
-                              TAG: /* Mask */0,
+                              TAG: /* MaskOp */0,
                               _0: make(l)
                             };
                   case "mem[" :
                       return {
-                              TAG: /* Mem */1,
+                              TAG: /* MemOp */1,
                               _0: make$1(l)
                             };
                   default:
@@ -144,13 +136,13 @@ function parseInstructions(lines) {
 
 function make$2(instructions) {
   return {
-          instructions: parseInstructions(instructions),
+          instructions: parse(instructions),
           memory: Belt_MutableMapString.make(undefined)
         };
 }
 
 function decodeMemory(mask, mem_value) {
-  return Caml_int64.and_(Caml_int64.or_(Caml_int64.and_(Caml_format.caml_int64_of_string("0b" + mask.mask_x), mem_value), Caml_format.caml_int64_of_string("0b" + mask.mask_one)), Int64.lognot(Caml_format.caml_int64_of_string("0b" + mask.mask_zero)));
+  return Caml_int64.and_(Caml_int64.or_(Caml_int64.and_(mask.mask_x, mem_value), mask.mask_one), Int64.lognot(mask.mask_zero));
 }
 
 function part1Algo(space, mask, mem) {
@@ -172,13 +164,11 @@ function bit1Index(m) {
 }
 
 function decodeAddress(mask, mem_address) {
-  var mask_x = Caml_format.caml_int64_of_string("0b" + mask.mask_x);
-  var mask_one = Caml_format.caml_int64_of_string("0b" + mask.mask_one);
   var int64_0 = Caml_int64.zero;
   var int64_1 = Caml_int64.one;
-  var pos_mask = Int64.lognot(mask_x);
-  var base = Caml_int64.and_(Caml_int64.or_(mem_address, mask_one), pos_mask);
-  var pos = bit1Index(mask.mask_x);
+  var pos_mask = Int64.lognot(mask.mask_x);
+  var base = Caml_int64.and_(Caml_int64.or_(mem_address, mask.mask_one), pos_mask);
+  var pos = bit1Index(mask.mask_x_str);
   var all_pos = Powerset$AdventOfCode.powersetArray(pos);
   return Belt_Array.map(all_pos, (function (pos) {
                 var m = Belt_Array.reduce(pos, int64_0, (function (acc, x) {
@@ -202,7 +192,7 @@ function run(t, algo) {
     contents: make("mask = 11110000XXXX")
   };
   Belt_Array.forEach(t.instructions, (function (x) {
-          if (x.TAG === /* Mask */0) {
+          if (x.TAG === /* MaskOp */0) {
             cur_m.contents = x._0;
             return ;
           } else {
@@ -230,7 +220,7 @@ var Program = {
   Mask: Mask,
   Memory: Memory,
   InvalidInstruction: InvalidInstruction,
-  parseInstructions: parseInstructions,
+  parse: parse,
   make: make$2,
   decodeMemory: decodeMemory,
   part1Algo: part1Algo,
@@ -243,7 +233,7 @@ var Program = {
   dump: dump$2
 };
 
-function parse(data) {
+function parse$1(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
                 return x.trim();
               }));
@@ -256,27 +246,21 @@ function memoryToAnswer(__x) {
 }
 
 function solvePart1(data) {
-  var prog = make$2(parse(data));
-  var result = run(prog, part1Algo);
-  var answer = memoryToAnswer(result);
-  var prim = Int64.to_string(answer);
-  console.log(prim);
-  return answer;
+  var prog = make$2(parse$1(data));
+  return memoryToAnswer(run(prog, part1Algo));
 }
 
 function solvePart2(data) {
-  var prog = make$2(parse(data));
-  var result = run(prog, part2Algo);
-  var answer = memoryToAnswer(result);
-  var prim = Int64.to_string(answer);
-  console.log(prim);
-  return answer;
+  var prog = make$2(parse$1(data));
+  return memoryToAnswer(run(prog, part2Algo));
 }
 
+var toInt64 = Utils$AdventOfCode.int64FromBitString;
+
 exports.log = log;
-exports.base2 = base2;
+exports.toInt64 = toInt64;
 exports.Program = Program;
-exports.parse = parse;
+exports.parse = parse$1;
 exports.memoryToAnswer = memoryToAnswer;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
