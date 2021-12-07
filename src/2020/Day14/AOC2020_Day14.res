@@ -124,31 +124,21 @@ module Program = {
   }
 
   // part 1: change memory value based on mask
-  let part1Algo = (mask: Mask.t, mem_value) => {
+  let decodeMemory = (mask: Mask.t, mem_value) => {
     Int64.logand(mask.mask_x->Mask.int64FromBitString, mem_value)
     ->Int64.logor(mask.mask_one->Mask.int64FromBitString)
     ->Int64.logand(mask.mask_zero->Mask.int64FromBitString->Int64.lognot)
   }
 
-  let run = t => {
-    let cur_m = ref(Mask.make("mask = 11110000XXXX"))
-    t.instructions->Array.forEach(x => {
-      switch x {
-      | Mask(mask) => cur_m := mask
-      // cur_m.contents->Mask.dum
-      | Mem(mem) =>
-        t.memory->MutableMap.String.update(mem.address->Int64.to_string, v => {
-          mem->Memory.dump
-          v->ignore
-          part1Algo(cur_m.contents, mem.value)->Some
-        })
-      }
+  let part1Algo = (space: memory_space, mask: Mask.t, mem: Memory.t) => {
+    space->MutableMap.String.update(mem.address->Int64.to_string, v => {
+      //      mem->Memory.dump
+      v->ignore
+      decodeMemory(mask, mem.value)->Some
     })
-
-    t.memory
   }
 
-  let bit_1_index = m => {
+  let bit1Index = m => {
     let xs = m->Utils.splitChars
     let len = xs->Array.length
 
@@ -157,16 +147,55 @@ module Program = {
     })
   }
 
-  let decode_memory = (mask: Mask.t, mem_address, mem_value) => {
+  let decodeAddress = (mask: Mask.t, mem_address) => {
     let mask_x = mask.mask_x->Mask.int64FromBitString
-    let mask_zero = mask.mask_zero->Mask.int64FromBitString
     let mask_one = mask.mask_one->Mask.int64FromBitString
 
-    let pos = mask.mask_x->bit_1_index
-    let enum = pos->Powerset.powersetArray
+    let int64_0 = Int64.of_int(0)
+    let int64_1 = Int64.of_int(1)
 
-    let a = Int64.logor(mem_address, mask_one)->Int64.to_string
+    let pos_mask = mask_x->Int64.lognot
+    let base = Int64.logand(Int64.logor(mem_address, mask_one), pos_mask)
+
+    let pos = mask.mask_x->bit1Index
+    let all_pos = pos->Powerset.powersetArray
+
+    let decoded_addresses = all_pos->Array.map(pos => {
+      let m = pos->Array.reduce(int64_0, (acc, x) => {
+        Int64.logor(acc, Int64.shift_left(int64_1, x))
+      })
+      Int64.logor(base, m)->Int64.to_string
+    })
+    decoded_addresses
+    //    (base->Int64.to_string, all_pos, )
   }
+
+  let part2Algo = (space: memory_space, mask: Mask.t, mem: Memory.t) => {
+    let addresses = decodeAddress(mask, mem.address)
+    addresses->Array.forEach(addr => {
+      space->MutableMap.String.update(addr, v => {
+        //        mem->Memory.dump
+        v->ignore
+        mem.value->Some
+      })
+    })
+  }
+
+  let run = (t, algo) => {
+    let cur_m = ref(Mask.make("mask = 11110000XXXX"))
+    t.instructions->Array.forEach(x => {
+      switch x {
+      | Mask(mask) => cur_m := mask
+      // cur_m.contents->Mask.dum
+      | Mem(mem) => algo(t.memory, cur_m.contents, mem)
+      }
+    })
+
+    t.memory
+  }
+
+  let runPart1 = run(_, part1Algo)
+  let runPart2 = run(_, part2Algo)
 
   let dump = t => {
     "=== Program dump ==="->log
@@ -183,22 +212,29 @@ let parse = data => {
   })
 }
 
+let memoryToAnswer = MutableMap.String.reduce(_, Int64.of_int(0), (a, k, v) => {
+  k->ignore
+  Int64.add(v, a)
+})
+
 let solvePart1 = data => {
   let prog = data->parse->Program.make
-  prog->Program.dump
-  let result = prog->Program.run
+  //  prog->Program.dump
+  let result = prog->Program.runPart1
   //  "=== part 1 result dump ==="->log
   //  result->Utils.dump_mutableMapInt_of_int64
-  //  open ReScriptJs.Js
-  let answer = result->MutableMap.String.reduce(Int64.of_int(0), (a, k, v) => {
-    k->ignore
-    Int64.add(v, a)
-  })
+  let answer = result->memoryToAnswer
   answer->Int64.to_string->log
   answer
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let prog = data->parse->Program.make
+  //  prog->Program.dump
+  let result = prog->Program.runPart2
+  //  "=== part 2 result dump ==="->log
+  //  result->Utils.dump_mutableMapInt_of_int64
+  let answer = result->memoryToAnswer
+  answer->Int64.to_string->log
+  answer
 }

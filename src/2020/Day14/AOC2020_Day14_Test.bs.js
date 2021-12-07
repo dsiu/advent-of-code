@@ -19,15 +19,38 @@ Jest.describe("2020 Day14", (function (param) {
                 var expected = Caml_format.caml_int64_of_string("17765746710228");
                 return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
               }));
-        Jest.test("Part 2 - Mem Address Decoder", (function (param) {
-                Curry._1(AOC2020_Day14$AdventOfCode.Program.Mask.make, "000000000000000000000000000000X1001X");
-                Caml_format.caml_int64_of_string("0u42");
-                Caml_format.caml_int64_of_string("0u100");
-                return Jest.Expect.toEqual("21", Jest.Expect.expect("21"));
+        Jest.test("Part 2 - Mem Address Decoder 1 ", (function (param) {
+                var mask = Curry._1(AOC2020_Day14$AdventOfCode.Program.Mask.make, "000000000000000000000000000000X1001X");
+                var address = Caml_format.caml_int64_of_string("0u42");
+                var result = AOC2020_Day14$AdventOfCode.Program.decodeAddress(mask, address);
+                var expected = [
+                  "26",
+                  "58",
+                  "27",
+                  "59"
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+              }));
+        Jest.test("Part 2 - Mem Address Decoder 2 ", (function (param) {
+                var mask = Curry._1(AOC2020_Day14$AdventOfCode.Program.Mask.make, "00000000000000000000000000000000X0XX");
+                var address = Caml_format.caml_int64_of_string("0u26");
+                var result = AOC2020_Day14$AdventOfCode.Program.decodeAddress(mask, address);
+                var expected = [
+                  "16",
+                  "24",
+                  "18",
+                  "26",
+                  "17",
+                  "25",
+                  "19",
+                  "27"
+                ];
+                return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2020_Day14$AdventOfCode.solvePart2(AOC2020_Day14_Data$AdventOfCode.data);
-                      return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
+                      var expected = Caml_format.caml_int64_of_string("4401465949086");
+                      return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
                     }));
       }));
 
