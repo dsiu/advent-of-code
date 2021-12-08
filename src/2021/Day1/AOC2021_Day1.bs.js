@@ -32,11 +32,8 @@ function sum2Array(a1, a2) {
 function roll3sum(xs) {
   var size = xs.length - 2 | 0;
   var a1 = Belt_Array.slice(xs, 0, size);
-  console.log(a1);
   var a2 = Belt_Array.slice(xs, 1, size);
-  console.log(a2);
   var a3 = Belt_Array.slice(xs, 2, size);
-  console.log(a3);
   return sum2Array(sum2Array(a1, a2), a3);
 }
 

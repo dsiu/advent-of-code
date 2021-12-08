@@ -21,11 +21,8 @@ let sum2Array = (a1, a2) =>
 let roll3sum = xs => {
   let size = xs->Array.length - 2
   let a1 = xs->Array.slice(~offset=0, ~len=size)
-  a1->log
   let a2 = xs->Array.slice(~offset=1, ~len=size)
-  a2->log
   let a3 = xs->Array.slice(~offset=2, ~len=size)
-  a3->log
 
   sum2Array(a1, a2)->sum2Array(a3)
 }
