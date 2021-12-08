@@ -7,6 +7,7 @@ let part1 = AOC2021_Day2.solvePart1(data)
 "Part 1 Result"->log
 part1->log
 
+//let part2 = AOC2021_Day2.solvePart2(sampleData)
 let part2 = AOC2021_Day2.solvePart2(data)
 "Part 2 Result"->log
 part2->log
