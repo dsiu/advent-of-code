@@ -3,7 +3,7 @@
 
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
-var FP$AdventOfCode = require("./FP.bs.js");
+var FP_Utils$AdventOfCode = require("./FP_Utils.bs.js");
 
 function powersetListMap_(set) {
   if (!set) {
@@ -32,7 +32,7 @@ function powersetListFlatMap_(set) {
   }
   var x = set.hd;
   var tail_powersets = powersetListFlatMap_(set.tl);
-  return FP$AdventOfCode.flatMapList(tail_powersets, (function (it) {
+  return FP_Utils$AdventOfCode.flatMapList(tail_powersets, (function (it) {
                 return {
                         hd: it,
                         tl: {
@@ -72,7 +72,7 @@ function powersetArrayFlatMap_(set) {
   var x = Belt_Array.getExn(set, 0);
   var xs = Belt_Array.sliceToEnd(set, 1);
   var tail_powersets = powersetArrayFlatMap_(xs);
-  return FP$AdventOfCode.flatMapArray(tail_powersets, (function (it) {
+  return FP_Utils$AdventOfCode.flatMapArray(tail_powersets, (function (it) {
                 return [
                         it,
                         Belt_Array.concat([x], it)
@@ -82,13 +82,13 @@ function powersetArrayFlatMap_(set) {
 
 var List;
 
-var flatMapList = FP$AdventOfCode.flatMapList;
+var flatMapList = FP_Utils$AdventOfCode.flatMapList;
 
 var powersetList = powersetListFlatMap_;
 
 var $$Array;
 
-var flatMapArray = FP$AdventOfCode.flatMapArray;
+var flatMapArray = FP_Utils$AdventOfCode.flatMapArray;
 
 var powersetArray = powersetArrayFlatMap_;
 

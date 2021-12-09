@@ -3,14 +3,17 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var Int64 = require("rescript/lib/js/int64.js");
+var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_MapInt = require("rescript/lib/js/belt_MapInt.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_format = require("rescript/lib/js/caml_format.js");
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
 var Belt_SortArrayInt = require("rescript/lib/js/belt_SortArrayInt.js");
 var Belt_MutableMapInt = require("rescript/lib/js/belt_MutableMapInt.js");
 var Belt_MutableMapString = require("rescript/lib/js/belt_MutableMapString.js");
+var FP_Utils$AdventOfCode = require("./FP_Utils.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -155,6 +158,10 @@ function base2(__x) {
   return __x.toString(2);
 }
 
+function intFromStringExn(param) {
+  return FP_Utils$AdventOfCode.compose(Belt_Int.fromString, Belt_Option.getExn, param);
+}
+
 function int64FromBitString(str) {
   return Caml_format.caml_int64_of_string("0b" + str);
 }
@@ -185,5 +192,6 @@ exports.maxIntInArray = maxIntInArray;
 exports.minIntInArray = minIntInArray;
 exports.int32ToUint32 = int32ToUint32;
 exports.base2 = base2;
+exports.intFromStringExn = intFromStringExn;
 exports.int64FromBitString = int64FromBitString;
 /* No side effect */

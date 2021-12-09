@@ -92,6 +92,8 @@ let int32ToUint32 = x => {
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
 
+let intFromStringExn = FP_Utils.compose(Int.fromString, Belt.Option.getExn)
+
 //
 // Int64
 //

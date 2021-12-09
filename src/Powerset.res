@@ -26,7 +26,7 @@ let rec powersetListMap_ = set => {
   }
 }
 
-let flatMapList = FP.flatMapList
+let flatMapList = FP_Utils.flatMapList
 
 let rec powersetListFlatMap_ = set => {
   switch set {
@@ -65,7 +65,7 @@ let rec powersetArrayMap_ = set => {
 //
 // powerset with flatmap
 //
-let flatMapArray = FP.flatMapArray
+let flatMapArray = FP_Utils.flatMapArray
 
 let rec powersetArrayFlatMap_ = set => {
   switch set->Array.size {
