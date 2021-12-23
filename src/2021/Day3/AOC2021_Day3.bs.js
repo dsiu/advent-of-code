@@ -90,12 +90,12 @@ var Total = {
 };
 
 function part1(xs) {
-  var total = Belt_Array.reduce(xs, Belt_MutableMapInt.make(undefined), (function (a, x) {
-          var items = Utils$AdventOfCode.splitChars(x.trim());
-          Belt_Array.forEachWithIndex(items, (function (idx, c) {
-                  var item = Utils$AdventOfCode.intFromStringExn(c);
+  var total = Belt_Array.reduce(xs, Belt_MutableMapInt.make(undefined), (function (a, line) {
+          var bits = Utils$AdventOfCode.splitChars(line.trim());
+          Belt_Array.forEachWithIndex(bits, (function (idx, c) {
+                  var bit_val = Utils$AdventOfCode.intFromStringExn(c);
                   var orig_total = getSafe(a, idx);
-                  return Belt_MutableMapInt.set(a, idx, inc(orig_total, item));
+                  return Belt_MutableMapInt.set(a, idx, inc(orig_total, bit_val));
                 }));
           return a;
         }));

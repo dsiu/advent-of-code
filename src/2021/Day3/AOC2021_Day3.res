@@ -3,6 +3,8 @@ open Utils
 let log = Js.Console.log
 
 module CountContainer = {
+  // key = item like 1, 0
+  // value = count of the item
   type t = Map.Int.t<int>
 
   let set = Map.Int.set
@@ -34,9 +36,9 @@ module CountContainer = {
   }
 }
 
-// Key = bit pos
-// value = content counts
 module Total = {
+  // key = bit pos
+  // value = content counts
   type t = MutableMap.Int.t<CountContainer.t>
 
   let set = MutableMap.Int.set
@@ -51,16 +53,16 @@ module Total = {
 let toBinaryString = MutableMap.Int.valuesToArray
 
 let part1 = xs => {
-  let total = xs->Array.reduce(Total.make(), (a, x) => {
+  let total = xs->Array.reduce(Total.make(), (a, line) => {
     // x = "10101010"
-    let items = x->Js.String2.trim->Utils.splitChars
+    let bits = line->Js.String2.trim->Utils.splitChars
     //    let n_items = items->Array.length
 
-    items->Array.forEachWithIndex((idx, c) => {
+    bits->Array.forEachWithIndex((idx, c) => {
       //      let i = n_items - 1 - idx // lsb = idx 0
-      let item = c->Utils.intFromStringExn
+      let bit_val = c->Utils.intFromStringExn
       let orig_total = a->Total.getSafe(idx)
-      a->Total.set(idx, orig_total->CountContainer.inc(item))
+      a->Total.set(idx, orig_total->CountContainer.inc(bit_val))
     })
 
     a
