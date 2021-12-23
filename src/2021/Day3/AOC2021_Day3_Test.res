@@ -22,9 +22,16 @@ describe("2020 DayX", () => {
     expect(result) |> toEqual(expected)
   })
 
+  test("Part 2 - Sample Data", () => {
+    let result = AOC2021_Day3.solvePart2(sampleData)
+    let expected = 230
+
+    expect(result) |> toEqual(expected)
+  })
+
   test("Part 2 - Solve", () => {
     let result = AOC2021_Day3.solvePart2(data)
-    let expected = 2
+    let expected = 482500
 
     expect(result) |> toEqual(expected)
   })

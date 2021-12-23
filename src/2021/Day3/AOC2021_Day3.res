@@ -15,24 +15,21 @@ module CountContainer = {
   let inc = (t, k) => t->set(k, t->getWithDefault(k, 0) + 1)
 
   let mostCommon = t => {
-    let (k, v) = t->reduce((Js.Int.min, Js.Int.min), ((lk, lv), k, v) => {
-      v > lv ? (k, v) : (lk, lv)
-    })
-    v->ignore
-    k
+    let one_count = t->get(1)
+    let zero_count = t->get(0)
+
+    one_count == zero_count ? 1 : one_count > zero_count ? 1 : 0
   }
 
   let leastCommon = t => {
-    let (k, v) = t->reduce((Js.Int.max, Js.Int.max), ((lk, lv), k, v) => {
-      v < lv ? (k, v) : (lk, lv)
-    })
-    v->ignore
-    k
+    let one_count = t->get(1)
+    let zero_count = t->get(0)
+    one_count == zero_count ? 0 : one_count < zero_count ? 1 : 0
   }
 
-  let make = items => {
+  let make = _ => {
     // use Set to make sure items are unique
-    items->Array.reduce(Map.Int.empty, (a, x) => a->set(x, 0))
+    [0, 1]->Array.reduce(Map.Int.empty, (a, x) => a->set(x, 0))
   }
 }
 
@@ -43,7 +40,7 @@ module Total = {
 
   let set = MutableMap.Int.set
   let get = MutableMap.Int.get
-  let getSafe = (m, k) => m->MutableMap.Int.getWithDefault(k, CountContainer.make([0, 1]))
+  let getSafe = (m, k) => m->MutableMap.Int.getWithDefault(k, CountContainer.make())
   let forEach = MutableMap.Int.forEach
   let map = MutableMap.Int.map
 
@@ -52,52 +49,67 @@ module Total = {
 
 let toBinaryString = MutableMap.Int.valuesToArray
 
-let part1 = xs => {
-  let total = xs->Array.reduce(Total.make(), (a, line) => {
-    // x = "10101010"
-    let bits = line->Js.String2.trim->Utils.splitChars
-    //    let n_items = items->Array.length
+let logAndCont = x => {
+  Js.log2("binStringToInt", x)
+  x
+}
+let bitArrayToInt = x => {
+  x->Array.map(Int.toString)->Js.Array2.joinWith("")->Utils.parseInt(~x=_, ~base=2)
+}
 
-    bits->Array.forEachWithIndex((idx, c) => {
-      //      let i = n_items - 1 - idx // lsb = idx 0
-      let bit_val = c->Utils.intFromStringExn
+let calTotal = xs => {
+  xs->Array.reduce(Total.make(), (a, bits) => {
+    bits->Array.forEachWithIndex((idx, bit_val) => {
       let orig_total = a->Total.getSafe(idx)
       a->Total.set(idx, orig_total->CountContainer.inc(bit_val))
     })
-
     a
   })
-
-  let logAndCont = x => {
-    Js.log2("binStringToInt", x)
-    x
-  }
-
-  let binStringToInt = x => {
-    x
-    ->toBinaryString
-    ->Array.map(Int.toString)
-    ->Js.Array2.joinWith("")
-    ->logAndCont
-    ->Utils.parseInt(~x=_, ~base=2)
-  }
-
-  //  let toGamma = FP_Utils.compose(, binStringToInt)
-
-  let gamma = total->Total.map(CountContainer.mostCommon)->binStringToInt
-  Js.log2("gamma", gamma)
-  let epsilon = total->Total.map(CountContainer.leastCommon)->binStringToInt
-  Js.log2("epsilon", epsilon)
-  gamma * epsilon
 }
 
-let parse = data => data->splitNewline
+let calGamma = xs => xs->calTotal->Total.map(CountContainer.mostCommon)->toBinaryString
+let calEpsilon = xs => xs->calTotal->Total.map(CountContainer.leastCommon)->toBinaryString
+
+let part1 = xs => {
+  let (gamma, epsilon) = (xs->calGamma, xs->calEpsilon)
+
+  gamma->bitArrayToInt * epsilon->bitArrayToInt
+}
+
+let findRating = (xs, func) => {
+  let rec inner = (bit_pos, inputs, func) => {
+    switch inputs {
+    | [] => raise(Not_found)
+    | [item] => item
+    | items => {
+        let filter = items->func
+        let criteria = filter->Array.getExn(bit_pos)
+        let next_inputs = items->Array.keep(x => x->Array.getExn(bit_pos) == criteria)
+        inner(bit_pos + 1, next_inputs, func)
+      }
+    }
+  }
+  inner(0, xs, func)
+}
+
+let calOxygen = findRating(_, calGamma)
+let calCO2 = findRating(_, calEpsilon)
+
+let part2 = xs => {
+  let oxygen = xs->calOxygen
+  let co2 = xs->calCO2
+  oxygen->bitArrayToInt * co2->bitArrayToInt
+}
+
+let parse = data =>
+  data
+  ->splitNewline
+  ->Array.map(line => line->Js.String2.trim->Utils.splitChars->Array.map(Utils.intFromStringExn))
 
 let solvePart1 = data => {
   data->parse->part1
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  data->parse->part2
 }
