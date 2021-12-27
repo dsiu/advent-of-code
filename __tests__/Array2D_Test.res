@@ -9,14 +9,14 @@ describe("Array2D - make / set / get", () => {
   //  open! Expect.Operators
 
   test("make - int", () => {
-    let a = Array2D.make((2, 3), -1)
+    let a = Array2D.make((3, 2), -1)
     let _ = [
       a->Array2D.set((0, 0), 4),
-      a->Array2D.set((0, 1), 5),
-      a->Array2D.set((0, 2), 6),
-      a->Array2D.set((1, 0), 7),
+      a->Array2D.set((1, 0), 5),
+      a->Array2D.set((2, 0), 6),
+      a->Array2D.set((0, 1), 7),
       a->Array2D.set((1, 1), 8),
-      a->Array2D.set((1, 2), 9),
+      a->Array2D.set((2, 1), 9),
     ]
     let result = a
     let expected = [[4, 5, 6], [7, 8, 9]]
@@ -25,14 +25,14 @@ describe("Array2D - make / set / get", () => {
   })
 
   test("make - string", () => {
-    let a = Array2D.make((2, 3), "")
+    let a = Array2D.make((3, 2), "")
     let _ = [
       a->Array2D.set((0, 0), "a"),
-      a->Array2D.set((0, 1), "b"),
-      a->Array2D.set((0, 2), "c"),
-      a->Array2D.set((1, 0), "d"),
+      a->Array2D.set((1, 0), "b"),
+      a->Array2D.set((2, 0), "c"),
+      a->Array2D.set((0, 1), "d"),
       a->Array2D.set((1, 1), "e"),
-      a->Array2D.set((1, 2), "f"),
+      a->Array2D.set((2, 1), "f"),
     ]
     let result = a
 
@@ -46,15 +46,15 @@ describe("Array2D - make / set / get", () => {
     let a = Array2D.make((2, 2), "")
     let _ = [
       a->Array2D.set((0, 0), "e"),
-      a->Array2D.set((0, 1), "f"),
-      a->Array2D.set((1, 0), "g"),
+      a->Array2D.set((1, 0), "f"),
+      a->Array2D.set((0, 1), "g"),
       a->Array2D.set((1, 1), "h"),
     ]
 
     let result = [
       a->Array2D.get((0, 0))->Option.getExn,
-      a->Array2D.get((0, 1))->Option.getExn,
       a->Array2D.get((1, 0))->Option.getExn,
+      a->Array2D.get((0, 1))->Option.getExn,
       a->Array2D.get((1, 1))->Option.getExn,
     ]
     let expected = ["e", "f", "g", "h"]
@@ -68,16 +68,16 @@ describe("Array2D - keep / map / getXYEquals / crop", () => {
   let a = Array2D.make((3, 4), -1)
   let _ = [
     a->Array2D.set((0, 0), 355),
-    a->Array2D.set((0, 1), 404),
-    a->Array2D.set((0, 2), 320),
-    a->Array2D.set((0, 3), 744),
     a->Array2D.set((1, 0), 907),
-    a->Array2D.set((1, 1), 559),
-    a->Array2D.set((1, 2), 891),
-    a->Array2D.set((1, 3), 97),
     a->Array2D.set((2, 0), 707),
+    a->Array2D.set((0, 1), 404),
+    a->Array2D.set((1, 1), 559),
     a->Array2D.set((2, 1), 514),
+    a->Array2D.set((0, 2), 320),
+    a->Array2D.set((1, 2), 891),
     a->Array2D.set((2, 2), 982),
+    a->Array2D.set((0, 3), 744),
+    a->Array2D.set((1, 3), 97),
     a->Array2D.set((2, 3), 876),
   ]
 
@@ -93,7 +93,7 @@ describe("Array2D - keep / map / getXYEquals / crop", () => {
 
   test("map - int", () => {
     let result = a->Array2D.map(x => {x * 2})
-    let expected = [[710, 808, 640, 1488], [1814, 1118, 1782, 194], [1414, 1028, 1964, 1752]]
+    let expected = [[710, 1814, 1414], [808, 1118, 1028], [640, 1782, 1964], [1488, 194, 1752]]
 
     expect(result)->toEqual(expected)
   })
@@ -119,8 +119,8 @@ describe("Array2D - keep / map / getXYEquals / crop", () => {
   })
 
   let crop_tests = [
-    (a->Array2D.crop((1, 2), ~len_x=1, ~len_y=2), [[891, 97]]),
-    (a->Array2D.crop((1, 1), ~len_x=2, ~len_y=2), [[559, 891], [514, 982]]),
+    (a->Array2D.crop((1, 2), ~len_x=1, ~len_y=2), [[891], [97]]),
+    (a->Array2D.crop((1, 1), ~len_x=2, ~len_y=2), [[559, 514], [891, 982]]),
   ]
 
   testEach2("crop", crop_tests, (result, expected) => {

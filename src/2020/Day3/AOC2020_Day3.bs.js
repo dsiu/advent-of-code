@@ -11,11 +11,11 @@ function log(prim) {
   
 }
 
-function height(t) {
+function width(t) {
   return Belt_Option.getExn(Belt_Array.get(t, 0)).length;
 }
 
-function width(t) {
+function height(t) {
   return t.length;
 }
 
@@ -27,8 +27,8 @@ function get(t, param) {
 }
 
 function getWrapped(t, param) {
-  var w = t.length;
-  var h = height(t);
+  var w = width(t);
+  var h = t.length;
   var newX = Caml_int32.mod_(param[0], w);
   var newY = Caml_int32.mod_(param[1], h);
   return Array2D$AdventOfCode.get(t, [
@@ -64,7 +64,7 @@ function make(xs) {
 function walk(t, param) {
   var down = param[1];
   var side = param[0];
-  var h = height(t);
+  var h = t.length;
   var _count = 0;
   var _param = [
     0,
@@ -102,8 +102,8 @@ function walk(t, param) {
 }
 
 var TreeMap = {
-  height: height,
   width: width,
+  height: height,
   get: get,
   getWrapped: getWrapped,
   isTree: isTree,

@@ -10,8 +10,8 @@ var AOC2020_Day4_Data_Sample$AdventOfCode = require("../src/2020/Day4/AOC2020_Da
 describe("Array2D - make / set / get", (function () {
         test("make - int", (function () {
                 var a = Array2D$AdventOfCode.make([
-                      2,
-                      3
+                      3,
+                      2
                     ], -1);
                 [
                   Array2D$AdventOfCode.set(a, [
@@ -19,24 +19,24 @@ describe("Array2D - make / set / get", (function () {
                         0
                       ], 4),
                   Array2D$AdventOfCode.set(a, [
-                        0,
-                        1
-                      ], 5),
-                  Array2D$AdventOfCode.set(a, [
-                        0,
-                        2
-                      ], 6),
-                  Array2D$AdventOfCode.set(a, [
                         1,
                         0
+                      ], 5),
+                  Array2D$AdventOfCode.set(a, [
+                        2,
+                        0
+                      ], 6),
+                  Array2D$AdventOfCode.set(a, [
+                        0,
+                        1
                       ], 7),
                   Array2D$AdventOfCode.set(a, [
                         1,
                         1
                       ], 8),
                   Array2D$AdventOfCode.set(a, [
-                        1,
-                        2
+                        2,
+                        1
                       ], 9)
                 ];
                 var expected = [
@@ -56,8 +56,8 @@ describe("Array2D - make / set / get", (function () {
               }));
         test("make - string", (function () {
                 var a = Array2D$AdventOfCode.make([
-                      2,
-                      3
+                      3,
+                      2
                     ], "");
                 [
                   Array2D$AdventOfCode.set(a, [
@@ -65,24 +65,24 @@ describe("Array2D - make / set / get", (function () {
                         0
                       ], "a"),
                   Array2D$AdventOfCode.set(a, [
-                        0,
-                        1
-                      ], "b"),
-                  Array2D$AdventOfCode.set(a, [
-                        0,
-                        2
-                      ], "c"),
-                  Array2D$AdventOfCode.set(a, [
                         1,
                         0
+                      ], "b"),
+                  Array2D$AdventOfCode.set(a, [
+                        2,
+                        0
+                      ], "c"),
+                  Array2D$AdventOfCode.set(a, [
+                        0,
+                        1
                       ], "d"),
                   Array2D$AdventOfCode.set(a, [
                         1,
                         1
                       ], "e"),
                   Array2D$AdventOfCode.set(a, [
-                        1,
-                        2
+                        2,
+                        1
                       ], "f")
                 ];
                 var expected = [
@@ -111,12 +111,12 @@ describe("Array2D - make / set / get", (function () {
                         0
                       ], "e"),
                   Array2D$AdventOfCode.set(a, [
-                        0,
-                        1
-                      ], "f"),
-                  Array2D$AdventOfCode.set(a, [
                         1,
                         0
+                      ], "f"),
+                  Array2D$AdventOfCode.set(a, [
+                        0,
+                        1
                       ], "g"),
                   Array2D$AdventOfCode.set(a, [
                         1,
@@ -129,12 +129,12 @@ describe("Array2D - make / set / get", (function () {
                             0
                           ])),
                   Belt_Option.getExn(Array2D$AdventOfCode.get(a, [
-                            0,
-                            1
-                          ])),
-                  Belt_Option.getExn(Array2D$AdventOfCode.get(a, [
                             1,
                             0
+                          ])),
+                  Belt_Option.getExn(Array2D$AdventOfCode.get(a, [
+                            0,
+                            1
                           ])),
                   Belt_Option.getExn(Array2D$AdventOfCode.get(a, [
                             1,
@@ -164,45 +164,45 @@ describe("Array2D - keep / map / getXYEquals / crop", (function () {
                 0
               ], 355),
           Array2D$AdventOfCode.set(a, [
+                1,
+                0
+              ], 907),
+          Array2D$AdventOfCode.set(a, [
+                2,
+                0
+              ], 707),
+          Array2D$AdventOfCode.set(a, [
                 0,
                 1
               ], 404),
           Array2D$AdventOfCode.set(a, [
+                1,
+                1
+              ], 559),
+          Array2D$AdventOfCode.set(a, [
+                2,
+                1
+              ], 514),
+          Array2D$AdventOfCode.set(a, [
                 0,
                 2
               ], 320),
+          Array2D$AdventOfCode.set(a, [
+                1,
+                2
+              ], 891),
+          Array2D$AdventOfCode.set(a, [
+                2,
+                2
+              ], 982),
           Array2D$AdventOfCode.set(a, [
                 0,
                 3
               ], 744),
           Array2D$AdventOfCode.set(a, [
                 1,
-                0
-              ], 907),
-          Array2D$AdventOfCode.set(a, [
-                1,
-                1
-              ], 559),
-          Array2D$AdventOfCode.set(a, [
-                1,
-                2
-              ], 891),
-          Array2D$AdventOfCode.set(a, [
-                1,
                 3
               ], 97),
-          Array2D$AdventOfCode.set(a, [
-                2,
-                0
-              ], 707),
-          Array2D$AdventOfCode.set(a, [
-                2,
-                1
-              ], 514),
-          Array2D$AdventOfCode.set(a, [
-                2,
-                2
-              ], 982),
           Array2D$AdventOfCode.set(a, [
                 2,
                 3
@@ -215,20 +215,22 @@ describe("Array2D - keep / map / getXYEquals / crop", (function () {
                 var expected = [
                   [
                     710,
-                    808,
-                    640,
-                    1488
-                  ],
-                  [
                     1814,
-                    1118,
-                    1782,
-                    194
+                    1414
                   ],
                   [
-                    1414,
-                    1028,
-                    1964,
+                    808,
+                    1118,
+                    1028
+                  ],
+                  [
+                    640,
+                    1782,
+                    1964
+                  ],
+                  [
+                    1488,
+                    194,
                     1752
                   ]
                 ];
@@ -304,10 +306,10 @@ describe("Array2D - keep / map / getXYEquals / crop", (function () {
                   1,
                   2
                 ], 1, 2),
-            [[
-                891,
-                97
-              ]]
+            [
+              [891],
+              [97]
+            ]
           ],
           [
             Array2D$AdventOfCode.crop(a, [
@@ -317,10 +319,10 @@ describe("Array2D - keep / map / getXYEquals / crop", (function () {
             [
               [
                 559,
-                891
+                514
               ],
               [
-                514,
+                891,
                 982
               ]
             ]

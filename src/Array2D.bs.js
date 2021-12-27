@@ -6,25 +6,25 @@ var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 
 function make(param, e) {
-  var y = param[1];
-  return Belt_Array.makeBy(param[0], (function (param) {
-                return Belt_Array.make(y, e);
+  var x = param[0];
+  return Belt_Array.makeBy(param[1], (function (param) {
+                return Belt_Array.make(x, e);
               }));
 }
 
-function lengthX(t) {
+function lengthY(t) {
   return t.length;
 }
 
-function lengthY(t) {
+function lengthX(t) {
   return Belt_Array.getExn(t, 0).length;
 }
 
 function isValidXY(t, param) {
   var y = param[1];
   var x = param[0];
-  var len_x = t.length;
-  var len_y = Belt_Array.getExn(t, 0).length;
+  var len_x = Belt_Array.getExn(t, 0).length;
+  var len_y = t.length;
   if (x >= 0 && x <= (len_x - 1 | 0) && y >= 0) {
     return y <= (len_y - 1 | 0);
   } else {
@@ -33,31 +33,31 @@ function isValidXY(t, param) {
 }
 
 function set(t, param, e) {
-  var x = Belt_Array.get(t, param[0]);
-  if (x !== undefined) {
-    return Belt_Array.set(x, param[1], e);
+  var y = Belt_Array.get(t, param[1]);
+  if (y !== undefined) {
+    return Belt_Array.set(y, param[0], e);
   } else {
     return false;
   }
 }
 
 function get(t, param) {
-  var x = Belt_Array.get(t, param[0]);
-  if (x !== undefined) {
-    return Belt_Array.get(x, param[1]);
+  var y = Belt_Array.get(t, param[1]);
+  if (y !== undefined) {
+    return Belt_Array.get(y, param[0]);
   }
   
 }
 
 function getExn(t, param) {
-  return Belt_Array.getExn(Belt_Array.getExn(t, param[0]), param[1]);
+  return Belt_Array.getExn(Belt_Array.getExn(t, param[1]), param[0]);
 }
 
-var getXEquals = Belt_Array.get;
+var getYEquals = Belt_Array.get;
 
-function getYEquals(t, y) {
-  var ret = Belt_Array.reduce(t, [], (function (a, ys) {
-          return Belt_Array.concat(a, [Belt_Array.getExn(ys, y)]);
+function getXEquals(t, x) {
+  var ret = Belt_Array.reduce(t, [], (function (a, xs) {
+          return Belt_Array.concat(a, [Belt_Array.getExn(xs, x)]);
         }));
   if (ret.length === t.length) {
     return ret;
@@ -72,8 +72,8 @@ function map(t, f) {
 }
 
 function mapWithIndex(t, f) {
-  return Belt_Array.mapWithIndex(t, (function (i, ys) {
-                return Belt_Array.mapWithIndex(ys, (function (j, e) {
+  return Belt_Array.mapWithIndex(t, (function (j, xs) {
+                return Belt_Array.mapWithIndex(xs, (function (i, e) {
                               return Curry._2(f, [
                                           i,
                                           j
@@ -94,14 +94,14 @@ function crop(t, param, len_x, len_y) {
   var y = param[1];
   var x = param[0];
   var ret = [];
-  for(var i = x ,i_finish = x + len_x | 0; i < i_finish; ++i){
-    ret = Belt_Array.concat(ret, [Belt_Array.slice(Belt_Option.getWithDefault(Belt_Array.get(t, i), []), y, len_y)]);
+  for(var i = y ,i_finish = y + len_y | 0; i < i_finish; ++i){
+    ret = Belt_Array.concat(ret, [Belt_Array.slice(Belt_Option.getWithDefault(Belt_Array.get(t, i), []), x, len_x)]);
   }
   return ret;
 }
 
 function eq(t, u) {
-  if (t.length === u.length && Belt_Array.getExn(t, 0).length === Belt_Array.getExn(u, 0).length) {
+  if (Belt_Array.getExn(t, 0).length === Belt_Array.getExn(u, 0).length && t.length === u.length) {
     return Belt_Array.reduceReverse2(t, u, true, (function (c, a, b) {
                   if (c) {
                     return Belt_Array.eq(a, b, (function (a, b) {

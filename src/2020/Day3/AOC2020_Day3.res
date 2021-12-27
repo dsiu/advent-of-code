@@ -4,9 +4,9 @@ let log = Js.Console.log
 module TreeMap = {
   type t
 
-  let height = t => t[0]->Option.getExn->Array.length
+  let width = t => t[0]->Option.getExn->Array.length
 
-  let width = t => t->Array.length
+  let height = t => t->Array.length
 
   let get = (t, (x, y)) => t->Array2D.get((x, y))
 
