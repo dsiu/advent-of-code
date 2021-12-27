@@ -12,6 +12,12 @@ function make(param, e) {
               }));
 }
 
+function copy(t) {
+  return Belt_Array.map(t, (function (__x) {
+                return Belt_Array.concat(__x, []);
+              }));
+}
+
 function lengthY(t) {
   return t.length;
 }
@@ -40,6 +46,8 @@ function set(t, param, e) {
     return false;
   }
 }
+
+var setYEquals = Belt_Array.set;
 
 function get(t, param) {
   var y = Belt_Array.get(t, param[1]);
@@ -117,10 +125,12 @@ function eq(t, u) {
 }
 
 exports.make = make;
+exports.copy = copy;
 exports.lengthX = lengthX;
 exports.lengthY = lengthY;
 exports.isValidXY = isValidXY;
 exports.set = set;
+exports.setYEquals = setYEquals;
 exports.get = get;
 exports.getExn = getExn;
 exports.getXEquals = getXEquals;

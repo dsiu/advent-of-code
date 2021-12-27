@@ -4,7 +4,7 @@ open Belt
 let data = AOC2020_Day4_Data.data
 let testData = AOC2020_Day4_Data_Sample.data
 
-describe("Array2D - make / set / get", () => {
+describe("make", () => {
   //  open Expect
   //  open! Expect.Operators
 
@@ -41,30 +41,91 @@ describe("Array2D - make / set / get", () => {
 
     expect(result)->toEqual(expected)
   })
+})
 
-  test("get - string", () => {
-    let a = Array2D.make((2, 2), "")
-    let _ = [
-      a->Array2D.set((0, 0), "e"),
-      a->Array2D.set((1, 0), "f"),
-      a->Array2D.set((0, 1), "g"),
-      a->Array2D.set((1, 1), "h"),
-    ]
+describe("get / set", () => {
+  let s = Array2D.make((2, 2), "")
 
-    let result = [
-      a->Array2D.get((0, 0))->Option.getExn,
-      a->Array2D.get((1, 0))->Option.getExn,
-      a->Array2D.get((0, 1))->Option.getExn,
-      a->Array2D.get((1, 1))->Option.getExn,
-    ]
-    let expected = ["e", "f", "g", "h"]
-    //    let result = [true, true, true, true]
+  let _ = [
+    s->Array2D.set((0, 0), "e"),
+    s->Array2D.set((1, 0), "f"),
+    s->Array2D.set((0, 1), "g"),
+    s->Array2D.set((1, 1), "h"),
+  ]
 
+  let get_string_tests = [
+    (s->Array2D.get((1, 0))->Option.getExn, "f"),
+    (s->Array2D.get((0, 1))->Option.getExn, "g"),
+    (s->Array2D.get((0, 0))->Option.getExn, "e"),
+    (s->Array2D.get((1, 1))->Option.getExn, "h"),
+  ]
+
+  testEach2("get - string", get_string_tests, (result, expected) => {
+    expect(result)->toEqual(expected)
+  })
+
+  let a = Array2D.make((2, 2), -1)
+
+  let _ = [
+    a->Array2D.set((0, 0), 1),
+    a->Array2D.set((1, 0), 2),
+    a->Array2D.set((0, 1), 3),
+    a->Array2D.set((1, 1), 4),
+  ]
+
+  let b = a->Array2D.copy
+
+  let get_tests = [
+    (a->Array2D.get((0, 0)), Some(1)),
+    (a->Array2D.get((1, 0)), Some(2)),
+    (a->Array2D.get((0, 1)), Some(3)),
+    (a->Array2D.get((1, 1)), Some(4)),
+  ]
+
+  testEach2("get - int", get_tests, (result, expected) => {
+    expect(result)->toEqual(expected)
+  })
+
+  let _ = [a->Array2D.set((0, 0), 5), a->Array2D.set((0, 1), 7)]
+
+  let set_tests = [
+    (a->Array2D.get((0, 0)), Some(5)),
+    (a->Array2D.get((1, 0)), Some(2)),
+    (a->Array2D.get((0, 1)), Some(7)),
+    (a->Array2D.get((1, 1)), Some(4)),
+  ]
+
+  testEach2("set - int", set_tests, (result, expected) => {
+    expect(result)->toEqual(expected)
+  })
+
+  let _ = [b->Array2D.setYEquals(1, [9, 11])]
+
+  let setYEquals_test = [
+    (b->Array2D.get((0, 0)), Some(1)),
+    (b->Array2D.get((1, 0)), Some(2)),
+    (b->Array2D.get((0, 1)), Some(9)),
+    (b->Array2D.get((1, 1)), Some(11)),
+  ]
+
+  testEach2("setYEquals", setYEquals_test, (result, expected) => {
     expect(result)->toEqual(expected)
   })
 })
 
-describe("Array2D - keep / map / getXYEquals / crop", () => {
+describe("setYEquals / getYEquals", () => {
+  let a = Array2D.make((2, 2), -1)
+  let _ = [
+    a->Array2D.set((0, 0), 1),
+    a->Array2D.set((1, 0), 2),
+    a->Array2D.set((0, 1), 3),
+    a->Array2D.set((1, 1), 4),
+  ]
+
+  let _ = []
+})
+
+describe("keep / map / getXYEquals / crop", () => {
   let a = Array2D.make((3, 4), -1)
   let _ = [
     a->Array2D.set((0, 0), 355),
@@ -80,16 +141,6 @@ describe("Array2D - keep / map / getXYEquals / crop", () => {
     a->Array2D.set((1, 3), 97),
     a->Array2D.set((2, 3), 876),
   ]
-
-  //  test("keep - int", () => {
-  //    let result = a->Array2D.keep(x => {0 == mod(x, 2)})
-  //    let expected = [[4, 6], [8]]
-  //
-  //    open Expect
-  //    open! Expect.Operators
-  //    expect(result)->toEqual(expected)
-
-  //  })
 
   test("map - int", () => {
     let result = a->Array2D.map(x => {x * 2})

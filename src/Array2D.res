@@ -6,6 +6,10 @@ let make = ((x, y), e: 'a) => {
   Array.makeBy(y, _ => Array.make(x, e))
 }
 
+let copy = t => {
+  t->Array.map(Array.concat(_, []))
+}
+
 let lengthY = t => t->Array.length
 
 let lengthX = t => t->Array.getExn(0)->Array.length
@@ -22,6 +26,10 @@ let set = (t, (x, y), e: 'a) => {
   | Some(y) => y->Array.set(x, e)
   | None => false
   }
+}
+
+let setYEquals = (t, y, e: array<'a>) => {
+  t->Array.set(y, e)
 }
 
 let get = (t, (x, y)) => {
