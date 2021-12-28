@@ -2,11 +2,32 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
+var Utils$AdventOfCode = require("../../Utils.bs.js");
 var AOC2021_Day4$AdventOfCode = require("./AOC2021_Day4.bs.js");
 var AOC2021_Day4_Data$AdventOfCode = require("./AOC2021_Day4_Data.bs.js");
 var AOC2021_Day4_Data_Sample$AdventOfCode = require("./AOC2021_Day4_Data_Sample.bs.js");
 
 Jest.describe("2020 DayX", (function (param) {
+        Jest.describe("board", (function (param) {
+                return Jest.test("result", (function (param) {
+                              var board = AOC2021_Day4$AdventOfCode.Board.make(Utils$AdventOfCode.splitNewline("14 21 17 24  4\n                         10 16 15  9 19\n                         18  8 23 26 20\n                         22 11 13  6  5\n                          2  0 12  3  7"));
+                              var result = AOC2021_Day4$AdventOfCode.Board.solve(board, [
+                                    7,
+                                    3,
+                                    0,
+                                    12,
+                                    2
+                                  ]);
+                              var expected = [
+                                0,
+                                2,
+                                3,
+                                7,
+                                12
+                              ];
+                              return Jest.Expect.toEqual(expected, Jest.Expect.expect(result));
+                            }));
+              }));
         Jest.test("Part 1 - Sample Data", (function (param) {
                 return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
               }));

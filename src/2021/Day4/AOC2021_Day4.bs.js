@@ -4,7 +4,9 @@
 var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
+var Belt_SetInt = require("rescript/lib/js/belt_SetInt.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
+var Array2D$AdventOfCode = require("../../Array2D.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -24,13 +26,41 @@ function make$1(lines) {
                 return Belt_Array.map(Belt_Array.keep(x.split(" "), (function (s) {
                                   return s.length > 0;
                                 })), (function (s) {
-                              return Belt_Int.fromString(s.trim());
+                              return Belt_Option.getExn(Belt_Int.fromString(s.trim()));
                             }));
               }));
 }
 
+function match(candidates, match_keys) {
+  var can_set = Belt_SetInt.fromArray(candidates);
+  var keys_set = Belt_SetInt.fromArray(match_keys);
+  if (Belt_SetInt.subset(keys_set, can_set)) {
+    return Belt_SetInt.toArray(can_set);
+  }
+  
+}
+
+function solve(t, match_keys) {
+  var helper = function (t, iy) {
+    if (iy < Array2D$AdventOfCode.lengthY(t)) {
+      return Belt_Option.flatMap(Array2D$AdventOfCode.getYEquals(t, iy), (function (row) {
+                    var matched = match(row, match_keys);
+                    if (matched !== undefined) {
+                      return matched;
+                    } else {
+                      return helper(t, iy + 1 | 0);
+                    }
+                  }));
+    }
+    
+  };
+  return helper(t, 0);
+}
+
 var Board = {
-  make: make$1
+  make: make$1,
+  match: match,
+  solve: solve
 };
 
 function make$2(lines) {

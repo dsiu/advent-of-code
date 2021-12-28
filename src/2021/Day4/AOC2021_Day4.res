@@ -11,13 +11,35 @@ module Drawn = {
 module Board = {
   type t = Array2D.t<int>
 
-  let make = lines => {
+  let make = (lines): t => {
     lines->Array.map(x =>
       x
       ->Js.String2.split(" ")
       ->Array.keep(s => s->Js.String2.length(_) > 0)
-      ->Array.map(s => s->Js.String2.trim->Int.fromString)
+      ->Array.map(s => s->Js.String2.trim->Int.fromString->Option.getExn)
     )
+  }
+
+  let match = (candidates, match_keys) => {
+    let can_set = candidates->Set.Int.fromArray
+    let keys_set = match_keys->Set.Int.fromArray
+    Set.Int.subset(keys_set, can_set) ? Some(can_set->Set.Int.toArray) : None
+  }
+
+  let solve = (t, match_keys) => {
+    let rec helper = (t, iy) => {
+      iy < t->Array2D.lengthY
+        ? t
+          ->Array2D.getYEquals(iy)
+          ->Option.flatMap(row => {
+            switch row->match(_, match_keys) {
+            | Some(matched) => Some(matched)
+            | None => helper(t, iy + 1)
+            }
+          })
+        : None
+    }
+    helper(t, 0)
   }
 }
 
