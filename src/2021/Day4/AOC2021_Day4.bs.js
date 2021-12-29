@@ -88,7 +88,7 @@ function dump(t) {
               }));
 }
 
-function solve$1(t, draws) {
+function solvePart1(t, draws) {
   var _i = 5;
   var limit = draws.length;
   while(true) {
@@ -120,10 +120,51 @@ function solve$1(t, draws) {
   };
 }
 
+function solvePart2(t, draws) {
+  var _t = t;
+  var _i = 5;
+  var limit = draws.length;
+  while(true) {
+    var i = _i;
+    var t$1 = _t;
+    if (i > limit) {
+      return ;
+    }
+    var keys = Belt_Array.slice(draws, 0, i);
+    var results = Belt_Array.keepMap(t$1, (function(keys){
+        return function (__x) {
+          return solve(__x, keys);
+        }
+        }(keys)));
+    var results_not = Belt_Array.keepMap(t$1, (function(keys){
+        return function (b) {
+          var match = solve(b, keys);
+          if (match !== undefined) {
+            return ;
+          } else {
+            return b;
+          }
+        }
+        }(keys)));
+    var match = results.length;
+    var match$1 = results_not.length;
+    if (match === 1 && match$1 === 0) {
+      return [
+              Belt_Option.getExn(Belt_Array.get(draws, i - 1 | 0)),
+              Belt_Array.get(results, 0)
+            ];
+    }
+    _i = i + 1 | 0;
+    _t = results_not;
+    continue ;
+  };
+}
+
 var Boards = {
   make: make$2,
   dump: dump,
-  solve: solve$1
+  solvePart1: solvePart1,
+  solvePart2: solvePart2
 };
 
 function parse(data) {
@@ -138,17 +179,22 @@ function parse(data) {
         ];
 }
 
-function solvePart1(data) {
+function solvePart1$1(data) {
   var match = parse(data);
-  var match$1 = Belt_Option.getExn(solve$1(match[1], match[0]));
+  var match$1 = Belt_Option.getExn(solvePart1(match[1], match[0]));
   var add = function (x, y) {
     return x + y | 0;
   };
   return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, add));
 }
 
-function solvePart2(data) {
-  return 2;
+function solvePart2$1(data) {
+  var match = parse(data);
+  var match$1 = Belt_Option.getExn(solvePart2(match[1], match[0]));
+  var add = function (x, y) {
+    return x + y | 0;
+  };
+  return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, add));
 }
 
 exports.log = log;
@@ -156,6 +202,6 @@ exports.Draws = Draws;
 exports.Board = Board;
 exports.Boards = Boards;
 exports.parse = parse;
-exports.solvePart1 = solvePart1;
-exports.solvePart2 = solvePart2;
+exports.solvePart1 = solvePart1$1;
+exports.solvePart2 = solvePart2$1;
 /* No side effect */

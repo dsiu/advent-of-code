@@ -152,9 +152,14 @@ describe("2020 Day4", (function () {
                 expect(result).toEqual(41503);
                 
               }));
+        test("Part 2 - Sample Data", (function () {
+                var result = AOC2021_Day4$AdventOfCode.solvePart2(AOC2021_Day4_Data_Sample$AdventOfCode.data);
+                expect(result).toEqual(1924);
+                
+              }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day4$AdventOfCode.solvePart2(AOC2021_Day4_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(3178);
                 
               }));
         

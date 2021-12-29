@@ -71,7 +71,7 @@ module Boards = {
 
   let dump = t => t->Array.forEach(Js.log)
 
-  let solve = (t, draws) => {
+  let solvePart1 = (t, draws) => {
     let rec helper = (t, ds, i, limit) => {
       i <= limit
         ? {
@@ -81,6 +81,31 @@ module Boards = {
             | 0 => helper(t, ds, i + 1, limit)
             | 1 => Some(draws->Array.get(i - 1)->Option.getExn, results[0])
             | _ => raise(Not_found)
+            }
+          }
+        : None
+    }
+
+    helper(t, draws, 5, draws->Array.length)
+  }
+
+  let solvePart2 = (t, draws) => {
+    let rec helper = (t, ds, i, limit) => {
+      i <= limit
+        ? {
+            let keys = draws->Array.slice(~offset=0, ~len=i)
+            let results = t->Array.keepMap(Board.solve(_, keys))
+
+            let results_not = t->Array.keepMap(b => {
+              switch b->Board.solve(keys) {
+              | Some(_) => None
+              | None => Some(b)
+              }
+            })
+
+            switch (results->Array.length, results_not->Array.length) {
+            | (1, 0) => Some(draws->Array.get(i - 1)->Option.getExn, results[0])
+            | (_, _) => helper(results_not, ds, i + 1, limit)
             }
           }
         : None
@@ -104,12 +129,14 @@ let parse = data => {
 
 let solvePart1 = data => {
   let (draws, boards) = data->parse
-  let (last_key, unmatched) = boards->Boards.solve(draws)->Option.getExn
+  let (last_key, unmatched) = boards->Boards.solvePart1(draws)->Option.getExn
   let add = (x, y) => x + y
   last_key * unmatched->Option.getExn->Array.reduce(0, add)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let (draws, boards) = data->parse
+  let (last_key, unmatched) = boards->Boards.solvePart2(draws)->Option.getExn
+  let add = (x, y) => x + y
+  last_key * unmatched->Option.getExn->Array.reduce(0, add)
 }
