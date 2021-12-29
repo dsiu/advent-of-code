@@ -31,7 +31,7 @@ describe("2020 DayX", () => {
 
   test("Part 2 - Solve", () => {
     let result = AOC2021_Day2.solvePart2(data)
-    let expected = 2
+    let expected = 1971095320
 
     expect(result) |> toEqual(expected)
   })
