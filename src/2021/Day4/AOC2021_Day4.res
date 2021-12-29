@@ -21,6 +21,7 @@ module Board = {
     )
   }
 
+  // determines if all all int in candidates exist in match_draws
   let match = (candidates, match_draws) => {
     let can_set = candidates->Set.Int.fromArray
     let draws_set = match_draws->Set.Int.fromArray
@@ -35,7 +36,7 @@ module Board = {
         ? t
           ->getter(i)
           ->Option.flatMap(row => {
-            switch row->match(_, match_draws) {
+            switch row->match(match_draws) {
             | Some(matched) => Some(matched)
             | None => helper(t, i + 1, getter, limit)
             }
@@ -46,16 +47,13 @@ module Board = {
     let matchY = helper(t, 0, Array2D.getYEquals, t->Array2D.lengthY)
     let matchX = helper(t, 0, Array2D.getXEquals, t->Array2D.lengthX)
 
-    let unmarked = (t, m) => {
+    let remove_marked = (t, m) => {
       Set.Int.diff(t->Array2D.flatten->Set.Int.fromArray, m->Set.Int.fromArray)->Set.Int.toArray
     }
 
     switch (matchX, matchY) {
     | (None, None) => None
-    | (Some(_), None)
-    | (None, Some(_))
-    | (Some(_), Some(_)) =>
-      unmarked(t, match_draws)->Some
+    | (_, _) => remove_marked(t, match_draws)->Some
     }
   }
 }
@@ -65,7 +63,7 @@ module Boards = {
 
   let make = lines => {
     lines->Array.map(b => {
-      b->splitNewline->Array.map(Js.String2.trim)->Board.make
+      b->splitNewline(_)->Array.map(Js.String2.trim)->Board.make
     })
   }
 
@@ -116,12 +114,7 @@ module Boards = {
 }
 
 let parse = data => {
-  let lines =
-    data
-    ->splitDoubleNewline
-    ->Array.map(x => {
-      x->Js.String2.trim
-    })
+  let lines = data->splitDoubleNewline->Array.map(Js.String2.trim)
   let draws = lines[0]->Option.getExn->Draws.make
   let boards = lines->Array.sliceToEnd(1)->Boards.make
   (draws, boards)
@@ -130,13 +123,11 @@ let parse = data => {
 let solvePart1 = data => {
   let (draws, boards) = data->parse
   let (last_key, unmatched) = boards->Boards.solvePart1(draws)->Option.getExn
-  let add = (x, y) => x + y
   last_key * unmatched->Option.getExn->Array.reduce(0, add)
 }
 
 let solvePart2 = data => {
   let (draws, boards) = data->parse
   let (last_key, unmatched) = boards->Boards.solvePart2(draws)->Option.getExn
-  let add = (x, y) => x + y
   last_key * unmatched->Option.getExn->Array.reduce(0, add)
 }

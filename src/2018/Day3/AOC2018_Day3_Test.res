@@ -40,8 +40,9 @@ describe("2018 Day3", () => {
       expect(result) |> toEqual(390)
     })
 
-    let add = (x, y) => x + y
-    let times = (x, y) => x * y
+    let add = Utils.add
+    let mul = Utils.mul
+
     test("fabric matrix - single value per point +", () => {
       let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(add)
       let result1 = test_fab->Fabric.getPoint(~x=1, ~y=1)
@@ -50,14 +51,14 @@ describe("2018 Day3", () => {
     })
 
     test("fabric matrix - single value per point *", () => {
-      let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(times)
+      let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(mul)
       let result1 = test_fab->Fabric.getPoint(~x=2, ~y=2)
       let result2 = test_fab->Fabric.getPoint(~x=4, ~y=6)
       expect((result1, result2)) |> toEqual((Some([4]), Some([24])))
     })
 
     test("fabric matrix - multiple value per point +/*", () => {
-      let test_fab = Fabric.make(~w=15, ~h=15)->Fabric.fill(add)->Fabric.fill(times)
+      let test_fab = Fabric.make(~w=15, ~h=15)->Fabric.fill(add)->Fabric.fill(mul)
       let result1 = test_fab->Fabric.getPoint(~x=9, ~y=8)
       let result2 = test_fab->Fabric.getPoint(~x=2, ~y=5)
       expect((result1, result2)) |> toEqual((Some([17, 72]), Some([7, 10])))

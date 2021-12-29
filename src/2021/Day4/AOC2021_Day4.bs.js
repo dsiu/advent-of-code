@@ -58,11 +58,11 @@ function solve(t, match_draws) {
   };
   var matchY = helper(t, 0, Array2D$AdventOfCode.getYEquals, Array2D$AdventOfCode.lengthY(t));
   var matchX = helper(t, 0, Array2D$AdventOfCode.getXEquals, Array2D$AdventOfCode.lengthX(t));
-  var unmarked = function (t, m) {
+  var remove_marked = function (t, m) {
     return Belt_SetInt.toArray(Belt_SetInt.diff(Belt_SetInt.fromArray(Array2D$AdventOfCode.flatten(t)), Belt_SetInt.fromArray(m)));
   };
   if (matchX !== undefined || matchY !== undefined) {
-    return unmarked(t, match_draws);
+    return remove_marked(t, match_draws);
   }
   
 }
@@ -168,8 +168,8 @@ var Boards = {
 };
 
 function parse(data) {
-  var lines = Belt_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), (function (x) {
-          return x.trim();
+  var lines = Belt_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), (function (prim) {
+          return prim.trim();
         }));
   var draws = make(Belt_Option.getExn(Belt_Array.get(lines, 0)));
   var boards = make$2(Belt_Array.sliceToEnd(lines, 1));
@@ -182,19 +182,13 @@ function parse(data) {
 function solvePart1$1(data) {
   var match = parse(data);
   var match$1 = Belt_Option.getExn(solvePart1(match[1], match[0]));
-  var add = function (x, y) {
-    return x + y | 0;
-  };
-  return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, add));
+  return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, Utils$AdventOfCode.add));
 }
 
 function solvePart2$1(data) {
   var match = parse(data);
   var match$1 = Belt_Option.getExn(solvePart2(match[1], match[0]));
-  var add = function (x, y) {
-    return x + y | 0;
-  };
-  return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, add));
+  return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, Utils$AdventOfCode.add));
 }
 
 exports.log = log;

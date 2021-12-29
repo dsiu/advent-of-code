@@ -3,6 +3,7 @@
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Utils$AdventOfCode = require("../../Utils.bs.js");
 var AOC2018_Day3$AdventOfCode = require("./AOC2018_Day3.bs.js");
 
 Jest.describe("2018 Day3", (function (param) {
@@ -39,14 +40,8 @@ Jest.describe("2018 Day3", (function (param) {
                                       ]));
                               return Jest.Expect.toEqual(390, Jest.Expect.expect(result));
                             }));
-                      var add = function (x, y) {
-                        return x + y | 0;
-                      };
-                      var times = function (x, y) {
-                        return Math.imul(x, y);
-                      };
                       Jest.test("fabric matrix - single value per point +", (function (param) {
-                              var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(10, 10), add);
+                              var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(10, 10), Utils$AdventOfCode.add);
                               var result1 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 1, 1);
                               var result2 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 3, 5);
                               return Jest.Expect.toEqual([
@@ -58,7 +53,7 @@ Jest.describe("2018 Day3", (function (param) {
                                             ]));
                             }));
                       Jest.test("fabric matrix - single value per point *", (function (param) {
-                              var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(10, 10), times);
+                              var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(10, 10), Utils$AdventOfCode.mul);
                               var result1 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 2, 2);
                               var result2 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 4, 6);
                               return Jest.Expect.toEqual([
@@ -70,7 +65,7 @@ Jest.describe("2018 Day3", (function (param) {
                                             ]));
                             }));
                       Jest.test("fabric matrix - multiple value per point +/*", (function (param) {
-                              var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(15, 15), add), times);
+                              var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(15, 15), Utils$AdventOfCode.add), Utils$AdventOfCode.mul);
                               var result1 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 9, 8);
                               var result2 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 2, 5);
                               return Jest.Expect.toEqual([
