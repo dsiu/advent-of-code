@@ -2,12 +2,7 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-let parse = data =>
-  data
-  ->splitNewline
-  ->Array.map(x => {
-    x->Js.String2.trim
-  })
+let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 
 let solvePart1 = data => {
   data->ignore

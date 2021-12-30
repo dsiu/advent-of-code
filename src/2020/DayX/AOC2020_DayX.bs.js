@@ -10,8 +10,8 @@ function log(prim) {
 }
 
 function parse(data) {
-  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                return x.trim();
+  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
+                return prim.trim();
               }));
 }
 
