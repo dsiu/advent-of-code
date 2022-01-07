@@ -4,7 +4,7 @@ open Jest2
 let data = AOC2021_Day4_Data.data
 let sampleData = AOC2021_Day4_Data_Sample.data
 
-describe("2020 Day4", () => {
+describe("2021 Day4", () => {
   describe("board", () => {
     open AOC2021_Day4
     let b = `14 21 17 24  4

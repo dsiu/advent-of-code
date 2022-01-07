@@ -7,7 +7,7 @@ open Jest2
 let data = AOC2021_Day5_Data.data
 let sampleData = AOC2021_Day5_Data_Sample.data
 
-describe("2020 DayX", () => {
+describe("2021 Day5", () => {
   test("Part 1 - Sample Data", () => {
     let result = AOC2021_Day5.solvePart1(sampleData)
     let expected = 5

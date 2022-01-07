@@ -6,7 +6,7 @@ var AOC2021_Day2$AdventOfCode = require("./AOC2021_Day2.bs.js");
 var AOC2021_Day2_Data$AdventOfCode = require("./AOC2021_Day2_Data.bs.js");
 var AOC2021_Day2_Data_Sample$AdventOfCode = require("./AOC2021_Day2_Data_Sample.bs.js");
 
-Jest.describe("2020 DayX", (function (param) {
+Jest.describe("2021 Day2", (function (param) {
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2021_Day2$AdventOfCode.solvePart1(AOC2021_Day2_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(150, Jest.Expect.expect(result));

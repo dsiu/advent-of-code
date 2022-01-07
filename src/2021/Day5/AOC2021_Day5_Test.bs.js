@@ -6,7 +6,7 @@ var AOC2021_Day5$AdventOfCode = require("./AOC2021_Day5.bs.js");
 var AOC2021_Day5_Data$AdventOfCode = require("./AOC2021_Day5_Data.bs.js");
 var AOC2021_Day5_Data_Sample$AdventOfCode = require("./AOC2021_Day5_Data_Sample.bs.js");
 
-describe("2020 DayX", (function () {
+describe("2021 Day5", (function () {
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2021_Day5$AdventOfCode.solvePart1(AOC2021_Day5_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(5);
