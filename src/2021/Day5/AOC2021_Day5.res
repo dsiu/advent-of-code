@@ -78,7 +78,7 @@ module Line = {
         })
         points.contents
       }
-    | Diagonal(l) => []
+    | Diagonal(_) => []
     | _ => raise(Not_found)
     }
   }
