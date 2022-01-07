@@ -78,6 +78,10 @@ let minIntInArray = xs => {
   sorted->Array.getExn(0)
 }
 
+let flatten = (xs: array<array<'a>>) => {
+  xs->Array.reduce([], (a, x) => Array.concat(a, x))
+}
+
 // Unsigned Int conversion
 let int32ToUint32 = x => {
   open Js.TypedArray2

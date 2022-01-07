@@ -151,6 +151,10 @@ function minIntInArray(xs) {
   return Belt_Array.getExn(sorted, 0);
 }
 
+function flatten(xs) {
+  return Belt_Array.reduce(xs, [], Belt_Array.concat);
+}
+
 function int32ToUint32(x) {
   return new Uint32Array([x])[0];
 }
@@ -205,6 +209,7 @@ exports.join = join;
 exports.sumRange = sumRange;
 exports.maxIntInArray = maxIntInArray;
 exports.minIntInArray = minIntInArray;
+exports.flatten = flatten;
 exports.int32ToUint32 = int32ToUint32;
 exports.base2 = base2;
 exports.intFromStringExn = intFromStringExn;
