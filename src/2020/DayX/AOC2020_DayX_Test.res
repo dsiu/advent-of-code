@@ -22,7 +22,7 @@ describe("2020 DayX", () => {
     expect(result) |> toEqual(expected)
   })
 
-  test("Part 1 - Sample Data", () => {
+  test("Part 2 - Sample Data", () => {
     let result = AOC2020_DayX.solvePart2(sampleData)
     let expected = 2
 
