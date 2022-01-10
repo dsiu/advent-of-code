@@ -9,31 +9,29 @@ let sampleData = AOC2021_Day7_Data_Sample.data
 
 describe("2021 Day7", () => {
   test("Part 1 - Sample Data", () => {
-    // let result = AOC2021_Day7.solvePart1(sampleData)
-    let result = 1
-    let expected = 1
+    let result = AOC2021_Day7.solvePart1(sampleData)
+    let expected = 37
 
     expect(result) |> toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
-    // let result = AOC2021_Day7.solvePart1(data)
-    let result = 1
-    let expected = 1
+    let result = AOC2021_Day7.solvePart1(data)
+    let expected = 331067
 
     expect(result) |> toEqual(expected)
   })
 
   test("Part 2 - Sample Data", () => {
     let result = AOC2021_Day7.solvePart2(sampleData)
-    let expected = 2
+    let expected = 168
 
     expect(result) |> toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2021_Day7.solvePart2(data)
-    let expected = 2
+    let expected = 92881128
 
     expect(result) |> toEqual(expected)
   })
