@@ -2,7 +2,7 @@
 'use strict';
 
 
-var data = "";
+var data = "0,3,6";
 
 exports.data = data;
 /* No side effect */
