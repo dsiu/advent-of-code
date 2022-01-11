@@ -1,5 +1,4 @@
 open Belt
-open Utils
 let log = Js.Console.log
 module Log = unpack(JS_Debug.make(__MODULE__))
 
