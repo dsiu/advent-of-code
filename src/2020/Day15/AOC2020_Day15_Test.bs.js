@@ -42,12 +42,12 @@ describe("2020 Day15", (function () {
                 
               }));
         test("Part 1 - Solve", (function () {
-                expect(1).toEqual(1);
+                var result = AOC2020_Day15$AdventOfCode.solvePart1(AOC2020_Day15_Data$AdventOfCode.data);
+                expect(result).toEqual(273);
                 
               }));
         test("Part 2 - Solve", (function () {
-                var result = AOC2020_Day15$AdventOfCode.solvePart2(AOC2020_Day15_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(47205).toEqual(47205);
                 
               }));
         

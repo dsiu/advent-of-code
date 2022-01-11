@@ -1,6 +1,7 @@
 open Belt
 open Utils
 let log = Js.Console.log
+module Log = unpack(JS_Debug.make(__MODULE__))
 
 module Appear = {
   type t = array<int>
@@ -11,7 +12,7 @@ module Appear = {
     | 0
     | 1 =>
       Some(0)
-    | _ => Some(t[len - 1]->Option.getExn - t[len - 2]->Option.getExn)
+    | _ => Some(t->Array.getUnsafe(len - 1) - t->Array.getUnsafe(len - 2))
     }
   }
 
@@ -19,18 +20,19 @@ module Appear = {
     let len = t->Array.length
     switch len {
     | 0 => [x]
-    | 1 => [t->Array.getExn(0), x]
-    | _ => [t->Array.getExn(len - 1), x]
+    | 1 => [t->Array.getUnsafe(0), x]
+    | _ => [t->Array.getUnsafe(len - 1), x]
     }
   }
 }
 
 let solve = (xs, total_turn) => {
-  let spoken = xs->Array.reduceWithIndex(Map.Int.empty, (a, x, i) => a->Map.Int.set(x, [i + 1]))
+  let spoken = xs->Array.reduceWithIndexU(Map.Int.empty, (. a, x, i) => a->Map.Int.set(x, [i + 1]))
 
   let len = xs->Array.length
-  let rec inner = (spoken, last_num, this_turn, total_turn) => {
-    Js.log2("----- turn", this_turn)
+  let rec inner = (spoken, last_num, this_turn: int, total_turn) => {
+    Log.debug(this_turn->Int.toString)
+
     //    Js.log2("last_num", last_num)
     this_turn > total_turn
       ? last_num
@@ -64,4 +66,5 @@ let solvePart1 = data => {
 
 let solvePart2 = data => {
   data->parse->solve(30000000)
+  //  data->parse->solve(300000)
 }
