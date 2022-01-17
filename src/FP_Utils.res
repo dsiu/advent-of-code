@@ -16,5 +16,6 @@ let flatMapArray: (array<'a>, 'a => array<'b>) => array<'b> = (xs, f) => {
   Array.reduce(Array.map(xs, f), [], Array.concat)
 }
 
+// g(f(x))
 let composeU: ((. 'a) => 'b, (. 'b) => 'c, 'a) => 'c = (f, g, x) => g(. f(. x))
 let compose: ('a => 'b, 'b => 'c, 'a) => 'c = (f, g, x) => x->f->g

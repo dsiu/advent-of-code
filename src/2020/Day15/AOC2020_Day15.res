@@ -64,6 +64,6 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->parse->solve(30000000)
+  data->parse->solve(30_000_000)
   //  data->parse->solve(300000)
 }

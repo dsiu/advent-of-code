@@ -5,7 +5,7 @@ let log = Js.Console.log
 let findEarliestBus = ((time_stamp, bus_numbers)) => {
   bus_numbers
   ->Array.map(x => (x, x - mod(time_stamp, x)))
-  ->Array.reduce((0, 10000), ((ats, amin), (ts, min)) => {
+  ->Array.reduce((0, 10_000), ((ats, amin), (ts, min)) => {
     min < amin ? (ts, min) : (ats, amin)
   })
 }

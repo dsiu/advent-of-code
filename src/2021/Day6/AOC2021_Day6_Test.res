@@ -17,7 +17,7 @@ describe("2021 Day6", () => {
 
   test("Part 1 - Solve", () => {
     let result = AOC2021_Day6.solvePart1(data)
-    let expected = 379414->Belt.Int.toString
+    let expected = 379_414->Belt.Int.toString
 
     expect(result) |> toEqual(expected)
   })

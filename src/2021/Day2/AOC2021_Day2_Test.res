@@ -17,7 +17,7 @@ describe("2021 Day2", () => {
 
   test("Part 1 - Solve", () => {
     let result = AOC2021_Day2.solvePart1(data)
-    let expected = 1804520
+    let expected = 1_804_520
 
     expect(result) |> toEqual(expected)
   })
@@ -31,7 +31,7 @@ describe("2021 Day2", () => {
 
   test("Part 2 - Solve", () => {
     let result = AOC2021_Day2.solvePart2(data)
-    let expected = 1971095320
+    let expected = 1_971_095_320
 
     expect(result) |> toEqual(expected)
   })
