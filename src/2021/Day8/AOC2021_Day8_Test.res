@@ -7,7 +7,7 @@ open! Expect.Operators
 let data = AOC2021_Day8_Data.data
 let sampleData = AOC2021_Day8_Data_Sample.data
 
-describe("2020 Day16", () => {
+describe("2021 Day8", () => {
   test("Part 1 - Sample Data", () => {
     let result = AOC2021_Day8.solvePart1(sampleData)
     let expected = 26

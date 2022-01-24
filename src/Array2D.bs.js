@@ -90,6 +90,23 @@ function mapWithIndex(t, f) {
               }));
 }
 
+function reduce(t, a, f) {
+  return Belt_Array.reduce(t, a, (function (acc, x) {
+                return Belt_Array.reduce(x, acc, f);
+              }));
+}
+
+function reduceWithIndex(t, a, f) {
+  return Belt_Array.reduceWithIndex(t, a, (function (acc, xs, yi) {
+                return Belt_Array.reduceWithIndex(xs, acc, (function (acc, x, xi) {
+                              return Curry._3(f, acc, x, [
+                                          xi,
+                                          yi
+                                        ]);
+                            }));
+              }));
+}
+
 function flatten(t) {
   var ret = [];
   for(var i = 0 ,i_finish = t.length; i < i_finish; ++i){
@@ -137,6 +154,8 @@ exports.getXEquals = getXEquals;
 exports.getYEquals = getYEquals;
 exports.map = map;
 exports.mapWithIndex = mapWithIndex;
+exports.reduce = reduce;
+exports.reduceWithIndex = reduceWithIndex;
 exports.flatten = flatten;
 exports.crop = crop;
 exports.eq = eq;

@@ -28,6 +28,10 @@ let map: (t<'a>, 'a => 'b) => t<'b>
 
 let mapWithIndex: (t<'a>, ((int, int), 'a) => 'b) => t<'b>
 
+let reduce: (t<'b>, 'a, ('a, 'b) => 'a) => 'a
+
+let reduceWithIndex: (t<'a>, 'b, ('b, 'a, (int, int)) => 'b) => 'b
+
 let flatten: t<'a> => array<'a>
 
 let crop: (t<'a>, (int, int), ~len_x: int, ~len_y: int) => t<'a>

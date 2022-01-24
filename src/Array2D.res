@@ -68,6 +68,16 @@ let mapWithIndex = (t, f) => {
   })
 }
 
+let reduce = (t, a, f) => {
+  t->Array.reduce(a, (acc, x) => x->Array.reduce(acc, f))
+}
+
+let reduceWithIndex = (t, a, f) => {
+  t->Array.reduceWithIndex(a, (acc, xs, yi) =>
+    xs->Array.reduceWithIndex(acc, (acc, x, xi) => f(acc, x, (xi, yi)))
+  )
+}
+
 let flatten = t => {
   let ret = ref([])
   for i in 0 to t->lengthY - 1 {
