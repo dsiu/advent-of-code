@@ -1,9 +1,6 @@
 open Jest2
 open Belt
 
-let data = AOC2020_Day4_Data.data
-let testData = AOC2020_Day4_Data_Sample.data
-
 describe("make", () => {
   //  open Expect
   //  open! Expect.Operators

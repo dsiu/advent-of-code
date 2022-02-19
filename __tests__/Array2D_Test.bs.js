@@ -4,8 +4,6 @@
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Jest2$AdventOfCode = require("../interop/Jest2.bs.js");
 var Array2D$AdventOfCode = require("../src/Array2D.bs.js");
-var AOC2020_Day4_Data$AdventOfCode = require("../src/2020/Day4/AOC2020_Day4_Data.bs.js");
-var AOC2020_Day4_Data_Sample$AdventOfCode = require("../src/2020/Day4/AOC2020_Day4_Data_Sample.bs.js");
 
 describe("make", (function () {
         test("make - int", (function () {
@@ -508,10 +506,4 @@ describe("keep / map / getXYEquals / crop", (function () {
                     }));
       }));
 
-var data = AOC2020_Day4_Data$AdventOfCode.data;
-
-var testData = AOC2020_Day4_Data_Sample$AdventOfCode.data;
-
-exports.data = data;
-exports.testData = testData;
 /*  Not a pure module */

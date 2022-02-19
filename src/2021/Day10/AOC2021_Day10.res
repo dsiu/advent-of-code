@@ -2,6 +2,7 @@ open Belt
 open Utils
 let log = Js.Console.log
 
+module Stack = Stack_Array
 // corrupted = closes with wrong character
 // eg: (], {()()()>, (((()))}
 
@@ -27,6 +28,16 @@ module Token = {
     }
   }
 
+  let matches = (~left: t, ~right: t) => {
+    switch (left, right) {
+    | (#"(", #")")
+    | (#"[", #"]")
+    | (#"{", #"}")
+    | (#"<", #">")
+    | _ => false
+    }
+  }
+
   let make = (c): t => {
     switch c {
     | "(" => #"("
@@ -45,6 +56,10 @@ module Token = {
 module ParseTree = {
   type token_at = TokenAt(Token.t, int)
 
+  let tokenize = (xs): array<token_at> => {
+    xs->Array.mapWithIndex((i, x) => TokenAt(x->Token.make, i))
+  }
+
   type rec t =
     | Empty
     | Node({l: token_at, tl: list<t>, r: token_at})
@@ -56,8 +71,12 @@ module ParseTree = {
     }
   }
 
-  let makeNode = (l, lp, r, rp) => {
-    Node({l: TokenAt(l->Token.make, lp), tl: list{Empty}, r: TokenAt(r->Token.make, rp)})
+  let makeNode = (l, r) => {
+    Node({l: l, tl: list{Empty}, r: r})
+  }
+
+  let makeNodeFromStr = (l, li, r, ri) => {
+    makeNode(TokenAt(l->Token.make, li), TokenAt(r->Token.make, ri))
   }
 
   let addChildren = (t, children) => {
@@ -65,6 +84,28 @@ module ParseTree = {
     | Node({l, tl: _, r}) => Node({l: l, tl: children, r: r})
     | Empty => Empty
     }
+  }
+
+  let makeParseTree = xs => {
+    let rec inner = (inputs, idx, tree, stack) => {
+      switch inputs {
+      | list{} => tree
+      | list{this, ...rest} => {
+          let last = stack->Stack.peek->Option.getExn
+          let TokenAt(last_token, _) = last
+          let TokenAt(this_token, _) = this
+
+          Token.matches(~left=last_token, ~right=this_token)
+            ? {
+                inner(rest, idx + 1, makeNode(last, this), stack)
+              }
+            : {
+                inner(rest, idx + 1, tree, stack->Stack.push(this))
+              }
+        }
+      }
+    }
+    inner(xs->tokenize->List.fromArray, 0, Empty, [])
   }
 }
 
@@ -74,11 +115,11 @@ let parse = data =>
 let solvePart1 = data => {
   data->ignore
   //  data->parse->Js.log
-  let parent = ParseTree.makeNode("(", 1, ")", 2)
+  let parent = ParseTree.makeNodeFromStr("(", 1, ")", 2)
   let t =
     parent->ParseTree.addChildren(list{
-      ParseTree.makeNode("[", 3, "]", 4),
-      ParseTree.makeNode("<", 5, ">", 6),
+      ParseTree.makeNodeFromStr("[", 3, "]", 4),
+      ParseTree.makeNodeFromStr("<", 5, ">", 6),
     })
 
   t

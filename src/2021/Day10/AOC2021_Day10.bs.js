@@ -4,9 +4,11 @@
 var Curry = require("rescript/lib/js/curry.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 var FP_Utils$AdventOfCode = require("../../FP_Utils.bs.js");
+var Stack_Array$AdventOfCode = require("../../Stack_Array.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -29,6 +31,10 @@ function isCloseBracket(token) {
   } else {
     return token === ")";
   }
+}
+
+function matches(left, right) {
+  return false;
 }
 
 function make(c) {
@@ -61,8 +67,18 @@ function make(c) {
 var Token = {
   isOpenBracket: isOpenBracket,
   isCloseBracket: isCloseBracket,
+  matches: matches,
   make: make
 };
+
+function tokenize(xs) {
+  return Belt_Array.mapWithIndex(xs, (function (i, x) {
+                return /* TokenAt */{
+                        _0: make(x),
+                        _1: i
+                      };
+              }));
+}
 
 function map(t, f) {
   if (t) {
@@ -78,21 +94,25 @@ function map(t, f) {
   }
 }
 
-function makeNode(l, lp, r, rp) {
+function makeNode(l, r) {
   return /* Node */{
-          l: /* TokenAt */{
-            _0: make(l),
-            _1: lp
-          },
+          l: l,
           tl: {
             hd: /* Empty */0,
             tl: /* [] */0
           },
-          r: /* TokenAt */{
-            _0: make(r),
-            _1: rp
-          }
+          r: r
         };
+}
+
+function makeNodeFromStr(l, li, r, ri) {
+  return makeNode(/* TokenAt */{
+              _0: make(l),
+              _1: li
+            }, /* TokenAt */{
+              _0: make(r),
+              _1: ri
+            });
 }
 
 function addChildren(t, children) {
@@ -107,10 +127,42 @@ function addChildren(t, children) {
   }
 }
 
+function makeParseTree(xs) {
+  var _inputs = Belt_List.fromArray(tokenize(xs));
+  var _idx = 0;
+  var _tree = /* Empty */0;
+  var _stack = [];
+  while(true) {
+    var stack = _stack;
+    var tree = _tree;
+    var idx = _idx;
+    var inputs = _inputs;
+    if (!inputs) {
+      return tree;
+    }
+    var rest = inputs.tl;
+    var $$this = inputs.hd;
+    var last = Belt_Option.getExn(Stack_Array$AdventOfCode.peek(stack));
+    if (matches(last._0, $$this._0)) {
+      _tree = makeNode(last, $$this);
+      _idx = idx + 1 | 0;
+      _inputs = rest;
+      continue ;
+    }
+    _stack = Stack_Array$AdventOfCode.push(stack, $$this);
+    _idx = idx + 1 | 0;
+    _inputs = rest;
+    continue ;
+  };
+}
+
 var ParseTree = {
+  tokenize: tokenize,
   map: map,
   makeNode: makeNode,
-  addChildren: addChildren
+  makeNodeFromStr: makeNodeFromStr,
+  addChildren: addChildren,
+  makeParseTree: makeParseTree
 };
 
 function parse(data) {
@@ -122,11 +174,11 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  var parent = makeNode("(", 1, ")", 2);
+  var parent = makeNodeFromStr("(", 1, ")", 2);
   var t = addChildren(parent, {
-        hd: makeNode("[", 3, "]", 4),
+        hd: makeNodeFromStr("[", 3, "]", 4),
         tl: {
-          hd: makeNode("<", 5, ">", 6),
+          hd: makeNodeFromStr("<", 5, ">", 6),
           tl: /* [] */0
         }
       });
@@ -154,7 +206,10 @@ function solvePart2(data) {
   return 2;
 }
 
+var Stack;
+
 exports.log = log;
+exports.Stack = Stack;
 exports.ParseError = ParseError;
 exports.Token = Token;
 exports.ParseTree = ParseTree;
