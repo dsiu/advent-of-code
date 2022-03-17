@@ -4,7 +4,6 @@
 var Curry = require("rescript/lib/js/curry.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
-var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 var FP_Utils$AdventOfCode = require("../../FP_Utils.bs.js");
@@ -16,6 +15,8 @@ function log(prim) {
 }
 
 var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day10-AdventOfCode.ParseError");
+
+var NotSupported = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day10-AdventOfCode.NotSupported");
 
 function isOpenBracket(token) {
   if (token === "{" || token === "[" || token === "<") {
@@ -34,7 +35,17 @@ function isCloseBracket(token) {
 }
 
 function matches(left, right) {
-  return false;
+  if (left === "(") {
+    return right === ")";
+  } else if (left === "<") {
+    return right === ">";
+  } else if (left === "[") {
+    return right === "]";
+  } else if (left === "{") {
+    return right === "}";
+  } else {
+    return false;
+  }
 }
 
 function make(c) {
@@ -64,12 +75,21 @@ function make(c) {
   }
 }
 
+function toString(x) {
+  return x;
+}
+
 var Token = {
   isOpenBracket: isOpenBracket,
   isCloseBracket: isCloseBracket,
   matches: matches,
-  make: make
+  make: make,
+  toString: toString
 };
+
+function tokenAtToString(param) {
+  return "'" + param._0 + "':" + String(param._1);
+}
 
 function tokenize(xs) {
   return Belt_Array.mapWithIndex(xs, (function (i, x) {
@@ -81,107 +101,231 @@ function tokenize(xs) {
 }
 
 function map(t, f) {
-  if (t) {
-    return /* Node */{
-            l: Curry._1(f, t.l),
-            tl: Belt_List.map(t.tl, (function (__x) {
+  if (typeof t === "number") {
+    return /* Empty */0;
+  }
+  if (t.TAG !== /* Node */0) {
+    return {
+            TAG: /* NodeList */1,
+            _0: Belt_List.map(t._0, (function (__x) {
                     return map(__x, f);
-                  })),
+                  }))
+          };
+  }
+  var tl = t.tl;
+  var b1 = t.l;
+  if (typeof tl === "number") {
+    return {
+            TAG: /* Node */0,
+            l: Curry._1(f, b1),
+            tl: /* Empty */0,
             r: Curry._1(f, t.r)
           };
+  }
+  if (tl.TAG !== /* Node */0) {
+    return {
+            TAG: /* Node */0,
+            l: Curry._1(f, b1),
+            tl: map({
+                  TAG: /* NodeList */1,
+                  _0: tl._0
+                }, f),
+            r: Curry._1(f, t.r)
+          };
+  }
+  throw {
+        RE_EXN_ID: NotSupported,
+        _1: "nested nodes",
+        Error: new Error()
+      };
+}
+
+function toString$1(t) {
+  if (typeof t === "number") {
+    return "Empty";
+  }
+  if (t.TAG !== /* Node */0) {
+    return "NodeList:{ " + Belt_List.toArray(Belt_List.map(t._0, toString$1)).join(", ") + " }";
+  }
+  var tl = t.tl;
+  var b1 = t.l;
+  if (typeof tl === "number") {
+    return "Node(" + tokenAtToString(b1) + ", tl: Empty, " + tokenAtToString(t.r) + "})";
   } else {
-    return /* Empty */0;
+    return "Node(" + tokenAtToString(b1) + ", tl: " + toString$1(tl) + ", " + tokenAtToString(t.r) + "})";
   }
 }
 
 function makeNode(l, r) {
-  return /* Node */{
+  return {
+          TAG: /* Node */0,
           l: l,
-          tl: {
-            hd: /* Empty */0,
-            tl: /* [] */0
-          },
+          tl: /* Empty */0,
           r: r
         };
 }
 
 function makeNodeFromStr(l, li, r, ri) {
-  return makeNode(/* TokenAt */{
-              _0: make(l),
-              _1: li
-            }, /* TokenAt */{
-              _0: make(r),
-              _1: ri
-            });
+  return {
+          TAG: /* Node */0,
+          l: /* TokenAt */{
+            _0: make(l),
+            _1: li
+          },
+          tl: /* Empty */0,
+          r: /* TokenAt */{
+            _0: make(r),
+            _1: ri
+          }
+        };
 }
 
-function addChildren(t, children) {
-  if (t) {
-    return /* Node */{
-            l: t.l,
-            tl: children,
-            r: t.r
-          };
+function add(t, children) {
+  if (typeof t === "number") {
+    return children;
+  }
+  if (t.TAG === /* Node */0) {
+    var tl = t.tl;
+    var l = t.l;
+    if (typeof tl === "number") {
+      if (typeof children === "number") {
+        return t;
+      } else if (children.TAG === /* Node */0) {
+        return {
+                TAG: /* NodeList */1,
+                _0: {
+                  hd: t,
+                  tl: {
+                    hd: children,
+                    tl: /* [] */0
+                  }
+                }
+              };
+      } else {
+        return {
+                TAG: /* Node */0,
+                l: l,
+                tl: children,
+                r: t.r
+              };
+      }
+    }
+    if (tl.TAG !== /* Node */0) {
+      return {
+              TAG: /* Node */0,
+              l: l,
+              tl: add({
+                    TAG: /* NodeList */1,
+                    _0: tl._0
+                  }, children),
+              r: t.r
+            };
+    }
+    throw {
+          RE_EXN_ID: NotSupported,
+          _1: "nested nodes",
+          Error: new Error()
+        };
   } else {
-    return /* Empty */0;
+    var tl$1 = t._0;
+    if (typeof children === "number") {
+      return t;
+    } else if (children.TAG === /* Node */0) {
+      return {
+              TAG: /* NodeList */1,
+              _0: Belt_List.concat(tl$1, {
+                    hd: children,
+                    tl: /* [] */0
+                  })
+            };
+    } else {
+      return {
+              TAG: /* NodeList */1,
+              _0: Belt_List.concat(tl$1, children._0)
+            };
+    }
   }
 }
 
 function makeParseTree(xs) {
-  var _inputs = Belt_List.fromArray(tokenize(xs));
-  var _idx = 0;
+  var match = Belt_List.fromArray(tokenize(xs));
+  var match$1;
+  if (match) {
+    match$1 = [
+      match.hd,
+      match.tl
+    ];
+  } else {
+    throw {
+          RE_EXN_ID: ParseError,
+          _1: "empty input",
+          Error: new Error()
+        };
+  }
+  var _inputs = match$1[1];
   var _tree = /* Empty */0;
-  var _stack = [];
+  var _stack = [match$1[0]];
   while(true) {
     var stack = _stack;
     var tree = _tree;
-    var idx = _idx;
     var inputs = _inputs;
     if (!inputs) {
-      return tree;
+      return [
+              tree,
+              stack
+            ];
     }
     var rest = inputs.tl;
     var $$this = inputs.hd;
-    var last = Belt_Option.getExn(Stack_Array$AdventOfCode.peek(stack));
-    if (matches(last._0, $$this._0)) {
-      _tree = makeNode(last, $$this);
-      _idx = idx + 1 | 0;
+    console.log("processing", $$this);
+    console.log("tree", tree);
+    var last = Stack_Array$AdventOfCode.peek(stack);
+    var match$2 = isCloseBracket($$this._0);
+    if (match$2) {
+      if (last !== undefined) {
+        var match$3 = Stack_Array$AdventOfCode.pop(stack);
+        _stack = match$3[1];
+        _tree = add(tree, {
+              TAG: /* Node */0,
+              l: last,
+              tl: /* Empty */0,
+              r: $$this
+            });
+        _inputs = rest;
+        continue ;
+      }
+      _stack = Stack_Array$AdventOfCode.push(stack, $$this);
       _inputs = rest;
       continue ;
     }
     _stack = Stack_Array$AdventOfCode.push(stack, $$this);
-    _idx = idx + 1 | 0;
     _inputs = rest;
     continue ;
   };
 }
 
 var ParseTree = {
+  tokenAtToString: tokenAtToString,
   tokenize: tokenize,
   map: map,
+  toString: toString$1,
   makeNode: makeNode,
   makeNodeFromStr: makeNodeFromStr,
-  addChildren: addChildren,
+  add: add,
   makeParseTree: makeParseTree
 };
 
 function parse(data) {
-  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
+  return FP_Utils$AdventOfCode.flatMapArray(Utils$AdventOfCode.splitNewline(data), (function (param) {
                 return FP_Utils$AdventOfCode.compose((function (prim) {
                               return prim.trim();
                             }), Utils$AdventOfCode.splitChars, param);
               }));
 }
 
-function solvePart1(data) {
+function examples(param) {
   var parent = makeNodeFromStr("(", 1, ")", 2);
-  var t = addChildren(parent, {
-        hd: makeNodeFromStr("[", 3, "]", 4),
-        tl: {
-          hd: makeNodeFromStr("<", 5, ">", 6),
-          tl: /* [] */0
-        }
-      });
+  var t = add(add(parent, makeNodeFromStr("[", 3, "]", 4)), makeNodeFromStr("<", 5, ">", 6));
   map(t, (function (x) {
           console.log(x);
           return x;
@@ -199,6 +343,16 @@ function solvePart1(data) {
                   _1: i
                 };
         }));
+  
+}
+
+function solvePart1(data) {
+  console.log(parse(data), "data");
+  var match = makeParseTree(parse(data));
+  console.log("tree ---");
+  console.log(toString$1(match[0]), "tree");
+  console.log("tree ---");
+  console.log(match[1], "stack");
   return 1;
 }
 
@@ -211,9 +365,11 @@ var Stack;
 exports.log = log;
 exports.Stack = Stack;
 exports.ParseError = ParseError;
+exports.NotSupported = NotSupported;
 exports.Token = Token;
 exports.ParseTree = ParseTree;
 exports.parse = parse;
+exports.examples = examples;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
 /* No side effect */

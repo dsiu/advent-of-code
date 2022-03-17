@@ -10,7 +10,7 @@ function log(prim) {
   
 }
 
-var part1 = AOC2021_Day10$AdventOfCode.solvePart1(AOC2021_Day10_Data_Sample$AdventOfCode.data);
+var part1 = AOC2021_Day10$AdventOfCode.solvePart1(AOC2021_Day10_Data_Sample$AdventOfCode.data2);
 
 console.log("Part 1 Result");
 
@@ -26,9 +26,12 @@ var data = AOC2021_Day10_Data$AdventOfCode.data;
 
 var sampleData = AOC2021_Day10_Data_Sample$AdventOfCode.data;
 
+var sampleData2 = AOC2021_Day10_Data_Sample$AdventOfCode.data2;
+
 exports.log = log;
 exports.data = data;
 exports.sampleData = sampleData;
+exports.sampleData2 = sampleData2;
 exports.part1 = part1;
 exports.part2 = part2;
 /* part1 Not a pure module */

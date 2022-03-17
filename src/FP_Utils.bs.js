@@ -13,8 +13,12 @@ function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
 
-function id(x) {
-  return x;
+function identity(a) {
+  return a;
+}
+
+function eq(x, y) {
+  return x === y;
 }
 
 function composeU(f, g, x) {
@@ -49,7 +53,8 @@ exports.List = List;
 exports.flatMapList = flatMapList;
 exports.$$Array = $$Array;
 exports.flatMapArray = flatMapArray;
-exports.id = id;
+exports.identity = identity;
+exports.eq = eq;
 exports.composeU = composeU;
 exports.compose = compose;
 exports.compose3 = compose3;
