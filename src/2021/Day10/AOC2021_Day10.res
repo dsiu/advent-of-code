@@ -58,17 +58,16 @@ module Token = {
   }
 }
 
+type token_at = TokenAt(Token.t, int)
+let tokenAtToString = (TokenAt(t, i)) => {
+  "'" ++ t->Token.toString ++ "'" ++ ":" ++ i->Int.toString
+}
+
+let tokenize = (xs): array<token_at> => {
+  xs->Array.mapWithIndex((i, x) => TokenAt(x->Token.make, i))
+}
+
 module ParseTree = {
-  type token_at = TokenAt(Token.t, int)
-
-  let tokenAtToString = (TokenAt(t, i)) => {
-    "'" ++ t->Token.toString ++ "'" ++ ":" ++ i->Int.toString
-  }
-
-  let tokenize = (xs): array<token_at> => {
-    xs->Array.mapWithIndex((i, x) => TokenAt(x->Token.make, i))
-  }
-
   type rec t =
     | Empty
     | Node({l: token_at, tl: t, r: token_at})
@@ -109,20 +108,26 @@ module ParseTree = {
     makeNode(TokenAt(l->Token.make, li), TokenAt(r->Token.make, ri))
   }
 
-  let rec add = (t, children) => {
-    switch (t, children) {
-    | (Node({tl: Empty, _}) as n, Node(_) as c) => NodeList(list{n, c})
-    | (Node({l, tl: Empty, r}), NodeList(_) as c) => Node({l: l, tl: c, r: r})
+  let rec add = (a, b) => {
+    switch (a, b) {
+    | (Node({tl: Empty, _}) as n, Node(_) as b) => NodeList(list{n, b})
+    | (Node({l, tl: Empty, r}), NodeList(_) as b) => Node({l: l, tl: b, r: r})
 
-    | (Node({l, tl: NodeList(tl), r}), _ as c) => Node({l: l, tl: add(NodeList(tl), c), r: r})
+    | (Node({l, tl: NodeList(tl), r}), _ as b) => Node({l: l, tl: add(NodeList(tl), b), r: r})
 
     | (Node({tl: Node(_)}), _) => raise(NotSupported("nested nodes"))
 
-    | (NodeList(tl), Node(c)) => NodeList(List.concat(tl, list{Node(c)}))
-    | (NodeList(tl), NodeList(cl)) => NodeList(List.concat(tl, cl))
+    //    | (NodeList(tl), Node(_) as b) => NodeList(List.concat(tl, list{b}))
+    | (NodeList(tl), Node({l, tl: NodeList(btl), r})) =>
+      Node({l: l, tl: NodeList(List.concat(tl, btl)), r: r})
+
+    | (NodeList(tl), Node({l, tl: Empty, r})) => Node({l: l, tl: NodeList(tl), r: r})
+
+    | (NodeList(tl), NodeList(bl)) => NodeList(List.concat(tl, bl))
 
     | (Empty, c) => c
     | (t, Empty) => t
+    | (_, _) => raise(NotSupported("not supported"))
     }
   }
 
@@ -132,7 +137,8 @@ module ParseTree = {
       | list{} => (tree, stack)
       | list{this, ...rest} => {
           Js.log2("processing", this)
-          Js.log2("tree", tree)
+          Js.log2("  tree", tree->toString)
+          Js.log2("  stack", stack)
           let last = stack->Stack.peek
           //          let TokenAt(last_token, _) = last
           let TokenAt(this_token, _) = this
@@ -160,8 +166,46 @@ module ParseTree = {
   }
 }
 
+type parseResult = Corrupted(token_at) | Incomplete(array<token_at>)
+
+let process = xs => {
+  let rec inner = (inputs, stack) => {
+    switch inputs {
+    | list{} => Incomplete(stack)
+    | list{this, ...rest} => {
+        let last = stack->Stack.peek
+        let TokenAt(this_token, _) = this
+
+        switch (this_token->Token.isCloseBracket, last) {
+        | (true, Some(last)) =>
+          let TokenAt(last_token, _) = last
+
+          if Token.matches(~left=last_token, ~right=this_token) {
+            let (_, new_stack) = stack->Stack.pop
+            // check matching?
+            // check if there is last token in stack
+            inner(rest, new_stack)
+          } else {
+            Corrupted(this)
+          }
+        | (true, None)
+        | (false, _) =>
+          inner(rest, stack->Stack.push(this))
+        }
+      }
+    }
+  }
+
+  // push the first token to stack to init
+  let (first, rest) = switch xs->tokenize->List.fromArray {
+  | list{} => raise(ParseError("empty input"))
+  | list{this, ...rest} => (this, rest)
+  }
+  inner(rest, [first])
+}
+
 let parse = data =>
-  data->splitNewline->FP_Utils.flatMapArray(FP_Utils.compose(Js.String2.trim, Utils.splitChars))
+  data->splitNewline->Array.map(FP_Utils.compose(Js.String2.trim, Utils.splitChars))
 
 let examples = () => {
   let parent = ParseTree.makeNodeFromStr("(", 1, ")", 2)
@@ -188,27 +232,72 @@ let examples = () => {
   ->ignore
 }
 
+let getCorruptedScore = (TokenAt(t, _)) => {
+  switch t {
+  | #")" => 3
+  | #"]" => 57
+  | #"}" => 1197
+  | #">" => 25137
+  | _ => raise(NotSupported("not supported"))
+  }
+}
+
+let getIncompleteScore = (TokenAt(t, _)) => {
+  switch t {
+  | #"(" => 1
+  | #"[" => 2
+  | #"{" => 3
+  | #"<" => 4
+  | _ => raise(NotSupported("not supported"))
+  }
+}
+
 let solvePart1 = data => {
-  data->parse->Js.log2("data")
-  let (tree, stack) = data->parse->ParseTree.makeParseTree
+  //  data->parse->Js.log2("data")
 
-  Js.log("tree ---")
-  tree->ParseTree.toString->Js.log2("tree")
-  Js.log("tree ---")
+  let corruptedOnly = r => {
+    switch r {
+    | Corrupted(x) => Some(x)
+    | _ => None
+    }
+  }
 
-  //  tree
-  //  ->ParseTree.map(x => {
-  //    x->ParseTree.toString->Js.log2("tree")
-  //    x
-  //  })
-  //  ->ignore
-
-  stack->Js.log2("stack")
-
-  1
+  data
+  ->parse
+  ->Array.map(process)
+  ->Array.keepMap(corruptedOnly)
+  ->Array.map(getCorruptedScore)
+  ->Array.reduce(0, sum)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let incompleteOnly = r => {
+    switch r {
+    | Incomplete(x) => Some(x)
+    | _ => None
+    }
+  }
+  module BigInt = ReScriptJs.Js.BigInt
+
+  data
+  ->parse
+  ->Array.map(process)
+  ->Array.keepMap(incompleteOnly)
+  ->Array.map(
+    Array.reduce(_, BigInt.fromInt(0), (a, x) =>
+      BigInt.add(BigInt.mul(a, BigInt.fromInt(5)), BigInt.fromInt(x->getIncompleteScore))
+    ),
+  )
+  ->Belt.SortArray.stableSortBy((a, b) => {
+    BigInt.sub(b, a)->BigInt.toFloat > 0.0 ? 1 : -1
+  })
+  ->(xs => {
+    let len = xs->Array.length
+    xs[len / 2]
+  })
+  ->Option.getExn
+  ->BigInt.toString
+  //  ->Array.map(BigInt.toString)
+  //  ->SortArray.Int.stableSort
+  //  ->Js.log2("diu")
 }

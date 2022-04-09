@@ -10,13 +10,13 @@ function log(prim) {
   
 }
 
-var part1 = AOC2021_Day10$AdventOfCode.solvePart1(AOC2021_Day10_Data_Sample$AdventOfCode.data2);
+var part1 = AOC2021_Day10$AdventOfCode.solvePart1(AOC2021_Day10_Data$AdventOfCode.data);
 
 console.log("Part 1 Result");
 
 console.log(part1);
 
-var part2 = AOC2021_Day10$AdventOfCode.solvePart2(AOC2021_Day10_Data_Sample$AdventOfCode.data);
+var part2 = AOC2021_Day10$AdventOfCode.solvePart2(AOC2021_Day10_Data$AdventOfCode.data);
 
 console.log("Part 2 Result");
 

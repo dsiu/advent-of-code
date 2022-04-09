@@ -4,6 +4,8 @@
 var Curry = require("rescript/lib/js/curry.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
+var Belt_SortArray = require("rescript/lib/js/belt_SortArray.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 var FP_Utils$AdventOfCode = require("../../FP_Utils.bs.js");
@@ -180,23 +182,23 @@ function makeNodeFromStr(l, li, r, ri) {
         };
 }
 
-function add(t, children) {
-  if (typeof t === "number") {
-    return children;
+function add(a, b) {
+  if (typeof a === "number") {
+    return b;
   }
-  if (t.TAG === /* Node */0) {
-    var tl = t.tl;
-    var l = t.l;
+  if (a.TAG === /* Node */0) {
+    var tl = a.tl;
+    var l = a.l;
     if (typeof tl === "number") {
-      if (typeof children === "number") {
-        return t;
-      } else if (children.TAG === /* Node */0) {
+      if (typeof b === "number") {
+        return a;
+      } else if (b.TAG === /* Node */0) {
         return {
                 TAG: /* NodeList */1,
                 _0: {
-                  hd: t,
+                  hd: a,
                   tl: {
-                    hd: children,
+                    hd: b,
                     tl: /* [] */0
                   }
                 }
@@ -205,8 +207,8 @@ function add(t, children) {
         return {
                 TAG: /* Node */0,
                 l: l,
-                tl: children,
-                r: t.r
+                tl: b,
+                r: a.r
               };
       }
     }
@@ -217,8 +219,8 @@ function add(t, children) {
               tl: add({
                     TAG: /* NodeList */1,
                     _0: tl._0
-                  }, children),
-              r: t.r
+                  }, b),
+              r: a.r
             };
     }
     throw {
@@ -227,23 +229,45 @@ function add(t, children) {
           Error: new Error()
         };
   } else {
-    var tl$1 = t._0;
-    if (typeof children === "number") {
-      return t;
-    } else if (children.TAG === /* Node */0) {
+    var tl$1 = a._0;
+    if (typeof b === "number") {
+      return a;
+    }
+    if (b.TAG !== /* Node */0) {
       return {
               TAG: /* NodeList */1,
-              _0: Belt_List.concat(tl$1, {
-                    hd: children,
-                    tl: /* [] */0
-                  })
-            };
-    } else {
-      return {
-              TAG: /* NodeList */1,
-              _0: Belt_List.concat(tl$1, children._0)
+              _0: Belt_List.concat(tl$1, b._0)
             };
     }
+    var btl = b.tl;
+    var l$1 = b.l;
+    if (typeof btl === "number") {
+      return {
+              TAG: /* Node */0,
+              l: l$1,
+              tl: {
+                TAG: /* NodeList */1,
+                _0: tl$1
+              },
+              r: b.r
+            };
+    }
+    if (btl.TAG !== /* Node */0) {
+      return {
+              TAG: /* Node */0,
+              l: l$1,
+              tl: {
+                TAG: /* NodeList */1,
+                _0: Belt_List.concat(tl$1, btl._0)
+              },
+              r: b.r
+            };
+    }
+    throw {
+          RE_EXN_ID: NotSupported,
+          _1: "not supported",
+          Error: new Error()
+        };
   }
 }
 
@@ -278,7 +302,8 @@ function makeParseTree(xs) {
     var rest = inputs.tl;
     var $$this = inputs.hd;
     console.log("processing", $$this);
-    console.log("tree", tree);
+    console.log("  tree", toString$1(tree));
+    console.log("  stack", stack);
     var last = Stack_Array$AdventOfCode.peek(stack);
     var match$2 = isCloseBracket($$this._0);
     if (match$2) {
@@ -305,8 +330,6 @@ function makeParseTree(xs) {
 }
 
 var ParseTree = {
-  tokenAtToString: tokenAtToString,
-  tokenize: tokenize,
   map: map,
   toString: toString$1,
   makeNode: makeNode,
@@ -315,8 +338,62 @@ var ParseTree = {
   makeParseTree: makeParseTree
 };
 
+function $$process(xs) {
+  var match = Belt_List.fromArray(tokenize(xs));
+  var match$1;
+  if (match) {
+    match$1 = [
+      match.hd,
+      match.tl
+    ];
+  } else {
+    throw {
+          RE_EXN_ID: ParseError,
+          _1: "empty input",
+          Error: new Error()
+        };
+  }
+  var _inputs = match$1[1];
+  var _stack = [match$1[0]];
+  while(true) {
+    var stack = _stack;
+    var inputs = _inputs;
+    if (!inputs) {
+      return {
+              TAG: /* Incomplete */1,
+              _0: stack
+            };
+    }
+    var rest = inputs.tl;
+    var $$this = inputs.hd;
+    var last = Stack_Array$AdventOfCode.peek(stack);
+    var this_token = $$this._0;
+    var match$2 = isCloseBracket(this_token);
+    if (match$2) {
+      if (last !== undefined) {
+        if (!matches(last._0, this_token)) {
+          return {
+                  TAG: /* Corrupted */0,
+                  _0: $$this
+                };
+        }
+        var match$3 = Stack_Array$AdventOfCode.pop(stack);
+        _stack = match$3[1];
+        _inputs = rest;
+        continue ;
+      }
+      _stack = Stack_Array$AdventOfCode.push(stack, $$this);
+      _inputs = rest;
+      continue ;
+    }
+    _stack = Stack_Array$AdventOfCode.push(stack, $$this);
+    _inputs = rest;
+    continue ;
+  };
+}
+
 function parse(data) {
-  return FP_Utils$AdventOfCode.flatMapArray(Utils$AdventOfCode.splitNewline(data), (function (param) {
+  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
                 return FP_Utils$AdventOfCode.compose((function (prim) {
                               return prim.trim();
                             }), Utils$AdventOfCode.splitChars, param);
@@ -346,18 +423,79 @@ function examples(param) {
   
 }
 
+function getCorruptedScore(param) {
+  var t = param._0;
+  if (t === ")") {
+    return 3;
+  }
+  if (t === ">") {
+    return 25137;
+  }
+  if (t === "]") {
+    return 57;
+  }
+  if (t === "}") {
+    return 1197;
+  }
+  throw {
+        RE_EXN_ID: NotSupported,
+        _1: "not supported",
+        Error: new Error()
+      };
+}
+
+function getIncompleteScore(param) {
+  var t = param._0;
+  if (t === "(") {
+    return 1;
+  }
+  if (t === "<") {
+    return 4;
+  }
+  if (t === "[") {
+    return 2;
+  }
+  if (t === "{") {
+    return 3;
+  }
+  throw {
+        RE_EXN_ID: NotSupported,
+        _1: "not supported",
+        Error: new Error()
+      };
+}
+
 function solvePart1(data) {
-  console.log(parse(data), "data");
-  var match = makeParseTree(parse(data));
-  console.log("tree ---");
-  console.log(toString$1(match[0]), "tree");
-  console.log("tree ---");
-  console.log(match[1], "stack");
-  return 1;
+  var corruptedOnly = function (r) {
+    if (r.TAG === /* Corrupted */0) {
+      return r._0;
+    }
+    
+  };
+  return Belt_Array.reduce(Belt_Array.map(Belt_Array.keepMap(Belt_Array.map(parse(data), $$process), corruptedOnly), getCorruptedScore), 0, Utils$AdventOfCode.sum);
 }
 
 function solvePart2(data) {
-  return 2;
+  var incompleteOnly = function (r) {
+    if (r.TAG === /* Corrupted */0) {
+      return ;
+    } else {
+      return r._0;
+    }
+  };
+  var xs = Belt_SortArray.stableSortBy(Belt_Array.map(Belt_Array.keepMap(Belt_Array.map(parse(data), $$process), incompleteOnly), (function (__x) {
+              return Belt_Array.reduce(__x, BigInt(0), (function (a, x) {
+                            return a * BigInt(5) + BigInt(getIncompleteScore(x));
+                          }));
+            })), (function (a, b) {
+          if (Number(b - a) > 0.0) {
+            return 1;
+          } else {
+            return -1;
+          }
+        }));
+  var len = xs.length;
+  return Belt_Option.getExn(Belt_Array.get(xs, len / 2 | 0)).toString();
 }
 
 var Stack;
@@ -367,9 +505,14 @@ exports.Stack = Stack;
 exports.ParseError = ParseError;
 exports.NotSupported = NotSupported;
 exports.Token = Token;
+exports.tokenAtToString = tokenAtToString;
+exports.tokenize = tokenize;
 exports.ParseTree = ParseTree;
+exports.$$process = $$process;
 exports.parse = parse;
 exports.examples = examples;
+exports.getCorruptedScore = getCorruptedScore;
+exports.getIncompleteScore = getIncompleteScore;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
 /* No side effect */

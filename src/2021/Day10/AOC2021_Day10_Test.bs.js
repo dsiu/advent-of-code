@@ -9,19 +9,19 @@ var AOC2021_Day10_Data_Sample$AdventOfCode = require("./AOC2021_Day10_Data_Sampl
 Jest.describe("2021 Day10", (function (param) {
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2021_Day10$AdventOfCode.solvePart1(AOC2021_Day10_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual(26397, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2021_Day10$AdventOfCode.solvePart1(AOC2021_Day10_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual(392139, Jest.Expect.expect(result));
               }));
         Jest.test("Part 2 - Sample Data", (function (param) {
                 var result = AOC2021_Day10$AdventOfCode.solvePart2(AOC2021_Day10_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual("288957", Jest.Expect.expect(result));
               }));
         return Jest.test("Part 2 - Solve", (function (param) {
                       var result = AOC2021_Day10$AdventOfCode.solvePart2(AOC2021_Day10_Data$AdventOfCode.data);
-                      return Jest.Expect.toEqual(2, Jest.Expect.expect(result));
+                      return Jest.Expect.toEqual("4001832844", Jest.Expect.expect(result));
                     }));
       }));
 
