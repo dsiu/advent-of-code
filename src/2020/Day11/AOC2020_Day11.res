@@ -27,27 +27,8 @@ module SeatMap = {
     x >= 0 && x <= len_x - 1 && y >= 0 && y <= len_y - 1
   }
 
-  let north = ((x, y)) => {(x, y - 1)}
-  let east = ((x, y)) => {(x + 1, y)}
-  let south = ((x, y)) => {(x, y + 1)}
-  let west = ((x, y)) => {(x - 1, y)}
-  let northEast = c => c->north->east
-  let northWest = c => c->north->west
-  let southEast = c => c->south->east
-  let southWest = c => c->south->west
-
-  let stepFunc = ((x, y), f) => (x, y)->f
-
-  let stepN = stepFunc(_, north)
-  let stepE = stepFunc(_, east)
-  let stepS = stepFunc(_, south)
-  let stepW = stepFunc(_, west)
-  let stepNE = stepFunc(_, northEast)
-  let stepNW = stepFunc(_, northWest)
-  let stepSE = stepFunc(_, southEast)
-  let stepSW = stepFunc(_, southWest)
-
   let adjCoords = c => {
+    open Coordinate
     [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => c->f)
   }
 
@@ -99,6 +80,7 @@ module SeatMap = {
   }
 
   let getDirectionals = (t, c) => {
+    open Coordinate
     [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f =>
       t->nextSeatIn(c, f)
     )

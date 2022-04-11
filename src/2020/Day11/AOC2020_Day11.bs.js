@@ -8,6 +8,7 @@ var Caml_option = require("rescript/lib/js/caml_option.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
 var Array2D$AdventOfCode = require("../../Array2D.bs.js");
+var Coordinate$AdventOfCode = require("../../Coordinate.bs.js");
 
 function log(prim) {
   console.log(prim);
@@ -47,99 +48,16 @@ function isValidCoord(param, len_x, len_y) {
   }
 }
 
-function north(param) {
-  return [
-          param[0],
-          param[1] - 1 | 0
-        ];
-}
-
-function east(param) {
-  return [
-          param[0] + 1 | 0,
-          param[1]
-        ];
-}
-
-function south(param) {
-  return [
-          param[0],
-          param[1] + 1 | 0
-        ];
-}
-
-function west(param) {
-  return [
-          param[0] - 1 | 0,
-          param[1]
-        ];
-}
-
-function northEast(c) {
-  return east(north(c));
-}
-
-function northWest(c) {
-  return west(north(c));
-}
-
-function southEast(c) {
-  return east(south(c));
-}
-
-function southWest(c) {
-  return west(south(c));
-}
-
-function stepFunc(param, f) {
-  return Curry._1(f, [
-              param[0],
-              param[1]
-            ]);
-}
-
-function stepN(__x) {
-  return stepFunc(__x, north);
-}
-
-function stepE(__x) {
-  return stepFunc(__x, east);
-}
-
-function stepS(__x) {
-  return stepFunc(__x, south);
-}
-
-function stepW(__x) {
-  return stepFunc(__x, west);
-}
-
-function stepNE(__x) {
-  return stepFunc(__x, northEast);
-}
-
-function stepNW(__x) {
-  return stepFunc(__x, northWest);
-}
-
-function stepSE(__x) {
-  return stepFunc(__x, southEast);
-}
-
-function stepSW(__x) {
-  return stepFunc(__x, southWest);
-}
-
 function adjCoords(c) {
   return Belt_Array.map([
-              stepNW,
-              stepN,
-              stepNE,
-              stepW,
-              stepE,
-              stepSW,
-              stepS,
-              stepSE
+              Coordinate$AdventOfCode.stepNW,
+              Coordinate$AdventOfCode.stepN,
+              Coordinate$AdventOfCode.stepNE,
+              Coordinate$AdventOfCode.stepW,
+              Coordinate$AdventOfCode.stepE,
+              Coordinate$AdventOfCode.stepSW,
+              Coordinate$AdventOfCode.stepS,
+              Coordinate$AdventOfCode.stepSE
             ], (function (f) {
                 return Curry._1(f, c);
               }));
@@ -226,14 +144,14 @@ function nextSeatIn(t, _param, step) {
 
 function getDirectionals(t, c) {
   return Belt_Array.map([
-              stepNW,
-              stepN,
-              stepNE,
-              stepW,
-              stepE,
-              stepSW,
-              stepS,
-              stepSE
+              Coordinate$AdventOfCode.stepNW,
+              Coordinate$AdventOfCode.stepN,
+              Coordinate$AdventOfCode.stepNE,
+              Coordinate$AdventOfCode.stepW,
+              Coordinate$AdventOfCode.stepE,
+              Coordinate$AdventOfCode.stepSW,
+              Coordinate$AdventOfCode.stepS,
+              Coordinate$AdventOfCode.stepSE
             ], (function (f) {
                 return nextSeatIn(t, c, f);
               }));
@@ -316,23 +234,6 @@ var SeatMap = {
   InvalidStatus: InvalidStatus,
   SeatStatus: SeatStatus,
   isValidCoord: isValidCoord,
-  north: north,
-  east: east,
-  south: south,
-  west: west,
-  northEast: northEast,
-  northWest: northWest,
-  southEast: southEast,
-  southWest: southWest,
-  stepFunc: stepFunc,
-  stepN: stepN,
-  stepE: stepE,
-  stepS: stepS,
-  stepW: stepW,
-  stepNE: stepNE,
-  stepNW: stepNW,
-  stepSE: stepSE,
-  stepSW: stepSW,
   adjCoords: adjCoords,
   getAdjacents: getAdjacents,
   isSeatEq: isSeatEq,

@@ -2,6 +2,7 @@
 'use strict';
 
 var Jest2$AdventOfCode = require("../../../interop/Jest2.bs.js");
+var Coordinate$AdventOfCode = require("../../Coordinate.bs.js");
 var AOC2020_Day11$AdventOfCode = require("./AOC2020_Day11.bs.js");
 var AOC2020_Day11_Data$AdventOfCode = require("./AOC2020_Day11_Data.bs.js");
 var AOC2020_Day11_Data_Sample$AdventOfCode = require("./AOC2020_Day11_Data_Sample.bs.js");
@@ -115,115 +116,6 @@ describe("2020 Day11", (function () {
                               
                             }));
               }));
-        describe("Step Functions", (function () {
-                var init = [
-                  4,
-                  4
-                ];
-                var singleStep_tests = [
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepN(init),
-                    [
-                      4,
-                      3
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepE(init),
-                    [
-                      5,
-                      4
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepS(init),
-                    [
-                      4,
-                      5
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepW(init),
-                    [
-                      3,
-                      4
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepNE(init),
-                    [
-                      5,
-                      3
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepNW(init),
-                    [
-                      3,
-                      3
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepSE(init),
-                    [
-                      5,
-                      5
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepSW(init),
-                    [
-                      3,
-                      5
-                    ]
-                  ]
-                ];
-                Jest2$AdventOfCode.testEach2("Single Step", singleStep_tests, (function (result, expected) {
-                        expect(result).toEqual(expected);
-                        
-                      }));
-                var multipleStep_test = [
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepN(AOC2020_Day11$AdventOfCode.SeatMap.stepN(init)),
-                    [
-                      4,
-                      2
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepE(AOC2020_Day11$AdventOfCode.SeatMap.stepE(init)),
-                    [
-                      6,
-                      4
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepW(AOC2020_Day11$AdventOfCode.SeatMap.stepS(init)),
-                    [
-                      3,
-                      5
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepSW(AOC2020_Day11$AdventOfCode.SeatMap.stepNE(init)),
-                    [
-                      4,
-                      4
-                    ]
-                  ],
-                  [
-                    AOC2020_Day11$AdventOfCode.SeatMap.stepSE(AOC2020_Day11$AdventOfCode.SeatMap.stepNW(init)),
-                    [
-                      4,
-                      4
-                    ]
-                  ]
-                ];
-                return Jest2$AdventOfCode.testEach2("Multiple Step", multipleStep_test, (function (result, expected) {
-                              expect(result).toEqual(expected);
-                              
-                            }));
-              }));
         describe("next seat given a direction", (function () {
                 var map = AOC2020_Day11$AdventOfCode.parse(".......#.\n                 ...#.....\n                 .#.......\n                 .........\n                 ..#L....#\n                 ....#....\n                 .........\n                 #........\n                 ...#.....");
                 var init_1 = [
@@ -232,35 +124,35 @@ describe("2020 Day11", (function () {
                 ];
                 var nextSeat_test1 = [
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepN),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepE),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepS),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepW),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepNE),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepNW),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepSE),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_1, Coordinate$AdventOfCode.stepSW),
                     "#"
                   ]
                 ];
@@ -274,35 +166,35 @@ describe("2020 Day11", (function () {
                 ];
                 var nextSeat_test2 = [
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepN),
                     "L"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepE),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepS),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepW),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepNE),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepNW),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepSE),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_2, Coordinate$AdventOfCode.stepSW),
                     "."
                   ]
                 ];
@@ -316,35 +208,35 @@ describe("2020 Day11", (function () {
                 ];
                 var nextSeat_test3 = [
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepN),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepE),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepS),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepW),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepNE),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepNW),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepSE),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_3, Coordinate$AdventOfCode.stepSW),
                     "."
                   ]
                 ];
@@ -358,35 +250,35 @@ describe("2020 Day11", (function () {
                 ];
                 var nextSeat_test4 = [
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepN),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepN),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepE),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepS),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepS),
                     "#"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepW),
                     "L"
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepNE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepNE),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepNW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepNW),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepSE),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepSE),
                     "."
                   ],
                   [
-                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, AOC2020_Day11$AdventOfCode.SeatMap.stepSW),
+                    AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map, init_4, Coordinate$AdventOfCode.stepSW),
                     "."
                   ]
                 ];
@@ -400,21 +292,21 @@ describe("2020 Day11", (function () {
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map_2, [
                           1,
                           1
-                        ], AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                        ], Coordinate$AdventOfCode.stepE),
                     "L"
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map_2, [
                           3,
                           1
-                        ], AOC2020_Day11$AdventOfCode.SeatMap.stepE),
+                        ], Coordinate$AdventOfCode.stepE),
                     "#"
                   ],
                   [
                     AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map_2, [
                           3,
                           1
-                        ], AOC2020_Day11$AdventOfCode.SeatMap.stepW),
+                        ], Coordinate$AdventOfCode.stepW),
                     "L"
                   ]
                 ];

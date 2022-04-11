@@ -6,25 +6,13 @@ let log = Js.Console.log
 
 module HeightMap = {
   type t = Array2D.t<int>
-  type coord = (int, int)
-
-  let north = ((x, y)) => {(x, y - 1)}
-  let east = ((x, y)) => {(x + 1, y)}
-  let south = ((x, y)) => {(x, y + 1)}
-  let west = ((x, y)) => {(x - 1, y)}
-
-  let stepFunc = ((x, y): coord, f) => (x, y)->f
-
-  let stepN = stepFunc(_, north)
-  let stepE = stepFunc(_, east)
-  let stepS = stepFunc(_, south)
-  let stepW = stepFunc(_, west)
 
   let adjCoords = c => {
+    open Coordinate
     list{stepN, stepW, stepE, stepS}->List.map(f => c->f)
   }
 
-  type elem = CoordAndVal(coord, int)
+  type elem = CoordAndVal(Coordinate.t, int)
 
   let getAdjacents = (t, (x, y)) => {
     (x, y)
