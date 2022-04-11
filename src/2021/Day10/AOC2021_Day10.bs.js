@@ -2,8 +2,10 @@
 'use strict';
 
 var Curry = require("rescript/lib/js/curry.js");
+var Int64 = require("rescript/lib/js/int64.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Caml_int64 = require("rescript/lib/js/caml_int64.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Belt_SortArray = require("rescript/lib/js/belt_SortArray.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
@@ -484,18 +486,15 @@ function solvePart2(data) {
     }
   };
   var xs = Belt_SortArray.stableSortBy(Belt_Array.map(Belt_Array.keepMap(Belt_Array.map(parse(data), $$process), incompleteOnly), (function (__x) {
-              return Belt_Array.reduce(__x, BigInt(0), (function (a, x) {
-                            return a * BigInt(5) + BigInt(getIncompleteScore(x));
+              return Belt_Array.reduce(__x, Caml_int64.zero, (function (a, x) {
+                            return Caml_int64.add(Caml_int64.mul(a, [
+                                            0,
+                                            5
+                                          ]), Caml_int64.of_int32(getIncompleteScore(x)));
                           }));
-            })), (function (a, b) {
-          if (Number(b - a) > 0.0) {
-            return 1;
-          } else {
-            return -1;
-          }
-        }));
+            })), Int64.compare);
   var len = xs.length;
-  return Belt_Option.getExn(Belt_Array.get(xs, len / 2 | 0)).toString();
+  return Int64.to_string(Belt_Option.getExn(Belt_Array.get(xs, len / 2 | 0)));
 }
 
 var Stack;

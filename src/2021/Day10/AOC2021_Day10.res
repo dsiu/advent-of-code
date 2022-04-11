@@ -277,26 +277,23 @@ let solvePart2 = data => {
     | _ => None
     }
   }
-  module BigInt = ReScriptJs.Js.BigInt
 
   data
   ->parse
   ->Array.map(process)
   ->Array.keepMap(incompleteOnly)
   ->Array.map(
-    Array.reduce(_, BigInt.fromInt(0), (a, x) =>
-      BigInt.add(BigInt.mul(a, BigInt.fromInt(5)), BigInt.fromInt(x->getIncompleteScore))
+    Array.reduce(_, Int64.of_int(0), (a, x) =>
+      Int64.add(Int64.mul(a, Int64.of_int(5)), Int64.of_int(x->getIncompleteScore))
     ),
   )
-  ->Belt.SortArray.stableSortBy((a, b) => {
-    BigInt.sub(b, a)->BigInt.toFloat > 0.0 ? 1 : -1
-  })
+  ->Belt.SortArray.stableSortBy(Int64.compare)
   ->(xs => {
     let len = xs->Array.length
     xs[len / 2]
   })
   ->Option.getExn
-  ->BigInt.toString
+  ->Int64.to_string
   //  ->Array.map(BigInt.toString)
   //  ->SortArray.Int.stableSort
   //  ->Js.log2("diu")
