@@ -16,7 +16,7 @@ console.log("Part 1 Result");
 
 console.log(part1);
 
-var part2 = AOC2021_Day11$AdventOfCode.solvePart2(AOC2021_Day11_Data_Sample$AdventOfCode.data0);
+var part2 = AOC2021_Day11$AdventOfCode.solvePart2(AOC2021_Day11_Data$AdventOfCode.data);
 
 console.log("Part 2 Result");
 

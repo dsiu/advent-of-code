@@ -64,32 +64,57 @@ function countZero(t) {
 }
 
 function increaseEnergy(t) {
-  return Array2D$AdventOfCode.map(t, (function (b) {
-                return b + 1 | 0;
+  return Array2D$AdventOfCode.map(t, (function (param) {
+                return Utils$AdventOfCode.add(1, param);
               }));
 }
 
+function getFlashingCoords(t) {
+  return Array2D$AdventOfCode.reduceWithIndex(t, [], (function (a, e, coord) {
+                if (e > 9) {
+                  return Belt_Array.concat(a, [coord]);
+                } else {
+                  return a;
+                }
+              }));
+}
+
+function performFlash(t, coord) {
+  var neighbors = getAdjacentCoords(t, coord);
+  Belt_Array.forEach(neighbors, (function (n_addr) {
+          var orig = Array2D$AdventOfCode.getExn(t, n_addr);
+          if (Array2D$AdventOfCode.set(t, n_addr, orig > 0 ? orig + 1 | 0 : orig)) {
+            return ;
+          }
+          throw {
+                RE_EXN_ID: "Not_found",
+                Error: new Error()
+              };
+        }));
+  return t;
+}
+
+function dim(t, coord) {
+  if (Array2D$AdventOfCode.set(t, coord, 0)) {
+    return t;
+  }
+  throw {
+        RE_EXN_ID: "Not_found",
+        Error: new Error()
+      };
+}
+
 function iterate(t) {
-  var next = increaseEnergy(t);
+  var next = Array2D$AdventOfCode.map(t, (function (param) {
+          return Utils$AdventOfCode.add(1, param);
+        }));
   while(true) {
-    var flashing_octopus = Array2D$AdventOfCode.reduceWithIndex(next, [], (function (a, e, coord) {
-            if (e > 9) {
-              return Belt_Array.concat(a, [coord]);
-            } else {
-              return a;
-            }
-          }));
-    if (flashing_octopus.length === 0) {
+    var flashings = getFlashingCoords(next);
+    if (flashings.length === 0) {
       return next;
     }
-    Belt_Array.forEach(flashing_octopus, (function (flash_coord) {
-            var coords = getAdjacentCoords(next, flash_coord);
-            Belt_Array.forEach(coords, (function (coord) {
-                    var orig = Array2D$AdventOfCode.getExn(next, coord);
-                    Array2D$AdventOfCode.set(next, coord, orig > 0 ? orig + 1 | 0 : orig);
-                    
-                  }));
-            Array2D$AdventOfCode.set(next, flash_coord, 0);
+    Belt_Array.forEach(flashings, (function (flash_coord) {
+            dim(performFlash(next, flash_coord), flash_coord);
             
           }));
     continue ;
@@ -125,6 +150,12 @@ function iterateN(t, n) {
               }));
 }
 
+function flashesAtN(t, n) {
+  return iterateAndReduceN(t, n, 0, (function (param, t) {
+                return countZero(Array2D$AdventOfCode.flatten(t));
+              }));
+}
+
 function toString(t) {
   var ret = [];
   for(var i = 0 ,i_finish = Array2D$AdventOfCode.lengthY(t); i < i_finish; ++i){
@@ -143,10 +174,14 @@ var Octopus = {
   count9Plus: count9Plus,
   countZero: countZero,
   increaseEnergy: increaseEnergy,
+  getFlashingCoords: getFlashingCoords,
+  performFlash: performFlash,
+  dim: dim,
   iterate: iterate,
   iterateAndReduceN: iterateAndReduceN,
   countFlashN: countFlashN,
   iterateN: iterateN,
+  flashesAtN: flashesAtN,
   toString: toString
 };
 
@@ -182,7 +217,14 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  return 2;
+  var d = parse(data);
+  var i = 0;
+  var c = 0;
+  while(c < 100) {
+    c = flashesAtN(d, i);
+    i = i + 1 | 0;
+  };
+  return i - 1 | 0;
 }
 
 exports.log = log;
