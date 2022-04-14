@@ -27,6 +27,8 @@ module Octopus = {
   }
 
   let count9Plus = t => t->Array.keep(_, b => b >= 9)->Array.size
+  let countZero = t => t->Array.keep(_, b => b == 0)->Array.size
+
   let increaseEnergy = t => t->Array2D.map(b => b + 1)
 
   let iterate = t => {
@@ -63,9 +65,24 @@ module Octopus = {
     inner(next)
   }
 
-  let rec iterateN = (t, n) => {
+  type collector<'a, 'b> = ('a, 'b) => 'a
+
+  let rec iterateAndReduceN = (t, n, acc, reducer: collector<'a, 'b>) => {
     let next = t->iterate
-    n - 1 < 0 ? t : iterateN(next, n - 1)
+    let acc = reducer(acc, t)
+    n - 1 < 0 ? acc : iterateAndReduceN(next, n - 1, acc, reducer)
+  }
+
+  let countFlashN = (t, n) => {
+    iterateAndReduceN(t, n, 0, (acc, t) => {
+      acc + t->Array2D.flatten->countZero
+    })
+  }
+
+  let iterateN = (t, n) => {
+    iterateAndReduceN(t, n, t, (_, t) => {
+      t
+    })
   }
 
   let toString = t => {
@@ -89,7 +106,7 @@ let parse = data =>
     FP_Utils.compose(Js.String2.trim, x => x->Utils.splitChars->Array.map(intFromStringExn)),
   )
 
-let solvePart1 = data => {
+let solvePart1_try = data => {
   Js.log("orig ----")
   let d = data->parse
   d->Octopus.toString->Js.log
@@ -108,8 +125,12 @@ let solvePart1 = data => {
   let e = d->Octopus.iterateN(_, i)
   e->Octopus.toString->Js.log
   Js.log(`iterate ${i->Int.toString} ----`)
+}
 
-  1
+let solvePart1 = data => {
+  let d = data->parse
+  let i = 100
+  d->Octopus.countFlashN(_, i)
 }
 
 let solvePart2 = data => {

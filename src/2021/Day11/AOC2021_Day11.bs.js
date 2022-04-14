@@ -57,6 +57,12 @@ function count9Plus(t) {
               })).length;
 }
 
+function countZero(t) {
+  return Belt_Array.keep(t, (function (b) {
+                return b === 0;
+              })).length;
+}
+
 function increaseEnergy(t) {
   return Array2D$AdventOfCode.map(t, (function (b) {
                 return b + 1 | 0;
@@ -90,18 +96,33 @@ function iterate(t) {
   };
 }
 
-function iterateN(_t, _n) {
+function iterateAndReduceN(_t, _n, _acc, reducer) {
   while(true) {
+    var acc = _acc;
     var n = _n;
     var t = _t;
     var next = iterate(t);
+    var acc$1 = Curry._2(reducer, acc, t);
     if ((n - 1 | 0) < 0) {
-      return t;
+      return acc$1;
     }
+    _acc = acc$1;
     _n = n - 1 | 0;
     _t = next;
     continue ;
   };
+}
+
+function countFlashN(t, n) {
+  return iterateAndReduceN(t, n, 0, (function (acc, t) {
+                return acc + countZero(Array2D$AdventOfCode.flatten(t)) | 0;
+              }));
+}
+
+function iterateN(t, n) {
+  return iterateAndReduceN(t, n, t, (function (param, t) {
+                return t;
+              }));
 }
 
 function toString(t) {
@@ -120,8 +141,11 @@ var Octopus = {
   getAdjacentCoords: getAdjacentCoords,
   getAdjacents: getAdjacents,
   count9Plus: count9Plus,
+  countZero: countZero,
   increaseEnergy: increaseEnergy,
   iterate: iterate,
+  iterateAndReduceN: iterateAndReduceN,
+  countFlashN: countFlashN,
   iterateN: iterateN,
   toString: toString
 };
@@ -136,7 +160,7 @@ function parse(data) {
               }));
 }
 
-function solvePart1(data) {
+function solvePart1_try(data) {
   console.log("orig ----");
   var d = parse(data);
   console.log(toString(d));
@@ -149,7 +173,12 @@ function solvePart1(data) {
   var e$1 = iterateN(d, 100);
   console.log(toString(e$1));
   console.log("iterate " + String(100) + " ----");
-  return 1;
+  
+}
+
+function solvePart1(data) {
+  var d = parse(data);
+  return countFlashN(d, 100);
 }
 
 function solvePart2(data) {
@@ -159,6 +188,7 @@ function solvePart2(data) {
 exports.log = log;
 exports.Octopus = Octopus;
 exports.parse = parse;
+exports.solvePart1_try = solvePart1_try;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
 /* No side effect */

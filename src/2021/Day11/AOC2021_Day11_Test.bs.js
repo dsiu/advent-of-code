@@ -6,14 +6,14 @@ var AOC2021_Day11$AdventOfCode = require("./AOC2021_Day11.bs.js");
 var AOC2021_Day11_Data$AdventOfCode = require("./AOC2021_Day11_Data.bs.js");
 var AOC2021_Day11_Data_Sample$AdventOfCode = require("./AOC2021_Day11_Data_Sample.bs.js");
 
-Jest.describe("2020 Day11", (function (param) {
+Jest.describe("2021 Day11", (function (param) {
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2021_Day11$AdventOfCode.solvePart1(AOC2021_Day11_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual(1656, Jest.Expect.expect(result));
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2021_Day11$AdventOfCode.solvePart1(AOC2021_Day11_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(result));
+                return Jest.Expect.toEqual(1793, Jest.Expect.expect(result));
               }));
         Jest.test("Part 2 - Sample Data", (function (param) {
                 var result = AOC2021_Day11$AdventOfCode.solvePart2(AOC2021_Day11_Data_Sample$AdventOfCode.data);
