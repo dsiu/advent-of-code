@@ -2,51 +2,33 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-module Graph = {
-  type t = HashMap.String.t<HashSet.String.t>
+module Maze = {
+  type t = Adjacency_List.t
 
-  let make = HashMap.String.make
+  exception ParseError
 
-  // return vertex's set
-  let addVertex = (t, x) => {
-    switch t->HashMap.String.get(x) {
-    | Some(_) => ()
-    | None => t->HashMap.String.set(x, HashSet.String.make(~hintSize=40))
-    }
+  let make = edges => {
+    let maze = Adjacency_List.make(~hintSize=40)
+    edges->Array.forEach(edge => {
+      switch edge {
+      | [a, b] => {
+          maze->Adjacency_List.addEdge(a, b)
+          maze->Adjacency_List.addEdge(b, a)
+        }
+      | _ => raise(ParseError)
+      }
+    })
+    maze
   }
 
-  // will create vertex if not exist
-  let getVertex = (t, x) => {
-    t->addVertex(x)
-    switch t->HashMap.String.get(x) {
-    | Some(v) => v
-    | None => raise(Not_found) // shouldn't really happen
-    }
-  }
-
-  let addEdge = (t, x, y) => {
-    t->getVertex(x)->HashSet.String.add(y)
-  }
-
-  let adjacent = (t, x, y) => {
-    switch t->HashMap.get(x) {
-    | Some(v) => v->HashSet.String.has(y)
-    | None => false
-    }
-  }
-
-  let neighbors = (t, x) => {
-    switch t->HashMap.get(x) {
-    | Some(v) => v->HashSet.String.toArray
-    | None => []
-    }
-  }
+  let toString = Adjacency_List.toString
 }
 
-let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+let parse = data =>
+  data->splitNewline->Array.map(Js.String2.trim)->Array.map(Js.String2.split(_, "-"))
 
 let solvePart1 = data => {
-  data->ignore
+  data->parse->Maze.make->Maze.toString->Js.log
   1
 }
 

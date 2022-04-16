@@ -2,76 +2,50 @@
 'use strict';
 
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
-var Caml_option = require("rescript/lib/js/caml_option.js");
-var Belt_HashMap = require("rescript/lib/js/belt_HashMap.js");
-var Belt_HashMapString = require("rescript/lib/js/belt_HashMapString.js");
-var Belt_HashSetString = require("rescript/lib/js/belt_HashSetString.js");
+var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
+var Adjacency_List$AdventOfCode = require("../../Adjacency_List.bs.js");
 
 function log(prim) {
   console.log(prim);
   
 }
 
-function addVertex(t, x) {
-  var match = Belt_HashMapString.get(t, x);
-  if (match !== undefined) {
-    return ;
-  } else {
-    return Belt_HashMapString.set(t, x, Belt_HashSetString.make(40));
-  }
+var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day12-AdventOfCode.Maze.ParseError");
+
+function make(edges) {
+  var maze = Adjacency_List$AdventOfCode.make(40);
+  Belt_Array.forEach(edges, (function (edge) {
+          if (edge.length !== 2) {
+            throw {
+                  RE_EXN_ID: ParseError,
+                  Error: new Error()
+                };
+          }
+          var a = edge[0];
+          var b = edge[1];
+          Adjacency_List$AdventOfCode.addEdge(maze, a, b);
+          return Adjacency_List$AdventOfCode.addEdge(maze, b, a);
+        }));
+  return maze;
 }
 
-function getVertex(t, x) {
-  addVertex(t, x);
-  var v = Belt_HashMapString.get(t, x);
-  if (v !== undefined) {
-    return Caml_option.valFromOption(v);
-  }
-  throw {
-        RE_EXN_ID: "Not_found",
-        Error: new Error()
-      };
-}
-
-function addEdge(t, x, y) {
-  return Belt_HashSetString.add(getVertex(t, x), y);
-}
-
-function adjacent(t, x, y) {
-  var v = Belt_HashMap.get(t, x);
-  if (v !== undefined) {
-    return Belt_HashSetString.has(Caml_option.valFromOption(v), y);
-  } else {
-    return false;
-  }
-}
-
-function neighbors(t, x) {
-  var v = Belt_HashMap.get(t, x);
-  if (v !== undefined) {
-    return Belt_HashSetString.toArray(Caml_option.valFromOption(v));
-  } else {
-    return [];
-  }
-}
-
-var Graph = {
-  make: Belt_HashMapString.make,
-  addVertex: addVertex,
-  getVertex: getVertex,
-  addEdge: addEdge,
-  adjacent: adjacent,
-  neighbors: neighbors
+var Maze = {
+  ParseError: ParseError,
+  make: make,
+  toString: Adjacency_List$AdventOfCode.toString
 };
 
 function parse(data) {
-  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
-                return prim.trim();
+  return Belt_Array.map(Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
+                    return prim.trim();
+                  })), (function (__x) {
+                return __x.split("-");
               }));
 }
 
 function solvePart1(data) {
+  console.log(Adjacency_List$AdventOfCode.toString(make(parse(data))));
   return 1;
 }
 
@@ -80,7 +54,7 @@ function solvePart2(data) {
 }
 
 exports.log = log;
-exports.Graph = Graph;
+exports.Maze = Maze;
 exports.parse = parse;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
