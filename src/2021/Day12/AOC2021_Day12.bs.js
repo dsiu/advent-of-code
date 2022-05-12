@@ -134,7 +134,7 @@ function dfs(visit_func, t, start_node, end_node) {
                 }));
   };
   var visited = Belt_HashMapString.make(40);
-  var acc = ["start"];
+  var acc = [start_node];
   return explore(start_node, visited, acc, end_node);
 }
 

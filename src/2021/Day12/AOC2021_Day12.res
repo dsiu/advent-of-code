@@ -89,7 +89,7 @@ let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
     switch node == end_node {
     | false => {
         let edges = t->get_edges(node)
-        let ret = edges->HashSet.String.reduce([], (a, e) => {
+        edges->HashSet.String.reduce([], (a, e) => {
           visit_func(visited', e)
             ? {
                 Array.concat(
@@ -101,15 +101,13 @@ let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
                 a
               }
         })
-
-        ret
       }
     | true => [acc]
     }
   }
 
   let visited = Belt.HashMap.String.make(~hintSize=40)
-  let acc = ["start"]
+  let acc = [start_node]
   explore(start_node, visited, acc, end_node)
 }
 
