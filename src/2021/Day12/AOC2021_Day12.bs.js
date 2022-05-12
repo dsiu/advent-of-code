@@ -4,9 +4,10 @@
 var Curry = require("rescript/lib/js/curry.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
+var Belt_HashMapString = require("rescript/lib/js/belt_HashMapString.js");
 var Belt_HashSetString = require("rescript/lib/js/belt_HashSetString.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
-var FP_Utils$AdventOfCode = require("../../FP_Utils.bs.js");
+var Belt_SortArrayString = require("rescript/lib/js/belt_SortArrayString.js");
 var Adjacency_List$AdventOfCode = require("../../Adjacency_List.bs.js");
 
 function log(prim) {
@@ -39,87 +40,120 @@ var Maze = {
   toString: Adjacency_List$AdventOfCode.toString
 };
 
-function array_count(xs, predicate) {
-  return Belt_Array.keep(xs, predicate).length;
-}
-
-var CycleFound = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day12-AdventOfCode.CycleFound");
-
-function count_node_in_array(a, node) {
-  var predicate = function (param) {
-    return FP_Utils$AdventOfCode.eq(node, param);
-  };
-  return Belt_Array.keep(a, predicate).length;
-}
-
 function is_visited(visited, node) {
-  var predicate = function (param) {
-    return FP_Utils$AdventOfCode.eq(node, param);
-  };
-  return Belt_Array.keep(visited, predicate).length !== 0;
+  var v = Belt_HashMapString.get(visited, node);
+  if (v !== undefined) {
+    return v > 0;
+  } else {
+    return false;
+  }
 }
 
-var get_edges = Adjacency_List$AdventOfCode.neighbors;
+function inc_visited(visited, node) {
+  var x = Belt_HashMapString.get(visited, node);
+  if (x !== undefined) {
+    Belt_HashMapString.set(visited, node, x + 1 | 0);
+  } else {
+    Belt_HashMapString.set(visited, node, 1);
+  }
+  return visited;
+}
+
+function get_visited_count(visited, node) {
+  var x = Belt_HashMapString.get(visited, node);
+  if (x !== undefined) {
+    return x;
+  } else {
+    return 0;
+  }
+}
 
 function is_upper_case(c) {
   return c.toUpperCase() === c;
 }
 
-function can_visited_part1(visited, node) {
+function is_small_case(c) {
+  return c.toLowerCase() === c;
+}
+
+function has_any_small_cave_been_visited_twice(visited) {
+  var smalls = Belt_HashMapString.reduce(visited, [], (function (acc, key, value) {
+          if (key.toLowerCase() === key && value > 1) {
+            return Belt_Array.concat(acc, [[
+                          key,
+                          value
+                        ]]);
+          } else {
+            return acc;
+          }
+        }));
+  return smalls.length !== 0;
+}
+
+var get_edges = Adjacency_List$AdventOfCode.neighbors;
+
+function can_visit_part1(visited, node) {
+  if (node.toUpperCase() === node) {
+    return true;
+  } else {
+    return get_visited_count(visited, node) <= 0;
+  }
+}
+
+function can_visit_part2(visited, node) {
+  var c = get_visited_count(visited, node);
   if (node.toUpperCase() === node) {
     return true;
   }
-  var predicate = function (param) {
-    return FP_Utils$AdventOfCode.eq(node, param);
-  };
-  return Belt_Array.keep(visited, predicate).length <= 0;
-}
-
-function can_visited_part2(visited, node) {
-  var predicate = function (param) {
-    return FP_Utils$AdventOfCode.eq(node, param);
-  };
-  var c = Belt_Array.keep(visited, predicate).length;
   switch (node) {
     case "end" :
     case "start" :
-        return c < 1;
+        return c <= 0;
     default:
-      if (node.toUpperCase() === node) {
+      if (c <= 0) {
         return true;
       } else {
-        return c < 2;
+        return !has_any_small_cave_been_visited_twice(visited);
       }
   }
 }
 
 function dfs(visit_func, t, start_node, end_node) {
-  var explore = function (node, visited, path, acc, end_node) {
-    var visited$p = Belt_Array.concat(visited, [node]);
+  var explore = function (node, visited, acc, end_node) {
+    var visited$p = inc_visited(visited, node);
     if (node === end_node) {
       return [acc];
     }
     var edges = Adjacency_List$AdventOfCode.neighbors(t, node);
     return Belt_HashSetString.reduce(edges, [], (function (a, e) {
                   if (Curry._2(visit_func, visited$p, e)) {
-                    return Belt_Array.concat(a, explore(e, visited$p, path, Belt_Array.concat(visited$p, [e]), end_node));
+                    return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));
                   } else {
                     return a;
                   }
                 }));
   };
-  var visited = [];
-  var path = [];
-  var acc = [];
-  return explore(start_node, visited, path, acc, end_node);
+  var visited = Belt_HashMapString.make(40);
+  var acc = ["start"];
+  return explore(start_node, visited, acc, end_node);
 }
 
 function dfs_part1(param, param$1, param$2) {
-  return dfs(can_visited_part1, param, param$1, param$2);
+  return dfs(can_visit_part1, param, param$1, param$2);
 }
 
 function dfs_part2(param, param$1, param$2) {
-  return dfs(can_visited_part2, param, param$1, param$2);
+  return dfs(can_visit_part2, param, param$1, param$2);
+}
+
+function array_to_string(xs) {
+  return Belt_Array.reduce(xs, "", (function (acc, x) {
+                return acc + " " + x;
+              }));
+}
+
+function sort_result(result) {
+  return Belt_SortArrayString.stableSort(Belt_Array.map(result, array_to_string));
 }
 
 function parse(data) {
@@ -132,34 +166,39 @@ function parse(data) {
 
 function solvePart1(data) {
   var maze = make(parse(data));
-  console.log(Adjacency_List$AdventOfCode.toString(maze));
-  var result = dfs_part1(maze, "start", "end");
-  console.log(result.length);
-  return result.length;
+  return dfs_part1(maze, "start", "end").length;
 }
 
 function solvePart2(data) {
   var maze = make(parse(data));
-  console.log(Adjacency_List$AdventOfCode.toString(maze));
-  var result = dfs_part2(maze, "start", "end");
-  console.log("part 2: ", result);
-  console.log(result.length);
-  return result.length;
+  return dfs_part2(maze, "start", "end").length;
 }
+
+var is_big_cave = is_upper_case;
+
+var is_small_cave = is_small_case;
+
+var get_visited_nodes = Belt_HashMapString.keysToArray;
 
 exports.log = log;
 exports.Maze = Maze;
-exports.array_count = array_count;
-exports.CycleFound = CycleFound;
-exports.count_node_in_array = count_node_in_array;
 exports.is_visited = is_visited;
-exports.get_edges = get_edges;
+exports.inc_visited = inc_visited;
+exports.get_visited_count = get_visited_count;
 exports.is_upper_case = is_upper_case;
-exports.can_visited_part1 = can_visited_part1;
-exports.can_visited_part2 = can_visited_part2;
+exports.is_small_case = is_small_case;
+exports.is_big_cave = is_big_cave;
+exports.is_small_cave = is_small_cave;
+exports.has_any_small_cave_been_visited_twice = has_any_small_cave_been_visited_twice;
+exports.get_edges = get_edges;
+exports.can_visit_part1 = can_visit_part1;
+exports.can_visit_part2 = can_visit_part2;
+exports.get_visited_nodes = get_visited_nodes;
 exports.dfs = dfs;
 exports.dfs_part1 = dfs_part1;
 exports.dfs_part2 = dfs_part2;
+exports.array_to_string = array_to_string;
+exports.sort_result = sort_result;
 exports.parse = parse;
 exports.solvePart1 = solvePart1;
 exports.solvePart2 = solvePart2;
