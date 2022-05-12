@@ -56,8 +56,5 @@ let adjacent = (t, x, y) => {
 }
 
 let neighbors = (t, x) => {
-  switch t->HashMap.get(x) {
-  | Some(v) => v->HashSet.String.toArray
-  | None => []
-  }
+  t->HashMap.String.get(x)->Option.getWithDefault(HashSet.String.make(~hintSize=40))
 }

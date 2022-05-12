@@ -2,7 +2,7 @@
 'use strict';
 
 
-var data = "";
+var data = "nu-start\n            rt-start\n            db-qh\n            PE-end\n            sl-rt\n            qh-end\n            ZH-rt\n            nu-rt\n            PE-db\n            db-sl\n            nu-ZH\n            nu-qh\n            PE-qh\n            ZH-db\n            ne-end\n            ne-ZH\n            QG-db\n            qh-sl\n            ZH-qh\n            start-ZH\n            nu-PE\n            uf-db\n            ne-sl";
 
 exports.data = data;
 /* No side effect */

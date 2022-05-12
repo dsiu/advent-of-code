@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@glennsl/bs-jest": "^0.7.0",
-    "jest": "^27.4.7",
+    "jest": "^27.5.1",
     "rescript": "^9.1.4"
   },
   "jest": {
@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "debug": "^4.3.3",
+    "debug": "^4.3.4",
     "rationale": "^0.2.0",
     "re-fp": "github:snatvb/re-fp",
     "rescript-js": "^0.6.2",
