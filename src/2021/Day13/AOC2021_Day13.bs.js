@@ -5,13 +5,193 @@ var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Utils$AdventOfCode = require("../../Utils.bs.js");
+var Array2D$AdventOfCode = require("../../Array2D.bs.js");
 
 function log(prim) {
   console.log(prim);
   
 }
 
-var Paper = {};
+function addMark(m1, m2) {
+  if (m1 === "#" || m2 === "#") {
+    return "#";
+  } else {
+    return ".";
+  }
+}
+
+function countMark(p) {
+  return Array2D$AdventOfCode.reduce(p, 0, (function (a, mark) {
+                if (mark === "#") {
+                  return a + 1 | 0;
+                } else {
+                  return a;
+                }
+              }));
+}
+
+function makeFoldDirection(s) {
+  switch (s) {
+    case "x" :
+        return "X";
+    case "y" :
+        return "Y";
+    default:
+      throw {
+            RE_EXN_ID: "Not_found",
+            Error: new Error()
+          };
+  }
+}
+
+function getPaper(t) {
+  return t.paper;
+}
+
+function getFolds(t) {
+  return t.folds;
+}
+
+function findSize(t) {
+  var param = Belt_Array.reduce(t, [
+        0,
+        0
+      ], (function (param, param$1) {
+          var y = param$1[1];
+          var x = param$1[0];
+          var ya = param[1];
+          var xa = param[0];
+          return [
+                  x > xa ? x : xa,
+                  y > ya ? y : ya
+                ];
+        }));
+  return [
+          param[0] + 1 | 0,
+          param[1] + 1 | 0
+        ];
+}
+
+function makePaper(coords) {
+  var sizes = findSize(coords);
+  var p = Array2D$AdventOfCode.make(sizes, ".");
+  Belt_Array.forEach(coords, (function (c) {
+          if (Array2D$AdventOfCode.set(p, c, "#")) {
+            return ;
+          }
+          throw {
+                RE_EXN_ID: "Not_found",
+                Error: new Error()
+              };
+        }));
+  return p;
+}
+
+function makeFolds(folds) {
+  return Belt_Array.map(folds, (function (param) {
+                return [
+                        makeFoldDirection(param[0]),
+                        param[1]
+                      ];
+              }));
+}
+
+function make(coords, folds) {
+  return {
+          paper: makePaper(coords),
+          folds: makeFolds(folds)
+        };
+}
+
+function transformCoord(param, param$1) {
+  var n = param$1[1];
+  var y = param[1];
+  var x = param[0];
+  if (param$1[0] === "Y") {
+    if (y > n) {
+      return [
+              x,
+              (n << 1) - y | 0
+            ];
+    } else {
+      return [
+              x,
+              y
+            ];
+    }
+  } else if (x > n) {
+    return [
+            (n << 1) - x | 0,
+            y
+          ];
+  } else {
+    return [
+            x,
+            y
+          ];
+  }
+}
+
+function getTransformedSize(t, param) {
+  var n = param[1];
+  var sizeX = Array2D$AdventOfCode.lengthX(t);
+  var sizeY = Array2D$AdventOfCode.lengthY(t);
+  if (param[0] === "Y") {
+    return [
+            sizeX,
+            n
+          ];
+  } else {
+    return [
+            n,
+            sizeY
+          ];
+  }
+}
+
+function transform(t, f) {
+  var new_size = getTransformedSize(t, f);
+  var t$p = Array2D$AdventOfCode.make(new_size, ".");
+  return Array2D$AdventOfCode.reduceWithIndex(t, t$p, (function (a, mark, coord) {
+                var coord$p = transformCoord(coord, f);
+                var new_mark = Belt_Option.getExn(Array2D$AdventOfCode.get(t, coord$p));
+                Array2D$AdventOfCode.set(a, coord$p, addMark(mark, new_mark));
+                return a;
+              }));
+}
+
+function transformFirst(t) {
+  return transform(t.paper, Belt_Option.getExn(Belt_Array.get(t.folds, 0)));
+}
+
+function transformAll(t) {
+  var folds = t.folds;
+  return Belt_Array.reduce(folds, t.paper, transform);
+}
+
+function toString(t) {
+  return Belt_Array.map(t, (function (x) {
+                  return x.join("");
+                })).join("\n");
+}
+
+var Paper = {
+  addMark: addMark,
+  countMark: countMark,
+  makeFoldDirection: makeFoldDirection,
+  getPaper: getPaper,
+  getFolds: getFolds,
+  findSize: findSize,
+  makePaper: makePaper,
+  makeFolds: makeFolds,
+  make: make,
+  transformCoord: transformCoord,
+  getTransformedSize: getTransformedSize,
+  transform: transform,
+  transformFirst: transformFirst,
+  transformAll: transformAll,
+  toString: toString
+};
 
 function parse(data) {
   var parsed = Utils$AdventOfCode.splitDoubleNewline(data);
@@ -21,8 +201,8 @@ function parse(data) {
           Belt_Array.map(Utils$AdventOfCode.splitNewline(coords), (function (x) {
                   var s = x.trim().split(",");
                   return [
-                          Belt_Int.fromString(Belt_Option.getExn(Belt_Array.get(s, 0))),
-                          Belt_Int.fromString(Belt_Option.getExn(Belt_Array.get(s, 1)))
+                          Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(s, 0), Belt_Int.fromString)),
+                          Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(s, 1), Belt_Int.fromString))
                         ];
                 })),
           Belt_Array.map(Utils$AdventOfCode.splitNewline(folds), (function (x) {
@@ -31,7 +211,7 @@ function parse(data) {
                   var s = sub.split("=");
                   return [
                           Belt_Option.getExn(Belt_Array.get(s, 0)),
-                          Belt_Int.fromString(Belt_Option.getExn(Belt_Array.get(s, 1)))
+                          Belt_Option.getExn(Belt_Option.flatMap(Belt_Array.get(s, 1), Belt_Int.fromString))
                         ];
                 }))
         ];
@@ -39,13 +219,16 @@ function parse(data) {
 
 function solvePart1(data) {
   var match = parse(data);
-  console.log("coords", match[0]);
-  console.log("folds", match[1]);
-  return 1;
+  var p = make(match[0], match[1]);
+  return countMark(transformFirst(p));
 }
 
 function solvePart2(data) {
-  return 2;
+  var match = parse(data);
+  var p = make(match[0], match[1]);
+  var p1 = transformAll(p);
+  console.log(toString(p1));
+  return countMark(p1);
 }
 
 exports.log = log;
