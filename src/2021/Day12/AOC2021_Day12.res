@@ -36,6 +36,8 @@ let is_visited = (visited, node) => {
   }
 }
 
+// should refactor this. 2021 Day 14 uses this too
+
 let inc_visited = (visited, node) => {
   switch visited->HashMap.String.get(node) {
   | Some(x) => visited->HashMap.String.set(node, x + 1)

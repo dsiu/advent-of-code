@@ -29,7 +29,7 @@ function morph(a, b, rules) {
   return Belt_Option.getExn(Belt_HashMapString.get(rules, k));
 }
 
-function iterate(param) {
+function iterate_no_tail_opt(param) {
   var inner = function (l, rules) {
     if (!l) {
       return /* [] */0;
@@ -57,6 +57,40 @@ function iterate(param) {
   return inner(param.template, param.rules);
 }
 
+function iterate(param) {
+  var _l = param.template;
+  var rules = param.rules;
+  var _acc = /* [] */0;
+  while(true) {
+    var acc = _acc;
+    var l = _l;
+    if (!l) {
+      return acc;
+    }
+    var match = l.tl;
+    var last = l.hd;
+    if (!match) {
+      return Belt_List.concat(acc, {
+                  hd: last,
+                  tl: /* [] */0
+                });
+    }
+    var h2 = match.hd;
+    _acc = Belt_List.concat(acc, {
+          hd: last,
+          tl: {
+            hd: morph(last, h2, rules),
+            tl: /* [] */0
+          }
+        });
+    _l = {
+      hd: h2,
+      tl: match.tl
+    };
+    continue ;
+  };
+}
+
 function iterateN(param, n) {
   var _t = param.template;
   var r = param.rules;
@@ -76,8 +110,8 @@ function iterateN(param, n) {
   };
 }
 
-function part1(t) {
-  var ret = iterateN(t, 10);
+function solve(t, n) {
+  var ret = iterateN(t, n);
   var r = Belt_HashMapString.toArray(Belt_List.reduce(ret, Belt_HashMapString.make(10), (function (acc, k) {
               var v = Belt_HashMapString.get(acc, k);
               if (v !== undefined) {
@@ -118,12 +152,23 @@ function part1(t) {
   return match[1] - match$1[1] | 0;
 }
 
+function part1(__x) {
+  return solve(__x, 10);
+}
+
+function part2(__x) {
+  return solve(__x, 40);
+}
+
 var Polymer = {
   make: make,
   morph: morph,
+  iterate_no_tail_opt: iterate_no_tail_opt,
   iterate: iterate,
   iterateN: iterateN,
-  part1: part1
+  solve: solve,
+  part1: part1,
+  part2: part2
 };
 
 function parse(data) {
@@ -144,11 +189,12 @@ function parse(data) {
 
 function solvePart1(data) {
   var match = parse(data);
-  return part1(make(match[0], match[1]));
+  return solve(make(match[0], match[1]), 10);
 }
 
 function solvePart2(data) {
-  return 2;
+  var match = parse(data);
+  return solve(make(match[0], match[1]), 40);
 }
 
 exports.log = log;
