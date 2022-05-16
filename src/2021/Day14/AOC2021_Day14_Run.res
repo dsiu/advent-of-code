@@ -2,8 +2,8 @@ let log = Js.Console.log
 let data = AOC2021_Day14_Data.data
 let sampleData = AOC2021_Day14_Data_Sample.data
 
-//let part1 = AOC2021_Day14.solvePart1(sampleData)
-let part1 = AOC2021_Day14.solvePart1(data)
+let part1 = AOC2021_Day14.solvePart1(sampleData)
+//let part1 = AOC2021_Day14.solvePart1(data)
 "Part 1 Result"->log
 part1->log
 
