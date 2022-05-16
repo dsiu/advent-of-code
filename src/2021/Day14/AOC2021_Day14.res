@@ -3,31 +3,9 @@ open Utils
 let log = Js.Console.log
 
 // should refactor this. 2021 Day 12 uses this too
-let update_value = (h, k, f) => {
-  h->HashMap.String.set(
-    k,
-    h->HashMap.String.get(k)->Option.mapWithDefault(f(None), x => f(Some(x))),
-  )
-  h
-}
 
-let increase_by_n = (v, n) => {
-  v->Option.mapWithDefault(n, x => x->Int64.add(n))
-}
-
-let increase_by_1 = increase_by_n(_, 1L)
-
-let update_value_inc_by_1 = (h, k) => update_value(h, k, increase_by_1)
-let update_value_inc_by_n = (h, k, n) => update_value(h, k, increase_by_n(_, n))
-
-let get_max_key_value_pair = Array.reduce(_, ("", 0L), (acc, (k, v)) => {
-  let (_, va) = acc
-  Int64.compare(v, va) > 0 ? (k, v) : acc
-})
-let get_min_key_value_pair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) => {
-  let (_, va) = acc
-  Int64.compare(v, va) < 0 ? (k, v) : acc
-})
+let update_value_inc_by_1 = (h, k) => hashMapStringUpdate(h, k, increaseBy1L)
+let update_value_inc_by_n = (h, k, n) => hashMapStringUpdate(h, k, increaseByInt64(_, n))
 
 module Polymer = {
   type template = list<string>
@@ -98,8 +76,8 @@ module Polymer = {
       })
     }->HashMap.String.toArray
 
-    let (_, max_n) = r->get_max_key_value_pair
-    let (_, min_n) = r->get_min_key_value_pair
+    let (_, max_n) = r->maxKeyInt64ValuePair
+    let (_, min_n) = r->minKeyInt64ValuePair
     max_n->Int64.sub(min_n)
   }
 
@@ -182,8 +160,8 @@ module Polymer = {
     //    r->HashMap.String.toArray->Js.log
     let c = r->countPolymers(t.template)->HashMap.String.toArray
 
-    let (_, max_n) = c->get_max_key_value_pair
-    let (_, min_n) = c->get_min_key_value_pair
+    let (_, max_n) = c->maxKeyInt64ValuePair
+    let (_, min_n) = c->minKeyInt64ValuePair
     max_n->Int64.sub(min_n)
   }
 

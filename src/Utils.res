@@ -42,6 +42,44 @@ let dump_mutableMapString_of_int = dump_mutableMapString_of(Int.toString)
 let dump_mutableMapString_of_int64 = dump_mutableMapString_of(Int64.to_string)
 
 //
+// Int / Int64
+//
+//@scope("Math") @val
+@val
+external parseInt: (~x: string, ~base: int) => int = "parseInt"
+let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
+
+let intFromStringExn = FP_Utils.compose(Int.fromString, Belt.Option.getExn)
+
+let add = (x, y) => x + y
+let sub = (x, y) => x - y
+let mul = (x, y) => x * y
+let div = (x, y) => x / y
+
+// Unsigned Int conversion
+let int32ToUint32 = x => {
+  open Js.TypedArray2
+  Uint32Array.make([x])->Uint32Array.unsafe_get(0)
+}
+
+let increaseByInt64 = (v, n) => {
+  v->Option.mapWithDefault(n, x => x->Int64.add(n))
+}
+
+let increaseBy1L = increaseByInt64(_, 1L)
+
+let increaseBy = (v, n) => {
+  v->Option.mapWithDefault(n, x => x + n)
+}
+
+let increaseBy1 = increaseBy(_, 1)
+
+//
+// Int64
+//
+let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
+
+//
 // list
 //
 let dump_list = List.forEach(_, log)
@@ -56,8 +94,7 @@ let splitDoubleNewline = Js.String2.split(_, "\n\n")
 //
 // array
 //
-let sum = (a, x) => a + x
-let sumIntArray = Array.reduce(_, 0, sum)
+let sumIntArray = Array.reduce(_, 0, add)
 let join = Js.Array2.joinWith(_, "")
 
 // sum up elements of array from ~offset with ~len (same as Array.slice)
@@ -82,27 +119,34 @@ let flatten = (xs: array<array<'a>>) => {
   xs->Array.reduce([], (a, x) => Array.concat(a, x))
 }
 
-// Unsigned Int conversion
-let int32ToUint32 = x => {
-  open Js.TypedArray2
-  Uint32Array.make([x])->Uint32Array.unsafe_get(0)
+let maxKeyIntValuePair = Array.reduce(_, ("", 0), (acc, (k, v)) => {
+  let (_, va) = acc
+  v > va ? (k, v) : acc
+})
+
+let minKeyIntValuePair = Array.reduce(_, ("", max_int), (acc, (k, v)) => {
+  let (_, va) = acc
+  v < va ? (k, v) : acc
+})
+
+let maxKeyInt64ValuePair = Array.reduce(_, ("", 0L), (acc, (k, v)) => {
+  let (_, va) = acc
+  Int64.compare(v, va) > 0 ? (k, v) : acc
+})
+
+let minKeyInt64ValuePair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) => {
+  let (_, va) = acc
+  Int64.compare(v, va) < 0 ? (k, v) : acc
+})
+
+//
+// Map / HashMap
+//
+
+let hashMapStringUpdate = (h, k, f) => {
+  h->HashMap.String.set(
+    k,
+    h->HashMap.String.get(k)->Option.mapWithDefault(f(None), x => f(Some(x))),
+  )
+  h
 }
-
-//
-// Int
-//
-//@scope("Math") @val
-@val
-external parseInt: (~x: string, ~base: int) => int = "parseInt"
-let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
-
-let intFromStringExn = FP_Utils.compose(Int.fromString, Belt.Option.getExn)
-
-let add = (x, y) => x + y
-let sub = (x, y) => x - y
-let mul = (x, y) => x * y
-let div = (x, y) => x / y
-//
-// Int64
-//
-let int64FromBitString = str => ("0b" ++ str)->Int64.of_string

@@ -505,7 +505,7 @@ function solve(data, algo) {
                   done.coord.y
                 ], (function (prim) {
                     return Math.abs(prim);
-                  })), 0, Utils$AdventOfCode.sum);
+                  })), 0, Utils$AdventOfCode.add);
 }
 
 function solvePart1(__x) {

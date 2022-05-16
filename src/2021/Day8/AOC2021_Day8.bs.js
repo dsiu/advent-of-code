@@ -340,7 +340,7 @@ function solvePart2(data) {
   var outputs = Belt_Array.map(parsed, (function (e) {
           return Belt_Option.getExn(Belt_Int.fromString(translateOutputs(e).join("")));
         }));
-  return Belt_Array.reduce(outputs, 0, Utils$AdventOfCode.sum);
+  return Belt_Array.reduce(outputs, 0, Utils$AdventOfCode.add);
 }
 
 exports.log = log;

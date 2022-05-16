@@ -30,27 +30,17 @@ module Maze = {
 //let is_visited = (visited, node) => count_node_in_array(visited, node) > 0
 
 let is_visited = (visited, node) => {
-  switch visited->HashMap.String.get(node) {
-  | Some(v) => v > 0
-  | None => false
-  }
+  visited->HashMap.String.get(node)->Option.mapWithDefault(false, v => v > 0)
 }
 
 // should refactor this. 2021 Day 14 uses this too
 
 let inc_visited = (visited, node) => {
-  switch visited->HashMap.String.get(node) {
-  | Some(x) => visited->HashMap.String.set(node, x + 1)
-  | None => visited->HashMap.String.set(node, 1)
-  }
-  visited
+  visited->hashMapStringUpdate(node, increaseBy1)
 }
 
 let get_visited_count = (visited, node) => {
-  switch visited->HashMap.String.get(node) {
-  | Some(x) => x
-  | None => 0
-  }
+  visited->HashMap.String.get(node)->Option.getWithDefault(0)
 }
 
 let is_upper_case = c => c->Js.String2.toUpperCase === c

@@ -226,9 +226,7 @@ function solvePart1(data) {
 function solvePart2(data) {
   var match = parse(data);
   var p = make(match[0], match[1]);
-  var p1 = transformAll(p);
-  console.log(toString(p1));
-  return countMark(p1);
+  return countMark(transformAll(p));
 }
 
 exports.log = log;

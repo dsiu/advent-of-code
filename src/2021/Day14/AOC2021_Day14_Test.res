@@ -2,32 +2,10 @@ open Jest
 open Expect
 open! Expect.Operators
 
-open Belt
-
 let data = AOC2021_Day14_Data.data
 let sampleData = AOC2021_Day14_Data_Sample.data
-open AOC2021_Day14
-
-let samplePolymer = {
-  let (template, rules) = sampleData->parse
-  Polymer.make(template, rules)
-}
-
-//let tally = s => {
-//let r = HashMap.String.make(~hintSize=40)
-//s->Utils.splitChars->Array.forEach(c => {
-
-//})
-//}
 
 describe("2021 Day14", () => {
-  test("solve (sample)", () => {
-    let expected = "NBCCNBBBCBHCB"
-    let steps = 2
-    let p = Polymer.solve(samplePolymer, steps)
-    expect(1) |> toEqual(1)
-  })
-
   test("Part 1 - Sample Data", () => {
     let result = AOC2021_Day14.solvePart1(sampleData)
     let expected = 1588L

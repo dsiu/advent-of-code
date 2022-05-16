@@ -165,6 +165,6 @@ let solvePart2 = data => {
 
   let p1 = p->Paper.transformAll
   //  Js.log("p1")
-  p1->Paper.toString->Js.log
+  //  p1->Paper.toString->Js.log
   p1->Paper.countMark
 }

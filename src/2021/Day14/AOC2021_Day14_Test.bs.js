@@ -6,15 +6,7 @@ var AOC2021_Day14$AdventOfCode = require("./AOC2021_Day14.bs.js");
 var AOC2021_Day14_Data$AdventOfCode = require("./AOC2021_Day14_Data.bs.js");
 var AOC2021_Day14_Data_Sample$AdventOfCode = require("./AOC2021_Day14_Data_Sample.bs.js");
 
-var match = AOC2021_Day14$AdventOfCode.parse(AOC2021_Day14_Data_Sample$AdventOfCode.data);
-
-var samplePolymer = AOC2021_Day14$AdventOfCode.Polymer.make(match[0], match[1]);
-
 Jest.describe("2021 Day14", (function (param) {
-        Jest.test("solve (sample)", (function (param) {
-                AOC2021_Day14$AdventOfCode.Polymer.solve(samplePolymer, 2);
-                return Jest.Expect.toEqual(1, Jest.Expect.expect(1));
-              }));
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2021_Day14$AdventOfCode.solvePart1(AOC2021_Day14_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual([
@@ -51,5 +43,4 @@ var sampleData = AOC2021_Day14_Data_Sample$AdventOfCode.data;
 
 exports.data = data;
 exports.sampleData = sampleData;
-exports.samplePolymer = samplePolymer;
-/* match Not a pure module */
+/*  Not a pure module */

@@ -3,6 +3,7 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_exceptions = require("rescript/lib/js/caml_exceptions.js");
 var Belt_HashMapString = require("rescript/lib/js/belt_HashMapString.js");
 var Belt_HashSetString = require("rescript/lib/js/belt_HashSetString.js");
@@ -41,31 +42,17 @@ var Maze = {
 };
 
 function is_visited(visited, node) {
-  var v = Belt_HashMapString.get(visited, node);
-  if (v !== undefined) {
-    return v > 0;
-  } else {
-    return false;
-  }
+  return Belt_Option.mapWithDefault(Belt_HashMapString.get(visited, node), false, (function (v) {
+                return v > 0;
+              }));
 }
 
 function inc_visited(visited, node) {
-  var x = Belt_HashMapString.get(visited, node);
-  if (x !== undefined) {
-    Belt_HashMapString.set(visited, node, x + 1 | 0);
-  } else {
-    Belt_HashMapString.set(visited, node, 1);
-  }
-  return visited;
+  return Utils$AdventOfCode.hashMapStringUpdate(visited, node, Utils$AdventOfCode.increaseBy1);
 }
 
 function get_visited_count(visited, node) {
-  var x = Belt_HashMapString.get(visited, node);
-  if (x !== undefined) {
-    return x;
-  } else {
-    return 0;
-  }
+  return Belt_Option.getWithDefault(Belt_HashMapString.get(visited, node), 0);
 }
 
 function is_upper_case(c) {
@@ -120,7 +107,7 @@ function can_visit_part2(visited, node) {
 
 function dfs(visit_func, t, start_node, end_node) {
   var explore = function (node, visited, acc, end_node) {
-    var visited$p = inc_visited(visited, node);
+    var visited$p = Utils$AdventOfCode.hashMapStringUpdate(visited, node, Utils$AdventOfCode.increaseBy1);
     if (node === end_node) {
       return [acc];
     }

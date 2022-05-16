@@ -207,7 +207,7 @@ let solve = (data, algo) => {
   let ship = Ship.make
   let done = ship->Ship.execute(ops, algo)
   //  done->log
-  [done.coord.x, done.coord.y]->Array.map(Js.Math.abs_int)->Array.reduce(0, sum)
+  [done.coord.x, done.coord.y]->Array.map(Js.Math.abs_int)->Array.reduce(0, add)
 }
 
 let solvePart1 = solve(_, Ship.part1Algo)

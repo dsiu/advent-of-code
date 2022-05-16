@@ -171,5 +171,5 @@ let solvePart2 = data => {
     parsed->Array.map(e =>
       e->Entry.translateOutputs->Js.Array2.joinWith("")->Int.fromString->Option.getExn
     )
-  outputs->Array.reduce(0, Utils.sum)
+  outputs->Array.reduce(0, Utils.add)
 }

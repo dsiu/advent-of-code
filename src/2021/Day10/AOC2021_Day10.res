@@ -267,7 +267,7 @@ let solvePart1 = data => {
   ->Array.map(process)
   ->Array.keepMap(corruptedOnly)
   ->Array.map(getCorruptedScore)
-  ->Array.reduce(0, sum)
+  ->Array.reduce(0, add)
 }
 
 let solvePart2 = data => {

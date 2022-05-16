@@ -474,7 +474,7 @@ function solvePart1(data) {
     }
     
   };
-  return Belt_Array.reduce(Belt_Array.map(Belt_Array.keepMap(Belt_Array.map(parse(data), $$process), corruptedOnly), getCorruptedScore), 0, Utils$AdventOfCode.sum);
+  return Belt_Array.reduce(Belt_Array.map(Belt_Array.keepMap(Belt_Array.map(parse(data), $$process), corruptedOnly), getCorruptedScore), 0, Utils$AdventOfCode.add);
 }
 
 function solvePart2(data) {
