@@ -2,8 +2,6 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-// should refactor this. 2021 Day 12 uses this too
-
 let update_value_inc_by_1 = (h, k) => hashMapStringUpdate(h, k, increaseBy1L)
 let update_value_inc_by_n = (h, k, n) => hashMapStringUpdate(h, k, increaseByInt64(_, n))
 
@@ -21,9 +19,11 @@ module Polymer = {
       template: template->List.fromArray,
       rules: {
         let r = HashMap.String.make(~hintSize=40)
+
         rules->Array.forEach(((k, v)) => {
           r->HashMap.String.set(k, v)->ignore
         })
+
         r
       },
     }
@@ -43,6 +43,7 @@ module Polymer = {
         List.concat(list{h1, morph(h1, h2, rules)}, inner(list{h2, ...rest}, rules))
       }
     }
+
     inner(template, rules)
   }
 
@@ -55,6 +56,7 @@ module Polymer = {
         inner(list{h2, ...rest}, rules, List.concat(acc, list{h1, morph(h1, h2, rules)}))
       }
     }
+
     inner(template, rules, list{})
   }
 
@@ -91,6 +93,7 @@ module Polymer = {
         inner(list{h2, ...rest}, acc)
       }
     }
+
     let acc = HashMap.String.make(~hintSize=40)
     inner(template, acc)
   }
@@ -112,6 +115,7 @@ module Polymer = {
 
   let iterate = (m, rules) => {
     let m' = HashMap.String.make(~hintSize=40)
+
     m->HashMap.String.forEach((k, v) => {
       k
       ->genNewKeys(rules)
@@ -119,6 +123,7 @@ module Polymer = {
         m'->update_value_inc_by_n(k', v)->ignore
       })
     })
+
     m'
   }
 
@@ -129,8 +134,8 @@ module Polymer = {
       | _ => inner(iterate(m, r), r, n - 1)
       }
     }
-    let init = genPairsMap(template)
 
+    let init = genPairsMap(template)
     inner(init, rules, n)
   }
 
@@ -147,11 +152,13 @@ module Polymer = {
 
     // first polymer is counted 2x - 1 times, others are counted 2x times
     let first_poly = template->List.headExn
+
     r->HashMap.String.forEach((k, v) => {
       //      let v' = k === first_poly ? (v + 1) / 2 : v / 2
       let v' = k === first_poly ? v->Int64.add(1L)->Int64.div(2L) : v->Int64.div(2L)
       r->HashMap.String.set(k, v')
     })
+
     r
   }
 
@@ -165,19 +172,6 @@ module Polymer = {
     max_n->Int64.sub(min_n)
   }
 
-  //  let solve = (t, n) => {
-  //    t->iteranteN(n)->HashMap.String.toArray
-  //    let (max_p, max_n) = r->Array.reduce(("", 0), (acc, (k, v)) => {
-  //      let (_, va) = acc
-  //      v > va ? (k, v) : acc
-  //    })
-  //    let (min_p, min_n) = r->Array.reduce(("", max_int), (acc, (k, v)) => {
-  //      let (_, va) = acc
-  //      v < va ? (k, v) : acc
-  //    })
-  //    max_n - min_n
-  //  }
-
   let part1 = solve_with_result(_, 10)
   let part2 = solve(_, 40)
 }
@@ -187,8 +181,8 @@ let parse = data => {
   open Option
 
   let parsed = data->splitDoubleNewline
-  let template = parsed[0]->Option.getExn
-  let rules = parsed[1]->Option.getExn
+  let template = parsed[0]->getExn
+  let rules = parsed[1]->getExn
   (
     template->trim->split(""),
     rules
