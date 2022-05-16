@@ -2,9 +2,10 @@
 'use strict';
 
 var Curry = require("rescript/lib/js/curry.js");
+var Int64 = require("rescript/lib/js/int64.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
-var Pervasives = require("rescript/lib/js/pervasives.js");
+var Caml_int64 = require("rescript/lib/js/caml_int64.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 var Belt_HashMapString = require("rescript/lib/js/belt_HashMapString.js");
@@ -13,6 +14,67 @@ var Utils$AdventOfCode = require("../../Utils.bs.js");
 function log(prim) {
   console.log(prim);
   
+}
+
+function update_value(h, k, f) {
+  Belt_HashMapString.set(h, k, Belt_Option.mapWithDefault(Belt_HashMapString.get(h, k), Curry._1(f, undefined), (function (x) {
+              return Curry._1(f, Caml_option.some(x));
+            })));
+  return h;
+}
+
+function increase_by_n(v, n) {
+  return Belt_Option.mapWithDefault(v, n, (function (x) {
+                return Caml_int64.add(x, n);
+              }));
+}
+
+function increase_by_1(__x) {
+  return increase_by_n(__x, Caml_int64.one);
+}
+
+function update_value_inc_by_1(h, k) {
+  return update_value(h, k, increase_by_1);
+}
+
+function update_value_inc_by_n(h, k, n) {
+  return update_value(h, k, (function (__x) {
+                return increase_by_n(__x, n);
+              }));
+}
+
+function get_max_key_value_pair(__x) {
+  return Belt_Array.reduce(__x, [
+              "",
+              Caml_int64.zero
+            ], (function (acc, param) {
+                var v = param[1];
+                if (Int64.compare(v, acc[1]) > 0) {
+                  return [
+                          param[0],
+                          v
+                        ];
+                } else {
+                  return acc;
+                }
+              }));
+}
+
+function get_min_key_value_pair(__x) {
+  return Belt_Array.reduce(__x, [
+              "",
+              Int64.max_int
+            ], (function (acc, param) {
+                var v = param[1];
+                if (Int64.compare(v, acc[1]) < 0) {
+                  return [
+                          param[0],
+                          v
+                        ];
+                } else {
+                  return acc;
+                }
+              }));
 }
 
 function make(template, rules) {
@@ -115,67 +177,11 @@ function iterateN_tail_opt(param, n) {
 function solve_with_result(t, n) {
   var ret = iterateN_tail_opt(t, n);
   var r = Belt_HashMapString.toArray(Belt_List.reduce(ret, Belt_HashMapString.make(10), (function (acc, k) {
-              var v = Belt_HashMapString.get(acc, k);
-              if (v !== undefined) {
-                Belt_HashMapString.set(acc, k, v + 1 | 0);
-              } else {
-                Belt_HashMapString.set(acc, k, 1);
-              }
-              return acc;
+              return update_value(acc, k, increase_by_1);
             })));
-  var match = Belt_Array.reduce(r, [
-        "",
-        0
-      ], (function (acc, param) {
-          var v = param[1];
-          if (v > acc[1]) {
-            return [
-                    param[0],
-                    v
-                  ];
-          } else {
-            return acc;
-          }
-        }));
-  var match$1 = Belt_Array.reduce(r, [
-        "",
-        Pervasives.max_int
-      ], (function (acc, param) {
-          var v = param[1];
-          if (v < acc[1]) {
-            return [
-                    param[0],
-                    v
-                  ];
-          } else {
-            return acc;
-          }
-        }));
-  return match[1] - match$1[1] | 0;
-}
-
-function update_value(h, k, f) {
-  var x = Belt_HashMapString.get(h, k);
-  if (x !== undefined) {
-    Belt_HashMapString.set(h, k, Curry._1(f, Caml_option.some(Caml_option.valFromOption(x))));
-  } else {
-    Belt_HashMapString.set(h, k, Curry._1(f, undefined));
-  }
-  return h;
-}
-
-function increase_by_n(v, n) {
-  if (v !== undefined) {
-    return v + n | 0;
-  } else {
-    return n;
-  }
-}
-
-function increase_by_1(h, k) {
-  return update_value(h, k, (function (__x) {
-                return increase_by_n(__x, 1);
-              }));
+  var match = get_max_key_value_pair(r);
+  var match$1 = get_min_key_value_pair(r);
+  return Caml_int64.sub(match[1], match$1[1]);
 }
 
 function genPairsMap(template) {
@@ -189,10 +195,10 @@ function genPairsMap(template) {
     var match = l.tl;
     var last = l.hd;
     if (!match) {
-      return increase_by_1(acc, last);
+      return update_value(acc, last, increase_by_1);
     }
     var h2 = match.hd;
-    increase_by_1(acc, last + h2);
+    update_value(acc, last + h2, increase_by_1);
     _l = {
       hd: h2,
       tl: match.tl
@@ -225,13 +231,7 @@ function iterate(m, rules) {
   var m$p = Belt_HashMapString.make(40);
   Belt_HashMapString.forEach(m, (function (k, v) {
           return Belt_Array.forEach(genNewKeys(k, rules), (function (k$p) {
-                        update_value(m$p, k$p, (function (v$p) {
-                                if (v$p !== undefined) {
-                                  return v + v$p | 0;
-                                } else {
-                                  return v;
-                                }
-                              }));
+                        update_value_inc_by_n(m$p, k$p, v);
                         
                       }));
         }));
@@ -255,27 +255,34 @@ function iterateN(param, n) {
   };
 }
 
-function countPolymers(m) {
+function countPolymers(m, template) {
   var r = Belt_HashMapString.make(40);
   Belt_HashMapString.forEach(m, (function (k, v) {
-          return Belt_Array.forEach(k.split(""), (function (c) {
-                        update_value(r, c, (function (v$p) {
-                                if (v$p !== undefined) {
-                                  return v$p + v | 0;
-                                } else {
-                                  return v;
-                                }
-                              }));
+          return Belt_Array.forEach(Utils$AdventOfCode.splitChars(k), (function (c) {
+                        update_value_inc_by_n(r, c, v);
                         
                       }));
+        }));
+  var first_poly = Belt_List.headExn(template);
+  Belt_HashMapString.forEach(r, (function (k, v) {
+          var v$p = k === first_poly ? Caml_int64.div(Caml_int64.add(v, Caml_int64.one), [
+                  0,
+                  2
+                ]) : Caml_int64.div(v, [
+                  0,
+                  2
+                ]);
+          return Belt_HashMapString.set(r, k, v$p);
         }));
   return r;
 }
 
 function solve(t, n) {
   var r = iterateN(t, n);
-  console.log(Belt_HashMapString.toArray(r));
-  return countPolymers(r);
+  var c = Belt_HashMapString.toArray(countPolymers(r, t.template));
+  var match = get_max_key_value_pair(c);
+  var match$1 = get_min_key_value_pair(c);
+  return Caml_int64.sub(match[1], match$1[1]);
 }
 
 function part1(__x) {
@@ -283,7 +290,7 @@ function part1(__x) {
 }
 
 function part2(__x) {
-  return solve(__x, 10);
+  return solve(__x, 40);
 }
 
 var Polymer = {
@@ -293,9 +300,6 @@ var Polymer = {
   iterate_tail_opt: iterate_tail_opt,
   iterateN_tail_opt: iterateN_tail_opt,
   solve_with_result: solve_with_result,
-  update_value: update_value,
-  increase_by_n: increase_by_n,
-  increase_by_1: increase_by_1,
   genPairsMap: genPairsMap,
   genNewKeys: genNewKeys,
   iterate: iterate,
@@ -329,12 +333,17 @@ function solvePart1(data) {
 
 function solvePart2(data) {
   var match = parse(data);
-  var p = make(match[0], match[1]);
-  console.log(Belt_HashMapString.toArray(solve(p, 10)));
-  return 2;
+  return solve(make(match[0], match[1]), 40);
 }
 
 exports.log = log;
+exports.update_value = update_value;
+exports.increase_by_n = increase_by_n;
+exports.increase_by_1 = increase_by_1;
+exports.update_value_inc_by_1 = update_value_inc_by_1;
+exports.update_value_inc_by_n = update_value_inc_by_n;
+exports.get_max_key_value_pair = get_max_key_value_pair;
+exports.get_min_key_value_pair = get_min_key_value_pair;
 exports.Polymer = Polymer;
 exports.parse = parse;
 exports.solvePart1 = solvePart1;

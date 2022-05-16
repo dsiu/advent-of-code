@@ -2,6 +2,33 @@ open Belt
 open Utils
 let log = Js.Console.log
 
+// should refactor this. 2021 Day 12 uses this too
+let update_value = (h, k, f) => {
+  h->HashMap.String.set(
+    k,
+    h->HashMap.String.get(k)->Option.mapWithDefault(f(None), x => f(Some(x))),
+  )
+  h
+}
+
+let increase_by_n = (v, n) => {
+  v->Option.mapWithDefault(n, x => x->Int64.add(n))
+}
+
+let increase_by_1 = increase_by_n(_, 1L)
+
+let update_value_inc_by_1 = (h, k) => update_value(h, k, increase_by_1)
+let update_value_inc_by_n = (h, k, n) => update_value(h, k, increase_by_n(_, n))
+
+let get_max_key_value_pair = Array.reduce(_, ("", 0L), (acc, (k, v)) => {
+  let (_, va) = acc
+  Int64.compare(v, va) > 0 ? (k, v) : acc
+})
+let get_min_key_value_pair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) => {
+  let (_, va) = acc
+  Int64.compare(v, va) < 0 ? (k, v) : acc
+})
+
 module Polymer = {
   type template = list<string>
   type rules = HashMap.String.t<string>
@@ -67,50 +94,22 @@ module Polymer = {
     let r = {
       let ret = t->iterateN_tail_opt(n)
       ret->List.reduce(HashMap.String.make(~hintSize=10), (acc, k) => {
-        switch acc->HashMap.String.get(k) {
-        | Some(v) => acc->HashMap.String.set(k, v + 1)
-        | None => acc->HashMap.String.set(k, 1)
-        }
-        acc
+        acc->update_value_inc_by_1(k)
       })
     }->HashMap.String.toArray
 
-    let (_, max_n) = r->Array.reduce(("", 0), (acc, (k, v)) => {
-      let (_, va) = acc
-      v > va ? (k, v) : acc
-    })
-    let (_, min_n) = r->Array.reduce(("", max_int), (acc, (k, v)) => {
-      let (_, va) = acc
-      v < va ? (k, v) : acc
-    })
-    max_n - min_n
+    let (_, max_n) = r->get_max_key_value_pair
+    let (_, min_n) = r->get_min_key_value_pair
+    max_n->Int64.sub(min_n)
   }
-
-  // should refactor this. 2021 Day 12 uses this too
-  let update_value = (h, k, f) => {
-    switch h->HashMap.String.get(k) {
-    | Some(x) => h->HashMap.String.set(k, f(Some(x)))
-    | None => h->HashMap.String.set(k, f(None))
-    }
-    h
-  }
-
-  let increase_by_n = (v, n) => {
-    switch v {
-    | Some(x) => x + n
-    | None => n
-    }
-  }
-
-  let increase_by_1 = (h, k) => update_value(h, k, increase_by_n(_, 1))
 
   let genPairsMap = template => {
     let rec inner = (l, acc) => {
       switch l {
       | list{} => acc
-      | list{last} => acc->increase_by_1(last)
+      | list{last} => acc->update_value_inc_by_1(last)
       | list{h1, h2, ...rest} =>
-        acc->increase_by_1(h1 ++ h2)->ignore
+        acc->update_value_inc_by_1(h1 ++ h2)->ignore
         inner(list{h2, ...rest}, acc)
       }
     }
@@ -139,14 +138,7 @@ module Polymer = {
       k
       ->genNewKeys(rules)
       ->Array.forEach(k' => {
-        m'
-        ->update_value(k', v' => {
-          switch v' {
-          | Some(x) => v + x
-          | None => v
-          }
-        })
-        ->ignore
+        m'->update_value_inc_by_n(k', v)->ignore
       })
     })
     m'
@@ -164,29 +156,35 @@ module Polymer = {
     inner(init, rules, n)
   }
 
-  let countPolymers = m => {
+  let countPolymers = (m, template) => {
     let r = HashMap.String.make(~hintSize=40)
+
     m->HashMap.String.forEach((k, v) => {
       k
-      ->Js.String2.split("")
+      ->Utils.splitChars
       ->Array.forEach(c => {
-        r
-        ->update_value(c, v' => {
-          switch v' {
-          | Some(x) => x + v
-          | None => v
-          }
-        })
-        ->ignore
+        r->update_value_inc_by_n(c, v)->ignore
       })
+    })
+
+    // first polymer is counted 2x - 1 times, others are counted 2x times
+    let first_poly = template->List.headExn
+    r->HashMap.String.forEach((k, v) => {
+      //      let v' = k === first_poly ? (v + 1) / 2 : v / 2
+      let v' = k === first_poly ? v->Int64.add(1L)->Int64.div(2L) : v->Int64.div(2L)
+      r->HashMap.String.set(k, v')
     })
     r
   }
 
   let solve = (t, n) => {
     let r = t->iterateN(n)
-    r->HashMap.String.toArray->Js.log
-    r->countPolymers
+    //    r->HashMap.String.toArray->Js.log
+    let c = r->countPolymers(t.template)->HashMap.String.toArray
+
+    let (_, max_n) = c->get_max_key_value_pair
+    let (_, min_n) = c->get_min_key_value_pair
+    max_n->Int64.sub(min_n)
   }
 
   //  let solve = (t, n) => {
@@ -203,7 +201,7 @@ module Polymer = {
   //  }
 
   let part1 = solve_with_result(_, 10)
-  let part2 = solve(_, 10)
+  let part2 = solve(_, 40)
 }
 
 let parse = data => {
@@ -237,6 +235,5 @@ let solvePart2 = data => {
   let p = Polymer.make(template, rules)
   //  p.template->List.toArray->Js.log
   //  p.rules->HashMap.String.toArray->Js.log
-  p->Polymer.part2->HashMap.String.toArray->Js.log
-  2
+  p->Polymer.part2
 }
