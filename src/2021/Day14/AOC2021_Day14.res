@@ -177,8 +177,8 @@ module Polymer = {
 }
 
 let parse = data => {
-  open Js.String2
-  open Option
+  let {getExn} = module(Option)
+  let {trim, split} = module(Js.String2)
 
   let parsed = data->splitDoubleNewline
   let template = parsed[0]->getExn
