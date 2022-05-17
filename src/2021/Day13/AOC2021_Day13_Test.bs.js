@@ -29,6 +29,12 @@ var data = AOC2021_Day13_Data$AdventOfCode.data;
 
 var sampleData = AOC2021_Day13_Data_Sample$AdventOfCode.data;
 
+var solvePart1 = AOC2021_Day13$AdventOfCode.solvePart1;
+
+var solvePart2 = AOC2021_Day13$AdventOfCode.solvePart2;
+
 exports.data = data;
 exports.sampleData = sampleData;
+exports.solvePart1 = solvePart1;
+exports.solvePart2 = solvePart2;
 /*  Not a pure module */
