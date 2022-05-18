@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 15 Start">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="IntelliJ project file update">
       <change afterPath="$PROJECT_DIR$/src/Play.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652785712603</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="IntelliJ project file update">
+      <created>1652891359880</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652891359880</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,7 +129,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="project file update" />
     <MESSAGE value="2021 Day 15 Start" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 15 Start" />
+    <MESSAGE value="IntelliJ project file update" />
+    <option name="LAST_COMMIT_MESSAGE" value="IntelliJ project file update" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
