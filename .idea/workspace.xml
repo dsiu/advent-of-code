@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="IntelliJ project file update">
+      <change afterPath="$PROJECT_DIR$/src/AdjacencyList.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HashSetTuple.res" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Play.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Adjacency_List.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Adjacency_List.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Adjacency_List.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Adjacency_List.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,6 +25,14 @@
   <component name="ChangesViewManager">
     <option name="groupingKeys">
       <option value="directory" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rescript Module" />
+        <option value="Rescript Interface" />
+      </list>
     </option>
   </component>
   <component name="Git.Settings">
@@ -44,11 +65,22 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/src/2021/Day15&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/node_modules/jest&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;
+    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Rescript&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -109,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652891359880</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="IntelliJ project file update">
+      <created>1652891392834</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652891392834</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,5 +174,9 @@
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

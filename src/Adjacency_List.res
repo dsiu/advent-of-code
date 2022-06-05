@@ -49,7 +49,7 @@ let removeEdge = (t, x, y) => {
 }
 
 let adjacent = (t, x, y) => {
-  switch t->HashMap.get(x) {
+  switch t->HashMap.String.get(x) {
   | Some(v) => v->HashSet.String.has(y)
   | None => false
   }

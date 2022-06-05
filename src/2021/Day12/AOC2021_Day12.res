@@ -3,17 +3,18 @@ open Utils
 let log = Js.Console.log
 
 module Maze = {
-  type t = Adjacency_List.t
+  module AdjList = AdjacencyList.AdjacencyList_String
+  type t = AdjList.t
 
   exception ParseError
 
   let make = edges => {
-    let maze = Adjacency_List.make(~hintSize=40)
+    let maze = AdjList.make(~hintSize=40)
     edges->Array.forEach(edge => {
       switch edge {
       | [a, b] => {
-          maze->Adjacency_List.addEdge(a, b)
-          maze->Adjacency_List.addEdge(b, a)
+          maze->AdjList.addEdge(a, b)
+          maze->AdjList.addEdge(b, a)
         }
       | _ => raise(ParseError)
       }
@@ -21,7 +22,7 @@ module Maze = {
     maze
   }
 
-  let toString = Adjacency_List.toString
+  let toString = AdjList.toString
 }
 
 //let array_count = (xs, predicate) => xs->Array.keep(predicate)->Array.size

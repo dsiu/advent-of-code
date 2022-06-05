@@ -3,7 +3,6 @@
 
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
-var Belt_HashMap = require("rescript/lib/js/belt_HashMap.js");
 var Belt_HashMapString = require("rescript/lib/js/belt_HashMapString.js");
 var Belt_HashSetString = require("rescript/lib/js/belt_HashSetString.js");
 
@@ -53,7 +52,7 @@ function removeEdge(t, x, y) {
 }
 
 function adjacent(t, x, y) {
-  var v = Belt_HashMap.get(t, x);
+  var v = Belt_HashMapString.get(t, x);
   if (v !== undefined) {
     return Belt_HashSetString.has(Caml_option.valFromOption(v), y);
   } else {
