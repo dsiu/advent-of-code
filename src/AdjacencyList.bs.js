@@ -66,7 +66,7 @@ function toString(t) {
   return str.contents;
 }
 
-var AdjacencyList_String = {
+var AdjList_String = {
   make: Belt_HashMapString.make,
   addVertex: addVertex,
   removeVertex: removeVertex,
@@ -161,6 +161,6 @@ var AdjacencyList_Tuple = {
   toString: toString$1
 };
 
-exports.AdjacencyList_String = AdjacencyList_String;
+exports.AdjList_String = AdjList_String;
 exports.AdjacencyList_Tuple = AdjacencyList_Tuple;
 /* HashSetTuple Not a pure module */

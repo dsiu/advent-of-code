@@ -3,7 +3,7 @@ open Utils
 let log = Js.Console.log
 
 module Maze = {
-  module AdjList = AdjacencyList.AdjacencyList_String
+  module AdjList = AdjacencyList.AdjList_String
   type t = AdjList.t
 
   exception ParseError

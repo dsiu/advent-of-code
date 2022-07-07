@@ -20,7 +20,7 @@ function log(prim) {
 var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day12-AdventOfCode.Maze.ParseError");
 
 function make(edges) {
-  var maze = Curry._1(AdjacencyList$AdventOfCode.AdjacencyList_String.make, 40);
+  var maze = Curry._1(AdjacencyList$AdventOfCode.AdjList_String.make, 40);
   Belt_Array.forEach(edges, (function (edge) {
           if (edge.length !== 2) {
             throw {
@@ -30,13 +30,13 @@ function make(edges) {
           }
           var a = edge[0];
           var b = edge[1];
-          AdjacencyList$AdventOfCode.AdjacencyList_String.addEdge(maze, a, b);
-          return AdjacencyList$AdventOfCode.AdjacencyList_String.addEdge(maze, b, a);
+          AdjacencyList$AdventOfCode.AdjList_String.addEdge(maze, a, b);
+          return AdjacencyList$AdventOfCode.AdjList_String.addEdge(maze, b, a);
         }));
   return maze;
 }
 
-var toString = AdjacencyList$AdventOfCode.AdjacencyList_String.toString;
+var toString = AdjacencyList$AdventOfCode.AdjList_String.toString;
 
 var Maze = {
   AdjList: undefined,
