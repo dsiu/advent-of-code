@@ -17,7 +17,7 @@ describe("2018 Day6", () => {
       let expected = [Coord.make(~x=1, ~y=2), Coord.make(~x=3, ~y=4), Coord.make(~x=5, ~y=6)]
       let result = td->Js.String2.split("\n")->Coord.parseCoords
 
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("maxXY", () => {
@@ -27,7 +27,7 @@ describe("2018 Day6", () => {
       let expected = Coord.make(~x=5, ~y=8)
       let result = td->Js.String2.split("\n")->Coord.parseCoords->Coord.maxXY
 
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("minXY", () => {
@@ -37,7 +37,7 @@ describe("2018 Day6", () => {
       let expected = Coord.make(~x=0, ~y=1)
       let result = td->Js.String2.split("\n")->Coord.parseCoords->Coord.minXY
 
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("dist", () => {
@@ -46,14 +46,14 @@ describe("2018 Day6", () => {
       let expected = 39
       let result = Coord.dist(a, b)
 
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     Skip.test("Solve Part 1", () => {
       let result = 1
 
       let expected = 1
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
   })
 
@@ -62,7 +62,7 @@ describe("2018 Day6", () => {
       let result = 1
 
       let expected = 1
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
   })
 })

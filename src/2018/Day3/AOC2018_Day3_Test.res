@@ -11,7 +11,7 @@ describe("2018 Day3", () => {
       let result = Claim.parseLine(test_line)
       let expected = [test_line, "1", "669", "271", "17", "11"]
 
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("make claim", () => {
@@ -19,7 +19,7 @@ describe("2018 Day3", () => {
       let result = Claim.makeClaim(test_line)
       let expected = Claim.make(~id=1, ~x=669, ~y=271, ~w=17, ~h=11)
 
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("find max x", () => {
@@ -28,7 +28,7 @@ describe("2018 Day3", () => {
 
       let result = [test_line1, test_line2]->Claims.make->Claims.findMaxX
 
-      expect(result) |> toEqual(278)
+      expect(result)->toEqual(278)
     })
 
     test("find max y", () => {
@@ -37,7 +37,7 @@ describe("2018 Day3", () => {
 
       let result = [test_line1, test_line2]->Claims.make->Claims.findMaxY
 
-      expect(result) |> toEqual(390)
+      expect(result)->toEqual(390)
     })
 
     let add = Utils.add
@@ -47,21 +47,21 @@ describe("2018 Day3", () => {
       let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(add)
       let result1 = test_fab->Fabric.getPoint(~x=1, ~y=1)
       let result2 = test_fab->Fabric.getPoint(~x=3, ~y=5)
-      expect((result1, result2)) |> toEqual((Some([2]), Some([8])))
+      expect((result1, result2))->toEqual((Some([2]), Some([8])))
     })
 
     test("fabric matrix - single value per point *", () => {
       let test_fab = Fabric.make(~w=10, ~h=10)->Fabric.fill(mul)
       let result1 = test_fab->Fabric.getPoint(~x=2, ~y=2)
       let result2 = test_fab->Fabric.getPoint(~x=4, ~y=6)
-      expect((result1, result2)) |> toEqual((Some([4]), Some([24])))
+      expect((result1, result2))->toEqual((Some([4]), Some([24])))
     })
 
     test("fabric matrix - multiple value per point +/*", () => {
       let test_fab = Fabric.make(~w=15, ~h=15)->Fabric.fill(add)->Fabric.fill(mul)
       let result1 = test_fab->Fabric.getPoint(~x=9, ~y=8)
       let result2 = test_fab->Fabric.getPoint(~x=2, ~y=5)
-      expect((result1, result2)) |> toEqual((Some([17, 72]), Some([7, 10])))
+      expect((result1, result2))->toEqual((Some([17, 72]), Some([7, 10])))
     })
 
     test("fabric add claim (demo case)", () => {
@@ -87,12 +87,12 @@ describe("2018 Day3", () => {
 
       let expected = (one, one, one, two, three, 4)
 
-      expect(results) |> toEqual(4)
+      expect(results)->toEqual(4)
     })
 
     test("solve Part1", () => {
       let result = solvePart1()
-      expect(result) |> toEqual(118223)
+      expect(result)->toEqual(118223)
     })
 
     test("part 2 (demo case)", () => {
@@ -107,12 +107,12 @@ describe("2018 Day3", () => {
         acc->Fabric.addClaim(i)
       })
       let result = test_fab->Fabric.countNonOverlapClaim(allClaims)
-      expect(result) |> toEqual([Some(11)])
+      expect(result)->toEqual([Some(11)])
     })
 
     test("solve part2", () => {
       let result = solvePart2()
-      expect(result) |> toEqual([Some(412)])
+      expect(result)->toEqual([Some(412)])
     })
   })
 })

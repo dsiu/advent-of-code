@@ -11,20 +11,20 @@ describe("2020 Day2", () => {
     let result = solvePart1(sampleData)
     let expected = 2
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = solvePart1(data)
     let expected = 383
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
     let expected = 272
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })

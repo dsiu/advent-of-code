@@ -13,14 +13,14 @@ describe("2020 Day4", () => {
     let result = AOC2020_Day4.solvePart1(sampleData)
     let expected = 2
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2020_Day4.solvePart1(data)
     let expected = 206
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("validators yr", () => {
@@ -30,7 +30,7 @@ describe("2020 Day4", () => {
     let result = [yr("1970"), yr("2010"), yr("2002")]
     let expected = [true, false, true]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("validators hgt", () => {
@@ -51,7 +51,7 @@ describe("2020 Day4", () => {
     ]
     let expected = [false, true, true, true, false, true, false, false, false, false]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("validators hcl", () => {
@@ -69,7 +69,7 @@ describe("2020 Day4", () => {
     ]
     let expected = [true, false, true, false, false, false, true]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("validators ecl", () => {
@@ -90,7 +90,7 @@ describe("2020 Day4", () => {
     ]
     let expected = [true, true, true, true, true, true, true, false, false, false]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("validators pid", () => {
@@ -106,13 +106,13 @@ describe("2020 Day4", () => {
     ]
     let expected = [true, true, false, false, false]
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_Day4.solvePart2(data)
     let expected = 123
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })

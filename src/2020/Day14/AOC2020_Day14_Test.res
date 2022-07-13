@@ -13,14 +13,14 @@ describe("2020 Day14", () => {
     let result = AOC2020_Day14.solvePart1(sampleData)
     let expected = Int64.of_string("165")
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2020_Day14.solvePart1(data)
     let expected = Int64.of_string("17765746710228")
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Mem Address Decoder 1 ", () => {
@@ -29,7 +29,7 @@ describe("2020 Day14", () => {
 
     let result = Program.decodeAddress(mask, address)
     let expected = ["26", "58", "27", "59"]
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Mem Address Decoder 2 ", () => {
@@ -38,13 +38,13 @@ describe("2020 Day14", () => {
 
     let result = Program.decodeAddress(mask, address)
     let expected = ["16", "24", "18", "26", "17", "25", "19", "27"]
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_Day14.solvePart2(data)
     let expected = Int64.of_string("4401465949086")
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })

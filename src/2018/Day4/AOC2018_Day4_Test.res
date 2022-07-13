@@ -12,13 +12,13 @@ describe("2018 Day4", () => {
     test("Solve Part 1 - sampleData", () => {
       let result = AOC2018_Day4.solvePart1(sampleData)
       let expected = 240
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("Solve Part 1 - Data", () => {
       let result = AOC2018_Day4.solvePart1(data)
       let expected = 48_680
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
   })
 
@@ -26,13 +26,13 @@ describe("2018 Day4", () => {
     test("Solve Part 2 - sampleData", () => {
       let result = AOC2018_Day4.solvePart2(sampleData)
       let expected = 4455
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("Solve Part 2 - Data", () => {
       let result = AOC2018_Day4.solvePart2(data)
       let expected = 94_826
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
   })
 })

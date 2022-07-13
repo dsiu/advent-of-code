@@ -12,27 +12,27 @@ describe("2020 DayX", () => {
     let result = AOC2020_DayX.solvePart1(sampleData)
     let expected = 1
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2020_DayX.solvePart1(data)
     let expected = 1
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Sample Data", () => {
     let result = AOC2020_DayX.solvePart2(sampleData)
     let expected = 2
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_DayX.solvePart2(data)
     let expected = 2
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })

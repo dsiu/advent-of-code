@@ -19,7 +19,7 @@
     }
   ],
   "package-specs": {
-    "module": "commonjs",
+    "module": "es6",
     "in-source": true
   },
   "suffix": ".bs.js",
@@ -30,7 +30,7 @@
     "re-fp"
   ],
   "bs-dev-dependencies": [
-    "@glennsl/bs-jest"
+    "@glennsl/rescript-jest"
   ],
   "warnings": {
     "error": "+101"

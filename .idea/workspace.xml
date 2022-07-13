@@ -5,17 +5,254 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="Adjacency List - WIP">
-      <change afterPath="$PROJECT_DIR$/src/AdjacencyList_Str.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/reason.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reason.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/Array2D_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Array2D_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/ChineseRemainder_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/ChineseRemainder_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/Coordinate_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Coordinate_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/Lens_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Lens_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/Lens_Test.re" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Lens_Test.re" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/Powerset_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Powerset_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/Stack_Array_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Stack_Array_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/Stack_Float_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Stack_Float_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/bsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interop/Jest2.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/interop/Jest2.bs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day1/AOC2018_Day1_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day5/AOC2018_Day5_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day1/AOC2020_Day1_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day10/AOC2020_Day10_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day3/AOC2020_Day3_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day5/AOC2020_Day5_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day6/AOC2020_Day6_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Sample.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Sample.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day8/AOC2020_Day8_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/DayX/AOC2020_DayX_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day11/AOC2021_Day11_Test.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.bs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day13/AOC2021_Day13_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Data.bs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Data_Sample.bs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Data_Sample.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Data_Sample.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day3/AOC2021_Day3_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9_Test.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Data.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Data.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Data_Sample.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Data_Sample.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Test.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Test.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Test.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AdjacencyList.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyList.bs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdjacencyList.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyList.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdjacencyList_Str.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyList_Str.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Adjacency_List.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Adjacency_List.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Array2D.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Array2D.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChineseRemainder.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChineseRemainder.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Coordinate.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coordinate.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FP_Utils.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HashSetTuple.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/HashSetTuple.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JS_Debug.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/JS_Debug.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JS_Debug_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/JS_Debug_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Play.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Play.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Powerset.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Powerset.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ResLogger.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ResLogger.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ResLogger_Run.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ResLogger_Run.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Stack.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stack.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Stack_Array.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stack_Array.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Unsigned_Int.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Unsigned_Int.bs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils.bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.bs.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,35 +291,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/src&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.reason&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/dsiu/code/playground/advent-of-code/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/dsiu/code/playground/advent-of-code/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "ruby.rails.projectView.checked": "true",
+    "settings.editor.selected.configurable": "editor.preferences.completion"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;Rescript&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Rescript"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -90,6 +327,16 @@
     </key>
   </component>
   <component name="RunManager" selected="Jest.All Tests">
+    <configuration name="AOC2021_Day14_Test.bs.js" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <jest-options value="AOC2021_Day14_Test.bs.js" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method v="2" />
+    </configuration>
     <configuration name="All Tests" type="JavaScriptTestRunnerJest" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -99,15 +346,26 @@
       <scope-kind value="ALL" />
       <method v="2" />
     </configuration>
+    <configuration name="AOC2021_Day14_Run.bs.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day14/AOC2021_Day14_Run.bs.js" working-dir="$PROJECT_DIR$/src/2021/Day14">
+      <method v="2" />
+    </configuration>
+    <configuration name="AOC2021_Day15_Run.bs.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Run.bs.js" working-dir="$PROJECT_DIR$/src/2021/Day15">
+      <method v="2" />
+    </configuration>
     <configuration name="Play.bs.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="Play.bs.js" working-dir="$PROJECT_DIR$/src">
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Jest.All Tests" />
+      <item itemvalue="Jest.AOC2021_Day14_Test.bs.js" />
+      <item itemvalue="Node.js.AOC2021_Day14_Run.bs.js" />
+      <item itemvalue="Node.js.AOC2021_Day15_Run.bs.js" />
       <item itemvalue="Node.js.Play.bs.js" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.AOC2021_Day14_Run.bs.js" />
+        <item itemvalue="Node.js.AOC2021_Day15_Run.bs.js" />
         <item itemvalue="Node.js.Play.bs.js" />
       </list>
     </recent_temporary>
@@ -156,7 +414,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654442775231</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Adjacency List - WIP">
+      <created>1657173709737</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1657173709737</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,7 +450,22 @@
     <settings-migrated>true</settings-migrated>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
+    <expand>
+      <path>
+        <item name="advent-of-code" type="b2602c69:ProjectViewProjectNode" />
+        <item name="advent-of-code" type="462c0819:PsiDirectoryNode" />
+      </path>
+    </expand>
     <select />
+  </component>
+  <component name="regexState">
+    <option name="map">
+      <map>
+        <entry key="flags" value="0" />
+        <entry key="mode" value="0" />
+        <entry key="regex" value="/node_modules/(?!((rescript)||(bs-platform)||(@glennsl/bs-jest/)))" />
+        <entry key="text" value="dsiu/node_modules/bs-platform/ &#10;dsiu/node_modules/rescript/&#10;dsiu/node_modules/fun&#10;dsiu/node_modules/@glennsl/bs-jest/&#10;dsiu/node_modules/@glennsl/b-jest1/&#10;rescript/lib/es6" />
+      </map>
+    </option>
   </component>
 </project>

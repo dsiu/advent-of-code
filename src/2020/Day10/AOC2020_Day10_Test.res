@@ -12,20 +12,20 @@ describe("2020 Day10", () => {
     let result = AOC2020_Day10.solvePart1(sampleData)
     let expected = 35
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2020_Day10.solvePart1(data)
     let expected = 2470
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_Day10.solvePart2(data)
     let expected = 1_973_822_685_184.0
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })

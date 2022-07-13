@@ -12,27 +12,27 @@ describe("2021 Day7", () => {
     let result = AOC2021_Day7.solvePart1(sampleData)
     let expected = 37
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = AOC2021_Day7.solvePart1(data)
     let expected = 331_067
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Sample Data", () => {
     let result = AOC2021_Day7.solvePart2(sampleData)
     let expected = 168
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = AOC2021_Day7.solvePart2(data)
     let expected = 92_881_128
 
-    expect(result) |> toEqual(expected)
+    expect(result)->toEqual(expected)
   })
 })

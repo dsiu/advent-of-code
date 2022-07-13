@@ -27,7 +27,7 @@ describe("2018 Day5", () => {
         fuse(("A", "a")),
       )
       let expected = (false, true, false, true, true, false, true)
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     // test("defuse", () => {
@@ -35,21 +35,21 @@ describe("2018 Day5", () => {
     // let result = d->defuse_old
     // let expected = list{list{"a", "b"}, list{"a", "B"}, list{"E", "Z"}}
     //
-    // expect(result) |> toEqual(expected)
+    // expect(result) -> toEqual(expected)
     // })
 
     test("Solve Part 1 - sampleData list", () => {
       let result = testCharList->defuse->List.toArray->Js.Array2.joinWith(_, "")
       // dabAcCaCBAcCcaDA
       let expected = "dabCBAcaDA"
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("Solve Part 1 - sampleData array", () => {
       let result = testCharArray->defuse_array->Js.Array2.joinWith(_, "")
       // dabAcCaCBAcCcaDA
       let expected = "dabCBAcaDA"
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     // answer: 11814
@@ -58,7 +58,7 @@ describe("2018 Day5", () => {
       let result = charArray->defuse_array->Js.Array2.joinWith(_, "")->Js.String.length
 
       let expected = AOC2018_Day5_Data.result->Js.String.length
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
   })
 
@@ -69,20 +69,20 @@ describe("2018 Day5", () => {
         testCharArray->Array.keep(notIsLetterAndUpper("b")),
       )
       let expected = ("dbcCCBcCcD"->Js.String2.split(""), "daAcCaCAcCcaDA"->Js.String2.split(""))
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     test("Solve Part 2 - sampleData", () => {
       let result = AOC2018_Day5.solvePart2(aTod, testCharArray)
       let expected = 4
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
 
     // skipped by default since it takes 20sec x 26
     Skip.test("Solve Part 2 - Data", () => {
       let result = AOC2018_Day5.solvePart2(aToz, charArray)
       let expected = 4282
-      expect(result) |> toEqual(expected)
+      expect(result)->toEqual(expected)
     })
   })
 })
