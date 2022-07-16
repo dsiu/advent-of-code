@@ -27,7 +27,8 @@
     "rationale",
     "@ryyppy/rescript-promise",
     "rescript-js",
-    "re-fp"
+    "re-fp",
+    "rescript-ocamlgraph"
   ],
   "bs-dev-dependencies": [
     "@glennsl/rescript-jest"

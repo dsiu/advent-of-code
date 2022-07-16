@@ -41,6 +41,7 @@
     "rationale": "^0.2.0",
     "re-fp": "github:snatvb/re-fp",
     "rescript-js": "^0.7.0",
+    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#main",
     "rescript-vector": "^0.4.0"
   }
 }

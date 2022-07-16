@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="Convert to ES6 module">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="update project file">
+      <change afterPath="$PROJECT_DIR$/src/basic.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/bsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +25,7 @@
       <list>
         <option value="Rescript Module" />
         <option value="Rescript Interface" />
+        <option value="Reason Module" />
       </list>
     </option>
   </component>
@@ -82,7 +86,7 @@
       <recent name="$PROJECT_DIR$/src/2021/Day15" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.All Tests">
+  <component name="RunManager" selected="Node.js.Graph_Basic.bs.js">
     <configuration name="AOC2021_Day14_Test.bs.js" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -108,18 +112,23 @@
     <configuration name="AOC2021_Day15_Run.bs.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15_Run.bs.js" working-dir="$PROJECT_DIR$/src/2021/Day15">
       <method v="2" />
     </configuration>
+    <configuration name="Graph_Basic.bs.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/Graph_Basic.bs.js" working-dir="$PROJECT_DIR$/src">
+      <method v="2" />
+    </configuration>
     <configuration name="Play.bs.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="Play.bs.js" working-dir="$PROJECT_DIR$/src">
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Jest.All Tests" />
       <item itemvalue="Jest.AOC2021_Day14_Test.bs.js" />
+      <item itemvalue="Node.js.Graph_Basic.bs.js" />
       <item itemvalue="Node.js.AOC2021_Day14_Run.bs.js" />
       <item itemvalue="Node.js.AOC2021_Day15_Run.bs.js" />
       <item itemvalue="Node.js.Play.bs.js" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.Graph_Basic.bs.js" />
         <item itemvalue="Node.js.Play.bs.js" />
         <item itemvalue="Node.js.AOC2021_Day15_Run.bs.js" />
         <item itemvalue="Node.js.AOC2021_Day14_Run.bs.js" />
@@ -184,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657699213451</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update project file">
+      <created>1657765558832</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1657765558832</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +223,8 @@
     <MESSAGE value="IntelliJ project file update" />
     <MESSAGE value="Adjacency List - WIP" />
     <MESSAGE value="Convert to ES6 module" />
-    <option name="LAST_COMMIT_MESSAGE" value="Convert to ES6 module" />
+    <MESSAGE value="update project file" />
+    <option name="LAST_COMMIT_MESSAGE" value="update project file" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
