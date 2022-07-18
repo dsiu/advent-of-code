@@ -5,9 +5,9 @@ let {solvePart1, solvePart2} = module(AOC2021_Day15)
 
 let part1 = solvePart1(sampleData)
 //let part1 = solvePart1(data)
-"Part 1 Result"->log
-part1->log
+//"Part 1 Result"->log
+//part1->log
 //let part1 = solvePart2(sampleData)
-let part2 = solvePart2(data)
-"Part 2 Result"->log
-part2->log
+//let part2 = solvePart2(data)
+//"Part 2 Result"->log
+//part2->log
