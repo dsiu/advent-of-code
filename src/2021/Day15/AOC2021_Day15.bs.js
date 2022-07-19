@@ -2,11 +2,11 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Format from "rescript/lib/es6/format.js";
-import * as Hashtbl from "rescript/lib/es6/hashtbl.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Path$Graph from "rescript-ocamlgraph/src/path.bs.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Graphviz$Graph from "rescript-ocamlgraph/src/graphviz.bs.js";
 import * as Imperative$Graph from "rescript-ocamlgraph/src/imperative.bs.js";
@@ -26,58 +26,79 @@ function log2(prim0, prim1) {
 
 var compare = Caml_obj.caml_compare;
 
-var equal = Caml_obj.caml_equal;
-
 var E = {
   compare: compare,
-  hash: Hashtbl.hash,
-  equal: equal,
   $$default: 0
 };
 
-function compare$1(param, param$1) {
-  var dy = param$1[1] - param[1] | 0;
-  var dx = param$1[0] - param[0] | 0;
-  if (dx === 0 && dy === 0) {
-    return 0;
-  } else if (dx > 0 && dy > 0) {
-    return 1;
-  } else {
-    return dx + dy | 0;
-  }
+var V = {};
+
+function W(E) {
+  var add = function (prim0, prim1) {
+    return prim0 + prim1 | 0;
+  };
+  var compare = Caml_obj.caml_compare;
+  return {
+          weight: E.label,
+          zero: 0,
+          add: add,
+          compare: compare
+        };
 }
 
-function equal$1(v1, v2) {
-  return compare$1(v1, v2) === 0;
-}
+var partial_arg = Imperative$Graph.Digraph.AbstractLabeled;
 
-function hash(param) {
-  return Hashtbl.hash([
-              param[0],
-              param[1]
-            ]);
-}
+var G = partial_arg(V, E);
 
-var V = {
-  compare: compare$1,
-  equal: equal$1,
-  seed: 31,
-  hash: hash
+var $$let = G.E;
+
+var partial_arg_V = G.V;
+
+var partial_arg_E = {
+  label: $$let.label,
+  src: $$let.src,
+  dst: $$let.dst,
+  create: $$let.create
 };
 
-var partial_arg = {
-  compare: compare$1,
-  hash: hash,
-  equal: equal$1
+var partial_arg_iter_vertex = G.iter_vertex;
+
+var partial_arg_fold_vertex = G.fold_vertex;
+
+var partial_arg_iter_succ = G.iter_succ;
+
+var partial_arg_iter_succ_e = G.iter_succ_e;
+
+var partial_arg_fold_edges_e = G.fold_edges_e;
+
+var partial_arg_nb_vertex = G.nb_vertex;
+
+var partial_arg$1 = {
+  V: partial_arg_V,
+  E: partial_arg_E,
+  iter_vertex: partial_arg_iter_vertex,
+  fold_vertex: partial_arg_fold_vertex,
+  iter_succ: partial_arg_iter_succ,
+  iter_succ_e: partial_arg_iter_succ_e,
+  fold_edges_e: partial_arg_fold_edges_e,
+  nb_vertex: partial_arg_nb_vertex
 };
 
-var partial_arg$1 = Imperative$Graph.Graph.ConcreteLabeled;
+var partial_arg$2 = Path$Graph.Dijkstra;
 
-var G = (function (param) {
-      return partial_arg$1(partial_arg, param);
+function add(prim0, prim1) {
+  return prim0 + prim1 | 0;
+}
+
+var compare$1 = Caml_obj.caml_compare;
+
+var Dij = (function (param) {
+      return partial_arg$2(partial_arg$1, param);
     })({
-      compare: compare,
-      $$default: 0
+      weight: G.E.label,
+      compare: compare$1,
+      add: add,
+      zero: 0
     });
 
 function adjCoords(c) {
@@ -113,38 +134,88 @@ function getAdjacents(t, param) {
               }));
 }
 
-function make(lines) {
-  return Array2D$AdventOfCode.reduceWithIndex(lines, Curry._2(G.create, undefined, undefined), (function (g, e, c) {
-                var y = c[1];
-                var x = c[0];
-                Belt_List.forEach(getAdjacents(lines, c), (function (param) {
-                        var cost = param._1;
-                        var match = param._0;
-                        var y$p = match[1];
-                        var x$p = match[0];
-                        Curry._2(G.add_edge_e, g, [
-                              [
-                                x,
-                                y
-                              ],
-                              cost,
-                              [
-                                x$p,
-                                y$p
-                              ]
-                            ]);
-                        var prim = "(" + String(x) + ", " + String(y) + ")[" + String(hash([
-                                  x,
-                                  y
-                                ])) + "], " + String(cost) + ", (" + String(x$p) + ", " + String(y$p) + ")[(" + String(hash([
-                                  x$p,
-                                  y$p
-                                ])) + ")]";
-                        console.log(prim);
-                        
-                      }));
-                return g;
+function makeNodes(g, lines) {
+  return Array2D$AdventOfCode.mapWithIndex(lines, (function (c, param) {
+                var v = Curry._1(G.V.create, c);
+                Curry._2(G.add_vertex, g, v);
+                return v;
               }));
+}
+
+function node(nodes, x, y) {
+  return Array2D$AdventOfCode.getExn(nodes, [
+              x,
+              y
+            ]);
+}
+
+function make(lines) {
+  var g = Curry._2(G.create, undefined, undefined);
+  var nodes = makeNodes(g, lines);
+  var g$1 = Array2D$AdventOfCode.reduceWithIndex(lines, g, (function (g, e, c) {
+          var v = node(nodes, c[0], c[1]);
+          Belt_List.forEach(getAdjacents(lines, c), (function (param) {
+                  var match = param._0;
+                  var v$p = node(nodes, match[0], match[1]);
+                  return Curry._2(G.add_edge_e, g, Curry._3(G.E.create, v, param._1, v$p));
+                }));
+          return g;
+        }));
+  return {
+          nodes: nodes,
+          g: g$1
+        };
+}
+
+function solve(param) {
+  var nodes = param.nodes;
+  var dest_x = Array2D$AdventOfCode.lengthX(nodes) - 1 | 0;
+  var dest_y = Array2D$AdventOfCode.lengthY(nodes) - 1 | 0;
+  return Curry._3(Dij.shortest_path, param.g, node(nodes, 0, 0), node(nodes, dest_x, dest_y))[1];
+}
+
+function expand(map_orig, x_times, y_times) {
+  var sz_x_orig = Array2D$AdventOfCode.lengthX(map_orig);
+  var sz_y_orig = Array2D$AdventOfCode.lengthY(map_orig);
+  var sz_x_final = Math.imul(sz_x_orig, x_times);
+  var sz_y_final = Math.imul(sz_y_orig, y_times);
+  var map = Array2D$AdventOfCode.make([
+        sz_x_final,
+        sz_y_final
+      ], 0);
+  for(var x_ep = 0; x_ep < x_times; ++x_ep){
+    (function(x_ep){
+    for(var y_ep = 0; y_ep < y_times; ++y_ep){
+      Array2D$AdventOfCode.reduceWithIndex(map_orig, 0, (function(y_ep){
+          return function (a, e, param) {
+            var x_new = param[0] + Math.imul(x_ep, sz_x_orig) | 0;
+            var y_new = param[1] + Math.imul(y_ep, sz_y_orig) | 0;
+            var e$p = ((e + x_ep | 0) + y_ep | 0) % 9;
+            var e_new = e$p === 0 ? 9 : e$p;
+            Array2D$AdventOfCode.set(map, [
+                  x_new,
+                  y_new
+                ], e_new);
+            return 0;
+          }
+          }(y_ep)));
+    }
+    }(x_ep));
+  }
+  return map;
+}
+
+function dump_graph(g) {
+  console.log("Vertex");
+  Curry._2(G.iter_vertex, (function (v) {
+          console.log("vertex: ", v);
+          
+        }), g);
+  console.log("Edges");
+  return Curry._2(G.iter_edges_e, (function (e) {
+                console.log("src: ", Curry._1(G.E.src, e), " dst:", Curry._1(G.E.dst, e));
+                
+              }), g);
 }
 
 var E$1 = G.E;
@@ -264,6 +335,8 @@ var Display_remove_edge = G.remove_edge;
 
 var Display_remove_edge_e = G.remove_edge_e;
 
+var Display_Mark = G.Mark;
+
 var Display = {
   V: Display_V,
   E: E$1,
@@ -306,6 +379,7 @@ var Display = {
   add_edge_e: Display_add_edge_e,
   remove_edge: Display_remove_edge,
   remove_edge_e: Display_remove_edge_e,
+  Mark: Display_Mark,
   vertex_name: vertex_name,
   graph_attributes: graph_attributes,
   default_vertex_attributes: default_vertex_attributes,
@@ -332,18 +406,25 @@ var Gv = Graphviz$Graph.Dot({
       edge_attributes: edge_attributes
     });
 
-function output(g) {
-  Curry._2(Gv.fprint_graph, Format.str_formatter, g);
+function output(param) {
+  Curry._2(Gv.fprint_graph, Format.str_formatter, param.g);
   return Format.flush_str_formatter(undefined);
 }
 
 var Cave = {
   E: E,
   V: V,
+  W: W,
   G: G,
+  Dij: Dij,
   adjCoords: adjCoords,
   getAdjacents: getAdjacents,
+  makeNodes: makeNodes,
+  node: node,
   make: make,
+  solve: solve,
+  expand: expand,
+  dump_graph: dump_graph,
   Display: Display,
   Gv: Gv,
   output: output
@@ -358,13 +439,12 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  var cave = make(parse(data));
-  console.log(output(cave));
-  return 1;
+  return solve(make(parse(data)));
 }
 
 function solvePart2(data) {
-  return 2;
+  var new_cave = expand(parse(data), 5, 5);
+  return solve(make(new_cave));
 }
 
 export {

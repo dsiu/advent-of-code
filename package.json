@@ -28,7 +28,7 @@
       "^.+\\.jsx?$": "esbuild-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale)/)"
+      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|rescript-ocamlgraph)/)"
     ],
     "moduleFileExtensions": [
       "js",
