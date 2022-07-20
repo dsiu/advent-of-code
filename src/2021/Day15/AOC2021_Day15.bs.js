@@ -115,12 +115,12 @@ function adjCoords(c) {
                 }
               }
             }, (function (f) {
-                return Curry._1(f, c);
+                return f(c);
               }));
 }
 
 function getAdjacents(t, param) {
-  return Belt_List.keepMap(adjCoords([
+  return Belt_List.keepMapU(adjCoords([
                   param[0],
                   param[1]
                 ]), (function (c) {
@@ -135,7 +135,7 @@ function getAdjacents(t, param) {
 }
 
 function makeNodes(g, lines) {
-  return Array2D$AdventOfCode.mapWithIndex(lines, (function (c, param) {
+  return Array2D$AdventOfCode.mapWithIndexU(lines, (function (c, param) {
                 var v = Curry._1(G.V.create, c);
                 Curry._2(G.add_vertex, g, v);
                 return v;
@@ -152,7 +152,7 @@ function node(nodes, x, y) {
 function make(lines) {
   var g = Curry._2(G.create, undefined, undefined);
   var nodes = makeNodes(g, lines);
-  var g$1 = Array2D$AdventOfCode.reduceWithIndex(lines, g, (function (g, e, c) {
+  var g$1 = Array2D$AdventOfCode.reduceWithIndexU(lines, g, (function (g, e, c) {
           var v = node(nodes, c[0], c[1]);
           Belt_List.forEach(getAdjacents(lines, c), (function (param) {
                   var match = param._0;

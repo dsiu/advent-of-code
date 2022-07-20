@@ -7,7 +7,7 @@ module Octopus = {
 
   let adjCoords = c => {
     open Coordinate
-    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => c->f)
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => f(. c))
   }
 
   let getAdjacentCoords = (t, c) => {
@@ -21,7 +21,7 @@ module Octopus = {
   let getAdjacents = (t, (x, y)) => {
     (x, y)
     ->adjCoords
-    ->Array.keepMap(c => {
+    ->Array.keepMapU((. c) => {
       t->Array2D.isValidXY(c) ? Some(t->Array2D.getExn(c)) : None
     })
   }
@@ -30,7 +30,7 @@ module Octopus = {
 
   let countZero = t => t->Array.keep(_, b => b == 0)->Array.size
 
-  let increaseEnergy = t => t->Array2D.map(add(1))
+  let increaseEnergy = t => t->Array2D.mapU((. x) => add(1, x))
 
   let getFlashingCoords = t => {
     t->Array2D.reduceWithIndex([], (a, e, coord) => {
@@ -45,7 +45,7 @@ module Octopus = {
   let performFlash = (t, coord) => {
     let neighbors = getAdjacentCoords(t, coord)
 
-    neighbors->Array.forEach(n_addr => {
+    neighbors->Array.forEachU((. n_addr) => {
       let orig = Array2D.getExn(t, n_addr)
       switch Array2D.set(t, n_addr, {orig > 0 ? orig + 1 : orig}) {
       | true => ()
@@ -72,7 +72,7 @@ module Octopus = {
 
       switch flashings->Array.size > 0 {
       | true => {
-          flashings->Array.forEach(flash_coord => {
+          flashings->Array.forEachU((. flash_coord) => {
             t->performFlash(flash_coord)->dim(flash_coord)->ignore
           })
           inner(t)

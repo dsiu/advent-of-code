@@ -78,9 +78,15 @@ function map(t, f) {
               }));
 }
 
+function mapU(t, f) {
+  return Belt_Array.mapU(t, (function (x) {
+                return Belt_Array.mapU(x, f);
+              }));
+}
+
 function mapWithIndex(t, f) {
-  return Belt_Array.mapWithIndex(t, (function (j, xs) {
-                return Belt_Array.mapWithIndex(xs, (function (i, e) {
+  return Belt_Array.mapWithIndexU(t, (function (j, xs) {
+                return Belt_Array.mapWithIndexU(xs, (function (i, e) {
                               return Curry._2(f, [
                                           i,
                                           j
@@ -89,16 +95,44 @@ function mapWithIndex(t, f) {
               }));
 }
 
+function mapWithIndexU(t, f) {
+  return Belt_Array.mapWithIndexU(t, (function (j, xs) {
+                return Belt_Array.mapWithIndexU(xs, (function (i, e) {
+                              return f([
+                                          i,
+                                          j
+                                        ], e);
+                            }));
+              }));
+}
+
 function reduce(t, a, f) {
-  return Belt_Array.reduce(t, a, (function (acc, x) {
+  return Belt_Array.reduceU(t, a, (function (acc, x) {
                 return Belt_Array.reduce(x, acc, f);
               }));
 }
 
+function reduceU(t, a, f) {
+  return Belt_Array.reduceU(t, a, (function (acc, x) {
+                return Belt_Array.reduceU(x, acc, f);
+              }));
+}
+
 function reduceWithIndex(t, a, f) {
-  return Belt_Array.reduceWithIndex(t, a, (function (acc, xs, yi) {
-                return Belt_Array.reduceWithIndex(xs, acc, (function (acc, x, xi) {
+  return Belt_Array.reduceWithIndexU(t, a, (function (acc, xs, yi) {
+                return Belt_Array.reduceWithIndexU(xs, acc, (function (acc, x, xi) {
                               return Curry._3(f, acc, x, [
+                                          xi,
+                                          yi
+                                        ]);
+                            }));
+              }));
+}
+
+function reduceWithIndexU(t, a, f) {
+  return Belt_Array.reduceWithIndexU(t, a, (function (acc, xs, yi) {
+                return Belt_Array.reduceWithIndexU(xs, acc, (function (acc, x, xi) {
+                              return f(acc, x, [
                                           xi,
                                           yi
                                         ]);
@@ -153,9 +187,13 @@ export {
   getXEquals ,
   getYEquals ,
   map ,
+  mapU ,
   mapWithIndex ,
+  mapWithIndexU ,
   reduce ,
+  reduceU ,
   reduceWithIndex ,
+  reduceWithIndexU ,
   flatten ,
   crop ,
   eq ,

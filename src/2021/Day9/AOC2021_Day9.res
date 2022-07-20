@@ -9,7 +9,7 @@ module HeightMap = {
 
   let adjCoords = c => {
     open Coordinate
-    list{stepN, stepW, stepE, stepS}->List.map(f => c->f)
+    list{stepN, stepW, stepE, stepS}->List.map(f => f(. c))
   }
 
   type elem = CoordAndVal(Coordinate.t, int)

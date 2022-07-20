@@ -58,7 +58,7 @@ function toString(t) {
   var str = {
     contents: ""
   };
-  Belt_HashMapString.forEach(t, (function (k, v) {
+  Belt_HashMapString.forEachU(t, (function (k, v) {
           str.contents = str.contents + k + ": [ " + Belt_HashSetString.toArray(v).join(",") + " ]\n";
           
         }));

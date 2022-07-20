@@ -20,7 +20,7 @@ var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day12-AdventOfCo
 
 function make(edges) {
   var maze = Curry._1(AdjacencyList$AdventOfCode.AdjList_String.make, 40);
-  Belt_Array.forEach(edges, (function (edge) {
+  Belt_Array.forEachU(edges, (function (edge) {
           if (edge.length !== 2) {
             throw {
                   RE_EXN_ID: ParseError,
@@ -45,7 +45,7 @@ var Maze = {
 };
 
 function is_visited(visited, node) {
-  return Belt_Option.mapWithDefault(Belt_HashMapString.get(visited, node), false, (function (v) {
+  return Belt_Option.mapWithDefaultU(Belt_HashMapString.get(visited, node), false, (function (v) {
                 return v > 0;
               }));
 }
@@ -67,7 +67,7 @@ function is_small_case(c) {
 }
 
 function has_any_small_cave_been_visited_twice(visited) {
-  var smalls = Belt_HashMapString.reduce(visited, [], (function (acc, key, value) {
+  var smalls = Belt_HashMapString.reduceU(visited, [], (function (acc, key, value) {
           if (key.toLowerCase() === key && value > 1) {
             return Belt_Array.concat(acc, [[
                           key,
@@ -115,8 +115,8 @@ function dfs(visit_func, t, start_node, end_node) {
       return [acc];
     }
     var edges = Adjacency_List$AdventOfCode.neighbors(t, node);
-    return Belt_HashSetString.reduce(edges, [], (function (a, e) {
-                  if (Curry._2(visit_func, visited$p, e)) {
+    return Belt_HashSetString.reduceU(edges, [], (function (a, e) {
+                  if (visit_func(visited$p, e)) {
                     return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));
                   } else {
                     return a;

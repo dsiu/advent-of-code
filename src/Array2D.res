@@ -62,19 +62,39 @@ let map = (t, f) => {
   t->Array.map(x => x->Array.map(f))
 }
 
+let mapU = (t, f) => {
+  t->Array.mapU((. x) => x->Array.mapU(f))
+}
+
 let mapWithIndex = (t, f) => {
-  t->Array.mapWithIndex((j, xs) => {
-    xs->Array.mapWithIndex((i, e) => f((i, j), e))
+  t->Array.mapWithIndexU((. j, xs) => {
+    xs->Array.mapWithIndexU((. i, e) => f((i, j), e))
+  })
+}
+
+let mapWithIndexU = (t, f) => {
+  t->Array.mapWithIndexU((. j, xs) => {
+    xs->Array.mapWithIndexU((. i, e) => f(. (i, j), e))
   })
 }
 
 let reduce = (t, a, f) => {
-  t->Array.reduce(a, (acc, x) => x->Array.reduce(acc, f))
+  t->Array.reduceU(a, (. acc, x) => x->Array.reduce(acc, f))
+}
+
+let reduceU = (t, a, f) => {
+  t->Array.reduceU(a, (. acc, x) => x->Array.reduceU(acc, f))
 }
 
 let reduceWithIndex = (t, a, f) => {
-  t->Array.reduceWithIndex(a, (acc, xs, yi) =>
-    xs->Array.reduceWithIndex(acc, (acc, x, xi) => f(acc, x, (xi, yi)))
+  t->Array.reduceWithIndexU(a, (. acc, xs, yi) =>
+    xs->Array.reduceWithIndexU(acc, (. acc, x, xi) => f(acc, x, (xi, yi)))
+  )
+}
+
+let reduceWithIndexU = (t, a, f) => {
+  t->Array.reduceWithIndexU(a, (. acc, xs, yi) =>
+    xs->Array.reduceWithIndexU(acc, (. acc, x, xi) => f(. acc, x, (xi, yi)))
   )
 }
 

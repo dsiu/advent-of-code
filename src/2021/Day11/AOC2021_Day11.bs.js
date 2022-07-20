@@ -25,7 +25,7 @@ function adjCoords(c) {
               Coordinate$AdventOfCode.stepS,
               Coordinate$AdventOfCode.stepSE
             ], (function (f) {
-                return Curry._1(f, c);
+                return f(c);
               }));
 }
 
@@ -39,7 +39,7 @@ function getAdjacentCoords(t, c) {
 }
 
 function getAdjacents(t, param) {
-  return Belt_Array.keepMap(adjCoords([
+  return Belt_Array.keepMapU(adjCoords([
                   param[0],
                   param[1]
                 ]), (function (c) {
@@ -63,8 +63,8 @@ function countZero(t) {
 }
 
 function increaseEnergy(t) {
-  return Array2D$AdventOfCode.map(t, (function (param) {
-                return Utils$AdventOfCode.add(1, param);
+  return Array2D$AdventOfCode.mapU(t, (function (x) {
+                return Utils$AdventOfCode.add(1, x);
               }));
 }
 
@@ -80,7 +80,7 @@ function getFlashingCoords(t) {
 
 function performFlash(t, coord) {
   var neighbors = getAdjacentCoords(t, coord);
-  Belt_Array.forEach(neighbors, (function (n_addr) {
+  Belt_Array.forEachU(neighbors, (function (n_addr) {
           var orig = Array2D$AdventOfCode.getExn(t, n_addr);
           if (Array2D$AdventOfCode.set(t, n_addr, orig > 0 ? orig + 1 | 0 : orig)) {
             return ;
@@ -104,15 +104,13 @@ function dim(t, coord) {
 }
 
 function iterate(t) {
-  var next = Array2D$AdventOfCode.map(t, (function (param) {
-          return Utils$AdventOfCode.add(1, param);
-        }));
+  var next = increaseEnergy(t);
   while(true) {
     var flashings = getFlashingCoords(next);
     if (flashings.length === 0) {
       return next;
     }
-    Belt_Array.forEach(flashings, (function (flash_coord) {
+    Belt_Array.forEachU(flashings, (function (flash_coord) {
             dim(performFlash(next, flash_coord), flash_coord);
             
           }));

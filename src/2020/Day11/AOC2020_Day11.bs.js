@@ -48,7 +48,7 @@ function isValidCoord(param, len_x, len_y) {
 }
 
 function adjCoords(c) {
-  return Belt_Array.map([
+  return Belt_Array.mapU([
               Coordinate$AdventOfCode.stepNW,
               Coordinate$AdventOfCode.stepN,
               Coordinate$AdventOfCode.stepNE,
@@ -58,7 +58,7 @@ function adjCoords(c) {
               Coordinate$AdventOfCode.stepS,
               Coordinate$AdventOfCode.stepSE
             ], (function (f) {
-                return Curry._1(f, c);
+                return f(c);
               }));
 }
 
@@ -114,7 +114,7 @@ function transformPart1(s, adjacents) {
 }
 
 function iteratePart1(t) {
-  return Array2D$AdventOfCode.mapWithIndex(t, (function (param, s) {
+  return Array2D$AdventOfCode.mapWithIndexU(t, (function (param, s) {
                 return transformPart1(s, getAdjacents(t, [
                                 param[0],
                                 param[1]
@@ -125,7 +125,7 @@ function iteratePart1(t) {
 function nextSeatIn(t, _param, step) {
   while(true) {
     var param = _param;
-    var c = Curry._1(step, [
+    var c = step([
           param[0],
           param[1]
         ]);
@@ -142,7 +142,7 @@ function nextSeatIn(t, _param, step) {
 }
 
 function getDirectionals(t, c) {
-  return Belt_Array.map([
+  return Belt_Array.mapU([
               Coordinate$AdventOfCode.stepNW,
               Coordinate$AdventOfCode.stepN,
               Coordinate$AdventOfCode.stepNE,
@@ -174,7 +174,7 @@ function transformPart2(s, directionals) {
 }
 
 function iteratePart2(t) {
-  return Array2D$AdventOfCode.mapWithIndex(t, (function (param, s) {
+  return Array2D$AdventOfCode.mapWithIndexU(t, (function (param, s) {
                 return transformPart2(s, getDirectionals(t, [
                                 param[0],
                                 param[1]

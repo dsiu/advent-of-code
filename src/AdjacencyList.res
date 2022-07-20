@@ -73,7 +73,7 @@ module AdjList_String: S
 
   let toString = t => {
     let str = ref("")
-    t->HashMap.String.forEach((k, v) => {
+    t->HashMap.String.forEachU((. k, v) => {
       str := `${str.contents}${k}: [ ${v->HashSet.String.toArray->Js.Array2.joinWith(_, ",")} ]\n`
     })
     str.contents

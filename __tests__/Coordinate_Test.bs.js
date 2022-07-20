@@ -70,37 +70,42 @@ describe("Step Functions", (function () {
                 expect(result).toEqual(expected);
                 
               }));
+        var __x = Coordinate$AdventOfCode.stepN(init);
+        var __x$1 = Coordinate$AdventOfCode.stepE(init);
+        var __x$2 = Coordinate$AdventOfCode.stepS(init);
+        var __x$3 = Coordinate$AdventOfCode.stepNE(init);
+        var __x$4 = Coordinate$AdventOfCode.stepNW(init);
         var multipleStep_test = [
           [
-            Coordinate$AdventOfCode.stepN(Coordinate$AdventOfCode.stepN(init)),
+            Coordinate$AdventOfCode.stepN(__x),
             [
               4,
               2
             ]
           ],
           [
-            Coordinate$AdventOfCode.stepE(Coordinate$AdventOfCode.stepE(init)),
+            Coordinate$AdventOfCode.stepE(__x$1),
             [
               6,
               4
             ]
           ],
           [
-            Coordinate$AdventOfCode.stepW(Coordinate$AdventOfCode.stepS(init)),
+            Coordinate$AdventOfCode.stepW(__x$2),
             [
               3,
               5
             ]
           ],
           [
-            Coordinate$AdventOfCode.stepSW(Coordinate$AdventOfCode.stepNE(init)),
+            Coordinate$AdventOfCode.stepSW(__x$3),
             [
               4,
               4
             ]
           ],
           [
-            Coordinate$AdventOfCode.stepSE(Coordinate$AdventOfCode.stepNW(init)),
+            Coordinate$AdventOfCode.stepSE(__x$4),
             [
               4,
               4

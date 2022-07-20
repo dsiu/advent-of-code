@@ -6,6 +6,7 @@
     "build": "rescript",
     "clean": "rescript clean -with-deps",
     "start": "rescript build -w",
+    "test": "jest",
     "reformat": "./scripts/reformat.sh"
   },
   "keywords": [
@@ -28,7 +29,7 @@
       "^.+\\.jsx?$": "esbuild-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|rescript-ocamlgraph)/)"
+      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|rescript-ocamlgraph|@resinfo/parser)/)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -37,6 +38,7 @@
     ]
   },
   "dependencies": {
+    "@resinfo/parser": "^2.0.0-alpha",
     "debug": "^4.3.4",
     "rationale": "^0.2.0",
     "re-fp": "github:snatvb/re-fp",

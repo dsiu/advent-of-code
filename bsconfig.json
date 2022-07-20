@@ -28,7 +28,8 @@
     "@ryyppy/rescript-promise",
     "rescript-js",
     "re-fp",
-    "rescript-ocamlgraph"
+    "rescript-ocamlgraph",
+    "@resinfo/parser"
   ],
   "bs-dev-dependencies": [
     "@glennsl/rescript-jest"

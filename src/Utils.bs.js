@@ -273,7 +273,7 @@ function minKeyInt64ValuePair(__x) {
 }
 
 function hashMapStringUpdate(h, k, f) {
-  Belt_HashMapString.set(h, k, Belt_Option.mapWithDefault(Belt_HashMapString.get(h, k), Curry._1(f, undefined), (function (x) {
+  Belt_HashMapString.set(h, k, Belt_Option.mapWithDefaultU(Belt_HashMapString.get(h, k), Curry._1(f, undefined), (function (x) {
               return Curry._1(f, Caml_option.some(x));
             })));
   return h;

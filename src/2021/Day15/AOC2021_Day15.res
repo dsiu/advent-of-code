@@ -41,7 +41,7 @@ module Cave = {
 
   let adjCoords = c => {
     open Coordinate
-    list{stepN, stepW, stepE, stepS}->List.map(f => c->f)
+    list{stepN, stepW, stepE, stepS}->List.map(f => f(. c))
   }
 
   type elem = CoordAndVal(Coordinate.t, int)
@@ -49,7 +49,7 @@ module Cave = {
   let getAdjacents = (t, (x, y)) => {
     (x, y)
     ->adjCoords
-    ->List.keepMap(c => {
+    ->List.keepMapU((. c) => {
       t->Array2D.isValidXY(c) ? Some(CoordAndVal(c, t->Array2D.getExn(c))) : None
     })
   }
@@ -62,7 +62,7 @@ module Cave = {
 
   /* * create all the vertex and keep them in a Array2D */
   let makeNodes = (g, lines) => {
-    lines->Array2D.mapWithIndex((c, _) => {
+    lines->Array2D.mapWithIndexU((. c, _) => {
       let v = G.V.create(c)
       G.add_vertex(g, v)
       v
@@ -76,7 +76,7 @@ module Cave = {
     let g = G.create()
     let nodes = makeNodes(g, lines)
 
-    let g = lines->Array2D.reduceWithIndex(g, (g, e, (x, y) as c) => {
+    let g = lines->Array2D.reduceWithIndexU(g, (. g, e, (x, y) as c) => {
       //      let h = V.hash((x, y))->Int.toString
       //      log(`${x->Int.toString},${y->Int.toString} (${h}) = ${e}`)->ignore
       let v = node(nodes, x, y)

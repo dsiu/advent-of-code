@@ -27,15 +27,13 @@ module SeatMap = {
     x >= 0 && x <= len_x - 1 && y >= 0 && y <= len_y - 1
   }
 
-  let adjCoords = c => {
+  let adjCoords = (. c) => {
     open Coordinate
-    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => c->f)
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.mapU((. f) => f(. c))
   }
 
   let getAdjacents = (t, (x, y)) => {
-    (x, y)
-    ->adjCoords
-    ->Array.keepMap(c => {
+    adjCoords(. (x, y))->Array.keepMap(c => {
       t->Array2D.isValidXY(c) ? Some(t->Array2D.getExn(c)) : None
     })
   }
@@ -63,16 +61,16 @@ module SeatMap = {
   }
 
   let iteratePart1 = t => {
-    t->Array2D.mapWithIndex(((x, y), s) => s->transformPart1(t->getAdjacents((x, y))))
+    t->Array2D.mapWithIndexU((. (x, y), s) => s->transformPart1(t->getAdjacents((x, y))))
   }
 
   // part 2
-  let rec nextSeatIn = (t, (x, y), step) => {
-    let c = (x, y)->step
+  let rec nextSeatIn = (. t, (x, y), step) => {
+    let c = step(. (x, y))
     t->Array2D.isValidXY(c)
       ? {
           switch t->Array2D.get(c)->Option.getExn {
-          | #"." => nextSeatIn(t, c, step)
+          | #"." => nextSeatIn(. t, c, step)
           | seat => seat
           }
         }
@@ -81,8 +79,8 @@ module SeatMap = {
 
   let getDirectionals = (t, c) => {
     open Coordinate
-    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f =>
-      t->nextSeatIn(c, f)
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.mapU((. f) =>
+      nextSeatIn(. t, c, f)
     )
   }
 
@@ -96,7 +94,7 @@ module SeatMap = {
   }
 
   let iteratePart2 = t => {
-    t->Array2D.mapWithIndex(((x, y), s) => s->transformPart2(t->getDirectionals((x, y))))
+    t->Array2D.mapWithIndexU((. (x, y), s) => s->transformPart2(t->getDirectionals((x, y))))
   }
 
   let isStabilized = Array2D.eq

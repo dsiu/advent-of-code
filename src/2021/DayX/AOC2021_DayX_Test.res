@@ -1,6 +1,4 @@
-open Jest
-open Expect
-open! Expect.Operators
+open Jest2
 
 //open Belt
 let data = AOC2021_DayX_Data.data

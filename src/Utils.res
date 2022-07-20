@@ -146,7 +146,7 @@ let minKeyInt64ValuePair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) =>
 let hashMapStringUpdate = (h, k, f) => {
   h->HashMap.String.set(
     k,
-    h->HashMap.String.get(k)->Option.mapWithDefault(f(None), x => f(Some(x))),
+    h->HashMap.String.get(k)->Option.mapWithDefaultU(f(None), (. x) => f(Some(x))),
   )
   h
 }
