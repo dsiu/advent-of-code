@@ -40,11 +40,10 @@ let parser: parser =
   ->P.map((((left, sign), right)) => Expression(left, sign, right))
 
 // Run our parser against an input string.
-type result = result<(expression, string), string>
+type result = result<expression, string>
 let result = P.run(parser, " 1 +  4  ")
 
 // Result is a tuple of a valid AST and the state object.
-
 // result == Ok(Expression(SingleDigit(1), Plus, SingleDigit(4)), _)
 
 let parse = data => data->splitNewline->Array.map(Js.String2.trim)
