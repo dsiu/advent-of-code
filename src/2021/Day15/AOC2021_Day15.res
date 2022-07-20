@@ -54,11 +54,13 @@ module Cave = {
     })
   }
 
+  /* * type of Cave */
   type t = {
     nodes: Array2D.t<G.V.t>,
     g: G.t,
   }
 
+  /* * create all the vertex and keep them in a Array2D */
   let makeNodes = (g, lines) => {
     lines->Array2D.mapWithIndex((c, _) => {
       let v = G.V.create(c)
@@ -67,6 +69,7 @@ module Cave = {
     })
   }
 
+  /* * get the vertex from Array2D */
   let node = (nodes, x, y) => Array2D.getExn(nodes, (x, y))
 
   let make = lines => {
@@ -100,6 +103,7 @@ module Cave = {
     {nodes: nodes, g: g}
   }
 
+  /* * given a nodes in Array2D and graph, find the shortest path from (0,0) to Array2D lengthX/Y */
   let solve = ({nodes, g}) => {
     let dest_x = nodes->Array2D.lengthX - 1
     let dest_y = nodes->Array2D.lengthY - 1
@@ -111,6 +115,7 @@ module Cave = {
     w
   }
 
+  /* * expand Array2D by factor of x_times/ytimes and increase their element values */
   let expand = (map_orig, x_times, y_times) => {
     let sz_x_orig = map_orig->Array2D.lengthX
     let sz_y_orig = map_orig->Array2D.lengthY
@@ -155,8 +160,6 @@ module Cave = {
   module Display = {
     include G
     let vertex_name = (v: V.t) => {
-      //      G.V.label(v)
-      //            let (x, y) = v
       let (x, y) = G.V.label(v)
       `"${x->Int.toString},${y->Int.toString}"`
     }
@@ -171,6 +174,7 @@ module Cave = {
   module Gv = Graphviz.Dot(Display)
 
   @@warning("-3")
+  /* * display graph in DOT format */
   let output = ({nodes: _, g}) => {
     let () = Gv.fprint_graph(Format.str_formatter, g)
     Format.flush_str_formatter()
