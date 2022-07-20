@@ -2,7 +2,7 @@
 'use strict';
 
 
-var data = "";
+var data = "110100101111111000101000";
 
 exports.data = data;
 /* No side effect */

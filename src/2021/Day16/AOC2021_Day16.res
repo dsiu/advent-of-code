@@ -1,55 +1,75 @@
 open Belt
 open Utils
 let log = Js.Console.log
+let log2 = Js.Console.log2
 
 module P = Res_parser
+module Rjs = ReScriptJs.Js
 
-// Define our AST
-type sign = Plus | Subtract | Multiply
-type number = SingleDigit(int)
-type expression = Expression(number, sign, number)
+module Packet_M = {
+  type version = Version(string)
+  type typeId = TypeID(string)
+  type payload = Payload(string)
+  type packet = P(version, typeId, payload)
 
-// Parse sign and transform into AST node
-type sign_ = P.t<sign>
-let sign: sign_ = P.choice([
-  P.char('+')->P.map(_ => Plus),
-  P.char('-')->P.map(_ => Subtract),
-  P.char('x')->P.map(_ => Multiply),
-])
+  let rec concatStringList = chars => {
+    switch chars {
+    | list{} => ""
+    | list{head, ...rest} => head ++ concatStringList(rest)
+    }
+  }
 
-// Helper that returns any parser
-// that's found to be wrapped in whitespace
-type manyWhitespace = P.t<list<char>>
-let manyWhitespace: manyWhitespace = P.many(P.char(' '))
+  let charToString = c => c->int_of_char->Js.String.fromCharCode
 
-// Parse single digit and transform into AST node
-type singleDigit = P.t<number>
-let singleDigit: singleDigit =
-  P.satisfy(char => char >= '0' && char <= '9')
-  ->P.map(Char.escaped)
-  ->P.map(int_of_string)
-  ->P.map(x => SingleDigit(x))
-  ->P.between(manyWhitespace, manyWhitespace)
+  let stringifyCharList = chars => {
+    chars->Belt.List.map(charToString)->concatStringList
+  }
 
-// Combine sign and digit parsers into fully typed AST.
-type parser = P.t<expression>
-let parser: parser =
-  singleDigit
-  ->P.andThen(sign)
-  ->P.andThen(singleDigit)
-  ->P.map((((left, sign), right)) => Expression(left, sign, right))
+  let binDigit = P.satisfy(c => c == '0' || c == '1')
 
-// Run our parser against an input string.
-type result = result<expression, string>
-let result = P.run(parser, " 1 +  4  ")
+  let threeBinDigits = {
+    binDigit->P.andThen(binDigit)->P.andThen(binDigit)
+  }
 
-// Result is a tuple of a valid AST and the state object.
-// result == Ok(Expression(SingleDigit(1), Plus, SingleDigit(4)), _)
+  type version_ = P.t<version>
+  let version: version_ = threeBinDigits->P.map((((a, b), c)) => {
+    Version(a->charToString ++ b->charToString ++ c->charToString)
+  })
+
+  type typeId_ = P.t<typeId>
+  let typeId: typeId_ = threeBinDigits->P.map((((a, b), c)) => {
+    TypeID(a->charToString ++ b->charToString ++ c->charToString)
+  })
+
+  type payload_ = P.t<payload>
+  let payload = P.many(binDigit)->P.map(chars => stringifyCharList(chars))->P.map(x => Payload(x))
+
+  let parser = version->P.andThen(typeId)->P.andThen(payload)
+
+  type result = P.parseResult<((version, typeId), payload)>
+  let parse = (s): result => P.run(parser, s)
+
+  let hexStrToBinStr = s => {
+    s
+    ->Rjs.Int.fromString(~radix=16, _)
+    ->Option.flatMap(x => Rjs.Int.toStringWithRadix(~radix=2, x)->Some)
+  }
+}
 
 let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 
 let solvePart1 = data => {
+  open Packet_M
   data->ignore
+
+  let r = Packet_M.parse("110100101111111000101000")
+  r->Result.isOk->log
+  let (((Version(v), TypeID(t)), Payload(p)), s) = r->Result.getExn
+  v->log2("v", _)
+  t->log2("t", _)
+  p->log2("p", _)
+  s->log2("b", _)
+
   1
 }
 
