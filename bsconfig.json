@@ -19,10 +19,10 @@
     }
   ],
   "package-specs": {
-    "module": "commonjs",
+    "module": "es6",
     "in-source": true
   },
-  "suffix": ".bs.js",
+  "suffix": ".mjs",
   "bs-dependencies": [
     "rationale",
     "@ryyppy/rescript-promise",

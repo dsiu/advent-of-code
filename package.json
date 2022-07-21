@@ -1,6 +1,7 @@
 {
   "name": "advent-of-code",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "build": "rescript",
     "clean": "rescript clean -with-deps",
@@ -22,14 +23,14 @@
   },
   "jest": {
     "testMatch": [
-      "<rootDir>/**/**/*.test.(js|jsx|ts|tsx)",
-      "<rootDir>/**/*_Test.bs.js"
+      "<rootDir>/**/**/*.test.(js|mjs|jsx|ts|tsx)",
+      "<rootDir>/**/*_Test.mjs"
     ],
     "transform": {
-      "^.+\\.jsx?$": "@swc/jest"
+      "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|rescript-ocamlgraph|@resinfo/parser)/)"
+      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|rescript-ocamlgraph|@resinfo/parser|rescript-js)/)"
     ],
     "moduleFileExtensions": [
       "js",
