@@ -66,10 +66,21 @@ var payload = Res_parser.map(Res_parser.map(Res_parser.many(binDigit), (function
               };
       }));
 
-var parser = Res_parser.andThen(Res_parser.andThen(version, typeId), payload);
+var packet = Res_parser.map(Res_parser.andThen(Res_parser.andThen(version, typeId), payload), (function (param) {
+        var match = param[0];
+        return /* Packet */{
+                _0: match[0],
+                _1: match[1],
+                _2: param[1]
+              };
+      }));
+
+function dumpPacket(param) {
+  return "ver = " + param._0._0 + " | typeId = " + param._1._0 + " | payload = " + param._2._0;
+}
 
 function parse(s) {
-  return Res_parser.run(parser, s);
+  return Res_parser.run(packet, s);
 }
 
 function hexStrToBinStr(s) {
@@ -87,7 +98,8 @@ var Packet_M = {
   version: version,
   typeId: typeId,
   payload: payload,
-  parser: parser,
+  packet: packet,
+  dumpPacket: dumpPacket,
   parse: parse,
   hexStrToBinStr: hexStrToBinStr
 };
@@ -99,16 +111,13 @@ function parse$1(data) {
 }
 
 function solvePart1(data) {
-  var r = Res_parser.run(parser, "110100101111111000101000");
+  var r = Res_parser.run(packet, "110100101111111000101000");
   var prim = Belt_Result.isOk(r);
   console.log(prim);
-  var match = Belt_Result.getExn(r);
-  var match$1 = match[0];
-  var match$2 = match$1[0];
-  console.log("v", match$2[0]._0);
-  console.log("t", match$2[1]._0);
-  console.log("p", match$1[1]._0);
-  console.log("b", match[1]);
+  var prim$1 = dumpPacket(Belt_Result.getExn(r)[0]);
+  console.log(prim$1);
+  var prim$2 = Belt_Result.getExn(r)[1];
+  console.log(prim$2);
   return 1;
 }
 

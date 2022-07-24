@@ -10,7 +10,7 @@ module Packet_M = {
   type version = Version(string)
   type typeId = TypeID(string)
   type payload = Payload(string)
-  type packet = P(version, typeId, payload)
+  type packet = Packet(version, typeId, payload)
 
   let rec concatStringList = chars => {
     switch chars {
@@ -44,10 +44,21 @@ module Packet_M = {
   type payload_ = P.t<payload>
   let payload = P.many(binDigit)->P.map(chars => stringifyCharList(chars))->P.map(x => Payload(x))
 
-  let parser = version->P.andThen(typeId)->P.andThen(payload)
+  type packet_ = P.t<packet>
+  let packet: packet_ =
+    version
+    ->P.andThen(typeId)
+    ->P.andThen(payload)
+    ->P.map((((a, b), c)) => {
+      Packet(a, b, c)
+    })
 
-  type result = P.parseResult<((version, typeId), payload)>
-  let parse = (s): result => P.run(parser, s)
+  let dumpPacket = (Packet(Version(version), TypeID(typeId), Payload(payload))) => {
+    `ver = ${version} | typeId = ${typeId} | payload = ${payload}`
+  }
+
+  type result = P.parseResult<packet>
+  let parse = (s): result => P.run(packet, s)
 
   let hexStrToBinStr = s => {
     s
@@ -64,12 +75,9 @@ let solvePart1 = data => {
 
   let r = Packet_M.parse("110100101111111000101000")
   r->Result.isOk->log
-  let (((Version(v), TypeID(t)), Payload(p)), s) = r->Result.getExn
-  v->log2("v", _)
-  t->log2("t", _)
-  p->log2("p", _)
-  s->log2("b", _)
 
+  r->Result.getExn->fst->dumpPacket->log
+  r->Result.getExn->snd->log
   1
 }
 
