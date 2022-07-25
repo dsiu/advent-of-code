@@ -33,7 +33,9 @@ module Packet_M = {
   //
   type version = Version(int)
   type typeId = TypeID(int)
-  type payload = Payload_Literal(int)
+  type payload =
+    | Payload_Literal(int)
+    | Payload_Operator(string)
   type packet = Packet(version, typeId, payload)
 
   // bit utils
@@ -75,8 +77,20 @@ module Packet_M = {
     TypeID(x)
   })
 
+  let operatorTypeId = typeId
+
+  let literalTypeId: typeId_ = {
+    // 100 == 4
+    P.char('1')
+    ->P.andThen(P.char('0'))
+    ->P.andThen(P.char('0'))
+    ->P.map((((a, b), c)) => {
+      TypeID([a, b, c]->binCharArrayToInt)
+    })
+  }
+
   type payload_ = P.t<payload>
-  let payload = {
+  let literalPayload: payload_ = {
     let oneAndFourBit = P.char('1')->P.andThen(fourBinDigitsToStr)
     let zeroAndFourBit = P.char('0')->P.andThen(fourBinDigitsToStr)
 
@@ -87,17 +101,28 @@ module Packet_M = {
     })
   }
 
-  type packet_ = P.t<packet>
-  let packet: packet_ =
-    version
-    ->P.andThen(typeId)
-    ->P.andThen(payload)
-    ->P.map((((a, b), c)) => {
-      Packet(a, b, c)
-    })
+  let operatorPayload: payload_ = {
+    P.many(binDigit)->P.map(chars => stringifyCharList(chars))->P.map(x => Payload_Operator(x))
+  }
 
-  let dumpPacket = (Packet(Version(version), TypeID(typeId), Payload_Literal(payload))) => {
-    j`ver = $version | typeId = $typeId | payload = $payload`
+  type packet_ = P.t<packet>
+  let packet: packet_ = {
+    let literalAndPayload = literalTypeId->P.andThen(literalPayload)
+    let operatorAndPayload = operatorTypeId->P.andThen(operatorPayload)
+
+    version
+    ->P.andThen(P.choice([literalAndPayload, operatorAndPayload]))
+    ->P.map(((v, (t, p))) => {
+      Packet(v, t, p)
+    })
+  }
+
+  let dumpPacket = (p: packet) => {
+    let Packet(Version(version), TypeID(typeId), p) = p
+    switch p {
+    | Payload_Literal(l) => j`ver = $version | typeId = $typeId | payload = $l`
+    | Payload_Operator(o) => j`ver = $version | typeId = $typeId | payload = $o`
+    }
   }
 
   type result = P.parseResult<packet>
@@ -116,11 +141,15 @@ let solvePart1 = data => {
   open Packet_M
   data->ignore
 
-  let r = Packet_M.parse("110100101111111000101000")
-  r->Result.isOk->log
+  let l = Packet_M.parse("110100101111111000101000")
+  l->Result.isOk->log
+  l->Result.getExn->fst->dumpPacket->log
+  l->Result.getExn->snd->log
 
-  r->Result.getExn->fst->dumpPacket->log
-  r->Result.getExn->snd->log
+  let o = Packet_M.parse("00111000000000000110111101000101001010010001001000000000")
+  o->Result.isOk->log
+  o->Result.getExn->fst->dumpPacket->log
+  o->Result.getExn->snd->log
   1
 }
 

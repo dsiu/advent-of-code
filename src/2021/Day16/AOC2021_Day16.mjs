@@ -101,31 +101,66 @@ var typeId = Res_parser.map(threeBinDigitsToInt, (function (x) {
               };
       }));
 
+var literalTypeId = Res_parser.map(Res_parser.andThen(Res_parser.andThen(Res_parser.$$char(/* '1' */49), Res_parser.$$char(/* '0' */48)), Res_parser.$$char(/* '0' */48)), (function (param) {
+        var match = param[0];
+        return /* TypeID */{
+                _0: parseInt(binCharArrayToStr([
+                          match[0],
+                          match[1],
+                          param[1]
+                        ]), 2)
+              };
+      }));
+
 var oneAndFourBit = Res_parser.andThen(Res_parser.$$char(/* '1' */49), fourBinDigitsToStr);
 
 var zeroAndFourBit = Res_parser.andThen(Res_parser.$$char(/* '0' */48), fourBinDigitsToStr);
 
 var literal = Res_parser.andThen(Res_parser.many(oneAndFourBit), zeroAndFourBit);
 
-var payload = Res_parser.map(literal, (function (param) {
-        return /* Payload_Literal */{
+var literalPayload = Res_parser.map(literal, (function (param) {
+        return {
+                TAG: /* Payload_Literal */0,
                 _0: parseInt(Belt_List.reduce(param[0], "", (function (a, param) {
                             return a + param[1];
                           })) + param[1][1], 2)
               };
       }));
 
-var packet = Res_parser.map(Res_parser.andThen(Res_parser.andThen(version, typeId), payload), (function (param) {
-        var match = param[0];
-        return /* Packet */{
-                _0: match[0],
-                _1: match[1],
-                _2: param[1]
+var operatorPayload = Res_parser.map(Res_parser.map(Res_parser.many(binDigit), (function (chars) {
+            return concatStringList(Belt_List.map(chars, charToString));
+          })), (function (x) {
+        return {
+                TAG: /* Payload_Operator */1,
+                _0: x
               };
       }));
 
-function dumpPacket(param) {
-  return "ver = " + param._0._0 + " | typeId = " + param._1._0 + " | payload = " + param._2._0;
+var literalAndPayload = Res_parser.andThen(literalTypeId, literalPayload);
+
+var operatorAndPayload = Res_parser.andThen(typeId, operatorPayload);
+
+var packet = Res_parser.map(Res_parser.andThen(version, Res_parser.choice([
+              literalAndPayload,
+              operatorAndPayload
+            ])), (function (param) {
+        var match = param[1];
+        return /* Packet */{
+                _0: param[0],
+                _1: match[0],
+                _2: match[1]
+              };
+      }));
+
+function dumpPacket(p) {
+  var p$1 = p._2;
+  var typeId = p._1._0;
+  var version = p._0._0;
+  if (p$1.TAG === /* Payload_Literal */0) {
+    return "ver = " + version + " | typeId = " + typeId + " | payload = " + p$1._0;
+  } else {
+    return "ver = " + version + " | typeId = " + typeId + " | payload = " + p$1._0;
+  }
 }
 
 function parse(s) {
@@ -150,7 +185,10 @@ var Packet_M = {
   fourBinDigitsToStr: fourBinDigitsToStr,
   version: version,
   typeId: typeId,
-  payload: payload,
+  operatorTypeId: typeId,
+  literalTypeId: literalTypeId,
+  literalPayload: literalPayload,
+  operatorPayload: operatorPayload,
   packet: packet,
   dumpPacket: dumpPacket,
   parse: parse,
@@ -164,13 +202,20 @@ function parse$1(data) {
 }
 
 function solvePart1(data) {
-  var r = Res_parser.run(packet, "110100101111111000101000");
-  var prim = Belt_Result.isOk(r);
+  var l = Res_parser.run(packet, "110100101111111000101000");
+  var prim = Belt_Result.isOk(l);
   console.log(prim);
-  var prim$1 = dumpPacket(Belt_Result.getExn(r)[0]);
+  var prim$1 = dumpPacket(Belt_Result.getExn(l)[0]);
   console.log(prim$1);
-  var prim$2 = Belt_Result.getExn(r)[1];
+  var prim$2 = Belt_Result.getExn(l)[1];
   console.log(prim$2);
+  var o = Res_parser.run(packet, "00111000000000000110111101000101001010010001001000000000");
+  var prim$3 = Belt_Result.isOk(o);
+  console.log(prim$3);
+  var prim$4 = dumpPacket(Belt_Result.getExn(o)[0]);
+  console.log(prim$4);
+  var prim$5 = Belt_Result.getExn(o)[1];
+  console.log(prim$5);
   return 1;
 }
 
