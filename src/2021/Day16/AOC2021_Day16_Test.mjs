@@ -6,7 +6,7 @@ import * as AOC2021_Day16_Data_Sample$AdventOfCode from "./AOC2021_Day16_Data_Sa
 
 describe("2021 Day16", (function () {
         test("hex string to binary", (function () {
-                var result = AOC2021_Day16$AdventOfCode.Packet_M.hexStrToBinStr("D2FE28");
+                var result = AOC2021_Day16$AdventOfCode.hexStrToBinStr("8A004A801A8002F478");
                 expect(result).toEqual("110100101111111000101000");
                 
               }));

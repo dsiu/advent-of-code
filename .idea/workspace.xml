@@ -8,6 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
