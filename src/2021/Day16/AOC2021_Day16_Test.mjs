@@ -7,7 +7,7 @@ import * as AOC2021_Day16$AdventOfCode from "./AOC2021_Day16.mjs";
 import * as AOC2021_Day16_Data$AdventOfCode from "./AOC2021_Day16_Data.mjs";
 import * as AOC2021_Day16_Data_Sample$AdventOfCode from "./AOC2021_Day16_Data_Sample.mjs";
 
-function makeLiteral(ver, literal) {
+function literal(ver, l) {
   return /* Packet */{
           _0: /* Version */{
             _0: ver
@@ -16,8 +16,40 @@ function makeLiteral(ver, literal) {
             _0: 4
           },
           _2: {
-            TAG: /* Payload_Literal */0,
-            _0: literal
+            TAG: /* Literal */0,
+            _0: l
+          }
+        };
+}
+
+function op_type_0(ver, t, param) {
+  return /* Packet */{
+          _0: /* Version */{
+            _0: ver
+          },
+          _1: /* TypeID */{
+            _0: t
+          },
+          _2: {
+            TAG: /* Op_Type_0 */1,
+            _0: param[0],
+            _1: param[1]
+          }
+        };
+}
+
+function op_type_1(ver, t, param) {
+  return /* Packet */{
+          _0: /* Version */{
+            _0: ver
+          },
+          _1: /* TypeID */{
+            _0: t
+          },
+          _2: {
+            TAG: /* Op_Type_1 */2,
+            _0: param[0],
+            _1: param[1]
           }
         };
 }
@@ -53,7 +85,7 @@ Jest.describe("2021 Day16", (function (param) {
                           _0: 4
                         };
                         var expected_2 = {
-                          TAG: /* Payload_Literal */0,
+                          TAG: /* Literal */0,
                           _0: 2021
                         };
                         var expected = /* Packet */{
@@ -72,7 +104,7 @@ Jest.describe("2021 Day16", (function (param) {
                           _0: 4
                         };
                         var expected_2 = {
-                          TAG: /* Payload_Literal */0,
+                          TAG: /* Literal */0,
                           _0: 10
                         };
                         var expected = /* Packet */{
@@ -91,7 +123,7 @@ Jest.describe("2021 Day16", (function (param) {
                           _0: 4
                         };
                         var expected_2 = {
-                          TAG: /* Payload_Literal */0,
+                          TAG: /* Literal */0,
                           _0: 20
                         };
                         var expected = /* Packet */{
@@ -103,31 +135,45 @@ Jest.describe("2021 Day16", (function (param) {
                       }));
                 Jest.test("op type 0 simple", (function (param) {
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("00111000000000000110111101000101001010010001001000000000"))[0];
-                        var expected_0 = /* Version */{
-                          _0: 1
-                        };
-                        var expected_1 = /* TypeID */{
-                          _0: 6
-                        };
-                        var expected_2 = {
-                          TAG: /* Payload_Operator */1,
-                          _0: {
-                            TAG: /* Operator_Type_0 */0,
-                            _0: 27,
-                            _1: {
-                              hd: /* Packet */{
-                                _0: /* Version */{
-                                  _0: 6
+                        var expected = op_type_0(1, 6, [
+                              27,
+                              {
+                                hd: /* Packet */{
+                                  _0: /* Version */{
+                                    _0: 6
+                                  },
+                                  _1: /* TypeID */{
+                                    _0: 4
+                                  },
+                                  _2: {
+                                    TAG: /* Literal */0,
+                                    _0: 10
+                                  }
                                 },
-                                _1: /* TypeID */{
-                                  _0: 4
-                                },
-                                _2: {
-                                  TAG: /* Payload_Literal */0,
-                                  _0: 10
+                                tl: {
+                                  hd: /* Packet */{
+                                    _0: /* Version */{
+                                      _0: 2
+                                    },
+                                    _1: /* TypeID */{
+                                      _0: 4
+                                    },
+                                    _2: {
+                                      TAG: /* Literal */0,
+                                      _0: 20
+                                    }
+                                  },
+                                  tl: /* [] */0
                                 }
-                              },
-                              tl: {
+                              }
+                            ]);
+                        return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+                      }));
+                Jest.test("op type 1 simple", (function (param) {
+                        var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("11101110000000001101010000001100100000100011000001100000"))[0];
+                        var expected = op_type_1(7, 3, [
+                              3,
+                              {
                                 hd: /* Packet */{
                                   _0: /* Version */{
                                     _0: 2
@@ -136,95 +182,359 @@ Jest.describe("2021 Day16", (function (param) {
                                     _0: 4
                                   },
                                   _2: {
-                                    TAG: /* Payload_Literal */0,
-                                    _0: 20
+                                    TAG: /* Literal */0,
+                                    _0: 1
                                   }
                                 },
-                                tl: /* [] */0
-                              }
-                            }
-                          }
-                        };
-                        var expected = /* Packet */{
-                          _0: expected_0,
-                          _1: expected_1,
-                          _2: expected_2
-                        };
-                        return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-                      }));
-                return Jest.test("op type 1 simple", (function (param) {
-                              var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("11101110000000001101010000001100100000100011000001100000"))[0];
-                              var expected_0 = /* Version */{
-                                _0: 7
-                              };
-                              var expected_1 = /* TypeID */{
-                                _0: 3
-                              };
-                              var expected_2 = {
-                                TAG: /* Payload_Operator */1,
-                                _0: {
-                                  TAG: /* Operator_Type_1 */1,
-                                  _0: 3,
-                                  _1: {
+                                tl: {
+                                  hd: /* Packet */{
+                                    _0: /* Version */{
+                                      _0: 4
+                                    },
+                                    _1: /* TypeID */{
+                                      _0: 4
+                                    },
+                                    _2: {
+                                      TAG: /* Literal */0,
+                                      _0: 2
+                                    }
+                                  },
+                                  tl: {
                                     hd: /* Packet */{
                                       _0: /* Version */{
-                                        _0: 2
+                                        _0: 1
                                       },
                                       _1: /* TypeID */{
                                         _0: 4
                                       },
                                       _2: {
-                                        TAG: /* Payload_Literal */0,
-                                        _0: 1
+                                        TAG: /* Literal */0,
+                                        _0: 3
                                       }
                                     },
-                                    tl: {
-                                      hd: /* Packet */{
-                                        _0: /* Version */{
-                                          _0: 4
-                                        },
-                                        _1: /* TypeID */{
-                                          _0: 4
-                                        },
-                                        _2: {
-                                          TAG: /* Payload_Literal */0,
-                                          _0: 2
-                                        }
-                                      },
-                                      tl: {
+                                    tl: /* [] */0
+                                  }
+                                }
+                              }
+                            ]);
+                        return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+                      }));
+                Jest.test("example 1", (function (param) {
+                        var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("8A004A801A8002F478");
+                        var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
+                        var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
+                        var expected = op_type_1(4, 2, [
+                              1,
+                              {
+                                hd: op_type_1(1, 2, [
+                                      1,
+                                      {
+                                        hd: op_type_0(5, 2, [
+                                              11,
+                                              {
+                                                hd: /* Packet */{
+                                                  _0: /* Version */{
+                                                    _0: 6
+                                                  },
+                                                  _1: /* TypeID */{
+                                                    _0: 4
+                                                  },
+                                                  _2: {
+                                                    TAG: /* Literal */0,
+                                                    _0: 15
+                                                  }
+                                                },
+                                                tl: /* [] */0
+                                              }
+                                            ]),
+                                        tl: /* [] */0
+                                      }
+                                    ]),
+                                tl: /* [] */0
+                              }
+                            ]);
+                        return Jest.Expect.toEqual(Jest.Expect.expect([
+                                        result,
+                                        versionSum
+                                      ]), [
+                                    expected,
+                                    16
+                                  ]);
+                      }));
+                Jest.test("example 2", (function (param) {
+                        var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("620080001611562C8802118E34");
+                        var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
+                        var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
+                        var expected = op_type_1(3, 0, [
+                              2,
+                              {
+                                hd: op_type_0(0, 0, [
+                                      22,
+                                      {
                                         hd: /* Packet */{
                                           _0: /* Version */{
-                                            _0: 1
+                                            _0: 0
                                           },
                                           _1: /* TypeID */{
                                             _0: 4
                                           },
                                           _2: {
-                                            TAG: /* Payload_Literal */0,
-                                            _0: 3
+                                            TAG: /* Literal */0,
+                                            _0: 10
                                           }
                                         },
-                                        tl: /* [] */0
+                                        tl: {
+                                          hd: /* Packet */{
+                                            _0: /* Version */{
+                                              _0: 5
+                                            },
+                                            _1: /* TypeID */{
+                                              _0: 4
+                                            },
+                                            _2: {
+                                              TAG: /* Literal */0,
+                                              _0: 11
+                                            }
+                                          },
+                                          tl: /* [] */0
+                                        }
                                       }
-                                    }
-                                  }
+                                    ]),
+                                tl: {
+                                  hd: op_type_1(1, 0, [
+                                        2,
+                                        {
+                                          hd: /* Packet */{
+                                            _0: /* Version */{
+                                              _0: 0
+                                            },
+                                            _1: /* TypeID */{
+                                              _0: 4
+                                            },
+                                            _2: {
+                                              TAG: /* Literal */0,
+                                              _0: 12
+                                            }
+                                          },
+                                          tl: {
+                                            hd: /* Packet */{
+                                              _0: /* Version */{
+                                                _0: 3
+                                              },
+                                              _1: /* TypeID */{
+                                                _0: 4
+                                              },
+                                              _2: {
+                                                TAG: /* Literal */0,
+                                                _0: 13
+                                              }
+                                            },
+                                            tl: /* [] */0
+                                          }
+                                        }
+                                      ]),
+                                  tl: /* [] */0
                                 }
-                              };
-                              var expected = /* Packet */{
-                                _0: expected_0,
-                                _1: expected_1,
-                                _2: expected_2
-                              };
-                              return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+                              }
+                            ]);
+                        return Jest.Expect.toEqual(Jest.Expect.expect([
+                                        result,
+                                        versionSum
+                                      ]), [
+                                    expected,
+                                    12
+                                  ]);
+                      }));
+                Jest.test("example 3", (function (param) {
+                        var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("C0015000016115A2E0802F182340");
+                        var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
+                        var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
+                        var expected = op_type_0(6, 0, [
+                              84,
+                              {
+                                hd: op_type_0(0, 0, [
+                                      22,
+                                      {
+                                        hd: /* Packet */{
+                                          _0: /* Version */{
+                                            _0: 0
+                                          },
+                                          _1: /* TypeID */{
+                                            _0: 4
+                                          },
+                                          _2: {
+                                            TAG: /* Literal */0,
+                                            _0: 10
+                                          }
+                                        },
+                                        tl: {
+                                          hd: /* Packet */{
+                                            _0: /* Version */{
+                                              _0: 6
+                                            },
+                                            _1: /* TypeID */{
+                                              _0: 4
+                                            },
+                                            _2: {
+                                              TAG: /* Literal */0,
+                                              _0: 11
+                                            }
+                                          },
+                                          tl: /* [] */0
+                                        }
+                                      }
+                                    ]),
+                                tl: {
+                                  hd: op_type_1(4, 0, [
+                                        2,
+                                        {
+                                          hd: /* Packet */{
+                                            _0: /* Version */{
+                                              _0: 7
+                                            },
+                                            _1: /* TypeID */{
+                                              _0: 4
+                                            },
+                                            _2: {
+                                              TAG: /* Literal */0,
+                                              _0: 12
+                                            }
+                                          },
+                                          tl: {
+                                            hd: /* Packet */{
+                                              _0: /* Version */{
+                                                _0: 0
+                                              },
+                                              _1: /* TypeID */{
+                                                _0: 4
+                                              },
+                                              _2: {
+                                                TAG: /* Literal */0,
+                                                _0: 13
+                                              }
+                                            },
+                                            tl: /* [] */0
+                                          }
+                                        }
+                                      ]),
+                                  tl: /* [] */0
+                                }
+                              }
+                            ]);
+                        return Jest.Expect.toEqual(Jest.Expect.expect([
+                                        result,
+                                        versionSum
+                                      ]), [
+                                    expected,
+                                    23
+                                  ]);
+                      }));
+                return Jest.test("example 4", (function (param) {
+                              var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("A0016C880162017C3686B18A3D4780");
+                              var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
+                              var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
+                              var expected = op_type_0(5, 0, [
+                                    91,
+                                    {
+                                      hd: op_type_1(1, 0, [
+                                            1,
+                                            {
+                                              hd: op_type_1(3, 0, [
+                                                    5,
+                                                    {
+                                                      hd: /* Packet */{
+                                                        _0: /* Version */{
+                                                          _0: 7
+                                                        },
+                                                        _1: /* TypeID */{
+                                                          _0: 4
+                                                        },
+                                                        _2: {
+                                                          TAG: /* Literal */0,
+                                                          _0: 6
+                                                        }
+                                                      },
+                                                      tl: {
+                                                        hd: /* Packet */{
+                                                          _0: /* Version */{
+                                                            _0: 6
+                                                          },
+                                                          _1: /* TypeID */{
+                                                            _0: 4
+                                                          },
+                                                          _2: {
+                                                            TAG: /* Literal */0,
+                                                            _0: 6
+                                                          }
+                                                        },
+                                                        tl: {
+                                                          hd: /* Packet */{
+                                                            _0: /* Version */{
+                                                              _0: 5
+                                                            },
+                                                            _1: /* TypeID */{
+                                                              _0: 4
+                                                            },
+                                                            _2: {
+                                                              TAG: /* Literal */0,
+                                                              _0: 12
+                                                            }
+                                                          },
+                                                          tl: {
+                                                            hd: /* Packet */{
+                                                              _0: /* Version */{
+                                                                _0: 2
+                                                              },
+                                                              _1: /* TypeID */{
+                                                                _0: 4
+                                                              },
+                                                              _2: {
+                                                                TAG: /* Literal */0,
+                                                                _0: 15
+                                                              }
+                                                            },
+                                                            tl: {
+                                                              hd: /* Packet */{
+                                                                _0: /* Version */{
+                                                                  _0: 2
+                                                                },
+                                                                _1: /* TypeID */{
+                                                                  _0: 4
+                                                                },
+                                                                _2: {
+                                                                  TAG: /* Literal */0,
+                                                                  _0: 15
+                                                                }
+                                                              },
+                                                              tl: /* [] */0
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  ]),
+                                              tl: /* [] */0
+                                            }
+                                          ]),
+                                      tl: /* [] */0
+                                    }
+                                  ]);
+                              return Jest.Expect.toEqual(Jest.Expect.expect([
+                                              result,
+                                              versionSum
+                                            ]), [
+                                          expected,
+                                          31
+                                        ]);
                             }));
               }));
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2021_Day16$AdventOfCode.solvePart1(AOC2021_Day16_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 31);
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2021_Day16$AdventOfCode.solvePart1(AOC2021_Day16_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1012);
               }));
         Jest.test("Part 2 - Sample Data", (function (param) {
                 var result = AOC2021_Day16$AdventOfCode.solvePart2(AOC2021_Day16_Data_Sample$AdventOfCode.data);
@@ -240,10 +550,6 @@ var data = AOC2021_Day16_Data$AdventOfCode.data;
 
 var sampleData = AOC2021_Day16_Data_Sample$AdventOfCode.data;
 
-var solvePart1 = AOC2021_Day16$AdventOfCode.solvePart1;
-
-var solvePart2 = AOC2021_Day16$AdventOfCode.solvePart2;
-
 var P;
 
 var Pac;
@@ -251,11 +557,11 @@ var Pac;
 export {
   data ,
   sampleData ,
-  solvePart1 ,
-  solvePart2 ,
   P ,
   Pac ,
-  makeLiteral ,
+  literal ,
+  op_type_0 ,
+  op_type_1 ,
   anyChar ,
   
 }

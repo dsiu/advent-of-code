@@ -59,6 +59,8 @@ let binCharArrayToInt = xs => xs->binCharArrayToStr->binToInt
 let binCharListToStr = xs => xs->List.reduce("", (a, v) => a ++ v->charToString)
 let binCharListToInt = xs => xs->binCharListToStr->binToInt
 
+exception ParseError(string)
+
 module Packet = {
   // Types
   //
@@ -69,11 +71,9 @@ module Packet = {
 
   type rec packet = Packet(version, typeId, payload)
   and payload =
-    | Payload_Literal(int)
-    | Payload_Operator(operator)
-  and operator =
-    | Operator_Type_0(int, list<packet>) // 15 bits indicate length of bits for sub-packets
-    | Operator_Type_1(int, list<packet>) // 11 bits indicates number of sub-packets
+    | Literal(int)
+    | Op_Type_0(int, list<packet>) // 15 bits indicate length of bits for sub-packets
+    | Op_Type_1(int, list<packet>) // 11 bits indicates number of sub-packets
 
   // bit utils
   let binDigit = P.satisfy(c => c == '0' || c == '1')
@@ -138,10 +138,6 @@ module Packet = {
     })
   }
 
-  //  let takeBitsToStr = n => {
-  //    takeN(n, binDigit)->P.map(binCharListToStr)
-  //  }
-
   type payload_ = P.t<payload>
 
   // Literal
@@ -183,7 +179,7 @@ module Packet = {
 
     literal_payload->P.map(((xs, last_x)) => {
       "literalPayload"->log
-      Payload_Literal({
+      Literal({
         let l = (xs->List.reduce("", (a, (_, x)) => a ++ x) ++ last_x->snd)->binToInt
 
         j`  l = $l`->log
@@ -225,7 +221,7 @@ module Packet = {
                 let packetsResult = P.run(P.many(p), packetStr)
 
                 switch packetsResult {
-                | Ok((resultAfterReminder, inputAfterPacket)) =>
+                | Ok((resultAfterReminder, _)) =>
                   Ok((p1Result, resultAfterReminder), inputAfterReminder)
                 | Error(err) => {
                     "  Error many(p)"->log
@@ -273,17 +269,13 @@ module Packet = {
 
     let operatorPayload: payload_ = {
       let lengthType_0 = P.char('0')->P.andThen(binDigits_15_int)->opPayloadType0
-      //        ->P.andThen(P.many(p))
-      //        ->P.andThen(remainingBinDigitStr)
       let lengthType_1 = P.char('1')->P.andThen(binDigits_11_int)->opPayloadType1
-      //        ->P.andThen(P.many(p))
-      //        ->P.andThen(remainingBinDigitStr)
 
       P.choice([lengthType_0, lengthType_1])->P.map((((len_type, len), rest_packets)) => {
         switch len_type {
-        | '0' => Payload_Operator(Operator_Type_0(len, rest_packets))
-
-        | '1' => Payload_Operator(Operator_Type_1(len, rest_packets))
+        | '0' => Op_Type_0(len, rest_packets)
+        | '1' => Op_Type_1(len, rest_packets)
+        | _ => raise(ParseError("unknown operator len type = " ++ len_type->charToString))
         }
       })
     }
@@ -303,77 +295,61 @@ module Packet = {
     let rest_packet_str = rest => rest->List.reduce("", (a, p) => a ++ "\n    " ++ dumpPacket(p))
 
     switch p {
-    | Payload_Literal(
-        l,
-        //        rest,
-      ) => j`ver = $version | typeId = $typeId | literal payload = $l`
-    | Payload_Operator(o) =>
-      switch o {
-      | Operator_Type_0(len, rest) => {
-          let sub_packets_str = rest_packet_str(rest)
+    | Literal(l) => j`ver = $version | typeId = $typeId | literal payload = $l`
 
-          j`{ ver = $version | typeId = $typeId | op payload = type_0(n_bits: $len, $sub_packets_str) }\n`
-        }
-      | Operator_Type_1(len, rest) => {
-          let sub_packets_str = rest_packet_str(rest)
+    | Op_Type_0(len, rest) => {
+        let sub_packets_str = rest_packet_str(rest)
 
-          j`{ ver = $version | typeId = $typeId | op payload = type_1(n_packats: $len, $sub_packets_str) }\n`
-        }
+        j`{ ver = $version | typeId = $typeId | op payload = type_0(n_bits: $len, $sub_packets_str) }\n`
+      }
+    | Op_Type_1(len, rest) => {
+        let sub_packets_str = rest_packet_str(rest)
+
+        j`{ ver = $version | typeId = $typeId | op payload = type_1(n_packats: $len, $sub_packets_str) }\n`
       }
     }
+  }
+
+  let version_sum = (p: packet) => {
+    let rec inner = (p, sum) => {
+      let Packet(Version(version), TypeID(_), payload) = p
+      switch payload {
+      | Literal(_) => sum + version
+      | Op_Type_0(_, rest)
+      | Op_Type_1(_, rest) =>
+        version + List.reduce(rest, 0, (a, p) => {a + inner(p, 0)})
+      }
+    }
+
+    inner(p, 0)
   }
 
   type result = P.parseResult<packet>
   let parse = (s): result => P.run(packet, s)
 }
 
-let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+//let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 
 let solvePart1 = data => {
   open Packet
-  data->ignore
+  let d = data->hexStrToBinStr
 
-  let data = [
-    //    "110100101111111000101000", // literal 2021
-    "00111000000000000110111101000101001010010001001000000000", // op, type 0, len 27
-
-    //    "11101110000000001101010000001100100000100011000001100000", // op, type 1, len 3
-
-    //    "11010001010", // literal 10
-    //    "0101001000100100", // literal 20
-  ]
-
-  let data_hex = [
-    //    "8A004A801A8002F478",
-    // represents an operator packet (version 4) which contains an operator packet (version 1) which contains an operator packet (version 5) which contains a literal value (version 6); this packet has a version sum of 16.
-
-    //    "620080001611562C8802118E34",
-    // represents an operator packet (version 3) which contains two sub-packets; each sub-packet is an operator packet that contains two literal values. This packet has a version sum of 12.
-
-    "C0015000016115A2E0802F182340",
-    // has the same structure as the previous example, but the outermost packet uses a different length type ID. This packet has a version sum of 23.
-
-    "A0016C880162017C3686B18A3D4780",
-    // is an operator packet that contains an operator packet that contains an operator packet that contains five literal values; it has a version sum of 31.
-  ]->Array.map(x => x->hexStrToBinStr)
-
-  data_hex->Array.forEach(d => {
-    let l = Packet.parse(d)
-    l->Result.isOk->log2(d)
-
-    switch l {
-    | Ok(_) => {
-        l->Result.getExn->fst->dumpPacket->log
-        l->Result.getExn->snd->log
-        log("\n")
-      }
-    | Error(err) => {
-        log(err)
-        log("\n")
-      }
+  let l = Packet.parse(d)
+  l->Result.isOk->log2(d)
+  let p = l->Result.getExn->fst
+  switch l {
+  | Ok(_) => {
+      p->dumpPacket->log
+      l->Result.getExn->snd->log
+      log("\n")
     }
-  })
-  1
+  | Error(err) => {
+      log(err)
+      log("\n")
+    }
+  }
+
+  p->Packet.version_sum
 }
 
 let solvePart2 = data => {

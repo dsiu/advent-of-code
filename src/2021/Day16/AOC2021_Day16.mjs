@@ -5,6 +5,7 @@ import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Res_parser from "@resinfo/parser/src/res_parser.mjs";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
+import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
@@ -162,6 +163,8 @@ function binCharListToInt(xs) {
   return parseInt(binCharListToStr(xs), 2);
 }
 
+var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day16-AdventOfCode.ParseError");
+
 var binDigit = Res_parser.satisfy(function (c) {
       if (c === /* '0' */48) {
         return true;
@@ -316,7 +319,7 @@ var literalPayload = Res_parser.map(literal_payload, (function (param) {
                     return a + param[1];
                   })) + param[1][1], 2);
         return {
-                TAG: /* Payload_Literal */0,
+                TAG: /* Literal */0,
                 _0: (console.log("  l = " + l), l)
               };
       }));
@@ -428,32 +431,22 @@ var packet = Res_parser.makeRecursive(function (p) {
               var len_type = match[0];
               if (len_type === 48) {
                 return {
-                        TAG: /* Payload_Operator */1,
-                        _0: {
-                          TAG: /* Operator_Type_0 */0,
-                          _0: len,
-                          _1: rest_packets
-                        }
+                        TAG: /* Op_Type_0 */1,
+                        _0: len,
+                        _1: rest_packets
                       };
               }
               if (len_type !== 49) {
                 throw {
-                      RE_EXN_ID: "Match_failure",
-                      _1: [
-                        "AOC2021_Day16.res",
-                        283,
-                        8
-                      ],
+                      RE_EXN_ID: ParseError,
+                      _1: "unknown operator len type = " + String.fromCharCode(len_type),
                       Error: new Error()
                     };
               }
               return {
-                      TAG: /* Payload_Operator */1,
-                      _0: {
-                        TAG: /* Operator_Type_1 */1,
-                        _0: len,
-                        _1: rest_packets
-                      }
+                      TAG: /* Op_Type_1 */2,
+                      _0: len,
+                      _1: rest_packets
                     };
             }));
       var literalAndPayload = Res_parser.andThen(literalTypeId, literalPayload);
@@ -480,16 +473,36 @@ function dumpPacket(p) {
                   return a + "\n    " + dumpPacket(p);
                 }));
   };
-  if (p$1.TAG === /* Payload_Literal */0) {
-    return "ver = " + version + " | typeId = " + typeId + " | literal payload = " + p$1._0;
+  switch (p$1.TAG | 0) {
+    case /* Literal */0 :
+        return "ver = " + version + " | typeId = " + typeId + " | literal payload = " + p$1._0;
+    case /* Op_Type_0 */1 :
+        var sub_packets_str = rest_packet_str(p$1._1);
+        return "{ ver = " + version + " | typeId = " + typeId + " | op payload = type_0(n_bits: " + p$1._0 + ", " + sub_packets_str + ") }\n";
+    case /* Op_Type_1 */2 :
+        var sub_packets_str$1 = rest_packet_str(p$1._1);
+        return "{ ver = " + version + " | typeId = " + typeId + " | op payload = type_1(n_packats: " + p$1._0 + ", " + sub_packets_str$1 + ") }\n";
+    
   }
-  var o = p$1._0;
-  if (o.TAG === /* Operator_Type_0 */0) {
-    var sub_packets_str = rest_packet_str(o._1);
-    return "{ ver = " + version + " | typeId = " + typeId + " | op payload = type_0(n_bits: " + o._0 + ", " + sub_packets_str + ") }\n";
-  }
-  var sub_packets_str$1 = rest_packet_str(o._1);
-  return "{ ver = " + version + " | typeId = " + typeId + " | op payload = type_1(n_packats: " + o._0 + ", " + sub_packets_str$1 + ") }\n";
+}
+
+function version_sum(p) {
+  var inner = function (p, sum) {
+    var payload = p._2;
+    var version = p._0._0;
+    switch (payload.TAG | 0) {
+      case /* Literal */0 :
+          return sum + version | 0;
+      case /* Op_Type_0 */1 :
+      case /* Op_Type_1 */2 :
+          break;
+      
+    }
+    return version + Belt_List.reduce(payload._1, 0, (function (a, p) {
+                  return a + inner(p, 0) | 0;
+                })) | 0;
+  };
+  return inner(p, 0);
 }
 
 function parse(s) {
@@ -521,37 +534,27 @@ var Packet = {
   remainingBinDigitStr: remainingBinDigitStr,
   packet: packet,
   dumpPacket: dumpPacket,
+  version_sum: version_sum,
   parse: parse
 };
 
-function parse$1(data) {
-  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
-                return prim.trim();
-              }));
-}
-
 function solvePart1(data) {
-  var data_hex = Belt_Array.map([
-        "C0015000016115A2E0802F182340",
-        "A0016C880162017C3686B18A3D4780"
-      ], hexStrToBinStr);
-  Belt_Array.forEach(data_hex, (function (d) {
-          var l = Res_parser.run(packet, d);
-          var prim0 = Belt_Result.isOk(l);
-          console.log(prim0, d);
-          if (l.TAG === /* Ok */0) {
-            var prim = dumpPacket(Belt_Result.getExn(l)[0]);
-            console.log(prim);
-            var prim$1 = Belt_Result.getExn(l)[1];
-            console.log(prim$1);
-            console.log("\n");
-            return ;
-          }
-          console.log(l._0);
-          console.log("\n");
-          
-        }));
-  return 1;
+  var d = hexStrToBinStr(data);
+  var l = Res_parser.run(packet, d);
+  var prim0 = Belt_Result.isOk(l);
+  console.log(prim0, d);
+  var p = Belt_Result.getExn(l)[0];
+  if (l.TAG === /* Ok */0) {
+    var prim = dumpPacket(p);
+    console.log(prim);
+    var prim$1 = Belt_Result.getExn(l)[1];
+    console.log(prim$1);
+    console.log("\n");
+  } else {
+    console.log(l._0);
+    console.log("\n");
+  }
+  return version_sum(p);
 }
 
 function solvePart2(data) {
@@ -577,8 +580,8 @@ export {
   binCharArrayToInt ,
   binCharListToStr ,
   binCharListToInt ,
+  ParseError ,
   Packet ,
-  parse$1 as parse,
   solvePart1 ,
   solvePart2 ,
   
