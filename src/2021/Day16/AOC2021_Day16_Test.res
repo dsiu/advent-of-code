@@ -202,9 +202,21 @@ describe("2021 Day16", () => {
       (Product(list{intVal(2), intVal(3)})->eval, 6),
       (Product(list{Product(list{intVal(3), intVal(4)}), intVal(2)})->eval, 24),
       (Product(list{intVal(11), intVal(12), intVal(13)})->eval, 1716),
+      (Product(list{Sum(list{intVal(3), intVal(4)}), Sum(list{intVal(2), intVal(1)})})->eval, 21),
     ]
 
     testEach2("product", product_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
+    })
+
+    let min_tests = [
+      (Min(list{intVal(2), intVal(3)})->eval, 2),
+      (Min(list{intVal(9), intVal(-1), intVal(12)})->eval, -1),
+      (Min(list{Min(list{intVal(4), intVal(5)}), Min(list{intVal(6), intVal(7)})})->eval, 4),
+      (Min(list{Sum(list{intVal(3), intVal(4)}), Sum(list{intVal(0), intVal(7)})})->eval, 7),
+    ]
+
+    testEach2("min", min_tests, (result, expected) => {
       expect(result)->toEqual(expected)
     })
   })

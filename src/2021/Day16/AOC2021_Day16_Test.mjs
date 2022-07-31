@@ -651,9 +651,137 @@ describe("2021 Day16", (function () {
                           }
                         }),
                     1716
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Product */2,
+                          _0: {
+                            hd: {
+                              TAG: /* Sum */1,
+                              _0: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(3),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(4),
+                                  tl: /* [] */0
+                                }
+                              }
+                            },
+                            tl: {
+                              hd: {
+                                TAG: /* Sum */1,
+                                _0: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                                  tl: {
+                                    hd: AOC2021_Day16$AdventOfCode.Expression.intVal(1),
+                                    tl: /* [] */0
+                                  }
+                                }
+                              },
+                              tl: /* [] */0
+                            }
+                          }
+                        }),
+                    21
                   ]
                 ];
-                return Jest2$AdventOfCode.testEach2("product", product_tests, (function (result, expected) {
+                Jest2$AdventOfCode.testEach2("product", product_tests, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var min_tests = [
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Min */3,
+                          _0: {
+                            hd: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                            tl: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(3),
+                              tl: /* [] */0
+                            }
+                          }
+                        }),
+                    2
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Min */3,
+                          _0: {
+                            hd: AOC2021_Day16$AdventOfCode.Expression.intVal(9),
+                            tl: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(-1),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(12),
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }),
+                    -1
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Min */3,
+                          _0: {
+                            hd: {
+                              TAG: /* Min */3,
+                              _0: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(4),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(5),
+                                  tl: /* [] */0
+                                }
+                              }
+                            },
+                            tl: {
+                              hd: {
+                                TAG: /* Min */3,
+                                _0: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(6),
+                                  tl: {
+                                    hd: AOC2021_Day16$AdventOfCode.Expression.intVal(7),
+                                    tl: /* [] */0
+                                  }
+                                }
+                              },
+                              tl: /* [] */0
+                            }
+                          }
+                        }),
+                    4
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Min */3,
+                          _0: {
+                            hd: {
+                              TAG: /* Sum */1,
+                              _0: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(3),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(4),
+                                  tl: /* [] */0
+                                }
+                              }
+                            },
+                            tl: {
+                              hd: {
+                                TAG: /* Sum */1,
+                                _0: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(0),
+                                  tl: {
+                                    hd: AOC2021_Day16$AdventOfCode.Expression.intVal(7),
+                                    tl: /* [] */0
+                                  }
+                                }
+                              },
+                              tl: /* [] */0
+                            }
+                          }
+                        }),
+                    7
+                  ]
+                ];
+                return Jest2$AdventOfCode.testEach2("min", min_tests, (function (result, expected) {
                               expect(result).toEqual(expected);
                               
                             }));
