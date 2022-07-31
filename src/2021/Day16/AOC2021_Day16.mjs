@@ -215,7 +215,7 @@ function $$eval(e) {
         } else {
           return 0;
         }
-    case /* LessThan */6 :
+    case /* Less */6 :
         if ($$eval(e._0) < $$eval(e._1)) {
           return 1;
         } else {
@@ -260,7 +260,7 @@ function dump(e) {
         var v1 = dump(e._0);
         var v2 = dump(e._1);
         return "Greater:{ " + v1 + ", " + v2 + " }";
-    case /* LessThan */6 :
+    case /* Less */6 :
         var v1$1 = dump(e._0);
         var v2$1 = dump(e._1);
         return "LessThan:{ " + v1$1 + ", " + v2$1 + " }";

@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 16 - Part 2 - WIP">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.res" afterDir="false" />
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 16 - Part 2 - Expression  tests">
+      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,7 +356,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659263245474</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="2021 Day 16 - Part 2 - Expression  tests">
+      <created>1659270404192</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1659270404192</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +402,8 @@
     <MESSAGE value="2021 Day 16 - Part 1 - all parsing should be working" />
     <MESSAGE value="2021 Day 16 - Part 1 - DONE" />
     <MESSAGE value="2021 Day 16 - Part 2 - WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 16 - Part 2 - WIP" />
+    <MESSAGE value="2021 Day 16 - Part 2 - Expression  tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 16 - Part 2 - Expression  tests" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
