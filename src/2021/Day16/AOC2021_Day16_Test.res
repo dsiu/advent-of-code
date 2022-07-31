@@ -219,6 +219,69 @@ describe("2021 Day16", () => {
     testEach2("min", min_tests, (result, expected) => {
       expect(result)->toEqual(expected)
     })
+
+    let max_tests = [
+      (Max(list{intVal(2), intVal(3)})->eval, 3),
+      (Max(list{intVal(9), intVal(-1), intVal(12)})->eval, 12),
+      (Max(list{Max(list{intVal(4), intVal(5)}), Max(list{intVal(6), intVal(7)})})->eval, 7),
+      (Max(list{Sum(list{intVal(3), intVal(4)}), Sum(list{intVal(0), intVal(7)})})->eval, 7),
+    ]
+
+    testEach2("max", max_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
+    })
+
+    let greater_tests = [
+      (Greater(intVal(2), intVal(3))->eval, 0),
+      (Greater(intVal(0), intVal(0))->eval, 0),
+      (Greater(intVal(1), intVal(-1))->eval, 1),
+      (
+        Greater(
+          Sum(list{intVal(30), intVal(20), intVal(10)}),
+          Product(list{intVal(2), intVal(20)}),
+        )->eval,
+        1,
+      ),
+    ]
+
+    testEach2("greater", greater_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
+    })
+
+    let less_tests = [
+      (Less(intVal(2), intVal(3))->eval, 1),
+      (Less(intVal(0), intVal(0))->eval, 0),
+      (Less(intVal(1), intVal(-1))->eval, 0),
+      (
+        Less(
+          Sum(list{intVal(30), intVal(20), intVal(10)}),
+          Product(list{intVal(2), intVal(20)}),
+        )->eval,
+        0,
+      ),
+    ]
+
+    testEach2("less", less_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
+    })
+
+    let equal_tests = [
+      (Equal(intVal(0), intVal(0))->eval, 1),
+      (Equal(intVal(1), intVal(0))->eval, 0),
+      (Equal(intVal(2), intVal(3))->eval, 0),
+      (Equal(intVal(-1), intVal(-1))->eval, 1),
+      (
+        Equal(
+          Sum(list{intVal(1), intVal(2), intVal(3)}),
+          Sum(list{intVal(3), intVal(2), intVal(1)}),
+        )->eval,
+        1,
+      ),
+    ]
+
+    testEach2("equal", equal_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
+    })
   })
 
   test("Part 1 - Sample Data", () => {

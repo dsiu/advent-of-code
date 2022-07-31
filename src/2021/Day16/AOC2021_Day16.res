@@ -71,7 +71,7 @@ module Expression = {
     | Min(list<expr<int>>): expr<int>
     | Max(list<expr<int>>): expr<int>
     | Greater(expr<int>, expr<int>): expr<int>
-    | LessThan(expr<int>, expr<int>): expr<int>
+    | Less(expr<int>, expr<int>): expr<int>
     | Equal(expr<int>, expr<int>): expr<int>
 
   let intVal = x => Value(Int(x))
@@ -100,7 +100,7 @@ module Expression = {
           v' > a ? v' : a
         })
       | Greater(e1, e2) => eval(e1) > eval(e2) ? 1 : 0
-      | LessThan(e1, e2) => eval(e1) < eval(e2) ? 1 : 0
+      | Less(e1, e2) => eval(e1) < eval(e2) ? 1 : 0
       | Equal(e1, e2) => eval(e1) == eval(e2) ? 1 : 0
       }
     }
@@ -132,7 +132,7 @@ module Expression = {
         let v2 = dump(e2)
         j`Greater:{ $v1, $v2 }`
       }
-    | LessThan(e1, e2) => {
+    | Less(e1, e2) => {
         let v1 = dump(e1)
         let v2 = dump(e2)
         j`LessThan:{ $v1, $v2 }`
@@ -457,4 +457,4 @@ let expression_run = {
   })
 }
 
-expression_run
+//expression_run

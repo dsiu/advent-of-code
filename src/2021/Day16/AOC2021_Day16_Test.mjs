@@ -781,7 +781,292 @@ describe("2021 Day16", (function () {
                     7
                   ]
                 ];
-                return Jest2$AdventOfCode.testEach2("min", min_tests, (function (result, expected) {
+                Jest2$AdventOfCode.testEach2("min", min_tests, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var max_tests = [
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Max */4,
+                          _0: {
+                            hd: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                            tl: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(3),
+                              tl: /* [] */0
+                            }
+                          }
+                        }),
+                    3
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Max */4,
+                          _0: {
+                            hd: AOC2021_Day16$AdventOfCode.Expression.intVal(9),
+                            tl: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(-1),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(12),
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }),
+                    12
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Max */4,
+                          _0: {
+                            hd: {
+                              TAG: /* Max */4,
+                              _0: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(4),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(5),
+                                  tl: /* [] */0
+                                }
+                              }
+                            },
+                            tl: {
+                              hd: {
+                                TAG: /* Max */4,
+                                _0: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(6),
+                                  tl: {
+                                    hd: AOC2021_Day16$AdventOfCode.Expression.intVal(7),
+                                    tl: /* [] */0
+                                  }
+                                }
+                              },
+                              tl: /* [] */0
+                            }
+                          }
+                        }),
+                    7
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Max */4,
+                          _0: {
+                            hd: {
+                              TAG: /* Sum */1,
+                              _0: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(3),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(4),
+                                  tl: /* [] */0
+                                }
+                              }
+                            },
+                            tl: {
+                              hd: {
+                                TAG: /* Sum */1,
+                                _0: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(0),
+                                  tl: {
+                                    hd: AOC2021_Day16$AdventOfCode.Expression.intVal(7),
+                                    tl: /* [] */0
+                                  }
+                                }
+                              },
+                              tl: /* [] */0
+                            }
+                          }
+                        }),
+                    7
+                  ]
+                ];
+                Jest2$AdventOfCode.testEach2("max", max_tests, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var greater_tests = [
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Greater */5,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(3)
+                        }),
+                    0
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Greater */5,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(0),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(0)
+                        }),
+                    0
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Greater */5,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(1),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(-1)
+                        }),
+                    1
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Greater */5,
+                          _0: {
+                            TAG: /* Sum */1,
+                            _0: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(30),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(20),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(10),
+                                  tl: /* [] */0
+                                }
+                              }
+                            }
+                          },
+                          _1: {
+                            TAG: /* Product */2,
+                            _0: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(20),
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }),
+                    1
+                  ]
+                ];
+                Jest2$AdventOfCode.testEach2("greater", greater_tests, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var less_tests = [
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Less */6,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(3)
+                        }),
+                    1
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Less */6,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(0),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(0)
+                        }),
+                    0
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Less */6,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(1),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(-1)
+                        }),
+                    0
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Less */6,
+                          _0: {
+                            TAG: /* Sum */1,
+                            _0: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(30),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(20),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(10),
+                                  tl: /* [] */0
+                                }
+                              }
+                            }
+                          },
+                          _1: {
+                            TAG: /* Product */2,
+                            _0: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(20),
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }),
+                    0
+                  ]
+                ];
+                Jest2$AdventOfCode.testEach2("less", less_tests, (function (result, expected) {
+                        expect(result).toEqual(expected);
+                        
+                      }));
+                var equal_tests = [
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Equal */7,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(0),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(0)
+                        }),
+                    1
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Equal */7,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(1),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(0)
+                        }),
+                    0
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Equal */7,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(3)
+                        }),
+                    0
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Equal */7,
+                          _0: AOC2021_Day16$AdventOfCode.Expression.intVal(-1),
+                          _1: AOC2021_Day16$AdventOfCode.Expression.intVal(-1)
+                        }),
+                    1
+                  ],
+                  [
+                    AOC2021_Day16$AdventOfCode.Expression.$$eval({
+                          TAG: /* Equal */7,
+                          _0: {
+                            TAG: /* Sum */1,
+                            _0: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(1),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(3),
+                                  tl: /* [] */0
+                                }
+                              }
+                            }
+                          },
+                          _1: {
+                            TAG: /* Sum */1,
+                            _0: {
+                              hd: AOC2021_Day16$AdventOfCode.Expression.intVal(3),
+                              tl: {
+                                hd: AOC2021_Day16$AdventOfCode.Expression.intVal(2),
+                                tl: {
+                                  hd: AOC2021_Day16$AdventOfCode.Expression.intVal(1),
+                                  tl: /* [] */0
+                                }
+                              }
+                            }
+                          }
+                        }),
+                    1
+                  ]
+                ];
+                return Jest2$AdventOfCode.testEach2("equal", equal_tests, (function (result, expected) {
                               expect(result).toEqual(expected);
                               
                             }));
