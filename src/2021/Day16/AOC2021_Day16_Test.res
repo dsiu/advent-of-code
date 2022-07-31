@@ -1,5 +1,5 @@
-open Jest
-open Expect
+open Jest2
+//open Expect
 
 open Belt
 
@@ -11,10 +11,19 @@ module P = Res_parser
 module Pac = Packet
 
 let literal = (ver, l) => Pac.Packet(Version(ver), TypeID(4), Pac.Literal(l))
-let op_type_0 = (ver, t, (len, xs)) => Pac.Packet(Version(ver), TypeID(t), Pac.Op_Type_0(len, xs))
-let op_type_1 = (ver, t, (len, xs)) => Pac.Packet(Version(ver), TypeID(t), Pac.Op_Type_1(len, xs))
+let op_type_0 = (ver, t, (len, xs)) => Pac.Packet(
+  Version(ver),
+  TypeID(t),
+  Pac.Op_Len_Kind_0(len, xs),
+)
+let op_type_1 = (ver, t, (len, xs)) => Pac.Packet(
+  Version(ver),
+  TypeID(t),
+  Pac.Op_Len_Kind_1(len, xs),
+)
 
 let anyChar = P.satisfy(_ => true)
+
 describe("2021 Day16", () => {
   describe("Parser Utils", () => {
     test("hex string to binary", () => {
@@ -174,6 +183,29 @@ describe("2021 Day16", () => {
         ),
       )
       expect((result, versionSum))->toEqual((expected, 31))
+    })
+  })
+
+  describe("Expression", () => {
+    open Expression
+    let sum_tests = [
+      (Sum(list{intVal(1), intVal(2)})->eval, 3),
+      (Sum(list{Sum(list{intVal(3), intVal(4)}), intVal(2)})->eval, 9),
+      (Sum(list{intVal(11), intVal(12), intVal(13)})->eval, 36),
+    ]
+
+    testEach2("sum", sum_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
+    })
+
+    let product_tests = [
+      (Product(list{intVal(2), intVal(3)})->eval, 6),
+      (Product(list{Product(list{intVal(3), intVal(4)}), intVal(2)})->eval, 24),
+      (Product(list{intVal(11), intVal(12), intVal(13)})->eval, 1716),
+    ]
+
+    testEach2("product", product_tests, (result, expected) => {
+      expect(result)->toEqual(expected)
     })
   })
 

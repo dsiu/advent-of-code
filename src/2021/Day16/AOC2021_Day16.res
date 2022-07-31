@@ -61,6 +61,91 @@ let binCharListToInt = xs => xs->binCharListToStr->binToInt
 
 exception ParseError(string)
 
+module Expression = {
+  type rec value<_> = Int(int): value<int>
+
+  type rec expr<_> =
+    | Value(value<'a>): expr<'a>
+    | Sum(list<expr<int>>): expr<int>
+    | Product(list<expr<int>>): expr<int>
+    | Min(list<expr<int>>): expr<int>
+    | Max(list<expr<int>>): expr<int>
+    | Greater(expr<int>, expr<int>): expr<int>
+    | LessThan(expr<int>, expr<int>): expr<int>
+    | Equal(expr<int>, expr<int>): expr<int>
+
+  let intVal = x => Value(Int(x))
+
+  let eval_value = (type a, v: value<a>): a => {
+    switch v {
+    | Int(v) => v
+    }
+  }
+
+  let rec eval:
+    type a. expr<a> => a =
+    (type a, e: expr<a>): a => {
+      switch e {
+      | Value(v) => eval_value(v)
+      | Sum(e) => e->List.reduce(0, (a, v) => a + eval(v))
+      | Product(e) => e->List.reduce(1, (a, v) => a * eval(v))
+      | Min(e) =>
+        e->List.reduce(Js.Int.max, (a, v) => {
+          let v' = eval(v)
+          v' < a ? v' : a
+        })
+      | Max(e) =>
+        e->List.reduce(Js.Int.min, (a, v) => {
+          let v' = eval(v)
+          v' > a ? v' : a
+        })
+      | Greater(e1, e2) => eval(e1) > eval(e2) ? 1 : 0
+      | LessThan(e1, e2) => eval(e1) < eval(e2) ? 1 : 0
+      | Equal(e1, e2) => eval(e1) == eval(e2) ? 1 : 0
+      }
+    }
+
+  let rec dump = e => {
+    switch e {
+    | Value(v) => {
+        let v' = eval_value(v)
+        j` Value=$v';`
+      }
+    | Sum(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Sum:{ $v' }`
+      }
+    | Product(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Product:{ $v' }`
+      }
+    | Min(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Min:{ $v' }`
+      }
+    | Max(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Max:{ $v' }`
+      }
+    | Greater(e1, e2) => {
+        let v1 = dump(e1)
+        let v2 = dump(e2)
+        j`Greater:{ $v1, $v2 }`
+      }
+    | LessThan(e1, e2) => {
+        let v1 = dump(e1)
+        let v2 = dump(e2)
+        j`LessThan:{ $v1, $v2 }`
+      }
+    | Equal(e1, e2) => {
+        let v1 = dump(e1)
+        let v2 = dump(e2)
+        j`Equal:{ $v1, $v2 }`
+      }
+    }
+  }
+}
+
 module Packet = {
   // Types
   //
@@ -72,8 +157,8 @@ module Packet = {
   type rec packet = Packet(version, typeId, payload)
   and payload =
     | Literal(int)
-    | Op_Type_0(int, list<packet>) // 15 bits indicate length of bits for sub-packets
-    | Op_Type_1(int, list<packet>) // 11 bits indicates number of sub-packets
+    | Op_Len_Kind_0(int, list<packet>) // 15 bits indicate length of bits for sub-packets
+    | Op_Len_Kind_1(int, list<packet>) // 11 bits indicates number of sub-packets
 
   // bit utils
   let binDigit = P.satisfy(c => c == '0' || c == '1')
@@ -273,8 +358,8 @@ module Packet = {
 
       P.choice([lengthType_0, lengthType_1])->P.map((((len_type, len), rest_packets)) => {
         switch len_type {
-        | '0' => Op_Type_0(len, rest_packets)
-        | '1' => Op_Type_1(len, rest_packets)
+        | '0' => Op_Len_Kind_0(len, rest_packets)
+        | '1' => Op_Len_Kind_1(len, rest_packets)
         | _ => raise(ParseError("unknown operator len type = " ++ len_type->charToString))
         }
       })
@@ -297,12 +382,12 @@ module Packet = {
     switch p {
     | Literal(l) => j`ver = $version | typeId = $typeId | literal payload = $l`
 
-    | Op_Type_0(len, rest) => {
+    | Op_Len_Kind_0(len, rest) => {
         let sub_packets_str = rest_packet_str(rest)
 
         j`{ ver = $version | typeId = $typeId | op payload = type_0(n_bits: $len, $sub_packets_str) }\n`
       }
-    | Op_Type_1(len, rest) => {
+    | Op_Len_Kind_1(len, rest) => {
         let sub_packets_str = rest_packet_str(rest)
 
         j`{ ver = $version | typeId = $typeId | op payload = type_1(n_packats: $len, $sub_packets_str) }\n`
@@ -315,8 +400,8 @@ module Packet = {
       let Packet(Version(version), TypeID(_), payload) = p
       switch payload {
       | Literal(_) => sum + version
-      | Op_Type_0(_, rest)
-      | Op_Type_1(_, rest) =>
+      | Op_Len_Kind_0(_, rest)
+      | Op_Len_Kind_1(_, rest) =>
         version + List.reduce(rest, 0, (a, p) => {a + inner(p, 0)})
       }
     }
@@ -356,3 +441,20 @@ let solvePart2 = data => {
   data->ignore
   2
 }
+
+let expression_run = {
+  open Expression
+  let d = [
+    Sum(list{intVal(1), intVal(2)}),
+    Sum(list{Sum(list{intVal(3), intVal(4)}), intVal(2)}),
+    Sum(list{intVal(11), intVal(12), intVal(13)}),
+  ]
+
+  Array.forEach(d, e => {
+    e->dump->log
+    let result = e->eval
+    result->log
+  })
+}
+
+expression_run
