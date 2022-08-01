@@ -13,6 +13,9 @@ external hexToInt: (string, @as(16) _) => int = "parseInt"
 @val
 external binToInt: (string, @as(2) _) => int = "parseInt"
 
+module BigInt = ReScriptJs.Js.BigInt
+let binStrToInt64 = s => ("0b" ++ s)->BigInt.fromString->BigInt.toFloat->Int64.of_float
+
 let hexTable = Js.Dict.fromList(list{
   ("0", "0000"),
   ("1", "0001"),
@@ -66,24 +69,24 @@ module Packet = {
   //
   type version = Version(int)
   type typeId = TypeID(int)
-
-  type operator_type_0
-
   type rec packet = Packet(version, typeId, payload)
   and payload =
     | Literal(Int64.t)
     | Op_Len_Kind_0(int, list<packet>) // 15 bits indicate length of bits for sub-packets
     | Op_Len_Kind_1(int, list<packet>) // 11 bits indicates number of sub-packets
 
-  // bit utils
+  // parse a binary bit
+  //
   let binDigit = P.satisfy(c => c == '0' || c == '1')
 
   // make a sequence of the same parser N times
+  //
   let sequenceN = (parser, n) => {
     List.makeBy(n, _ => parser)->P.sequence
   }
 
   // non-recursive version of sequenceN
+  //
   let sequenceN_ = (parser, n) => P.Parser(
     input => {
       let rec inner = (parser, i, input, result) => {
@@ -100,6 +103,8 @@ module Packet = {
     },
   )
 
+  // parse pre-set number of bits
+  //
   let binDigits_3 = sequenceN_(binDigit, 3)
   let binDigits_3_int = binDigits_3->P.map(binCharListToInt)
   let binDigits_3_str = binDigits_3->P.map(binCharListToStr)
@@ -116,18 +121,26 @@ module Packet = {
   let binDigits_11_int = binDigits_11->P.map(binCharListToInt)
   let binDigits_11_str = binDigits_11->P.map(binCharListToStr)
 
+  // parse version tag
+  //
   type version_ = P.t<version>
   let version: version_ = binDigits_3_int->P.map(x => {
     Version(x)
   })
 
+  // parse typeID tag
+  //
   type typeId_ = P.t<typeId>
   let typeId: typeId_ = binDigits_3_int->P.map(x => {
     TypeID(x)
   })
 
+  // operator packet has type ID other than literal packet
+  //
   let operatorTypeId = typeId
 
+  // literal packet has type ID of 4 == 100
+  //
   let literalTypeId: typeId_ = {
     // 100 == 4
     P.char('1')
@@ -138,76 +151,35 @@ module Packet = {
     })
   }
 
-  type payload_ = P.t<payload>
-
-  // Literal
-  //
-  type restOfMultipleOf4Bits<'a, 'b> = P.t<'a> => P.t<'b>
-  let restOfMultipleOf4Bits: restOfMultipleOf4Bits<'a, 'b> = parser => P.Parser(
-    input => {
-      let result = P.runOnInput(parser, input)
-
-      switch result {
-      | Ok((p1Result, inputAfterP1)) =>
-        let (xs, last_x) = p1Result
-        let len =
-          xs->List.reduce(0, (a, (_, x)) => a + x->String.length + 1) +
-          last_x->snd->String.length + 1
-
-        let reminder = mod(len, 4)
-
-        log(j`  reminder = $reminder | len = $len`)
-
-        let reminderP = sequenceN(binDigit, reminder)->P.map(binCharListToStr)
-        let reminderResult = P.runOnInput(reminderP, inputAfterP1)
-
-        switch reminderResult {
-        | Ok((resultAfterReminder, inputAfterReminder)) =>
-          Ok((p1Result, resultAfterReminder), inputAfterReminder)
-        | Error(err) => Error(err)
-        }
-      | Error(err) => Error(err)
-      }
-    },
-  )
-
-  let literalPayload: payload_ = {
-    let oneAndFourBit = P.char('1')->P.andThen(binDigits_4_str)
-    let zeroAndFourBit = P.char('0')->P.andThen(binDigits_4_str)
-
-    let literal_payload = P.many(oneAndFourBit)->P.andThen(zeroAndFourBit) // ->restOfMultipleOf4Bits // ->P.andThen(restOfMultipleOf4Bits)
-
-    literal_payload->P.map(((xs, last_x)) => {
-      //      "literalPayload"->log
-      Literal({
-        //        let l = (xs->List.reduce("", (a, (_, x)) => a ++ x) ++ last_x->snd)->binToInt
-
-        module BigInt = ReScriptJs.Js.BigInt
-        let l =
-          ("0b" ++ (xs->List.reduce("", (a, (_, x)) => a ++ x) ++ last_x->snd))
-          ->BigInt.fromString
-          ->BigInt.toFloat
-          ->Int64.of_float
-
-        //        j`  l = $l`->log
-        l
-      })
-    })
-  }
-
   let remainingBinDigitStr = P.many(binDigit)->P.map(stringifyCharList)
-
-  type opPayloadType1<'a, 'b> = P.t<'a> => P.t<'b>
-  type opPayloadType0<'a, 'b> = P.t<'a> => P.t<'b>
 
   // Packet
   //
   type packet_ = P.t<packet>
+  type literalPayload_ = P.t<payload>
+  type opPayloadType1_<'a, 'b> = P.t<'a> => P.t<'b>
+  type opPayloadType0_<'a, 'b> = P.t<'a> => P.t<'b>
 
   let packet: packet_ = P.makeRecursive(p => {
+    // Literal payload
+    //
+    let literalPayload: literalPayload_ = {
+      let oneAndFourBit = P.char('1')->P.andThen(binDigits_4_str)
+      let zeroAndFourBit = P.char('0')->P.andThen(binDigits_4_str)
+
+      let literal_payload = P.many(oneAndFourBit)->P.andThen(zeroAndFourBit) // ->restOfMultipleOf4Bits // ->P.andThen(restOfMultipleOf4Bits)
+
+      literal_payload->P.map(((xs, last_x)) => {
+        //      "literalPayload"->log
+        Literal({
+          (xs->List.reduce("", (a, (_, x)) => a ++ x) ++ last_x->snd)->binStrToInt64
+        })
+      })
+    }
+
     // opPayload Type 0  len = 15 bit (total bit length for packets)
     //
-    let opPayloadType0: opPayloadType0<'a, 'b> = parser => P.Parser(
+    let opPayloadType0: opPayloadType0_<'a, 'b> = parser => P.Parser(
       input => {
         let result = P.runOnInput(parser, input)
         //        "opPayloadType0"->log
@@ -247,7 +219,7 @@ module Packet = {
 
     // opPayload Type 1  len = 11 bit (number of packets)
     //
-    let opPayloadType1: opPayloadType1<'a, 'b> = parser => P.Parser(
+    let opPayloadType1: opPayloadType1_<'a, 'b> = parser => P.Parser(
       input => {
         let result = P.runOnInput(parser, input)
         //        "opPayloadType1"->log
@@ -272,7 +244,7 @@ module Packet = {
       },
     )
 
-    let operatorPayload: payload_ = {
+    let operatorPayload: literalPayload_ = {
       let lengthType_0 = P.char('0')->P.andThen(binDigits_15_int)->opPayloadType0
       let lengthType_1 = P.char('1')->P.andThen(binDigits_11_int)->opPayloadType1
 

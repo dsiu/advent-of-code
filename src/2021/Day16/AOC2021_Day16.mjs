@@ -25,6 +25,10 @@ function log3(prim0, prim1, prim2) {
   
 }
 
+function binStrToInt64(s) {
+  return Caml_int64.of_float(Number(BigInt("0b" + s)));
+}
+
 var hexTable = Js_dict.fromList({
       hd: [
         "0",
@@ -267,66 +271,20 @@ var literalTypeId = Res_parser.map(Res_parser.andThen(Res_parser.andThen(Res_par
               };
       }));
 
-function restOfMultipleOf4Bits(parser) {
-  return /* Parser */{
-          _0: (function (input) {
-              var result = Res_parser.runOnInput(parser, input);
-              if (result.TAG !== /* Ok */0) {
-                return {
-                        TAG: /* Error */1,
-                        _0: result._0
-                      };
-              }
-              var match = result._0;
-              var p1Result = match[0];
-              var len = (Belt_List.reduce(p1Result[0], 0, (function (a, param) {
-                        return (a + param[1].length | 0) + 1 | 0;
-                      })) + p1Result[1][1].length | 0) + 1 | 0;
-              var reminder = len % 4;
-              console.log("  reminder = " + reminder + " | len = " + len);
-              var reminderP = Res_parser.map(Res_parser.sequence(Belt_List.makeBy(reminder, (function (param) {
-                              return binDigit;
-                            }))), binCharListToStr);
-              var reminderResult = Res_parser.runOnInput(reminderP, match[1]);
-              if (reminderResult.TAG !== /* Ok */0) {
-                return {
-                        TAG: /* Error */1,
-                        _0: reminderResult._0
-                      };
-              }
-              var match$1 = reminderResult._0;
-              return {
-                      TAG: /* Ok */0,
-                      _0: [
-                        [
-                          p1Result,
-                          match$1[0]
-                        ],
-                        match$1[1]
-                      ]
-                    };
-            })
-        };
-}
-
-var oneAndFourBit = Res_parser.andThen(Res_parser.$$char(/* '1' */49), binDigits_4_str);
-
-var zeroAndFourBit = Res_parser.andThen(Res_parser.$$char(/* '0' */48), binDigits_4_str);
-
-var literal_payload = Res_parser.andThen(Res_parser.many(oneAndFourBit), zeroAndFourBit);
-
-var literalPayload = Res_parser.map(literal_payload, (function (param) {
-        return {
-                TAG: /* Literal */0,
-                _0: Caml_int64.of_float(Number(BigInt("0b" + (Belt_List.reduce(param[0], "", (function (a, param) {
-                                      return a + param[1];
-                                    })) + param[1][1]))))
-              };
-      }));
-
 var remainingBinDigitStr = Res_parser.map(Res_parser.many(binDigit), stringifyCharList);
 
 var packet = Res_parser.makeRecursive(function (p) {
+      var oneAndFourBit = Res_parser.andThen(Res_parser.$$char(/* '1' */49), binDigits_4_str);
+      var zeroAndFourBit = Res_parser.andThen(Res_parser.$$char(/* '0' */48), binDigits_4_str);
+      var literal_payload = Res_parser.andThen(Res_parser.many(oneAndFourBit), zeroAndFourBit);
+      var literalPayload = Res_parser.map(literal_payload, (function (param) {
+              return {
+                      TAG: /* Literal */0,
+                      _0: binStrToInt64(Belt_List.reduce(param[0], "", (function (a, param) {
+                                  return a + param[1];
+                                })) + param[1][1])
+                    };
+            }));
       var opPayloadType0 = function (parser) {
         return /* Parser */{
                 _0: (function (input) {
@@ -515,8 +473,6 @@ var Packet = {
   typeId: typeId,
   operatorTypeId: typeId,
   literalTypeId: literalTypeId,
-  restOfMultipleOf4Bits: restOfMultipleOf4Bits,
-  literalPayload: literalPayload,
   remainingBinDigitStr: remainingBinDigitStr,
   packet: packet,
   dumpPacket: dumpPacket,
@@ -745,12 +701,16 @@ var P;
 
 var Rjs;
 
+var $$BigInt$1;
+
 export {
   log ,
   log2 ,
   log3 ,
   P ,
   Rjs ,
+  $$BigInt$1 as $$BigInt,
+  binStrToInt64 ,
   hexTable ,
   hexStrToBinStr ,
   concatStringList ,
