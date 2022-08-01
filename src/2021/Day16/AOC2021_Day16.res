@@ -61,91 +61,6 @@ let binCharListToInt = xs => xs->binCharListToStr->binToInt
 
 exception ParseError(string)
 
-module Expression = {
-  type rec value<_> = Int(int): value<int>
-
-  type rec expr<_> =
-    | Value(value<'a>): expr<'a>
-    | Sum(list<expr<int>>): expr<int>
-    | Product(list<expr<int>>): expr<int>
-    | Min(list<expr<int>>): expr<int>
-    | Max(list<expr<int>>): expr<int>
-    | Greater(expr<int>, expr<int>): expr<int>
-    | Less(expr<int>, expr<int>): expr<int>
-    | Equal(expr<int>, expr<int>): expr<int>
-
-  let intVal = x => Value(Int(x))
-
-  let eval_value = (type a, v: value<a>): a => {
-    switch v {
-    | Int(v) => v
-    }
-  }
-
-  let rec eval:
-    type a. expr<a> => a =
-    (type a, e: expr<a>): a => {
-      switch e {
-      | Value(v) => eval_value(v)
-      | Sum(e) => e->List.reduce(0, (a, v) => a + eval(v))
-      | Product(e) => e->List.reduce(1, (a, v) => a * eval(v))
-      | Min(e) =>
-        e->List.reduce(Js.Int.max, (a, v) => {
-          let v' = eval(v)
-          v' < a ? v' : a
-        })
-      | Max(e) =>
-        e->List.reduce(Js.Int.min, (a, v) => {
-          let v' = eval(v)
-          v' > a ? v' : a
-        })
-      | Greater(e1, e2) => eval(e1) > eval(e2) ? 1 : 0
-      | Less(e1, e2) => eval(e1) < eval(e2) ? 1 : 0
-      | Equal(e1, e2) => eval(e1) == eval(e2) ? 1 : 0
-      }
-    }
-
-  let rec dump = e => {
-    switch e {
-    | Value(v) => {
-        let v' = eval_value(v)
-        j` Value=$v';`
-      }
-    | Sum(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
-        j`Sum:{ $v' }`
-      }
-    | Product(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
-        j`Product:{ $v' }`
-      }
-    | Min(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
-        j`Min:{ $v' }`
-      }
-    | Max(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
-        j`Max:{ $v' }`
-      }
-    | Greater(e1, e2) => {
-        let v1 = dump(e1)
-        let v2 = dump(e2)
-        j`Greater:{ $v1, $v2 }`
-      }
-    | Less(e1, e2) => {
-        let v1 = dump(e1)
-        let v2 = dump(e2)
-        j`LessThan:{ $v1, $v2 }`
-      }
-    | Equal(e1, e2) => {
-        let v1 = dump(e1)
-        let v2 = dump(e2)
-        j`Equal:{ $v1, $v2 }`
-      }
-    }
-  }
-}
-
 module Packet = {
   // Types
   //
@@ -156,7 +71,7 @@ module Packet = {
 
   type rec packet = Packet(version, typeId, payload)
   and payload =
-    | Literal(int)
+    | Literal(Int64.t)
     | Op_Len_Kind_0(int, list<packet>) // 15 bits indicate length of bits for sub-packets
     | Op_Len_Kind_1(int, list<packet>) // 11 bits indicates number of sub-packets
 
@@ -263,11 +178,18 @@ module Packet = {
     let literal_payload = P.many(oneAndFourBit)->P.andThen(zeroAndFourBit) // ->restOfMultipleOf4Bits // ->P.andThen(restOfMultipleOf4Bits)
 
     literal_payload->P.map(((xs, last_x)) => {
-      "literalPayload"->log
+      //      "literalPayload"->log
       Literal({
-        let l = (xs->List.reduce("", (a, (_, x)) => a ++ x) ++ last_x->snd)->binToInt
+        //        let l = (xs->List.reduce("", (a, (_, x)) => a ++ x) ++ last_x->snd)->binToInt
 
-        j`  l = $l`->log
+        module BigInt = ReScriptJs.Js.BigInt
+        let l =
+          ("0b" ++ (xs->List.reduce("", (a, (_, x)) => a ++ x) ++ last_x->snd))
+          ->BigInt.fromString
+          ->BigInt.toFloat
+          ->Int64.of_float
+
+        //        j`  l = $l`->log
         l
       })
     })
@@ -288,36 +210,34 @@ module Packet = {
     let opPayloadType0: opPayloadType0<'a, 'b> = parser => P.Parser(
       input => {
         let result = P.runOnInput(parser, input)
-        "opPayloadType0"->log
+        //        "opPayloadType0"->log
 
         switch result {
         | Ok((p1Result, inputAfterP1)) => {
-            let (c, nBits) = p1Result
-            `  c = ${c->charToString}`->log
-            j`  nBits = $nBits`->log
+            let (_, nBits) = p1Result
+            //            `  c = ${c->charToString}`->log
+            //            j`  nBits = $nBits`->log
             //            let reminderPackets = sequenceN(binDigit, nBits)->P.map(binCharListToStr)
             let reminderPackets = sequenceN_(binDigit, nBits)->P.map(binCharListToStr)
             let reminderResult = P.runOnInput(reminderPackets, inputAfterP1)
-            j`  done running reminderpackages`->log
+            //            j`  done running reminderpackages`->log
             switch reminderResult {
             | Ok((packetStr, inputAfterReminder)) => {
-                j`  packetStr = $packetStr`->log
+                //                j`  packetStr = $packetStr`->log
 
                 let packetsResult = P.run(P.many(p), packetStr)
 
                 switch packetsResult {
                 | Ok((resultAfterReminder, _)) =>
                   Ok((p1Result, resultAfterReminder), inputAfterReminder)
-                | Error(err) => {
-                    "  Error many(p)"->log
-                    Error(err)
-                  }
+                | Error(err) =>
+                  //                    "  Error many(p)"->log
+                  Error(err)
                 }
               }
-            | Error(err) => {
-                "  Error reminderPackets"->log
-                Error(err)
-              }
+            | Error(err) =>
+              //                "  Error reminderPackets"->log
+              Error(err)
             }
           }
         | Error(err) => Error(err)
@@ -330,13 +250,13 @@ module Packet = {
     let opPayloadType1: opPayloadType1<'a, 'b> = parser => P.Parser(
       input => {
         let result = P.runOnInput(parser, input)
-        "opPayloadType1"->log
+        //        "opPayloadType1"->log
         switch result {
         | Ok((p1Result, inputAfterP1)) => {
-            let (c, nPacket) = p1Result
-            `  c = ${c->charToString}`->log
+            let (_, nPacket) = p1Result
+            //            `  c = ${c->charToString}`->log
 
-            j`  nPacket = $nPacket`->log
+            //            j`  nPacket = $nPacket`->log
 
             let reminderPackets = sequenceN(p, nPacket)
             let reminderPacketsResult = P.runOnInput(reminderPackets, inputAfterP1)
@@ -413,48 +333,167 @@ module Packet = {
   let parse = (s): result => P.run(packet, s)
 }
 
-//let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+module Expression = {
+  //  let int_max = Int64.fromString("9007199254740991")
+  //  let int_min = Int64.fromString("-9007199254740991")
+  let int_max = Int64.max_int
+  let int_min = Int64.min_int
 
-let solvePart1 = data => {
-  open Packet
-  let d = data->hexStrToBinStr
+  type rec value<_> = Int(Int64.t): value<Int64.t>
 
-  let l = Packet.parse(d)
-  l->Result.isOk->log2(d)
-  let p = l->Result.getExn->fst
-  switch l {
-  | Ok(_) => {
-      p->dumpPacket->log
-      l->Result.getExn->snd->log
-      log("\n")
+  type rec expr<_> =
+    | Value(value<'a>): expr<'a>
+    | Sum(list<expr<Int64.t>>): expr<Int64.t>
+    | Product(list<expr<Int64.t>>): expr<Int64.t>
+    | Min(list<expr<Int64.t>>): expr<Int64.t>
+    | Max(list<expr<Int64.t>>): expr<Int64.t>
+    | Greater(expr<Int64.t>, expr<Int64.t>): expr<Int64.t>
+    | Less(expr<Int64.t>, expr<Int64.t>): expr<Int64.t>
+    | Equal(expr<Int64.t>, expr<Int64.t>): expr<Int64.t>
+
+  let intVal = x => Value(Int(Int64.of_int(x)))
+
+  let eval_value = (type a, v: value<a>): a => {
+    switch v {
+    | Int(v) => v
     }
-  | Error(err) => {
-      log(err)
-      log("\n")
+  }
+  let zero_64 = Int64.of_int(0)
+  let one_64 = Int64.of_int(1)
+
+  let rec eval:
+    type a. expr<a> => a =
+    (type a, e: expr<a>): a => {
+      switch e {
+      | Value(v) => eval_value(v)
+      | Sum(e) => e->List.reduce(zero_64, (a, v) => Int64.add(a, eval(v)))
+      | Product(e) => e->List.reduce(one_64, (a, v) => Int64.mul(a, eval(v)))
+      | Min(e) =>
+        e->List.reduce(int_max, (a, v) => {
+          let v' = eval(v)
+          Int64.compare(v', a) < 0 ? v' : a
+        })
+      | Max(e) =>
+        e->List.reduce(int_min, (a, v) => {
+          let v' = eval(v)
+          Int64.compare(v', a) > 0 ? v' : a
+        })
+      | Greater(e1, e2) => Int64.compare(eval(e1), eval(e2)) > 0 ? one_64 : zero_64
+      | Less(e1, e2) => Int64.compare(eval(e1), eval(e2)) < 0 ? one_64 : zero_64
+      | Equal(e1, e2) => Int64.compare(eval(e1), eval(e2)) == 0 ? one_64 : zero_64
+      }
+    }
+
+  let rec dump = e => {
+    switch e {
+    | Value(v) => {
+        let v' = eval_value(v)
+        j` Value=$v';`
+      }
+    | Sum(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Sum:{ $v' }`
+      }
+    | Product(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Product:{ $v' }`
+      }
+    | Min(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Min:{ $v' }`
+      }
+    | Max(e) => {
+        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        j`Max:{ $v' }`
+      }
+    | Greater(e1, e2) => {
+        let v1 = dump(e1)
+        let v2 = dump(e2)
+        j`Greater:{ $v1, $v2 }`
+      }
+    | Less(e1, e2) => {
+        let v1 = dump(e1)
+        let v2 = dump(e2)
+        j`LessThan:{ $v1, $v2 }`
+      }
+    | Equal(e1, e2) => {
+        let v1 = dump(e1)
+        let v2 = dump(e2)
+        j`Equal:{ $v1, $v2 }`
+      }
     }
   }
 
-  p->Packet.version_sum
+  open Packet
+  let rec makeFromPacket = (p: packet) => {
+    let Packet(Version(_), TypeID(typeId), p) = p
+
+    switch p {
+    | Literal(l) => Value(Int(l))
+    | Op_Len_Kind_0(_, rest)
+    | Op_Len_Kind_1(_, rest) =>
+      switch typeId {
+      | 0 => Sum(rest->List.map(makeFromPacket))
+      | 1 => Product(rest->List.map(makeFromPacket))
+      | 2 => Min(rest->List.map(makeFromPacket))
+      | 3 => Max(rest->List.map(makeFromPacket))
+      | 5 =>
+        Greater(
+          makeFromPacket(rest->List.headExn),
+          makeFromPacket(rest->List.tailExn->List.headExn),
+        )
+      | 6 =>
+        Less(makeFromPacket(rest->List.headExn), makeFromPacket(rest->List.tailExn->List.headExn))
+      | 7 =>
+        Equal(makeFromPacket(rest->List.headExn), makeFromPacket(rest->List.tailExn->List.headExn))
+      | _ => raise(ParseError("Unknown typeId"))
+      }
+    }
+  }
+}
+
+//let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+
+let solvePart1 = data => {
+  let d = data->hexStrToBinStr
+
+  let l = Packet.parse(d)
+  //  l->Result.isOk->log2(d)
+  let p = l->Result.getExn->fst
+  switch l {
+  | Ok(_) =>
+    //      p->dumpPacket->log
+    //      l->Result.getExn->snd->log
+    //      log("\n")
+    p->Packet.version_sum
+  | Error(err) => {
+      log(err)
+      log("\n")
+      0
+    }
+  }
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
-}
-
-let expression_run = {
   open Expression
-  let d = [
-    Sum(list{intVal(1), intVal(2)}),
-    Sum(list{Sum(list{intVal(3), intVal(4)}), intVal(2)}),
-    Sum(list{intVal(11), intVal(12), intVal(13)}),
-  ]
 
-  Array.forEach(d, e => {
-    e->dump->log
-    let result = e->eval
-    result->log
-  })
+  let d = data->hexStrToBinStr
+  let l = Packet.parse(d)
+  //  l->Result.isOk->log2(d)
+  let p = l->Result.getExn->fst
+
+  switch l {
+  | Ok(_) =>
+    let e = p->makeFromPacket
+    //    "Expression: "->log
+    //    e->dump->log
+    //    "Eval'ed: "->log
+    e->eval->Int64.to_string
+
+  | Error(err) => {
+      log(err)
+      log("\n")
+      0->Int64.of_int->Int64.to_string
+    }
+  }
 }
-
-//expression_run
