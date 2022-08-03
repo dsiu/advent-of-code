@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 16 - Part 2 DONE">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 16 - Part 2 - Expression  tests">
+      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data_Sample.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +66,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/dsiu/code/playground/advent-of-code/src/2021/Day16",
+    "last_opened_file_path": "/Users/dsiu/code/playground/advent-of-code/src/2021/Day17",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -86,6 +90,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/2021/Day17" />
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/2021/Day15" />
@@ -94,7 +99,7 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.All Tests - Watch">
+  <component name="RunManager" selected="Node.js.AOC2021_Day17_Run.mjs">
     <configuration name="AOC2021_Day16_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -126,10 +131,10 @@
       <scope-kind value="ALL" />
       <method v="2" />
     </configuration>
-    <configuration name="AOC2021_Day16_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day16">
+    <configuration name="AOC2021_Day17_Run.mjs" type="NodeJSConfigurationType" temporary="true" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day17_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day17">
       <method v="2" />
     </configuration>
-    <configuration name="AOC2021_Day16.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day16.mjs" working-dir="$PROJECT_DIR$/src/2021/Day16">
+    <configuration name="AOC2021_Day17.mjs" type="NodeJSConfigurationType" temporary="true" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day17.mjs" working-dir="$PROJECT_DIR$/src/2021/Day17">
       <method v="2" />
     </configuration>
     <configuration name="Jest Profiling" type="NodeJSConfigurationType" path-to-js-file="./node_modules/.bin/jest" working-dir="$PROJECT_DIR$">
@@ -143,13 +148,13 @@
       <item itemvalue="Jest.All Tests" />
       <item itemvalue="Jest.All Tests - Watch" />
       <item itemvalue="Node.js.Jest Profiling" />
-      <item itemvalue="Node.js.AOC2021_Day16.mjs" />
-      <item itemvalue="Node.js.AOC2021_Day16_Run.mjs" />
+      <item itemvalue="Node.js.AOC2021_Day17.mjs" />
+      <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.AOC2021_Day16_Run.mjs" />
-        <item itemvalue="Node.js.AOC2021_Day16.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day17.mjs" />
       </list>
     </recent_temporary>
   </component>
