@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 16 - Part 2 - Expression  tests">
-      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data_Sample.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.res" afterDir="false" />
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - implemented brute force">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -370,7 +366,21 @@
       <option name="project" value="LOCAL" />
       <updated>1659352164541</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="2021 Day 17 - Part 1 - implemented brute force">
+      <created>1659542461309</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1659542461309</updated>
+    </task>
+    <task id="LOCAL-00031" summary="2021 Day 17 - Part 1 - implemented brute force">
+      <created>1659542474449</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1659542474449</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -411,7 +421,8 @@
     <MESSAGE value="2021 Day 16 - Part 2 - WIP" />
     <MESSAGE value="2021 Day 16 - Part 2 - Expression  tests" />
     <MESSAGE value="2021 Day 16 - Part 2 DONE" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 16 - Part 2 DONE" />
+    <MESSAGE value="2021 Day 17 - Part 1 - implemented brute force" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 - implemented brute force" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

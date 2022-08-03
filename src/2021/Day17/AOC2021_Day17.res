@@ -1,11 +1,11 @@
 open Belt
-open Utils
+//open Utils
 let log = Js.Console.log
 
 module TrickShot = {
   type velocity = {x: int, y: int}
 
-  let velocityNext = ({x, y} as v: velocity) => {
+  let velocityNext = ({x, y}: velocity) => {
     x: x < 0 ? x + 1 : x - 1,
     y: y - 1,
   }
@@ -18,7 +18,7 @@ module TrickShot = {
 
   let isTargetHit = t_init => isTargetHit_(_, t_init)
 
-  let isOutOfRange_ = ((x, y) as c, {x_min, x_max, y_min, y_max} as t: target) => {
+  let isOutOfRange_ = ((x, y), {x_min, x_max, y_min, y_max}: target) => {
     j`isOutOfRange $x, $y, {$x_min, $x_max, $y_min, $y_max}`->log
     x > x_max || y < y_min
   }
@@ -47,13 +47,13 @@ module TrickShot = {
 
   let launch = (v0, target) => {
     let isHit = isTargetHit(target)
-    let isOutofRange = isOUtOfRange(target)
+    let isOutOfRange = isOUtOfRange(target)
 
     let rec inner = ((x, y) as c, {x: vx, y: vy} as v: velocity, trajectory) => {
       j`c = $c`->log
       if isHit(c) {
         Hit(c, trajectory)
-      } else if isOutofRange(c) {
+      } else if isOutOfRange(c) {
         Miss(trajectory)
       } else {
         inner((x + vx, y + vy), velocityNext(v), Array.concat(trajectory, [(x, y)]))

@@ -9,11 +9,11 @@ function log(prim) {
   
 }
 
-function velocityNext(v) {
-  var x = v.x;
+function velocityNext(param) {
+  var x = param.x;
   return {
           x: x < 0 ? x + 1 | 0 : x - 1 | 0,
-          y: v.y - 1 | 0
+          y: param.y - 1 | 0
         };
 }
 
@@ -31,12 +31,12 @@ function isTargetHit(t_init, __x) {
   return isTargetHit_(__x, t_init);
 }
 
-function isOutOfRange_(c, t) {
-  var y_min = t.y_min;
-  var x_max = t.x_max;
-  var y = c[1];
-  var x = c[0];
-  console.log("isOutOfRange " + x + ", " + y + ", {" + t.x_min + ", " + x_max + ", " + y_min + ", " + t.y_max + "}");
+function isOutOfRange_(param, param$1) {
+  var y_min = param$1.y_min;
+  var x_max = param$1.x_max;
+  var y = param[1];
+  var x = param[0];
+  console.log("isOutOfRange " + x + ", " + y + ", {" + param$1.x_min + ", " + x_max + ", " + y_min + ", " + param$1.y_max + "}");
   if (x > x_max) {
     return true;
   } else {
