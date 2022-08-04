@@ -12,7 +12,9 @@ function log(prim) {
 function velocityNext(param) {
   var x = param.x;
   return {
-          x: x < 0 ? x + 1 | 0 : x - 1 | 0,
+          x: x === 0 ? 0 : (
+              x < 0 ? x + 1 | 0 : x - 1 | 0
+            ),
           y: param.y - 1 | 0
         };
 }
@@ -32,15 +34,10 @@ function isTargetHit(t_init, __x) {
 }
 
 function isOutOfRange_(param, param$1) {
-  var y_min = param$1.y_min;
-  var x_max = param$1.x_max;
-  var y = param[1];
-  var x = param[0];
-  console.log("isOutOfRange " + x + ", " + y + ", {" + param$1.x_min + ", " + x_max + ", " + y_min + ", " + param$1.y_max + "}");
-  if (x > x_max) {
+  if (param[0] > param$1.x_max) {
     return true;
   } else {
-    return y < y_min;
+    return param[1] < param$1.y_min;
   }
 }
 
@@ -74,9 +71,6 @@ function launch(v0, target) {
     var trajectory = _trajectory;
     var v = _v;
     var c = _c;
-    var y = c[1];
-    var x = c[0];
-    console.log("c = " + c);
     if (isTargetHit_(c, target)) {
       return {
               TAG: /* Hit */0,
@@ -87,17 +81,14 @@ function launch(v0, target) {
     if (isOutOfRange_(c, target)) {
       return {
               TAG: /* Miss */1,
-              _0: trajectory
+              _0: Belt_Array.concat(trajectory, [c])
             };
     }
-    _trajectory = Belt_Array.concat(trajectory, [[
-            x,
-            y
-          ]]);
+    _trajectory = Belt_Array.concat(trajectory, [c]);
     _v = velocityNext(v);
     _c = [
-      x + v.x | 0,
-      y + v.y | 0
+      c[0] + v.x | 0,
+      c[1] + v.y | 0
     ];
     continue ;
   };
@@ -171,8 +162,8 @@ function parse(data) {
 function solvePart1(data) {
   var t = parse(data);
   var prim = dump(launch({
-            x: 7,
-            y: 2
+            x: 17,
+            y: -4
           }, t));
   console.log(prim);
   return 1;

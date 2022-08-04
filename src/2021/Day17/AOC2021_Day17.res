@@ -6,7 +6,7 @@ module TrickShot = {
   type velocity = {x: int, y: int}
 
   let velocityNext = ({x, y}: velocity) => {
-    x: x < 0 ? x + 1 : x - 1,
+    x: x == 0 ? 0 : x < 0 ? x + 1 : x - 1,
     y: y - 1,
   }
 
@@ -19,7 +19,7 @@ module TrickShot = {
   let isTargetHit = t_init => isTargetHit_(_, t_init)
 
   let isOutOfRange_ = ((x, y), {x_min, x_max, y_min, y_max}: target) => {
-    j`isOutOfRange $x, $y, {$x_min, $x_max, $y_min, $y_max}`->log
+    //    j`isOutOfRange $x, $y, {$x_min, $x_max, $y_min, $y_max}`->log
     x > x_max || y < y_min
   }
 
@@ -50,13 +50,13 @@ module TrickShot = {
     let isOutOfRange = isOUtOfRange(target)
 
     let rec inner = ((x, y) as c, {x: vx, y: vy} as v: velocity, trajectory) => {
-      j`c = $c`->log
+      //      j`c = $c`->log
       if isHit(c) {
         Hit(c, trajectory)
       } else if isOutOfRange(c) {
-        Miss(trajectory)
+        Miss(Array.concat(trajectory, [c]))
       } else {
-        inner((x + vx, y + vy), velocityNext(v), Array.concat(trajectory, [(x, y)]))
+        inner((x + vx, y + vy), velocityNext(v), Array.concat(trajectory, [c]))
       }
     }
 
@@ -78,7 +78,7 @@ let parse = (data): target => {
 
 let solvePart1 = data => {
   let t = data->parse
-  let v = {x: 7, y: 2}
+  let v = {x: 17, y: -4}
   launch(v, t)->dump->log
   1
 }
