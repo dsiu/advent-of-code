@@ -4,6 +4,7 @@ let log = Js.Console.log
 
 module TrickShot = {
   type velocity = {x: int, y: int}
+  type coord = (int, int)
 
   let velocityNext = ({x, y}: velocity) => {
     x: x == 0 ? 0 : x < 0 ? x + 1 : x - 1,
@@ -12,23 +13,23 @@ module TrickShot = {
 
   type target = {x_min: int, x_max: int, y_min: int, y_max: int}
 
-  let isTargetHit_ = ((x, y), {x_min, x_max, y_min, y_max}: target) => {
+  let isTargetHit_ = ((x, y): coord, {x_min, x_max, y_min, y_max}: target) => {
     x >= x_min && x <= x_max && y >= y_min && y <= y_max
   }
 
   let isTargetHit = t_init => isTargetHit_(_, t_init)
 
-  let isOutOfRange_ = ((x, y), {x_min, x_max, y_min, y_max}: target) => {
+  let isOutOfRange_ = ((x, y): coord, {x_min, x_max, y_min, y_max}: target) => {
     //    j`isOutOfRange $x, $y, {$x_min, $x_max, $y_min, $y_max}`->log
     x > x_max || y < y_min
   }
 
   let isOUtOfRange = t_init => isOutOfRange_(_, t_init)
 
-  type trajectory = array<(int, int)>
+  type trajectory = array<coord>
 
   type launchResult =
-    | Hit((int, int), trajectory)
+    | Hit(coord, trajectory)
     | Miss(trajectory)
 
   let dump = r => {
@@ -49,7 +50,7 @@ module TrickShot = {
     let isHit = isTargetHit(target)
     let isOutOfRange = isOUtOfRange(target)
 
-    let rec inner = ((x, y) as c, {x: vx, y: vy} as v: velocity, trajectory) => {
+    let rec inner = ((x, y) as c: coord, {x: vx, y: vy} as v: velocity, trajectory) => {
       //      j`c = $c`->log
       if isHit(c) {
         Hit(c, trajectory)
@@ -78,7 +79,7 @@ let parse = (data): target => {
 
 let solvePart1 = data => {
   let t = data->parse
-  let v = {x: 17, y: -4}
+  let v = {x: 6, y: 9}
   launch(v, t)->dump->log
   1
 }

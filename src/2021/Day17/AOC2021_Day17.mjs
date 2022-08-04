@@ -111,7 +111,7 @@ function parse(data) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2021_Day17.res",
-            71,
+            72,
             6
           ],
           Error: new Error()
@@ -127,7 +127,7 @@ function parse(data) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2021_Day17.res",
-            72,
+            73,
             6
           ],
           Error: new Error()
@@ -143,7 +143,7 @@ function parse(data) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2021_Day17.res",
-            74,
+            75,
             6
           ],
           Error: new Error()
@@ -162,8 +162,8 @@ function parse(data) {
 function solvePart1(data) {
   var t = parse(data);
   var prim = dump(launch({
-            x: 17,
-            y: -4
+            x: 6,
+            y: 9
           }, t));
   console.log(prim);
   return 1;
