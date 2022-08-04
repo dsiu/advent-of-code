@@ -8,6 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.res" afterDir="false" />
     </list>
@@ -389,7 +393,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659595061167</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="2021 Day 17 - WIP">
+      <created>1659595748836</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1659595748836</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

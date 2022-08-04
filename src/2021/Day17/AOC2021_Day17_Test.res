@@ -5,7 +5,7 @@ let data = AOC2021_Day17_Data.data
 let sampleData = AOC2021_Day17_Data_Sample.data
 let {solvePart1, solvePart2} = module(AOC2021_Day17)
 
-open AOC2021_Day17
+let {parse} = module(AOC2021_Day17)
 open AOC2021_Day17.TrickShot
 
 describe("2021 Day17", () => {
@@ -65,33 +65,29 @@ describe("2021 Day17", () => {
   })
 
   test("Part 1 - Sample Data", () => {
-    //    let result = solvePart1(sampleData)
-    let result = 1
-    let expected = 1
+    let result = solvePart1(sampleData)
+    let expected = 45
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
-    //    let result = solvePart1(data)
-    let result = 1
-    let expected = 1
+    let result = solvePart1(data)
+    let expected = 5050
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Sample Data", () => {
-    //    let result = solvePart2(sampleData)
-    let result = 2
-    let expected = 2
+    let result = solvePart2(sampleData)
+    let expected = 112
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
-    //    let result = solvePart2(data)
-    let result = 2
-    let expected = 2
+    let result = solvePart2(data)
+    let expected = 2223
 
     expect(result)->toEqual(expected)
   })

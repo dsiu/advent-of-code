@@ -268,19 +268,23 @@ describe("2021 Day17", (function () {
                             }));
               }));
         test("Part 1 - Sample Data", (function () {
-                expect(1).toEqual(1);
+                var result = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data_Sample$AdventOfCode.data);
+                expect(result).toEqual(45);
                 
               }));
         test("Part 1 - Solve", (function () {
-                expect(1).toEqual(1);
+                var result = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data$AdventOfCode.data);
+                expect(result).toEqual(5050);
                 
               }));
         test("Part 2 - Sample Data", (function () {
-                expect(2).toEqual(2);
+                var result = AOC2021_Day17$AdventOfCode.solvePart2(AOC2021_Day17_Data_Sample$AdventOfCode.data);
+                expect(result).toEqual(112);
                 
               }));
         test("Part 2 - Solve", (function () {
-                expect(2).toEqual(2);
+                var result = AOC2021_Day17$AdventOfCode.solvePart2(AOC2021_Day17_Data$AdventOfCode.data);
+                expect(result).toEqual(2223);
                 
               }));
         
@@ -294,11 +298,14 @@ var solvePart1 = AOC2021_Day17$AdventOfCode.solvePart1;
 
 var solvePart2 = AOC2021_Day17$AdventOfCode.solvePart2;
 
+var parse = AOC2021_Day17$AdventOfCode.parse;
+
 export {
   data ,
   sampleData ,
   solvePart1 ,
   solvePart2 ,
+  parse ,
   
 }
 /*  Not a pure module */

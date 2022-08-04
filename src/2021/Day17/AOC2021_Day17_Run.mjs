@@ -9,7 +9,7 @@ function log(prim) {
   
 }
 
-var part1 = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data_Sample$AdventOfCode.data);
+var part1 = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data$AdventOfCode.data);
 
 console.log("Part 1 Result");
 
