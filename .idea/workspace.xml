@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 and 2 DONE">
-      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data_Sample.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Run.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Test.res" afterDir="false" />
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 18 - Start">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -399,7 +394,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659610038189</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="2021 Day 18 - Start">
+      <created>1659610582692</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1659610582692</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -417,7 +419,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2021 Day 15 Start" />
     <MESSAGE value="IntelliJ project file update" />
     <MESSAGE value="Adjacency List - WIP" />
     <MESSAGE value="Convert to ES6 module" />
@@ -442,7 +443,8 @@
     <MESSAGE value="2021 Day 17 - Part 1 - implemented brute force" />
     <MESSAGE value="2021 Day 17 - WIP" />
     <MESSAGE value="2021 Day 17 - Part 1 and 2 DONE" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 and 2 DONE" />
+    <MESSAGE value="2021 Day 18 - Start" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 18 - Start" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
