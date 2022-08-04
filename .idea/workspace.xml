@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - WIP">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 and 2 DONE">
+      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data_Sample.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Run.res" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Test.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Data.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Run.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,41 +54,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.vendoring.notification.had.been.shown&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/src/2021/Day17&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/node_modules/jest&quot;,
-    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.vendoring.notification.had.been.shown": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/dsiu/code/playground/advent-of-code/src/2021/Day18",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/dsiu/code/playground/advent-of-code/node_modules/jest",
+    "nodejs.mocha.mocha_node_package_dir": "",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "ruby.rails.projectView.checked": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;Rescript&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Rescript"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/2021/Day18" />
       <recent name="$PROJECT_DIR$/src/2021/Day17" />
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
       <recent name="$PROJECT_DIR$/src" />
@@ -101,8 +99,8 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.AOC2021_Day17_Test.mjs">
-    <configuration name="AOC2021_Day17_Test.mjs" type="JavaScriptTestRunnerJest">
+  <component name="RunManager" selected="Jest.AOC2021_Day18_Test.mjs">
+    <configuration name="AOC2021_Day18_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -110,7 +108,7 @@
       <jest-options value="--watch --maxWorkers=50%" />
       <envs />
       <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.mjs" />
+      <test-file value="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Test.mjs" />
       <method v="2" />
     </configuration>
     <configuration name="All Tests - Watch" type="JavaScriptTestRunnerJest">
@@ -133,10 +131,10 @@
       <scope-kind value="ALL" />
       <method v="2" />
     </configuration>
-    <configuration name="AOC2021_Day17_Run.mjs" type="NodeJSConfigurationType" temporary="true" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day17_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day17">
+    <configuration name="AOC2021_Day18_Run.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day18_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
       <method v="2" />
     </configuration>
-    <configuration name="AOC2021_Day17.mjs" type="NodeJSConfigurationType" temporary="true" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day17.mjs" working-dir="$PROJECT_DIR$/src/2021/Day17">
+    <configuration name="AOC2021_Day18.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day18.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
       <method v="2" />
     </configuration>
     <configuration name="Jest Profiling" type="NodeJSConfigurationType" path-to-js-file="./node_modules/.bin/jest" working-dir="$PROJECT_DIR$">
@@ -146,19 +144,13 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Jest.AOC2021_Day17_Test.mjs" />
+      <item itemvalue="Jest.AOC2021_Day18_Test.mjs" />
       <item itemvalue="Jest.All Tests" />
       <item itemvalue="Jest.All Tests - Watch" />
+      <item itemvalue="Node.js.AOC2021_Day18.mjs" />
+      <item itemvalue="Node.js.AOC2021_Day18_Run.mjs" />
       <item itemvalue="Node.js.Jest Profiling" />
-      <item itemvalue="Node.js.AOC2021_Day17.mjs" />
-      <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
-        <item itemvalue="Node.js.AOC2021_Day17.mjs" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -400,7 +392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659595748836</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="2021 Day 17 - Part 1 and 2 DONE">
+      <created>1659610038189</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1659610038189</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -418,7 +417,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="project file update" />
     <MESSAGE value="2021 Day 15 Start" />
     <MESSAGE value="IntelliJ project file update" />
     <MESSAGE value="Adjacency List - WIP" />
@@ -443,7 +441,8 @@
     <MESSAGE value="2021 Day 16 - Part 2 DONE" />
     <MESSAGE value="2021 Day 17 - Part 1 - implemented brute force" />
     <MESSAGE value="2021 Day 17 - WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - WIP" />
+    <MESSAGE value="2021 Day 17 - Part 1 and 2 DONE" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 and 2 DONE" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
