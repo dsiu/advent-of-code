@@ -5,6 +5,7 @@ import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Res_parser from "@resinfo/parser/src/res_parser.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
+import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 
 function log(prim) {
   console.log(prim);
@@ -21,9 +22,11 @@ function log3(prim0, prim1, prim2) {
   
 }
 
+var Not_Expected = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day18-AdventOfCode.Tree.Not_Expected");
+
 function dumpTree(e) {
   if (e.TAG === /* Leaf */0) {
-    return "Leaf:" + String(e._0);
+    return String(e._0);
   }
   var s1 = dumpTree(e._0);
   var s2 = dumpTree(e._1);
@@ -37,49 +40,55 @@ function dumpCxt(c) {
   if (c.TAG === /* L */0) {
     var t_str = dumpTree(c._1);
     var c_str = dumpCxt(c._0);
-    return "L(" + c_str + ", " + t_str + ")";
+    return "L (" + c_str + ", " + t_str + ")";
   }
   var t_str$1 = dumpTree(c._0);
   var c_str$1 = dumpCxt(c._1);
-  return "R(" + c_str$1 + ", " + t_str$1 + ")";
+  return "R (" + t_str$1 + ", " + c_str$1 + ")";
 }
 
 function dumpLoc(param) {
   var t_str = dumpTree(param[0]);
   var c_str = dumpCxt(param[1]);
-  return "Loc(cxt=" + c_str + ", tree=" + t_str + ")";
+  return "Loc[ cxt = " + c_str + "\n      tree = " + t_str + "]";
 }
 
-function left(l) {
-  var t = l[0];
-  if (t.TAG === /* Leaf */0) {
-    return l;
-  } else {
+function left(param) {
+  var t = param[0];
+  if (t.TAG !== /* Leaf */0) {
     return [
             t._0,
             {
               TAG: /* L */0,
-              _0: l[1],
+              _0: param[1],
               _1: t._1
             }
           ];
   }
+  throw {
+        RE_EXN_ID: Not_Expected,
+        _1: "left: not a Pair",
+        Error: new Error()
+      };
 }
 
-function right(l) {
-  var t = l[0];
-  if (t.TAG === /* Leaf */0) {
-    return l;
-  } else {
+function right(param) {
+  var t = param[0];
+  if (t.TAG !== /* Leaf */0) {
     return [
             t._1,
             {
               TAG: /* R */1,
               _0: t._0,
-              _1: l[1]
+              _1: param[1]
             }
           ];
   }
+  throw {
+        RE_EXN_ID: Not_Expected,
+        _1: "right: not a Pair",
+        Error: new Error()
+      };
 }
 
 function top(t) {
@@ -89,30 +98,35 @@ function top(t) {
         ];
 }
 
-function up(l) {
-  var c = l[1];
-  var t = l[0];
-  if (typeof c === "number") {
-    return l;
-  } else if (c.TAG === /* L */0) {
-    return [
-            {
-              TAG: /* Pair */1,
-              _0: t,
-              _1: c._1
-            },
-            c._0
-          ];
-  } else {
-    return [
-            {
-              TAG: /* Pair */1,
-              _0: c._0,
-              _1: t
-            },
-            c._1
-          ];
+function up(param) {
+  var c = param[1];
+  var t = param[0];
+  if (typeof c !== "number") {
+    if (c.TAG === /* L */0) {
+      return [
+              {
+                TAG: /* Pair */1,
+                _0: t,
+                _1: c._1
+              },
+              c._0
+            ];
+    } else {
+      return [
+              {
+                TAG: /* Pair */1,
+                _0: c._0,
+                _1: t
+              },
+              c._1
+            ];
+    }
   }
+  throw {
+        RE_EXN_ID: Not_Expected,
+        _1: "up: not a L or R",
+        Error: new Error()
+      };
 }
 
 function upmost(_l) {
@@ -195,6 +209,7 @@ var prim1$2 = dumpTree(upmost(modify(right(left([
 console.log("upmost\n", prim1$2);
 
 var Tree = {
+  Not_Expected: Not_Expected,
   dumpTree: dumpTree,
   dumpCxt: dumpCxt,
   dumpLoc: dumpLoc,

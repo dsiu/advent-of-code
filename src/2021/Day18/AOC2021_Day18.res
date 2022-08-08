@@ -8,6 +8,7 @@ module P = Res_parser
 module Rjs = ReScriptJs.Js
 
 module Tree = {
+  exception Not_Expected(string)
   // Type
   //
   type rec tree<'a> =
@@ -18,7 +19,7 @@ module Tree = {
   //
   let rec dumpTree = e => {
     switch e {
-    | Leaf(i) => `Leaf:${i->Int.toString}`
+    | Leaf(i) => i->Int.toString
     | Pair((e1, e2)) => {
         let s1 = e1->dumpTree
         let s2 = e2->dumpTree
@@ -41,13 +42,13 @@ module Tree = {
     | L(c, t) => {
         let t_str = t->dumpTree
         let c_str = c->dumpCxt
-        j`L($c_str, $t_str)`
+        j`L ($c_str, $t_str)`
       }
 
     | R(t, c) => {
         let t_str = t->dumpTree
         let c_str = c->dumpCxt
-        j`R($c_str, $t_str)`
+        j`R ($t_str, $c_str)`
       }
     }
   }
@@ -57,22 +58,22 @@ module Tree = {
   let dumpLoc = ((t, c)) => {
     let t_str = t->dumpTree
     let c_str = c->dumpCxt
-    j`Loc(cxt=$c_str, tree=$t_str)`
+    j`Loc[ cxt = $c_str\n      tree = $t_str]`
   }
 
   type left_<'a> = loc<'a> => loc<'a>
-  let left: left_<'a> = ((t, c) as l) => {
+  let left: left_<'a> = ((t, c)) => {
     switch t {
     | Pair(l, r) => (l, L(c, r))
-    | _ => l
+    | _ => raise(Not_Expected("left: not a Pair"))
     }
   }
 
   type right_<'a> = loc<'a> => loc<'a>
-  let right: right_<'a> = ((t, c) as l) => {
+  let right: right_<'a> = ((t, c)) => {
     switch t {
     | Pair(l, r) => (r, R(l, c))
-    | _ => l
+    | _ => raise(Not_Expected("right: not a Pair"))
     }
   }
 
@@ -80,11 +81,11 @@ module Tree = {
   let top: top_<'a> = t => (t, Top)
 
   type up_<'a> = loc<'a> => loc<'a>
-  let up: up_<'a> = ((t, c) as l) => {
+  let up: up_<'a> = ((t, c)) => {
     switch c {
     | L(c, r) => (Pair(t, r), c)
     | R(l, c) => (Pair(l, t), c)
-    | Top => l
+    | Top => raise(Not_Expected("up: not a L or R"))
     }
   }
 

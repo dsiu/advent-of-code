@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - Parser done">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - implemented zipper for tree">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
@@ -410,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659955625579</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="2021 Day 17 - Part 1 - implemented zipper for tree">
+      <created>1659962264330</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1659962264330</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -428,7 +435,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adjacency List - WIP" />
     <MESSAGE value="Convert to ES6 module" />
     <MESSAGE value="update project file" />
     <MESSAGE value="use my own rescript-ocamlgraph package" />
@@ -453,7 +459,8 @@
     <MESSAGE value="2021 Day 17 - Part 1 and 2 DONE" />
     <MESSAGE value="2021 Day 18 - Start" />
     <MESSAGE value="2021 Day 17 - Part 1 - Parser done" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 - Parser done" />
+    <MESSAGE value="2021 Day 17 - Part 1 - implemented zipper for tree" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 - implemented zipper for tree" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
