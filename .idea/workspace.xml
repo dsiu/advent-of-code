@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - WIP">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - Parser done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data_Sample.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data_Sample.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data_Sample.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Data_Sample.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Run.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Run.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Run.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +75,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -407,7 +403,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659610582692</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="2021 Day 17 - Part 1 - Parser done">
+      <created>1659955625579</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1659955625579</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,7 +428,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="IntelliJ project file update" />
     <MESSAGE value="Adjacency List - WIP" />
     <MESSAGE value="Convert to ES6 module" />
     <MESSAGE value="update project file" />
@@ -450,7 +452,8 @@
     <MESSAGE value="2021 Day 17 - WIP" />
     <MESSAGE value="2021 Day 17 - Part 1 and 2 DONE" />
     <MESSAGE value="2021 Day 18 - Start" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 18 - Start" />
+    <MESSAGE value="2021 Day 17 - Part 1 - Parser done" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 - Parser done" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
