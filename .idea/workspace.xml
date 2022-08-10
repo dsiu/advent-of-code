@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - WIP">
-      <change afterPath="$PROJECT_DIR$/__tests__/Tree_Test.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Tree.res" afterDir="false" />
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - Refactor Tree to its own module and added tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +73,7 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
     "ruby.rails.projectView.checked": "true",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "editor.breadcrumbs",
     "ts.external.directory.path": "/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external"
   },
   "keyToStringList": {
@@ -438,7 +434,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659964226186</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="2021 Day 17 - Part 1 - Refactor Tree to its own module and added tests">
+      <created>1660049820823</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1660049820823</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -456,7 +459,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update project file" />
     <MESSAGE value="use my own rescript-ocamlgraph package" />
     <MESSAGE value="update" />
     <MESSAGE value="update project files" />
@@ -481,7 +483,8 @@
     <MESSAGE value="2021 Day 17 - Part 1 - Parser done" />
     <MESSAGE value="2021 Day 17 - Part 1 - implemented zipper for tree" />
     <MESSAGE value="2021 Day 17 - Part 1 - WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 - WIP" />
+    <MESSAGE value="2021 Day 17 - Part 1 - Refactor Tree to its own module and added tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 17 - Part 1 - Refactor Tree to its own module and added tests" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
