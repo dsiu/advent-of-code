@@ -21,6 +21,62 @@ function log3(prim0, prim1, prim2) {
   
 }
 
+function splittable(t) {
+  var splittableC = function (loc) {
+    var n = loc._0;
+    if (n.TAG === /* Leaf */0) {
+      if (n._0 >= 10) {
+        return loc;
+      } else {
+        return ;
+      }
+    } else {
+      return Belt_Option.flatMap(splittableC(Tree$AdventOfCode.left(loc)), (function (param) {
+                    return splittableC(Tree$AdventOfCode.right(loc));
+                  }));
+    }
+  };
+  return splittableC(Tree$AdventOfCode.top(t));
+}
+
+function split(num) {
+  var mn0 = splittable(num);
+  if (mn0 === undefined) {
+    return ;
+  }
+  var n0 = Belt_Option.getExn(mn0);
+  var sn = n0._0;
+  if (sn.TAG === /* Leaf */0) {
+    var sn$1 = sn._0;
+    var ln = sn$1 / 2 | 0;
+    var rn = ln + sn$1 % 2 | 0;
+    var n1 = Tree$AdventOfCode.modify(n0, (function (param) {
+            return {
+                    TAG: /* Pair */1,
+                    _0: {
+                      TAG: /* Leaf */0,
+                      _0: ln
+                    },
+                    _1: {
+                      TAG: /* Leaf */0,
+                      _0: rn
+                    }
+                  };
+          }));
+    var match = Tree$AdventOfCode.upmost(n1);
+    return match._0;
+  }
+  throw {
+        RE_EXN_ID: "Match_failure",
+        _1: [
+          "AOC2021_Day18.res",
+          34,
+          12
+        ],
+        Error: new Error()
+      };
+}
+
 function charToString(c) {
   return String.fromCharCode(c);
 }
@@ -89,6 +145,8 @@ var Parser = {
 };
 
 var SnailFish = {
+  splittable: splittable,
+  split: split,
   Parser: Parser
 };
 

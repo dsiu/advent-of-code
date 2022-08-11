@@ -72,7 +72,7 @@ let up = (Loc(t, c)) => {
   switch c {
   | L(c, r) => Loc(Pair(t, r), c)
   | R(l, c) => Loc(Pair(l, t), c)
-  | Top => raise(Not_Expected("up: not a L or R"))
+  | Top => raise(Not_Expected("up: up of Top"))
   }
 }
 

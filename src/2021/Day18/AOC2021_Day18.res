@@ -12,6 +12,35 @@ module SnailFish = {
   //
   type t = Tree.tree<int>
 
+  let splittable = t => {
+    open Tree
+    let rec splittableC = loc => {
+      switch loc {
+      | Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
+      | Loc(Pair(_, _), _) => Option.flatMap(splittableC(left(loc)), _ => splittableC(right(loc)))
+      }
+    }
+    splittableC(top(t))
+  }
+
+  let split = num => {
+    open Tree
+    let mn0 = splittable(num)
+
+    switch mn0 {
+    | None => None
+    | Some(_) => {
+        let n0 = Option.getExn(mn0)
+        let Loc(Leaf(sn), _) = n0
+        let ln = sn / 2
+        let rn = ln + mod(sn, 2)
+        let n1 = modify(n0, _ => {Pair(Leaf(ln), Leaf(rn))})
+        let Loc(num1, _) = upmost(n1)
+        num1->Some
+      }
+    }
+  }
+
   // simple parser for elements
   //
   module Parser = {

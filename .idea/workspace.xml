@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 17 - Part 1 - Refactor Tree to its own module and added tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tree.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tree.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tree.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tree.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +77,7 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
     "ruby.rails.projectView.checked": "true",
-    "settings.editor.selected.configurable": "editor.breadcrumbs",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external"
   },
   "keyToStringList": {

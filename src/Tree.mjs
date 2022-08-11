@@ -105,7 +105,7 @@ function up(param) {
   }
   throw {
         RE_EXN_ID: Not_Expected,
-        _1: "up: not a L or R",
+        _1: "up: up of Top",
         Error: new Error()
       };
 }
