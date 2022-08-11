@@ -17,7 +17,7 @@ module SnailFish = {
     let rec splittableC = loc => {
       switch loc {
       | Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
-      | Loc(Pair(_, _), _) => Option.flatMap(splittableC(left(loc)), _ => splittableC(right(loc)))
+      | Loc(Pair(_, _), _) => splittableC(left(loc))->Option.flatMap(_ => splittableC(right(loc)))
       }
     }
     splittableC(top(t))
@@ -38,6 +38,36 @@ module SnailFish = {
         let Loc(num1, _) = upmost(n1)
         num1->Some
       }
+    }
+  }
+
+  let pairAtDepth = (n, t) => {
+    open Tree
+    let rec pairAtDepthC = (n, l) => {
+      switch (n, l) {
+      | (_, Loc(Leaf(_), _)) => None
+      | (0, Loc(Pair(_, _), _)) => Some(l)
+      | (n, Loc(Pair(_, _), _)) =>
+        pairAtDepthC(n - 1, left(l))->Option.flatMap(_ => pairAtDepthC(n - 1, right(l)))
+      }
+    }
+    pairAtDepthC(n, top(t))
+  }
+
+  let rec rightmostNum = loc => {
+    open Tree
+    switch loc {
+    | Loc(Leaf(_), _) => loc
+    | Loc(Pair(_, _), _) => loc->right->rightmostNum
+    }
+  }
+
+  let rec rightmostOnLeft = loc => {
+    open Tree
+    switch loc {
+    | Loc(_, Top) => None
+    | Loc(_, L(_, _)) => loc->up->rightmostOnLeft
+    | Loc(_, R(_, _)) => loc->up->rightmostNum->Some
     }
   }
 

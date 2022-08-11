@@ -8,8 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tree.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tree.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tree.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tree.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -445,7 +443,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660049820823</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="2021 Day 17 - Part 1 - Refactor Tree to its own module and added tests">
+      <created>1660220287689</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1660220287689</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

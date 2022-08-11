@@ -77,6 +77,47 @@ function split(num) {
       };
 }
 
+function pairAtDepth(n, t) {
+  var pairAtDepthC = function (n, l) {
+    if (l._0.TAG === /* Leaf */0) {
+      return ;
+    } else if (n !== 0) {
+      return Belt_Option.flatMap(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), (function (param) {
+                    return pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l));
+                  }));
+    } else {
+      return l;
+    }
+  };
+  return pairAtDepthC(n, Tree$AdventOfCode.top(t));
+}
+
+function rightmostNum(_loc) {
+  while(true) {
+    var loc = _loc;
+    if (loc._0.TAG === /* Leaf */0) {
+      return loc;
+    }
+    _loc = Tree$AdventOfCode.right(loc);
+    continue ;
+  };
+}
+
+function rightmostOnLeft(_loc) {
+  while(true) {
+    var loc = _loc;
+    var tmp = loc._1;
+    if (typeof tmp === "number") {
+      return ;
+    }
+    if (tmp.TAG !== /* L */0) {
+      return rightmostNum(Tree$AdventOfCode.up(loc));
+    }
+    _loc = Tree$AdventOfCode.up(loc);
+    continue ;
+  };
+}
+
 function charToString(c) {
   return String.fromCharCode(c);
 }
@@ -147,6 +188,9 @@ var Parser = {
 var SnailFish = {
   splittable: splittable,
   split: split,
+  pairAtDepth: pairAtDepth,
+  rightmostNum: rightmostNum,
+  rightmostOnLeft: rightmostOnLeft,
   Parser: Parser
 };
 
