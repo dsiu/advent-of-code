@@ -23,7 +23,7 @@ module SnailFish = {
     let rec splittableC = loc => {
       switch loc {
       | Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
-      | Loc(Pair(_, _), _) => splittableC(left(loc))->Option.flatMap(_ => splittableC(right(loc)))
+      | Loc(Pair(_, _), _) => splittableC(left(loc))->optionOr(splittableC(right(loc)))
       }
     }
     splittableC(top(t))
@@ -47,24 +47,15 @@ module SnailFish = {
     }
   }
 
-  // refactor this
-  let optionOr = (a, b) => {
-    switch a {
-    | Some(_) => a
-    | None => b
-    }
-  }
-
   type pairAtDepthC = (int, loc) => option<loc>
   let rec pairAtDepthC: pairAtDepthC = (n, l) => {
-    log2("pairAtDepthC at n = ", n)
+    //    log2("pairAtDepthC at n = ", n)
     switch (n, l) {
     | (_, Loc(Leaf(_), _)) => None
-    | (0, Loc(Pair(_, _), _)) => {
-        "at depth 0"->log
-        l->locToString->log
-        Some(l)
-      }
+    | (0, Loc(Pair(_, _), _)) =>
+      //        "at depth 0"->log
+      //        l->locToString->log
+      Some(l)
     | (n, Loc(Pair(_, _), _)) =>
       // pairAtDepthC(n - 1, left(l))->Option.flatMap(_ => pairAtDepthC(n - 1, right(l)))
       pairAtDepthC(n - 1, left(l))->optionOr(pairAtDepthC(n - 1, right(l)))
@@ -112,13 +103,13 @@ module SnailFish = {
 
   type explode = tree => option<tree>
   let explode: explode = num => {
-    log("explode")
+    //    log("explode")
     let mp0 = pairAtDepth(4, num)
-    log2("mp0 = ", mp0)
+    //    log2("mp0 = ", mp0)
     switch mp0 {
     | None => None
     | Some(_) => {
-        log("--> got depth 4")
+        //        log("--> got depth 4")
         let p0 = Option.getExn(mp0)
 
         let Loc(Pair(Leaf(nl), Leaf(nr)), _) = p0
@@ -154,13 +145,13 @@ module SnailFish = {
 
   type snailAdd = (tree, tree) => tree
   let snailAdd: snailAdd = (a, b) => {
-    log("snailAdd:")
-    a->treeToString->log2("a: ", _)
-    b->treeToString->log2("b: ", _)
+    //    log("snailAdd:")
+    //    a->treeToString->log2("a: ", _)
+    //    b->treeToString->log2("b: ", _)
     Pair(a, b)->reduce
   }
 
-  let sumOf = xs => xs->foldlArray(snailAdd)
+  let total = xs => xs->foldlArray(snailAdd)
 
   type magnitude = tree => int
   let rec magnitude: magnitude = t => {
@@ -171,9 +162,22 @@ module SnailFish = {
   }
 
   let part1 = numbers => {
-    let total = numbers->sumOf
-    total->Tree.treeToString->log2("result:", _)
+    let total = numbers->total
+    //    total->Tree.treeToString->log2("result:", _)
     total->magnitude
+  }
+
+  let part2 = numbers => {
+    // should refactor
+    numbers
+    ->Array.reduce([], (acc, a) => {
+      acc->Array.concat(
+        numbers->Array.reduce([], (acc, b) => {
+          acc->Array.concat([snailAdd(a, b)->magnitude])
+        }),
+      )
+    })
+    ->maxIntInArray
   }
 
   // simple parser for elements
@@ -215,28 +219,28 @@ module SnailFish = {
       s->parse->Result.getExn->fst
     }
   }
+
+  let makeParseTree = x => {
+    //  l->Result.isOk->log2("parse result:", _)
+
+    let p = Parser.parseAndGetResult(x)
+
+    //  switch l {
+    //  | Ok(_) =>
+    //    p->Tree.treeToString->log2("Parsed as: ", _)
+    //    l->Result.getExn->snd->log2("Parse state:", _)
+    //    log("\n")
+    //  | Error(err) => {
+    //      log(err)
+    //      log("\n")
+    //    }
+    //  }
+
+    p
+  }
 }
 
 open SnailFish
-
-let makeParseTree = x => {
-  //  l->Result.isOk->log2("parse result:", _)
-
-  let p = Parser.parseAndGetResult(x)
-
-  //  switch l {
-  //  | Ok(_) =>
-  //    p->Tree.treeToString->log2("Parsed as: ", _)
-  //    l->Result.getExn->snd->log2("Parse state:", _)
-  //    log("\n")
-  //  | Error(err) => {
-  //      log(err)
-  //      log("\n")
-  //    }
-  //  }
-
-  p
-}
 
 let parse = data => {
   data->splitNewline->Array.map(x => x->Js.String2.trim)->Array.map(makeParseTree)
@@ -248,6 +252,6 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let lines = parse(data)
+  part2(lines)
 }

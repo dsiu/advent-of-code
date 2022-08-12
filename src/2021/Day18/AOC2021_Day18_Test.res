@@ -47,32 +47,43 @@ describe("2021 Day18", () => {
     expect(result)->toEqual(expected)
   })
 
+  let makeSumOfTests = Array.map(_, (((a, b), r)) => {
+    (snailAdd(a->parseAndGetResult, b->parseAndGetResult)->treeToString, r)
+  })
+
+  let sumOf_tests =
+    [
+      (("[[[[4,3],4],4],[7,[[8,4],9]]]", "[1,1]"), "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"),
+    ]->makeSumOfTests
+
+  testEach2("sumOf", sumOf_tests, (result, expected) => {
+    expect(result)->toEqual(expected)
+  })
+
   test("Part 1 - Sample Data", () => {
-    //    let result = solvePart1(sampleData)
-    let result = 1
-    let expected = 1
+    let result = solvePart1(sampleData)
+    let expected = 4140
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
-    //    let result = solvePart1(data)
-    let result = 1
-    let expected = 1
+    let result = solvePart1(data)
+    let expected = 4088
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Sample Data", () => {
     let result = solvePart2(sampleData)
-    let expected = 2
+    let expected = 3993
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = 2
+    let expected = 4536
 
     expect(result)->toEqual(expected)
   })

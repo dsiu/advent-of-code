@@ -57,6 +57,14 @@ function composeN(fs) {
               }));
 }
 
+function optionOr(a, b) {
+  if (a !== undefined) {
+    return a;
+  } else {
+    return b;
+  }
+}
+
 var List;
 
 var $$Array;
@@ -75,6 +83,7 @@ export {
   compose3 ,
   compose4 ,
   composeN ,
+  optionOr ,
   
 }
 /* No side effect */

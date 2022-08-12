@@ -44,3 +44,12 @@ let compose4 = (f, g, h, i, x) => i(h(g(f(x))))
 
 let composeN = fs =>
   fs->Array.sliceToEnd(1)->Array.reduce(fs->Array.getExn(0), (a, f) => compose(a, f))
+
+// Options
+// refactor this
+let optionOr = (a, b) => {
+  switch a {
+  | Some(_) => a
+  | None => b
+  }
+}

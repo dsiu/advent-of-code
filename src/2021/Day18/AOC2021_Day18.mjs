@@ -34,9 +34,7 @@ function splittable(t) {
         return ;
       }
     } else {
-      return Belt_Option.flatMap(splittableC(Tree$AdventOfCode.left(loc)), (function (param) {
-                    return splittableC(Tree$AdventOfCode.right(loc));
-                  }));
+      return FP_Utils$AdventOfCode.optionOr(splittableC(Tree$AdventOfCode.left(loc)), splittableC(Tree$AdventOfCode.right(loc)));
     }
   };
   return splittableC(Tree$AdventOfCode.top(t));
@@ -80,26 +78,14 @@ function split(num) {
       };
 }
 
-function optionOr(a, b) {
-  if (a !== undefined) {
-    return a;
-  } else {
-    return b;
-  }
-}
-
 function pairAtDepthC(n, l) {
-  console.log("pairAtDepthC at n = ", n);
   if (l._0.TAG === /* Leaf */0) {
     return ;
+  } else if (n !== 0) {
+    return FP_Utils$AdventOfCode.optionOr(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l)));
+  } else {
+    return l;
   }
-  if (n !== 0) {
-    return optionOr(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l)));
-  }
-  console.log("at depth 0");
-  var prim = Tree$AdventOfCode.locToString(l);
-  console.log(prim);
-  return l;
 }
 
 function pairAtDepth(n, t) {
@@ -159,13 +145,10 @@ function leftmostOnRight(_loc) {
 }
 
 function explode(num) {
-  console.log("explode");
   var mp0 = pairAtDepthC(4, Tree$AdventOfCode.top(num));
-  console.log("mp0 = ", mp0);
   if (mp0 === undefined) {
     return ;
   }
-  console.log("--> got depth 4");
   var p0 = Belt_Option.getExn(mp0);
   var match = p0._0;
   if (match.TAG !== /* Leaf */0) {
@@ -187,7 +170,7 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          128,
+                          119,
                           43
                         ],
                         Error: new Error()
@@ -205,7 +188,7 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          133,
+                          124,
                           45
                         ],
                         Error: new Error()
@@ -229,7 +212,7 @@ function explode(num) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day18.res",
-          124,
+          115,
           12
         ],
         Error: new Error()
@@ -239,7 +222,7 @@ function explode(num) {
 function reduce(_num) {
   while(true) {
     var num = _num;
-    var num1 = optionOr(explode(num), split(num));
+    var num1 = FP_Utils$AdventOfCode.optionOr(explode(num), split(num));
     if (num1 === undefined) {
       return num;
     }
@@ -249,11 +232,6 @@ function reduce(_num) {
 }
 
 function snailAdd(a, b) {
-  console.log("snailAdd:");
-  var prim1 = Tree$AdventOfCode.treeToString(a);
-  console.log("a: ", prim1);
-  var prim1$1 = Tree$AdventOfCode.treeToString(b);
-  console.log("b: ", prim1$1);
   return reduce({
               TAG: /* Pair */1,
               _0: a,
@@ -261,7 +239,7 @@ function snailAdd(a, b) {
             });
 }
 
-function sumOf(xs) {
+function total(xs) {
   return FP_Utils$AdventOfCode.foldlArray(xs, snailAdd);
 }
 
@@ -274,10 +252,19 @@ function magnitude(t) {
 }
 
 function part1(numbers) {
-  var total = FP_Utils$AdventOfCode.foldlArray(numbers, snailAdd);
-  var prim1 = Tree$AdventOfCode.treeToString(total);
-  console.log("result:", prim1);
-  return magnitude(total);
+  return magnitude(FP_Utils$AdventOfCode.foldlArray(numbers, snailAdd));
+}
+
+function part2(numbers) {
+  return Utils$AdventOfCode.maxIntInArray(Belt_Array.reduce(numbers, [], (function (acc, a) {
+                    return Belt_Array.concat(acc, Belt_Array.reduce(numbers, [], (function (acc, b) {
+                                      return Belt_Array.concat(acc, [magnitude(reduce({
+                                                            TAG: /* Pair */1,
+                                                            _0: a,
+                                                            _1: b
+                                                          }))]);
+                                    })));
+                  })));
 }
 
 function charToString(c) {
@@ -352,10 +339,11 @@ var Parser = {
   parseAndGetResult: parseAndGetResult
 };
 
+var makeParseTree = parseAndGetResult;
+
 var SnailFish = {
   splittable: splittable,
   split: split,
-  optionOr: optionOr,
   pairAtDepthC: pairAtDepthC,
   pairAtDepth: pairAtDepth,
   rightmostNum: rightmostNum,
@@ -365,13 +353,13 @@ var SnailFish = {
   explode: explode,
   reduce: reduce,
   snailAdd: snailAdd,
-  sumOf: sumOf,
+  total: total,
   magnitude: magnitude,
   part1: part1,
-  Parser: Parser
+  part2: part2,
+  Parser: Parser,
+  makeParseTree: makeParseTree
 };
-
-var makeParseTree = parseAndGetResult;
 
 function parse$1(data) {
   return Belt_Array.map(Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
@@ -380,11 +368,12 @@ function parse$1(data) {
 }
 
 function solvePart1(data) {
-  return part1(parse$1(data));
+  var numbers = parse$1(data);
+  return magnitude(FP_Utils$AdventOfCode.foldlArray(numbers, snailAdd));
 }
 
 function solvePart2(data) {
-  return 2;
+  return part2(parse$1(data));
 }
 
 var P;
@@ -398,7 +387,6 @@ export {
   P ,
   Rjs ,
   SnailFish ,
-  makeParseTree ,
   parse$1 as parse,
   solvePart1 ,
   solvePart2 ,

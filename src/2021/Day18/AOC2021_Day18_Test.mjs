@@ -80,22 +80,44 @@ describe("2021 Day18", (function () {
                 expect(result).toEqual(expected);
                 
               }));
+        var makeSumOfTests = function (__x) {
+          return Belt_Array.map(__x, (function (param) {
+                        var match = param[0];
+                        return [
+                                Tree$AdventOfCode.treeToString(AOC2021_Day18$AdventOfCode.SnailFish.snailAdd(Curry._1(AOC2021_Day18$AdventOfCode.SnailFish.Parser.parseAndGetResult, match[0]), Curry._1(AOC2021_Day18$AdventOfCode.SnailFish.Parser.parseAndGetResult, match[1]))),
+                                param[1]
+                              ];
+                      }));
+        };
+        var sumOf_tests = makeSumOfTests([[
+                [
+                  "[[[[4,3],4],4],[7,[[8,4],9]]]",
+                  "[1,1]"
+                ],
+                "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"
+              ]]);
+        Jest2$AdventOfCode.testEach2("sumOf", sumOf_tests, (function (result, expected) {
+                expect(result).toEqual(expected);
+                
+              }));
         test("Part 1 - Sample Data", (function () {
-                expect(1).toEqual(1);
+                var result = AOC2021_Day18$AdventOfCode.solvePart1(AOC2021_Day18_Data_Sample$AdventOfCode.data);
+                expect(result).toEqual(4140);
                 
               }));
         test("Part 1 - Solve", (function () {
-                expect(1).toEqual(1);
+                var result = AOC2021_Day18$AdventOfCode.solvePart1(AOC2021_Day18_Data$AdventOfCode.data);
+                expect(result).toEqual(4088);
                 
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2021_Day18$AdventOfCode.solvePart2(AOC2021_Day18_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(3993);
                 
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day18$AdventOfCode.solvePart2(AOC2021_Day18_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(4536);
                 
               }));
         
