@@ -11,7 +11,7 @@ function treeToString(e) {
   }
   var s1 = treeToString(e._0);
   var s2 = treeToString(e._1);
-  return "[" + s1 + ", " + s2 + "]";
+  return "[" + s1 + "," + s2 + "]";
 }
 
 function cxtToString(c) {
@@ -21,11 +21,11 @@ function cxtToString(c) {
   if (c.TAG === /* L */0) {
     var t_str = treeToString(c._1);
     var c_str = cxtToString(c._0);
-    return "L(" + c_str + ", " + t_str + ")";
+    return "L(" + c_str + "," + t_str + ")";
   }
   var t_str$1 = treeToString(c._0);
   var c_str$1 = cxtToString(c._1);
-  return "R(" + t_str$1 + ", " + c_str$1 + ")";
+  return "R(" + t_str$1 + "," + c_str$1 + ")";
 }
 
 function locToString(param) {

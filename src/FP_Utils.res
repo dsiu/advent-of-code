@@ -16,6 +16,19 @@ let flatMapArray: (array<'a>, 'a => array<'b>) => array<'b> = (xs, f) => {
   Array.reduce(Array.map(xs, f), [], Array.concat)
 }
 
+let foldlArray = (xs, f) => {
+  let init = xs->Array.getExn(0)
+  let rest = xs->Array.sliceToEnd(1)
+  rest->Array.reduce(init, f)
+}
+
+let foldrArray = (xs, f) => {
+  let end = xs->Array.length - 1
+  let init = xs->Array.getExn(end)
+  let rest = xs->Array.slice(~offset=0, ~len=end)
+  rest->Array.reduceReverse(init, f)
+}
+
 let identity = (a: 'a) => a
 let eq = (x, y) => x === y
 

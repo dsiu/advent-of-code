@@ -12,6 +12,19 @@ function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
 
+function foldlArray(xs, f) {
+  var init = Belt_Array.getExn(xs, 0);
+  var rest = Belt_Array.sliceToEnd(xs, 1);
+  return Belt_Array.reduce(rest, init, f);
+}
+
+function foldrArray(xs, f) {
+  var end = xs.length - 1 | 0;
+  var init = Belt_Array.getExn(xs, end);
+  var rest = Belt_Array.slice(xs, 0, end);
+  return Belt_Array.reduceReverse(rest, init, f);
+}
+
 function identity(a) {
   return a;
 }
@@ -53,6 +66,8 @@ export {
   flatMapList ,
   $$Array ,
   flatMapArray ,
+  foldlArray ,
+  foldrArray ,
   identity ,
   eq ,
   composeU ,

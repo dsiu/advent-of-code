@@ -1,19 +1,25 @@
 open Belt
-//open Utils
+open Utils
+open FP_Utils
+
 let log = Js.Console.log
 let log2 = Js.Console.log2
 let log3 = Js.Console.log3
 
 module P = Res_parser
 module Rjs = ReScriptJs.Js
+open Tree
 
 module SnailFish = {
   // type
   //
-  type t = Tree.tree<int>
+  type tree = Tree.tree<int>
+  type loc = Tree.loc<int>
 
-  let splittable = t => {
-    open Tree
+  // https://work.njae.me.uk/2021/12/21/advent-of-code-2021-day-18/
+  //
+  type splittable = tree => option<loc>
+  let splittable: splittable = t => {
     let rec splittableC = loc => {
       switch loc {
       | Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
@@ -23,8 +29,8 @@ module SnailFish = {
     splittableC(top(t))
   }
 
-  let split = num => {
-    open Tree
+  type split = tree => option<tree>
+  let split: split = num => {
     let mn0 = splittable(num)
 
     switch mn0 {
@@ -41,34 +47,133 @@ module SnailFish = {
     }
   }
 
-  let pairAtDepth = (n, t) => {
-    open Tree
-    let rec pairAtDepthC = (n, l) => {
-      switch (n, l) {
-      | (_, Loc(Leaf(_), _)) => None
-      | (0, Loc(Pair(_, _), _)) => Some(l)
-      | (n, Loc(Pair(_, _), _)) =>
-        pairAtDepthC(n - 1, left(l))->Option.flatMap(_ => pairAtDepthC(n - 1, right(l)))
-      }
+  // refactor this
+  let optionOr = (a, b) => {
+    switch a {
+    | Some(_) => a
+    | None => b
     }
+  }
+
+  type pairAtDepthC = (int, loc) => option<loc>
+  let rec pairAtDepthC: pairAtDepthC = (n, l) => {
+    log2("pairAtDepthC at n = ", n)
+    switch (n, l) {
+    | (_, Loc(Leaf(_), _)) => None
+    | (0, Loc(Pair(_, _), _)) => {
+        "at depth 0"->log
+        l->locToString->log
+        Some(l)
+      }
+    | (n, Loc(Pair(_, _), _)) =>
+      // pairAtDepthC(n - 1, left(l))->Option.flatMap(_ => pairAtDepthC(n - 1, right(l)))
+      pairAtDepthC(n - 1, left(l))->optionOr(pairAtDepthC(n - 1, right(l)))
+    }
+  }
+
+  type pairAtDepth = (int, tree) => option<loc>
+  let pairAtDepth: pairAtDepth = (n, t) => {
     pairAtDepthC(n, top(t))
   }
 
-  let rec rightmostNum = loc => {
-    open Tree
+  type rightmostNum = loc => loc
+  let rec rightmostNum: rightmostNum = loc => {
     switch loc {
     | Loc(Leaf(_), _) => loc
     | Loc(Pair(_, _), _) => loc->right->rightmostNum
     }
   }
 
-  let rec rightmostOnLeft = loc => {
-    open Tree
+  type rightmostOnLeft = loc => option<loc>
+  let rec rightmostOnLeft: rightmostOnLeft = loc => {
     switch loc {
     | Loc(_, Top) => None
     | Loc(_, L(_, _)) => loc->up->rightmostOnLeft
-    | Loc(_, R(_, _)) => loc->up->rightmostNum->Some
+    | Loc(_, R(_, _)) => loc->up->left->rightmostNum->Some
     }
+  }
+
+  type leftmostNum = loc => loc
+  let rec leftmostNum: leftmostNum = loc => {
+    switch loc {
+    | Loc(Leaf(_), _) => loc
+    | Loc(Pair(_, _), _) => loc->left->leftmostNum
+    }
+  }
+
+  type leftmostOnRight = loc => option<loc>
+  let rec leftmostOnRight: leftmostOnRight = loc => {
+    switch loc {
+    | Loc(_, Top) => None
+    | Loc(_, R(_, _)) => loc->up->leftmostOnRight
+    | Loc(_, L(_, _)) => loc->up->right->leftmostNum->Some
+    }
+  }
+
+  type explode = tree => option<tree>
+  let explode: explode = num => {
+    log("explode")
+    let mp0 = pairAtDepth(4, num)
+    log2("mp0 = ", mp0)
+    switch mp0 {
+    | None => None
+    | Some(_) => {
+        log("--> got depth 4")
+        let p0 = Option.getExn(mp0)
+
+        let Loc(Pair(Leaf(nl), Leaf(nr)), _) = p0
+
+        let p1 = switch rightmostOnLeft(p0) {
+        | None => p0
+        | Some(leftReg) => modify(leftReg, (Leaf(n)) => {Leaf(n + nl)})
+        }
+
+        let p2 = switch pairAtDepthC(4, p1->upmost)->Option.flatMap(leftmostOnRight) {
+        | None => p1
+        | Some(rightReg) => modify(rightReg, (Leaf(n)) => {Leaf(n + nr)})
+        }
+
+        let p3 = switch pairAtDepthC(4, p2->upmost) {
+        | None => p2
+        | Some(centrePair) => modify(centrePair, _ => {Leaf(0)})
+        }
+
+        let Loc(num1, _) = p3->upmost
+        Some(num1)
+      }
+    }
+  }
+
+  type reduce = tree => tree
+  let rec reduce: reduce = num => {
+    switch explode(num)->optionOr(split(num)) {
+    | None => num
+    | Some(num1) => reduce(num1)
+    }
+  }
+
+  type snailAdd = (tree, tree) => tree
+  let snailAdd: snailAdd = (a, b) => {
+    log("snailAdd:")
+    a->treeToString->log2("a: ", _)
+    b->treeToString->log2("b: ", _)
+    Pair(a, b)->reduce
+  }
+
+  let sumOf = xs => xs->foldlArray(snailAdd)
+
+  type magnitude = tree => int
+  let rec magnitude: magnitude = t => {
+    switch t {
+    | Leaf(n) => n
+    | Pair(a, b) => 3 * magnitude(a) + 2 * magnitude(b)
+    }
+  }
+
+  let part1 = numbers => {
+    let total = numbers->sumOf
+    total->Tree.treeToString->log2("result:", _)
+    total->magnitude
   }
 
   // simple parser for elements
@@ -104,29 +209,42 @@ module SnailFish = {
       ->P.map(((l, r)) => Tree.Pair(l, r))
     })
 
-    type result = P.parseResult<t>
+    type result = P.parseResult<tree>
     let parse = (s): result => P.run(pair, s)
+    let parseAndGetResult = s => {
+      s->parse->Result.getExn->fst
+    }
   }
 }
 
-//let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+open SnailFish
+
+let makeParseTree = x => {
+  //  l->Result.isOk->log2("parse result:", _)
+
+  let p = Parser.parseAndGetResult(x)
+
+  //  switch l {
+  //  | Ok(_) =>
+  //    p->Tree.treeToString->log2("Parsed as: ", _)
+  //    l->Result.getExn->snd->log2("Parse state:", _)
+  //    log("\n")
+  //  | Error(err) => {
+  //      log(err)
+  //      log("\n")
+  //    }
+  //  }
+
+  p
+}
+
+let parse = data => {
+  data->splitNewline->Array.map(x => x->Js.String2.trim)->Array.map(makeParseTree)
+}
 
 let solvePart1 = data => {
-  open SnailFish
-  let l = Parser.parse(data)
-  l->Result.isOk->log2("parse result:", _)
-  let p = l->Result.getExn->fst
-  switch l {
-  | Ok(_) =>
-    p->Tree.treeToString->log2("Parsed as: ", _)
-    l->Result.getExn->snd->log2("Parse state:", _)
-    log("\n")
-  | Error(err) => {
-      log(err)
-      log("\n")
-    }
-  }
-  1
+  let lines = parse(data)
+  part1(lines)
 }
 
 let solvePart2 = data => {

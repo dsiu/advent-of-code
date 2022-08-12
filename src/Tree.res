@@ -15,7 +15,7 @@ let rec treeToString = e => {
   | Pair((e1, e2)) => {
       let s1 = e1->treeToString
       let s2 = e2->treeToString
-      j`[$s1, $s2]`
+      j`[$s1,$s2]`
     }
   }
 }
@@ -34,12 +34,12 @@ let rec cxtToString = c => {
   | L(c, t) => {
       let t_str = t->treeToString
       let c_str = c->cxtToString
-      j`L($c_str, $t_str)`
+      j`L($c_str,$t_str)`
     }
   | R(t, c) => {
       let t_str = t->treeToString
       let c_str = c->cxtToString
-      j`R($t_str, $c_str)`
+      j`R($t_str,$c_str)`
     }
   }
 }
