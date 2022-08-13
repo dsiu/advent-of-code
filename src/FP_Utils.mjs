@@ -12,17 +12,33 @@ function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
 
-function foldlArray(xs, f) {
+function foldLeftArray(xs, f) {
   var init = Belt_Array.getExn(xs, 0);
   var rest = Belt_Array.sliceToEnd(xs, 1);
   return Belt_Array.reduce(rest, init, f);
 }
 
-function foldrArray(xs, f) {
+function foldRightArray(xs, f) {
   var end = xs.length - 1 | 0;
   var init = Belt_Array.getExn(xs, end);
   var rest = Belt_Array.slice(xs, 0, end);
   return Belt_Array.reduceReverse(rest, init, f);
+}
+
+function combinationArray2(a, b, f) {
+  return Belt_Array.reduce(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
+                                  return Belt_Array.concat(acc, [Curry._2(f, x, y)]);
+                                })));
+              }));
+}
+
+function optionOr(a, b) {
+  if (a !== undefined) {
+    return a;
+  } else {
+    return b;
+  }
 }
 
 function identity(a) {
@@ -50,19 +66,7 @@ function compose4(f, g, h, i, x) {
 }
 
 function composeN(fs) {
-  return Belt_Array.reduce(Belt_Array.sliceToEnd(fs, 1), Belt_Array.getExn(fs, 0), (function (a, f) {
-                return function (param) {
-                  return Curry._1(f, Curry._1(a, param));
-                };
-              }));
-}
-
-function optionOr(a, b) {
-  if (a !== undefined) {
-    return a;
-  } else {
-    return b;
-  }
+  return foldLeftArray(fs, compose);
 }
 
 var List;
@@ -74,8 +78,10 @@ export {
   flatMapList ,
   $$Array ,
   flatMapArray ,
-  foldlArray ,
-  foldrArray ,
+  foldLeftArray ,
+  foldRightArray ,
+  combinationArray2 ,
+  optionOr ,
   identity ,
   eq ,
   composeU ,
@@ -83,7 +89,6 @@ export {
   compose3 ,
   compose4 ,
   composeN ,
-  optionOr ,
   
 }
 /* No side effect */

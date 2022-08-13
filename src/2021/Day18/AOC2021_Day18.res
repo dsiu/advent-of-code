@@ -1,6 +1,6 @@
 open Belt
+open! FP_Utils
 open Utils
-open FP_Utils
 
 let log = Js.Console.log
 let log2 = Js.Console.log2
@@ -10,13 +10,23 @@ module P = Res_parser
 module Rjs = ReScriptJs.Js
 open Tree
 
+@@warning("-8")
 module SnailFish = {
   // type
   //
   type tree = Tree.tree<int>
   type loc = Tree.loc<int>
 
+  //
   // https://work.njae.me.uk/2021/12/21/advent-of-code-2021-day-18/
+  //
+
+  // First is to find a splittable element. This is a function from a Tree to a Maybe Loc,
+  // returning Nothing if there are no splittable numbers. splitable wraps the tree in a context
+  // then recurses into it with splittableC.
+  //
+  //If that's given a Pair, it looks for splittable numbers in the branches, exploiting that Maybe
+  // is Applicative so <|> handles the alternatives nicely.
   //
   type splittable = tree => option<loc>
   let splittable: splittable = t => {
@@ -29,6 +39,10 @@ module SnailFish = {
     splittableC(top(t))
   }
 
+  // Given the ability to find splittable numbers, split will split the leftmost one. If there is
+  // no splittable number, it returns Nothing.  If there is a splittable number, it focuses on
+  // that number, replaces it with the pair, then returns focus to the root of the tree.
+  //
   type split = tree => option<tree>
   let split: split = num => {
     let mn0 = splittable(num)
@@ -47,6 +61,9 @@ module SnailFish = {
     }
   }
 
+  // Finding the pair to split is much the same as above, but using a counter to track now many
+  // layers deep to find the pair.
+  //
   type pairAtDepthC = (int, loc) => option<loc>
   let rec pairAtDepthC: pairAtDepthC = (n, l) => {
     //    log2("pairAtDepthC at n = ", n)
@@ -67,6 +84,11 @@ module SnailFish = {
     pairAtDepthC(n, top(t))
   }
 
+  // Given a pair that explodes, I need to find the rightmost leaf that's to the left of this pair.
+  // I find that by going back up the tree until I find where I took the right branch at a pair.
+  // I then take the left branch of that pair and follow it down, always taking the right branch.
+  // If I get to the root of the tree without finding branch to the left, I return Nothing.
+  //
   type rightmostNum = loc => loc
   let rec rightmostNum: rightmostNum = loc => {
     switch loc {
@@ -151,7 +173,7 @@ module SnailFish = {
     Pair(a, b)->reduce
   }
 
-  let total = xs => xs->foldlArray(snailAdd)
+  let total = xs => xs->foldLeftArray(snailAdd)
 
   type magnitude = tree => int
   let rec magnitude: magnitude = t => {
@@ -168,16 +190,7 @@ module SnailFish = {
   }
 
   let part2 = numbers => {
-    // should refactor
-    numbers
-    ->Array.reduce([], (acc, a) => {
-      acc->Array.concat(
-        numbers->Array.reduce([], (acc, b) => {
-          acc->Array.concat([snailAdd(a, b)->magnitude])
-        }),
-      )
-    })
-    ->maxIntInArray
+    combinationArray2(numbers, numbers, (a, b) => snailAdd(a, b)->magnitude)->maxIntInArray
   }
 
   // simple parser for elements

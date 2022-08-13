@@ -71,7 +71,7 @@ function split(num) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day18.res",
-          40,
+          54,
           12
         ],
         Error: new Error()
@@ -170,7 +170,7 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          119,
+                          141,
                           43
                         ],
                         Error: new Error()
@@ -188,7 +188,7 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          124,
+                          146,
                           45
                         ],
                         Error: new Error()
@@ -212,7 +212,7 @@ function explode(num) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day18.res",
-          115,
+          137,
           12
         ],
         Error: new Error()
@@ -240,7 +240,7 @@ function snailAdd(a, b) {
 }
 
 function total(xs) {
-  return FP_Utils$AdventOfCode.foldlArray(xs, snailAdd);
+  return FP_Utils$AdventOfCode.foldLeftArray(xs, snailAdd);
 }
 
 function magnitude(t) {
@@ -252,18 +252,16 @@ function magnitude(t) {
 }
 
 function part1(numbers) {
-  return magnitude(FP_Utils$AdventOfCode.foldlArray(numbers, snailAdd));
+  return magnitude(FP_Utils$AdventOfCode.foldLeftArray(numbers, snailAdd));
 }
 
 function part2(numbers) {
-  return Utils$AdventOfCode.maxIntInArray(Belt_Array.reduce(numbers, [], (function (acc, a) {
-                    return Belt_Array.concat(acc, Belt_Array.reduce(numbers, [], (function (acc, b) {
-                                      return Belt_Array.concat(acc, [magnitude(reduce({
-                                                            TAG: /* Pair */1,
-                                                            _0: a,
-                                                            _1: b
-                                                          }))]);
-                                    })));
+  return Utils$AdventOfCode.maxIntInArray(FP_Utils$AdventOfCode.combinationArray2(numbers, numbers, (function (a, b) {
+                    return magnitude(reduce({
+                                    TAG: /* Pair */1,
+                                    _0: a,
+                                    _1: b
+                                  }));
                   })));
 }
 
@@ -369,7 +367,7 @@ function parse$1(data) {
 
 function solvePart1(data) {
   var numbers = parse$1(data);
-  return magnitude(FP_Utils$AdventOfCode.foldlArray(numbers, snailAdd));
+  return magnitude(FP_Utils$AdventOfCode.foldLeftArray(numbers, snailAdd));
 }
 
 function solvePart2(data) {
