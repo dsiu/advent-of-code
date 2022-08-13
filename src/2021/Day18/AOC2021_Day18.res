@@ -49,8 +49,8 @@ module SnailFish = {
 
     switch mn0 {
     | None => None
-    | Some(_) => {
-        let n0 = Option.getExn(mn0)
+    | Some(n0) => {
+        //        let n0 = Option.getExn(mn0)
         let Loc(Leaf(sn), _) = n0
         let ln = sn / 2
         let rn = ln + mod(sn, 2)
@@ -130,9 +130,9 @@ module SnailFish = {
     //    log2("mp0 = ", mp0)
     switch mp0 {
     | None => None
-    | Some(_) => {
+    | Some(p0) => {
         //        log("--> got depth 4")
-        let p0 = Option.getExn(mp0)
+        //        let p0 = Option.getExn(mp0)
 
         let Loc(Pair(Leaf(nl), Leaf(nr)), _) = p0
 
