@@ -164,9 +164,7 @@ var MutableMapString = {
 };
 
 function toString$14(a, f) {
-  return Belt_Array.reduce(a, "[", (function (a, v) {
-                return a + Curry._1(f, v) + ",";
-              })) + "]";
+  return "[" + Belt_Array.map(a, f).join(",") + "]";
 }
 
 var $$Array = {

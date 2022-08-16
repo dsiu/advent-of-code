@@ -79,7 +79,7 @@ module Printable = {
 
   module Array = {
     let toString = (a, f) => {
-      a->Belt.Array.reduce("[", (a, v) => a ++ f(v) ++ ",") ++ "]"
+      "[" ++ a->Belt.Array.map(f)->Js.Array2.joinWith(",") ++ "]"
     }
   }
 
