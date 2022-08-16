@@ -189,7 +189,7 @@ module Program = {
   let dump = t => {
     "=== Program dump ==="->log
     t.instructions->log
-    t.memory->Utils.dump_mutableMapString_of_int64
+    t.memory->Utils.MutableMapString.Int64.toString->log
   }
 }
 

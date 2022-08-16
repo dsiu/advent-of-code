@@ -139,7 +139,7 @@ module LandingMap = {
     minBound->log
     // s->log
     let pinsMap = xs->Array.reduceWithIndex(empty, (a, x, i) => {a->set(i, x)})
-    pinsMap->dump_mapInt_of(c => c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString)
+    pinsMap->MapInt.toString(c => c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString)->log
     {
       pins: pinsMap,
       grid: empty,
@@ -208,11 +208,13 @@ let solvePart1 = data => {
   //  map->LandingMap.dump
 
   ` ========= landing areas (size = ${areas->Map.Int.size->Int.toString})`->log
-  areas->dump_mapInt_of_int
+  areas->Utils.MapInt.Int.toString->log
 
   let targetPins = map->LandingMap.getNonInfPin
   ` ======== target pins (size = ${targetPins->Map.Int.size->Int.toString})`->log
-  targetPins->dump_mapInt_of(c => {c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString})
+  targetPins
+  ->Utils.MapInt.toString(c => {c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString})
+  ->log
 
   open Map.Int
   let maxArea =

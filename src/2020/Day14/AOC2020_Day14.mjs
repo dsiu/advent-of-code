@@ -212,7 +212,9 @@ function runPart2(__x) {
 function dump$2(t) {
   console.log("=== Program dump ===");
   console.log(t.instructions);
-  return Utils$AdventOfCode.dump_mutableMapString_of_int64(t.memory);
+  var prim = Curry._1(Utils$AdventOfCode.MutableMapString.Int64.toString, t.memory);
+  console.log(prim);
+  
 }
 
 var Program = {

@@ -190,9 +190,10 @@ function make$1(xs) {
   var pinsMap = Belt_Array.reduceWithIndex(xs, undefined, (function (a, x, i) {
           return Belt_MapInt.set(a, i, x);
         }));
-  Utils$AdventOfCode.dump_mapInt_of(pinsMap, (function (c) {
+  var prim = Utils$AdventOfCode.MapInt.toString(pinsMap, (function (c) {
           return String(c.x) + " " + String(c.y);
         }));
+  console.log(prim);
   return fill(alloc({
                   pins: pinsMap,
                   grid: undefined,
@@ -272,13 +273,15 @@ function solvePart1(data) {
   var areas = findLandingAreasOfPins(map);
   var prim = " ========= landing areas (size = " + String(Belt_MapInt.size(areas)) + ")";
   console.log(prim);
-  Utils$AdventOfCode.dump_mapInt_of_int(areas);
-  var targetPins = getNonInfPin(map);
-  var prim$1 = " ======== target pins (size = " + String(Belt_MapInt.size(targetPins)) + ")";
+  var prim$1 = Curry._1(Utils$AdventOfCode.MapInt.Int.toString, areas);
   console.log(prim$1);
-  Utils$AdventOfCode.dump_mapInt_of(targetPins, (function (c) {
+  var targetPins = getNonInfPin(map);
+  var prim$2 = " ======== target pins (size = " + String(Belt_MapInt.size(targetPins)) + ")";
+  console.log(prim$2);
+  var prim$3 = Utils$AdventOfCode.MapInt.toString(targetPins, (function (c) {
           return String(c.x) + " " + String(c.y);
         }));
+  console.log(prim$3);
   var maxArea = Belt_MapInt.reduce(Belt_MapInt.keep(areas, (function (k, v) {
               return Belt_MapInt.has(targetPins, k);
             })), Js_int.min, (function (a, k, v) {
@@ -289,8 +292,8 @@ function solvePart1(data) {
           }
         }));
   console.log(" ======== answer");
-  var prim$2 = "maxArea = " + String(maxArea);
-  console.log(prim$2);
+  var prim$4 = "maxArea = " + String(maxArea);
+  console.log(prim$4);
   
 }
 

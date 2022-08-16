@@ -4,42 +4,77 @@ open Belt
 let log = Js.Console.log
 @val @scope("console") external consoleDir: 'a => unit = "dir"
 
-// map string
-let dump_mapString_of = (f, m) =>
-  Map.String.forEach(m, (k, v) => {
-    log(`key:${k}, val:${v->f}`)
-  })
+let identity = FP_Utils.identity
 
-let dump_mapString_of_int = dump_mapString_of(Int.toString)
-let dump_mapString_of_string = dump_mapString_of(a => a)
+// map string
+module MapString = {
+  let toString = (m, f) =>
+    Map.String.reduce(m, "", (a, k, v) => {
+      a ++ `key:${k}, val:${v->f}\n`
+    })
+
+  module String = {
+    let toString = m => toString(m, identity)
+  }
+
+  module Int = {
+    let toString = m => toString(m, Int.toString)
+  }
+}
 
 // map int
-let dump_mapInt_of = (m, f) =>
-  Map.Int.forEach(m, (k, v) => {
-    log(`key:${k->Int.toString}, val:${f(v)}`)
-  })
-let dump_mapInt_of_int = dump_mapInt_of(_, Int.toString)
-let dump_mapInt_of_int64 = dump_mapInt_of(_, Int64.to_string)
+module MapInt = {
+  let toString = (m, f) => {
+    Map.Int.reduce(m, "", (a, k, v) => {
+      a ++ `key:${k->Int.toString}, val:${f(v)}\n`
+    })
+  }
+  module String = {
+    let toString = m => toString(m, identity)
+  }
+
+  module Int = {
+    let toString = m => toString(m, Int.toString)
+  }
+
+  module Int64 = {
+    let toString = m => toString(m, Int64.to_string)
+  }
+}
 
 // mutable map int
-let dump_mutableMapInt_of = (f, m) =>
-  MutableMap.Int.forEach(m, (k, v) => {
-    log(`key:${k->Int.toString}, val:${v->f}`)
-  })
-let dump_mutableMapInt_of_int = dump_mutableMapInt_of(Int.toString)
-let dump_mutableMapInt_of_int64 = dump_mutableMapInt_of(Int64.to_string)
+module MutableMapInt = {
+  let toString = (m, f) =>
+    MutableMap.Int.reduce(m, "", (a, k, v) => {
+      a ++ `key:${k->Int.toString}, val:${v->f}`
+    })
 
-let dump_mutableMapInt_of_int_base2 = dump_mutableMapInt_of(x =>
-  x->Js.Int.toStringWithRadix(~radix=2)
-)
+  module Int = {
+    let toString = m => toString(m, Int.toString)
+  }
+
+  module Int64 = {
+    let toString = m => toString(m, Int64.to_string)
+  }
+
+  module IntBase2 = {
+    let toString = m => toString(m, x => x->Js.Int.toStringWithRadix(~radix=2))
+  }
+}
 
 // mutable map string
-let dump_mutableMapString_of = (f, m) =>
-  MutableMap.String.forEach(m, (k, v) => {
-    log(`key:${k}, val:${v->f}`)
-  })
-let dump_mutableMapString_of_int = dump_mutableMapString_of(Int.toString)
-let dump_mutableMapString_of_int64 = dump_mutableMapString_of(Int64.to_string)
+module MutableMapString = {
+  let toString = (m, f) =>
+    MutableMap.String.reduce(m, "", (a, k, v) => {
+      a ++ `key:${k}, val:${v->f}`
+    })
+  module Int = {
+    let toString = m => toString(m, Int.toString)
+  }
+  module Int64 = {
+    let toString = m => toString(m, Int64.to_string)
+  }
+}
 
 //
 // Int / Int64

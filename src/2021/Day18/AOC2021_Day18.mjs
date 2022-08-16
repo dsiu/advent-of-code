@@ -45,13 +45,12 @@ function split(num) {
   if (mn0 === undefined) {
     return ;
   }
-  var n0 = Belt_Option.getExn(mn0);
-  var sn = n0._0;
+  var sn = mn0._0;
   if (sn.TAG === /* Leaf */0) {
     var sn$1 = sn._0;
     var ln = sn$1 / 2 | 0;
     var rn = ln + sn$1 % 2 | 0;
-    var n1 = Tree$AdventOfCode.modify(n0, (function (param) {
+    var n1 = Tree$AdventOfCode.modify(mn0, (function (param) {
             return {
                     TAG: /* Pair */1,
                     _0: {
@@ -149,8 +148,7 @@ function explode(num) {
   if (mp0 === undefined) {
     return ;
   }
-  var p0 = Belt_Option.getExn(mp0);
-  var match = p0._0;
+  var match = mp0._0;
   if (match.TAG !== /* Leaf */0) {
     var nl = match._0;
     if (nl.TAG === /* Leaf */0) {
@@ -158,7 +156,7 @@ function explode(num) {
       var nl$1 = nl._0;
       if (nr.TAG === /* Leaf */0) {
         var nr$1 = nr._0;
-        var leftReg = rightmostOnLeft(p0);
+        var leftReg = rightmostOnLeft(mp0);
         var p1 = leftReg !== undefined ? Tree$AdventOfCode.modify(leftReg, (function (n) {
                   if (n.TAG === /* Leaf */0) {
                     return {
@@ -175,7 +173,7 @@ function explode(num) {
                         ],
                         Error: new Error()
                       };
-                })) : p0;
+                })) : mp0;
         var rightReg = Belt_Option.flatMap(pairAtDepthC(4, Tree$AdventOfCode.upmost(p1)), leftmostOnRight);
         var p2 = rightReg !== undefined ? Tree$AdventOfCode.modify(rightReg, (function (n) {
                   if (n.TAG === /* Leaf */0) {

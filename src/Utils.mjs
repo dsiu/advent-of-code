@@ -24,85 +24,145 @@ function log(prim) {
   
 }
 
-function dump_mapString_of(f, m) {
-  return Belt_MapString.forEach(m, (function (k, v) {
-                var prim = "key:" + k + ", val:" + Curry._1(f, v);
-                console.log(prim);
-                
+function toString(m, f) {
+  return Belt_MapString.reduce(m, "", (function (a, k, v) {
+                return a + ("key:" + k + ", val:" + Curry._1(f, v) + "\n");
               }));
 }
 
-function dump_mapString_of_int(param) {
-  return dump_mapString_of((function (prim) {
-                return String(prim);
-              }), param);
+function toString$1(m) {
+  return toString(m, FP_Utils$AdventOfCode.identity);
 }
 
-function dump_mapString_of_string(param) {
-  return dump_mapString_of((function (a) {
-                return a;
-              }), param);
-}
+var $$String = {
+  toString: toString$1
+};
 
-function dump_mapInt_of(m, f) {
-  return Belt_MapInt.forEach(m, (function (k, v) {
-                var prim = "key:" + String(k) + ", val:" + Curry._1(f, v);
-                console.log(prim);
-                
-              }));
-}
-
-function dump_mapInt_of_int(__x) {
-  return dump_mapInt_of(__x, (function (prim) {
+function toString$2(m) {
+  return toString(m, (function (prim) {
                 return String(prim);
               }));
 }
 
-function dump_mapInt_of_int64(__x) {
-  return dump_mapInt_of(__x, Int64.to_string);
-}
+var Int = {
+  toString: toString$2
+};
 
-function dump_mutableMapInt_of(f, m) {
-  return Belt_MutableMapInt.forEach(m, (function (k, v) {
-                var prim = "key:" + String(k) + ", val:" + Curry._1(f, v);
-                console.log(prim);
-                
+var MapString = {
+  toString: toString,
+  $$String: $$String,
+  Int: Int
+};
+
+function toString$3(m, f) {
+  return Belt_MapInt.reduce(m, "", (function (a, k, v) {
+                return a + ("key:" + String(k) + ", val:" + Curry._1(f, v) + "\n");
               }));
 }
 
-function dump_mutableMapInt_of_int(param) {
-  return dump_mutableMapInt_of((function (prim) {
+function toString$4(m) {
+  return toString$3(m, FP_Utils$AdventOfCode.identity);
+}
+
+var $$String$2 = {
+  toString: toString$4
+};
+
+function toString$5(m) {
+  return toString$3(m, (function (prim) {
                 return String(prim);
-              }), param);
+              }));
 }
 
-function dump_mutableMapInt_of_int64(param) {
-  return dump_mutableMapInt_of(Int64.to_string, param);
+var Int$1 = {
+  toString: toString$5
+};
+
+function toString$6(m) {
+  return toString$3(m, Int64.to_string);
 }
 
-function dump_mutableMapInt_of_int_base2(param) {
-  return dump_mutableMapInt_of((function (x) {
+var Int64$1 = {
+  toString: toString$6
+};
+
+var MapInt = {
+  toString: toString$3,
+  $$String: $$String$2,
+  Int: Int$1,
+  Int64: Int64$1
+};
+
+function toString$7(m, f) {
+  return Belt_MutableMapInt.reduce(m, "", (function (a, k, v) {
+                return a + ("key:" + String(k) + ", val:" + Curry._1(f, v));
+              }));
+}
+
+function toString$8(m) {
+  return toString$7(m, (function (prim) {
+                return String(prim);
+              }));
+}
+
+var Int$2 = {
+  toString: toString$8
+};
+
+function toString$9(m) {
+  return toString$7(m, Int64.to_string);
+}
+
+var Int64$2 = {
+  toString: toString$9
+};
+
+function toString$10(m) {
+  return toString$7(m, (function (x) {
                 return x.toString(2);
-              }), param);
-}
-
-function dump_mutableMapString_of(f, m) {
-  return Belt_MutableMapString.forEach(m, (function (k, v) {
-                var prim = "key:" + k + ", val:" + Curry._1(f, v);
-                console.log(prim);
-                
               }));
 }
 
-function dump_mutableMapString_of_int(param) {
-  return dump_mutableMapString_of((function (prim) {
-                return String(prim);
-              }), param);
+var IntBase2 = {
+  toString: toString$10
+};
+
+var MutableMapInt = {
+  toString: toString$7,
+  Int: Int$2,
+  Int64: Int64$2,
+  IntBase2: IntBase2
+};
+
+function toString$11(m, f) {
+  return Belt_MutableMapString.reduce(m, "", (function (a, k, v) {
+                return a + ("key:" + k + ", val:" + Curry._1(f, v));
+              }));
 }
 
-function dump_mutableMapString_of_int64(param) {
-  return dump_mutableMapString_of(Int64.to_string, param);
+function toString$12(m) {
+  return toString$11(m, (function (prim) {
+                return String(prim);
+              }));
 }
+
+var Int$3 = {
+  toString: toString$12
+};
+
+function toString$13(m) {
+  return toString$11(m, Int64.to_string);
+}
+
+var Int64$3 = {
+  toString: toString$13
+};
+
+var MutableMapString = {
+  toString: toString$11,
+  Int: Int$3,
+  Int64: Int64$3
+};
 
 function base2(__x) {
   return __x.toString(2);
@@ -279,21 +339,15 @@ function hashMapStringUpdate(h, k, f) {
   return h;
 }
 
+var identity = FP_Utils$AdventOfCode.identity;
+
 export {
   log ,
-  dump_mapString_of ,
-  dump_mapString_of_int ,
-  dump_mapString_of_string ,
-  dump_mapInt_of ,
-  dump_mapInt_of_int ,
-  dump_mapInt_of_int64 ,
-  dump_mutableMapInt_of ,
-  dump_mutableMapInt_of_int ,
-  dump_mutableMapInt_of_int64 ,
-  dump_mutableMapInt_of_int_base2 ,
-  dump_mutableMapString_of ,
-  dump_mutableMapString_of_int ,
-  dump_mutableMapString_of_int64 ,
+  identity ,
+  MapString ,
+  MapInt ,
+  MutableMapInt ,
+  MutableMapString ,
   base2 ,
   intFromStringExn ,
   add ,
