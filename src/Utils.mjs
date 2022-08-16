@@ -3,7 +3,6 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Int64 from "rescript/lib/es6/int64.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
-import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
 import * as Caml_int64 from "rescript/lib/es6/caml_int64.js";
@@ -95,7 +94,7 @@ var MapInt = {
 
 function toString$7(m, f) {
   return Belt_MutableMapInt.reduce(m, "", (function (a, k, v) {
-                return a + ("key:" + String(k) + ", val:" + Curry._1(f, v));
+                return a + ("key:" + String(k) + ", val:" + Curry._1(f, v) + "\n");
               }));
 }
 
@@ -136,7 +135,7 @@ var MutableMapInt = {
 
 function toString$11(m, f) {
   return Belt_MutableMapString.reduce(m, "", (function (a, k, v) {
-                return a + ("key:" + k + ", val:" + Curry._1(f, v));
+                return a + ("key:" + k + ", val:" + Curry._1(f, v) + "\n");
               }));
 }
 
@@ -174,12 +173,23 @@ var $$Array = {
   toString: toString$14
 };
 
+function toString$15(a, f) {
+  return Belt_Array.reduce(a, "{", (function (a, v) {
+                return a + Curry._1(f, v) + ",";
+              })) + "}";
+}
+
+var List = {
+  toString: toString$15
+};
+
 var Printable = {
   MapString: MapString,
   MapInt: MapInt,
   MutableMapInt: MutableMapInt,
   MutableMapString: MutableMapString,
-  $$Array: $$Array
+  $$Array: $$Array,
+  List: List
 };
 
 function base2(__x) {
@@ -230,10 +240,6 @@ function increaseBy1(__x) {
 
 function int64FromBitString(str) {
   return Caml_format.caml_int64_of_string("0b" + str);
-}
-
-function dump_list(__x) {
-  return Belt_List.forEach(__x, log);
 }
 
 function splitChars(__x) {
@@ -375,7 +381,6 @@ export {
   increaseBy ,
   increaseBy1 ,
   int64FromBitString ,
-  dump_list ,
   splitChars ,
   splitNewline ,
   splitDoubleNewline ,
