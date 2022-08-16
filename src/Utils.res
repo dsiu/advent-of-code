@@ -47,7 +47,7 @@ module Printable = {
   module MutableMapInt = {
     let toString = (m, f) =>
       MutableMap.Int.reduce(m, "", (a, k, v) => {
-        a ++ `key:${k->Int.toString}, val:${v->f}`
+        a ++ `key:${k->Int.toString}, val:${v->f}\n`
       })
 
     module Int = {
@@ -67,7 +67,7 @@ module Printable = {
   module MutableMapString = {
     let toString = (m, f) =>
       MutableMap.String.reduce(m, "", (a, k, v) => {
-        a ++ `key:${k}, val:${v->f}`
+        a ++ `key:${k}, val:${v->f}\n`
       })
     module Int = {
       let toString = m => toString(m, Int.toString)
