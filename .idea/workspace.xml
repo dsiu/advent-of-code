@@ -6,21 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="clean up - rename dump functions to toString">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Array2D.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Array2D.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Array2D.resi" beforeDir="false" afterPath="$PROJECT_DIR$/src/Array2D.resi" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utils.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +102,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.reason&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -138,7 +123,7 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.All Tests - Watch">
+  <component name="RunManager" selected="Node.js.AOC2021_Day18_Run.mjs">
     <configuration name="AOC2021_Day18_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -181,10 +166,31 @@
       <test-file value="$PROJECT_DIR$/__tests__/Tree_Test.mjs" />
       <method v="2" />
     </configuration>
-    <configuration name="AOC2021_Day18_Run.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day18_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
+    <configuration name="AOC2021_Day15_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="AOC2021_Day15_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day15">
+      <envs>
+        <env name="DEBUG" value="*" />
+      </envs>
+      <method v="2" />
+    </configuration>
+    <configuration name="AOC2021_Day17_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="AOC2021_Day17_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day17">
+      <envs>
+        <env name="DEBUG" value="*" />
+      </envs>
+      <method v="2" />
+    </configuration>
+    <configuration name="AOC2021_Day17.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" working-dir="$PROJECT_DIR$/src/2021/Day17">
+      <method v="2" />
+    </configuration>
+    <configuration name="AOC2021_Day18_Run.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon DEBUG=*" path-to-js-file="AOC2021_Day18_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
       <method v="2" />
     </configuration>
     <configuration name="AOC2021_Day18.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day18.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
+      <method v="2" />
+    </configuration>
+    <configuration name="JS_Debug_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="JS_Debug_Run.mjs" working-dir="$PROJECT_DIR$/src">
+      <envs>
+        <env name="DEBUG" value="*" />
+      </envs>
       <method v="2" />
     </configuration>
     <configuration name="Jest Profiling" type="NodeJSConfigurationType" path-to-js-file="./node_modules/.bin/jest" working-dir="$PROJECT_DIR$">
@@ -201,7 +207,19 @@
       <item itemvalue="Node.js.AOC2021_Day18.mjs" />
       <item itemvalue="Node.js.AOC2021_Day18_Run.mjs" />
       <item itemvalue="Node.js.Jest Profiling" />
+      <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
+      <item itemvalue="Node.js.AOC2021_Day17.mjs" />
+      <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
+      <item itemvalue="Node.js.JS_Debug_Run.mjs" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.JS_Debug_Run.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day17.mjs" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -527,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660631545705</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="clean up - rename dump functions to toString">
+      <created>1660643842326</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1660643842326</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

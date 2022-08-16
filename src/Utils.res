@@ -82,6 +82,12 @@ module Printable = {
       a->Belt.Array.reduce("[", (a, v) => a ++ f(v) ++ ",") ++ "]"
     }
   }
+
+  module List = {
+    let toString = (a, f) => {
+      a->Belt.Array.reduce("{", (a, v) => a ++ f(v) ++ ",") ++ "}"
+    }
+  }
 }
 
 //
@@ -121,11 +127,6 @@ let increaseBy1 = increaseBy(_, 1)
 // Int64
 //
 let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
-
-//
-// list
-//
-let dump_list = List.forEach(_, log)
 
 //
 // strings
