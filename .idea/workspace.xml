@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="clean up">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="clean up - rename dump functions to toString">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day3/AOC2018_Day3.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day6/AOC2018_Day6.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day11/AOC2020_Day11.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day4/AOC2021_Day4.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Array2D.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Array2D.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Array2D.resi" beforeDir="false" afterPath="$PROJECT_DIR$/src/Array2D.resi" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utils.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,11 +43,39 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="cleanup_ratify_names" />
+                    <option name="lastUsedInstant" value="1660631512" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1660631511" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
@@ -480,7 +520,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660386327224</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="clean up - rename dump functions to toString">
+      <created>1660631545705</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1660631545705</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2021 Day 16 Start" />
     <MESSAGE value="2021 Day 15 - added more comments" />
     <MESSAGE value="optimized hot code with uncurried calls" />
     <MESSAGE value="OMG, tests are running 2x faster.  swapped out esbuild-jest with @swc/jest" />
@@ -523,7 +569,8 @@
     <MESSAGE value="2021 Day 17 - Part 1 / Part 2 DONE" />
     <MESSAGE value="documentation" />
     <MESSAGE value="clean up" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean up" />
+    <MESSAGE value="clean up - rename dump functions to toString" />
+    <option name="LAST_COMMIT_MESSAGE" value="clean up - rename dump functions to toString" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

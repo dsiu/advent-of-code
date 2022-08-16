@@ -7,72 +7,80 @@ let log = Js.Console.log
 let identity = FP_Utils.identity
 
 // map string
-module MapString = {
-  let toString = (m, f) =>
-    Map.String.reduce(m, "", (a, k, v) => {
-      a ++ `key:${k}, val:${v->f}\n`
-    })
+module Printable = {
+  module MapString = {
+    let toString = (m, f) =>
+      Map.String.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k}, val:${v->f}\n`
+      })
 
-  module String = {
-    let toString = m => toString(m, identity)
+    module String = {
+      let toString = m => toString(m, identity)
+    }
+
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
   }
 
-  module Int = {
-    let toString = m => toString(m, Int.toString)
-  }
-}
+  // map int
+  module MapInt = {
+    let toString = (m, f) => {
+      Map.Int.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k->Int.toString}, val:${f(v)}\n`
+      })
+    }
+    module String = {
+      let toString = m => toString(m, identity)
+    }
 
-// map int
-module MapInt = {
-  let toString = (m, f) => {
-    Map.Int.reduce(m, "", (a, k, v) => {
-      a ++ `key:${k->Int.toString}, val:${f(v)}\n`
-    })
-  }
-  module String = {
-    let toString = m => toString(m, identity)
-  }
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
 
-  module Int = {
-    let toString = m => toString(m, Int.toString)
-  }
-
-  module Int64 = {
-    let toString = m => toString(m, Int64.to_string)
-  }
-}
-
-// mutable map int
-module MutableMapInt = {
-  let toString = (m, f) =>
-    MutableMap.Int.reduce(m, "", (a, k, v) => {
-      a ++ `key:${k->Int.toString}, val:${v->f}`
-    })
-
-  module Int = {
-    let toString = m => toString(m, Int.toString)
+    module Int64 = {
+      let toString = m => toString(m, Int64.to_string)
+    }
   }
 
-  module Int64 = {
-    let toString = m => toString(m, Int64.to_string)
+  // mutable map int
+  module MutableMapInt = {
+    let toString = (m, f) =>
+      MutableMap.Int.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k->Int.toString}, val:${v->f}`
+      })
+
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
+
+    module Int64 = {
+      let toString = m => toString(m, Int64.to_string)
+    }
+
+    module IntBase2 = {
+      let toString = m => toString(m, x => x->Js.Int.toStringWithRadix(~radix=2))
+    }
   }
 
-  module IntBase2 = {
-    let toString = m => toString(m, x => x->Js.Int.toStringWithRadix(~radix=2))
+  // mutable map string
+  module MutableMapString = {
+    let toString = (m, f) =>
+      MutableMap.String.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k}, val:${v->f}`
+      })
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
+    module Int64 = {
+      let toString = m => toString(m, Int64.to_string)
+    }
   }
-}
 
-// mutable map string
-module MutableMapString = {
-  let toString = (m, f) =>
-    MutableMap.String.reduce(m, "", (a, k, v) => {
-      a ++ `key:${k}, val:${v->f}`
-    })
-  module Int = {
-    let toString = m => toString(m, Int.toString)
-  }
-  module Int64 = {
-    let toString = m => toString(m, Int64.to_string)
+  module Array = {
+    let toString = (a, f) => {
+      a->Belt.Array.reduce("[", (a, v) => a ++ f(v) ++ ",") ++ "]"
+    }
   }
 }
 

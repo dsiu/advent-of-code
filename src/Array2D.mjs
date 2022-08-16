@@ -3,6 +3,8 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
+import * as Utils$AdventOfCode from "./Utils.mjs";
+import * as FP_Utils$AdventOfCode from "./FP_Utils.mjs";
 
 function make(param, e) {
   var x = param[0];
@@ -174,6 +176,15 @@ function eq(t, u) {
   }
 }
 
+function toString(t, f) {
+  var arrToStr = Utils$AdventOfCode.Printable.$$Array.toString;
+  return Curry._2(arrToStr, Belt_Array.map(t, (function (x) {
+                    return Belt_Array.map(x, f);
+                  })), (function (x) {
+                return Curry._2(arrToStr, x, FP_Utils$AdventOfCode.identity) + "\n";
+              }));
+}
+
 export {
   make ,
   copy ,
@@ -197,6 +208,7 @@ export {
   flatten ,
   crop ,
   eq ,
+  toString ,
   
 }
 /* No side effect */

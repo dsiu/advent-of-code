@@ -356,41 +356,41 @@ module Expression = {
       }
     }
 
-  let rec dump = e => {
+  let rec toString = e => {
     switch e {
     | Value(v) => {
         let v' = eval_value(v)
         j` Value=$v';`
       }
     | Sum(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        let v' = e->List.reduce("", (a, v) => a ++ toString(v))
         j`Sum:{ $v' }`
       }
     | Product(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        let v' = e->List.reduce("", (a, v) => a ++ toString(v))
         j`Product:{ $v' }`
       }
     | Min(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        let v' = e->List.reduce("", (a, v) => a ++ toString(v))
         j`Min:{ $v' }`
       }
     | Max(e) => {
-        let v' = e->List.reduce("", (a, v) => a ++ dump(v))
+        let v' = e->List.reduce("", (a, v) => a ++ toString(v))
         j`Max:{ $v' }`
       }
     | Greater(e1, e2) => {
-        let v1 = dump(e1)
-        let v2 = dump(e2)
+        let v1 = toString(e1)
+        let v2 = toString(e2)
         j`Greater:{ $v1, $v2 }`
       }
     | Less(e1, e2) => {
-        let v1 = dump(e1)
-        let v2 = dump(e2)
+        let v1 = toString(e1)
+        let v2 = toString(e2)
         j`LessThan:{ $v1, $v2 }`
       }
     | Equal(e1, e2) => {
-        let v1 = dump(e1)
-        let v2 = dump(e2)
+        let v1 = toString(e1)
+        let v2 = toString(e2)
         j`Equal:{ $v1, $v2 }`
       }
     }
@@ -458,7 +458,7 @@ let solvePart2 = data => {
   | Ok(_) =>
     let e = p->makeFromPacket
     //    "Expression: "->log
-    //    e->dump->log
+    //    e->toString->log->log
     //    "Eval'ed: "->log
     e->eval->Int64.to_string
 

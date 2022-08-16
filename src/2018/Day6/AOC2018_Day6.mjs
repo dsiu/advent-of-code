@@ -190,7 +190,7 @@ function make$1(xs) {
   var pinsMap = Belt_Array.reduceWithIndex(xs, undefined, (function (a, x, i) {
           return Belt_MapInt.set(a, i, x);
         }));
-  var prim = Utils$AdventOfCode.MapInt.toString(pinsMap, (function (c) {
+  var prim = Curry._2(Utils$AdventOfCode.Printable.MapInt.toString, pinsMap, (function (c) {
           return String(c.x) + " " + String(c.y);
         }));
   console.log(prim);
@@ -240,8 +240,7 @@ function numToChar(xs) {
               }));
 }
 
-function dump(t) {
-  console.log("dump");
+function toString(t) {
   console.log("x, y, v");
   return Belt_MapInt.forEach(t.grid, (function (kx, vx) {
                 Caml_splice_call.spliceApply(console.log, [numToChar(Belt_MapInt.valuesToArray(vx))]);
@@ -265,7 +264,7 @@ var LandingMap = {
   findLandingAreasOfPins: findLandingAreasOfPins,
   getMaxArea: getMaxArea,
   numToChar: numToChar,
-  dump: dump
+  toString: toString
 };
 
 function solvePart1(data) {
@@ -273,12 +272,12 @@ function solvePart1(data) {
   var areas = findLandingAreasOfPins(map);
   var prim = " ========= landing areas (size = " + String(Belt_MapInt.size(areas)) + ")";
   console.log(prim);
-  var prim$1 = Curry._1(Utils$AdventOfCode.MapInt.Int.toString, areas);
+  var prim$1 = Curry._1(Utils$AdventOfCode.Printable.MapInt.Int.toString, areas);
   console.log(prim$1);
   var targetPins = getNonInfPin(map);
   var prim$2 = " ======== target pins (size = " + String(Belt_MapInt.size(targetPins)) + ")";
   console.log(prim$2);
-  var prim$3 = Utils$AdventOfCode.MapInt.toString(targetPins, (function (c) {
+  var prim$3 = Curry._2(Utils$AdventOfCode.Printable.MapInt.toString, targetPins, (function (c) {
           return String(c.x) + " " + String(c.y);
         }));
   console.log(prim$3);

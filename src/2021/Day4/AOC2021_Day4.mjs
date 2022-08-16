@@ -21,6 +21,12 @@ var Draws = {
   make: make
 };
 
+function toString(t) {
+  return Array2D$AdventOfCode.toString(t, (function (prim) {
+                return String(prim);
+              }));
+}
+
 function make$1(lines) {
   return Belt_Array.map(lines, (function (x) {
                 return Belt_Array.keepMap(x.split(" "), (function (s) {
@@ -67,6 +73,7 @@ function solve(t, match_draws) {
 }
 
 var Board = {
+  toString: toString,
   make: make$1,
   match: match,
   solve: solve
@@ -80,11 +87,8 @@ function make$2(lines) {
               }));
 }
 
-function dump(t) {
-  return Belt_Array.forEach(t, (function (prim) {
-                console.log(prim);
-                
-              }));
+function toString$1(t) {
+  return Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, t, toString);
 }
 
 function solvePart1(t, draws) {
@@ -161,7 +165,7 @@ function solvePart2(t, draws) {
 
 var Boards = {
   make: make$2,
-  dump: dump,
+  toString: toString$1,
   solvePart1: solvePart1,
   solvePart2: solvePart2
 };

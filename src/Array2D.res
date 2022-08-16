@@ -125,3 +125,8 @@ let eq = (t, u) => {
     c && Array.eq(a, b, (a, b) => {a === b})
   })
 }
+
+let toString = (t, f) => {
+  let arrToStr = Utils.Printable.Array.toString
+  t->Array.map(x => x->Array.map(f))->arrToStr(x => x->arrToStr(FP_Utils.identity) ++ "\n")
+}

@@ -46,7 +46,7 @@ function isOUtOfRange(t_init, __x) {
   return isOutOfRange_(__x, t_init);
 }
 
-function dump(r) {
+function toString(r) {
   var trajectory_str = function (__x) {
     return Belt_Array.map(__x, (function (param) {
                   return "(" + param[0] + ", " + param[1] + ")\n";
@@ -160,7 +160,7 @@ var TrickShot = {
   isTargetHit: isTargetHit,
   isOutOfRange_: isOutOfRange_,
   isOUtOfRange: isOUtOfRange,
-  dump: dump,
+  toString: toString,
   launch: launch,
   iterate: iterate,
   part1: part1,

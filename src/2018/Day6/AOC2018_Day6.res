@@ -139,7 +139,9 @@ module LandingMap = {
     minBound->log
     // s->log
     let pinsMap = xs->Array.reduceWithIndex(empty, (a, x, i) => {a->set(i, x)})
-    pinsMap->MapInt.toString(c => c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString)->log
+    pinsMap
+    ->Printable.MapInt.toString(c => c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString)
+    ->log
     {
       pins: pinsMap,
       grid: empty,
@@ -189,8 +191,7 @@ module LandingMap = {
     })
   }
 
-  let dump = t => {
-    "dump"->log
+  let toString = t => {
     open Map.Int
     "x, y, v"->log
     t
@@ -208,12 +209,12 @@ let solvePart1 = data => {
   //  map->LandingMap.dump
 
   ` ========= landing areas (size = ${areas->Map.Int.size->Int.toString})`->log
-  areas->Utils.MapInt.Int.toString->log
+  areas->Printable.MapInt.Int.toString->log
 
   let targetPins = map->LandingMap.getNonInfPin
   ` ======== target pins (size = ${targetPins->Map.Int.size->Int.toString})`->log
   targetPins
-  ->Utils.MapInt.toString(c => {c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString})
+  ->Printable.MapInt.toString(c => {c->Coord.x->Int.toString ++ " " ++ c->Coord.y->Int.toString})
   ->log
 
   open Map.Int

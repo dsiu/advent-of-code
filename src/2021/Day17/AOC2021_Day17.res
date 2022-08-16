@@ -32,7 +32,7 @@ module TrickShot = {
     | Hit(coord, trajectory)
     | Miss(trajectory)
 
-  let dump = (r: launchResult) => {
+  let toString = (r: launchResult) => {
     let trajectory_str = Array.map(_, ((x, y)) => j`($x, $y)\n`)
     switch r {
     | Hit((x, y), t) => {
@@ -133,7 +133,7 @@ let solvePart1 = data => {
   //  j`max_y = $max_y`->log
   //  j`velocity = $vx, $vy`->log
 
-  //  r->dump->log
+  //  r->toString->log->log
   max_y
 }
 

@@ -221,12 +221,12 @@ function make$1(xs) {
   return ret;
 }
 
-function dump(t) {
+function toString(t) {
+  var s = "";
   for(var y = 0 ,y_finish = Array2D$AdventOfCode.lengthY(t); y < y_finish; ++y){
-    var prim = Utils$AdventOfCode.join(Belt_Option.getExn(Array2D$AdventOfCode.getYEquals(t, y)));
-    console.log(prim);
+    s = s + Utils$AdventOfCode.join(Belt_Option.getExn(Array2D$AdventOfCode.getYEquals(t, y)));
   }
-  
+  return s;
 }
 
 var SeatMap = {
@@ -251,7 +251,7 @@ var SeatMap = {
   solvePart1: solvePart1,
   solvePart2: solvePart2,
   make: make$1,
-  dump: dump
+  toString: toString
 };
 
 function parse(data) {

@@ -39,6 +39,14 @@ module Program = {
       m->Utils.splitChars->Array.map(f)->Js.Array2.joinWith("")
     }
 
+    let toString = ({mask, mask_x, mask_x_str, mask_one, mask_zero}: t) => {
+      `mask: ${mask}\n` ++
+      `mask_x: ${mask_x->Int64.to_string}\n` ++
+      `mask_x_str: ${mask_x_str}` ++
+      `mask_one: ${mask_one->Int64.to_string}\n` ++
+      `mask_zero: ${mask_zero->Int64.to_string}`
+    }
+
     let makePassThurMask = makeMask(_, onlyXto1)
     let makeOneMask = makeMask(_, only1to1)
     let makeZeroMask = makeMask(_, only0to1)
@@ -52,11 +60,6 @@ module Program = {
         mask_one: str->makeOneMask->toInt64,
         mask_zero: str->makeZeroMask->toInt64,
       }
-    }
-
-    let dump = t => {
-      "=== Mask dump ==="->log
-      t->log
     }
   }
 
@@ -82,9 +85,8 @@ module Program = {
       }
     }
 
-    let dump = t => {
-      "=== Memory dump ==="->log
-      t->log
+    let toString = t => {
+      `address: ${t.address->Int64.to_string}\n` ++ `value: ${t.value->Int64.to_string}`
     }
   }
 
@@ -93,6 +95,13 @@ module Program = {
   type memory_space = MutableMap.String.t<Int64.t>
 
   type instruction = MaskOp(Mask.t) | MemOp(Memory.t)
+
+  let instructionToString = i => {
+    switch i {
+    | MaskOp(mask) => "MaskOp(" ++ Mask.toString(mask) ++ ")"
+    | MemOp(mem) => "MemOp(" ++ Memory.toString(mem) ++ ")"
+    }
+  }
 
   type t = {
     instructions: array<instruction>,
@@ -186,10 +195,11 @@ module Program = {
   let runPart1 = run(_, part1Algo)
   let runPart2 = run(_, part2Algo)
 
-  let dump = t => {
-    "=== Program dump ==="->log
-    t.instructions->log
-    t.memory->Utils.MutableMapString.Int64.toString->log
+  let toString = t => {
+    "=== Program dump ===\n" ++
+    t.instructions->Printable.Array.toString(instructionToString) ++
+    "\n" ++
+    t.memory->Printable.MutableMapString.Int64.toString
   }
 }
 

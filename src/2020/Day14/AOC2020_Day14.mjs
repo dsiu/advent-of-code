@@ -45,6 +45,10 @@ function makeMask(m, f) {
   return Belt_Array.map(Utils$AdventOfCode.splitChars(m), f).join("");
 }
 
+function toString(param) {
+  return "mask: " + param.mask + "\n" + ("mask_x: " + Int64.to_string(param.mask_x) + "\n") + ("mask_x_str: " + param.mask_x_str) + ("mask_one: " + Int64.to_string(param.mask_one) + "\n") + ("mask_zero: " + Int64.to_string(param.mask_zero));
+}
+
 function makePassThurMask(__x) {
   return makeMask(__x, onlyXto1);
 }
@@ -67,22 +71,16 @@ function make(str) {
         };
 }
 
-function dump(t) {
-  console.log("=== Mask dump ===");
-  console.log(t);
-  
-}
-
 var Mask = {
   onlyXto1: onlyXto1,
   only1to1: only1to1,
   only0to1: only0to1,
   makeMask: makeMask,
+  toString: toString,
   makePassThurMask: makePassThurMask,
   makeOneMask: makeOneMask,
   makeZeroMask: makeZeroMask,
-  make: make,
-  dump: dump
+  make: make
 };
 
 function make$1(str) {
@@ -96,16 +94,22 @@ function make$1(str) {
         };
 }
 
-function dump$1(t) {
-  console.log("=== Memory dump ===");
-  console.log(t);
-  
+function toString$1(t) {
+  return "address: " + Int64.to_string(t.address) + "\n" + ("value: " + Int64.to_string(t.value));
 }
 
 var Memory = {
   make: make$1,
-  dump: dump$1
+  toString: toString$1
 };
+
+function instructionToString(i) {
+  if (i.TAG === /* MaskOp */0) {
+    return "MaskOp(" + toString(i._0) + ")";
+  } else {
+    return "MemOp(" + toString$1(i._0) + ")";
+  }
+}
 
 var InvalidInstruction = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day14-AdventOfCode.Program.InvalidInstruction");
 
@@ -209,17 +213,14 @@ function runPart2(__x) {
   return run(__x, part2Algo);
 }
 
-function dump$2(t) {
-  console.log("=== Program dump ===");
-  console.log(t.instructions);
-  var prim = Curry._1(Utils$AdventOfCode.MutableMapString.Int64.toString, t.memory);
-  console.log(prim);
-  
+function toString$2(t) {
+  return "=== Program dump ===\n" + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, t.instructions, instructionToString) + "\n" + Curry._1(Utils$AdventOfCode.Printable.MutableMapString.Int64.toString, t.memory);
 }
 
 var Program = {
   Mask: Mask,
   Memory: Memory,
+  instructionToString: instructionToString,
   InvalidInstruction: InvalidInstruction,
   parse: parse,
   make: make$2,
@@ -231,7 +232,7 @@ var Program = {
   run: run,
   runPart1: runPart1,
   runPart2: runPart2,
-  dump: dump$2
+  toString: toString$2
 };
 
 function parse$1(data) {

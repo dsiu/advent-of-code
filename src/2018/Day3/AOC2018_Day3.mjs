@@ -129,7 +129,7 @@ function make$2(w, h) {
         };
 }
 
-function dump(t) {
+function toString(t) {
   return Belt_MapInt.forEach(t.matrix, (function (x, col) {
                 return Belt_MutableMapInt.forEach(col, (function (y, vs) {
                               console.log("x:" + String(x) + " y:" + String(y));
@@ -247,7 +247,7 @@ var Fabric = {
   h: h$1,
   matrix: matrix,
   make: make$2,
-  dump: dump,
+  toString: toString,
   twoOrMore: twoOrMore,
   oneOrMore: oneOrMore,
   isOne: isOne,

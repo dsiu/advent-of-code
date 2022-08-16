@@ -10,6 +10,7 @@ module Draws = {
 
 module Board = {
   type t = Array2D.t<int>
+  let toString = t => t->Array2D.toString(Int.toString)
 
   let make = (lines): t => {
     lines->Array.map(x =>
@@ -67,7 +68,7 @@ module Boards = {
     })
   }
 
-  let dump = t => t->Array.forEach(Js.log)
+  let toString = t => t->Printable.Array.toString(Board.toString)
 
   let solvePart1 = (t, draws) => {
     let rec helper = (t, ds, i, limit) => {

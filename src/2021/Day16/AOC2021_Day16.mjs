@@ -549,42 +549,42 @@ function $$eval(e) {
   }
 }
 
-function dump(e) {
+function toString(e) {
   switch (e.TAG | 0) {
     case /* Value */0 :
         var v$p = e._0._0;
         return " Value=" + v$p + ";";
     case /* Sum */1 :
         var v$p$1 = Belt_List.reduce(e._0, "", (function (a, v) {
-                return a + dump(v);
+                return a + toString(v);
               }));
         return "Sum:{ " + v$p$1 + " }";
     case /* Product */2 :
         var v$p$2 = Belt_List.reduce(e._0, "", (function (a, v) {
-                return a + dump(v);
+                return a + toString(v);
               }));
         return "Product:{ " + v$p$2 + " }";
     case /* Min */3 :
         var v$p$3 = Belt_List.reduce(e._0, "", (function (a, v) {
-                return a + dump(v);
+                return a + toString(v);
               }));
         return "Min:{ " + v$p$3 + " }";
     case /* Max */4 :
         var v$p$4 = Belt_List.reduce(e._0, "", (function (a, v) {
-                return a + dump(v);
+                return a + toString(v);
               }));
         return "Max:{ " + v$p$4 + " }";
     case /* Greater */5 :
-        var v1 = dump(e._0);
-        var v2 = dump(e._1);
+        var v1 = toString(e._0);
+        var v2 = toString(e._1);
         return "Greater:{ " + v1 + ", " + v2 + " }";
     case /* Less */6 :
-        var v1$1 = dump(e._0);
-        var v2$1 = dump(e._1);
+        var v1$1 = toString(e._0);
+        var v2$1 = toString(e._1);
         return "LessThan:{ " + v1$1 + ", " + v2$1 + " }";
     case /* Equal */7 :
-        var v1$2 = dump(e._0);
-        var v2$2 = dump(e._1);
+        var v1$2 = toString(e._0);
+        var v2$2 = toString(e._1);
         return "Equal:{ " + v1$2 + ", " + v2$2 + " }";
     
   }
@@ -668,7 +668,7 @@ var Expression = {
   zero_64: zero_64,
   one_64: one_64,
   $$eval: $$eval,
-  dump: dump,
+  toString: toString,
   makeFromPacket: makeFromPacket
 };
 

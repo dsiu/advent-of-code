@@ -41,3 +41,5 @@ let flatten: t<'a> => array<'a>
 let crop: (t<'a>, (int, int), ~len_x: int, ~len_y: int) => t<'a>
 
 let eq: (t<'a>, t<'a>) => bool
+
+let toString: (t<'a>, 'a => string) => string

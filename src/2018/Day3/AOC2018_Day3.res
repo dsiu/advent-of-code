@@ -118,7 +118,7 @@ module Fabric = {
     ),
   }
 
-  let dump = t => {
+  let toString = t => {
     t
     ->matrix
     ->Map.Int.forEach((x, col) => {

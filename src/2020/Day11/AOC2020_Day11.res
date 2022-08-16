@@ -124,10 +124,12 @@ module SeatMap = {
     ret
   }
 
-  let dump = t => {
+  let toString = t => {
+    let s = ref("")
     for y in 0 to t->Array2D.lengthY - 1 {
-      t->Array2D.getYEquals(y)->Option.getExn->Utils.join->log
+      s := s.contents ++ t->Array2D.getYEquals(y)->Option.getExn->Utils.join
     }
+    s.contents
   }
 }
 
@@ -140,7 +142,7 @@ let solvePart1 = data => {
   let seats = data->parse
   let result = seats->SeatMap.solvePart1
   let result_flat = result->Array2D.flatten
-  //  result->SeatMap.dump
+  //  result->SeatMap.toString->log
   result_flat->SeatMap.countOccupiedSeat
 }
 

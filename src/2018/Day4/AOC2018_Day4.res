@@ -109,7 +109,7 @@ module Attendance = {
     })
   }
 
-  let dump = gAtt => {
+  let toString = gAtt => {
     gAtt->MutableMap.Int.forEach((gid, drs) => {
       Js.Console.log(`gid:${gid->string_of_int}`)
       drs->MutableMap.String.forEach((date, hr) => {

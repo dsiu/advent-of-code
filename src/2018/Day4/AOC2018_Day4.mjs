@@ -122,7 +122,7 @@ function busiestMin(gAtt) {
               }));
 }
 
-function dump(gAtt) {
+function toString(gAtt) {
   return Belt_MutableMapInt.forEach(gAtt, (function (gid, drs) {
                 console.log("gid:" + String(gid));
                 return Belt_MutableMapString.forEach(drs, (function (date, hr) {
@@ -146,7 +146,7 @@ var Attendance = {
   perGuardTallySleptPerMin: perGuardTallySleptPerMin,
   perGuardMostSleptMin: perGuardMostSleptMin,
   busiestMin: busiestMin,
-  dump: dump
+  toString: toString
 };
 
 var guardBeginsRe = /\[(.*)\s+(\d\d):(\d\d)\]\s+Guard\s+#(\d+)\s+begins shift/i;
