@@ -330,16 +330,16 @@ module Expression = {
     | Int(v) => v
     }
   }
-  let zero_64 = Int64.of_int(0)
-  let one_64 = Int64.of_int(1)
+  let zero = Int64.zero
+  let one = Int64.one
 
   let rec eval:
     type a. expr<a> => a =
     (type a, e: expr<a>): a => {
       switch e {
       | Value(v) => eval_value(v)
-      | Sum(e) => e->List.reduce(zero_64, (a, v) => Int64.add(a, eval(v)))
-      | Product(e) => e->List.reduce(one_64, (a, v) => Int64.mul(a, eval(v)))
+      | Sum(e) => e->List.reduce(Int64.zero, (a, v) => Int64.add(a, eval(v)))
+      | Product(e) => e->List.reduce(Int64.one, (a, v) => Int64.mul(a, eval(v)))
       | Min(e) =>
         e->List.reduce(int_max, (a, v) => {
           let v' = eval(v)
@@ -350,9 +350,9 @@ module Expression = {
           let v' = eval(v)
           Int64.compare(v', a) > 0 ? v' : a
         })
-      | Greater(e1, e2) => Int64.compare(eval(e1), eval(e2)) > 0 ? one_64 : zero_64
-      | Less(e1, e2) => Int64.compare(eval(e1), eval(e2)) < 0 ? one_64 : zero_64
-      | Equal(e1, e2) => Int64.compare(eval(e1), eval(e2)) == 0 ? one_64 : zero_64
+      | Greater(e1, e2) => Int64.compare(eval(e1), eval(e2)) > 0 ? one : zero
+      | Less(e1, e2) => Int64.compare(eval(e1), eval(e2)) < 0 ? one : zero
+      | Equal(e1, e2) => Int64.compare(eval(e1), eval(e2)) == 0 ? one : zero
       }
     }
 

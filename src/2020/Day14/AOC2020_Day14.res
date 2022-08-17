@@ -152,9 +152,6 @@ module Program = {
   }
 
   let decodeAddress = (mask: Mask.t, mem_address) => {
-    let int64_0 = Int64.of_int(0)
-    let int64_1 = Int64.of_int(1)
-
     let pos_mask = mask.mask_x->Int64.lognot
     let base = Int64.logand(Int64.logor(mem_address, mask.mask_one), pos_mask)
 
@@ -162,8 +159,8 @@ module Program = {
     let all_pos = pos->Powerset.powersetArray
 
     let decoded_addresses = all_pos->Array.map(pos => {
-      let m = pos->Array.reduce(int64_0, (acc, x) => {
-        Int64.logor(acc, Int64.shift_left(int64_1, x))
+      let m = pos->Array.reduce(Int64.zero, (acc, x) => {
+        Int64.logor(acc, Int64.shift_left(Int64.one, x))
       })
       Int64.logor(base, m)->Int64.to_string
     })

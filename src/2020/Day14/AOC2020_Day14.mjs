@@ -167,15 +167,13 @@ function bit1Index(m) {
 }
 
 function decodeAddress(mask, mem_address) {
-  var int64_0 = Caml_int64.zero;
-  var int64_1 = Caml_int64.one;
   var pos_mask = Int64.lognot(mask.mask_x);
   var base = Caml_int64.and_(Caml_int64.or_(mem_address, mask.mask_one), pos_mask);
   var pos = bit1Index(mask.mask_x_str);
   var all_pos = Powerset$AdventOfCode.powersetArray(pos);
   return Belt_Array.map(all_pos, (function (pos) {
-                var m = Belt_Array.reduce(pos, int64_0, (function (acc, x) {
-                        return Caml_int64.or_(acc, Caml_int64.lsl_(int64_1, x));
+                var m = Belt_Array.reduce(pos, Int64.zero, (function (acc, x) {
+                        return Caml_int64.or_(acc, Caml_int64.lsl_(Int64.one, x));
                       }));
                 return Int64.to_string(Caml_int64.or_(base, m));
               }));

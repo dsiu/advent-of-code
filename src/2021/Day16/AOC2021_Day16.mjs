@@ -493,20 +493,16 @@ function eval_value(v) {
   return v._0;
 }
 
-var zero_64 = Caml_int64.zero;
-
-var one_64 = Caml_int64.one;
-
 function $$eval(e) {
   switch (e.TAG | 0) {
     case /* Value */0 :
         return e._0._0;
     case /* Sum */1 :
-        return Belt_List.reduce(e._0, zero_64, (function (a, v) {
+        return Belt_List.reduce(e._0, Int64.zero, (function (a, v) {
                       return Caml_int64.add(a, $$eval(v));
                     }));
     case /* Product */2 :
-        return Belt_List.reduce(e._0, one_64, (function (a, v) {
+        return Belt_List.reduce(e._0, Int64.one, (function (a, v) {
                       return Caml_int64.mul(a, $$eval(v));
                     }));
     case /* Min */3 :
@@ -529,21 +525,21 @@ function $$eval(e) {
                     }));
     case /* Greater */5 :
         if (Int64.compare($$eval(e._0), $$eval(e._1)) > 0) {
-          return one_64;
+          return Int64.one;
         } else {
-          return zero_64;
+          return Int64.zero;
         }
     case /* Less */6 :
         if (Int64.compare($$eval(e._0), $$eval(e._1)) < 0) {
-          return one_64;
+          return Int64.one;
         } else {
-          return zero_64;
+          return Int64.zero;
         }
     case /* Equal */7 :
         if (Int64.compare($$eval(e._0), $$eval(e._1)) === 0) {
-          return one_64;
+          return Int64.one;
         } else {
-          return zero_64;
+          return Int64.zero;
         }
     
   }
@@ -665,8 +661,8 @@ var Expression = {
   int_min: Int64.min_int,
   intVal: intVal,
   eval_value: eval_value,
-  zero_64: zero_64,
-  one_64: one_64,
+  zero: Int64.zero,
+  one: Int64.one,
   $$eval: $$eval,
   toString: toString,
   makeFromPacket: makeFromPacket

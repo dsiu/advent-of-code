@@ -283,7 +283,7 @@ let solvePart2 = data => {
   ->Array.map(process)
   ->Array.keepMap(incompleteOnly)
   ->Array.map(
-    Array.reduce(_, Int64.of_int(0), (a, x) =>
+    Array.reduce(_, Int64.zero, (a, x) =>
       Int64.add(Int64.mul(a, Int64.of_int(5)), Int64.of_int(x->getIncompleteScore))
     ),
   )

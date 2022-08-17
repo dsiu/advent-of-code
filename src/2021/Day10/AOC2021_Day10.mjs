@@ -485,7 +485,7 @@ function solvePart2(data) {
     }
   };
   var xs = Belt_SortArray.stableSortBy(Belt_Array.map(Belt_Array.keepMap(Belt_Array.map(parse(data), $$process), incompleteOnly), (function (__x) {
-              return Belt_Array.reduce(__x, Caml_int64.zero, (function (a, x) {
+              return Belt_Array.reduce(__x, Int64.zero, (function (a, x) {
                             return Caml_int64.add(Caml_int64.mul(a, [
                                             0,
                                             5
