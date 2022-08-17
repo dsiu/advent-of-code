@@ -5,7 +5,14 @@ open! FP_Utils
 
 module Scanner = {
   type coord = Coord(int, int, int)
+  let coordToString = (Coord(x, y, z)) => j`($x, $y, $z)`
+
   type transform = coord => coord
+
+  let transformToString = trans => {
+    Coord(1, 2, 3)->trans->coordToString
+  }
+
   let nullTrans = identity
 
   let rotX: transform = (Coord(x, y, z)) => Coord(x, -z, y)
@@ -27,13 +34,21 @@ module Scanner = {
 
     combinationArray2(ras, rbs, (a, b) => compose(a, b))
   }
+
+  rotations->Array.length->log
+  rotations->Printable.Array.toString(transformToString)->log
 }
 
 let parse = data => {
   module Str = Js.String2
   let parseOne = data => {
     let lines = data->splitNewline->Array.map(Str.trim)
-    let name = lines->Array.getExn(0)->Str.replace("--- scanner ", "")->Str.replace(" ---", "")
+    let name =
+      lines
+      ->Array.getExn(0)
+      ->Str.replace("--- scanner ", "")
+      ->Str.replace(" ---", "")
+      ->Int.fromString
     let coords =
       lines
       ->Array.sliceToEnd(1)
@@ -51,7 +66,7 @@ let solvePart1 = data => {
   let scanners = data->parse
   scanners
   ->Printable.Array.toString(((name, coords)) => {
-    `name: ${name}, ` ++
+    j`name: $name, ` ++
     "coords: " ++
     coords->Printable.Array.toString(((x, y, z)) => j`($x, $y, $z)`) ++ "\n"
   })

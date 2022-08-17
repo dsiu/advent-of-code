@@ -11,6 +11,18 @@ function log(prim) {
   
 }
 
+function coordToString(param) {
+  return "(" + param._0 + ", " + param._1 + ", " + param._2 + ")";
+}
+
+function transformToString(trans) {
+  return coordToString(Curry._1(trans, /* Coord */{
+                  _0: 1,
+                  _1: 2,
+                  _2: 3
+                }));
+}
+
 function rotX(param) {
   return /* Coord */{
           _0: param._0,
@@ -81,7 +93,15 @@ var rotations = FP_Utils$AdventOfCode.combinationArray2(ras, rbs, (function (a, 
         };
       }));
 
+console.log(rotations.length);
+
+var prim = Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, rotations, transformToString);
+
+console.log(prim);
+
 var Scanner = {
+  coordToString: coordToString,
+  transformToString: transformToString,
   nullTrans: FP_Utils$AdventOfCode.identity,
   rotX: rotX,
   rotY: rotY,
@@ -95,7 +115,7 @@ function parse(data) {
     var lines = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
             return prim.trim();
           }));
-    var name = Belt_Array.getExn(lines, 0).replace("--- scanner ", "").replace(" ---", "");
+    var name = Belt_Int.fromString(Belt_Array.getExn(lines, 0).replace("--- scanner ", "").replace(" ---", ""));
     var coords = Belt_Array.map(Belt_Array.sliceToEnd(lines, 1), (function (line) {
             var c = Belt_Array.map(line.split(","), Belt_Int.fromString);
             return [
