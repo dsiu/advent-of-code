@@ -3,6 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 function flatMapList(xs, f) {
   return Belt_List.reduce(Belt_List.map(xs, f), /* [] */0, Belt_List.concat);
@@ -29,6 +30,19 @@ function combinationArray2(a, b, f) {
   return Belt_Array.reduce(a, [], (function (acc, x) {
                 return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
                                   return Belt_Array.concat(acc, [Curry._2(f, x, y)]);
+                                })));
+              }));
+}
+
+function combinationIfArray2(a, b, f) {
+  return Belt_Array.reduce(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
+                                  var r = Curry._2(f, x, y);
+                                  if (r !== undefined) {
+                                    return Belt_Array.concat(acc, [Caml_option.valFromOption(r)]);
+                                  } else {
+                                    return acc;
+                                  }
                                 })));
               }));
 }
@@ -81,6 +95,7 @@ export {
   foldLeftArray ,
   foldRightArray ,
   combinationArray2 ,
+  combinationIfArray2 ,
   optionOr ,
   identity ,
   eq ,

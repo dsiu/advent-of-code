@@ -29,6 +29,7 @@
     "rescript-js",
     "re-fp",
     "rescript-ocamlgraph",
+    "rescript-bag",
     "@resinfo/parser"
   ],
   "bs-dev-dependencies": [

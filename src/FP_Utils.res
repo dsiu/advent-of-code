@@ -42,7 +42,7 @@ let foldRightArray: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
 }
 
 /**
-  apply f(x,y) for each x in a and and each y in  b
+  apply f(x,y) for each x in a and and each y in b
   returns result in array
 */
 let combinationArray2: (array<'a>, array<'b>, ('a, 'b) => 'c) => array<'c> = (a, b, f) => {
@@ -50,6 +50,27 @@ let combinationArray2: (array<'a>, array<'b>, ('a, 'b) => 'c) => array<'c> = (a,
     acc->Array.concat(
       b->Array.reduce([], (acc, y) => {
         acc->Array.concat([f(x, y)])
+      }),
+    )
+  })
+}
+
+/**
+  apply f(x,y) for each x in a and and each y in b ONLY if f(x,y) returns Some()
+  returns result in array
+*/
+let combinationIfArray2: (array<'a>, array<'b>, ('a, 'b) => option<'c>) => array<'c> = (
+  a,
+  b,
+  f,
+) => {
+  a->Array.reduce([], (acc, x) => {
+    acc->Array.concat(
+      b->Array.reduce([], (acc, y) => {
+        switch f(x, y) {
+        | Some(r) => acc->Array.concat([r])
+        | None => acc
+        }
       }),
     )
   })
