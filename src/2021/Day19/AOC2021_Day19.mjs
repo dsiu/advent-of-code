@@ -15,46 +15,62 @@ function log(prim) {
 }
 
 function coordToString(param) {
-  return "(" + param._0 + ", " + param._1 + ", " + param._2 + ")";
+  var match = param._0;
+  return "(" + match[0] + ", " + match[1] + ", " + match[2] + ")";
 }
 
 function transformToString(trans) {
   return coordToString(Curry._1(trans, /* Coord */{
-                  _0: 1,
-                  _1: 2,
-                  _2: 3
+                  _0: [
+                    1,
+                    2,
+                    3
+                  ]
                 }));
 }
 
 function rotX(param) {
+  var match = param._0;
   return /* Coord */{
-          _0: param._0,
-          _1: -param._2 | 0,
-          _2: param._1
+          _0: [
+            match[0],
+            -match[2] | 0,
+            match[1]
+          ]
         };
 }
 
 function rotY(param) {
+  var match = param._0;
   return /* Coord */{
-          _0: param._2,
-          _1: param._1,
-          _2: -param._0 | 0
+          _0: [
+            match[2],
+            match[1],
+            -match[0] | 0
+          ]
         };
 }
 
 function rotZ(param) {
+  var match = param._0;
   return /* Coord */{
-          _0: -param._1 | 0,
-          _1: param._0,
-          _2: param._2
+          _0: [
+            -match[1] | 0,
+            match[0],
+            match[2]
+          ]
         };
 }
 
 function translate(param, param$1) {
+  var match = param$1._0;
+  var match$1 = param._0;
   return /* Coord */{
-          _0: param._0 + param$1._0 | 0,
-          _1: param._1 + param$1._1 | 0,
-          _2: param._2 + param$1._2 | 0
+          _0: [
+            match$1[0] + match[0] | 0,
+            match$1[1] + match[1] | 0,
+            match$1[2] + match[2] | 0
+          ]
         };
 }
 
@@ -130,16 +146,18 @@ function bagToString(b) {
 function toString(t) {
   return Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, t, (function (param) {
                 return "scannerName: " + param.scannerName + ", " + "beacons: " + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, param.beacons, (function (param) {
-                              return "(" + param._0 + ", " + param._1 + ", " + param._2 + ")";
+                              var match = param._0;
+                              return "(" + match[0] + ", " + match[1] + ", " + match[2] + ")";
                             })) + "\n" + ("signature: " + bagToString(param.signature)) + "\n";
               }));
 }
 
 function sign(bcns) {
   var pythag = function (param) {
-    var z = param._2;
-    var y = param._1;
-    var x = param._0;
+    var match = param._0;
+    var z = match[2];
+    var y = match[1];
+    var x = match[0];
     return (Math.imul(x, x) + Math.imul(y, y) | 0) + Math.imul(z, z) | 0;
   };
   return bagFromArray(FP_Utils$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
@@ -190,9 +208,11 @@ function parse(data) {
                     return Belt_Option.getExn(Belt_Int.fromString(x));
                   }));
             return /* Coord */{
-                    _0: Belt_Array.getExn(c, 0),
-                    _1: Belt_Array.getExn(c, 1),
-                    _2: Belt_Array.getExn(c, 2)
+                    _0: [
+                      Belt_Array.getExn(c, 0),
+                      Belt_Array.getExn(c, 1),
+                      Belt_Array.getExn(c, 2)
+                    ]
                   };
           }));
     return [

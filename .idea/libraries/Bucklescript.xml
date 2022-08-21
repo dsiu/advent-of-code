@@ -6,6 +6,7 @@
         <item url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
         <item url="file://$PROJECT_DIR$/node_modules/rationale" />
         <item url="file://$PROJECT_DIR$/node_modules/re-fp" />
+        <item url="file://$PROJECT_DIR$/node_modules/rescript-bag" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-js" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-ocamlgraph" />
       </sourceFilesUrls>
@@ -15,6 +16,7 @@
       <root url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
       <root url="file://$PROJECT_DIR$/node_modules/rationale" />
       <root url="file://$PROJECT_DIR$/node_modules/re-fp" />
+      <root url="file://$PROJECT_DIR$/node_modules/rescript-bag" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-js" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-ocamlgraph" />
     </CLASSES>
