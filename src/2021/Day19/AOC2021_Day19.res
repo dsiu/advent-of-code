@@ -6,9 +6,10 @@ open! FP_Utils
 module Scanner = {
   // Coord Type [should refactor out]
   //
-  type coord = Coord(Linear.V3.t<int>)
+  open Linear
+  type coord = Coord(V3.t<int>)
 
-  let coordToString = (Coord(x, y, z)) => j`($x, $y, $z)`
+  let coordToString: coord => string = (Coord((x, y, z))) => j`($x, $y, $z)`
 
   type transform = coord => coord
 

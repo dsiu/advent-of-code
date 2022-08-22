@@ -31,7 +31,7 @@
       "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js)/)"
+      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js)/)"
     ],
     "moduleFileExtensions": [
       "js",
