@@ -119,10 +119,9 @@ let parse = (data): target => {
   {x_min: x_min, x_max: x_max, y_min: y_min, y_max: y_max}
 }
 
-@@warning("-27")
 let solvePart1 = data => {
   let t = data->parse
-  let (max_y, ({x: vx, y: vy}, r)) = part1(
+  let (max_y, ({x: _vx, y: _vy}, _r)) = part1(
     ~vx_start=1,
     ~vx_end=t.x_max - 1,
     ~vy_start=0,

@@ -1,5 +1,3 @@
-@@warning("-27")
-
 open Belt
 open Utils
 let log = Js.Console.log
@@ -25,7 +23,7 @@ module HeightMap = {
   let rec isLowest = (x, adjs) => {
     switch adjs {
     | list{} => true
-    | list{CoordAndVal(coord, adj), ...others} => x >= adj ? false : isLowest(x, others)
+    | list{CoordAndVal(_coord, adj), ...others} => x >= adj ? false : isLowest(x, others)
     }
   }
 
@@ -70,7 +68,7 @@ module HeightMap = {
                 va != 9 && v >= 0 && !(new_set->Belt.Set.has(coord))
               })
 
-            candidates->List.reduce(new_set, (acc, CoordAndVal((xa, ya), s)) => {
+            candidates->List.reduce(new_set, (acc, CoordAndVal((xa, ya), _s)) => {
               Belt.Set.union(acc, helper(t, (xa, ya), acc))
             })
           }
@@ -128,7 +126,7 @@ let solvePart1 = data => {
   let add1 = Utils.add(_, 1)
   hmap
   ->HeightMap.getLowPoints
-  ->Array.map((HeightMap.CoordAndVal(coord, v)) => {v->add1})
+  ->Array.map((HeightMap.CoordAndVal(_coord, v)) => {v->add1})
   ->Array.reduce(0, (a, x) => add(a, x))
 }
 
@@ -140,7 +138,7 @@ let solvePart2 = data => {
     hmap
     ->HeightMap.getLowPoints
     //    ->HeightMap.getAllPoints
-    ->Array.map((HeightMap.CoordAndVal(coord, v)) => {
+    ->Array.map((HeightMap.CoordAndVal(coord, _v)) => {
       hmap->HeightMap.getBasinSize(coord)
     })
     ->SortArray.Int.stableSort
@@ -158,7 +156,7 @@ let solvePart2_from_github = data => {
     hmap
     ->HeightMap.getLowPoints
     //    ->HeightMap.getAllPoints
-    ->Array.map((HeightMap.CoordAndVal((x, y), v)) => {
+    ->Array.map((HeightMap.CoordAndVal((x, y), _v)) => {
       hmap->HeightMap.search(x, y)
     })
     ->SortArray.Int.stableSort

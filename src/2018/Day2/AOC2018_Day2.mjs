@@ -24,7 +24,7 @@ function char_freq(cs) {
 }
 
 function countMatchFreq(freq, m) {
-  return Belt_MapString.reduce(m, 0, (function (acc, key, v) {
+  return Belt_MapString.reduce(m, 0, (function (acc, _key, v) {
                 if (v === freq) {
                   return acc + 1 | 0;
                 } else {

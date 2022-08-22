@@ -3,8 +3,6 @@ open Utils
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
-@@warning("-27")
-
 open Graph
 
 module Cave = {
@@ -76,7 +74,7 @@ module Cave = {
     let g = G.create()
     let nodes = makeNodes(g, lines)
 
-    let g = lines->Array2D.reduceWithIndexU(g, (. g, e, (x, y) as c) => {
+    let g = lines->Array2D.reduceWithIndexU(g, (. g, _e, (x, y) as c) => {
       //      let h = V.hash((x, y))->Int.toString
       //      log(`${x->Int.toString},${y->Int.toString} (${h}) = ${e}`)->ignore
       let v = node(nodes, x, y)
@@ -107,7 +105,7 @@ module Cave = {
   let solve = ({nodes, g}) => {
     let dest_x = nodes->Array2D.lengthX - 1
     let dest_y = nodes->Array2D.lengthY - 1
-    let (path, w) = Dij.shortest_path(g, node(nodes, 0, 0), node(nodes, dest_x, dest_y))
+    let (_path, w) = Dij.shortest_path(g, node(nodes, 0, 0), node(nodes, dest_x, dest_y))
 
     //    List.forEach(path, e => {
     //      Js.log4("src: ", e->G.E.src->G.V.label, " dst:", e->G.E.dst->G.V.label)
@@ -128,7 +126,7 @@ module Cave = {
     for x_ep in 0 to x_times - 1 {
       for y_ep in 0 to y_times - 1 {
         map_orig
-        ->Array2D.reduceWithIndex(0, (a, e, (x', y')) => {
+        ->Array2D.reduceWithIndex(0, (_a, e, (x', y')) => {
           let x_new = x' + x_ep * sz_x_orig
           let y_new = y' + y_ep * sz_y_orig
           let e_new = {

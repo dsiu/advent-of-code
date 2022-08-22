@@ -221,14 +221,14 @@ function makeATozData(letters, data) {
               }));
 }
 
-function solvePart1(d) {
+function solvePart1(_d) {
   return 240;
 }
 
 function solvePart2(polymars, d) {
   return Belt_MapString.reduce(Belt_MapString.map(Belt_MapString.map(makeATozData(polymars, d), defuse_array), (function (prim) {
                     return prim.length;
-                  })), Js_int.max, (function (a, k, v) {
+                  })), Js_int.max, (function (a, _k, v) {
                 if (v < a) {
                   return v;
                 } else {

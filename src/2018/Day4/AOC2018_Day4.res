@@ -1,7 +1,7 @@
 let data = AOC2018_Day4_Data.data
 let sampleData = AOC2018_Day4_Data_Sample.data
 open Belt
-@@warning("-27-8")
+@@warning("-8")
 //
 // data structures
 //
@@ -52,7 +52,7 @@ module Attendance = {
   let minsSleptPerHourRec = MutableSet.Int.size
 
   let minsSleptTotal = dr => {
-    dr->MutableMap.String.reduce(0, (a, k, hr) => {
+    dr->MutableMap.String.reduce(0, (a, _k, hr) => {
       a + hr->minsSleptPerHourRec
     })
   }
@@ -63,14 +63,14 @@ module Attendance = {
     gAtt
     ->perGuardMinsSlept
     ->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
-      let (gid, minSlept) = a
+      let (_gid, minSlept) = a
       v > minSlept ? (k, v) : a
     })
   }
 
   let tallySleptPerMin = dr => {
     // Js.Console.log("tallySleptPerMin")
-    dr->MutableMap.String.reduce(MutableMap.Int.make(), (a, k, hr) => {
+    dr->MutableMap.String.reduce(MutableMap.Int.make(), (a, _k, hr) => {
       hr->MutableSet.Int.forEach(m => {
         a->MutableMap.Int.update(m, prev => {
           switch prev {
@@ -92,7 +92,7 @@ module Attendance = {
       t->MutableMap.Int.reduce((-1, -1), (a, k, v) => {
         // Js.Console.log(a)
         // Js.Console.log(`k:${k->string_of_int}, v:${v->string_of_int}`)
-        let (which_min, how_many) = a
+        let (_which_min, how_many) = a
         v > how_many ? (k, v) : a
       })
     })
@@ -102,9 +102,9 @@ module Attendance = {
     gAtt
     ->perGuardMostSleptMin
     ->MutableMap.Int.reduce((-1, (-1, -1)), (a, k, v) => {
-      let (guard, busyMin) = a
-      let (which_min, how_many) = busyMin
-      let (next_which_min, next_how_many) = v
+      let (_guard, busyMin) = a
+      let (_which_min, how_many) = busyMin
+      let (_next_which_min, next_how_many) = v
       next_how_many > how_many ? (k, v) : a
     })
   }
@@ -192,19 +192,19 @@ module Parser = {
 
     switch x->parseLine {
     | Begin(d) => {
-        let {raw, date, h, m, gid} = d
+        let {raw: _, date: _, h: _, m: _, gid} = d
 
         {...a, state: AtBegin, gid: gid, sleptSince: -1}
       }
     | Asleep(d) => {
         assert (state === AtAwake || state === AtBegin)
-        let {raw, date, h, m, gid} = d
+        let {raw: _, date: _, h: _, m, gid: _} = d
 
         {...a, state: AtAsleep, sleptSince: m}
       }
     | Awake(d) => {
         assert (state === AtAsleep)
-        let {raw, date, h, m} = d
+        let {raw: _, date, h: _, m} = d
         let {sleptSince, gAtt, gid} = a
 
         Attendance.insertGuardRec(gAtt, gid, date, sleptSince, m - 1)
@@ -252,8 +252,8 @@ let solvePart1 = data => {
   // })
 
   // Js.Console.log("=== part1 - dump gid x lazest min")
-  let (laziestGid, totalMins) = laziest
-  let (laziestMin, how_many) = laziestMins->MutableMap.Int.get(laziestGid)->Option.getExn
+  let (laziestGid, _totalMins) = laziest
+  let (laziestMin, _how_many) = laziestMins->MutableMap.Int.get(laziestGid)->Option.getExn
   // Js.Console.log(laziestGid)
   // Js.Console.log(laziestMin)
   let part1Answer = laziestGid * laziestMin
@@ -276,7 +276,7 @@ let solvePart2 = data => {
   let {gAtt}: Parser.rresult = sortLines->Array.reduce(initState, Parser.processLineReducer)
   let (busy_guy, busy_min) = gAtt->Attendance.busiestMin
   // Js.Console.log(busy_guy)
-  let (which_busy_min, how_many) = busy_min
+  let (which_busy_min, _how_many) = busy_min
 
   let part2Answer = busy_guy * which_busy_min
 

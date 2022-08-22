@@ -2,7 +2,6 @@ open Jest
 open Expect
 open! Expect.Operators
 open AOC2018_Day3
-@@warning("-26-27")
 
 describe("2018 Day3", () => {
   describe("Part1", () => {
@@ -77,7 +76,7 @@ describe("2018 Day3", () => {
       })
 
       // test_fab->Fabric.dump
-      let gp = test_fab->Fabric.getPoint
+      let _gp = test_fab->Fabric.getPoint
       let countOverlapTwoMore = test_fab->Fabric.countOverlap(_, Fabric.twoOrMore)
       let one = Some([1])
       let two = Some([2])
@@ -85,7 +84,7 @@ describe("2018 Day3", () => {
       // let results = (gp(~x=1, ~y=3), gp(~x=1, ~y=4), gp(~x=3, ~y=1), gp(~x=6, ~y=5), countOverlapTwoMore)
       let results = countOverlapTwoMore
 
-      let expected = (one, one, one, two, three, 4)
+      let _expected = (one, one, one, two, three, 4)
 
       expect(results)->toEqual(4)
     })

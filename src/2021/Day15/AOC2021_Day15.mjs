@@ -152,7 +152,7 @@ function node(nodes, x, y) {
 function make(lines) {
   var g = Curry._2(G.create, undefined, undefined);
   var nodes = makeNodes(g, lines);
-  var g$1 = Array2D$AdventOfCode.reduceWithIndexU(lines, g, (function (g, e, c) {
+  var g$1 = Array2D$AdventOfCode.reduceWithIndexU(lines, g, (function (g, _e, c) {
           var v = node(nodes, c[0], c[1]);
           Belt_List.forEach(getAdjacents(lines, c), (function (param) {
                   var match = param._0;
@@ -187,7 +187,7 @@ function expand(map_orig, x_times, y_times) {
     (function(x_ep){
     for(var y_ep = 0; y_ep < y_times; ++y_ep){
       Array2D$AdventOfCode.reduceWithIndex(map_orig, 0, (function(y_ep){
-          return function (a, e, param) {
+          return function (_a, e, param) {
             var x_new = param[0] + Math.imul(x_ep, sz_x_orig) | 0;
             var y_new = param[1] + Math.imul(y_ep, sz_y_orig) | 0;
             var e$p = ((e + x_ep | 0) + y_ep | 0) % 9;

@@ -108,7 +108,7 @@ function distsFromPins(at, pins) {
 }
 
 function findMinDists(__x) {
-  return Belt_MapInt.reduce(__x, Js_int.max, (function (a, k, v) {
+  return Belt_MapInt.reduce(__x, Js_int.max, (function (a, _k, v) {
                 if (v < a) {
                   return v;
                 } else {
@@ -118,7 +118,7 @@ function findMinDists(__x) {
 }
 
 function keepOnly(value, xs) {
-  return Belt_MapInt.keep(xs, (function (k, v) {
+  return Belt_MapInt.keep(xs, (function (_k, v) {
                 return v === value;
               }));
 }
@@ -132,7 +132,7 @@ function makeCellShortest(at, pins) {
           RE_EXN_ID: "Assert_failure",
           _1: [
             "AOC2018_Day6.res",
-            98,
+            96,
             4
           ],
           Error: new Error()
@@ -141,7 +141,7 @@ function makeCellShortest(at, pins) {
   if (Belt_MapInt.size(onlyMins) > 1) {
     return -1;
   } else {
-    return Belt_MapInt.reduce(onlyMins, Js_int.min, (function (a, k, v) {
+    return Belt_MapInt.reduce(onlyMins, Js_int.min, (function (_a, k, _v) {
                   return k;
                 }));
   }
@@ -165,7 +165,7 @@ function alloc(t) {
 
 function fill(t) {
   var filled = Belt_MapInt.reduce(t.grid, undefined, (function (a, kx, x) {
-          return Belt_MapInt.set(a, kx, Belt_MapInt.reduce(x, undefined, (function (a, ky, y) {
+          return Belt_MapInt.set(a, kx, Belt_MapInt.reduce(x, undefined, (function (a, ky, _y) {
                             return Belt_MapInt.set(a, ky, makeCellShortest({
                                             x: kx,
                                             y: ky
@@ -205,7 +205,7 @@ function make$1(xs) {
 }
 
 function countCellWith(pinId, t) {
-  return Belt_MapInt.reduce(t.grid, 0, (function (a, kx, x) {
+  return Belt_MapInt.reduce(t.grid, 0, (function (a, _kx, x) {
                 return a + Belt_MapInt.size(keepOnly(pinId, x)) | 0;
               }));
 }
@@ -213,19 +213,19 @@ function countCellWith(pinId, t) {
 function getNonInfPin(t) {
   var minBound = t.minBound;
   var maxBound = t.maxBound;
-  return Belt_MapInt.keep(t.pins, (function (k, v) {
+  return Belt_MapInt.keep(t.pins, (function (_k, v) {
                 return !(v.x === maxBound.x || v.x === minBound.x || v.y === maxBound.y || v.y === minBound.y);
               }));
 }
 
 function findLandingAreasOfPins(t) {
-  return Belt_MapInt.mapWithKey(t.pins, (function (k, v) {
+  return Belt_MapInt.mapWithKey(t.pins, (function (k, _v) {
                 return countCellWith(k, t);
               }));
 }
 
 function getMaxArea(m) {
-  return Belt_MapInt.reduce(m, 0, (function (a, k, v) {
+  return Belt_MapInt.reduce(m, 0, (function (a, _k, v) {
                 return Math.max(a, v);
               }));
 }
@@ -242,7 +242,7 @@ function numToChar(xs) {
 
 function toString(t) {
   console.log("x, y, v");
-  return Belt_MapInt.forEach(t.grid, (function (kx, vx) {
+  return Belt_MapInt.forEach(t.grid, (function (_kx, vx) {
                 Caml_splice_call.spliceApply(console.log, [numToChar(Belt_MapInt.valuesToArray(vx))]);
                 
               }));
@@ -281,9 +281,9 @@ function solvePart1(data) {
           return String(c.x) + " " + String(c.y);
         }));
   console.log(prim$3);
-  var maxArea = Belt_MapInt.reduce(Belt_MapInt.keep(areas, (function (k, v) {
+  var maxArea = Belt_MapInt.reduce(Belt_MapInt.keep(areas, (function (k, _v) {
               return Belt_MapInt.has(targetPins, k);
-            })), Js_int.min, (function (a, k, v) {
+            })), Js_int.min, (function (a, _k, v) {
           if (v > a) {
             return v;
           } else {

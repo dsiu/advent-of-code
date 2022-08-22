@@ -1,5 +1,3 @@
-@@warning("-27")
-
 open Belt
 open Utils
 let log = Js.Console.log
@@ -72,11 +70,11 @@ module LandingMap = {
     pins->Map.Int.map(v => {Coord.dist(at, v)})
   }
 
-  let findMinDists = Map.Int.reduce(_, Js.Int.max, (a, k, v) => {
+  let findMinDists = Map.Int.reduce(_, Js.Int.max, (a, _k, v) => {
     v < a ? v : a
   })
 
-  let keepOnly = (~value, xs) => xs->Map.Int.keep((k, v) => {v === value})
+  let keepOnly = (~value, xs) => xs->Map.Int.keep((_k, v) => {v === value})
 
   let makeCellShortest = (at, pins) => {
     //    " "->log
@@ -97,7 +95,7 @@ module LandingMap = {
     open Map.Int
     assert (onlyMins->size > 0)
 
-    let ret = onlyMins->size > 1 ? -1 : onlyMins->reduce(Js.Int.min, (a, k, v) => k)
+    let ret = onlyMins->size > 1 ? -1 : onlyMins->reduce(Js.Int.min, (_a, k, _v) => k)
 
     //    ret->log
     ret
@@ -123,7 +121,7 @@ module LandingMap = {
     let filled = t.grid->reduce(Map.Int.empty, (a, kx, x) => {
       a->set(
         kx,
-        x->reduce(Map.Int.empty, (a, ky, y) => {
+        x->reduce(Map.Int.empty, (a, ky, _y) => {
           a->set(ky, makeCellShortest(Coord.make(~x=kx, ~y=ky), t.pins))
         }),
       )
@@ -156,14 +154,14 @@ module LandingMap = {
 
   let countCellWith = (~pinId, t) => {
     open Map.Int
-    t.grid->reduce(0, (a, kx, x) => {
+    t.grid->reduce(0, (a, _kx, x) => {
       a + x->keepOnly(~value=pinId)->size
     })
   }
 
   let getNonInfPin = t => {
-    let {pins, w, h, maxBound, minBound} = t
-    pins->Map.Int.keep((k, v) => {
+    let {pins, w: _, h: _, maxBound, minBound} = t
+    pins->Map.Int.keep((_k, v) => {
       !(v.x === maxBound.x || v.x === minBound.x || v.y === maxBound.y || v.y === minBound.y)
     })
   }
@@ -172,14 +170,14 @@ module LandingMap = {
     //    t->getNonInfLoc->Map.Int.mapWithKey((k,v) => {
     //      t->countCellWith(~value=k)
     //    })
-    t.pins->Map.Int.mapWithKey((k, v) => {
+    t.pins->Map.Int.mapWithKey((k, _v) => {
       t->countCellWith(~pinId=k)
     })
   }
 
   let getMaxArea = m => {
     open Map.Int
-    m->reduce(0, (a, k, v) => {Js.Math.max_int(a, v)})
+    m->reduce(0, (a, _k, v) => {Js.Math.max_int(a, v)})
   }
 
   let numToChar = xs => {
@@ -196,7 +194,7 @@ module LandingMap = {
     "x, y, v"->log
     t
     ->grid
-    ->forEach((kx, vx) => {
+    ->forEach((_kx, vx) => {
       vx->valuesToArray->numToChar->Js.Console.logMany
     })
   }
@@ -220,10 +218,10 @@ let solvePart1 = data => {
   open Map.Int
   let maxArea =
     areas
-    ->keep((k, v) => {
+    ->keep((k, _v) => {
       targetPins->has(k)
     })
-    ->Map.Int.reduce(Js.Int.min, (a, k, v) => {
+    ->Map.Int.reduce(Js.Int.min, (a, _k, v) => {
       v > a ? v : a
     })
 

@@ -3,8 +3,6 @@ let sampleData = AOC2018_Day5_Data_Sample.data
 open Belt
 //open Utils
 
-@@warning("-27")
-
 let log = Js.Console.log
 
 let charArray = data->Js.String2.split("")
@@ -16,7 +14,7 @@ let testCharList = testCharArray->List.fromArray
 // charList -> List.forEach(Console.log)
 // da bA cC aC BA cC ca DA
 let groupByN = (l, n) => {
-  let (r, cur) = l->List.reduce((list{}, list{}), (a, x) => {
+  let (r, _cur) = l->List.reduce((list{}, list{}), (a, x) => {
     let (r, cur) = a
     cur->List.length == n - 1
       ? (List.add(r, cur->List.add(x)->List.reverse), list{})
@@ -43,14 +41,14 @@ let fuse = pair => {
 }
 
 let findPairIndex = l => {
-  let (last, has_last, found, founded_idx) = l->List.reduceWithIndex(("", false, false, -1), (
+  let (_last, _has_last, found, founded_idx) = l->List.reduceWithIndex(("", false, false, -1), (
     a,
     x,
     i,
   ) => {
     switch a {
     | (_, _, true, _) => a
-    | (last, false, false, _) => (x, true, false, -1)
+    | (_last, false, false, _) => (x, true, false, -1)
     | (last, true, false, _) => fuse((last, x)) ? ("", false, true, i - 1) : (x, true, false, -1)
     }
   })
@@ -63,7 +61,7 @@ let findPairIndex_array = l => {
     let cont = i < len
     switch (last, has_last, cont) {
     | (_, _, false) => None
-    | (last, false, ture) => helper(l, i + 1, len, x, true)
+    | (_last, false, true) => helper(l, i + 1, len, x, true)
     | (last, true, true) =>
       fuse((last->Option.getExn, x->Option.getExn)) ? Some(i - 1) : helper(l, i + 1, len, x, true)
     }
@@ -152,12 +150,12 @@ let makeATozData = (letters, data) => {
 
 // fuse(list{"a", "a"})->Utils.list_dump
 
-let solvePart1 = d => 240
+let solvePart1 = _d => 240
 let solvePart2 = (polymars, d) => {
   makeATozData(polymars, d)
   ->Map.String.map(defuse_array)
   ->Map.String.map(Array.length)
-  ->Map.String.reduce(Js.Int.max, (a, k, v) => {
+  ->Map.String.reduce(Js.Int.max, (a, _k, v) => {
     v < a ? v : a
   })
 }

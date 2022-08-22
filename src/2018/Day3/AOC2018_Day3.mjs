@@ -169,7 +169,7 @@ function getPoint(t, x, y) {
 }
 
 function fill(t, f) {
-  return Belt_Array.reduce(Belt_Array.range(0, t.w), t, (function (acc, x) {
+  return Belt_Array.reduce(Belt_Array.range(0, t.w), t, (function (_acc, x) {
                 return Belt_Array.reduce(Belt_Array.range(0, t.h), t, (function (acc, y) {
                               return addPoint(acc, x, y, Curry._2(f, x, y));
                             }));
@@ -177,7 +177,7 @@ function fill(t, f) {
 }
 
 function claimAreaIter(c, t, f) {
-  return Belt_Array.reduce(Belt_Array.range(c.x, (c.x + c.w | 0) - 1 | 0), t, (function (acc, x) {
+  return Belt_Array.reduce(Belt_Array.range(c.x, (c.x + c.w | 0) - 1 | 0), t, (function (_acc, x) {
                 return Belt_Array.reduce(Belt_Array.range(c.y, (c.y + c.h | 0) - 1 | 0), t, (function (acc, y) {
                               return Curry._4(f, acc, x, y, c);
                             }));
@@ -192,7 +192,7 @@ function addClaim(t, c) {
   return claimAreaIter(c, t, addClaimIdToPoint);
 }
 
-function getClaimIdFromPointIf(t, c, x, y, c$1) {
+function getClaimIdFromPointIf(t, _c, x, y, _c$1) {
   var point = getPoint(t, x, y);
   var len = Belt_Option.getExn(point).length;
   if (len === 1) {
@@ -231,8 +231,8 @@ function countNonOverlapClaim(t, xs) {
 }
 
 function countOverlap(t, p) {
-  return Belt_MapInt.reduce(t.matrix, 0, (function (acc, x, col) {
-                return acc + Belt_MutableMapInt.reduce(col, 0, (function (acc, y, vs) {
+  return Belt_MapInt.reduce(t.matrix, 0, (function (acc, _x, col) {
+                return acc + Belt_MutableMapInt.reduce(col, 0, (function (acc, _y, vs) {
                               if (Curry._1(p, vs.length)) {
                                 return acc + 1 | 0;
                               } else {

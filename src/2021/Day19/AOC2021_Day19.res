@@ -66,7 +66,7 @@ module Scanner = {
   }
 
   let toString = t =>
-    t->Printable.Array.toString(({scannerName, beacons, transformation, signature}) => {
+    t->Printable.Array.toString(({scannerName, beacons, transformation: _, signature}) => {
       j`scannerName: $scannerName, ` ++
       "beacons: " ++
       beacons->Printable.Array.toString((Coord(x, y, z)) => j`($x, $y, $z)`) ++

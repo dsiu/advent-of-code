@@ -41,7 +41,7 @@ function insertGuardRec(gAtt, gid, date, from_min, to_min) {
 }
 
 function minsSleptTotal(dr) {
-  return Belt_MutableMapString.reduce(dr, 0, (function (a, k, hr) {
+  return Belt_MutableMapString.reduce(dr, 0, (function (a, _k, hr) {
                 return a + Belt_MutableSetInt.size(hr) | 0;
               }));
 }
@@ -67,7 +67,7 @@ function findLaziestGuard(gAtt) {
 }
 
 function tallySleptPerMin(dr) {
-  return Belt_MutableMapString.reduce(dr, Belt_MutableMapInt.make(undefined), (function (a, k, hr) {
+  return Belt_MutableMapString.reduce(dr, Belt_MutableMapInt.make(undefined), (function (a, _k, hr) {
                 Belt_MutableSetInt.forEach(hr, (function (m) {
                         return Belt_MutableMapInt.update(a, m, (function (prev) {
                                       if (prev !== undefined) {
