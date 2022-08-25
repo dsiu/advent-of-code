@@ -95,7 +95,7 @@ let parse = data =>
   data
   ->splitNewline
   ->Array.map(x => {
-    x->Js.String2.trim->Int.fromString->Option.getExn
+    x->intFromStringExn
   })
 
 let solvePart1 = (data, preambleSize) => {

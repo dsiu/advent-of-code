@@ -2,10 +2,8 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Js_int from "rescript/lib/es6/js_int.js";
-import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_MapInt from "rescript/lib/es6/belt_MapInt.js";
-import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_splice_call from "rescript/lib/es6/caml_splice_call.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as AOC2018_Day6_Data$AdventOfCode from "./AOC2018_Day6_Data.mjs";
@@ -67,9 +65,7 @@ function dist(a, b) {
 }
 
 function parse(l) {
-  return makeFromArray(Belt_Array.map(l.trim().split(","), (function (x) {
-                    return Belt_Option.getExn(Belt_Int.fromString(x.trim()));
-                  })));
+  return makeFromArray(Belt_Array.map(l.trim().split(","), Utils$AdventOfCode.intFromStringExn));
 }
 
 function parseCoords(__x) {

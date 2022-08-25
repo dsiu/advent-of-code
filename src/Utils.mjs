@@ -195,7 +195,11 @@ function base2(__x) {
 }
 
 function intFromStringExn(param) {
-  return FP_Utils$AdventOfCode.compose(Belt_Int.fromString, Belt_Option.getExn, param);
+  return FP_Utils$AdventOfCode.compose((function (prim) {
+                return prim.trim();
+              }), (function (param) {
+                return FP_Utils$AdventOfCode.compose(Belt_Int.fromString, Belt_Option.getExn, param);
+              }), param);
 }
 
 function add(x, y) {

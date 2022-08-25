@@ -33,7 +33,7 @@ module Coord = {
     ->Js.String2.trim
     ->Js.String2.split(",")
     ->Array.map(x => {
-      x->Js.String2.trim->Int.fromString->Option.getExn
+      x->intFromStringExn
     })
     ->makeFromArray
   }

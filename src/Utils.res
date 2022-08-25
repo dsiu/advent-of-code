@@ -98,7 +98,10 @@ module Printable = {
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
 
-let intFromStringExn = FP_Utils.compose(Int.fromString, Belt.Option.getExn)
+let intFromStringExn = FP_Utils.compose(
+  Js.String2.trim,
+  FP_Utils.compose(Int.fromString, Belt.Option.getExn),
+)
 
 let add = (x, y) => x + y
 let sub = (x, y) => x - y
