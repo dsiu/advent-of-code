@@ -183,7 +183,7 @@ let parse = data => {
   data
   ->splitNewline
   ->Array.map(l => {
-    l->Js.String2.trim->splitChars->Array.map(c => c->Int.fromString->Option.getExn)
+    l->Js.String2.trim->splitChars->Array.map(c => c->intFromStringExn)
   })
 }
 

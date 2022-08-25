@@ -6,34 +6,32 @@
   <component name="ChangeListManager">
     <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="cleanup warning -27 (unused vars) by using _">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/Stack_Float_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Stack_Float_Test.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/Tree_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Tree_Test.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/bsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day2/AOC2018_Day2_Test.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2018/Day4/AOC2018_Day4.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day14/AOC2020_Day14.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day9/AOC2020_Day9.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day10/AOC2021_Day10.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day16/AOC2021_Day16_Test.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17_Test.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day6/AOC2021_Day6.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day9/AOC2021_Day9.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graph_Basic.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph_Basic.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Linear.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Linear.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Linear.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Linear.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ResultX.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ResultX.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Stack.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stack.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tree.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tree.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,39 +103,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.vendoring.notification.had.been.shown": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/dsiu/code/playground/advent-of-code/src/2021/Day19",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "/Users/dsiu/code/playground/advent-of-code/node_modules/jest",
-    "nodejs.mocha.mocha_node_package_dir": "",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "ruby.rails.projectView.checked": "true",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
-    "ts.external.directory.path": "/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.vendoring.notification.had.been.shown&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/src/2021/Day19&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/node_modules/jest&quot;,
+    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "Rescript"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Rescript&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/2021/Day19" />
@@ -151,7 +149,7 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.AOC2021_Day19_Run.mjs">
+  <component name="RunManager" selected="Jest.All Tests - Watch">
     <configuration name="AOC2021_Day18_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />

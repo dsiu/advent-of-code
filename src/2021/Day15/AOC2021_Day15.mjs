@@ -2,12 +2,10 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Format from "rescript/lib/es6/format.js";
-import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Path$Graph from "rescript-ocamlgraph/src/path.mjs";
-import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Graphviz$Graph from "rescript-ocamlgraph/src/graphviz.mjs";
 import * as Imperative$Graph from "rescript-ocamlgraph/src/imperative.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
@@ -432,9 +430,7 @@ var Cave = {
 
 function parse(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (l) {
-                return Belt_Array.map(Utils$AdventOfCode.splitChars(l.trim()), (function (c) {
-                              return Belt_Option.getExn(Belt_Int.fromString(c));
-                            }));
+                return Belt_Array.map(Utils$AdventOfCode.splitChars(l.trim()), Utils$AdventOfCode.intFromStringExn);
               }));
 }
 

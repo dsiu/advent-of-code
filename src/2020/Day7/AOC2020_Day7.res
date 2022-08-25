@@ -42,7 +42,7 @@ module Rules = {
         | None => []
         }
         Bag.make(
-          numIndex == 0 ? 0 : c->Array.getExn(numIndex)->Int.fromString->Option.getExn,
+          numIndex == 0 ? 0 : c->Array.getExn(numIndex)->intFromStringExn,
           c->Array.getExn(bagIndex),
         )
       }

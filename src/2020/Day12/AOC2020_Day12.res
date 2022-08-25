@@ -198,7 +198,7 @@ let parse = data =>
   ->Array.map(x => {
     let s = x->Js.String2.trim
     let code = s->Js.String2.charAt(0)
-    let n = s->Js.String2.substringToEnd(~from=1)->Int.fromString->Option.getExn
+    let n = s->Js.String2.substringToEnd(~from=1)->intFromStringExn
     (code, n)
   })
 

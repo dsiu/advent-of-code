@@ -216,7 +216,7 @@ module SnailFish = {
       let numberLike = digits
 
       let betweenBraces = P.between(_, P.char('['), P.char(']'))
-      let makeIntElem = x => Tree.Leaf(x->Int.fromString->Option.getExn)
+      let makeIntElem = x => Tree.Leaf(x->intFromStringExn)
       let pairOrNumber = P.choice([p, numberLike->P.map(makeIntElem)])
 
       pairOrNumber

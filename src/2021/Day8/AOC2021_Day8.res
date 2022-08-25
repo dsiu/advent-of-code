@@ -168,8 +168,6 @@ let solvePart2 = data => {
   let parsed = data->parse
   //  parsed->Array.forEach(Js.log)
   let outputs =
-    parsed->Array.map(e =>
-      e->Entry.translateOutputs->Js.Array2.joinWith("")->Int.fromString->Option.getExn
-    )
+    parsed->Array.map(e => e->Entry.translateOutputs->Js.Array2.joinWith("")->intFromStringExn)
   outputs->Array.reduce(0, Utils.add)
 }

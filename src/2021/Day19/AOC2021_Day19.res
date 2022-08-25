@@ -108,7 +108,7 @@ let parse = data => {
       lines
       ->Array.sliceToEnd(1)
       ->Array.map(line => {
-        let c = line->Str.split(",")->Array.map(x => x->Int.fromString->Option.getExn)
+        let c = line->Str.split(",")->Array.map(x => x->intFromStringExn)
         Scanner.Coord(c->Array.getExn(0), c->Array.getExn(1), c->Array.getExn(2))
       })
 

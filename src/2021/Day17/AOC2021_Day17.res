@@ -1,5 +1,6 @@
 open Belt
-//open Utils
+open Utils
+
 let log = Js.Console.log
 
 module TrickShot = {
@@ -113,9 +114,9 @@ let parse = (data): target => {
   module Str = Js.String2
   let [x_str, y_str] = data->Str.replace("target area: ", "")->Str.split(", ")
   let [x_min, x_max] =
-    x_str->Str.replace("x=", "")->Str.split("..")->Array.map(x => x->Int.fromString->Option.getExn)
+    x_str->Str.replace("x=", "")->Str.split("..")->Array.map(x => x->intFromStringExn)
   let [y_min, y_max] =
-    y_str->Str.replace("y=", "")->Str.split("..")->Array.map(y => y->Int.fromString->Option.getExn)
+    y_str->Str.replace("y=", "")->Str.split("..")->Array.map(y => y->intFromStringExn)
   {x_min: x_min, x_max: x_max, y_min: y_min, y_max: y_max}
 }
 

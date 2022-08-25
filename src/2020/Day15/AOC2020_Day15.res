@@ -1,4 +1,6 @@
 open Belt
+open Utils
+
 let log = Js.Console.log
 module Log = unpack(JS_Debug.make(__MODULE__))
 
@@ -57,7 +59,7 @@ let solve = (xs, total_turn) => {
 }
 
 let parse = data =>
-  data->Js.String2.trim->Js.String2.split(",")->Array.map(x => x->Int.fromString->Option.getExn)
+  data->Js.String2.trim->Js.String2.split(",")->Array.map(x => x->intFromStringExn)
 
 let solvePart1 = data => {
   data->parse->solve(2020)

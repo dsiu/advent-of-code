@@ -18,7 +18,7 @@ let parse = data => {
       x->Js.String2.trim
     })
 
-  let timeStamp = lines->Array.get(0)->Option.getExn->Int.fromString->Option.getExn
+  let timeStamp = lines->Array.get(0)->Option.getExn->intFromStringExn
 
   let isNotX = c => c !== "x"
   let bus_numbers =
@@ -27,7 +27,7 @@ let parse = data => {
     ->Option.getExn
     ->Js.String2.split(",")
     ->Array.keep(isNotX)
-    ->Array.map(x => {x->Int.fromString->Option.getExn})
+    ->Array.map(x => {x->intFromStringExn})
   (timeStamp, bus_numbers)
 }
 
@@ -81,7 +81,7 @@ let parse2 = data => {
       x->Js.String2.trim
     })
 
-  //  let start = lines->Array.get(0)->Option.getExn->Int.fromString->Option.getExn
+  //  let start = lines->Array.get(0)->Option.getExn->intFromStringExn
   let bus_list =
     lines
     ->Array.get(1)

@@ -1,4 +1,6 @@
 open Belt
+open Utils
+
 let log = Js.Console.log
 let data1 = `1-3 a: abcde
             1-3 b: cdefg
@@ -20,8 +22,8 @@ module Password = {
     | None => []
     }
     {
-      min: args->Array.getExn(1)->Int.fromString->Option.getExn,
-      max: args->Array.getExn(2)->Int.fromString->Option.getExn,
+      min: args->Array.getExn(1)->intFromStringExn,
+      max: args->Array.getExn(2)->intFromStringExn,
       char: args->Array.getExn(3),
       input: args->Array.getExn(4),
     }

@@ -54,10 +54,7 @@ let parse = data =>
   ->splitNewline
   ->Array.map(x => {
     let s = x->Js.String2.trim->Js.String2.split(" ")
-    Move.make(
-      s->Array.get(0)->Option.getExn,
-      s->Array.get(1)->Option.getExn->Int.fromString->Option.getExn,
-    )
+    Move.make(s->Array.get(0)->Option.getExn, s->Array.get(1)->Option.getExn->intFromStringExn)
   })
 
 let answer = (t: Submarine.t) => {t.h * t.d}

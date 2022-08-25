@@ -169,7 +169,7 @@ let parse = data =>
       x
       ->Js.String2.split(",")
       ->Array.map(x => {
-        x->Int.fromString->Option.getExn
+        x->intFromStringExn
       })
     })
   })

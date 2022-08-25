@@ -204,9 +204,7 @@ function parse(data) {
           }));
     var name = Belt_Option.getExn(Belt_Int.fromString(Belt_Array.getExn(lines, 0).replace("--- scanner ", "").replace(" ---", "")));
     var coords = Belt_Array.map(Belt_Array.sliceToEnd(lines, 1), (function (line) {
-            var c = Belt_Array.map(line.split(","), (function (x) {
-                    return Belt_Option.getExn(Belt_Int.fromString(x));
-                  }));
+            var c = Belt_Array.map(line.split(","), Utils$AdventOfCode.intFromStringExn);
             return /* Coord */{
                     _0: [
                       Belt_Array.getExn(c, 0),

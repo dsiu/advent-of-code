@@ -26,7 +26,7 @@ let costAll = (xs, p) => {
 }
 
 let parse = data =>
-  data->Js.String2.trim->Js.String2.split(",")->Array.map(x => x->Int.fromString->Option.getExn)
+  data->Js.String2.trim->Js.String2.split(",")->Array.map(x => x->intFromStringExn)
 
 let solvePart1 = data => {
   let xs = data->parse
