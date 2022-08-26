@@ -4,34 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="cleanup warning -27 (unused vars) by using _">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="refactoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day12/AOC2020_Day12.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day13/AOC2020_Day13.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day15/AOC2020_Day15.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day2/AOC2020_Day2.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day15/AOC2021_Day15.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day2/AOC2021_Day2.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day5/AOC2021_Day5.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day7/AOC2021_Day7.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day8/AOC2021_Day8.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,8 +125,8 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.All Tests - Watch">
-    <configuration name="AOC2021_Day18_Test.mjs" type="JavaScriptTestRunnerJest">
+  <component name="RunManager" selected="Node.js.AOC2021_Day1_Run.mjs">
+    <configuration name="AOC2021_Day1_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -158,7 +134,7 @@
       <jest-options value="--watch --maxWorkers=50%" />
       <envs />
       <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/src/2021/Day18/AOC2021_Day18_Test.mjs" />
+      <test-file value="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Test.mjs" />
       <method v="2" />
     </configuration>
     <configuration name="All Tests - Watch" type="JavaScriptTestRunnerJest">
@@ -204,9 +180,6 @@
       </envs>
       <method v="2" />
     </configuration>
-    <configuration name="AOC2021_Day17.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day17/AOC2021_Day17.mjs" working-dir="$PROJECT_DIR$/src/2021/Day17">
-      <method v="2" />
-    </configuration>
     <configuration name="AOC2021_Day18_Run.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon DEBUG=*" path-to-js-file="AOC2021_Day18_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
       <method v="2" />
     </configuration>
@@ -214,6 +187,9 @@
       <method v="2" />
     </configuration>
     <configuration name="AOC2021_Day19_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day19">
+      <method v="2" />
+    </configuration>
+    <configuration name="AOC2021_Day1_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day1">
       <method v="2" />
     </configuration>
     <configuration name="JS_Debug_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="JS_Debug_Run.mjs" working-dir="$PROJECT_DIR$/src">
@@ -229,26 +205,26 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Jest.AOC2021_Day18_Test.mjs" />
+      <item itemvalue="Jest.AOC2021_Day1_Test.mjs" />
       <item itemvalue="Jest.Tree_Test" />
       <item itemvalue="Jest.All Tests" />
       <item itemvalue="Jest.All Tests - Watch" />
       <item itemvalue="Node.js.AOC2021_Day18.mjs" />
       <item itemvalue="Node.js.AOC2021_Day18_Run.mjs" />
       <item itemvalue="Node.js.Jest Profiling" />
+      <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
-      <item itemvalue="Node.js.AOC2021_Day17.mjs" />
       <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
       <item itemvalue="Node.js.JS_Debug_Run.mjs" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
         <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
         <item itemvalue="Node.js.JS_Debug_Run.mjs" />
         <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
         <item itemvalue="Node.js.AOC2021_Day17_Run.mjs" />
-        <item itemvalue="Node.js.AOC2021_Day17.mjs" />
       </list>
     </recent_temporary>
   </component>
@@ -260,13 +236,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00003" summary="IntelliJ project file update">
-      <created>1652891359880</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1652891359880</updated>
     </task>
     <task id="LOCAL-00004" summary="IntelliJ project file update">
       <created>1652891392834</created>
@@ -604,11 +573,28 @@
       <option name="project" value="LOCAL" />
       <updated>1661149250787</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="refactoring">
+      <created>1661430833496</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1661430833496</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -622,7 +608,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="reverted back to commonjs module since @resinfo/parser, rescript-js, etc are not compatible with es6 module yet" />
     <MESSAGE value="2021 Day16 - Part 1 - parsed Version and TypeID for Literal packet" />
     <MESSAGE value="2021 Day 16 - Part 1 - Literal Packet parsing" />
     <MESSAGE value="2021 Day 16 - Part 1 - Literal Packet parsing with trailing" />
@@ -647,7 +632,8 @@
     <MESSAGE value="clean up - remove unused file" />
     <MESSAGE value="2021 Day 19 - Day 1 Start" />
     <MESSAGE value="cleanup warning -27 (unused vars) by using _" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleanup warning -27 (unused vars) by using _" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

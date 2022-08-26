@@ -4,7 +4,6 @@ import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -27,18 +26,20 @@ function findDiff(xs) {
 }
 
 function findDiff2(xs) {
+  console.log("findDiff2");
   return Belt_Array.keep(Belt_Array.zip(Belt_Array.sliceToEnd(xs, 1), xs), (function (param) {
                 return Caml_obj.caml_greaterthan(param[0], param[1]);
               }));
 }
 
 function sum2Array(a1, a2) {
-  return FP_Utils$AdventOfCode.combinationArray2(a1, a2, (function (a, b) {
-                return a + b | 0;
+  return Belt_Array.reduceReverse2(Belt_Array.reverse(a1), Belt_Array.reverse(a2), [], (function (acc, x, y) {
+                return Belt_Array.concat(acc, [x + y | 0]);
               }));
 }
 
 function roll3sum(xs) {
+  console.log("roll3sum");
   var size = xs.length - 2 | 0;
   var a1 = Belt_Array.slice(xs, 0, size);
   var a2 = Belt_Array.slice(xs, 1, size);
