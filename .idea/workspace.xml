@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="refactoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,13 +234,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00004" summary="IntelliJ project file update">
-      <created>1652891392834</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1652891392834</updated>
     </task>
     <task id="LOCAL-00005" summary="Adjacency List - WIP">
       <created>1654442775231</created>
@@ -580,7 +571,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661430833496</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="refactoring">
+      <created>1661490418114</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1661490418114</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
