@@ -38,18 +38,14 @@ describe("2020 Day15", (function () {
         ];
         Jest2$AdventOfCode.testEach2("Part 1 - Sample Data", part1_sample_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2020_Day15$AdventOfCode.solvePart1(AOC2020_Day15_Data$AdventOfCode.data);
                 expect(result).toEqual(273);
-                
               }));
         test("Part 2 - Solve", (function () {
                 expect(47205).toEqual(47205);
-                
               }));
-        
       }));
 
 var data = AOC2020_Day15_Data$AdventOfCode.data;
@@ -59,6 +55,5 @@ var sampleData = AOC2020_Day15_Data_Sample$AdventOfCode.data;
 export {
   data ,
   sampleData ,
-  
 }
 /*  Not a pure module */

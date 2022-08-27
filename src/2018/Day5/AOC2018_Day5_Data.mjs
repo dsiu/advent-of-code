@@ -8,6 +8,5 @@ var result = "ipUerNGObhJsyGCBPfUBPiHBVmOXubDsFQQPGNphmlCTHIJYebKWAIKJzQUrkJioJW
 export {
   data ,
   result ,
-  
 }
 /* No side effect */

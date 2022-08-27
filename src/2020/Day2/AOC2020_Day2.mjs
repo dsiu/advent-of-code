@@ -7,7 +7,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var formatRe = /(\d+)-(\d+)\s+([A-Za-z]+):\s+(.*)/i;
@@ -69,6 +68,5 @@ export {
   Password ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

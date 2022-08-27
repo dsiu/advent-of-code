@@ -5,6 +5,5 @@ var data = "1440\n            1511\n            1731\n            1400\n        
 
 export {
   data ,
-  
 }
 /* No side effect */

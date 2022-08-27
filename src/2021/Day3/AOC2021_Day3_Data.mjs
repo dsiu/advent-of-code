@@ -5,6 +5,5 @@ var data = "010110011101\n            101100111000\n            100100000011\n  
 
 export {
   data ,
-  
 }
 /* No side effect */

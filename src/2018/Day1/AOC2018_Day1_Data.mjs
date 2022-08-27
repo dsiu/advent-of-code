@@ -1049,6 +1049,5 @@ var data = [
 export {
   data_test ,
   data ,
-  
 }
 /* No side effect */

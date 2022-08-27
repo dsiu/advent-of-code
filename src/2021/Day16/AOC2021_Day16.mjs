@@ -12,17 +12,14 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
-  
 }
 
 function log3(prim0, prim1, prim2) {
   console.log(prim0, prim1, prim2);
-  
 }
 
 function binStrToInt64(s) {
@@ -721,6 +718,5 @@ export {
   Expression ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* hexTable Not a pure module */

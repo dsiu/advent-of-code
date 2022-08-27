@@ -6,7 +6,6 @@ import * as AOC2021_Day3_Data_Sample$AdventOfCode from "./AOC2021_Day3_Data_Samp
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 console.log("Part 1 Result");
@@ -31,6 +30,5 @@ export {
   sampleData ,
   part1 ,
   part2 ,
-  
 }
 /*  Not a pure module */

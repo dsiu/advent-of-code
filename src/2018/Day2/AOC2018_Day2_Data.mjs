@@ -5,6 +5,5 @@ var data = "crruafyzloguvxwctqmphenbkd\nsrcjafyzlcguvrwctqmphenbkd\nsrijafyzlogb
 
 export {
   data ,
-  
 }
 /* No side effect */

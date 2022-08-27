@@ -21,6 +21,5 @@ export {
   push ,
   pop ,
   peek ,
-  
 }
 /* No side effect */

@@ -11,7 +11,6 @@ import * as AOC2018_Day6_Data_Sample$AdventOfCode from "./AOC2018_Day6_Data_Samp
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function x(t) {
@@ -238,10 +237,9 @@ function numToChar(xs) {
 
 function toString(t) {
   console.log("x, y, v");
-  return Belt_MapInt.forEach(t.grid, (function (_kx, vx) {
-                Caml_splice_call.spliceApply(console.log, [numToChar(Belt_MapInt.valuesToArray(vx))]);
-                
-              }));
+  Belt_MapInt.forEach(t.grid, (function (_kx, vx) {
+          Caml_splice_call.spliceApply(console.log, [numToChar(Belt_MapInt.valuesToArray(vx))]);
+        }));
 }
 
 var LandingMap = {
@@ -287,9 +285,8 @@ function solvePart1(data) {
           }
         }));
   console.log(" ======== answer");
-  var prim$4 = "maxArea = " + String(maxArea);
+  var prim$4 = "maxArea = " + String(maxArea) + "";
   console.log(prim$4);
-  
 }
 
 var data = AOC2018_Day6_Data$AdventOfCode.data;
@@ -303,6 +300,5 @@ export {
   Coord ,
   LandingMap ,
   solvePart1 ,
-  
 }
 /* No side effect */

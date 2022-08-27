@@ -20,7 +20,7 @@
     "@swc/jest": "^0.2.22",
     "jest": "^29.0.0",
     "nodemon": "^2.0.19",
-    "rescript": "^9.1.4"
+    "rescript": "^10.0.0"
   },
   "jest": {
     "testMatch": [
@@ -45,8 +45,8 @@
     "rationale": "^0.2.0",
     "re-fp": "github:snatvb/re-fp",
     "rescript-bag": "github:dsiu/rescript-bag#main",
-    "rescript-js": "^0.7.0",
-    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#main",
+    "rescript-js": "latest",
+    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10",
     "rescript-vector": "^0.4.0"
   }
 }

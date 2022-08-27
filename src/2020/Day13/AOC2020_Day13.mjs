@@ -8,7 +8,6 @@ import * as ChineseRemainder$AdventOfCode from "../../ChineseRemainder.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function findEarliestBus(param) {
@@ -86,7 +85,6 @@ function part2(xs) {
           var bus = param[0];
           rem.contents = Belt_Array.concat(rem.contents, [bus - param[1]]);
           num.contents = Belt_Array.concat(num.contents, [bus]);
-          
         }));
   return ChineseRemainder$AdventOfCode.crtBigInt(rem.contents, num.contents);
 }
@@ -125,6 +123,5 @@ export {
   parse2 ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* ChineseRemainder-AdventOfCode Not a pure module */

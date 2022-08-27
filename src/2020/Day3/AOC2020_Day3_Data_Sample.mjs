@@ -5,6 +5,5 @@ var data = "..##.......\n            #...#...#..\n            .#....#..#.\n     
 
 export {
   data ,
-  
 }
 /* No side effect */

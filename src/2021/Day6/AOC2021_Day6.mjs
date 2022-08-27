@@ -8,7 +8,6 @@ import * as JS_Debug$AdventOfCode from "../../JS_Debug.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var Log = JS_Debug$AdventOfCode.make("AOC2021_Day6-AdventOfCode");
@@ -80,7 +79,7 @@ function runDumb(_fs, _days) {
     var days = _days;
     var fs = _fs;
     console.log("days", days);
-    Curry._1(Log.debug, "run " + "days");
+    Curry._1(Log.debug, "run days");
     Curry._1(Log.debug, "fs size " + String(fs.length));
     if (days === 0) {
       return fs;
@@ -118,7 +117,7 @@ function add(prim0, prim1) {
 function runSmart(fs, days) {
   var counts = Belt_Array.make(9, big_zero);
   Belt_Array.forEach(fs, (function (n) {
-          return Belt_Array.setExn(counts, n, Belt_Array.getExn(counts, n) + big_one);
+          Belt_Array.setExn(counts, n, Belt_Array.getExn(counts, n) + big_one);
         }));
   var run = function (_counts, _days) {
     while(true) {
@@ -169,6 +168,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* Log Not a pure module */

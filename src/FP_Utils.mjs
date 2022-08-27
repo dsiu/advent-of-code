@@ -104,6 +104,5 @@ export {
   compose3 ,
   compose4 ,
   composeN ,
-  
 }
 /* No side effect */

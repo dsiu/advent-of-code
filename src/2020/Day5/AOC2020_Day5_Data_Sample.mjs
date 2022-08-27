@@ -5,6 +5,5 @@ var data = "BFFFBBFRRR\nFFFBBBFRRR\nBBFFBBFRLL";
 
 export {
   data ,
-  
 }
 /* No side effect */

@@ -7,7 +7,6 @@ import * as Array2D$AdventOfCode from "../../Array2D.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function width(t) {
@@ -49,13 +48,12 @@ function make(xs) {
       ], "");
   Belt_Array.forEachWithIndex(xs, (function (j, s) {
           var ss = s.split("");
-          return Belt_Array.forEachWithIndex(ss, (function (i, c) {
-                        Array2D$AdventOfCode.set(ret, [
-                              i,
-                              j
-                            ], c);
-                        
-                      }));
+          Belt_Array.forEachWithIndex(ss, (function (i, c) {
+                  Array2D$AdventOfCode.set(ret, [
+                        i,
+                        j
+                      ], c);
+                }));
         }));
   return ret;
 }
@@ -163,6 +161,5 @@ export {
   TreeMap ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

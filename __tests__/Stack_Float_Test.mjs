@@ -30,7 +30,6 @@ describe("Stack Float", (function () {
         ];
         Jest2$AdventOfCode.testEach2("push", push_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var pop_tests = [
           [
@@ -63,7 +62,6 @@ describe("Stack Float", (function () {
         ];
         Jest2$AdventOfCode.testEach2("pop", pop_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var __x = Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start)));
         var __x$1 = Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start));
@@ -156,7 +154,6 @@ describe("Stack Float", (function () {
         ];
         Jest2$AdventOfCode.testEach2("core", core_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var math_tests = [
           [
@@ -261,7 +258,6 @@ describe("Stack Float", (function () {
         ];
         return Jest2$AdventOfCode.testEach2("math", math_tests, (function (result, expected) {
                       expect(result).toEqual(expected);
-                      
                     }));
       }));
 
@@ -269,6 +265,5 @@ var S;
 
 export {
   S ,
-  
 }
 /*  Not a pure module */

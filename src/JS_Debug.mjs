@@ -19,7 +19,7 @@ var JSD = {
 function make(moduleName) {
   var jsd = Debug(moduleName);
   var debug$1 = function (message) {
-    return debug(jsd, message);
+    debug(jsd, message);
   };
   return {
           debug: debug$1
@@ -29,6 +29,5 @@ function make(moduleName) {
 export {
   JSD ,
   make ,
-  
 }
 /* debug Not a pure module */

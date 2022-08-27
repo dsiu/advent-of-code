@@ -31,7 +31,7 @@ function getVertex(t, x) {
 }
 
 function addEdge(t, x, y) {
-  return Belt_HashSetString.add(getVertex(t, x), y);
+  Belt_HashSetString.add(getVertex(t, x), y);
 }
 
 function removeEdge(t, x, y) {
@@ -59,8 +59,7 @@ function toString(t) {
     contents: ""
   };
   Belt_HashMapString.forEachU(t, (function (k, v) {
-          str.contents = str.contents + k + ": [ " + Belt_HashSetString.toArray(v).join(",") + " ]\n";
-          
+          str.contents = "" + str.contents + "" + k + ": [ " + Belt_HashSetString.toArray(v).join(",") + " ]\n";
         }));
   return str.contents;
 }
@@ -114,7 +113,7 @@ function getVertex$1(t, x) {
 }
 
 function addEdge$1(t, x, y) {
-  return Belt_HashSet.add(getVertex$1(t, x), y);
+  Belt_HashSet.add(getVertex$1(t, x), y);
 }
 
 function removeEdge$1(t, x, y) {
@@ -142,8 +141,7 @@ function toString$1(t) {
     contents: ""
   };
   Belt_HashMapString.forEach(t, (function (k, v) {
-          str.contents = str.contents + k + ": [ " + Belt_HashSet.toArray(v).join(",") + " ]\n";
-          
+          str.contents = "" + str.contents + "" + k + ": [ " + Belt_HashSet.toArray(v).join(",") + " ]\n";
         }));
   return str.contents;
 }
@@ -163,6 +161,5 @@ var AdjacencyList_Tuple = {
 export {
   AdjList_String ,
   AdjacencyList_Tuple ,
-  
 }
 /* HashSetTuple Not a pure module */

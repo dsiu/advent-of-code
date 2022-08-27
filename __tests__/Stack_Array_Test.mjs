@@ -23,7 +23,6 @@ describe("Stack", (function () {
         ];
         Jest2$AdventOfCode.testEach2("push", push_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var pop_tests = [
           [
@@ -57,7 +56,6 @@ describe("Stack", (function () {
         ];
         Jest2$AdventOfCode.testEach2("pop", pop_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var peek_tests = [
           [
@@ -79,7 +77,6 @@ describe("Stack", (function () {
         ];
         return Jest2$AdventOfCode.testEach2("peek", peek_tests, (function (result, expected) {
                       expect(result).toEqual(expected);
-                      
                     }));
       }));
 
@@ -87,6 +84,5 @@ var Stack;
 
 export {
   Stack ,
-  
 }
 /*  Not a pure module */

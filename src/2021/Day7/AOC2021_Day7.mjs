@@ -6,7 +6,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function median(xs) {
@@ -63,6 +62,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "acc -17\n            nop +318\n            jmp +1\n            acc -
 
 export {
   data ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "NNCB\n\n            CH -> B\n            HH -> N\n            CB -> 
 
 export {
   data ,
-  
 }
 /* No side effect */

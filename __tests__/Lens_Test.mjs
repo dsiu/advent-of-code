@@ -268,21 +268,21 @@ Jest.describe("view", (function (param) {
                                     }
                                   });
                       }));
-                return Jest.test("index", (function (param) {
-                              return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), record)), 2);
-                            }));
+                Jest.test("index", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), record)), 2);
+                      }));
               }));
         Jest.test("dict", (function (param) {
                 return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(dictLens, aLens), record)), 7);
               }));
-        return Jest.describe("tuple", (function (param) {
-                      Jest.test("first", (function (param) {
-                              return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), record)), 8);
-                            }));
-                      return Jest.test("second", (function (param) {
-                                    return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), record)), 9);
-                                  }));
-                    }));
+        Jest.describe("tuple", (function (param) {
+                Jest.test("first", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), record)), 8);
+                      }));
+                Jest.test("second", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), record)), 9);
+                      }));
+              }));
       }));
 
 Jest.describe("set", (function (param) {
@@ -329,21 +329,21 @@ Jest.describe("set", (function (param) {
                                     }
                                   });
                       }));
-                return Jest.test("index", (function (param) {
-                              return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), Lens$Rationale.set(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), 5, record))), 5);
-                            }));
+                Jest.test("index", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), Lens$Rationale.set(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), 5, record))), 5);
+                      }));
               }));
         Jest.test("dict", (function (param) {
                 return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(dictLens, aLens), Lens$Rationale.set(Lens$Rationale.$great$great$neg(dictLens, aLens), 5, record))), 5);
               }));
-        return Jest.describe("tuple", (function (param) {
-                      Jest.test("first", (function (param) {
-                              return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), Lens$Rationale.set(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), 5, record))), 5);
-                            }));
-                      return Jest.test("second", (function (param) {
-                                    return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), Lens$Rationale.set(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), 5, record))), 5);
-                                  }));
-                    }));
+        Jest.describe("tuple", (function (param) {
+                Jest.test("first", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), Lens$Rationale.set(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), 5, record))), 5);
+                      }));
+                Jest.test("second", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), Lens$Rationale.set(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), 5, record))), 5);
+                      }));
+              }));
       }));
 
 Jest.describe("over", (function (param) {
@@ -389,21 +389,21 @@ Jest.describe("over", (function (param) {
                                     }
                                   });
                       }));
-                return Jest.test("index", (function (param) {
-                              return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), Lens$Rationale.over(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), $$double, record))), 4);
-                            }));
+                Jest.test("index", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), Lens$Rationale.over(Lens$Rationale.$great$great$neg(Lens$Rationale.$great$great$neg(listLens, Lens$Rationale.index(1)), Lens$Rationale.optional(0)), $$double, record))), 4);
+                      }));
               }));
         Jest.test("dict", (function (param) {
                 return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(dictLens, aLens), Lens$Rationale.over(Lens$Rationale.$great$great$neg(dictLens, aLens), $$double, record))), 14);
               }));
-        return Jest.describe("tuple", (function (param) {
-                      Jest.test("first", (function (param) {
-                              return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), Lens$Rationale.over(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), $$double, record))), 16);
-                            }));
-                      return Jest.test("second", (function (param) {
-                                    return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), Lens$Rationale.over(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), $$double, record))), 18);
-                                  }));
-                    }));
+        Jest.describe("tuple", (function (param) {
+                Jest.test("first", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), Lens$Rationale.over(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.first), $$double, record))), 16);
+                      }));
+                Jest.test("second", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Lens$Rationale.view(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), Lens$Rationale.over(Lens$Rationale.$great$great$neg(tupleLens, Lens$Rationale.second), $$double, record))), 18);
+                      }));
+              }));
       }));
 
 export {
@@ -420,6 +420,5 @@ export {
   dictLens ,
   aLens ,
   tupleLens ,
-  
 }
 /* basicLens Not a pure module */

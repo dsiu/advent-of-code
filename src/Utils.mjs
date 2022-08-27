@@ -20,7 +20,6 @@ import * as FP_Utils$AdventOfCode from "./FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function toString(m, f) {
@@ -241,7 +240,7 @@ function increaseBy1(__x) {
 }
 
 function int64FromBitString(str) {
-  return Caml_format.caml_int64_of_string("0b" + str);
+  return Caml_format.int64_of_string("0b" + str);
 }
 
 function splitChars(__x) {
@@ -271,7 +270,6 @@ function sumRange(xs, offset, len) {
   };
   Belt_Array.forEach(elems, (function (x) {
           total.contents = total.contents + x | 0;
-          
         }));
   return total.contents;
 }
@@ -397,6 +395,5 @@ export {
   maxKeyInt64ValuePair ,
   minKeyInt64ValuePair ,
   hashMapStringUpdate ,
-  
 }
 /* No side effect */

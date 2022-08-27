@@ -5,6 +5,5 @@ var data = "nu-start\n            rt-start\n            db-qh\n            PE-en
 
 export {
   data ,
-  
 }
 /* No side effect */

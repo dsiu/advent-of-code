@@ -8,6 +8,5 @@ var data2 = "28\n             33\n             18\n             42\n            
 export {
   data ,
   data2 ,
-  
 }
 /* No side effect */

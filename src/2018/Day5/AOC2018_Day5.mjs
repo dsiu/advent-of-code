@@ -10,7 +10,6 @@ import * as AOC2018_Day5_Data_Sample$AdventOfCode from "./AOC2018_Day5_Data_Samp
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var charArray = AOC2018_Day5_Data$AdventOfCode.data.split("");
@@ -264,6 +263,5 @@ export {
   makeATozData ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* charArray Not a pure module */

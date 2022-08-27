@@ -9,7 +9,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var make = Utils$AdventOfCode.splitChars;
@@ -349,6 +348,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* defaults Not a pure module */

@@ -8,6 +8,5 @@ var data2 = "0";
 export {
   data ,
   data2 ,
-  
 }
 /* No side effect */

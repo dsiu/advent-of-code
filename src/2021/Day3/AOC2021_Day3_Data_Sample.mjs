@@ -5,6 +5,5 @@ var data = "00100\n            11110\n            10110\n            10111\n    
 
 export {
   data ,
-  
 }
 /* No side effect */

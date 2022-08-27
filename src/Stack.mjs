@@ -530,6 +530,5 @@ export {
   StackInt ,
   FloatOps ,
   StackFloat ,
-  
 }
 /* square Not a pure module */

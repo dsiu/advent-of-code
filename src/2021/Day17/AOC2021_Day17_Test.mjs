@@ -264,30 +264,24 @@ describe("2021 Day17", (function () {
                     ]);
                 return Jest2$AdventOfCode.testEach2("examples", example_tests, (function (result, expected) {
                               expect(result).toEqual(expected);
-                              
                             }));
               }));
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(45);
-                
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data$AdventOfCode.data);
                 expect(result).toEqual(5050);
-                
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart2(AOC2021_Day17_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(112);
-                
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart2(AOC2021_Day17_Data$AdventOfCode.data);
                 expect(result).toEqual(2223);
-                
               }));
-        
       }));
 
 var data = AOC2021_Day17_Data$AdventOfCode.data;
@@ -306,6 +300,5 @@ export {
   solvePart1 ,
   solvePart2 ,
   parse ,
-  
 }
 /*  Not a pure module */

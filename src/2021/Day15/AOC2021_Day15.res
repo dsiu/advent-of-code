@@ -98,7 +98,7 @@ module Cave = {
       g
     })
 
-    {nodes: nodes, g: g}
+    {nodes, g}
   }
 
   /* * given a nodes in Array2D and graph, find the shortest path from (0,0) to Array2D lengthX/Y */
@@ -169,14 +169,14 @@ module Cave = {
     let get_subgraph = _ => None
   }
 
-  module Gv = Graphviz.Dot(Display)
+  //  module Gv = Graphviz.Dot(Display)
 
   @@warning("-3")
   /* * display graph in DOT format */
-  let output = ({nodes: _, g}) => {
-    let () = Gv.fprint_graph(Format.str_formatter, g)
-    Format.flush_str_formatter()
-  }
+  //  let output = ({nodes: _, g}) => {
+  //    let () = Gv.fprint_graph(Format.str_formatter, g)
+  //    Format.flush_str_formatter()
+  //  }
 }
 
 let parse = data => {

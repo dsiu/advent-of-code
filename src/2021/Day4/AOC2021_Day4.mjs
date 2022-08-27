@@ -10,7 +10,6 @@ import * as Array2D$AdventOfCode from "../../Array2D.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function make(line) {
@@ -202,6 +201,5 @@ export {
   parse ,
   solvePart1$1 as solvePart1,
   solvePart2$1 as solvePart2,
-  
 }
 /* No side effect */

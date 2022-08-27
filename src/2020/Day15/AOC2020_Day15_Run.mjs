@@ -8,7 +8,6 @@ import * as AOC2020_Day15_Data_Sample$AdventOfCode from "./AOC2020_Day15_Data_Sa
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var Log = JS_Debug$AdventOfCode.make("AOC2020_Day15_Run-AdventOfCode");
@@ -40,6 +39,5 @@ export {
   Log ,
   part1 ,
   part2 ,
-  
 }
 /* Log Not a pure module */

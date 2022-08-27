@@ -5,6 +5,5 @@ var data = "220D6448300428021F9EFE668D3F5FD6025165C00C602FC980B45002A40400B40254
 
 export {
   data ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "--- scanner 0 ---\n            -1,-1,1\n            -2,-2,2\n       
 
 export {
   data ,
-  
 }
 /* No side effect */

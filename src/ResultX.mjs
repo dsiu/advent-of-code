@@ -40,6 +40,5 @@ export {
   mapError ,
   fromOption ,
   asyncFlatMap ,
-  
 }
 /* No side effect */

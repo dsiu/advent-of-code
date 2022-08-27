@@ -102,6 +102,5 @@ export {
   stepNW ,
   stepSE ,
   stepSW ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "dim red bags contain 2 bright gold bags, 5 striped fuchsia bags.\n  
 
 export {
   data ,
-  
 }
 /* No side effect */

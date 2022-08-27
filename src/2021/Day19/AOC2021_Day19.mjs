@@ -11,7 +11,6 @@ import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function coordToString(param) {
@@ -118,7 +117,7 @@ var prim = Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, rotations, tr
 
 console.log(prim);
 
-var compare = Caml_obj.caml_compare;
+var compare = Caml_obj.compare;
 
 var I = {
   compare: compare
@@ -138,17 +137,16 @@ function bagToString(b) {
   };
   Curry._2(B.iter, (function (x, m) {
           str.contents = str.contents + ("@ " + x + ":" + m + ",");
-          
         }), b);
   return "{" + str.contents + "}";
 }
 
 function toString(t) {
   return Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, t, (function (param) {
-                return "scannerName: " + param.scannerName + ", " + "beacons: " + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, param.beacons, (function (param) {
+                return "scannerName: " + param.scannerName + ", beacons: " + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, param.beacons, (function (param) {
                               var match = param._0;
                               return "(" + match[0] + ", " + match[1] + ", " + match[2] + ")";
-                            })) + "\n" + ("signature: " + bagToString(param.signature)) + "\n";
+                            })) + "\n" + ("signature: " + bagToString(param.signature) + "") + "\n";
               }));
 }
 
@@ -161,7 +159,7 @@ function sign(bcns) {
     return (Math.imul(x, x) + Math.imul(y, y) | 0) + Math.imul(z, z) | 0;
   };
   return bagFromArray(FP_Utils$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
-                    if (Caml_obj.caml_lessthan(a, b)) {
+                    if (Caml_obj.lessthan(a, b)) {
                       return pythag(a) - pythag(b) | 0;
                     }
                     
@@ -238,6 +236,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* ras Not a pure module */

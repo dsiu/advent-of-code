@@ -9,7 +9,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function opcode(t) {
@@ -261,6 +260,5 @@ export {
   solvePart1 ,
   genPatched ,
   solvePart2 ,
-  
 }
 /* No side effect */

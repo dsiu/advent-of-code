@@ -5,6 +5,5 @@ var data = "light red bags contain 1 bright white bag, 2 muted yellow bags.\n   
 
 export {
   data ,
-  
 }
 /* No side effect */

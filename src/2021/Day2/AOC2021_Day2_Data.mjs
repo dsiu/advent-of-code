@@ -5,6 +5,5 @@ var data = "forward 2\n            down 4\n            down 1\n            down 
 
 export {
   data ,
-  
 }
 /* No side effect */

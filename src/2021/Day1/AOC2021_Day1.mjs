@@ -7,7 +7,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function findDiff(xs) {
@@ -28,7 +27,7 @@ function findDiff(xs) {
 function findDiff2(xs) {
   console.log("findDiff2");
   return Belt_Array.keep(Belt_Array.zip(Belt_Array.sliceToEnd(xs, 1), xs), (function (param) {
-                return Caml_obj.caml_greaterthan(param[0], param[1]);
+                return Caml_obj.greaterthan(param[0], param[1]);
               }));
 }
 
@@ -68,6 +67,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

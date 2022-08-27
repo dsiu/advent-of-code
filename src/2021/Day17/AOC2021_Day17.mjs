@@ -7,7 +7,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function velocityNext(param) {
@@ -236,6 +235,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

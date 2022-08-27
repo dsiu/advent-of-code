@@ -95,11 +95,9 @@ describe("Powerset", (function () {
                   ]];
                 Jest2$AdventOfCode.testEach2("int", int_tests, (function (result, expected) {
                         expect(sortResultInt(result)).toEqual(expected);
-                        
                       }));
                 return Jest2$AdventOfCode.testEach2("string", string_tests, (function (result, expected) {
                               expect(sortResultString(result)).toEqual(expected);
-                              
                             }));
               }));
         describe("powerset_array()", (function () {
@@ -113,14 +111,11 @@ describe("Powerset", (function () {
                   ]];
                 Jest2$AdventOfCode.testEach2("int", int_tests, (function (result, expected) {
                         expect(sortResultInt(result)).toEqual(expected);
-                        
                       }));
                 return Jest2$AdventOfCode.testEach2("string", string_tests, (function (result, expected) {
                               expect(sortResultString(result)).toEqual(expected);
-                              
                             }));
               }));
-        
       }));
 
 var $$Array;
@@ -131,6 +126,5 @@ export {
   sortResultInt ,
   strCmp ,
   sortResultString ,
-  
 }
 /*  Not a pure module */

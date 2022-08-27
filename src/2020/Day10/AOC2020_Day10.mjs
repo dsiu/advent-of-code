@@ -7,12 +7,10 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
-  
 }
 
 function diffs(xs, ys) {
@@ -116,6 +114,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

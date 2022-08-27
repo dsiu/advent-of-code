@@ -9,7 +9,6 @@ import * as JS_Debug$AdventOfCode from "../../JS_Debug.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var Log = JS_Debug$AdventOfCode.make("AOC2020_Day15-AdventOfCode");
@@ -101,6 +100,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* Log Not a pure module */

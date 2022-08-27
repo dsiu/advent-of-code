@@ -112,7 +112,6 @@ describe("2020 Day11", (function () {
                 ];
                 return Jest2$AdventOfCode.testEach2("getAdjacents", getAdj_tests, (function (result, expected) {
                               expect(result).toEqual(expected);
-                              
                             }));
               }));
         describe("next seat given a direction", (function () {
@@ -157,7 +156,6 @@ describe("2020 Day11", (function () {
                 ];
                 Jest2$AdventOfCode.testEach2("test 1", nextSeat_test1, (function (result, expected) {
                         expect(result).toEqual(expected);
-                        
                       }));
                 var init_2 = [
                   3,
@@ -199,7 +197,6 @@ describe("2020 Day11", (function () {
                 ];
                 Jest2$AdventOfCode.testEach2("test 2", nextSeat_test2, (function (result, expected) {
                         expect(result).toEqual(expected);
-                        
                       }));
                 var init_3 = [
                   0,
@@ -241,7 +238,6 @@ describe("2020 Day11", (function () {
                 ];
                 Jest2$AdventOfCode.testEach2("test 3", nextSeat_test3, (function (result, expected) {
                         expect(result).toEqual(expected);
-                        
                       }));
                 var init_4 = [
                   4,
@@ -283,7 +279,6 @@ describe("2020 Day11", (function () {
                 ];
                 Jest2$AdventOfCode.testEach2("test 4", nextSeat_test4, (function (result, expected) {
                         expect(result).toEqual(expected);
-                        
                       }));
                 var map_2 = AOC2020_Day11$AdventOfCode.parse(".............\n                  .L.L.#.#.#.#.\n                  .............");
                 var nextSeat_test5 = [
@@ -311,25 +306,20 @@ describe("2020 Day11", (function () {
                 ];
                 return Jest2$AdventOfCode.testEach2("test 5", nextSeat_test5, (function (result, expected) {
                               expect(result).toEqual(expected);
-                              
                             }));
               }));
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart1(AOC2020_Day11_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(37);
-                
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart1(AOC2020_Day11_Data$AdventOfCode.data);
                 expect(result).toEqual(2270);
-                
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart2(AOC2020_Day11_Data$AdventOfCode.data);
                 expect(result).toEqual(2042);
-                
               }));
-        
       }));
 
 var data = AOC2020_Day11_Data$AdventOfCode.data;
@@ -339,6 +329,5 @@ var sampleData = AOC2020_Day11_Data_Sample$AdventOfCode.data;
 export {
   data ,
   sampleData ,
-  
 }
 /*  Not a pure module */

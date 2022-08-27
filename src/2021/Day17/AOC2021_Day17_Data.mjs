@@ -5,6 +5,5 @@ var data = "target area: x=257..286, y=-101..-57";
 
 export {
   data ,
-  
 }
 /* No side effect */

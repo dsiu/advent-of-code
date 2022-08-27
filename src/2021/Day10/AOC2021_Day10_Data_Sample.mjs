@@ -8,6 +8,5 @@ var data = "[({(<(())[]>[[{[]{<()<>>\n            [(()[<>])]({[<{<<[]>>(\n      
 export {
   data2 ,
   data ,
-  
 }
 /* No side effect */

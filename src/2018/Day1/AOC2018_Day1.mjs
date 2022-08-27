@@ -59,6 +59,5 @@ export {
   solve_part2 ,
   runDay1Part2 ,
   part2_result ,
-  
 }
 /* part1 Not a pure module */

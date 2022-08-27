@@ -49,7 +49,6 @@ describe("make", (function () {
                   ]
                 ];
                 expect(a).toEqual(expected);
-                
               }));
         test("make - string", (function () {
                 var a = Array2D$AdventOfCode.make([
@@ -95,9 +94,7 @@ describe("make", (function () {
                   ]
                 ];
                 expect(a).toEqual(expected);
-                
               }));
-        
       }));
 
 describe("get / set", (function () {
@@ -155,7 +152,6 @@ describe("get / set", (function () {
         ];
         Jest2$AdventOfCode.testEach2("get - string", get_string_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var a = Array2D$AdventOfCode.make([
               2,
@@ -212,7 +208,6 @@ describe("get / set", (function () {
         ];
         Jest2$AdventOfCode.testEach2("get - int", get_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         [
           Array2D$AdventOfCode.set(a, [
@@ -256,7 +251,6 @@ describe("get / set", (function () {
         ];
         Jest2$AdventOfCode.testEach2("set - int", set_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         [Array2D$AdventOfCode.setYEquals(b, 1, [
                 9,
@@ -294,7 +288,6 @@ describe("get / set", (function () {
         ];
         return Jest2$AdventOfCode.testEach2("setYEquals", setYEquals_test, (function (result, expected) {
                       expect(result).toEqual(expected);
-                      
                     }));
       }));
 
@@ -321,7 +314,6 @@ describe("setYEquals / getYEquals", (function () {
                 1
               ], 4)
         ];
-        
       }));
 
 describe("keep / map / getXYEquals / crop", (function () {
@@ -406,7 +398,6 @@ describe("keep / map / getXYEquals / crop", (function () {
                   ]
                 ];
                 expect(result).toEqual(expected);
-                
               }));
         var getXEquals_tests = [
           [
@@ -439,7 +430,6 @@ describe("keep / map / getXYEquals / crop", (function () {
         ];
         Jest2$AdventOfCode.testEach2("getXEquals", getXEquals_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var getYEquals_tests = [
           [
@@ -469,7 +459,6 @@ describe("keep / map / getXYEquals / crop", (function () {
         ];
         Jest2$AdventOfCode.testEach2("getYEquals", getYEquals_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var crop_tests = [
           [
@@ -501,7 +490,6 @@ describe("keep / map / getXYEquals / crop", (function () {
         ];
         return Jest2$AdventOfCode.testEach2("crop", crop_tests, (function (result, expected) {
                       expect(result).toEqual(expected);
-                      
                     }));
       }));
 

@@ -7,23 +7,18 @@ import * as AOC2021_Day19_Data_Sample$AdventOfCode from "./AOC2021_Day19_Data_Sa
 describe("2021 Day19", (function () {
         test("Part 1 - Sample Data", (function () {
                 expect(1).toEqual(1);
-                
               }));
         test("Part 1 - Solve", (function () {
                 expect(1).toEqual(1);
-                
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2021_Day19$AdventOfCode.solvePart2(AOC2021_Day19_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(2);
-                
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day19$AdventOfCode.solvePart2(AOC2021_Day19_Data$AdventOfCode.data);
                 expect(result).toEqual(2);
-                
               }));
-        
       }));
 
 var data = AOC2021_Day19_Data$AdventOfCode.data;
@@ -39,6 +34,5 @@ export {
   sampleData ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /*  Not a pure module */

@@ -8,7 +8,6 @@ import * as Array2D$AdventOfCode from "../../Array2D.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function addMark(m1, m2) {
@@ -234,6 +233,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

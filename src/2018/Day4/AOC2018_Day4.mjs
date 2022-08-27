@@ -14,7 +14,7 @@ import * as AOC2018_Day4_Data_Sample$AdventOfCode from "./AOC2018_Day4_Data_Samp
 
 function insertHourRec(hr, from_min, to_min) {
   Belt_Range.forEach(from_min, to_min, (function (i) {
-          return Belt_MutableSetInt.add(hr, i);
+          Belt_MutableSetInt.add(hr, i);
         }));
   return Caml_option.some(hr);
 }
@@ -31,13 +31,13 @@ function insertDayRec(dr, date, from_min, to_min) {
 }
 
 function insertGuardRec(gAtt, gid, date, from_min, to_min) {
-  return Belt_MutableMapInt.update(gAtt, gid, (function (dr) {
-                if (dr !== undefined) {
-                  return insertDayRec(Caml_option.valFromOption(dr), date, from_min, to_min);
-                } else {
-                  return insertDayRec(Belt_MutableMapString.make(undefined), date, from_min, to_min);
-                }
-              }));
+  Belt_MutableMapInt.update(gAtt, gid, (function (dr) {
+          if (dr !== undefined) {
+            return insertDayRec(Caml_option.valFromOption(dr), date, from_min, to_min);
+          } else {
+            return insertDayRec(Belt_MutableMapString.make(undefined), date, from_min, to_min);
+          }
+        }));
 }
 
 function minsSleptTotal(dr) {
@@ -69,13 +69,13 @@ function findLaziestGuard(gAtt) {
 function tallySleptPerMin(dr) {
   return Belt_MutableMapString.reduce(dr, Belt_MutableMapInt.make(undefined), (function (a, _k, hr) {
                 Belt_MutableSetInt.forEach(hr, (function (m) {
-                        return Belt_MutableMapInt.update(a, m, (function (prev) {
-                                      if (prev !== undefined) {
-                                        return prev + 1 | 0;
-                                      } else {
-                                        return 1;
-                                      }
-                                    }));
+                        Belt_MutableMapInt.update(a, m, (function (prev) {
+                                if (prev !== undefined) {
+                                  return prev + 1 | 0;
+                                } else {
+                                  return 1;
+                                }
+                              }));
                       }));
                 return a;
               }));
@@ -123,15 +123,14 @@ function busiestMin(gAtt) {
 }
 
 function toString(gAtt) {
-  return Belt_MutableMapInt.forEach(gAtt, (function (gid, drs) {
-                console.log("gid:" + String(gid));
-                return Belt_MutableMapString.forEach(drs, (function (date, hr) {
-                              console.log("  date:" + date);
-                              console.log("    Set Size:" + String(Belt_MutableSetInt.size(hr)));
-                              console.log(Belt_MutableSetInt.toArray(hr));
-                              
-                            }));
-              }));
+  Belt_MutableMapInt.forEach(gAtt, (function (gid, drs) {
+          console.log("gid:" + String(gid) + "");
+          Belt_MutableMapString.forEach(drs, (function (date, hr) {
+                  console.log("  date:" + date + "");
+                  console.log("    Set Size:" + String(Belt_MutableSetInt.size(hr)) + "");
+                  console.log(Belt_MutableSetInt.toArray(hr));
+                }));
+        }));
 }
 
 var Attendance = {
@@ -181,9 +180,9 @@ function unboxBeginLine(l) {
   return {
           raw: raw,
           date: date,
-          h: Caml_format.caml_int_of_string(h),
-          m: Caml_format.caml_int_of_string(m),
-          gid: Caml_format.caml_int_of_string(gid)
+          h: Caml_format.int_of_string(h),
+          m: Caml_format.int_of_string(m),
+          gid: Caml_format.int_of_string(gid)
         };
 }
 
@@ -206,8 +205,8 @@ function unboxAsleepLine(l) {
   return {
           raw: raw,
           date: date,
-          h: Caml_format.caml_int_of_string(h),
-          m: Caml_format.caml_int_of_string(m),
+          h: Caml_format.int_of_string(h),
+          m: Caml_format.int_of_string(m),
           gid: -1
         };
 }
@@ -231,8 +230,8 @@ function unboxAwakeLine(l) {
   return {
           raw: raw,
           date: date,
-          h: Caml_format.caml_int_of_string(h),
-          m: Caml_format.caml_int_of_string(m),
+          h: Caml_format.int_of_string(h),
+          m: Caml_format.int_of_string(m),
           gid: -1
         };
 }
@@ -392,6 +391,5 @@ export {
   Parser ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

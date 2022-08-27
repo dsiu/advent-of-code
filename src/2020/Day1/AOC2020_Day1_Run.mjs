@@ -6,7 +6,6 @@ import * as AOC2020_Day1_Data_Sample$AdventOfCode from "./AOC2020_Day1_Data_Samp
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var part1 = AOC2020_Day1$AdventOfCode.solvePart2(AOC2020_Day1_Data$AdventOfCode.data);
@@ -22,6 +21,5 @@ export {
   data ,
   sampleData ,
   part1 ,
-  
 }
 /* part1 Not a pure module */

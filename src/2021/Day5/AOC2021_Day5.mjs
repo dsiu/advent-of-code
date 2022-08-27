@@ -10,7 +10,6 @@ import * as Array2D$AdventOfCode from "../../Array2D.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function fromArray(xs) {
@@ -119,7 +118,6 @@ function toPoints2(t) {
                         x: i,
                         y: start.y
                       }]);
-                
               }));
         return points.contents;
     case /* Vertical */1 :
@@ -142,7 +140,6 @@ function toPoints2(t) {
                         x: start$1.x,
                         y: i
                       }]);
-                
               }));
         return points$1.contents;
     case /* Diagonal */2 :
@@ -159,7 +156,7 @@ function toPoints2(t) {
 function cmp(a, b) {
   if (a === b) {
     return 0;
-  } else if (Caml_obj.caml_greaterthan(a, b)) {
+  } else if (Caml_obj.greaterthan(a, b)) {
     return 1;
   } else {
     return -1;
@@ -330,7 +327,6 @@ function solve(data, filter) {
                 p.x,
                 p.y
               ], add1);
-          
         }));
   return count(vents, (function (x) {
                 return x >= 2;
@@ -355,6 +351,5 @@ export {
   solve ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

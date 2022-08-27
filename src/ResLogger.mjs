@@ -6,7 +6,7 @@ function prependDate(message) {
   var hours = now.getHours().toString().padStart(2, "0");
   var minutes = now.getMinutes().toString().padStart(2, "0");
   var seconds = now.getSeconds().toString().padStart(2, "0");
-  return hours + ":" + minutes + ":" + seconds + " " + message;
+  return "" + hours + ":" + minutes + ":" + seconds + " " + message + "";
 }
 
 function log(level, msg) {
@@ -66,42 +66,41 @@ var loggerImpl = {
 
 function setLoggerImpl(impl) {
   loggerImpl.contents = impl;
-  
 }
 
 function make(moduleName) {
   var prefix = "[" + moduleName + "] ";
   var debug = function (message) {
     var I = loggerImpl.contents;
-    return I.log(/* Debug */0, prefix + message);
+    I.log(/* Debug */0, prefix + message);
   };
   var info = function (message) {
     var I = loggerImpl.contents;
-    return I.log(/* Info */1, prefix + message);
+    I.log(/* Info */1, prefix + message);
   };
   var warn = function (message) {
     var I = loggerImpl.contents;
-    return I.log(/* Warn */2, prefix + message);
+    I.log(/* Warn */2, prefix + message);
   };
   var error = function (message) {
     var I = loggerImpl.contents;
-    return I.log(/* Error */3, prefix + message);
+    I.log(/* Error */3, prefix + message);
   };
   var debug2 = function (message, obj) {
     var I = loggerImpl.contents;
-    return I.log2(/* Debug */0, prefix + message, obj);
+    I.log2(/* Debug */0, prefix + message, obj);
   };
   var info2 = function (message, obj) {
     var I = loggerImpl.contents;
-    return I.log2(/* Info */1, prefix + message, obj);
+    I.log2(/* Info */1, prefix + message, obj);
   };
   var warn2 = function (message, obj) {
     var I = loggerImpl.contents;
-    return I.log2(/* Warn */2, prefix + message, obj);
+    I.log2(/* Warn */2, prefix + message, obj);
   };
   var error2 = function (message, obj) {
     var I = loggerImpl.contents;
-    return I.log2(/* Error */3, prefix + message, obj);
+    I.log2(/* Error */3, prefix + message, obj);
   };
   return {
           debug: debug,
@@ -120,6 +119,5 @@ export {
   loggerImpl ,
   setLoggerImpl ,
   make ,
-  
 }
 /* No side effect */

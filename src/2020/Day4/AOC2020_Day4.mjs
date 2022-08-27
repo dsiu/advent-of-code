@@ -10,7 +10,6 @@ import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var requiredFields = [
@@ -69,8 +68,8 @@ function validateStringAsInt(s, f) {
 }
 
 function between(x, a, b) {
-  if (Caml_obj.caml_greaterequal(x, a)) {
-    return Caml_obj.caml_lessequal(x, b);
+  if (Caml_obj.greaterequal(x, a)) {
+    return Caml_obj.lessequal(x, b);
   } else {
     return false;
   }
@@ -286,6 +285,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

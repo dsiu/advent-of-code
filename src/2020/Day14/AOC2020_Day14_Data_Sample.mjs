@@ -8,6 +8,5 @@ var data2 = "mask = 000000000000000000000000000000X1001X\n             mem[42] =
 export {
   data ,
   data2 ,
-  
 }
 /* No side effect */

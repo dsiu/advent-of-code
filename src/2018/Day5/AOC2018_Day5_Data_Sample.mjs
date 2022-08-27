@@ -5,6 +5,5 @@ var data = "dabAcCaCBAcCcaDA";
 
 export {
   data ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "3,4,3,1,2";
 
 export {
   data ,
-  
 }
 /* No side effect */

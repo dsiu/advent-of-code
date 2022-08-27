@@ -68,7 +68,6 @@ describe("Step Functions", (function () {
         ];
         Jest2$AdventOfCode.testEach2("Single Step", singleStep_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var __x = Coordinate$AdventOfCode.stepN(init);
         var __x$1 = Coordinate$AdventOfCode.stepE(init);
@@ -114,7 +113,6 @@ describe("Step Functions", (function () {
         ];
         return Jest2$AdventOfCode.testEach2("Multiple Step", multipleStep_test, (function (result, expected) {
                       expect(result).toEqual(expected);
-                      
                     }));
       }));
 

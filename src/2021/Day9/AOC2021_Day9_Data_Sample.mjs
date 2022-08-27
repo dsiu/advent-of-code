@@ -8,6 +8,5 @@ var data2 = "3235678976\n             2124899989\n             1012567897\n     
 export {
   data ,
   data2 ,
-  
 }
 /* No side effect */

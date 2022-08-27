@@ -14,7 +14,6 @@ import * as Coordinate$AdventOfCode from "../../Coordinate.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function adjCoords(c) {
@@ -98,11 +97,11 @@ function getAllPoints(t) {
 }
 
 function cmp(param, param$1) {
-  var c = Caml_obj.caml_compare(param[0], param$1[0]);
+  var c = Caml_obj.compare(param[0], param$1[0]);
   if (c !== 0) {
     return c;
   } else {
-    return Caml_obj.caml_compare(param[1], param$1[1]);
+    return Caml_obj.compare(param[1], param$1[1]);
   }
 }
 
@@ -180,13 +179,12 @@ function make(xs) {
         y
       ], 0);
   Belt_Array.forEachWithIndex(xs, (function (y, ys) {
-          return Belt_Array.forEachWithIndex(ys, (function (x, c) {
-                        Array2D$AdventOfCode.set(ret, [
-                              x,
-                              y
-                            ], c);
-                        
-                      }));
+          Belt_Array.forEachWithIndex(ys, (function (x, c) {
+                  Array2D$AdventOfCode.set(ret, [
+                        x,
+                        y
+                      ], c);
+                }));
         }));
   return ret;
 }
@@ -247,6 +245,5 @@ export {
   solvePart1 ,
   solvePart2 ,
   solvePart2_from_github ,
-  
 }
 /* PairComparator Not a pure module */

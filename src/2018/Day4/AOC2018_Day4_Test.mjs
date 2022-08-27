@@ -11,21 +11,21 @@ Jest.describe("2018 Day4", (function (param) {
                         var result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data_Sample$AdventOfCode.data);
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), 240);
                       }));
-                return Jest.test("Solve Part 1 - Data", (function (param) {
-                              var result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data$AdventOfCode.data);
-                              return Jest.Expect.toEqual(Jest.Expect.expect(result), 48680);
-                            }));
+                Jest.test("Solve Part 1 - Data", (function (param) {
+                        var result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data$AdventOfCode.data);
+                        return Jest.Expect.toEqual(Jest.Expect.expect(result), 48680);
+                      }));
               }));
-        return Jest.describe("Part 2", (function (param) {
-                      Jest.test("Solve Part 2 - sampleData", (function (param) {
-                              var result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data_Sample$AdventOfCode.data);
-                              return Jest.Expect.toEqual(Jest.Expect.expect(result), 4455);
-                            }));
-                      return Jest.test("Solve Part 2 - Data", (function (param) {
-                                    var result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data$AdventOfCode.data);
-                                    return Jest.Expect.toEqual(Jest.Expect.expect(result), 94826);
-                                  }));
-                    }));
+        Jest.describe("Part 2", (function (param) {
+                Jest.test("Solve Part 2 - sampleData", (function (param) {
+                        var result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data_Sample$AdventOfCode.data);
+                        return Jest.Expect.toEqual(Jest.Expect.expect(result), 4455);
+                      }));
+                Jest.test("Solve Part 2 - Data", (function (param) {
+                        var result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data$AdventOfCode.data);
+                        return Jest.Expect.toEqual(Jest.Expect.expect(result), 94826);
+                      }));
+              }));
       }));
 
 var data = AOC2018_Day4_Data$AdventOfCode.data;
@@ -35,6 +35,5 @@ var sampleData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
 export {
   data ,
   sampleData ,
-  
 }
 /*  Not a pure module */

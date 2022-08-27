@@ -8,6 +8,5 @@ var data0 = "11111\n             19991\n             19191\n             19991\n
 export {
   data ,
   data0 ,
-  
 }
 /* No side effect */

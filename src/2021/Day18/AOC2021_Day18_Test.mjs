@@ -40,7 +40,6 @@ describe("2021 Day18", (function () {
             ]);
         Jest2$AdventOfCode.testEach2("reduce", reduce_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var makeMagnitudeTests = function (__x) {
           return Belt_Array.map(__x, (function (param) {
@@ -78,7 +77,6 @@ describe("2021 Day18", (function () {
             ]);
         Jest2$AdventOfCode.testEach2("magnitude", magnitude_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var makeSumOfTests = function (__x) {
           return Belt_Array.map(__x, (function (param) {
@@ -98,29 +96,23 @@ describe("2021 Day18", (function () {
               ]]);
         Jest2$AdventOfCode.testEach2("sumOf", sumOf_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2021_Day18$AdventOfCode.solvePart1(AOC2021_Day18_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(4140);
-                
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2021_Day18$AdventOfCode.solvePart1(AOC2021_Day18_Data$AdventOfCode.data);
                 expect(result).toEqual(4088);
-                
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2021_Day18$AdventOfCode.solvePart2(AOC2021_Day18_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(3993);
-                
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day18$AdventOfCode.solvePart2(AOC2021_Day18_Data$AdventOfCode.data);
                 expect(result).toEqual(4536);
-                
               }));
-        
       }));
 
 var data = AOC2021_Day18_Data$AdventOfCode.data;
@@ -136,6 +128,5 @@ export {
   sampleData ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /*  Not a pure module */

@@ -17,7 +17,7 @@
 
 @@warning("-3")
 
-open Format
+//open Format
 
 open Graph
 
@@ -60,16 +60,16 @@ module Dij = Path.Dijkstra(G, W)
 
 let (p, w) = Dij.shortest_path(gc, 1, 5)
 
-open G.E
+//open G.E
 
-let () = {
-  List.iter(e => printf("[%d -> %d]", src(e), dst(e)), p)
-  printf("@.")
-}
+//let () = {
+//  List.iter(e => printf("[%d -> %d]", src(e), dst(e)), p)
+//  printf("@.")
+//}
 
 module Comp = Components.Make(G)
 let g = G.add_edge(g, 3, 2)
 let (n, f) = Comp.scc(g)
-let () = G.iter_edges((u, v) => printf("%d -> %d@.", u, v), g)
-let () = printf("%d components@.", n)
-let () = G.iter_vertex(v => printf("  %d -> %d@.", v, f(v)), g)
+//let () = G.iter_edges((u, v) => printf("%d -> %d@.", u, v), g)
+//let () = printf("%d components@.", n)
+//let () = G.iter_vertex(v => printf("  %d -> %d@.", v, f(v)), g)

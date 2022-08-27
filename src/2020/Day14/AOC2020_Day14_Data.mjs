@@ -5,6 +5,5 @@ var data = "mask = 11100XX0000X1101X1010100X1010001XX0X\n            mem[24196] 
 
 export {
   data ,
-  
 }
 /* No side effect */

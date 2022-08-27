@@ -9,7 +9,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function inc(t, k) {
@@ -19,7 +18,7 @@ function inc(t, k) {
 function mostCommon(t) {
   var one_count = Belt_MapInt.get(t, 1);
   var zero_count = Belt_MapInt.get(t, 0);
-  if (Caml_obj.caml_equal(one_count, zero_count) || Caml_obj.caml_greaterthan(one_count, zero_count)) {
+  if (Caml_obj.equal(one_count, zero_count) || Caml_obj.greaterthan(one_count, zero_count)) {
     return 1;
   } else {
     return 0;
@@ -29,7 +28,7 @@ function mostCommon(t) {
 function leastCommon(t) {
   var one_count = Belt_MapInt.get(t, 1);
   var zero_count = Belt_MapInt.get(t, 0);
-  if (Caml_obj.caml_equal(one_count, zero_count) || !Caml_obj.caml_lessthan(one_count, zero_count)) {
+  if (Caml_obj.equal(one_count, zero_count) || !Caml_obj.lessthan(one_count, zero_count)) {
     return 0;
   } else {
     return 1;
@@ -84,7 +83,7 @@ function calTotal(xs) {
   return Belt_Array.reduce(xs, Belt_MutableMapInt.make(undefined), (function (a, bits) {
                 Belt_Array.forEachWithIndex(bits, (function (idx, bit_val) {
                         var orig_total = getSafe(a, idx);
-                        return Belt_MutableMapInt.set(a, idx, inc(orig_total, bit_val));
+                        Belt_MutableMapInt.set(a, idx, inc(orig_total, bit_val));
                       }));
                 return a;
               }));
@@ -119,7 +118,7 @@ function findRating(xs, func) {
       var criteria = Belt_Array.getExn(filter, bit_pos);
       var next_inputs = Belt_Array.keep(inputs, (function(bit_pos,criteria){
           return function (x) {
-            return Caml_obj.caml_equal(Belt_Array.getExn(x, bit_pos), criteria);
+            return Caml_obj.equal(Belt_Array.getExn(x, bit_pos), criteria);
           }
           }(bit_pos,criteria)));
       _inputs = next_inputs;
@@ -181,6 +180,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

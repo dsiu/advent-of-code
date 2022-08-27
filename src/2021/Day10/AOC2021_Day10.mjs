@@ -14,7 +14,6 @@ import * as Stack_Array$AdventOfCode from "../../Stack_Array.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day10-AdventOfCode.ParseError");
@@ -72,7 +71,7 @@ function make(c) {
     default:
       throw {
             RE_EXN_ID: ParseError,
-            _1: c + " is not supported",
+            _1: "" + c + " is not supported",
             Error: new Error()
           };
   }
@@ -421,7 +420,6 @@ function examples(param) {
                   _1: i
                 };
         }));
-  
 }
 
 function getCorruptedScore(param) {
@@ -514,6 +512,5 @@ export {
   getIncompleteScore ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

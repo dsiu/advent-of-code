@@ -5,6 +5,5 @@ var data = "1000186\n            17,x,x,x,x,x,x,x,x,x,x,37,x,x,x,x,x,907,x,x,x,x
 
 export {
   data ,
-  
 }
 /* No side effect */

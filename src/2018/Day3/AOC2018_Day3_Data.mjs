@@ -5,6 +5,5 @@ var data = "#1 @ 669,271: 17x11\n#2 @ 153,186: 20x26\n#3 @ 186,838: 28x11\n#4 @ 
 
 export {
   data ,
-  
 }
 /* No side effect */

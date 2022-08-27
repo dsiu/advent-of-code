@@ -102,6 +102,7 @@ module Passport = {
         | (_, _) => false
         }
       }
+
     | None => false
     }
   }
@@ -132,7 +133,7 @@ let parse = data =>
   data
   ->Js.String2.split("\n\n")
   ->Array.map(x => {
-    x->Js.String2.trim->Js.String2.replaceByRe(%re("/(\\r\\n|\\r|\\n|\\s)+/g"), " ")
+    x->Js.String2.trim->Js.String2.replaceByRe(%re("/(\r\n|\r|\n|\s)+/g"), " ")
   })
 
 let solvePart1 = data => {

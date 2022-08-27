@@ -8,7 +8,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function color(t) {
@@ -123,9 +122,7 @@ function doesThisBagContain(t, srcColor, match) {
   return Belt_Array.reduce(leaf, [], (function (a, x) {
                 if (isEmpty(x)) {
                   return a;
-                }
-                var color = match.color;
-                if (x.color === color) {
+                } else if (x.color === match.color) {
                   return Belt_Array.concat(a, [srcColor]);
                 } else {
                   return Belt_Array.concat(a, doesThisBagContain(t, x.color, match));
@@ -222,6 +219,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "6,10\n            0,14\n            9,10\n            0,3\n         
 
 export {
   data ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "4-8 g: ggtxgtgbg\n            13-14 q: qmzdrtqctvrqsb\n            1
 
 export {
   data ,
-  
 }
 /* No side effect */

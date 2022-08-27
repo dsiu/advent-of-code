@@ -139,6 +139,5 @@ export {
   up ,
   upmost ,
   modify ,
-  
 }
 /* No side effect */

@@ -44,6 +44,5 @@ function solvePart2(data) {
 export {
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

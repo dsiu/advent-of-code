@@ -5,6 +5,5 @@ var data = "199\n            200\n            208\n            210\n            
 
 export {
   data ,
-  
 }
 /* No side effect */

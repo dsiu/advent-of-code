@@ -14,7 +14,6 @@ import * as Powerset$AdventOfCode from "../../Powerset.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function onlyXto1(c) {
@@ -46,7 +45,7 @@ function makeMask(m, f) {
 }
 
 function toString(param) {
-  return "mask: " + param.mask + "\n" + ("mask_x: " + Int64.to_string(param.mask_x) + "\n") + ("mask_x_str: " + param.mask_x_str) + ("mask_one: " + Int64.to_string(param.mask_one) + "\n") + ("mask_zero: " + Int64.to_string(param.mask_zero));
+  return "mask: " + param.mask + "\n" + ("mask_x: " + Int64.to_string(param.mask_x) + "\n") + ("mask_x_str: " + param.mask_x_str + "") + ("mask_one: " + Int64.to_string(param.mask_one) + "\n") + ("mask_zero: " + Int64.to_string(param.mask_zero) + "");
 }
 
 function makePassThurMask(__x) {
@@ -63,7 +62,7 @@ function makeZeroMask(__x) {
 
 function make(str) {
   return {
-          mask: str.slice(7),
+          mask: str.slice("mask = ".length),
           mask_x: Utils$AdventOfCode.int64FromBitString(makeMask(str, onlyXto1)),
           mask_x_str: makeMask(str, onlyXto1),
           mask_one: Utils$AdventOfCode.int64FromBitString(makeMask(str, only1to1)),
@@ -89,13 +88,13 @@ function make$1(str) {
           return Belt_Option.getExn((l == null) ? undefined : Caml_option.some(l));
         }));
   return {
-          address: Belt_Option.getExn(Belt_Option.map(Belt_Array.get(parsed, 1), Caml_format.caml_int64_of_string)),
-          value: Belt_Option.getExn(Belt_Option.map(Belt_Array.get(parsed, 2), Caml_format.caml_int64_of_string))
+          address: Belt_Option.getExn(Belt_Option.map(Belt_Array.get(parsed, 1), Caml_format.int64_of_string)),
+          value: Belt_Option.getExn(Belt_Option.map(Belt_Array.get(parsed, 2), Caml_format.int64_of_string))
         };
 }
 
 function toString$1(t) {
-  return "address: " + Int64.to_string(t.address) + "\n" + ("value: " + Int64.to_string(t.value));
+  return "address: " + Int64.to_string(t.address) + "\n" + ("value: " + Int64.to_string(t.value) + "");
 }
 
 var Memory = {
@@ -149,9 +148,9 @@ function decodeMemory(mask, mem_value) {
 }
 
 function part1Algo(space, mask, mem) {
-  return Belt_MutableMapString.update(space, Int64.to_string(mem.address), (function (v) {
-                return decodeMemory(mask, mem.value);
-              }));
+  Belt_MutableMapString.update(space, Int64.to_string(mem.address), (function (v) {
+          return decodeMemory(mask, mem.value);
+        }));
 }
 
 function bit1Index(m) {
@@ -181,11 +180,11 @@ function decodeAddress(mask, mem_address) {
 
 function part2Algo(space, mask, mem) {
   var addresses = decodeAddress(mask, mem.address);
-  return Belt_Array.forEach(addresses, (function (addr) {
-                return Belt_MutableMapString.update(space, addr, (function (v) {
-                              return mem.value;
-                            }));
-              }));
+  Belt_Array.forEach(addresses, (function (addr) {
+          Belt_MutableMapString.update(space, addr, (function (v) {
+                  return mem.value;
+                }));
+        }));
 }
 
 function run(t, algo) {
@@ -265,6 +264,5 @@ export {
   memoryToAnswer ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

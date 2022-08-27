@@ -9,7 +9,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function update_value_inc_by_1(h, k) {
@@ -28,7 +27,6 @@ function make(template, rules) {
           template: Belt_List.fromArray(template),
           rules: (Belt_Array.forEach(rules, (function (param) {
                     Belt_HashMapString.set(r, param[0], param[1]);
-                    
                   })), r)
         };
 }
@@ -175,10 +173,9 @@ function genNewKeys(k, rules) {
 function iterate(m, rules) {
   var m$p = Belt_HashMapString.make(40);
   Belt_HashMapString.forEach(m, (function (k, v) {
-          return Belt_Array.forEach(genNewKeys(k, rules), (function (k$p) {
-                        update_value_inc_by_n(m$p, k$p, v);
-                        
-                      }));
+          Belt_Array.forEach(genNewKeys(k, rules), (function (k$p) {
+                  update_value_inc_by_n(m$p, k$p, v);
+                }));
         }));
   return m$p;
 }
@@ -203,10 +200,9 @@ function iterateN(param, n) {
 function countPolymers(m, template) {
   var r = Belt_HashMapString.make(40);
   Belt_HashMapString.forEach(m, (function (k, v) {
-          return Belt_Array.forEach(Utils$AdventOfCode.splitChars(k), (function (c) {
-                        update_value_inc_by_n(r, c, v);
-                        
-                      }));
+          Belt_Array.forEach(Utils$AdventOfCode.splitChars(k), (function (c) {
+                  update_value_inc_by_n(r, c, v);
+                }));
         }));
   var first_poly = Belt_List.headExn(template);
   Belt_HashMapString.forEach(r, (function (k, v) {
@@ -217,7 +213,7 @@ function countPolymers(m, template) {
                   0,
                   2
                 ]);
-          return Belt_HashMapString.set(r, k, v$p);
+          Belt_HashMapString.set(r, k, v$p);
         }));
   return r;
 }
@@ -289,6 +285,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

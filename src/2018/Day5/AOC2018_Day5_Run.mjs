@@ -9,6 +9,5 @@ Utils$AdventOfCode.log(result);
 
 export {
   result ,
-  
 }
 /* result Not a pure module */

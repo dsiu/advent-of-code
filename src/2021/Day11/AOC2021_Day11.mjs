@@ -11,7 +11,6 @@ import * as Coordinate$AdventOfCode from "../../Coordinate.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function adjCoords(c) {
@@ -112,7 +111,6 @@ function iterate(t) {
     }
     Belt_Array.forEachU(flashings, (function (flash_coord) {
             dim(performFlash(next, flash_coord), flash_coord);
-            
           }));
     continue ;
   };
@@ -205,7 +203,6 @@ function solvePart1_try(data) {
   var e$1 = iterateN(d, 100);
   console.log(toString(e$1));
   console.log("iterate " + String(100) + " ----");
-  
 }
 
 function solvePart1(data) {
@@ -231,6 +228,5 @@ export {
   solvePart1_try ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

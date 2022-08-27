@@ -6,7 +6,6 @@ import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function make(zero, one, raw) {
@@ -19,7 +18,7 @@ function make(zero, one, raw) {
 }
 
 function replace(src, from, to_) {
-  if (Caml_obj.caml_equal(src, from)) {
+  if (Caml_obj.equal(src, from)) {
     return to_;
   } else {
     return src;
@@ -72,7 +71,7 @@ function parse(data) {
 }
 
 function maxReducer(a, x) {
-  if (Caml_obj.caml_greaterthan(x, a)) {
+  if (Caml_obj.greaterthan(x, a)) {
     return x;
   } else {
     return a;
@@ -109,6 +108,5 @@ export {
   findGap ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

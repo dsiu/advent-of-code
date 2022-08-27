@@ -5,6 +5,5 @@ var data = "[1518-07-04 00:01] falls asleep\n[1518-06-27 00:42] wakes up\n[1518-
 
 export {
   data ,
-  
 }
 /* No side effect */

@@ -5,6 +5,5 @@ var data = "F10\n            N3\n            F7\n            R90\n            F1
 
 export {
   data ,
-  
 }
 /* No side effect */

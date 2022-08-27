@@ -7,7 +7,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var InvalidStatus = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day12-AdventOfCode.InvalidStatus");
@@ -521,6 +520,5 @@ export {
   solve ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* No side effect */

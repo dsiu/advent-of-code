@@ -10,17 +10,17 @@ import * as AOC2020_Day14_Data_Sample$AdventOfCode from "./AOC2020_Day14_Data_Sa
 Jest.describe("2020 Day14", (function (param) {
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2020_Day14$AdventOfCode.solvePart1(AOC2020_Day14_Data_Sample$AdventOfCode.data);
-                var expected = Caml_format.caml_int64_of_string("165");
+                var expected = Caml_format.int64_of_string("165");
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2020_Day14$AdventOfCode.solvePart1(AOC2020_Day14_Data$AdventOfCode.data);
-                var expected = Caml_format.caml_int64_of_string("17765746710228");
+                var expected = Caml_format.int64_of_string("17765746710228");
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
         Jest.test("Part 2 - Mem Address Decoder 1 ", (function (param) {
                 var mask = Curry._1(AOC2020_Day14$AdventOfCode.Program.Mask.make, "000000000000000000000000000000X1001X");
-                var address = Caml_format.caml_int64_of_string("0u42");
+                var address = Caml_format.int64_of_string("0u42");
                 var result = AOC2020_Day14$AdventOfCode.Program.decodeAddress(mask, address);
                 var expected = [
                   "26",
@@ -32,7 +32,7 @@ Jest.describe("2020 Day14", (function (param) {
               }));
         Jest.test("Part 2 - Mem Address Decoder 2 ", (function (param) {
                 var mask = Curry._1(AOC2020_Day14$AdventOfCode.Program.Mask.make, "00000000000000000000000000000000X0XX");
-                var address = Caml_format.caml_int64_of_string("0u26");
+                var address = Caml_format.int64_of_string("0u26");
                 var result = AOC2020_Day14$AdventOfCode.Program.decodeAddress(mask, address);
                 var expected = [
                   "16",
@@ -46,11 +46,11 @@ Jest.describe("2020 Day14", (function (param) {
                 ];
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
-        return Jest.test("Part 2 - Solve", (function (param) {
-                      var result = AOC2020_Day14$AdventOfCode.solvePart2(AOC2020_Day14_Data$AdventOfCode.data);
-                      var expected = Caml_format.caml_int64_of_string("4401465949086");
-                      return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-                    }));
+        Jest.test("Part 2 - Solve", (function (param) {
+                var result = AOC2020_Day14$AdventOfCode.solvePart2(AOC2020_Day14_Data$AdventOfCode.data);
+                var expected = Caml_format.int64_of_string("4401465949086");
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+              }));
       }));
 
 var data = AOC2020_Day14_Data$AdventOfCode.data;
@@ -60,6 +60,5 @@ var sampleData = AOC2020_Day14_Data_Sample$AdventOfCode.data;
 export {
   data ,
   sampleData ,
-  
 }
 /*  Not a pure module */

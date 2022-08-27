@@ -118,7 +118,6 @@ describe("Tree", (function () {
             ]);
         Jest2$AdventOfCode.testEach2("left", left_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var right_tests = toString([
               [
@@ -153,7 +152,6 @@ describe("Tree", (function () {
             ]);
         Jest2$AdventOfCode.testEach2("right", right_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var left_right_tests = toString([
               [
@@ -237,7 +235,6 @@ describe("Tree", (function () {
             ]);
         Jest2$AdventOfCode.testEach2("left right", left_right_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var upmost_tests = toString([
               [
@@ -313,7 +310,6 @@ describe("Tree", (function () {
             ]);
         Jest2$AdventOfCode.testEach2("upmost", upmost_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var up_tests = toString([
               [
@@ -370,7 +366,6 @@ describe("Tree", (function () {
             ]);
         Jest2$AdventOfCode.testEach2("up", up_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var modify_tests = toString([
               [
@@ -502,7 +497,6 @@ describe("Tree", (function () {
             ]);
         return Jest2$AdventOfCode.testEach2("modify", modify_tests, (function (result, expected) {
                       expect(result).toEqual(expected);
-                      
                     }));
       }));
 

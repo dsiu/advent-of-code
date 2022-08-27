@@ -5,6 +5,5 @@ var data = "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe
 
 export {
   data ,
-  
 }
 /* No side effect */

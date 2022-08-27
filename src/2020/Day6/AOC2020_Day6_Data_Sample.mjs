@@ -5,6 +5,5 @@ var data = "abc\n\n            a\n            b\n            c\n\n            ab
 
 export {
   data ,
-  
 }
 /* No side effect */

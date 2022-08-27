@@ -5,6 +5,5 @@ var data = "clvxybjp\n            kripatlzy\n\n            yrn\n            labi
 
 export {
   data ,
-  
 }
 /* No side effect */

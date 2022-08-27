@@ -4,11 +4,11 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 
 function cmp(param, param$1) {
-  var r = Caml_obj.caml_compare(param[0], param$1[0]);
+  var r = Caml_obj.compare(param[0], param$1[0]);
   if (r !== 0) {
     return r;
   } else {
-    return Caml_obj.caml_compare(param[1], param$1[1]);
+    return Caml_obj.compare(param[1], param$1[1]);
   }
 }
 
@@ -25,15 +25,15 @@ var V2 = {
 };
 
 function cmp$1(param, param$1) {
-  var r = Caml_obj.caml_compare(param[0], param$1[0]);
+  var r = Caml_obj.compare(param[0], param$1[0]);
   if (r !== 0) {
     return r;
   }
-  var r$1 = Caml_obj.caml_compare(param[1], param$1[1]);
+  var r$1 = Caml_obj.compare(param[1], param$1[1]);
   if (r$1 !== 0) {
     return r$1;
   } else {
-    return Caml_obj.caml_compare(param[2], param$1[2]);
+    return Caml_obj.compare(param[2], param$1[2]);
   }
 }
 
@@ -53,6 +53,5 @@ var V3 = {
 export {
   V2 ,
   V3 ,
-  
 }
 /* No side effect */

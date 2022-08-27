@@ -11,7 +11,6 @@ import * as Coordinate$AdventOfCode from "../../Coordinate.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var InvalidStatus = /* @__PURE__ */Caml_exceptions.create("AOC2020_Day11-AdventOfCode.SeatMap.InvalidStatus");
@@ -210,13 +209,12 @@ function make$1(xs) {
         y
       ], ".");
   Belt_Array.forEachWithIndex(xs, (function (y, ys) {
-          return Belt_Array.forEachWithIndex(Utils$AdventOfCode.splitChars(ys), (function (x, c) {
-                        Array2D$AdventOfCode.set(ret, [
-                              x,
-                              y
-                            ], make(c));
-                        
-                      }));
+          Belt_Array.forEachWithIndex(Utils$AdventOfCode.splitChars(ys), (function (x, c) {
+                  Array2D$AdventOfCode.set(ret, [
+                        x,
+                        y
+                      ], make(c));
+                }));
         }));
   return ret;
 }
@@ -278,6 +276,5 @@ export {
   parse ,
   solvePart1$1 as solvePart1,
   solvePart2$1 as solvePart2,
-  
 }
 /* No side effect */

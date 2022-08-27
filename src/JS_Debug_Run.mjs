@@ -29,6 +29,5 @@ export {
   LogR ,
   error ,
   b ,
-  
 }
 /* Log Not a pure module */

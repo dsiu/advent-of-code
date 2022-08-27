@@ -5,6 +5,5 @@ var data = "609,754\n            1101,140\n            1129,317\n            622
 
 export {
   data ,
-  
 }
 /* No side effect */

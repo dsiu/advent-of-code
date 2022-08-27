@@ -11,6 +11,5 @@ export {
   data0 ,
   data1 ,
   data ,
-  
 }
 /* No side effect */

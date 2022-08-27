@@ -62,7 +62,6 @@ describe("ChineseRemainder", (function () {
         ];
         Jest2$AdventOfCode.testEach2("int", int_tests, (function (result, expected) {
                 expect(result).toEqual(expected);
-                
               }));
         var bigint_tests = [
           [
@@ -88,7 +87,6 @@ describe("ChineseRemainder", (function () {
         ];
         return Jest2$AdventOfCode.testEach2("big int", bigint_tests, (function (result, expected) {
                       expect(result.toString()).toEqual(expected.toString());
-                      
                     }));
       }));
 

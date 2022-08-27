@@ -10,8 +10,7 @@ function toString(t) {
     contents: ""
   };
   Belt_HashMapString.forEach(t, (function (k, v) {
-          str.contents = str.contents + k + ": [ " + Belt_HashSetString.toArray(v).join(",") + " ]\n";
-          
+          str.contents = "" + str.contents + "" + k + ": [ " + Belt_HashSetString.toArray(v).join(",") + " ]\n";
         }));
   return str.contents;
 }
@@ -40,7 +39,7 @@ function getVertex(t, x) {
 }
 
 function addEdge(t, x, y) {
-  return Belt_HashSetString.add(getVertex(t, x), y);
+  Belt_HashSetString.add(getVertex(t, x), y);
 }
 
 function removeEdge(t, x, y) {
@@ -75,6 +74,5 @@ export {
   removeEdge ,
   adjacent ,
   neighbors ,
-  
 }
 /* No side effect */

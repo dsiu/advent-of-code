@@ -13,7 +13,6 @@ import * as Adjacency_List$AdventOfCode from "../../Adjacency_List.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day12-AdventOfCode.Maze.ParseError");
@@ -30,7 +29,7 @@ function make(edges) {
           var a = edge[0];
           var b = edge[1];
           AdjacencyList$AdventOfCode.AdjList_String.addEdge(maze, a, b);
-          return AdjacencyList$AdventOfCode.AdjList_String.addEdge(maze, b, a);
+          AdjacencyList$AdventOfCode.AdjList_String.addEdge(maze, b, a);
         }));
   return maze;
 }
@@ -193,6 +192,5 @@ export {
   parse ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* AdjacencyList-AdventOfCode Not a pure module */

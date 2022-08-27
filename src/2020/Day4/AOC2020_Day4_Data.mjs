@@ -5,6 +5,5 @@ var data = "ecl:#eef340 eyr:2023 hcl:#c0946f pid:244684338 iyr:2020 cid:57 byr:1
 
 export {
   data ,
-  
 }
 /* No side effect */

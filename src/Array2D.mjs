@@ -209,6 +209,5 @@ export {
   crop ,
   eq ,
   toString ,
-  
 }
 /* No side effect */

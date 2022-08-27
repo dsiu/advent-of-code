@@ -32,15 +32,15 @@ Jest.describe("2018 Day6", (function (param) {
                         var result = AOC2018_Day6$AdventOfCode.Coord.dist(a, b);
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), 39);
                       }));
-                return Jest.Skip.test("Solve Part 1", (function (param) {
-                              return Jest.Expect.toEqual(Jest.Expect.expect(1), 1);
-                            }));
+                Jest.Skip.test("Solve Part 1", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(1), 1);
+                      }));
               }));
-        return Jest.describe("Part 2", (function (param) {
-                      return Jest.Skip.test("Solve Part 2", (function (param) {
-                                    return Jest.Expect.toEqual(Jest.Expect.expect(1), 1);
-                                  }));
-                    }));
+        Jest.describe("Part 2", (function (param) {
+                Jest.Skip.test("Solve Part 2", (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(1), 1);
+                      }));
+              }));
       }));
 
 var data = AOC2018_Day6_Data$AdventOfCode.data;
@@ -50,6 +50,5 @@ var sampleData = AOC2018_Day6_Data_Sample$AdventOfCode.data;
 export {
   data ,
   sampleData ,
-  
 }
 /*  Not a pure module */

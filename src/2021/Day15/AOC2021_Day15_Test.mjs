@@ -8,24 +8,19 @@ describe("2021 Day15", (function () {
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2021_Day15$AdventOfCode.solvePart1(AOC2021_Day15_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(40);
-                
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2021_Day15$AdventOfCode.solvePart1(AOC2021_Day15_Data$AdventOfCode.data);
                 expect(result).toEqual(811);
-                
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2021_Day15$AdventOfCode.solvePart2(AOC2021_Day15_Data_Sample$AdventOfCode.data);
                 expect(result).toEqual(315);
-                
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day15$AdventOfCode.solvePart2(AOC2021_Day15_Data$AdventOfCode.data);
                 expect(result).toEqual(3012);
-                
               }));
-        
       }));
 
 var data = AOC2021_Day15_Data$AdventOfCode.data;
@@ -44,6 +39,5 @@ export {
   solvePart1 ,
   solvePart2 ,
   Cave ,
-  
 }
 /*  Not a pure module */

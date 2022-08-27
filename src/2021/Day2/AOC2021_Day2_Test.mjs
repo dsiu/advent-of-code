@@ -18,10 +18,10 @@ Jest.describe("2021 Day2", (function (param) {
                 var result = AOC2021_Day2$AdventOfCode.solvePart2(AOC2021_Day2_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 900);
               }));
-        return Jest.test("Part 2 - Solve", (function (param) {
-                      var result = AOC2021_Day2$AdventOfCode.solvePart2(AOC2021_Day2_Data$AdventOfCode.data);
-                      return Jest.Expect.toEqual(Jest.Expect.expect(result), 1971095320);
-                    }));
+        Jest.test("Part 2 - Solve", (function (param) {
+                var result = AOC2021_Day2$AdventOfCode.solvePart2(AOC2021_Day2_Data$AdventOfCode.data);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1971095320);
+              }));
       }));
 
 var data = AOC2021_Day2_Data$AdventOfCode.data;
@@ -31,6 +31,5 @@ var sampleData = AOC2021_Day2_Data_Sample$AdventOfCode.data;
 export {
   data ,
   sampleData ,
-  
 }
 /*  Not a pure module */

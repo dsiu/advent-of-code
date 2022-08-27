@@ -103,6 +103,5 @@ export {
   flatMapArray ,
   powersetArrayFlatMap_ ,
   powersetArray ,
-  
 }
 /* No side effect */

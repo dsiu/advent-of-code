@@ -5,6 +5,5 @@ var data = "CBNBOKHVBONCPPBBCKVH\n\n            FK -> O\n            BK -> B\n  
 
 export {
   data ,
-  
 }
 /* No side effect */

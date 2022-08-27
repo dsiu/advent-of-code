@@ -8,6 +8,5 @@ var data2 = "1202000000\n             1789,37,47,1889";
 export {
   data ,
   data2 ,
-  
 }
 /* No side effect */

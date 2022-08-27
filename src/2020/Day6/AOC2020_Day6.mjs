@@ -6,7 +6,6 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function parsePart1(x) {
@@ -49,6 +48,5 @@ export {
   parsePart2 ,
   solvePart1 ,
   solvePart2 ,
-  
 }
 /* filled Not a pure module */
