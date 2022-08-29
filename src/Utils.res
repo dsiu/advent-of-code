@@ -6,8 +6,14 @@ let log = Js.Console.log
 
 let identity = FP_Utils.identity
 
-// map string
+/**
+ Printable
+ */
 module Printable = {
+  /**
+    MapString
+    @param: m
+  */
   module MapString = {
     let toString = (m, f) =>
       Map.String.reduce(m, "", (a, k, v) => {
@@ -23,7 +29,9 @@ module Printable = {
     }
   }
 
-  // map int
+  /**
+    MapInt
+  */
   module MapInt = {
     let toString = (m, f) => {
       Map.Int.reduce(m, "", (a, k, v) => {
@@ -35,6 +43,11 @@ module Printable = {
     }
 
     module Int = {
+      /**
+       @returns String
+       @param {Map} m the `map`
+       @param b the other
+      */
       let toString = m => toString(m, Int.toString)
     }
 

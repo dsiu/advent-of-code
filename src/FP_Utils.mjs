@@ -9,8 +9,19 @@ function flatMapList(xs, f) {
   return Belt_List.reduce(Belt_List.map(xs, f), /* [] */0, Belt_List.concat);
 }
 
+function listToOption(l) {
+  if (l) {
+    return Caml_option.some(l.hd);
+  }
+  
+}
+
 function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
+}
+
+function arrayToOption(__x) {
+  return Belt_Array.get(__x, 0);
 }
 
 function foldLeftArray(xs, f) {
@@ -34,6 +45,16 @@ function combinationArray2(a, b, f) {
               }));
 }
 
+function combinationArray3(a, b, c, f) {
+  return Belt_Array.reduce(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
+                                  return Belt_Array.concat(acc, Belt_Array.reduce(c, [], (function (acc, z) {
+                                                    return Belt_Array.concat(acc, [Curry._3(f, x, y, z)]);
+                                                  })));
+                                })));
+              }));
+}
+
 function combinationIfArray2(a, b, f) {
   return Belt_Array.reduce(a, [], (function (acc, x) {
                 return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
@@ -43,6 +64,21 @@ function combinationIfArray2(a, b, f) {
                                   } else {
                                     return acc;
                                   }
+                                })));
+              }));
+}
+
+function combinationIfArray3(a, b, c, f) {
+  return Belt_Array.reduce(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
+                                  return Belt_Array.concat(acc, Belt_Array.reduce(c, [], (function (acc, z) {
+                                                    var r = Curry._3(f, x, y, z);
+                                                    if (r !== undefined) {
+                                                      return Belt_Array.concat(acc, [Caml_option.valFromOption(r)]);
+                                                    } else {
+                                                      return acc;
+                                                    }
+                                                  })));
                                 })));
               }));
 }
@@ -83,19 +119,17 @@ function composeN(fs) {
   return foldLeftArray(fs, compose);
 }
 
-var List;
-
-var $$Array;
-
 export {
-  List ,
   flatMapList ,
-  $$Array ,
+  listToOption ,
   flatMapArray ,
+  arrayToOption ,
   foldLeftArray ,
   foldRightArray ,
   combinationArray2 ,
+  combinationArray3 ,
   combinationIfArray2 ,
+  combinationIfArray3 ,
   optionOr ,
   identity ,
   eq ,

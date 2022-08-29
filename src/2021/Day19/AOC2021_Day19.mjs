@@ -2,15 +2,22 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Bag$Bag from "rescript-bag/src/bag.mjs";
-import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
+import * as Belt_Id from "rescript/lib/es6/belt_Id.js";
+import * as Belt_Set from "rescript/lib/es6/belt_Set.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
+import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
+import * as Linear$AdventOfCode from "../../Linear.mjs";
 import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
+}
+
+function log2(prim0, prim1) {
+  console.log(prim0, prim1);
 }
 
 function coordToString(param) {
@@ -33,7 +40,7 @@ function rotX(param) {
   return /* Coord */{
           _0: [
             match[0],
-            -match[2] | 0,
+            -match[2],
             match[1]
           ]
         };
@@ -45,7 +52,7 @@ function rotY(param) {
           _0: [
             match[2],
             match[1],
-            -match[0] | 0
+            -match[0]
           ]
         };
 }
@@ -54,7 +61,7 @@ function rotZ(param) {
   var match = param._0;
   return /* Coord */{
           _0: [
-            -match[1] | 0,
+            -match[1],
             match[0],
             match[2]
           ]
@@ -66,9 +73,9 @@ function translate(param, param$1) {
   var match$1 = param._0;
   return /* Coord */{
           _0: [
-            match$1[0] + match[0] | 0,
-            match$1[1] + match[1] | 0,
-            match$1[2] + match[2] | 0
+            match$1[0] + match[0],
+            match$1[1] + match[1],
+            match$1[2] + match[2]
           ]
         };
 }
@@ -111,19 +118,19 @@ var rotations = FP_Utils$AdventOfCode.combinationArray2(ras, rbs, (function (a, 
         };
       }));
 
-console.log(rotations.length);
-
-var prim = Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, rotations, transformToString);
-
-console.log(prim);
-
 var compare = Caml_obj.compare;
 
 var I = {
   compare: compare
 };
 
-var B = Bag$Bag.Make(I);
+var compare$1 = Caml_obj.compare;
+
+var F = {
+  compare: compare$1
+};
+
+var B = Bag$Bag.Make(F);
 
 function bagFromArray(__x) {
   return Belt_Array.reduce(__x, B.empty, (function (acc, x) {
@@ -141,29 +148,183 @@ function bagToString(b) {
   return "{" + str.contents + "}";
 }
 
+function eq(a, b) {
+  return a.scannerName === b.scannerName;
+}
+
 function toString(t) {
   return Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, t, (function (param) {
                 return "scannerName: " + param.scannerName + ", beacons: " + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, param.beacons, (function (param) {
                               var match = param._0;
                               return "(" + match[0] + ", " + match[1] + ", " + match[2] + ")";
-                            })) + "\n" + ("signature: " + bagToString(param.signature) + "") + "\n";
+                            })) + ", " + ("signature: " + bagToString(param.signature) + "") + "\n";
               }));
 }
 
 function sign(bcns) {
   var pythag = function (param) {
-    var match = param._0;
-    var z = match[2];
-    var y = match[1];
-    var x = match[0];
-    return (Math.imul(x, x) + Math.imul(y, y) | 0) + Math.imul(z, z) | 0;
+    var z = param[2];
+    var y = param[1];
+    var x = param[0];
+    return x * x + y * y + z * z;
   };
   return bagFromArray(FP_Utils$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
-                    if (Caml_obj.lessthan(a, b)) {
-                      return pythag(a) - pythag(b) | 0;
+                    var b$1 = b._0;
+                    var a$1 = a._0;
+                    if (Linear$AdventOfCode.V3.cmp(b$1, a$1) > 0) {
+                      return pythag(a$1) - pythag(b$1);
                     }
                     
                   })));
+}
+
+function vagueMatch(scanner1, scanner2) {
+  var s1 = scanner1.signature;
+  var s2 = scanner2.signature;
+  var s = Curry._1(B.cardinal, Curry._2(B.inter, s1, s2));
+  return s >= 66;
+}
+
+function minus(a, b) {
+  var b$1 = b._0;
+  var a$1 = a._0;
+  return /* Coord */{
+          _0: [
+            a$1[0] - b$1[0],
+            a$1[1] - b$1[1],
+            a$1[2] - b$1[2]
+          ]
+        };
+}
+
+function cmp(a, b) {
+  return Linear$AdventOfCode.V3.cmp(a._0, b._0);
+}
+
+var V3Comparator = Belt_Id.MakeComparable({
+      cmp: cmp
+    });
+
+var v3_set = Belt_Set.make(V3Comparator);
+
+function interact(a, b) {
+  var sa = Belt_Set.fromArray(a, V3Comparator);
+  var sb = Belt_Set.fromArray(b, V3Comparator);
+  return Belt_Set.intersect(sa, sb);
+}
+
+function matchingTransformAll(scanner1, scanner2) {
+  var beacons1 = scanner1.beacons;
+  var beacons2 = scanner2.beacons;
+  return FP_Utils$AdventOfCode.combinationIfArray3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
+                var t = minus(b1, Curry._1(rot, b2));
+                var translation = function (param) {
+                  return translate(t, param);
+                };
+                var transB2 = Belt_Array.map(beacons2, (function (b) {
+                        return Curry._1(rot, translate(t, b));
+                      }));
+                var len = Belt_Set.size(interact(beacons1, transB2));
+                if (len >= 12) {
+                  return (function (param) {
+                            return FP_Utils$AdventOfCode.compose(translation, rot, param);
+                          });
+                }
+                
+              }));
+}
+
+function matchingTransform(scanner1, scanner2) {
+  return FP_Utils$AdventOfCode.arrayToOption(matchingTransformAll(scanner1, scanner2));
+}
+
+function mkReconstruction(scanners) {
+  if (scanners) {
+    return /* Reconstruction */{
+            found: /* [] */0,
+            working: {
+              hd: scanners.hd,
+              tl: /* [] */0
+            },
+            waiting: scanners.tl
+          };
+  }
+  throw {
+        RE_EXN_ID: "Match_failure",
+        _1: [
+          "AOC2021_Day19.res",
+          144,
+          8
+        ],
+        Error: new Error()
+      };
+}
+
+function transformScanner(param) {
+  var trans = param[1];
+  var s = param[0];
+  return {
+          scannerName: s.scannerName,
+          beacons: Belt_Array.map(s.beacons, (function (b) {
+                  return Curry._1(Belt_Option.getExn(trans), b);
+                })),
+          transformation: Belt_Option.getExn(trans),
+          signature: s.signature
+        };
+}
+
+function reconstructStep(param) {
+  var waiting = param.waiting;
+  var working = param.working;
+  if (working) {
+    var current = working.hd;
+    var passMatches = Belt_List.keep(waiting, (function (x) {
+            return vagueMatch(current, x);
+          }));
+    var matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.map(passMatches, (function (x) {
+                    return FP_Utils$AdventOfCode.arrayToOption(matchingTransformAll(current, x));
+                  }))), (function (x) {
+            return Belt_Option.isSome(x[1]);
+          }));
+    var waiting$p = Belt_List.keep(waiting, (function (s) {
+            if (Belt_List.has(Belt_List.map(matches, (function (prim) {
+                          return prim[0];
+                        })), s, eq)) {
+              return false;
+            } else {
+              return true;
+            }
+          }));
+    var newWorker = Belt_List.map(matches, transformScanner);
+    return /* Reconstruction */{
+            found: {
+              hd: current,
+              tl: param.found
+            },
+            working: Belt_List.concat(working.tl, newWorker),
+            waiting: waiting$p
+          };
+  }
+  throw {
+        RE_EXN_ID: "Match_failure",
+        _1: [
+          "AOC2021_Day19.res",
+          161,
+          8
+        ],
+        Error: new Error()
+      };
+}
+
+function reconstruct(_r) {
+  while(true) {
+    var r = _r;
+    if (!r.working) {
+      return r;
+    }
+    _r = reconstructStep(r);
+    continue ;
+  };
 }
 
 function make(param) {
@@ -186,23 +347,39 @@ var Scanner = {
   translate: translate,
   rotations: rotations,
   I: I,
+  F: F,
   Bag: undefined,
   B: B,
   bagFromArray: bagFromArray,
   bagToString: bagToString,
+  eq: eq,
   toString: toString,
   sign: sign,
+  vagueMatch: vagueMatch,
+  minus: minus,
+  V3Comparator: V3Comparator,
+  v3_set: v3_set,
+  interact: interact,
+  matchingTransformAll: matchingTransformAll,
+  matchingTransform: matchingTransform,
+  mkReconstruction: mkReconstruction,
+  transformScanner: transformScanner,
+  reconstructStep: reconstructStep,
+  reconstruct: reconstruct,
   make: make
 };
 
 function parse(data) {
+  var floatFromStr = function (prim) {
+    return Number(prim);
+  };
   var parseOne = function (data) {
     var lines = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
             return prim.trim();
           }));
-    var name = Belt_Option.getExn(Belt_Int.fromString(Belt_Array.getExn(lines, 0).replace("--- scanner ", "").replace(" ---", "")));
+    var name = Utils$AdventOfCode.intFromStringExn(Belt_Array.getExn(lines, 0).replace("--- scanner ", "").replace(" ---", ""));
     var coords = Belt_Array.map(Belt_Array.sliceToEnd(lines, 1), (function (line) {
-            var c = Belt_Array.map(line.split(","), Utils$AdventOfCode.intFromStringExn);
+            var c = Belt_Array.map(line.split(","), floatFromStr);
             return /* Coord */{
                     _0: [
                       Belt_Array.getExn(c, 0),
@@ -223,6 +400,16 @@ function solvePart1(data) {
   var scanners = Belt_Array.map(parse(data), make);
   var prim = toString(scanners);
   console.log(prim);
+  var r = reconstruct(mkReconstruction(Belt_List.fromArray(scanners)));
+  var newScanners = r.found;
+  var bSets = Belt_List.map(newScanners, (function (s) {
+          return Belt_Set.fromArray(s.beacons, V3Comparator);
+        }));
+  var result = Belt_List.reduce(bSets, Belt_Set.make(V3Comparator), Belt_Set.union);
+  var prim$1 = Belt_Set.toArray(result);
+  console.log(prim$1);
+  var prim$2 = Belt_Set.size(result);
+  console.log(prim$2);
   return 1;
 }
 
@@ -232,6 +419,7 @@ function solvePart2(data) {
 
 export {
   log ,
+  log2 ,
   Scanner ,
   parse ,
   solvePart1 ,

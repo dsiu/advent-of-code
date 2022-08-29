@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="Use Rescript v10">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/bsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data_Sample.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data_Sample.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data_Sample.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data_Sample.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FP_Utils.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FP_Utils.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +130,7 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.All Tests">
+  <component name="RunManager" selected="Node.js.AOC2021_Day19_Run.mjs">
     <configuration name="AOC2021_Day1_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -176,13 +182,13 @@
       </envs>
       <method v="2" />
     </configuration>
-    <configuration name="AOC2021_Day18_Run.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon DEBUG=*" path-to-js-file="AOC2021_Day18_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
-      <method v="2" />
-    </configuration>
     <configuration name="AOC2021_Day18.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day18.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
       <method v="2" />
     </configuration>
     <configuration name="AOC2021_Day19_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day19">
+      <method v="2" />
+    </configuration>
+    <configuration name="AOC2021_Day19_Run.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon DEBUG=*" path-to-js-file="AOC2021_Day19_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day19">
       <method v="2" />
     </configuration>
     <configuration name="AOC2021_Day1_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2021/Day1/AOC2021_Day1_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day1">
@@ -206,19 +212,18 @@
       <item itemvalue="Jest.All Tests" />
       <item itemvalue="Jest.All Tests - Watch" />
       <item itemvalue="Node.js.AOC2021_Day18.mjs" />
-      <item itemvalue="Node.js.AOC2021_Day18_Run.mjs" />
       <item itemvalue="Node.js.Jest Profiling" />
+      <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
       <item itemvalue="Node.js.AOC2020_Day4_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
-      <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
       <item itemvalue="Node.js.JS_Debug_Run.mjs" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
         <item itemvalue="Node.js.AOC2020_Day4_Run.mjs" />
         <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
-        <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
         <item itemvalue="Node.js.JS_Debug_Run.mjs" />
         <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
       </list>
@@ -232,13 +237,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Adjacency List - WIP">
-      <created>1657173709737</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1657173709737</updated>
     </task>
     <task id="LOCAL-00007" summary="Convert to ES6 module">
       <created>1657699213451</created>
@@ -576,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661508357589</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Use Rescript v10">
+      <created>1661586669640</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1661586669640</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
