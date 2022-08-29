@@ -15,8 +15,6 @@ let findDiff = xs => {
 
 // use zip to find the differences between the two arrays
 let findDiff2 = xs => {
-  "findDiff2"->log
-
   Array.zip(xs->Array.sliceToEnd(1), xs)->Array.keep(((a, b)) => a > b)
 }
 
@@ -26,7 +24,6 @@ let sum2Array = (a1, a2) =>
   )
 
 let roll3sum = xs => {
-  "roll3sum"->log
   let size = xs->Array.length - 2
   let a1 = xs->Array.slice(~offset=0, ~len=size)
   let a2 = xs->Array.slice(~offset=1, ~len=size)
