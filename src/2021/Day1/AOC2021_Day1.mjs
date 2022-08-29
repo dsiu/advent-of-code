@@ -25,7 +25,6 @@ function findDiff(xs) {
 }
 
 function findDiff2(xs) {
-  console.log("findDiff2");
   return Belt_Array.keep(Belt_Array.zip(Belt_Array.sliceToEnd(xs, 1), xs), (function (param) {
                 return Caml_obj.greaterthan(param[0], param[1]);
               }));
@@ -38,7 +37,6 @@ function sum2Array(a1, a2) {
 }
 
 function roll3sum(xs) {
-  console.log("roll3sum");
   var size = xs.length - 2 | 0;
   var a1 = Belt_Array.slice(xs, 0, size);
   var a2 = Belt_Array.slice(xs, 1, size);
