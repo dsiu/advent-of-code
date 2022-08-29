@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 19 - Day 1 WIP">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 19 - Day 1 and Day 2 DONE">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Data.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Test.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Test.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Test.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Test.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FP_Utils.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FP_Utils.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,13 +234,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00008" summary="update project file">
-      <created>1657765558832</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1657765558832</updated>
     </task>
     <task id="LOCAL-00009" summary="use my own rescript-ocamlgraph package">
       <created>1657954282180</created>
@@ -584,7 +571,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661770707837</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="2021 Day 19 - Day 1 and Day 2 DONE">
+      <created>1661774971789</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1661774971789</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -612,7 +606,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2021 Day 16 - Part 1 - all parsing should be working" />
     <MESSAGE value="2021 Day 16 - Part 1 - DONE" />
     <MESSAGE value="2021 Day 16 - Part 2 - WIP" />
     <MESSAGE value="2021 Day 16 - Part 2 - Expression  tests" />
@@ -637,7 +630,8 @@
     <MESSAGE value="package updates" />
     <MESSAGE value="Use Rescript v10" />
     <MESSAGE value="2021 Day 19 - Day 1 WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 19 - Day 1 WIP" />
+    <MESSAGE value="2021 Day 19 - Day 1 and Day 2 DONE" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 19 - Day 1 and Day 2 DONE" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

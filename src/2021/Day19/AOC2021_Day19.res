@@ -237,7 +237,7 @@ let part1 = scanners => {
     Belt.Set.union(a, b)
   })
 
-  result->Belt.Set.toArray->log
+  //  result->Belt.Set.toArray->log
   result->Belt.Set.size
 }
 
@@ -246,7 +246,7 @@ let part2 = scanners => {
 
   let extractOrigin = sc => sc.transformation(Coord(0.0, 0.0, 0.0))
   let origins = scanners->List.map(extractOrigin)
-  origins->List.toArray->log
+  //  origins->List.toArray->log
   let manhatton = (Coord(a)) => {
     let (x1, y1, z1) = a
     abs_float(x1) +. abs_float(y1) +. abs_float(z1)

@@ -409,10 +409,7 @@ function part1(scanners) {
   var bSets = Belt_List.map(scanners, (function (s) {
           return Belt_Set.fromArray(s.beacons, V3Comparator);
         }));
-  var result = Belt_List.reduce(bSets, Belt_Set.make(V3Comparator), Belt_Set.union);
-  var prim = Belt_Set.toArray(result);
-  console.log(prim);
-  return Belt_Set.size(result);
+  return Belt_Set.size(Belt_List.reduce(bSets, Belt_Set.make(V3Comparator), Belt_Set.union));
 }
 
 function part2(scanners) {
@@ -426,8 +423,6 @@ function part2(scanners) {
               });
   };
   var origins = Belt_List.map(scanners, extractOrigin);
-  var prim = Belt_List.toArray(origins);
-  console.log(prim);
   return Belt_Option.getExn(FP_Utils$AdventOfCode.listToOption(Belt_List.sort(FP_Utils$AdventOfCode.combinationList2(origins, origins, (function (a, b) {
                             var a$1 = minus(a, b);
                             var a$2 = a$1._0;
