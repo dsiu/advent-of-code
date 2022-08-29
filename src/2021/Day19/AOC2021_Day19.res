@@ -53,7 +53,9 @@ module Scanner = {
   }
   module Bag = Bag.Bag // namespaced in Bag package
   module B = Bag.Make(F) // MultiSet Bag of int
+
   let bagFromArray = Array.reduce(_, B.empty, (acc, x) => acc->B.add(x, _))
+
   let bagToString = b => {
     let str = ref("")
     b->B.iter((x, m) => {
@@ -82,28 +84,28 @@ module Scanner = {
       `signature: ${signature->bagToString}` ++ "\n"
     })
 
+  // should refactor
+  let minus = (Coord(a), Coord(b)) => {
+    let (x1, y1, z1) = a
+    let (x2, y2, z2) = b
+    Coord(x1 -. x2, y1 -. y2, z1 -. z2)
+  }
+
   let sign = (bcns: array<coord>): B.t => {
-    let pythag = ((x, y, z)) => {
+    let pythag = (Coord(x, y, z)) => {
       x *. x +. y *. y +. z *. z
     }
 
     combinationIfArray2(bcns, bcns, (Coord(a), Coord(b)) => {
-      V3.cmp(b, a) > 0 ? Some(pythag(a) -. pythag(b)) : None
+      V3.cmp(b, a) > 0 ? Some(pythag(minus(Coord(a), Coord(b)))) : None
     })->bagFromArray
   }
 
   let vagueMatch = (scanner1, scanner2) => {
     let s1 = scanner1.signature
     let s2 = scanner2.signature
-    let s = B.inter(s1, s2)->B.cardinal
+    let s = B.inter(s1, s2)->B.elements->List.size
     s >= 12 * 11 / 2
-  }
-
-  // should refactor
-  let minus = (Coord(a), Coord(b)) => {
-    let (x1, y1, z1) = a
-    let (x2, y2, z2) = b
-    Coord(x1 -. x2, y1 -. y2, z1 -. z2)
   }
 
   module V3Comparator = Belt.Id.MakeComparable({
@@ -127,10 +129,10 @@ module Scanner = {
       let t = minus(b1, rot(b2)) // apply rot to b2
       let translation = translate(t)
 
-      let transB2 = beacons2->Array.map(b => {b->translation->rot})
+      let transB2 = beacons2->Array.map(b => {b->rot->translation})
 
       let len = interact(beacons1, transB2)->Belt.Set.size
-      len >= 12 ? Some(compose(translation, rot)) : None
+      len >= 12 ? Some(compose(rot, translation)) : None
     })
   }
 
@@ -218,14 +220,16 @@ let parse = data => {
   data->splitDoubleNewline->Array.map(parseOne)
 }
 
-let solvePart1 = data => {
+let reconstructScanners = scanners => {
   open Scanner
-  let scanners = data->parse->Array.map(Scanner.make)
-  scanners->Scanner.toString->log
-
   let Reconstruction(r) = Scanner.reconstruct(mkReconstruction(scanners->List.fromArray))
-  let newScanners = r.found
-  let bSets = newScanners->List.map(s => {
+  r.found
+}
+
+let part1 = scanners => {
+  open Scanner
+
+  let bSets = scanners->List.map(s => {
     Belt.Set.fromArray(s.beacons, ~id=module(V3Comparator))
   })
 
@@ -234,11 +238,38 @@ let solvePart1 = data => {
   })
 
   result->Belt.Set.toArray->log
-  result->Belt.Set.size->log
-  1
+  result->Belt.Set.size
+}
+
+let part2 = scanners => {
+  open Scanner
+
+  let extractOrigin = sc => sc.transformation(Coord(0.0, 0.0, 0.0))
+  let origins = scanners->List.map(extractOrigin)
+  origins->List.toArray->log
+  let manhatton = (Coord(a)) => {
+    let (x1, y1, z1) = a
+    abs_float(x1) +. abs_float(y1) +. abs_float(z1)
+  }
+
+  combinationList2(origins, origins, (a, b) => {
+    minus(a, b)->manhatton
+  })
+  ->List.sort((a, b) => Float.toInt(b -. a))
+  ->listToOption
+  ->Option.getExn
+}
+
+let solvePart1 = data => {
+  let scanners = data->parse->Array.map(Scanner.make)
+  //  scanners->Scanner.toString->log
+
+  let newScanners = reconstructScanners(scanners)
+  part1(newScanners)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let scanners = data->parse->Array.map(Scanner.make)
+  let newScanners = reconstructScanners(scanners)
+  part2(newScanners)
 }

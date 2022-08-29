@@ -16,6 +16,33 @@ function listToOption(l) {
   
 }
 
+function combinationList2(a, b, f) {
+  return Belt_List.reduce(a, /* [] */0, (function (acc, x) {
+                return Belt_List.concat(acc, Belt_List.reduce(b, /* [] */0, (function (acc, y) {
+                                  return Belt_List.concat(acc, {
+                                              hd: Curry._2(f, x, y),
+                                              tl: /* [] */0
+                                            });
+                                })));
+              }));
+}
+
+function combinationIfList2(a, b, f) {
+  return Belt_List.reduce(a, /* [] */0, (function (acc, x) {
+                return Belt_List.concat(acc, Belt_List.reduce(b, /* [] */0, (function (acc, y) {
+                                  var r = Curry._2(f, x, y);
+                                  if (r !== undefined) {
+                                    return Belt_List.concat(acc, {
+                                                hd: Caml_option.valFromOption(r),
+                                                tl: /* [] */0
+                                              });
+                                  } else {
+                                    return acc;
+                                  }
+                                })));
+              }));
+}
+
 function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
@@ -122,6 +149,8 @@ function composeN(fs) {
 export {
   flatMapList ,
   listToOption ,
+  combinationList2 ,
+  combinationIfList2 ,
   flatMapArray ,
   arrayToOption ,
   foldLeftArray ,

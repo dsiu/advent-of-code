@@ -161,30 +161,6 @@ function toString(t) {
               }));
 }
 
-function sign(bcns) {
-  var pythag = function (param) {
-    var z = param[2];
-    var y = param[1];
-    var x = param[0];
-    return x * x + y * y + z * z;
-  };
-  return bagFromArray(FP_Utils$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
-                    var b$1 = b._0;
-                    var a$1 = a._0;
-                    if (Linear$AdventOfCode.V3.cmp(b$1, a$1) > 0) {
-                      return pythag(a$1) - pythag(b$1);
-                    }
-                    
-                  })));
-}
-
-function vagueMatch(scanner1, scanner2) {
-  var s1 = scanner1.signature;
-  var s2 = scanner2.signature;
-  var s = Curry._1(B.cardinal, Curry._2(B.inter, s1, s2));
-  return s >= 66;
-}
-
 function minus(a, b) {
   var b$1 = b._0;
   var a$1 = a._0;
@@ -195,6 +171,35 @@ function minus(a, b) {
             a$1[2] - b$1[2]
           ]
         };
+}
+
+function sign(bcns) {
+  var pythag = function (param) {
+    var match = param._0;
+    var z = match[2];
+    var y = match[1];
+    var x = match[0];
+    return x * x + y * y + z * z;
+  };
+  return bagFromArray(FP_Utils$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
+                    var b$1 = b._0;
+                    var a$1 = a._0;
+                    if (Linear$AdventOfCode.V3.cmp(b$1, a$1) > 0) {
+                      return pythag(minus(/* Coord */{
+                                      _0: a$1
+                                    }, /* Coord */{
+                                      _0: b$1
+                                    }));
+                    }
+                    
+                  })));
+}
+
+function vagueMatch(scanner1, scanner2) {
+  var s1 = scanner1.signature;
+  var s2 = scanner2.signature;
+  var s = Belt_List.size(Curry._1(B.elements, Curry._2(B.inter, s1, s2)));
+  return s >= 66;
 }
 
 function cmp(a, b) {
@@ -222,12 +227,12 @@ function matchingTransformAll(scanner1, scanner2) {
                   return translate(t, param);
                 };
                 var transB2 = Belt_Array.map(beacons2, (function (b) {
-                        return Curry._1(rot, translate(t, b));
+                        return translate(t, Curry._1(rot, b));
                       }));
                 var len = Belt_Set.size(interact(beacons1, transB2));
                 if (len >= 12) {
                   return (function (param) {
-                            return FP_Utils$AdventOfCode.compose(translation, rot, param);
+                            return FP_Utils$AdventOfCode.compose(rot, translation, param);
                           });
                 }
                 
@@ -253,7 +258,7 @@ function mkReconstruction(scanners) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day19.res",
-          144,
+          146,
           8
         ],
         Error: new Error()
@@ -309,7 +314,7 @@ function reconstructStep(param) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day19.res",
-          161,
+          163,
           8
         ],
         Error: new Error()
@@ -354,9 +359,9 @@ var Scanner = {
   bagToString: bagToString,
   eq: eq,
   toString: toString,
+  minus: minus,
   sign: sign,
   vagueMatch: vagueMatch,
-  minus: minus,
   V3Comparator: V3Comparator,
   v3_set: v3_set,
   interact: interact,
@@ -396,25 +401,50 @@ function parse(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), parseOne);
 }
 
-function solvePart1(data) {
-  var scanners = Belt_Array.map(parse(data), make);
-  var prim = toString(scanners);
-  console.log(prim);
-  var r = reconstruct(mkReconstruction(Belt_List.fromArray(scanners)));
-  var newScanners = r.found;
-  var bSets = Belt_List.map(newScanners, (function (s) {
+function reconstructScanners(scanners) {
+  return reconstruct(mkReconstruction(Belt_List.fromArray(scanners))).found;
+}
+
+function part1(scanners) {
+  var bSets = Belt_List.map(scanners, (function (s) {
           return Belt_Set.fromArray(s.beacons, V3Comparator);
         }));
   var result = Belt_List.reduce(bSets, Belt_Set.make(V3Comparator), Belt_Set.union);
-  var prim$1 = Belt_Set.toArray(result);
-  console.log(prim$1);
-  var prim$2 = Belt_Set.size(result);
-  console.log(prim$2);
-  return 1;
+  var prim = Belt_Set.toArray(result);
+  console.log(prim);
+  return Belt_Set.size(result);
+}
+
+function part2(scanners) {
+  var extractOrigin = function (sc) {
+    return Curry._1(sc.transformation, /* Coord */{
+                _0: [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              });
+  };
+  var origins = Belt_List.map(scanners, extractOrigin);
+  var prim = Belt_List.toArray(origins);
+  console.log(prim);
+  return Belt_Option.getExn(FP_Utils$AdventOfCode.listToOption(Belt_List.sort(FP_Utils$AdventOfCode.combinationList2(origins, origins, (function (a, b) {
+                            var a$1 = minus(a, b);
+                            var a$2 = a$1._0;
+                            return Math.abs(a$2[0]) + Math.abs(a$2[1]) + Math.abs(a$2[2]);
+                          })), (function (a, b) {
+                        return b - a | 0;
+                      }))));
+}
+
+function solvePart1(data) {
+  var scanners = Belt_Array.map(parse(data), make);
+  return part1(reconstructScanners(scanners));
 }
 
 function solvePart2(data) {
-  return 2;
+  var scanners = Belt_Array.map(parse(data), make);
+  return part2(reconstructScanners(scanners));
 }
 
 export {
@@ -422,6 +452,9 @@ export {
   log2 ,
   Scanner ,
   parse ,
+  reconstructScanners ,
+  part1 ,
+  part2 ,
   solvePart1 ,
   solvePart2 ,
 }

@@ -17,6 +17,41 @@ let listToOption = l => {
   }
 }
 
+/**
+  apply f(x,y) for each x in a and and each y in b
+  returns result in list
+*/
+let combinationList2: (list<'a>, list<'b>, ('a, 'b) => 'c) => list<'c> = (a, b, f) => {
+  open Belt
+
+  a->List.reduce(list{}, (acc, x) => {
+    acc->List.concat(
+      b->List.reduce(list{}, (acc, y) => {
+        acc->List.concat(list{f(x, y)})
+      }),
+    )
+  })
+}
+
+/**
+  apply f(x,y) for each x in a and each y in b ONLY if f(x,y) returns Some()
+  returns result in list
+*/
+let combinationIfList2: (list<'a>, list<'b>, ('a, 'b) => option<'c>) => list<'c> = (a, b, f) => {
+  open Belt
+
+  a->List.reduce(list{}, (acc, x) => {
+    acc->List.concat(
+      b->List.reduce(list{}, (acc, y) => {
+        switch f(x, y) {
+        | Some(r) => acc->List.concat(list{r})
+        | None => acc
+        }
+      }),
+    )
+  })
+}
+
 //
 // Array
 //
