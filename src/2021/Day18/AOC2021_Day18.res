@@ -190,7 +190,7 @@ module SnailFish = {
   }
 
   let part2 = numbers => {
-    combinationArray2(numbers, numbers, (a, b) => snailAdd(a, b)->magnitude)->maxIntInArray
+    combinationArray2(numbers, numbers, (. a, b) => snailAdd(a, b)->magnitude)->maxIntInArray
   }
 
   // simple parser for elements

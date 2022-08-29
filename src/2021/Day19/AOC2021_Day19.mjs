@@ -226,7 +226,7 @@ function matchingTransformAll(scanner1, scanner2) {
                 var translation = function (param) {
                   return translate(t, param);
                 };
-                var transB2 = Belt_Array.map(beacons2, (function (b) {
+                var transB2 = Belt_Array.mapU(beacons2, (function (b) {
                         return translate(t, Curry._1(rot, b));
                       }));
                 var len = Belt_Set.size(interact(beacons1, transB2));
@@ -270,7 +270,7 @@ function transformScanner(param) {
   var s = param[0];
   return {
           scannerName: s.scannerName,
-          beacons: Belt_Array.map(s.beacons, (function (b) {
+          beacons: Belt_Array.mapU(s.beacons, (function (b) {
                   return Curry._1(Belt_Option.getExn(trans), b);
                 })),
           transformation: Belt_Option.getExn(trans),
@@ -286,7 +286,7 @@ function reconstructStep(param) {
     var passMatches = Belt_List.keep(waiting, (function (x) {
             return vagueMatch(current, x);
           }));
-    var matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.map(passMatches, (function (x) {
+    var matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.mapU(passMatches, (function (x) {
                     return FP_Utils$AdventOfCode.arrayToOption(matchingTransformAll(current, x));
                   }))), (function (x) {
             return Belt_Option.isSome(x[1]);
@@ -300,7 +300,7 @@ function reconstructStep(param) {
               return true;
             }
           }));
-    var newWorker = Belt_List.map(matches, transformScanner);
+    var newWorker = Belt_List.mapU(matches, transformScanner);
     return /* Reconstruction */{
             found: {
               hd: current,
@@ -406,10 +406,10 @@ function reconstructScanners(scanners) {
 }
 
 function part1(scanners) {
-  var bSets = Belt_List.map(scanners, (function (s) {
+  var bSets = Belt_List.mapU(scanners, (function (s) {
           return Belt_Set.fromArray(s.beacons, V3Comparator);
         }));
-  return Belt_Set.size(Belt_List.reduce(bSets, Belt_Set.make(V3Comparator), Belt_Set.union));
+  return Belt_Set.size(Belt_List.reduceU(bSets, Belt_Set.make(V3Comparator), Belt_Set.union));
 }
 
 function part2(scanners) {
@@ -422,7 +422,7 @@ function part2(scanners) {
                 ]
               });
   };
-  var origins = Belt_List.map(scanners, extractOrigin);
+  var origins = Belt_List.mapU(scanners, extractOrigin);
   return Belt_Option.getExn(FP_Utils$AdventOfCode.listToOption(Belt_List.sort(FP_Utils$AdventOfCode.combinationList2(origins, origins, (function (a, b) {
                             var a$1 = minus(a, b);
                             var a$2 = a$1._0;

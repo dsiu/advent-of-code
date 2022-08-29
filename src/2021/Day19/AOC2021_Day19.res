@@ -37,7 +37,7 @@ module Scanner = {
     ]
     let rbs = [nullTrans, rotX, compose(rotX, rotX), composeN([rotX, rotX, rotX])]
 
-    combinationArray2(ras, rbs, (a, b) => compose(a, b))
+    combinationArray2(ras, rbs, (. a, b) => compose(a, b))
   }
 
   //  rotations->Array.length->log
@@ -96,7 +96,7 @@ module Scanner = {
       x *. x +. y *. y +. z *. z
     }
 
-    combinationIfArray2(bcns, bcns, (Coord(a), Coord(b)) => {
+    combinationIfArray2(bcns, bcns, (. Coord(a), Coord(b)) => {
       V3.cmp(b, a) > 0 ? Some(pythag(minus(Coord(a), Coord(b)))) : None
     })->bagFromArray
   }
@@ -125,11 +125,11 @@ module Scanner = {
     let beacons1 = scanner1.beacons
     let beacons2 = scanner2.beacons
 
-    combinationIfArray3(beacons1, beacons2, rotations, (b1, b2, rot) => {
+    combinationIfArray3(beacons1, beacons2, rotations, (. b1, b2, rot) => {
       let t = minus(b1, rot(b2)) // apply rot to b2
       let translation = translate(t)
 
-      let transB2 = beacons2->Array.map(b => {b->rot->translation})
+      let transB2 = beacons2->Array.mapU((. b) => {b->rot->translation})
 
       let len = interact(beacons1, transB2)->Belt.Set.size
       len >= 12 ? Some(compose(rot, translation)) : None
@@ -151,9 +151,9 @@ module Scanner = {
     })
   }
 
-  let transformScanner = ((s, trans)) => {
+  let transformScanner = (. (s, trans)) => {
     ...s,
-    beacons: s.beacons->Array.map(b => {
+    beacons: s.beacons->Array.mapU((. b) => {
       Option.getExn(trans)(b)
     }),
     transformation: trans->Option.getExn,
@@ -165,14 +165,14 @@ module Scanner = {
     let matches =
       List.zip(
         passMatches,
-        List.map(passMatches, x => matchingTransform(current, x)),
+        List.mapU(passMatches, (. x) => matchingTransform(current, x)),
       )->List.keep(x => x->snd->Option.isSome)
 
     let waiting' = waiting->List.keep(s => {
       matches->List.map(fst)->List.has(s, eq) ? false : true
     })
 
-    let newWorker = matches->List.map(transformScanner)
+    let newWorker = matches->List.mapU(transformScanner)
 
     Reconstruction({
       found: list{current, ...found},
@@ -229,11 +229,11 @@ let reconstructScanners = scanners => {
 let part1 = scanners => {
   open Scanner
 
-  let bSets = scanners->List.map(s => {
+  let bSets = scanners->List.mapU((. s) => {
     Belt.Set.fromArray(s.beacons, ~id=module(V3Comparator))
   })
 
-  let result = bSets->List.reduce(Belt.Set.make(~id=module(V3Comparator)), (a, b) => {
+  let result = bSets->List.reduceU(Belt.Set.make(~id=module(V3Comparator)), (. a, b) => {
     Belt.Set.union(a, b)
   })
 
@@ -244,15 +244,15 @@ let part1 = scanners => {
 let part2 = scanners => {
   open Scanner
 
-  let extractOrigin = sc => sc.transformation(Coord(0.0, 0.0, 0.0))
-  let origins = scanners->List.map(extractOrigin)
+  let extractOrigin = (. sc) => sc.transformation(Coord(0.0, 0.0, 0.0))
+  let origins = scanners->List.mapU(extractOrigin)
   //  origins->List.toArray->log
   let manhatton = (Coord(a)) => {
     let (x1, y1, z1) = a
     abs_float(x1) +. abs_float(y1) +. abs_float(z1)
   }
 
-  combinationList2(origins, origins, (a, b) => {
+  combinationList2(origins, origins, (. a, b) => {
     minus(a, b)->manhatton
   })
   ->List.sort((a, b) => Float.toInt(b -. a))

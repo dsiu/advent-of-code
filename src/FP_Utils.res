@@ -21,13 +21,13 @@ let listToOption = l => {
   apply f(x,y) for each x in a and and each y in b
   returns result in list
 */
-let combinationList2: (list<'a>, list<'b>, ('a, 'b) => 'c) => list<'c> = (a, b, f) => {
+let combinationList2: (list<'a>, list<'b>, (. 'a, 'b) => 'c) => list<'c> = (a, b, f) => {
   open Belt
 
-  a->List.reduce(list{}, (acc, x) => {
+  a->List.reduceU(list{}, (. acc, x) => {
     acc->List.concat(
-      b->List.reduce(list{}, (acc, y) => {
-        acc->List.concat(list{f(x, y)})
+      b->List.reduceU(list{}, (. acc, y) => {
+        acc->List.concat(list{f(. x, y)})
       }),
     )
   })
@@ -37,13 +37,13 @@ let combinationList2: (list<'a>, list<'b>, ('a, 'b) => 'c) => list<'c> = (a, b, 
   apply f(x,y) for each x in a and each y in b ONLY if f(x,y) returns Some()
   returns result in list
 */
-let combinationIfList2: (list<'a>, list<'b>, ('a, 'b) => option<'c>) => list<'c> = (a, b, f) => {
+let combinationIfList2: (list<'a>, list<'b>, (. 'a, 'b) => option<'c>) => list<'c> = (a, b, f) => {
   open Belt
 
-  a->List.reduce(list{}, (acc, x) => {
+  a->List.reduceU(list{}, (. acc, x) => {
     acc->List.concat(
-      b->List.reduce(list{}, (acc, y) => {
-        switch f(x, y) {
+      b->List.reduceU(list{}, (. acc, y) => {
+        switch f(. x, y) {
         | Some(r) => acc->List.concat(list{r})
         | None => acc
         }
@@ -93,13 +93,13 @@ let foldRightArray: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
   apply f(x,y) for each x in a and and each y in b
   returns result in array
 */
-let combinationArray2: (array<'a>, array<'b>, ('a, 'b) => 'c) => array<'c> = (a, b, f) => {
+let combinationArray2: (array<'a>, array<'b>, (. 'a, 'b) => 'c) => array<'c> = (a, b, f) => {
   open Belt
 
-  a->Array.reduce([], (acc, x) => {
+  a->Array.reduceU([], (. acc, x) => {
     acc->Array.concat(
-      b->Array.reduce([], (acc, y) => {
-        acc->Array.concat([f(x, y)])
+      b->Array.reduceU([], (. acc, y) => {
+        acc->Array.concat([f(. x, y)])
       }),
     )
   })
@@ -108,7 +108,7 @@ let combinationArray2: (array<'a>, array<'b>, ('a, 'b) => 'c) => array<'c> = (a,
   apply f(x,y) for each x in a and and each y in b
   returns result in array
 */
-let combinationArray3: (array<'a>, array<'b>, array<'c>, ('a, 'b, 'c) => 'd) => array<'c> = (
+let combinationArray3: (array<'a>, array<'b>, array<'c>, (. 'a, 'b, 'c) => 'd) => array<'c> = (
   a,
   b,
   c,
@@ -116,14 +116,14 @@ let combinationArray3: (array<'a>, array<'b>, array<'c>, ('a, 'b, 'c) => 'd) => 
 ) => {
   open Belt
 
-  a->Array.reduce([], (acc, x) => {
+  a->Array.reduceU([], (. acc, x) => {
     acc->Array.concat(
-      b->Array.reduce([], (acc, y) => {
+      b->Array.reduceU([], (. acc, y) => {
         acc->Array.concat(
-          c->Array.reduce(
+          c->Array.reduceU(
             [],
-            (acc, z) => {
-              acc->Array.concat([f(x, y, z)])
+            (. acc, z) => {
+              acc->Array.concat([f(. x, y, z)])
             },
           ),
         ) // b concat
@@ -136,17 +136,17 @@ let combinationArray3: (array<'a>, array<'b>, array<'c>, ('a, 'b, 'c) => 'd) => 
   apply f(x,y) for each x in a and each y in b ONLY if f(x,y) returns Some()
   returns result in array
 */
-let combinationIfArray2: (array<'a>, array<'b>, ('a, 'b) => option<'c>) => array<'c> = (
+let combinationIfArray2: (array<'a>, array<'b>, (. 'a, 'b) => option<'c>) => array<'c> = (
   a,
   b,
   f,
 ) => {
   open Belt
 
-  a->Array.reduce([], (acc, x) => {
+  a->Array.reduceU([], (. acc, x) => {
     acc->Array.concat(
-      b->Array.reduce([], (acc, y) => {
-        switch f(x, y) {
+      b->Array.reduceU([], (. acc, y) => {
+        switch f(. x, y) {
         | Some(r) => acc->Array.concat([r])
         | None => acc
         }
@@ -163,18 +163,18 @@ let combinationIfArray3: (
   array<'a>,
   array<'b>,
   array<'c>,
-  ('a, 'b, 'c) => option<'d>,
+  (. 'a, 'b, 'c) => option<'d>,
 ) => array<'d> = (a, b, c, f) => {
   open Belt
 
-  a->Array.reduce([], (acc, x) => {
+  a->Array.reduceU([], (. acc, x) => {
     acc->Array.concat(
-      b->Array.reduce([], (acc, y) => {
+      b->Array.reduceU([], (. acc, y) => {
         acc->Array.concat(
-          c->Array.reduce(
+          c->Array.reduceU(
             [],
-            (acc, z) => {
-              switch f(x, y, z) {
+            (. acc, z) => {
+              switch f(. x, y, z) {
               | Some(r) => acc->Array.concat([r])
               | None => acc
               }

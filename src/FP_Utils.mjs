@@ -17,10 +17,10 @@ function listToOption(l) {
 }
 
 function combinationList2(a, b, f) {
-  return Belt_List.reduce(a, /* [] */0, (function (acc, x) {
-                return Belt_List.concat(acc, Belt_List.reduce(b, /* [] */0, (function (acc, y) {
+  return Belt_List.reduceU(a, /* [] */0, (function (acc, x) {
+                return Belt_List.concat(acc, Belt_List.reduceU(b, /* [] */0, (function (acc, y) {
                                   return Belt_List.concat(acc, {
-                                              hd: Curry._2(f, x, y),
+                                              hd: f(x, y),
                                               tl: /* [] */0
                                             });
                                 })));
@@ -28,9 +28,9 @@ function combinationList2(a, b, f) {
 }
 
 function combinationIfList2(a, b, f) {
-  return Belt_List.reduce(a, /* [] */0, (function (acc, x) {
-                return Belt_List.concat(acc, Belt_List.reduce(b, /* [] */0, (function (acc, y) {
-                                  var r = Curry._2(f, x, y);
+  return Belt_List.reduceU(a, /* [] */0, (function (acc, x) {
+                return Belt_List.concat(acc, Belt_List.reduceU(b, /* [] */0, (function (acc, y) {
+                                  var r = f(x, y);
                                   if (r !== undefined) {
                                     return Belt_List.concat(acc, {
                                                 hd: Caml_option.valFromOption(r),
@@ -65,27 +65,27 @@ function foldRightArray(xs, f) {
 }
 
 function combinationArray2(a, b, f) {
-  return Belt_Array.reduce(a, [], (function (acc, x) {
-                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
-                                  return Belt_Array.concat(acc, [Curry._2(f, x, y)]);
+  return Belt_Array.reduceU(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduceU(b, [], (function (acc, y) {
+                                  return Belt_Array.concat(acc, [f(x, y)]);
                                 })));
               }));
 }
 
 function combinationArray3(a, b, c, f) {
-  return Belt_Array.reduce(a, [], (function (acc, x) {
-                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
-                                  return Belt_Array.concat(acc, Belt_Array.reduce(c, [], (function (acc, z) {
-                                                    return Belt_Array.concat(acc, [Curry._3(f, x, y, z)]);
+  return Belt_Array.reduceU(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduceU(b, [], (function (acc, y) {
+                                  return Belt_Array.concat(acc, Belt_Array.reduceU(c, [], (function (acc, z) {
+                                                    return Belt_Array.concat(acc, [f(x, y, z)]);
                                                   })));
                                 })));
               }));
 }
 
 function combinationIfArray2(a, b, f) {
-  return Belt_Array.reduce(a, [], (function (acc, x) {
-                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
-                                  var r = Curry._2(f, x, y);
+  return Belt_Array.reduceU(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduceU(b, [], (function (acc, y) {
+                                  var r = f(x, y);
                                   if (r !== undefined) {
                                     return Belt_Array.concat(acc, [Caml_option.valFromOption(r)]);
                                   } else {
@@ -96,10 +96,10 @@ function combinationIfArray2(a, b, f) {
 }
 
 function combinationIfArray3(a, b, c, f) {
-  return Belt_Array.reduce(a, [], (function (acc, x) {
-                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
-                                  return Belt_Array.concat(acc, Belt_Array.reduce(c, [], (function (acc, z) {
-                                                    var r = Curry._3(f, x, y, z);
+  return Belt_Array.reduceU(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduceU(b, [], (function (acc, y) {
+                                  return Belt_Array.concat(acc, Belt_Array.reduceU(c, [], (function (acc, z) {
+                                                    var r = f(x, y, z);
                                                     if (r !== undefined) {
                                                       return Belt_Array.concat(acc, [Caml_option.valFromOption(r)]);
                                                     } else {
