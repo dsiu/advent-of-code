@@ -94,15 +94,16 @@ let foldRightArray: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
   returns result in array
 */
 let combinationArray2: (array<'a>, array<'b>, (. 'a, 'b) => 'c) => array<'c> = (a, b, f) => {
-  open Belt
+  module Array = Js.Array2
 
-  a->Array.reduceU([], (. acc, x) => {
-    acc->Array.concat(
-      b->Array.reduceU([], (. acc, y) => {
-        acc->Array.concat([f(. x, y)])
-      }),
-    )
+  let ret = ref([])
+  a->Array.forEach(x => {
+    b->Array.forEach(y => {
+      ret := ret.contents->Array.concat([f(. x, y)])
+    })
   })
+
+  ret.contents
 }
 /**
   apply f(x,y) for each x in a and and each y in b
@@ -114,22 +115,20 @@ let combinationArray3: (array<'a>, array<'b>, array<'c>, (. 'a, 'b, 'c) => 'd) =
   c,
   f,
 ) => {
-  open Belt
+  module Array = Js.Array2
 
-  a->Array.reduceU([], (. acc, x) => {
-    acc->Array.concat(
-      b->Array.reduceU([], (. acc, y) => {
-        acc->Array.concat(
-          c->Array.reduceU(
-            [],
-            (. acc, z) => {
-              acc->Array.concat([f(. x, y, z)])
-            },
-          ),
-        ) // b concat
-      }), //b
-    ) // a concat
-  }) // a
+  let ret = ref([])
+  a->Array.forEach(x => {
+    b->Array.forEach(y => {
+      c->Array.forEach(
+        z => {
+          ret := ret.contents->Array.concat([f(. x, y, z)])
+        },
+      )
+    })
+  })
+
+  ret.contents
 }
 
 /**
@@ -141,18 +140,19 @@ let combinationIfArray2: (array<'a>, array<'b>, (. 'a, 'b) => option<'c>) => arr
   b,
   f,
 ) => {
-  open Belt
+  module Array = Js.Array2
 
-  a->Array.reduceU([], (. acc, x) => {
-    acc->Array.concat(
-      b->Array.reduceU([], (. acc, y) => {
-        switch f(. x, y) {
-        | Some(r) => acc->Array.concat([r])
-        | None => acc
-        }
-      }),
-    )
+  let ret = ref([])
+  a->Array.forEach(x => {
+    b->Array.forEach(y => {
+      switch f(. x, y) {
+      | Some(r) => ret := ret.contents->Array.concat([r])
+      | None => ()
+      }
+    })
   })
+
+  ret.contents
 }
 
 /**
@@ -165,25 +165,23 @@ let combinationIfArray3: (
   array<'c>,
   (. 'a, 'b, 'c) => option<'d>,
 ) => array<'d> = (a, b, c, f) => {
-  open Belt
+  module Array = Js.Array2
 
-  a->Array.reduceU([], (. acc, x) => {
-    acc->Array.concat(
-      b->Array.reduceU([], (. acc, y) => {
-        acc->Array.concat(
-          c->Array.reduceU(
-            [],
-            (. acc, z) => {
-              switch f(. x, y, z) {
-              | Some(r) => acc->Array.concat([r])
-              | None => acc
-              }
-            },
-          ),
-        ) // b concat
-      }), //b
-    ) // a concat
-  }) // a
+  let ret = ref([])
+  a->Array.forEach(x => {
+    b->Array.forEach(y => {
+      c->Array.forEach(
+        z => {
+          switch f(. x, y, z) {
+          | Some(r) => ret := ret.contents->Array.concat([r])
+          | None => ()
+          }
+        },
+      )
+    })
+  })
+
+  ret.contents
 }
 
 //

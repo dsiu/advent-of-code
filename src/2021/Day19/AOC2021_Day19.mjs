@@ -28,9 +28,9 @@ function coordToString(param) {
 function transformToString(trans) {
   return coordToString(Curry._1(trans, /* Coord */{
                   _0: [
-                    1,
-                    2,
-                    3
+                    0,
+                    0,
+                    0
                   ]
                 }));
 }
@@ -124,7 +124,9 @@ var I = {
   compare: compare
 };
 
-var compare$1 = Caml_obj.compare;
+function compare$1(a, b) {
+  return a - b | 0;
+}
 
 var F = {
   compare: compare$1

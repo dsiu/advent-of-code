@@ -15,7 +15,7 @@ module Scanner = {
   type transform = coord => coord
 
   let transformToString = trans => {
-    Coord(1., 2., 3.)->trans->coordToString
+    Coord(0., 0., 0.)->trans->coordToString
   }
 
   let nullTrans = identity
@@ -49,7 +49,7 @@ module Scanner = {
   }
   module F = {
     type t = float
-    let compare = Pervasives.compare
+    let compare = (a, b) => Float.toInt(a -. b)
   }
   module Bag = Bag.Bag // namespaced in Bag package
   module B = Bag.Make(F) // MultiSet Bag of int
