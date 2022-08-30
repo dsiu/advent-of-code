@@ -18,27 +18,11 @@ let listToOption = l => {
 }
 
 /**
-  apply f(x,y) for each x in a and and each y in b
-  returns result in list
-*/
-let combinationList2: (list<'a>, list<'b>, (. 'a, 'b) => 'c) => list<'c> = (a, b, f) => {
-  open Belt
-
-  a->List.reduceU(list{}, (. acc, x) => {
-    acc->List.concat(
-      b->List.reduceU(list{}, (. acc, y) => {
-        acc->List.concat(list{f(. x, y)})
-      }),
-    )
-  })
-}
-
-/**
   apply f(x,y) for each x in a and each y in b ONLY if f(x,y) returns Some()
   returns result in list
 */
 let combinationIfList2: (list<'a>, list<'b>, (. 'a, 'b) => option<'c>) => list<'c> = (a, b, f) => {
-  open Belt
+  module List = Belt.List
 
   a->List.reduceU(list{}, (. acc, x) => {
     acc->List.concat(
@@ -52,6 +36,14 @@ let combinationIfList2: (list<'a>, list<'b>, (. 'a, 'b) => option<'c>) => list<'
   })
 }
 
+/**
+  apply f(x,y) for each x in a and and each y in b
+  returns result in list
+*/
+let combinationList2: (list<'a>, list<'b>, (. 'a, 'b) => 'c) => list<'c> = (a, b, f) => {
+  combinationIfList2(a, b, (. x, y) => Some(f(. x, y)))
+}
+
 //
 // Array
 //
@@ -60,7 +52,8 @@ let combinationIfList2: (list<'a>, list<'b>, (. 'a, 'b) => option<'c>) => list<'
   flatMap (ie: bind) on Array
  */
 let flatMapArray: (array<'a>, 'a => array<'b>) => array<'b> = (xs, f) => {
-  open Belt
+  module Array = Belt.Array
+
   Array.reduce(Array.map(xs, f), [], Array.concat)
 }
 
@@ -70,7 +63,7 @@ let arrayToOption = Belt.Array.get(_, 0)
  fold left on Array
  */
 let foldLeftArray: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
-  open Belt
+  module Array = Belt.Array
 
   let init = xs->Array.getExn(0)
   let rest = xs->Array.sliceToEnd(1)
@@ -81,54 +74,12 @@ let foldLeftArray: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
   fold right on Array
  */
 let foldRightArray: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
-  open Belt
+  module Array = Belt.Array
 
   let end = xs->Array.length - 1
   let init = xs->Array.getExn(end)
   let rest = xs->Array.slice(~offset=0, ~len=end)
   rest->Array.reduceReverse(init, f)
-}
-
-/**
-  apply f(x,y) for each x in a and and each y in b
-  returns result in array
-*/
-let combinationArray2: (array<'a>, array<'b>, (. 'a, 'b) => 'c) => array<'c> = (a, b, f) => {
-  module Array = Js.Array2
-
-  let ret = ref([])
-  a->Array.forEach(x => {
-    b->Array.forEach(y => {
-      ret := ret.contents->Array.concat([f(. x, y)])
-    })
-  })
-
-  ret.contents
-}
-/**
-  apply f(x,y) for each x in a and and each y in b
-  returns result in array
-*/
-let combinationArray3: (array<'a>, array<'b>, array<'c>, (. 'a, 'b, 'c) => 'd) => array<'c> = (
-  a,
-  b,
-  c,
-  f,
-) => {
-  module Array = Js.Array2
-
-  let ret = ref([])
-  a->Array.forEach(x => {
-    b->Array.forEach(y => {
-      c->Array.forEach(
-        z => {
-          ret := ret.contents->Array.concat([f(. x, y, z)])
-        },
-      )
-    })
-  })
-
-  ret.contents
 }
 
 /**
@@ -153,6 +104,15 @@ let combinationIfArray2: (array<'a>, array<'b>, (. 'a, 'b) => option<'c>) => arr
   })
 
   ret.contents
+}
+
+/**
+  apply f(x,y) for each x in a and and each y in b
+  returns result in array
+*/
+let combinationArray2: (array<'a>, array<'b>, (. 'a, 'b) => 'c) => array<'c> = (a, b, f) => {
+  module Array = Js.Array2
+  combinationIfArray2(a, b, (. x, y) => Some(f(. x, y)))
 }
 
 /**
@@ -182,6 +142,19 @@ let combinationIfArray3: (
   })
 
   ret.contents
+}
+
+/**
+  apply f(x,y) for each x in a and and each y in b
+  returns result in array
+*/
+let combinationArray3: (array<'a>, array<'b>, array<'c>, (. 'a, 'b, 'c) => 'd) => array<'c> = (
+  a,
+  b,
+  c,
+  f,
+) => {
+  combinationIfArray3(a, b, c, (. x, y, z) => Some(f(. x, y, z)))
 }
 
 //

@@ -63,6 +63,7 @@ module Scanner = {
     }, _)
     "{" ++ str.contents ++ "}"
   }
+
   /**
     type of Scanner
  */
@@ -112,12 +113,17 @@ module Scanner = {
     type t = coord
     let cmp = (Coord(a), Coord(b)) => V3.cmp(a, b)
   })
-  let v3_set = Belt.Set.make(~id=module(V3Comparator))
+  // let v3_set = Belt.Set.make(~id=module(V3Comparator))
+  let v3SetFromArray = a => {
+    Belt.Set.fromArray(a, ~id=module(V3Comparator))
+  }
+
+  let v3SetMake = Belt.Set.make(~id=module(V3Comparator))
 
   // should refactor
   let interact = (a, b) => {
-    let sa = Belt.Set.fromArray(a, ~id=module(V3Comparator))
-    let sb = Belt.Set.fromArray(b, ~id=module(V3Comparator))
+    let sa = v3SetFromArray(a)
+    let sb = v3SetFromArray(b)
     Belt.Set.intersect(sa, sb)
   }
 
@@ -143,12 +149,15 @@ module Scanner = {
   type reconstruction = Reconstruction({found: list<t>, working: list<t>, waiting: list<t>})
 
   let mkReconstruction = scanners => {
-    let list{s, ...ss} = scanners
-    Reconstruction({
-      found: list{},
-      working: list{s},
-      waiting: ss,
-    })
+    switch scanners {
+    | list{s, ...ss} =>
+      Reconstruction({
+        found: list{},
+        working: list{s},
+        waiting: ss,
+      })
+    | list{} => raise(Invalid_argument("empty scanners"))
+    }
   }
 
   let transformScanner = (. (s, trans)) => {
@@ -160,28 +169,33 @@ module Scanner = {
   }
 
   let reconstructStep = (Reconstruction({found, working, waiting})) => {
-    let list{current, ...workers} = working
-    let passMatches = waiting->List.keep(x => vagueMatch(current, x))
-    let matches =
-      List.zip(
-        passMatches,
-        List.mapU(passMatches, (. x) => matchingTransform(current, x)),
-      )->List.keep(x => x->snd->Option.isSome)
+    switch working {
+    | list{current, ...workers} => {
+        let passMatches = waiting->List.keep(x => vagueMatch(current, x))
+        let matches =
+          List.zip(
+            passMatches,
+            List.mapU(passMatches, (. x) => matchingTransform(current, x)),
+          )->List.keep(x => x->snd->Option.isSome)
 
-    let waiting' = waiting->List.keep(s => {
-      matches->List.map(fst)->List.has(s, eq) ? false : true
-    })
+        let waiting' = waiting->List.keep(s => {
+          matches->List.map(fst)->List.has(s, eq) ? false : true
+        })
 
-    let newWorker = matches->List.mapU(transformScanner)
+        let newWorker = matches->List.mapU(transformScanner)
 
-    Reconstruction({
-      found: list{current, ...found},
-      working: List.concat(workers, newWorker),
-      waiting: waiting',
-    })
+        Reconstruction({
+          found: list{current, ...found},
+          working: List.concat(workers, newWorker),
+          waiting: waiting',
+        })
+      }
+
+    | list{} => raise(Invalid_argument("empty working scanner"))
+    }
   }
 
-  let rec reconstruct = (Reconstruction({found, working, waiting}) as r) => {
+  let rec reconstruct = (Reconstruction({found: _, working, waiting: _}) as r) => {
     switch working {
     | list{} => r
     | _ => reconstruct(reconstructStep(r))
@@ -199,6 +213,7 @@ module Scanner = {
 let parse = data => {
   module Str = Js.String2
   let floatFromStr = Js.Float.fromString
+
   let parseOne = data => {
     let lines = data->splitNewline->Array.map(Str.trim)
     let name =
@@ -220,20 +235,19 @@ let parse = data => {
   data->splitDoubleNewline->Array.map(parseOne)
 }
 
+open Scanner
+
 let reconstructScanners = scanners => {
-  open Scanner
   let Reconstruction(r) = Scanner.reconstruct(mkReconstruction(scanners->List.fromArray))
   r.found
 }
 
 let part1 = scanners => {
-  open Scanner
-
   let bSets = scanners->List.mapU((. s) => {
-    Belt.Set.fromArray(s.beacons, ~id=module(V3Comparator))
+    v3SetFromArray(s.beacons)
   })
 
-  let result = bSets->List.reduceU(Belt.Set.make(~id=module(V3Comparator)), (. a, b) => {
+  let result = bSets->List.reduceU(v3SetMake, (. a, b) => {
     Belt.Set.union(a, b)
   })
 
@@ -242,11 +256,9 @@ let part1 = scanners => {
 }
 
 let part2 = scanners => {
-  open Scanner
-
   let extractOrigin = (. sc) => sc.transformation(Coord(0.0, 0.0, 0.0))
   let origins = scanners->List.mapU(extractOrigin)
-  //  origins->List.toArray->log
+
   let manhatton = (Coord(a)) => {
     let (x1, y1, z1) = a
     abs_float(x1) +. abs_float(y1) +. abs_float(z1)

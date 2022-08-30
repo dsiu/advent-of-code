@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="2021 Day 19 - Optimization">
-      <change afterPath="$PROJECT_DIR$/src/MS.res" afterDir="false" />
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="Time the runs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19_Run.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/DayX/AOC2021_DayX_Run.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FP_Utils.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FP_Utils.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.res" afterDir="false" />
     </list>
@@ -133,7 +127,7 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.MS.mjs">
+  <component name="RunManager" selected="Jest.All Tests">
     <configuration name="AOC2021_Day1_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -254,20 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00013" summary="update project files">
-      <created>1658058049094</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1658058049094</updated>
-    </task>
-    <task id="LOCAL-00014" summary="2021 Day 15 Part 1 &amp; Part 2 DONE">
-      <created>1658235588546</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1658235588546</updated>
     </task>
     <task id="LOCAL-00015" summary="2021 Day 16 Start">
       <created>1658235773185</created>
@@ -598,7 +578,21 @@
       <option name="project" value="LOCAL" />
       <updated>1661777237374</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Time the runs">
+      <created>1661841267941</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1661841267941</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Time the runs">
+      <created>1661841279932</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1661841279932</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,7 +620,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2021 Day 16 - Part 2 - Expression  tests" />
     <MESSAGE value="2021 Day 16 - Part 2 DONE" />
     <MESSAGE value="2021 Day 17 - Part 1 - implemented brute force" />
     <MESSAGE value="2021 Day 17 - WIP" />
@@ -651,7 +644,8 @@
     <MESSAGE value="2021 Day 19 - Day 1 and Day 2 DONE" />
     <MESSAGE value="removed some log" />
     <MESSAGE value="2021 Day 19 - Optimization" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021 Day 19 - Optimization" />
+    <MESSAGE value="Time the runs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Time the runs" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
