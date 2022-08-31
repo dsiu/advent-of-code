@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="Time the runs">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="refactoring">
+      <change afterPath="$PROJECT_DIR$/src/Linear_New.res" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day19/AOC2021_Day19.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FP_Utils.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FP_Utils.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/FP_Utils.res" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,46 +78,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.vendoring.notification.had.been.shown&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/src/2021/Day19&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/node_modules/jest&quot;,
-    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.vendoring.notification.had.been.shown": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/dsiu/code/playground/advent-of-code/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/dsiu/code/playground/advent-of-code/node_modules/jest",
+    "nodejs.mocha.mocha_node_package_dir": "",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "ruby.rails.projectView.checked": "true",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
+    "ts.external.directory.path": "/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;Rescript&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Rescript"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/2021/Day19" />
       <recent name="$PROJECT_DIR$/src/2021/Day18" />
       <recent name="$PROJECT_DIR$/src/2021/Day17" />
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -222,8 +219,8 @@
       <item itemvalue="Jest.All Tests - Watch" />
       <item itemvalue="Node.js.AOC2021_Day18.mjs" />
       <item itemvalue="Node.js.Jest Profiling" />
-      <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day19_Run.mjs profiling" />
+      <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
       <item itemvalue="Node.js.MS.mjs" />
       <item itemvalue="Node.js.AOC2020_Day4_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
@@ -248,20 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00015" summary="2021 Day 16 Start">
-      <created>1658235773185</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1658235773185</updated>
-    </task>
-    <task id="LOCAL-00016" summary="2021 Day 16 Start">
-      <created>1658235798733</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1658235798733</updated>
     </task>
     <task id="LOCAL-00017" summary="2021 Day 15 - added more comments">
       <created>1658292440925</created>
@@ -592,7 +575,21 @@
       <option name="project" value="LOCAL" />
       <updated>1661841279932</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="refactoring">
+      <created>1661843627441</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1661843627441</updated>
+    </task>
+    <task id="LOCAL-00065" summary="refactoring">
+      <created>1661843769745</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1661843769745</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -637,7 +634,6 @@
     <MESSAGE value="clean up - remove unused file" />
     <MESSAGE value="2021 Day 19 - Day 1 Start" />
     <MESSAGE value="cleanup warning -27 (unused vars) by using _" />
-    <MESSAGE value="refactoring" />
     <MESSAGE value="package updates" />
     <MESSAGE value="Use Rescript v10" />
     <MESSAGE value="2021 Day 19 - Day 1 WIP" />
@@ -645,7 +641,8 @@
     <MESSAGE value="removed some log" />
     <MESSAGE value="2021 Day 19 - Optimization" />
     <MESSAGE value="Time the runs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Time the runs" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
