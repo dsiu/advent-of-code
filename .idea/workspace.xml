@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="refactoring">
-      <change afterPath="$PROJECT_DIR$/src/Linear_New.res" afterDir="false" />
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="WIP: generalize V2 V3 Linear conainers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdjacencyList.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyList.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdjacencyList.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyList.res" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdjacencyList_Str.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdjacencyList_Str.res" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Adjacency_List.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Adjacency_List.res" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,39 +85,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.vendoring.notification.had.been.shown": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/dsiu/code/playground/advent-of-code/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "/Users/dsiu/code/playground/advent-of-code/node_modules/jest",
-    "nodejs.mocha.mocha_node_package_dir": "",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "ruby.rails.projectView.checked": "true",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
-    "ts.external.directory.path": "/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.vendoring.notification.had.been.shown&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/dsiu/code/playground/advent-of-code/node_modules/jest&quot;,
+    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "Rescript"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Rescript&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -230,10 +237,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Node.js.MS.mjs" />
-        <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
-        <item itemvalue="Node.js.AOC2020_Day4_Run.mjs" />
-        <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
         <item itemvalue="Node.js.JS_Debug_Run.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
+        <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
       </list>
     </recent_temporary>
   </component>
@@ -245,13 +252,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00017" summary="2021 Day 15 - added more comments">
-      <created>1658292440925</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1658292440925</updated>
     </task>
     <task id="LOCAL-00018" summary="optimized hot code with uncurried calls">
       <created>1658305688261</created>
@@ -589,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661843769745</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="WIP: generalize V2 V3 Linear conainers">
+      <created>1661964593900</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1661964593900</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -617,7 +624,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2021 Day 16 - Part 2 DONE" />
     <MESSAGE value="2021 Day 17 - Part 1 - implemented brute force" />
     <MESSAGE value="2021 Day 17 - WIP" />
     <MESSAGE value="2021 Day 17 - Part 1 and 2 DONE" />
@@ -642,7 +648,8 @@
     <MESSAGE value="2021 Day 19 - Optimization" />
     <MESSAGE value="Time the runs" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="WIP: generalize V2 V3 Linear conainers" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP: generalize V2 V3 Linear conainers" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

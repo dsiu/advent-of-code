@@ -9,7 +9,6 @@ import * as Belt_HashSetString from "rescript/lib/es6/belt_HashSetString.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Belt_SortArrayString from "rescript/lib/es6/belt_SortArrayString.js";
 import * as AdjacencyList$AdventOfCode from "../../AdjacencyList.mjs";
-import * as Adjacency_List$AdventOfCode from "../../Adjacency_List.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -18,7 +17,7 @@ function log(prim) {
 var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day12-AdventOfCode.Maze.ParseError");
 
 function make(edges) {
-  var maze = Curry._1(AdjacencyList$AdventOfCode.AdjList_String.make, 40);
+  var maze = Curry._1(AdjacencyList$AdventOfCode.$$String.make, 40);
   Belt_Array.forEachU(edges, (function (edge) {
           if (edge.length !== 2) {
             throw {
@@ -28,13 +27,13 @@ function make(edges) {
           }
           var a = edge[0];
           var b = edge[1];
-          AdjacencyList$AdventOfCode.AdjList_String.addEdge(maze, a, b);
-          AdjacencyList$AdventOfCode.AdjList_String.addEdge(maze, b, a);
+          AdjacencyList$AdventOfCode.$$String.addEdge(maze, a, b);
+          AdjacencyList$AdventOfCode.$$String.addEdge(maze, b, a);
         }));
   return maze;
 }
 
-var toString = AdjacencyList$AdventOfCode.AdjList_String.toString;
+var toString = AdjacencyList$AdventOfCode.$$String.toString;
 
 var Maze = {
   AdjList: undefined,
@@ -79,7 +78,9 @@ function has_any_small_cave_been_visited_twice(visited) {
   return smalls.length !== 0;
 }
 
-var get_edges = Adjacency_List$AdventOfCode.neighbors;
+function get_edges(t, node) {
+  return AdjacencyList$AdventOfCode.$$String.neighbors(t, node);
+}
 
 function can_visit_part1(visited, node) {
   if (node.toUpperCase() === node) {
@@ -113,7 +114,7 @@ function dfs(visit_func, t, start_node, end_node) {
     if (node === end_node) {
       return [acc];
     }
-    var edges = Adjacency_List$AdventOfCode.neighbors(t, node);
+    var edges = AdjacencyList$AdventOfCode.$$String.neighbors(t, node);
     return Belt_HashSetString.reduceU(edges, [], (function (a, e) {
                   if (visit_func(visited$p, e)) {
                     return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));

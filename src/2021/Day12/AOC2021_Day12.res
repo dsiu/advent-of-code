@@ -3,7 +3,10 @@ open Utils
 let log = Js.Console.log
 
 module Maze = {
-  module AdjList = AdjacencyList.AdjList_String
+  //  module AdjList = AdjacencyList.AdjList_String
+  //  type t = AdjList.t
+
+  module AdjList = AdjacencyList.String
   type t = AdjList.t
 
   exception ParseError
@@ -16,6 +19,7 @@ module Maze = {
           maze->AdjList.addEdge(a, b)
           maze->AdjList.addEdge(b, a)
         }
+
       | _ => raise(ParseError)
       }
     })
@@ -56,7 +60,7 @@ let has_any_small_cave_been_visited_twice = visited => {
   smalls->Array.length > 0
 }
 
-let get_edges = (t, node) => Adjacency_List.neighbors(t, node)
+let get_edges = (t, node) => Maze.AdjList.neighbors(t, node)
 
 let can_visit_part1 = (. visited, node) =>
   is_big_cave(node) || get_visited_count(visited, node) <= 0
@@ -96,6 +100,7 @@ let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
               }
         })
       }
+
     | true => [acc]
     }
   }
