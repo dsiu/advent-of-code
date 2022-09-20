@@ -32,9 +32,9 @@ module type BASE = {
   let make: (~hintSize: int) => t
 }
 
-module Make = (BASE: BASE): (S with type e = BASE.e and type c = BASE.c and type t = BASE.t) => {
-  type e = BASE.e
-  type c = BASE.c
+module Make = (BASE: BASE): (S with type e := BASE.e and type c := BASE.c and type t = BASE.t) => {
+  //  type e = BASE.e
+  //  type c = BASE.c
   type t = BASE.t
   let make = HashMap.String.make
   let containerMake = BASE.containerMake

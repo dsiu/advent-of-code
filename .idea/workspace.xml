@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="WIP: generalize V2 V3 Linear conainers">
+    <list default="true" id="689415e0-f11e-4124-bbad-e2601a783d4d" name="Changes" comment="Generalized Adjacency List">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/2021/Day12/AOC2021_Day12.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdjacencyList.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyList.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AdjacencyList.res" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyList.res" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdjacencyList_Str.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdjacencyList_Str.res" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Adjacency_List.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Adjacency_List.res" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +18,9 @@
     <option name="groupingKeys">
       <option value="directory" />
     </option>
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -78,6 +75,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
   <component name="ProjectId" id="29HgYOU3ZDg9T2r4LBaxZeYNObO" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -109,7 +109,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA 2022.2 EAP.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -131,7 +131,7 @@
       <recent name="$PROJECT_DIR$/src/2021/Day16" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.All Tests">
+  <component name="RunManager" selected="Node.js.AOC2020_Day7_Run.mjs">
     <configuration name="AOC2021_Day1_Test.mjs" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -174,13 +174,7 @@
       <test-file value="$PROJECT_DIR$/__tests__/Tree_Test.mjs" />
       <method v="2" />
     </configuration>
-    <configuration name="AOC2020_Day4_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2020/Day4/AOC2020_Day4_Run.mjs" working-dir="$PROJECT_DIR$/src/2020/Day4">
-      <method v="2" />
-    </configuration>
-    <configuration name="AOC2021_Day15_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="AOC2021_Day15_Run.mjs" working-dir="$PROJECT_DIR$/src/2021/Day15">
-      <envs>
-        <env name="DEBUG" value="*" />
-      </envs>
+    <configuration name="AOC2020_Day7_Run.mjs" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/2020/Day7/AOC2020_Day7_Run.mjs" working-dir="$PROJECT_DIR$/src/2020/Day7">
       <method v="2" />
     </configuration>
     <configuration name="AOC2021_Day18.mjs" type="NodeJSConfigurationType" node-parameters="$ProjectFileDir$/node_modules/.bin/nodemon" path-to-js-file="AOC2021_Day18.mjs" working-dir="$PROJECT_DIR$/src/2021/Day18">
@@ -227,20 +221,19 @@
       <item itemvalue="Node.js.AOC2021_Day18.mjs" />
       <item itemvalue="Node.js.Jest Profiling" />
       <item itemvalue="Node.js.AOC2021_Day19_Run.mjs profiling" />
+      <item itemvalue="Node.js.AOC2020_Day7_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
       <item itemvalue="Node.js.MS.mjs" />
-      <item itemvalue="Node.js.AOC2020_Day4_Run.mjs" />
       <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
-      <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
       <item itemvalue="Node.js.JS_Debug_Run.mjs" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.AOC2020_Day7_Run.mjs" />
         <item itemvalue="Node.js.MS.mjs" />
         <item itemvalue="Node.js.JS_Debug_Run.mjs" />
         <item itemvalue="Node.js.AOC2021_Day1_Run.mjs" />
         <item itemvalue="Node.js.AOC2021_Day19_Run.mjs" />
-        <item itemvalue="Node.js.AOC2021_Day15_Run.mjs" />
       </list>
     </recent_temporary>
   </component>
@@ -252,13 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652775471395</updated>
-    </task>
-    <task id="LOCAL-00018" summary="optimized hot code with uncurried calls">
-      <created>1658305688261</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1658305688261</updated>
     </task>
     <task id="LOCAL-00019" summary="OMG, tests are running 2x faster.  swapped out esbuild-jest with @swc/jest">
       <created>1658307383923</created>
@@ -596,7 +582,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661964593900</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Generalized Adjacency List">
+      <created>1662464929122</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1662464929122</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,7 +617,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2021 Day 17 - Part 1 - implemented brute force" />
     <MESSAGE value="2021 Day 17 - WIP" />
     <MESSAGE value="2021 Day 17 - Part 1 and 2 DONE" />
     <MESSAGE value="2021 Day 18 - Start" />
@@ -649,7 +641,8 @@
     <MESSAGE value="Time the runs" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="WIP: generalize V2 V3 Linear conainers" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP: generalize V2 V3 Linear conainers" />
+    <MESSAGE value="Generalized Adjacency List" />
+    <option name="LAST_COMMIT_MESSAGE" value="Generalized Adjacency List" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
