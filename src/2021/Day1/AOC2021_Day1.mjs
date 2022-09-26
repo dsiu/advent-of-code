@@ -25,7 +25,8 @@ function findDiff(xs) {
 }
 
 function findDiff2(xs) {
-  return Belt_Array.keep(Belt_Array.zip(Belt_Array.sliceToEnd(xs, 1), xs), (function (param) {
+  var shifted = Belt_Array.sliceToEnd(xs, 1);
+  return Belt_Array.keep(Belt_Array.zip(shifted, xs), (function (param) {
                 return Caml_obj.greaterthan(param[0], param[1]);
               }));
 }
