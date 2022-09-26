@@ -15,7 +15,8 @@ let findDiff = xs => {
 
 // use zip to find the differences between the two arrays
 let findDiff2 = xs => {
-  Array.zip(xs->Array.sliceToEnd(1), xs)->Array.keep(((a, b)) => a > b)
+  let shifted = xs->Array.sliceToEnd(1)
+  Array.zip(shifted, xs)->Array.keep(((a, b)) => a > b)
 }
 
 let sum2Array = (a1, a2) =>
