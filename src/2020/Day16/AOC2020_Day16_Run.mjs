@@ -27,7 +27,7 @@ console.log("----------");
 
 var t2 = Date.now();
 
-var part2 = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data$AdventOfCode.data);
+var part2 = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data_Sample$AdventOfCode.data2);
 
 var t2_done = Date.now();
 
@@ -41,7 +41,9 @@ console.log(prim$1);
 
 var data = AOC2020_Day16_Data$AdventOfCode.data;
 
-var sampleData = AOC2020_Day16_Data_Sample$AdventOfCode.data;
+var sampleData1 = AOC2020_Day16_Data_Sample$AdventOfCode.data1;
+
+var sampleData2 = AOC2020_Day16_Data_Sample$AdventOfCode.data2;
 
 var solvePart1 = AOC2020_Day16$AdventOfCode.solvePart1;
 
@@ -50,7 +52,8 @@ var solvePart2 = AOC2020_Day16$AdventOfCode.solvePart2;
 export {
   log ,
   data ,
-  sampleData ,
+  sampleData1 ,
+  sampleData2 ,
   solvePart1 ,
   solvePart2 ,
   t1 ,

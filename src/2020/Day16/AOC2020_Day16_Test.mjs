@@ -7,15 +7,15 @@ import * as AOC2020_Day16_Data_Sample$AdventOfCode from "./AOC2020_Day16_Data_Sa
 
 Jest.describe("2020 Day16", (function (param) {
         Jest.test("Part 1 - Sample Data", (function (param) {
-                var result = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data_Sample$AdventOfCode.data);
+                var result = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data_Sample$AdventOfCode.data1);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 71);
               }));
         Jest.test("Part 1 - Solve", (function (param) {
                 var result = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 28882);
               }));
         Jest.test("Part 2 - Sample Data", (function (param) {
-                var result = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data_Sample$AdventOfCode.data);
+                var result = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data_Sample$AdventOfCode.data2);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
               }));
         Jest.test("Part 2 - Solve", (function (param) {
@@ -26,10 +26,13 @@ Jest.describe("2020 Day16", (function (param) {
 
 var data = AOC2020_Day16_Data$AdventOfCode.data;
 
-var sampleData = AOC2020_Day16_Data_Sample$AdventOfCode.data;
+var sampleData1 = AOC2020_Day16_Data_Sample$AdventOfCode.data1;
+
+var sampleData2 = AOC2020_Day16_Data_Sample$AdventOfCode.data2;
 
 export {
   data ,
-  sampleData ,
+  sampleData1 ,
+  sampleData2 ,
 }
 /*  Not a pure module */

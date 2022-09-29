@@ -10,7 +10,7 @@ let log2 = Js.Console.log2
 
 type range = Range(int, int)
 type body = Body(range, range)
-type ruleSet = Map.String.t<body>
+type ruleSet = RuleSet(Map.String.t<body>)
 type ticket = Ticket(array<int>)
 
 let rangeToString = (Range(a, b)) => a->Int.toString ++ "-" ++ b->Int.toString
@@ -19,14 +19,19 @@ let bodyToString = (Body(r1, r2)) => r1->rangeToString ++ " or " ++ r2->rangeToS
 let inRange = (Range(lower, upper), value) => lower <= value && value <= upper
 let matchesRule = (Body(a, b), value) => inRange(a, value) || inRange(b, value)
 
-let validForAnyField = (rules, value) => {
+let validForAnyField = (RuleSet(rules), value) => {
   open Array
-  rules->Map.String.valuesToArray->keep(matchesRule(_, value))->length > 0
+  some(rules->Map.String.valuesToArray, matchesRule(_, value))
 }
 
-let ticketErrorRate = (rules, tickets) => {
+let ticketErrorRate = (rules, tickets: array<ticket>) => {
   open Array
-  tickets->map(t => t->keep(v => !validForAnyField(rules, v)))->flatten->sumIntArray
+  sumIntArray(tickets->map((Ticket(t)) => t->keep(v => !validForAnyField(rules, v)))->flatten)
+}
+
+let isValidTicket = (rules, Ticket(ticket)) => {
+  open Array
+  every(map(ticket, v => validForAnyField(rules, v)), identity)
 }
 
 let part1 = ticketErrorRate
@@ -51,10 +56,10 @@ let parse = data => {
     (ruleStr, Body(r1, r2))
   }
 
-  let ruleSet = rules->Array.map(parseRule)->Map.String.fromArray
+  let ruleSet = rules->Array.map(parseRule)->Map.String.fromArray->RuleSet
 
   let parseTicket = s => {
-    s->split(",")->map(intFromStrEx)
+    s->split(",")->map(intFromStrEx)->Ticket
   }
 
   let myTicket = my->Array.getExn(1)->parseTicket
@@ -73,6 +78,8 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
+  let (rules, myTicket, nearbyTickets) = data->parse
+  isValidTicket(rules, myTicket)->log
+  nearbyTickets->Array.map(isValidTicket(rules, _))->log
   2
 }

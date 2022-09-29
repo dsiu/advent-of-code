@@ -40,17 +40,23 @@ function matchesRule(param, value) {
 }
 
 function validForAnyField(rules, value) {
-  return Belt_Array.keep(Belt_MapString.valuesToArray(rules), (function (__x) {
+  return Belt_Array.some(Belt_MapString.valuesToArray(rules._0), (function (__x) {
                 return matchesRule(__x, value);
-              })).length !== 0;
+              }));
 }
 
 function ticketErrorRate(rules, tickets) {
   return Utils$AdventOfCode.sumIntArray(Utils$AdventOfCode.flatten(Belt_Array.map(tickets, (function (t) {
-                        return Belt_Array.keep(t, (function (v) {
+                        return Belt_Array.keep(t._0, (function (v) {
                                       return !validForAnyField(rules, v);
                                     }));
                       }))));
+}
+
+function isValidTicket(rules, ticket) {
+  return Belt_Array.every(Belt_Array.map(ticket._0, (function (v) {
+                    return validForAnyField(rules, v);
+                  })), FP_Utils$AdventOfCode.identity);
 }
 
 function parse(data) {
@@ -68,7 +74,7 @@ function parse(data) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2020_Day16.res",
-            41,
+            46,
             6
           ],
           Error: new Error()
@@ -84,7 +90,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              44,
+              49,
               8
             ],
             Error: new Error()
@@ -104,7 +110,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              49,
+              54,
               8
             ],
             Error: new Error()
@@ -118,7 +124,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              50,
+              55,
               8
             ],
             Error: new Error()
@@ -134,9 +140,13 @@ function parse(data) {
             }
           ];
   };
-  var ruleSet = Belt_MapString.fromArray(Belt_Array.map(rules, parseRule));
+  var ruleSet = /* RuleSet */{
+    _0: Belt_MapString.fromArray(Belt_Array.map(rules, parseRule))
+  };
   var parseTicket = function (s) {
-    return Belt_Array.map(s.split(","), intFromStrEx);
+    return /* Ticket */{
+            _0: Belt_Array.map(s.split(","), intFromStrEx)
+          };
   };
   var myTicket = parseTicket(Belt_Array.getExn(my, 1));
   var nearbyTickets = Belt_Array.map(Belt_Array.sliceToEnd(nearby, 1), parseTicket);
@@ -153,6 +163,14 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
+  var match = parse(data);
+  var rules = match[0];
+  var prim = isValidTicket(rules, match[1]);
+  console.log(prim);
+  var prim$1 = Belt_Array.map(match[2], (function (__x) {
+          return isValidTicket(rules, __x);
+        }));
+  console.log(prim$1);
   return 2;
 }
 
@@ -167,6 +185,7 @@ export {
   matchesRule ,
   validForAnyField ,
   ticketErrorRate ,
+  isValidTicket ,
   part1 ,
   parse ,
   solvePart1 ,

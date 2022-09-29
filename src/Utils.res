@@ -179,6 +179,20 @@ let flatten = (xs: array<array<'a>>) => {
   xs->Array.reduce([], (a, x) => Array.concat(a, x))
 }
 
+// ref: https://blog.shaynefletcher.org/2017/08/transpose.html
+// ref: https://github.com/nyinyithann/rescript-js-array2-extension/blob/main/src/JsArray2Ex.res
+
+let rec transpose = (xs: array<array<'a>>) => {
+ let rec transpose_rec = (acc, x) => {
+  switch x {
+
+
+  }
+
+ }
+ transpose_rec([], xs)
+}
+
 let maxKeyIntValuePair = Array.reduce(_, ("", 0), (acc, (k, v)) => {
   let (_, va) = acc
   v > va ? (k, v) : acc
