@@ -31,7 +31,7 @@
       "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js)/)"
+      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js|js-array2-ex)/)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -42,12 +42,15 @@
   "dependencies": {
     "@resinfo/parser": "^2.0.0-alpha",
     "debug": "^4.3.4",
+    "js-array2-ex": "^0.0.4",
     "ms": "^2.1.3",
     "rationale": "^0.2.0",
     "re-fp": "github:snatvb/re-fp",
     "rescript-bag": "github:dsiu/rescript-bag#main",
     "rescript-js": "latest",
     "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10",
-    "rescript-vector": "^0.4.0"
+    "rescript-vector": "^0.4.0",
+    "bs-bastet": "github:dsiu/bastet#rescript-v10",
+    "relude": "github:dsiu/relude#rescript-v10"
   }
 }

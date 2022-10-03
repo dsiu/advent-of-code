@@ -5,16 +5,19 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-type pixel = Pixel(Linear.V2.t<int>)
+//type pixel = Pixel(Linear.V2.t<int>)
 
-module V2Comparator = Belt.Id.MakeComparable({
-  type t = pixel
-  let cmp = (Pixel(a), Pixel(b)) => Linear.V2.cmp(a, b)
-})
+//module V2Comparator = Belt.Id.MakeComparable({
+//  type t = pixel
+//  let cmp = (Pixel(a), Pixel(b)) => Linear.V2.cmp(a, b)
+//})
+//
+//let v2SetMake = Belt.Set.make(~id=module(V2Comparator))
+//type pixelSet = Belt.Set.t<V2Comparator.t, V2Comparator.identity>
+//type image = Image({grid: pixelSet, distantPixel: bool, explicitPixel: (pixel, pixel)})
 
-let v2SetMake = Belt.Set.make(~id=module(V2Comparator))
-type pixelSet = Belt.Set.t<V2Comparator.t, V2Comparator.identity>
-type image = Image({grid: pixelSet, distantPixel: bool, explicitPixel: (pixel, pixel)})
+module Tuple2 = Relude.Tuple2
+type piexl = Pixel((int, int))
 
 //let findContents : (pixelSet, bool, (pixel, pixel), pixel) => bool= (grid, distant, region, here) => {
 //

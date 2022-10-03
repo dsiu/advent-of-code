@@ -4,7 +4,8 @@
 
 open Belt
 open Utils
-open FP_Utils
+open! FP_Utils
+
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
@@ -29,9 +30,27 @@ let ticketErrorRate = (rules, tickets: array<ticket>) => {
   sumIntArray(tickets->map((Ticket(t)) => t->keep(v => !validForAnyField(rules, v)))->flatten)
 }
 
-let isValidTicket = (rules, Ticket(ticket)) => {
+let isValidTicket = (RuleSet(rules), Ticket(ticket)) => {
   open Array
-  every(map(ticket, v => validForAnyField(rules, v)), identity)
+  every(map(ticket, v => validForAnyField(RuleSet(rules), v)), identity)
+}
+
+let possibleColumns = (ticketCols, body) => {
+  open Array
+  let columnMatches = ((_, col)) => {
+    every(col, matchesRule(body, _))
+  }
+
+  let idx = makeBy(ticketCols->length, identity)
+  zip(idx, ticketCols)->keep(columnMatches)->map(fst)
+}
+
+type colCandidateSet = ColCandidateSet(Map.String.t<array<int>>)
+
+let possibleColumnsAll = (RuleSet(rules), tickets) => {
+  open Array
+  let validTickets = tickets->keep(isValidTicket(RuleSet(rules)))
+  //  let ticketCols = Utils.transpose(validTickets)
 }
 
 let part1 = ticketErrorRate

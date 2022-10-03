@@ -6,6 +6,7 @@ import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
 import * as Caml_int64 from "rescript/lib/es6/caml_int64.js";
+import * as JsArray2Ex from "js-array2-ex/src/JsArray2Ex.mjs";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Belt_MapInt from "rescript/lib/es6/belt_MapInt.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
@@ -365,6 +366,8 @@ function hashMapStringUpdate(h, k, f) {
 
 var identity = FP_Utils$AdventOfCode.identity;
 
+var transpose = JsArray2Ex.transpose;
+
 export {
   log ,
   identity ,
@@ -390,6 +393,7 @@ export {
   maxIntInArray ,
   minIntInArray ,
   flatten ,
+  transpose ,
   maxKeyIntValuePair ,
   minKeyIntValuePair ,
   maxKeyInt64ValuePair ,

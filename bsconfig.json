@@ -30,7 +30,10 @@
     "re-fp",
     "rescript-ocamlgraph",
     "rescript-bag",
-    "@resinfo/parser"
+    "@resinfo/parser",
+    "bs-bastet",
+    "relude",
+    "js-array2-ex"
   ],
   "bs-dev-dependencies": [
     "@glennsl/rescript-jest"

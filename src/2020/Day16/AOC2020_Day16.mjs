@@ -54,9 +54,33 @@ function ticketErrorRate(rules, tickets) {
 }
 
 function isValidTicket(rules, ticket) {
+  var rules$1 = rules._0;
   return Belt_Array.every(Belt_Array.map(ticket._0, (function (v) {
-                    return validForAnyField(rules, v);
+                    return validForAnyField(/* RuleSet */{
+                                _0: rules$1
+                              }, v);
                   })), FP_Utils$AdventOfCode.identity);
+}
+
+function possibleColumns(ticketCols, body) {
+  var columnMatches = function (param) {
+    return Belt_Array.every(param[1], (function (__x) {
+                  return matchesRule(body, __x);
+                }));
+  };
+  var idx = Belt_Array.makeBy(ticketCols.length, FP_Utils$AdventOfCode.identity);
+  return Belt_Array.map(Belt_Array.keep(Belt_Array.zip(idx, ticketCols), columnMatches), (function (prim) {
+                return prim[0];
+              }));
+}
+
+function possibleColumnsAll(rules, tickets) {
+  var partial_arg = /* RuleSet */{
+    _0: rules._0
+  };
+  Belt_Array.keep(tickets, (function (param) {
+          return isValidTicket(partial_arg, param);
+        }));
 }
 
 function parse(data) {
@@ -74,7 +98,7 @@ function parse(data) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2020_Day16.res",
-            46,
+            65,
             6
           ],
           Error: new Error()
@@ -90,7 +114,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              49,
+              68,
               8
             ],
             Error: new Error()
@@ -110,7 +134,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              54,
+              73,
               8
             ],
             Error: new Error()
@@ -124,7 +148,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              55,
+              74,
               8
             ],
             Error: new Error()
@@ -186,6 +210,8 @@ export {
   validForAnyField ,
   ticketErrorRate ,
   isValidTicket ,
+  possibleColumns ,
+  possibleColumnsAll ,
   part1 ,
   parse ,
   solvePart1 ,
