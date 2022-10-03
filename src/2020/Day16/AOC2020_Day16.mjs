@@ -47,7 +47,7 @@ function validForAnyField(rules, value) {
 
 function ticketErrorRate(rules, tickets) {
   return Utils$AdventOfCode.sumIntArray(Utils$AdventOfCode.flatten(Belt_Array.map(tickets, (function (t) {
-                        return Belt_Array.keep(t._0, (function (v) {
+                        return Belt_Array.keep(t, (function (v) {
                                       return !validForAnyField(rules, v);
                                     }));
                       }))));
@@ -55,7 +55,7 @@ function ticketErrorRate(rules, tickets) {
 
 function isValidTicket(rules, ticket) {
   var rules$1 = rules._0;
-  return Belt_Array.every(Belt_Array.map(ticket._0, (function (v) {
+  return Belt_Array.every(Belt_Array.map(ticket, (function (v) {
                     return validForAnyField(/* RuleSet */{
                                 _0: rules$1
                               }, v);
@@ -75,12 +75,59 @@ function possibleColumns(ticketCols, body) {
 }
 
 function possibleColumnsAll(rules, tickets) {
+  var rules$1 = rules._0;
   var partial_arg = /* RuleSet */{
-    _0: rules._0
+    _0: rules$1
   };
-  Belt_Array.keep(tickets, (function (param) {
+  var validTickets = Belt_Array.keep(tickets, (function (param) {
           return isValidTicket(partial_arg, param);
         }));
+  var ticketCols = Utils$AdventOfCode.transpose(validTickets);
+  return Belt_MapString.map(rules$1, (function (__x) {
+                return possibleColumns(ticketCols, __x);
+              }));
+}
+
+function reduceCandidate(candidates) {
+  var findNextCandidate = function (candidates) {
+    var only1Elem = function (param, v) {
+      return v.length === 1;
+    };
+    return Belt_MapString.findFirstBy(candidates._0, only1Elem);
+  };
+  var _c = /* ColCandidateSet */{
+    _0: candidates._0
+  };
+  var _solved = [];
+  while(true) {
+    var c = _c;
+    var solved = _solved;
+    var c$1 = c._0;
+    var match = findNextCandidate(/* ColCandidateSet */{
+          _0: c$1
+        });
+    if (match === undefined) {
+      return solved;
+    }
+    var k = match[0];
+    var v$p = Belt_Array.getExn(match[1], 0);
+    var solved$p = Belt_Array.concat(solved, [[
+            k,
+            v$p
+          ]]);
+    var removeFound = (function(v$p){
+    return function removeFound(__x) {
+      return Belt_Array.keep(__x, (function (x) {
+                    return x !== v$p;
+                  }));
+    }
+    }(v$p));
+    _solved = solved$p;
+    _c = /* ColCandidateSet */{
+      _0: Belt_MapString.map(Belt_MapString.remove(c$1, k), removeFound)
+    };
+    continue ;
+  };
 }
 
 function parse(data) {
@@ -98,7 +145,7 @@ function parse(data) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2020_Day16.res",
-            65,
+            105,
             6
           ],
           Error: new Error()
@@ -114,7 +161,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              68,
+              108,
               8
             ],
             Error: new Error()
@@ -134,7 +181,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              73,
+              113,
               8
             ],
             Error: new Error()
@@ -148,7 +195,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              74,
+              114,
               8
             ],
             Error: new Error()
@@ -168,9 +215,7 @@ function parse(data) {
     _0: Belt_MapString.fromArray(Belt_Array.map(rules, parseRule))
   };
   var parseTicket = function (s) {
-    return /* Ticket */{
-            _0: Belt_Array.map(s.split(","), intFromStrEx)
-          };
+    return Belt_Array.map(s.split(","), intFromStrEx);
   };
   var myTicket = parseTicket(Belt_Array.getExn(my, 1));
   var nearbyTickets = Belt_Array.map(Belt_Array.sliceToEnd(nearby, 1), parseTicket);
@@ -188,14 +233,20 @@ function solvePart1(data) {
 
 function solvePart2(data) {
   var match = parse(data);
-  var rules = match[0];
-  var prim = isValidTicket(rules, match[1]);
+  var myTicket = match[1];
+  var pc = possibleColumnsAll(match[0], match[2]);
+  var prim = Belt_MapString.toArray(pc);
   console.log(prim);
-  var prim$1 = Belt_Array.map(match[2], (function (__x) {
-          return isValidTicket(rules, __x);
-        }));
-  console.log(prim$1);
-  return 2;
+  var colMapping = reduceCandidate(/* ColCandidateSet */{
+        _0: pc
+      });
+  return Belt_Array.reduce(Belt_Array.map(Belt_Array.keep(colMapping, (function (param) {
+                        return param[0].startsWith("departure");
+                      })), (function (param) {
+                    return Belt_Array.getExn(myTicket, param[1]);
+                  })), 1, (function (acc, x) {
+                return x * acc;
+              }));
 }
 
 var part1 = ticketErrorRate;
@@ -209,10 +260,11 @@ export {
   matchesRule ,
   validForAnyField ,
   ticketErrorRate ,
+  part1 ,
   isValidTicket ,
   possibleColumns ,
   possibleColumnsAll ,
-  part1 ,
+  reduceCandidate ,
   parse ,
   solvePart1 ,
   solvePart2 ,
