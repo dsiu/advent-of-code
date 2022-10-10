@@ -235,8 +235,6 @@ function solvePart2(data) {
   var match = parse(data);
   var myTicket = match[1];
   var pc = possibleColumnsAll(match[0], match[2]);
-  var prim = Belt_MapString.toArray(pc);
-  console.log(prim);
   var colMapping = reduceCandidate(/* ColCandidateSet */{
         _0: pc
       });

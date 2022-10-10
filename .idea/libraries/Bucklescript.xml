@@ -4,8 +4,11 @@
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/node_modules/@resinfo/parser" />
         <item url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
+        <item url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
+        <item url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
         <item url="file://$PROJECT_DIR$/node_modules/rationale" />
         <item url="file://$PROJECT_DIR$/node_modules/re-fp" />
+        <item url="file://$PROJECT_DIR$/node_modules/relude" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-bag" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-js" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-ocamlgraph" />
@@ -14,8 +17,11 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/node_modules/@resinfo/parser" />
       <root url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
+      <root url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
+      <root url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
       <root url="file://$PROJECT_DIR$/node_modules/rationale" />
       <root url="file://$PROJECT_DIR$/node_modules/re-fp" />
+      <root url="file://$PROJECT_DIR$/node_modules/relude" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-bag" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-js" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-ocamlgraph" />

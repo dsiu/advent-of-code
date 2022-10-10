@@ -142,7 +142,7 @@ let solvePart2 = data => {
   //  nearbyTickets->Array.map(isValidTicket(rules, _))->log
 
   let pc = possibleColumnsAll(rules, nearbyTickets)
-  pc->Map.String.toArray->log
+  //  pc->Map.String.toArray->log
   let colMapping = ColCandidateSet(pc)->reduceCandidate
 
   colMapping
