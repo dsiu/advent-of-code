@@ -55,10 +55,10 @@ function ticketErrorRate(rules, tickets) {
 
 function isValidTicket(rules, ticket) {
   var rules$1 = rules._0;
-  return Belt_Array.every(Belt_Array.map(ticket, (function (v) {
+  return Belt_Array.every(Belt_Array.map(ticket, (function (__x) {
                     return validForAnyField(/* RuleSet */{
                                 _0: rules$1
-                              }, v);
+                              }, __x);
                   })), FP_Utils$AdventOfCode.identity);
 }
 
@@ -238,10 +238,11 @@ function solvePart2(data) {
   var colMapping = reduceCandidate(/* ColCandidateSet */{
         _0: pc
       });
-  return Belt_Array.reduce(Belt_Array.map(Belt_Array.keep(colMapping, (function (param) {
-                        return param[0].startsWith("departure");
-                      })), (function (param) {
-                    return Belt_Array.getExn(myTicket, param[1]);
+  return Belt_Array.reduce(Belt_Array.keepMap(colMapping, (function (param) {
+                    if (param[0].startsWith("departure")) {
+                      return Belt_Array.getExn(myTicket, param[1]);
+                    }
+                    
                   })), 1, (function (acc, x) {
                 return x * acc;
               }));

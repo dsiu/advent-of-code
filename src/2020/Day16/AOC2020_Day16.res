@@ -36,7 +36,7 @@ let part1 = ticketErrorRate
   */
 let isValidTicket = (RuleSet(rules), ticket) => {
   open Array
-  every(map(ticket, v => validForAnyField(RuleSet(rules), v)), identity)
+  every(ticket->map(validForAnyField(RuleSet(rules), _)), identity)
 }
 
 /**
@@ -145,8 +145,10 @@ let solvePart2 = data => {
   //  pc->Map.String.toArray->log
   let colMapping = ColCandidateSet(pc)->reduceCandidate
 
+  open Array
   colMapping
-  ->Array.keep(((k, _)) => k->Js.String2.startsWith("departure"))
-  ->Array.map(((_, col)) => myTicket->Array.getExn(col))
-  ->Array.reduce(1., (acc, x) => Float.fromInt(x) *. acc)
+  ->keepMap(((k, col)) => {
+    k->Js.String2.startsWith("departure") ? Some(myTicket->Array.getExn(col)) : None
+  })
+  ->reduce(1., (acc, x) => Float.fromInt(x) *. acc) // product of array
 }
