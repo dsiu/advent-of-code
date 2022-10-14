@@ -21,7 +21,7 @@ let matchesRule = (Body(a, b), value) => inRange(a, value) || inRange(b, value)
 
 let validForAnyField = (RuleSet(rules), value) => {
   open Array
-  some(rules->Map.String.valuesToArray, matchesRule(_, value))
+  rules->Map.String.valuesToArray->some(matchesRule(_, value))
 }
 
 let ticketErrorRate = (rules, tickets: array<ticket>) => {
@@ -83,7 +83,6 @@ let reduceCandidate = (ColCandidateSet(candidates)) => {
     | Some((k, v)) => {
         let v' = v->Array.getExn(0)
         let solved' = Array.concat(solved, [(k, v')])
-
         let removeFound = Array.keep(_, x => x != v')
 
         inner(ColCandidateSet(c->Map.String.remove(k)->Map.String.map(removeFound)), solved')
