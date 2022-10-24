@@ -11,7 +11,7 @@ function log(prim) {
 
 var t1 = Date.now();
 
-var part1 = AOC2020_Day17$AdventOfCode.solvePart1(AOC2020_Day17_Data_Sample$AdventOfCode.data);
+var part1 = AOC2020_Day17$AdventOfCode.solvePart1(AOC2020_Day17_Data$AdventOfCode.data);
 
 var t1_done = Date.now();
 
