@@ -33,7 +33,8 @@
     "@resinfo/parser",
     "bs-bastet",
     "relude",
-    "js-array2-ex"
+    "js-array2-ex",
+    "tablecloth-rescript"
   ],
   "bs-dev-dependencies": [
     "@glennsl/rescript-jest"

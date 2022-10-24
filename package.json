@@ -51,6 +51,7 @@
     "rescript-bag": "github:dsiu/rescript-bag#main",
     "rescript-js": "latest",
     "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10",
-    "rescript-vector": "^0.4.0"
+    "rescript-vector": "^0.4.0",
+    "tablecloth-rescript": "github:darklang/tablecloth-rescript"
   }
 }
