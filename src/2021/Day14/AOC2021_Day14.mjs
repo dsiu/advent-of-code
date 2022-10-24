@@ -4,36 +4,36 @@ import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int64 from "rescript/lib/es6/caml_int64.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
+import * as Belt_MutableMapString from "rescript/lib/es6/belt_MutableMapString.js";
 
 function log(prim) {
   console.log(prim);
 }
 
 function update_value_inc_by_1(h, k) {
-  return Utils$AdventOfCode.hashMapStringUpdate(h, k, Utils$AdventOfCode.increaseBy1L);
+  return Utils$AdventOfCode.mutableMapStringUpdate(h, k, Utils$AdventOfCode.increaseBy1L);
 }
 
 function update_value_inc_by_n(h, k, n) {
-  return Utils$AdventOfCode.hashMapStringUpdate(h, k, (function (__x) {
+  return Utils$AdventOfCode.mutableMapStringUpdate(h, k, (function (__x) {
                 return Utils$AdventOfCode.increaseByInt64(__x, n);
               }));
 }
 
 function make(template, rules) {
-  var r = Belt_HashMapString.make(40);
+  var r = Belt_MutableMapString.make(undefined);
   return {
           template: Belt_List.fromArray(template),
           rules: (Belt_Array.forEach(rules, (function (param) {
-                    Belt_HashMapString.set(r, param[0], param[1]);
+                    Belt_MutableMapString.set(r, param[0], param[1]);
                   })), r)
         };
 }
 
 function morph(a, b, rules) {
   var k = a + b;
-  return Belt_Option.getExn(Belt_HashMapString.get(rules, k));
+  return Belt_Option.getExn(Belt_MutableMapString.get(rules, k));
 }
 
 function iterate_no_tail_opt(param) {
@@ -119,8 +119,8 @@ function iterateN_tail_opt(param, n) {
 
 function solve_with_result(t, n) {
   var ret = iterateN_tail_opt(t, n);
-  var r = Belt_HashMapString.toArray(Belt_List.reduce(ret, Belt_HashMapString.make(10), (function (acc, k) {
-              return Utils$AdventOfCode.hashMapStringUpdate(acc, k, Utils$AdventOfCode.increaseBy1L);
+  var r = Belt_MutableMapString.toArray(Belt_List.reduce(ret, Belt_MutableMapString.make(undefined), (function (acc, k) {
+              return Utils$AdventOfCode.mutableMapStringUpdate(acc, k, Utils$AdventOfCode.increaseBy1L);
             })));
   var match = Utils$AdventOfCode.maxKeyInt64ValuePair(r);
   var match$1 = Utils$AdventOfCode.minKeyInt64ValuePair(r);
@@ -128,7 +128,7 @@ function solve_with_result(t, n) {
 }
 
 function genPairsMap(template) {
-  var acc = Belt_HashMapString.make(40);
+  var acc = Belt_MutableMapString.make(undefined);
   var _l = template;
   while(true) {
     var l = _l;
@@ -138,10 +138,10 @@ function genPairsMap(template) {
     var match = l.tl;
     var last = l.hd;
     if (!match) {
-      return Utils$AdventOfCode.hashMapStringUpdate(acc, last, Utils$AdventOfCode.increaseBy1L);
+      return Utils$AdventOfCode.mutableMapStringUpdate(acc, last, Utils$AdventOfCode.increaseBy1L);
     }
     var h2 = match.hd;
-    Utils$AdventOfCode.hashMapStringUpdate(acc, last + h2, Utils$AdventOfCode.increaseBy1L);
+    Utils$AdventOfCode.mutableMapStringUpdate(acc, last + h2, Utils$AdventOfCode.increaseBy1L);
     _l = {
       hd: h2,
       tl: match.tl
@@ -171,8 +171,8 @@ function genNewKeys(k, rules) {
 }
 
 function iterate(m, rules) {
-  var m$p = Belt_HashMapString.make(40);
-  Belt_HashMapString.forEach(m, (function (k, v) {
+  var m$p = Belt_MutableMapString.make(undefined);
+  Belt_MutableMapString.forEach(m, (function (k, v) {
           Belt_Array.forEach(genNewKeys(k, rules), (function (k$p) {
                   update_value_inc_by_n(m$p, k$p, v);
                 }));
@@ -198,14 +198,14 @@ function iterateN(param, n) {
 }
 
 function countPolymers(m, template) {
-  var r = Belt_HashMapString.make(40);
-  Belt_HashMapString.forEach(m, (function (k, v) {
+  var r = Belt_MutableMapString.make(undefined);
+  Belt_MutableMapString.forEach(m, (function (k, v) {
           Belt_Array.forEach(Utils$AdventOfCode.splitChars(k), (function (c) {
                   update_value_inc_by_n(r, c, v);
                 }));
         }));
   var first_poly = Belt_List.headExn(template);
-  Belt_HashMapString.forEach(r, (function (k, v) {
+  Belt_MutableMapString.forEach(r, (function (k, v) {
           var v$p = k === first_poly ? Caml_int64.div(Caml_int64.add(v, Caml_int64.one), [
                   0,
                   2
@@ -213,14 +213,14 @@ function countPolymers(m, template) {
                   0,
                   2
                 ]);
-          Belt_HashMapString.set(r, k, v$p);
+          Belt_MutableMapString.set(r, k, v$p);
         }));
   return r;
 }
 
 function solve(t, n) {
   var r = iterateN(t, n);
-  var c = Belt_HashMapString.toArray(countPolymers(r, t.template));
+  var c = Belt_MutableMapString.toArray(countPolymers(r, t.template));
   var match = Utils$AdventOfCode.maxKeyInt64ValuePair(c);
   var match$1 = Utils$AdventOfCode.minKeyInt64ValuePair(c);
   return Caml_int64.sub(match[1], match$1[1]);

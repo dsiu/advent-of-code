@@ -2,12 +2,12 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-let update_value_inc_by_1 = (h, k) => hashMapStringUpdate(h, k, increaseBy1L)
-let update_value_inc_by_n = (h, k, n) => hashMapStringUpdate(h, k, increaseByInt64(_, n))
+let update_value_inc_by_1 = (h, k) => mutableMapStringUpdate(h, k, increaseBy1L)
+let update_value_inc_by_n = (h, k, n) => mutableMapStringUpdate(h, k, increaseByInt64(_, n))
 
 module Polymer = {
   type template = list<string>
-  type rules = HashMap.String.t<string>
+  type rules = MutableMap.String.t<string>
 
   type t = {
     template: template,
@@ -18,10 +18,10 @@ module Polymer = {
     {
       template: template->List.fromArray,
       rules: {
-        let r = HashMap.String.make(~hintSize=40)
+        let r = MutableMap.String.make()
 
         rules->Array.forEach(((k, v)) => {
-          r->HashMap.String.set(k, v)->ignore
+          r->MutableMap.String.set(k, v)->ignore
         })
 
         r
@@ -31,7 +31,7 @@ module Polymer = {
 
   let morph = (a: string, b: string, rules): string => {
     let k = a ++ b
-    rules->HashMap.String.get(k)->Option.getExn
+    rules->MutableMap.String.get(k)->Option.getExn
   }
 
   let iterate_no_tail_opt = ({template, rules}: t) => {
@@ -73,10 +73,10 @@ module Polymer = {
   let solve_with_result = (t, n) => {
     let r = {
       let ret = t->iterateN_tail_opt(n)
-      ret->List.reduce(HashMap.String.make(~hintSize=10), (acc, k) => {
+      ret->List.reduce(MutableMap.String.make(), (acc, k) => {
         acc->update_value_inc_by_1(k)
       })
-    }->HashMap.String.toArray
+    }->MutableMap.String.toArray
 
     let (_, max_n) = r->maxKeyInt64ValuePair
     let (_, min_n) = r->minKeyInt64ValuePair
@@ -94,7 +94,7 @@ module Polymer = {
       }
     }
 
-    let acc = HashMap.String.make(~hintSize=40)
+    let acc = MutableMap.String.make()
     inner(template, acc)
   }
 
@@ -109,14 +109,15 @@ module Polymer = {
         let c = morph(a, b, rules)
         [a ++ c, c ++ b]
       }
+
     | _ => raise(Not_found)
     }
   }
 
   let iterate = (m, rules) => {
-    let m' = HashMap.String.make(~hintSize=40)
+    let m' = MutableMap.String.make()
 
-    m->HashMap.String.forEach((k, v) => {
+    m->MutableMap.String.forEach((k, v) => {
       k
       ->genNewKeys(rules)
       ->Array.forEach(k' => {
@@ -140,9 +141,9 @@ module Polymer = {
   }
 
   let countPolymers = (m, template) => {
-    let r = HashMap.String.make(~hintSize=40)
+    let r = MutableMap.String.make()
 
-    m->HashMap.String.forEach((k, v) => {
+    m->MutableMap.String.forEach((k, v) => {
       k
       ->Utils.splitChars
       ->Array.forEach(c => {
@@ -153,10 +154,10 @@ module Polymer = {
     // first polymer is counted 2x - 1 times, others are counted 2x times
     let first_poly = template->List.headExn
 
-    r->HashMap.String.forEach((k, v) => {
+    r->MutableMap.String.forEach((k, v) => {
       //      let v' = k === first_poly ? (v + 1) / 2 : v / 2
       let v' = k === first_poly ? v->Int64.add(1L)->Int64.div(2L) : v->Int64.div(2L)
-      r->HashMap.String.set(k, v')
+      r->MutableMap.String.set(k, v')
     })
 
     r
@@ -164,8 +165,8 @@ module Polymer = {
 
   let solve = (t, n) => {
     let r = t->iterateN(n)
-    //    r->HashMap.String.toArray->Js.log
-    let c = r->countPolymers(t.template)->HashMap.String.toArray
+    //    r->MutableMap.String.toArray->Js.log
+    let c = r->countPolymers(t.template)->MutableMap.String.toArray
 
     let (_, max_n) = c->maxKeyInt64ValuePair
     let (_, min_n) = c->minKeyInt64ValuePair
@@ -198,7 +199,7 @@ let solvePart1 = data => {
   let (template, rules) = data->parse
   let p = Polymer.make(template, rules)
   //  p.template->List.toArray->Js.log
-  //  p.rules->HashMap.String.toArray->Js.log
+  //  p.rules->MutableMap.String.toArray->Js.log
   p->Polymer.part1
 }
 
@@ -206,6 +207,6 @@ let solvePart2 = data => {
   let (template, rules) = data->parse
   let p = Polymer.make(template, rules)
   //  p.template->List.toArray->Js.log
-  //  p.rules->HashMap.String.toArray->Js.log
+  //  p.rules->MutableMap.String.toArray->Js.log
   p->Polymer.part2
 }

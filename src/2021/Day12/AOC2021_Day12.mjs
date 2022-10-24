@@ -5,9 +5,9 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
-import * as Belt_HashSetString from "rescript/lib/es6/belt_HashSetString.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Belt_SortArrayString from "rescript/lib/es6/belt_SortArrayString.js";
+import * as Belt_MutableSetString from "rescript/lib/es6/belt_MutableSetString.js";
 import * as AdjacencyList$AdventOfCode from "../../AdjacencyList.mjs";
 
 function log(prim) {
@@ -17,7 +17,7 @@ function log(prim) {
 var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2021_Day12-AdventOfCode.Maze.ParseError");
 
 function make(edges) {
-  var maze = Curry._1(AdjacencyList$AdventOfCode.$$String.make, 40);
+  var maze = Curry._1(AdjacencyList$AdventOfCode.$$String.make, undefined);
   Belt_Array.forEachU(edges, (function (edge) {
           if (edge.length !== 2) {
             throw {
@@ -115,7 +115,7 @@ function dfs(visit_func, t, start_node, end_node) {
       return [acc];
     }
     var edges = AdjacencyList$AdventOfCode.$$String.neighbors(t, node);
-    return Belt_HashSetString.reduceU(edges, [], (function (a, e) {
+    return Belt_MutableSetString.reduceU(edges, [], (function (a, e) {
                   if (visit_func(visited$p, e)) {
                     return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));
                   } else {

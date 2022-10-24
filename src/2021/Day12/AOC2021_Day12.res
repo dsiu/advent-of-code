@@ -12,7 +12,7 @@ module Maze = {
   exception ParseError
 
   let make = edges => {
-    let maze = AdjList.make(~hintSize=40)
+    let maze = AdjList.make()
     edges->Array.forEachU((. edge) => {
       switch edge {
       | [a, b] => {
@@ -87,7 +87,7 @@ let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
     switch node == end_node {
     | false => {
         let edges = t->get_edges(node)
-        edges->HashSet.String.reduceU([], (. a, e) => {
+        edges->MutableSet.String.reduceU([], (. a, e) => {
           visit_func(. visited', e)
             ? {
                 Array.concat(

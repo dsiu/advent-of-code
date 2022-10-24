@@ -364,6 +364,13 @@ function hashMapStringUpdate(h, k, f) {
   return h;
 }
 
+function mutableMapStringUpdate(h, k, f) {
+  Belt_MutableMapString.set(h, k, Belt_Option.mapWithDefaultU(Belt_MutableMapString.get(h, k), Curry._1(f, undefined), (function (x) {
+              return Curry._1(f, Caml_option.some(x));
+            })));
+  return h;
+}
+
 var identity = FP_Utils$AdventOfCode.identity;
 
 var transpose = JsArray2Ex.transpose;
@@ -399,5 +406,6 @@ export {
   maxKeyInt64ValuePair ,
   minKeyInt64ValuePair ,
   hashMapStringUpdate ,
+  mutableMapStringUpdate ,
 }
 /* No side effect */

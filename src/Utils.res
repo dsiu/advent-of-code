@@ -215,3 +215,11 @@ let hashMapStringUpdate = (h, k, f) => {
   )
   h
 }
+
+let mutableMapStringUpdate = (h, k, f) => {
+  h->MutableMap.String.set(
+    k,
+    h->MutableMap.String.get(k)->Option.mapWithDefaultU(f(None), (. x) => f(Some(x))),
+  )
+  h
+}
