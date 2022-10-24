@@ -27,9 +27,18 @@ var include = TableclothComparator.Make({
 
 var comparator = include.comparator;
 
+function add(param, param$1) {
+  return [
+          param[0] + param$1[0] | 0,
+          param[1] + param$1[1] | 0,
+          param[2] + param$1[2] | 0
+        ];
+}
+
 var Coord = {
   compare: compare,
-  comparator: comparator
+  comparator: comparator,
+  add: add
 };
 
 function makeGrid(lines) {
@@ -50,6 +59,89 @@ function makeGrid(lines) {
   return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray2(xs, ys, createActive), {
               comparator: comparator
             });
+}
+
+function neighbourSpaces(here) {
+  return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray3([
+                  -1,
+                  0,
+                  1
+                ], [
+                  -1,
+                  0,
+                  1
+                ], [
+                  -1,
+                  0,
+                  1
+                ], (function (x, y, z) {
+                    if (x === 0 && y === 0 && z === 0) {
+                      return ;
+                    } else {
+                      return add([
+                                  x,
+                                  y,
+                                  z
+                                ], here);
+                    }
+                  })), {
+              comparator: comparator
+            });
+}
+
+function countOccupiedNeighbours(cell, grid) {
+  return TableclothSet.length(TableclothSet.intersection(neighbourSpaces(cell), grid._0));
+}
+
+function cubeSurvives(grid, cell) {
+  var grid$1 = grid._0;
+  var alive = TableclothSet.includes(grid$1, cell);
+  var nNbrs = countOccupiedNeighbours(cell, /* Grid */{
+        _0: grid$1
+      });
+  if (alive) {
+    if (nNbrs === 2) {
+      return true;
+    } else {
+      return nNbrs === 3;
+    }
+  } else {
+    return false;
+  }
+}
+
+function cubeBorn(grid, cell) {
+  var grid$1 = grid._0;
+  var dead = !TableclothSet.includes(grid$1, cell);
+  var nNbrs = countOccupiedNeighbours(cell, /* Grid */{
+        _0: grid$1
+      });
+  if (dead) {
+    return nNbrs === 3;
+  } else {
+    return false;
+  }
+}
+
+function update(grid) {
+  var grid$1 = grid._0;
+  var mergeEmpties = function (acc, cell) {
+    return TableclothSet.union(acc, neighbourSpaces(cell));
+  };
+  var empties = TableclothSet.difference(TableclothSet.fold(grid$1, TableclothSet.empty({
+                comparator: comparator
+              }), mergeEmpties), grid$1);
+  var partial_arg = /* Grid */{
+    _0: grid$1
+  };
+  var partial_arg$1 = /* Grid */{
+    _0: grid$1
+  };
+  return TableclothSet.union(TableclothSet.filter(grid$1, (function (param) {
+                    return cubeSurvives(partial_arg, param);
+                  })), TableclothSet.filter(empties, (function (param) {
+                    return cubeBorn(partial_arg$1, param);
+                  })));
 }
 
 function parse(data) {
@@ -79,6 +171,11 @@ export {
   TC ,
   Coord ,
   makeGrid ,
+  neighbourSpaces ,
+  countOccupiedNeighbours ,
+  cubeSurvives ,
+  cubeBorn ,
+  update ,
   parse ,
   solvePart1 ,
   solvePart2 ,
