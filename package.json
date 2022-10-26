@@ -52,6 +52,6 @@
     "rescript-js": "latest",
     "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10",
     "rescript-vector": "^0.4.0",
-    "tablecloth-rescript": "github:darklang/tablecloth-rescript"
+    "tablecloth-rescript": "github:darklang/tablecloth-rescript#main"
   }
 }
