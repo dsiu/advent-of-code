@@ -3316,7 +3316,7 @@ symbol-tree@^3.2.4:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
 
-"tablecloth-rescript@github:darklang/tablecloth-rescript":
+"tablecloth-rescript@github:darklang/tablecloth-rescript#main":
   version "0.1.0"
   resolved "https://codeload.github.com/darklang/tablecloth-rescript/tar.gz/ba59b9d2279e005674800d94ee473616e17a7c2a"
 

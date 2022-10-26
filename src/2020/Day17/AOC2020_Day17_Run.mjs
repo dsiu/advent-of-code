@@ -27,7 +27,7 @@ console.log("----------");
 
 var t2 = Date.now();
 
-var part2 = AOC2020_Day17$AdventOfCode.solvePart2(AOC2020_Day17_Data$AdventOfCode.data);
+var part2 = AOC2020_Day17$AdventOfCode.solvePart2(AOC2020_Day17_Data_Sample$AdventOfCode.data);
 
 var t2_done = Date.now();
 

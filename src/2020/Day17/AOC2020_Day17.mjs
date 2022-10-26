@@ -2,12 +2,15 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as TableclothInt from "tablecloth-rescript/src/TableclothInt.mjs";
 import * as TableclothSet from "tablecloth-rescript/src/TableclothSet.mjs";
+import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
 import * as TableclothTuple3 from "tablecloth-rescript/src/TableclothTuple3.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as TableclothComparator from "tablecloth-rescript/src/TableclothComparator.mjs";
 import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
+import * as TableclothTuple4$AdventOfCode from "../../TableclothTuple4.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -26,8 +29,6 @@ var include = TableclothComparator.Make({
       compare: compare
     });
 
-var comparator = include.comparator;
-
 function add(param, param$1) {
   return [
           param[0] + param$1[0] | 0,
@@ -36,20 +37,102 @@ function add(param, param$1) {
         ];
 }
 
-var Coord = {
+var Coord_V3_comparator = include.comparator;
+
+var Coord_V3 = {
   compare: compare,
-  comparator: comparator,
+  comparator: Coord_V3_comparator,
   add: add
+};
+
+function compare$1(param) {
+  return function (param$1) {
+    var param$2 = TableclothInt.compare;
+    var param$3 = TableclothInt.compare;
+    var param$4 = TableclothInt.compare;
+    var param$5 = TableclothInt.compare;
+    return TableclothTuple4$AdventOfCode.compare(param, param$1, param$2, param$3, param$4, param$5);
+  };
+}
+
+var include$1 = TableclothComparator.Make({
+      compare: compare$1
+    });
+
+function add$1(param, param$1) {
+  return [
+          param[0] + param$1[0] | 0,
+          param[1] + param$1[1] | 0,
+          param[2] + param$1[2] | 0,
+          param[3] + param$1[3] | 0
+        ];
+}
+
+var Coord_V4_comparator = include$1.comparator;
+
+var Coord_V4 = {
+  compare: compare$1,
+  comparator: Coord_V4_comparator,
+  add: add$1
+};
+
+function compare$2(a, b) {
+  if (a.TAG === /* Coord_V3 */0) {
+    if (b.TAG === /* Coord_V3 */0) {
+      return compare(a._0)(b._0);
+    } else {
+      return Pervasives.failwith("Invalid comparison");
+    }
+  } else if (b.TAG === /* Coord_V3 */0) {
+    return Pervasives.failwith("Invalid comparison");
+  } else {
+    return compare$1(a._0)(b._0);
+  }
+}
+
+var include$2 = TableclothComparator.Make({
+      compare: compare$2
+    });
+
+var comparator = include$2.comparator;
+
+function add$2(a, b) {
+  if (a.TAG === /* Coord_V3 */0) {
+    if (b.TAG === /* Coord_V3 */0) {
+      return {
+              TAG: /* Coord_V3 */0,
+              _0: add(a._0, b._0)
+            };
+    } else {
+      return Pervasives.failwith("Invalid addition");
+    }
+  } else if (b.TAG === /* Coord_V3 */0) {
+    return Pervasives.failwith("Invalid addition");
+  } else {
+    return {
+            TAG: /* Coord_V4 */1,
+            _0: add$1(a._0, b._0)
+          };
+  }
+}
+
+var Coord = {
+  compare: compare$2,
+  comparator: comparator,
+  add: add$2
 };
 
 function makeGrid(lines) {
   var createActive = function (x, y) {
     if (Belt_Array.getExn(Belt_Array.getExn(lines, y), x) === "#") {
-      return [
-              x,
-              y,
-              0
-            ];
+      return {
+              TAG: /* Coord_V3 */0,
+              _0: [
+                x,
+                y,
+                0
+              ]
+            };
     }
     
   };
@@ -62,44 +145,110 @@ function makeGrid(lines) {
             });
 }
 
-function neighbourSpaces(here) {
-  return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray3([
-                  -1,
-                  0,
-                  1
-                ], [
-                  -1,
-                  0,
-                  1
-                ], [
-                  -1,
-                  0,
-                  1
-                ], (function (x, y, z) {
-                    if (x === 0 && y === 0 && z === 0) {
-                      return ;
-                    } else {
-                      return add([
-                                  x,
-                                  y,
-                                  z
-                                ], here);
-                    }
-                  })), {
+function conv34Cell(param) {
+  if (param.TAG === /* Coord_V3 */0) {
+    var match = param._0;
+    return {
+            TAG: /* Coord_V4 */1,
+            _0: [
+              match[0],
+              match[1],
+              match[2],
+              0
+            ]
+          };
+  }
+  throw {
+        RE_EXN_ID: "Match_failure",
+        _1: [
+          "AOC2020_Day17.res",
+          84,
+          17
+        ],
+        Error: new Error()
+      };
+}
+
+function conv34(grid) {
+  return TableclothSet.fromArray(TableclothArray.map(TableclothSet.toArray(grid), conv34Cell), {
               comparator: comparator
             });
 }
 
+function neighbourSpaces(here) {
+  if (here.TAG === /* Coord_V3 */0) {
+    return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray3([
+                    -1,
+                    0,
+                    1
+                  ], [
+                    -1,
+                    0,
+                    1
+                  ], [
+                    -1,
+                    0,
+                    1
+                  ], (function (x, y, z) {
+                      if (x === 0 && y === 0 && z === 0) {
+                        return ;
+                      } else {
+                        return add$2({
+                                    TAG: /* Coord_V3 */0,
+                                    _0: [
+                                      x,
+                                      y,
+                                      z
+                                    ]
+                                  }, here);
+                      }
+                    })), {
+                comparator: comparator
+              });
+  } else {
+    return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray4([
+                    -1,
+                    0,
+                    1
+                  ], [
+                    -1,
+                    0,
+                    1
+                  ], [
+                    -1,
+                    0,
+                    1
+                  ], [
+                    -1,
+                    0,
+                    1
+                  ], (function (x, y, z, w) {
+                      if (x === 0 && y === 0 && z === 0 && w === 0) {
+                        return ;
+                      } else {
+                        return add$2({
+                                    TAG: /* Coord_V4 */1,
+                                    _0: [
+                                      x,
+                                      y,
+                                      z,
+                                      w
+                                    ]
+                                  }, here);
+                      }
+                    })), {
+                comparator: comparator
+              });
+  }
+}
+
 function countOccupiedNeighbours(cell, grid) {
-  return TableclothSet.length(TableclothSet.intersection(neighbourSpaces(cell), grid._0));
+  return TableclothSet.length(TableclothSet.intersection(neighbourSpaces(cell), grid));
 }
 
 function cubeSurvives(grid, cell) {
-  var grid$1 = grid._0;
-  var alive = TableclothSet.includes(grid$1, cell);
-  var nNbrs = countOccupiedNeighbours(cell, /* Grid */{
-        _0: grid$1
-      });
+  var alive = TableclothSet.includes(grid, cell);
+  var nNbrs = countOccupiedNeighbours(cell, grid);
   if (alive) {
     if (nNbrs === 2) {
       return true;
@@ -112,11 +261,8 @@ function cubeSurvives(grid, cell) {
 }
 
 function cubeBorn(grid, cell) {
-  var grid$1 = grid._0;
-  var dead = !TableclothSet.includes(grid$1, cell);
-  var nNbrs = countOccupiedNeighbours(cell, /* Grid */{
-        _0: grid$1
-      });
+  var dead = !TableclothSet.includes(grid, cell);
+  var nNbrs = countOccupiedNeighbours(cell, grid);
   if (dead) {
     return nNbrs === 3;
   } else {
@@ -125,40 +271,28 @@ function cubeBorn(grid, cell) {
 }
 
 function update(grid) {
-  var grid$1 = grid._0;
   var mergeEmpties = function (acc, cell) {
     return TableclothSet.union(acc, neighbourSpaces(cell));
   };
-  var empties = TableclothSet.difference(TableclothSet.fold(grid$1, TableclothSet.empty({
+  var empties = TableclothSet.difference(TableclothSet.fold(grid, TableclothSet.empty({
                 comparator: comparator
-              }), mergeEmpties), grid$1);
-  var partial_arg = /* Grid */{
-    _0: grid$1
-  };
-  var partial_arg$1 = /* Grid */{
-    _0: grid$1
-  };
-  return /* Grid */{
-          _0: TableclothSet.union(TableclothSet.filter(grid$1, (function (param) {
-                      return cubeSurvives(partial_arg, param);
-                    })), TableclothSet.filter(empties, (function (param) {
-                      return cubeBorn(partial_arg$1, param);
-                    })))
-        };
+              }), mergeEmpties), grid);
+  return TableclothSet.union(TableclothSet.filter(grid, (function (param) {
+                    return cubeSurvives(grid, param);
+                  })), TableclothSet.filter(empties, (function (param) {
+                    return cubeBorn(grid, param);
+                  })));
 }
 
 function iterate(_grid, f, _times) {
   while(true) {
-    var grid = _grid;
     var times = _times;
-    var grid$1 = grid._0;
+    var grid = _grid;
     if (times === 0) {
-      return grid$1;
+      return grid;
     }
     _times = times - 1 | 0;
-    _grid = Curry._1(f, /* Grid */{
-          _0: grid$1
-        });
+    _grid = Curry._1(f, grid);
     continue ;
   };
 }
@@ -173,13 +307,12 @@ function parse(data) {
 
 function solvePart1(data) {
   var grid0 = makeGrid(parse(data));
-  return TableclothSet.length(iterate(/* Grid */{
-                  _0: grid0
-                }, update, 6));
+  return TableclothSet.length(iterate(grid0, update, 6));
 }
 
 function solvePart2(data) {
-  return 2;
+  var grid = conv34(makeGrid(parse(data)));
+  return TableclothSet.length(iterate(grid, update, 6));
 }
 
 var TC;
@@ -187,8 +320,12 @@ var TC;
 export {
   log ,
   TC ,
+  Coord_V3 ,
+  Coord_V4 ,
   Coord ,
   makeGrid ,
+  conv34Cell ,
+  conv34 ,
   neighbourSpaces ,
   countOccupiedNeighbours ,
   cubeSurvives ,

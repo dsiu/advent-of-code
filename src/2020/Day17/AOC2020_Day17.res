@@ -8,7 +8,7 @@ let log = Js.Console.log
 
 module TC = Tablecloth
 
-module Coord = {
+module Coord_V3 = {
   open TC
   type t = Tuple3.t<int, int, int>
   let compare = Tuple3.compare(~f=TC.Int.compare, ~g=TC.Int.compare, ~h=TC.Int.compare)
@@ -18,14 +18,60 @@ module Coord = {
     let compare = compare
   })
 
-  let add = ((a, b, c), (d, e, f)) => (a + d, b + e, c + f)
+  let add = ((a, b, c), (a', b', c')) => (a + a', b + b', c + c')
 }
 
-type grid = Grid(TC.Set.t<Coord.t, Coord.identity>)
+module Coord_V4 = {
+  open TC
+  type t = TableclothTuple4.t<int, int, int, int>
+  let compare = TableclothTuple4.compare(
+    ~f=TC.Int.compare,
+    ~g=TC.Int.compare,
+    ~h=TC.Int.compare,
+    ~i=TC.Int.compare,
+  )
+
+  include Comparator.Make({
+    type t = t
+    let compare = compare
+  })
+
+  let add = ((a, b, c, d), (a', b', c', d')) => (a + a', b + b', c + c', d + d')
+}
+
+module Coord = {
+  open TC
+  type t =
+    | Coord_V3(Coord_V3.t)
+    | Coord_V4(Coord_V4.t)
+
+  let compare = (a, b) => {
+    switch (a, b) {
+    | (Coord_V3(a), Coord_V3(b)) => Coord_V3.compare(a, b)
+    | (Coord_V4(a), Coord_V4(b)) => Coord_V4.compare(a, b)
+    | (_, _) => failwith("Invalid comparison")
+    }
+  }
+
+  include Comparator.Make({
+    type t = t
+    let compare = compare
+  })
+
+  let add = (a, b) => {
+    switch (a, b) {
+    | (Coord_V3(a), Coord_V3(b)) => Coord_V3(Coord_V3.add(a, b))
+    | (Coord_V4(a), Coord_V4(b)) => Coord_V4(Coord_V4.add(a, b))
+    | (_, _) => failwith("Invalid addition")
+    }
+  }
+}
+
+type grid = TC.Set.t<Coord.t, Coord.identity>
 
 let makeGrid = (lines: array<array<string>>) => {
   let createActive = (. x, y) => {
-    lines->Array.getExn(y)->Array.getExn(x) === "#" ? Some((x, y, 0)) : None
+    lines->Array.getExn(y)->Array.getExn(x) === "#" ? Some(Coord.Coord_V3(x, y, 0)) : None
   }
   let maxX = lines->Array.getExn(0)->Array.length - 1
   let maxY = lines->Array.length - 1
@@ -34,29 +80,45 @@ let makeGrid = (lines: array<array<string>>) => {
   combinationIfArray2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
 }
 
-let neighbourSpaces = (here: Coord.t) => {
-  combinationIfArray3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z) => {
-    x == 0 && y == 0 && z == 0 ? None : Some(Coord.add((x, y, z), here))
-  })->TC.Set.fromArray(module(Coord))
+@@warning("-8")
+let conv34Cell = (Coord.Coord_V3(x, y, z)): Coord.t => Coord.Coord_V4(x, y, z, 0)
+
+let conv34 = grid => {
+  grid->TC.Set.toArray->TC.Array.map(~f=conv34Cell)->TC.Set.fromArray(module(Coord))
 }
 
-let countOccupiedNeighbours = (cell, Grid(grid)) => {
+let neighbourSpaces = (here: Coord.t) => {
+  switch here {
+  | Coord_V3(_) as here =>
+    combinationIfArray3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z) => {
+      x == 0 && y == 0 && z == 0 ? None : Some(Coord.add(Coord.Coord_V3(x, y, z), here))
+    })->TC.Set.fromArray(module(Coord))
+  | Coord_V4(_) as here =>
+    combinationIfArray4([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z, w) => {
+      x == 0 && y == 0 && z == 0 && w == 0
+        ? None
+        : Some(Coord.add(Coord.Coord_V4(x, y, z, w), here))
+    })->TC.Set.fromArray(module(Coord))
+  }
+}
+
+let countOccupiedNeighbours = (cell, grid) => {
   cell->neighbourSpaces->TC.Set.intersection(grid)->TC.Set.length
 }
 
-let cubeSurvives = (Grid(grid), cell: Coord.t) => {
+let cubeSurvives = (grid, cell: Coord.t) => {
   let alive = grid->TC.Set.includes(cell)
-  let nNbrs = countOccupiedNeighbours(cell, Grid(grid))
+  let nNbrs = countOccupiedNeighbours(cell, grid)
   alive && (nNbrs == 2 || nNbrs == 3)
 }
 
-let cubeBorn = (Grid(grid), cell) => {
+let cubeBorn = (grid, cell) => {
   let dead = !(grid->TC.Set.includes(cell))
-  let nNbrs = countOccupiedNeighbours(cell, Grid(grid))
+  let nNbrs = countOccupiedNeighbours(cell, grid)
   dead && nNbrs == 3
 }
 
-let update = (Grid(grid)) => {
+let update = grid => {
   let mergeEmpties = (acc, cell) => {
     TC.Set.union(acc, neighbourSpaces(cell))
   }
@@ -67,13 +129,13 @@ let update = (Grid(grid)) => {
     )
 
   TC.Set.union(
-    grid->TC.Set.filter(~f=cubeSurvives(Grid(grid))),
-    empties->TC.Set.filter(~f=cubeBorn(Grid(grid))),
-  )->Grid
+    grid->TC.Set.filter(~f=cubeSurvives(grid)),
+    empties->TC.Set.filter(~f=cubeBorn(grid)),
+  )
 }
 
-let rec iterate = (Grid(grid), f, times) => {
-  times == 0 ? grid : iterate(f(Grid(grid)), f, times - 1)
+let rec iterate = (grid, f, times) => {
+  times == 0 ? grid : iterate(f(grid), f, times - 1)
 }
 
 let parse = data => data->splitNewline->Array.map(compose(Js.String2.trim, splitChars))
@@ -81,11 +143,12 @@ let parse = data => data->splitNewline->Array.map(compose(Js.String2.trim, split
 let solvePart1 = data => {
   //  data->parse->log
   let grid0 = data->parse->makeGrid
-  let finalGrid = iterate(Grid(grid0), update, 6)
+  let finalGrid = iterate(grid0, update, 6)
   TC.Set.length(finalGrid)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let grid = data->parse->makeGrid->conv34
+  let finalGrid = iterate(grid, update, 6)
+  TC.Set.length(finalGrid)
 }

@@ -15,11 +15,11 @@ describe("2020 Day17", (function () {
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2020_Day17$AdventOfCode.solvePart2(AOC2020_Day17_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(848);
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2020_Day17$AdventOfCode.solvePart2(AOC2020_Day17_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(1908);
               }));
       }));
 
