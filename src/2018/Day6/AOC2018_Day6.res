@@ -10,7 +10,7 @@ module Coord = {
   let x = t => t.x
   let y = t => t.y
 
-  let make = (~x, ~y) => {x: x, y: y}
+  let make = (~x, ~y) => {x, y}
   let makeFromArray = xs => {
     make(~x=xs->Array.getExn(0), ~y=xs->Array.getExn(1))
   }
@@ -29,13 +29,7 @@ module Coord = {
   }
 
   let parse = l => {
-    l
-    ->Js.String2.trim
-    ->Js.String2.split(",")
-    ->Array.map(x => {
-      x->intFromStringExn
-    })
-    ->makeFromArray
+    l->Js.String2.trim->Js.String2.split(",")->Array.map(intFromStringExn)->makeFromArray
   }
 
   let parseCoords = Array.map(_, parse)
@@ -145,8 +139,8 @@ module LandingMap = {
       grid: empty,
       w: maxBound->Coord.x,
       h: maxBound->Coord.y,
-      maxBound: maxBound,
-      minBound: minBound,
+      maxBound,
+      minBound,
     }
     ->alloc
     ->fill
@@ -229,4 +223,8 @@ let solvePart1 = data => {
 
   //  `targetPin = ${targetPin->Int.toString}`->log
   `maxArea = ${maxArea->Int.toString}`->log
+}
+
+let solvePart2 = data => {
+  2
 }

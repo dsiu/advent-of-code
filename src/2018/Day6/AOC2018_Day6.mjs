@@ -127,7 +127,7 @@ function makeCellShortest(at, pins) {
           RE_EXN_ID: "Assert_failure",
           _1: [
             "AOC2018_Day6.res",
-            96,
+            90,
             4
           ],
           Error: new Error()
@@ -289,6 +289,10 @@ function solvePart1(data) {
   console.log(prim$4);
 }
 
+function solvePart2(data) {
+  return 2;
+}
+
 var data = AOC2018_Day6_Data$AdventOfCode.data;
 
 var sampleData = AOC2018_Day6_Data_Sample$AdventOfCode.data;
@@ -300,5 +304,6 @@ export {
   Coord ,
   LandingMap ,
   solvePart1 ,
+  solvePart2 ,
 }
 /* No side effect */

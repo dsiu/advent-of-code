@@ -38,7 +38,7 @@ Jest.describe("2018 Day6", (function (param) {
               }));
         Jest.describe("Part 2", (function (param) {
                 Jest.Skip.test("Solve Part 2", (function (param) {
-                        return Jest.Expect.toEqual(Jest.Expect.expect(1), 1);
+                        return Jest.Expect.toEqual(Jest.Expect.expect(2), 2);
                       }));
               }));
       }));
