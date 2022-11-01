@@ -226,5 +226,6 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
+  data->log
   2
 }

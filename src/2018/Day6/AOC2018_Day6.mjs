@@ -290,6 +290,7 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
+  console.log(data);
   return 2;
 }
 
