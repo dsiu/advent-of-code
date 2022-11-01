@@ -2,8 +2,6 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-let parse = data => data->splitNewline->Array.map(Js.String2.trim)
-
 let fuel = mass => {
   (mass->float_of_int /. 3.)->int_of_float - 2
 }
