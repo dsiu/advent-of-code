@@ -5,13 +5,9 @@ import * as AOC2019_Day2_Data$AdventOfCode from "./AOC2019_Day2_Data.mjs";
 import * as AOC2019_Day2_Data_Sample$AdventOfCode from "./AOC2019_Day2_Data_Sample.mjs";
 
 describe("2019 Day2a", (function () {
-        test("Part 1 - Sample Data", (function () {
-                var result = AOC2019_Day2$AdventOfCode.solvePart1(AOC2019_Day2_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(1);
-              }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2019_Day2$AdventOfCode.solvePart1(AOC2019_Day2_Data$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(4945026);
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2019_Day2$AdventOfCode.solvePart2(AOC2019_Day2_Data_Sample$AdventOfCode.data);
