@@ -83,18 +83,22 @@ let part1 = xs => {
 
 let part2 = xs => {
   open IntCode
+  open FP_Utils
+  //  let result = ref(None)
+  //
+  //  for noun in 0 to 99 {
+  //    for verb in 0 to 99 {
+  //      if executeWithNounVerb(make(xs->Array.copy), noun, verb) == 19690720 {
+  //        result := Some(noun * 100 + verb)
+  //      }
+  //    }
+  //  }
 
-  let result = ref(None)
-
-  for noun in 0 to 99 {
-    for verb in 0 to 99 {
-      if executeWithNounVerb(make(xs->Array.copy), noun, verb) == 19690720 {
-        result := Some(noun * 100 + verb)
-      }
-    }
-  }
-
-  result.contents->Option.getExn
+  combinationIfArray2(Array.range(0, 99), Array.range(0, 99), (. noun, verb) => {
+    executeWithNounVerb(make(xs->Array.copy), noun, verb) == 19690720
+      ? Some(noun * 100 + verb)
+      : None
+  })->Array.getExn(0)
 }
 
 let solvePart1 = data => {

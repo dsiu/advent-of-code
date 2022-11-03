@@ -4,6 +4,7 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
+import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -125,19 +126,15 @@ function part1(xs) {
 }
 
 function part2(xs) {
-  var result;
-  for(var noun = 0; noun <= 99; ++noun){
-    for(var verb = 0; verb <= 99; ++verb){
-      if (executeWithNounVerb({
-              prog: xs.slice(0),
-              pc: 0
-            }, noun, verb) === 19690720) {
-        result = Math.imul(noun, 100) + verb | 0;
-      }
-      
-    }
-  }
-  return Belt_Option.getExn(result);
+  return Belt_Array.getExn(FP_Utils$AdventOfCode.combinationIfArray2(Belt_Array.range(0, 99), Belt_Array.range(0, 99), (function (noun, verb) {
+                    if (executeWithNounVerb({
+                            prog: xs.slice(0),
+                            pc: 0
+                          }, noun, verb) === 19690720) {
+                      return Math.imul(noun, 100) + verb | 0;
+                    }
+                    
+                  })), 0);
 }
 
 function solvePart1(data) {
