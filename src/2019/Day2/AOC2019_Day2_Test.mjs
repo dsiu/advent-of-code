@@ -9,13 +9,9 @@ describe("2019 Day2a", (function () {
                 var result = AOC2019_Day2$AdventOfCode.solvePart1(AOC2019_Day2_Data$AdventOfCode.data);
                 expect(result).toEqual(4945026);
               }));
-        test("Part 2 - Sample Data", (function () {
-                var result = AOC2019_Day2$AdventOfCode.solvePart2(AOC2019_Day2_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
-              }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2019_Day2$AdventOfCode.solvePart2(AOC2019_Day2_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(5296);
               }));
       }));
 

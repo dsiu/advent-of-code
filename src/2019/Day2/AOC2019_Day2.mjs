@@ -9,12 +9,16 @@ function log(prim) {
   console.log(prim);
 }
 
+function log2(prim0, prim1) {
+  console.log(prim0, prim1);
+}
+
 function parse(data) {
   return Belt_Array.map(data.split(","), Utils$AdventOfCode.intFromStringExn);
 }
 
 function getVal(t, pos) {
-  return Belt_Option.getExn(Belt_Array.get(t.prog, pos));
+  return Belt_Array.getExn(t.prog, pos);
 }
 
 function saveVal(t, pos, v) {
@@ -27,7 +31,7 @@ var InvalidOpCode = /* @__PURE__ */Caml_exceptions.create("AOC2019_Day2-AdventOf
 function executeInstr(t, instr) {
   var match = instr.op;
   if (match === 1) {
-    return saveVal(t, instr.out, getVal(t, instr.arg1) + getVal(t, instr.arg2) | 0);
+    return saveVal(t, instr.out, Belt_Array.getExn(t.prog, instr.arg1) + Belt_Array.getExn(t.prog, instr.arg2) | 0);
   }
   if (match !== 2) {
     throw {
@@ -36,14 +40,14 @@ function executeInstr(t, instr) {
           Error: new Error()
         };
   }
-  return saveVal(t, instr.out, Math.imul(getVal(t, instr.arg1), getVal(t, instr.arg2)));
+  return saveVal(t, instr.out, Math.imul(Belt_Array.getExn(t.prog, instr.arg1), Belt_Array.getExn(t.prog, instr.arg2)));
 }
 
 function getInstr(t) {
-  var op = getVal(t, t.pc);
-  var arg1 = getVal(t, t.pc + 1 | 0);
-  var arg2 = getVal(t, t.pc + 2 | 0);
-  var out = getVal(t, t.pc + 3 | 0);
+  var op = Belt_Array.getExn(t.prog, t.pc);
+  var arg1 = Belt_Array.getExn(t.prog, t.pc + 1 | 0);
+  var arg2 = Belt_Array.getExn(t.prog, t.pc + 2 | 0);
+  var out = Belt_Array.getExn(t.prog, t.pc + 3 | 0);
   if (op >= 3) {
     if (op === 99) {
       return ;
@@ -85,8 +89,8 @@ function execute(_t) {
   };
 }
 
-function fix1202Alarm(t) {
-  return saveVal(saveVal(t, 1, 12), 2, 2);
+function setNounVerb(t, noun, verb) {
+  return saveVal(saveVal(t, 1, noun), 2, verb);
 }
 
 function make(xs) {
@@ -96,6 +100,11 @@ function make(xs) {
         };
 }
 
+function executeWithNounVerb(prog, noun, verb) {
+  var result = execute(setNounVerb(prog, noun, verb));
+  return Belt_Option.getExn(Belt_Array.get(result.prog, 0));
+}
+
 var IntCode = {
   getVal: getVal,
   saveVal: saveVal,
@@ -103,31 +112,49 @@ var IntCode = {
   executeInstr: executeInstr,
   getInstr: getInstr,
   execute: execute,
-  fix1202Alarm: fix1202Alarm,
-  make: make
+  setNounVerb: setNounVerb,
+  make: make,
+  executeWithNounVerb: executeWithNounVerb
 };
 
-function part1(prog) {
-  var result = execute(fix1202Alarm(prog));
-  return Belt_Option.getExn(Belt_Array.get(result.prog, 0));
+function part1(xs) {
+  return executeWithNounVerb({
+              prog: xs,
+              pc: 0
+            }, 12, 2);
+}
+
+function part2(xs) {
+  var result;
+  for(var noun = 0; noun <= 99; ++noun){
+    for(var verb = 0; verb <= 99; ++verb){
+      if (executeWithNounVerb({
+              prog: xs.slice(0),
+              pc: 0
+            }, noun, verb) === 19690720) {
+        result = Math.imul(noun, 100) + verb | 0;
+      }
+      
+    }
+  }
+  return Belt_Option.getExn(result);
 }
 
 function solvePart1(data) {
-  return part1({
-              prog: parse(data),
-              pc: 0
-            });
+  return part1(parse(data));
 }
 
 function solvePart2(data) {
-  return 2;
+  return part2(parse(data));
 }
 
 export {
   log ,
+  log2 ,
   parse ,
   IntCode ,
   part1 ,
+  part2 ,
   solvePart1 ,
   solvePart2 ,
 }

@@ -1,6 +1,7 @@
 open Belt
 open Utils
 let log = Js.Console.log
+let log2 = Js.Console.log2
 
 let parse = data => data->Js.String2.split(_, ",")->Array.map(intFromStringExn)
 
@@ -18,7 +19,7 @@ module IntCode = {
   }
 
   let getVal = (t, pos) => {
-    t.prog[pos]->Option.getExn
+    t.prog->Array.getExn(pos)
   }
 
   let saveVal = (t, pos, v) => {
@@ -63,25 +64,45 @@ module IntCode = {
     }
   }
 
-  let fix1202Alarm = t => {
-    t->saveVal(1, 12)->saveVal(2, 2)
+  let setNounVerb = (t, noun, verb) => {
+    t->saveVal(1, noun)->saveVal(2, verb)
   }
 
   let make = xs => {prog: xs, pc: 0}
+
+  let executeWithNounVerb = (prog, noun, verb) => {
+    let result = prog->setNounVerb(noun, verb)->execute
+    result.prog[0]->Option.getExn
+  }
 }
 
-let part1 = prog => {
+let part1 = xs => {
   open IntCode
-  let result = prog->fix1202Alarm->execute
-  result.prog[0]->Option.getExn
+  executeWithNounVerb(make(xs), 12, 2)
+}
+
+let part2 = xs => {
+  open IntCode
+
+  let result = ref(None)
+
+  for noun in 0 to 99 {
+    for verb in 0 to 99 {
+      if executeWithNounVerb(make(xs->Array.copy), noun, verb) == 19690720 {
+        result := Some(noun * 100 + verb)
+      }
+    }
+  }
+
+  result.contents->Option.getExn
 }
 
 let solvePart1 = data => {
-  let prog = data->parse->IntCode.make
+  let prog = data->parse
   part1(prog)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let prog = data->parse
+  part2(prog)
 }
