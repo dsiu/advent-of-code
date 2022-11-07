@@ -27,6 +27,15 @@ function add(param, param$1) {
         ];
 }
 
+function mul(param, x) {
+  return [
+          Math.imul(param[0], x),
+          Math.imul(param[1], x),
+          Math.imul(param[2], x),
+          Math.imul(param[3], x)
+        ];
+}
+
 var TC;
 
 var comparator = include.comparator;
@@ -36,5 +45,6 @@ export {
   compare ,
   comparator ,
   add ,
+  mul ,
 }
 /* include Not a pure module */

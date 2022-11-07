@@ -7,7 +7,15 @@ import * as AOC2019_Day3_Data_Sample$AdventOfCode from "./AOC2019_Day3_Data_Samp
 describe("2019 Day3", (function () {
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2019_Day3$AdventOfCode.solvePart1(AOC2019_Day3_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(6);
+              }));
+        test("Part 1 - Sample Data 1", (function () {
+                var result = AOC2019_Day3$AdventOfCode.solvePart1(AOC2019_Day3_Data_Sample$AdventOfCode.data1);
+                expect(result).toEqual(159);
+              }));
+        test("Part 1 - Sample Data 2", (function () {
+                var result = AOC2019_Day3$AdventOfCode.solvePart1(AOC2019_Day3_Data_Sample$AdventOfCode.data2);
+                expect(result).toEqual(135);
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2019_Day3$AdventOfCode.solvePart1(AOC2019_Day3_Data$AdventOfCode.data);
@@ -27,6 +35,10 @@ var data = AOC2019_Day3_Data$AdventOfCode.data;
 
 var sampleData = AOC2019_Day3_Data_Sample$AdventOfCode.data;
 
+var sampleData1 = AOC2019_Day3_Data_Sample$AdventOfCode.data1;
+
+var sampleData2 = AOC2019_Day3_Data_Sample$AdventOfCode.data2;
+
 var solvePart1 = AOC2019_Day3$AdventOfCode.solvePart1;
 
 var solvePart2 = AOC2019_Day3$AdventOfCode.solvePart2;
@@ -34,6 +46,8 @@ var solvePart2 = AOC2019_Day3$AdventOfCode.solvePart2;
 export {
   data ,
   sampleData ,
+  sampleData1 ,
+  sampleData2 ,
   solvePart1 ,
   solvePart2 ,
 }

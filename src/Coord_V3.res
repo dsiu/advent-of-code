@@ -10,3 +10,4 @@ include Comparator.Make({
 })
 
 let add = ((a, b, c), (a', b', c')) => (a + a', b + b', c + c')
+let mul = ((a, b, c), x) => (a * x, b * x, c * x)

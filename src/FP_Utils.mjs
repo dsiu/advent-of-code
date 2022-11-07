@@ -142,6 +142,17 @@ function optionOr(a, b) {
   }
 }
 
+function unfold(p, g, b) {
+  if (Curry._1(p, b)) {
+    return /* [] */0;
+  }
+  var match = Curry._1(g, b);
+  return {
+          hd: match[0],
+          tl: unfold(p, g, match[1])
+        };
+}
+
 function identity(a) {
   return a;
 }
@@ -186,6 +197,7 @@ export {
   combinationIfArray4 ,
   combinationArray4 ,
   optionOr ,
+  unfold ,
   identity ,
   eq ,
   composeU ,
