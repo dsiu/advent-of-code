@@ -1,14 +1,14 @@
 open Belt
 open Utils
 let log = Js.Console.log
+module TC = Tablecloth
 
 let fuel = mass => {
   (mass->float_of_int /. 3.)->int_of_float - 2
 }
 
 let part1 = xs => {
-  open FP_Utils
-  xs->Array.map(fuel)->foldLeftArray(add)
+  xs->Array.map(fuel)->TC.Array.sum(module(TC.Int))
 }
 
 let fuelCompound = mass => {
@@ -20,8 +20,7 @@ let fuelCompound = mass => {
 }
 
 let part2 = xs => {
-  open FP_Utils
-  xs->Array.map(fuelCompound)->foldLeftArray(add)
+  xs->Array.map(fuelCompound)->TC.Array.sum(module(TC.Int))
 }
 
 let parse = data => data->splitNewline->Array.map(intFromStringExn)
