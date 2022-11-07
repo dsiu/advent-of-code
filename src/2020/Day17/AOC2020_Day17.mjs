@@ -3,105 +3,44 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
-import * as TableclothInt from "tablecloth-rescript/src/TableclothInt.mjs";
 import * as TableclothSet from "tablecloth-rescript/src/TableclothSet.mjs";
 import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
-import * as TableclothTuple3 from "tablecloth-rescript/src/TableclothTuple3.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as TableclothComparator from "tablecloth-rescript/src/TableclothComparator.mjs";
+import * as Coord_V3$AdventOfCode from "../../Coord_V3.mjs";
+import * as Coord_V4$AdventOfCode from "../../Coord_V4.mjs";
 import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
-import * as TableclothTuple4$AdventOfCode from "../../TableclothTuple4.mjs";
 
 function log(prim) {
   console.log(prim);
 }
 
-function compare(param) {
-  return function (param$1) {
-    var param$2 = TableclothInt.compare;
-    var param$3 = TableclothInt.compare;
-    var param$4 = TableclothInt.compare;
-    return TableclothTuple3.compare(param, param$1, param$2, param$3, param$4);
-  };
-}
-
-var include = TableclothComparator.Make({
-      compare: compare
-    });
-
-function add(param, param$1) {
-  return [
-          param[0] + param$1[0] | 0,
-          param[1] + param$1[1] | 0,
-          param[2] + param$1[2] | 0
-        ];
-}
-
-var Coord_V3_comparator = include.comparator;
-
-var Coord_V3 = {
-  compare: compare,
-  comparator: Coord_V3_comparator,
-  add: add
-};
-
-function compare$1(param) {
-  return function (param$1) {
-    var param$2 = TableclothInt.compare;
-    var param$3 = TableclothInt.compare;
-    var param$4 = TableclothInt.compare;
-    var param$5 = TableclothInt.compare;
-    return TableclothTuple4$AdventOfCode.compare(param, param$1, param$2, param$3, param$4, param$5);
-  };
-}
-
-var include$1 = TableclothComparator.Make({
-      compare: compare$1
-    });
-
-function add$1(param, param$1) {
-  return [
-          param[0] + param$1[0] | 0,
-          param[1] + param$1[1] | 0,
-          param[2] + param$1[2] | 0,
-          param[3] + param$1[3] | 0
-        ];
-}
-
-var Coord_V4_comparator = include$1.comparator;
-
-var Coord_V4 = {
-  compare: compare$1,
-  comparator: Coord_V4_comparator,
-  add: add$1
-};
-
-function compare$2(a, b) {
+function compare(a, b) {
   if (a.TAG === /* Coord_V3 */0) {
     if (b.TAG === /* Coord_V3 */0) {
-      return compare(a._0)(b._0);
+      return Coord_V3$AdventOfCode.compare(a._0)(b._0);
     } else {
       return Pervasives.failwith("Invalid comparison");
     }
   } else if (b.TAG === /* Coord_V3 */0) {
     return Pervasives.failwith("Invalid comparison");
   } else {
-    return compare$1(a._0)(b._0);
+    return Coord_V4$AdventOfCode.compare(a._0)(b._0);
   }
 }
 
-var include$2 = TableclothComparator.Make({
-      compare: compare$2
+var include = TableclothComparator.Make({
+      compare: compare
     });
 
-var comparator = include$2.comparator;
+var comparator = include.comparator;
 
-function add$2(a, b) {
+function add(a, b) {
   if (a.TAG === /* Coord_V3 */0) {
     if (b.TAG === /* Coord_V3 */0) {
       return {
               TAG: /* Coord_V3 */0,
-              _0: add(a._0, b._0)
+              _0: Coord_V3$AdventOfCode.add(a._0, b._0)
             };
     } else {
       return Pervasives.failwith("Invalid addition");
@@ -111,15 +50,15 @@ function add$2(a, b) {
   } else {
     return {
             TAG: /* Coord_V4 */1,
-            _0: add$1(a._0, b._0)
+            _0: Coord_V4$AdventOfCode.add(a._0, b._0)
           };
   }
 }
 
 var Coord = {
-  compare: compare$2,
+  compare: compare,
   comparator: comparator,
-  add: add$2
+  add: add
 };
 
 function makeGrid(lines) {
@@ -162,7 +101,7 @@ function conv34Cell(param) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2020_Day17.res",
-          84,
+          53,
           17
         ],
         Error: new Error()
@@ -193,7 +132,7 @@ function neighbourSpaces(here) {
                       if (x === 0 && y === 0 && z === 0) {
                         return ;
                       } else {
-                        return add$2({
+                        return add({
                                     TAG: /* Coord_V3 */0,
                                     _0: [
                                       x,
@@ -226,7 +165,7 @@ function neighbourSpaces(here) {
                       if (x === 0 && y === 0 && z === 0 && w === 0) {
                         return ;
                       } else {
-                        return add$2({
+                        return add({
                                     TAG: /* Coord_V4 */1,
                                     _0: [
                                       x,
@@ -320,8 +259,6 @@ var TC;
 export {
   log ,
   TC ,
-  Coord_V3 ,
-  Coord_V4 ,
   Coord ,
   makeGrid ,
   conv34Cell ,

@@ -8,37 +8,6 @@ let log = Js.Console.log
 
 module TC = Tablecloth
 
-module Coord_V3 = {
-  open TC
-  type t = Tuple3.t<int, int, int>
-  let compare = Tuple3.compare(~f=TC.Int.compare, ~g=TC.Int.compare, ~h=TC.Int.compare)
-
-  include Comparator.Make({
-    type t = t
-    let compare = compare
-  })
-
-  let add = ((a, b, c), (a', b', c')) => (a + a', b + b', c + c')
-}
-
-module Coord_V4 = {
-  open TC
-  type t = TableclothTuple4.t<int, int, int, int>
-  let compare = TableclothTuple4.compare(
-    ~f=TC.Int.compare,
-    ~g=TC.Int.compare,
-    ~h=TC.Int.compare,
-    ~i=TC.Int.compare,
-  )
-
-  include Comparator.Make({
-    type t = t
-    let compare = compare
-  })
-
-  let add = ((a, b, c, d), (a', b', c', d')) => (a + a', b + b', c + c', d + d')
-}
-
 module Coord = {
   open TC
   type t =
