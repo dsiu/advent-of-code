@@ -21,7 +21,7 @@ type segment = {
 
 exception InvalidDirection(string)
 
-let makeSegment = str => {
+let makeSegment = (str: string): segment => {
   let direction = str->Js.String2.get(0)
   let steps = str->Js.String2.sliceToEnd(~from=1)->Int.fromString->Option.getExn
 
@@ -48,7 +48,7 @@ type path = {
   tip: Location.t,
 }
 
-let travelSegment = (path, segment) => {
+let travelSegment = (path: path, segment: segment): path => {
   open FP_Utils
   //  path->log2("path", _)
   //  segment->log2("segment", _)
