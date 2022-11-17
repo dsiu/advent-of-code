@@ -70,7 +70,7 @@ let travelSegment = (path: path, segment: segment): path => {
 
   let visited' =
     TC.List.zip(
-      TC.List.initialize(distance, ~f=x => x + len),
+      TC.List.initialize(distance, ~f=x => x + len + 1),
       unfold(
         ((a, _x)) => a >= distance,
         ((a, x)) => (Location.add(x, delta), (a + 1, Location.add(x, delta))),

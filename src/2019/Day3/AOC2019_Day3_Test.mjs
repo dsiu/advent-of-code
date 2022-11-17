@@ -23,11 +23,19 @@ describe("2019 Day3", (function () {
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2019_Day3$AdventOfCode.solvePart2(AOC2019_Day3_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(28);
+                expect(result).toEqual(30);
+              }));
+        test("Part 2 - Sample Data 1", (function () {
+                var result = AOC2019_Day3$AdventOfCode.solvePart2(AOC2019_Day3_Data_Sample$AdventOfCode.data1);
+                expect(result).toEqual(610);
+              }));
+        test("Part 2 - Sample Data 2", (function () {
+                var result = AOC2019_Day3$AdventOfCode.solvePart2(AOC2019_Day3_Data_Sample$AdventOfCode.data2);
+                expect(result).toEqual(410);
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2019_Day3$AdventOfCode.solvePart2(AOC2019_Day3_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(11238);
               }));
       }));
 

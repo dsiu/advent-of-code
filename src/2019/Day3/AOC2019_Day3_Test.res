@@ -38,14 +38,28 @@ describe("2019 Day3", () => {
 
   test("Part 2 - Sample Data", () => {
     let result = solvePart2(sampleData)
-    let expected = 28
+    let expected = 30
+
+    expect(result)->toEqual(expected)
+  })
+
+  test("Part 2 - Sample Data 1", () => {
+    let result = solvePart2(sampleData1)
+    let expected = 610
+
+    expect(result)->toEqual(expected)
+  })
+
+  test("Part 2 - Sample Data 2", () => {
+    let result = solvePart2(sampleData2)
+    let expected = 410
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = 2
+    let expected = 11238
 
     expect(result)->toEqual(expected)
   })

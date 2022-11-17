@@ -105,7 +105,7 @@ function travelSegment(path, segment) {
     }
   };
   var visited$p = TableclothList.fold(TableclothList.zip(TableclothList.initialize(distance, (function (x) {
-                    return x + len | 0;
+                    return (x + len | 0) + 1 | 0;
                   })))(FP_Utils$AdventOfCode.unfold((function (param) {
                   return param[0] >= distance;
                 }), (function (param) {
