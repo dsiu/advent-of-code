@@ -90,12 +90,21 @@ let travelPath = segments => {
 let travelAllPaths = Array.map(_, travelPath)
 
 let closest = points => {
-  points->Set.toArray->Array.map(manhattan)->minIntInArray
+  points->Belt.Map.keysToArray->Array.map(manhattan)->minIntInArray
 }
 
 let crossovers = travelledPaths => {
   open FP_Utils
-  travelledPaths->Array.map(({visited}) => visited)->foldLeftArray(TC.Set.intersection)
+  travelledPaths
+  ->Array.map(({visited}) => visited)
+  ->foldLeftArray(
+    TC.Map.merge(~f=(k, a, b) => {
+      switch (a, b) {
+      | (Some(a), Some(b)) => Some(a + b)
+      | _ => None
+      }
+    }),
+  )
 }
 
 let part1 = segmentss => {
