@@ -107,8 +107,16 @@ let crossovers = travelledPaths => {
   )
 }
 
+let shortestPaths = crossings => {
+  crossings->Belt.Map.valuesToArray->minIntInArray
+}
+
 let part1 = segmentss => {
   segmentss->travelAllPaths->crossovers->closest
+}
+
+let part2 = segmentss => {
+  segmentss->travelAllPaths->crossovers->shortestPaths
 }
 
 let parse = data => data->splitNewline->Array.map(x => x->Js.String2.trim->Js.String2.split(","))
@@ -119,6 +127,6 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let segs = data->parse->Array.map(Array.map(_, makeSegment))
+  segs->part2
 }
