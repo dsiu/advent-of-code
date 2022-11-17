@@ -19,7 +19,7 @@ describe("2019 Day3", (function () {
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2019_Day3$AdventOfCode.solvePart1(AOC2019_Day3_Data$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(855);
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2019_Day3$AdventOfCode.solvePart2(AOC2019_Day3_Data_Sample$AdventOfCode.data);

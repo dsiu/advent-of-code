@@ -9,8 +9,11 @@ module Location = Coord_V2
 
 let manhattan = ((x, y)) => {Js.Math.abs_int(x) + Js.Math.abs_int(y)}
 
-type visited = TC.Set.t<Location.t, Location.identity>
-let emptyVisited = TC.Set.empty(module(Location))
+// type visited = TC.Set.t<Location.t, Location.identity>
+// let emptyVisited = TC.Set.empty(module(Location))
+
+type visited = TC.Map.t<Location.t, int, Location.identity>
+let emptyVisited = TC.Map.empty(module(Location))
 
 type direction = East | South | West | North
 
@@ -46,6 +49,7 @@ let facing = (direction: direction): Location.t => {
 type path = {
   visited: visited,
   tip: Location.t,
+  currentLength: int,
 }
 
 let travelSegment = (path: path, segment: segment): path => {
@@ -57,16 +61,22 @@ let travelSegment = (path: path, segment: segment): path => {
   let distance = segment.steps
   let start = path.tip
   let visited = path.visited
+  let len = path.currentLength
+  let len' = len + distance
+
+  let insertStep = (visits, (dist, loc)) => {
+    visits->TC.Map.includes(loc) ? visits : visits->TC.Map.add(~key=loc, ~value=dist)
+  }
 
   let visited' =
     unfold(
       ((a, _x)) => a >= distance,
       ((a, x)) => (Location.add(x, delta), (a + 1, Location.add(x, delta))),
       (0, start),
-    )->TC.List.fold(~initial=visited, ~f=TC.Set.add)
+    )->TC.List.fold(~initial=visited, ~f=insertStep)
 
   let tip' = Location.add(start, Location.mul(delta, distance))
-  {tip: tip', visited: visited'}
+  {tip: tip', visited: visited', currentLength: len'}
 }
 
 let travelPath = segments => {
