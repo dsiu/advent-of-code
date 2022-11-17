@@ -69,10 +69,13 @@ let travelSegment = (path: path, segment: segment): path => {
   }
 
   let visited' =
-    unfold(
-      ((a, _x)) => a >= distance,
-      ((a, x)) => (Location.add(x, delta), (a + 1, Location.add(x, delta))),
-      (0, start),
+    TC.List.zip(
+      TC.List.initialize(distance, ~f=x => x + len),
+      unfold(
+        ((a, _x)) => a >= distance,
+        ((a, x)) => (Location.add(x, delta), (a + 1, Location.add(x, delta))),
+        (0, start),
+      ),
     )->TC.List.fold(~initial=visited, ~f=insertStep)
 
   let tip' = Location.add(start, Location.mul(delta, distance))
@@ -80,7 +83,7 @@ let travelSegment = (path: path, segment: segment): path => {
 }
 
 let travelPath = segments => {
-  let path0 = {visited: emptyVisited, tip: (0, 0)}
+  let path0 = {visited: emptyVisited, tip: (0, 0), currentLength: 0}
   segments->TC.Array.fold(~initial=path0, ~f=travelSegment)
 }
 
