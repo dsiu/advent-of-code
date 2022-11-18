@@ -7,7 +7,7 @@ module TC = Tablecloth
 
 module Location = Coord_V2
 
-let manhattan = ((x, y)) => {Js.Math.abs_int(x) + Js.Math.abs_int(y)}
+let manhattan: ((int, int)) => int = ((x, y)) => {Js.Math.abs_int(x) + Js.Math.abs_int(y)}
 
 // type visited = TC.Set.t<Location.t, Location.identity>
 // let emptyVisited = TC.Set.empty(module(Location))
@@ -24,7 +24,7 @@ type segment = {
 
 exception InvalidDirection(string)
 
-let makeSegment = (str: string): segment => {
+let makeSegment: string => segment = str => {
   let direction = str->Js.String2.get(0)
   let steps = str->Js.String2.sliceToEnd(~from=1)->Int.fromString->Option.getExn
 
@@ -37,7 +37,7 @@ let makeSegment = (str: string): segment => {
   }
 }
 
-let facing = (direction: direction): Location.t => {
+let facing: direction => Location.t = direction => {
   switch direction {
   | East => (1, 0)
   | South => (0, -1)
@@ -52,53 +52,59 @@ type path = {
   currentLength: int,
 }
 
-let travelSegment = (path: path, segment: segment): path => {
+/**
+  travel a single segment of a path
+  */
+let travelSegment: (path, segment) => path = (path, segment) => {
   open FP_Utils
-  //  path->log2("path", _)
-  //  segment->log2("segment", _)
   let delta = facing(segment.direction)
-  //  delta->log2("delta", _)
   let distance = segment.steps
   let start = path.tip
   let visited = path.visited
   let len = path.currentLength
   let len' = len + distance
 
+  /**
+    only insert loc to visited if it's not already there
+  */
   let insertStep = (visits, (dist, loc)) => {
     visits->TC.Map.includes(loc) ? visits : visits->TC.Map.add(~key=loc, ~value=dist)
   }
 
-  let visited' =
-    TC.List.zip(
-      TC.List.initialize(distance, ~f=x => x + len + 1),
-      unfold(
-        ((a, _x)) => a >= distance,
-        ((a, x)) => (Location.add(x, delta), (a + 1, Location.add(x, delta))),
-        (0, start),
-      ),
-    )->TC.List.fold(~initial=visited, ~f=insertStep)
+  let visited' = TC.List.zip(
+    TC.List.initialize(distance, ~f=x => x + len + 1),
+    // unfold is iterate
+    unfold(
+      ((a, _x)) => a >= distance,
+      ((a, x)) => (Location.add(x, delta), (a + 1, Location.add(x, delta))),
+      (0, start),
+    ),
+  )->TC.List.fold(~initial=visited, ~f=insertStep)
 
   let tip' = Location.add(start, Location.mul(delta, distance))
   {tip: tip', visited: visited', currentLength: len'}
 }
 
-let travelPath = segments => {
+/**
+  travel a single path
+  */
+let travelPath = (segments: array<segment>): path => {
   let path0 = {visited: emptyVisited, tip: (0, 0), currentLength: 0}
   segments->TC.Array.fold(~initial=path0, ~f=travelSegment)
 }
 
-let travelAllPaths = Array.map(_, travelPath)
+let travelAllPaths: array<array<segment>> => array<path> = Array.map(_, travelPath)
 
-let closest = points => {
+let closest: visited => int = points => {
   points->Belt.Map.keysToArray->Array.map(manhattan)->minIntInArray
 }
 
-let crossovers = travelledPaths => {
+let crossovers: array<path> => visited = travelledPaths => {
   open FP_Utils
   travelledPaths
   ->Array.map(({visited}) => visited)
   ->foldLeftArray(
-    TC.Map.merge(~f=(k, a, b) => {
+    TC.Map.merge(~f=(_k, a, b) => {
       switch (a, b) {
       | (Some(a), Some(b)) => Some(a + b)
       | _ => None
@@ -107,7 +113,7 @@ let crossovers = travelledPaths => {
   )
 }
 
-let shortestPaths = crossings => {
+let shortestPaths: visited => int = crossings => {
   crossings->Belt.Map.valuesToArray->minIntInArray
 }
 

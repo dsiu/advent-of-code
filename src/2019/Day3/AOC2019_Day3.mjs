@@ -151,7 +151,7 @@ function closest(points) {
 }
 
 function crossovers(travelledPaths) {
-  var arg = function (k, a, b) {
+  var arg = function (_k, a, b) {
     if (a !== undefined && b !== undefined) {
       return a + b | 0;
     }
