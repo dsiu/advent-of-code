@@ -64,9 +64,7 @@ let travelSegment: (path, segment) => path = (path, segment) => {
   let len = path.currentLength
   let len' = len + distance
 
-  /**
-    only insert loc to visited if it's not already there
-  */
+  // only insert loc to visited if it's not already there
   let insertStep = (visits, (dist, loc)) => {
     visits->TC.Map.includes(loc) ? visits : visits->TC.Map.add(~key=loc, ~value=dist)
   }
