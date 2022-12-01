@@ -1,11 +1,11 @@
 open Jest2
 
 //open Belt
-let data = AOC2020_DayX_Data.data
-let sampleData = AOC2020_DayX_Data_Sample.data
-let {solvePart1, solvePart2} = module(AOC2020_DayX)
+let data = AOC2020_Day18_Data.data
+let sampleData = AOC2020_Day18_Data_Sample.data
+let {solvePart1, solvePart2} = module(AOC2020_Day18)
 
-describe("2020 DayX", () => {
+describe("2020 Day18", () => {
   test("Part 1 - Sample Data", () => {
     let result = solvePart1(sampleData)
     let expected = 1
