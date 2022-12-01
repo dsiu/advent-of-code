@@ -5,28 +5,40 @@ open Belt
 open Utils
 let log = Js.Console.log
 
-//type pixel = Pixel(Linear.V2.t<int>)
+module TC = Tablecloth
 
-//module V2Comparator = Belt.Id.MakeComparable({
-//  type t = pixel
-//  let cmp = (Pixel(a), Pixel(b)) => Linear.V2.cmp(a, b)
-//})
-//
-//let v2SetMake = Belt.Set.make(~id=module(V2Comparator))
-//type pixelSet = Belt.Set.t<V2Comparator.t, V2Comparator.identity>
-//type image = Image({grid: pixelSet, distantPixel: bool, explicitPixel: (pixel, pixel)})
+module Pixel = Coord_V2
 
-module Tuple2 = Relude.Tuple2
-type piexl = Pixel((int, int))
+type pixelSet = TC.Set.t<Pixel.t, Pixel.identity>
 
-//let findContents : (pixelSet, bool, (pixel, pixel), pixel) => bool= (grid, distant, region, here) => {
-//
-//}
+type image = Image({grid: pixelSet, distantPixel: bool, explicitRegion: (Pixel.t, Pixel.t)})
+
+// refactor
+let inRange = (range: (Pixel.t, Pixel.t), pixel: Pixel.t): bool => {
+  let ((ax, ay), (bx, by)) = range
+  let (px, py) = pixel
+
+  ((px <= ax && px >= bx) || (px >= ax && px <= bx)) &&
+    ((py <= ay && py >= by) || (py >= ay && py <= by))
+}
+
+let findContents = (
+  grid: pixelSet,
+  distant: bool,
+  region: (Pixel.t, Pixel.t),
+  here: Pixel.t,
+): bool => {
+  inRange(region, here) ? grid->TC.Set.includes(here) : distant
+}
+
+// refactor
+let neighbours = FP_Utils.combinationArray2([-1, 0, 1], [-1, 0, 1], (. x, y) => (x, y))
 
 let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 
 let solvePart1 = data => {
   data->ignore
+  neighbours->log
   1
 }
 

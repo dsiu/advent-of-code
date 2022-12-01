@@ -9,3 +9,6 @@ Go - https://skarlso.github.io/2021/12/14/aoc-day14/
 
 ### 2019
 Haskell - https://github.com/frerich/aoc2019
+
+### 2018
+Haskell - https://github.com/frerich/aoc2018
