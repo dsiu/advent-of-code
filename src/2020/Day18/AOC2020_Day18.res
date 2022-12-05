@@ -15,20 +15,20 @@ module Math = {
   and addop = Plus
   and mulop = Times
 
-  type expr_ = P.t<expr>
-  let expr: expr_ = P.makeRecursive(p => {
-    ()
-  })
+  //  type expr_ = P.t<expr>
+  //  let expr: expr_ = P.makeRecursive(p => {
 
-  type result = P.parseResult<expr>
-  let parse = (s): result => P.run(expr, s)
+  //  })
+
+  //  type result = P.parseResult<expr>
+  //  let parse = (s): result => P.run(expr, s)
 }
 
 let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 
 let solvePart1 = data => {
-  let d = data
-  let l = Math.parse(d)
+  data->ignore
+  //  let l = Math.parse(d)
   1
 }
 
