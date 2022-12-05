@@ -7,15 +7,15 @@ import * as AOC2022_Day2_Data_Sample$AdventOfCode from "./AOC2022_Day2_Data_Samp
 describe("2022 Day2", (function () {
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2022_Day2$AdventOfCode.solvePart1(AOC2022_Day2_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(15);
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2022_Day2$AdventOfCode.solvePart1(AOC2022_Day2_Data$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(11603);
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2022_Day2$AdventOfCode.solvePart2(AOC2022_Day2_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(12);
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2022_Day2$AdventOfCode.solvePart2(AOC2022_Day2_Data$AdventOfCode.data);
