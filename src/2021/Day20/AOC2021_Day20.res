@@ -38,7 +38,7 @@ let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 
 let solvePart1 = data => {
   data->ignore
-  neighbours->log
+  //  neighbours->log
   1
 }
 

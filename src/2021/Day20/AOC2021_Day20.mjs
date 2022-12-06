@@ -61,7 +61,6 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  console.log(neighbours);
   return 1;
 }
 

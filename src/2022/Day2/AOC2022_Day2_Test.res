@@ -29,7 +29,7 @@ describe("2022 Day2", () => {
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = 2
+    let expected = 12725
 
     expect(result)->toEqual(expected)
   })

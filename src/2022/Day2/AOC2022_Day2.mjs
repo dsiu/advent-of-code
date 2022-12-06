@@ -3,6 +3,7 @@
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
+import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -96,8 +97,46 @@ function scoreResult(r) {
   }
 }
 
+var InvalidResult = /* @__PURE__ */Caml_exceptions.create("AOC2022_Day2-AdventOfCode.InvalidResult");
+
+function makeResult(s) {
+  switch (s) {
+    case "X" :
+        return /* Loss */0;
+    case "Y" :
+        return /* Draw */1;
+    case "Z" :
+        return /* Win */2;
+    default:
+      throw {
+            RE_EXN_ID: InvalidResult,
+            _1: s,
+            Error: new Error()
+          };
+  }
+}
+
 function scoreRound(r) {
   return scoreResult(player2Result(r)) + (r._1 + 1 | 0) | 0;
+}
+
+function roundFromResult(param) {
+  var result = param._1;
+  var shape = param._0;
+  var p2s = Belt_Array.getExn(Belt_Array.keep([
+            /* Rock */0,
+            /* Paper */1,
+            /* Scissors */2
+          ], (function (p2Shape) {
+              return player2Result(/* Round */{
+                          _0: shape,
+                          _1: p2Shape
+                        }) === result;
+            })), 0);
+  return /* Round */{
+          _0: shape,
+          _1: p2s
+        };
 }
 
 function makeRound(s) {
@@ -107,7 +146,7 @@ function makeRound(s) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2022_Day2.res",
-            68,
+            88,
             6
           ],
           Error: new Error()
@@ -121,6 +160,27 @@ function makeRound(s) {
         };
 }
 
+function makeShapeResult(s) {
+  var match = s.trim().split(" ");
+  if (match.length !== 2) {
+    throw {
+          RE_EXN_ID: "Match_failure",
+          _1: [
+            "AOC2022_Day2.res",
+            95,
+            6
+          ],
+          Error: new Error()
+        };
+  }
+  var p1 = match[0];
+  var r = match[1];
+  return /* ShapeResult */{
+          _0: makeP1Shape(p1),
+          _1: makeResult(r)
+        };
+}
+
 function parse(data, f) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), f);
 }
@@ -129,13 +189,19 @@ function part1(rounds) {
   return Utils$AdventOfCode.sumIntArray(Belt_Array.map(rounds, scoreRound));
 }
 
+function part2(rounds) {
+  return Utils$AdventOfCode.sumIntArray(Belt_Array.map(rounds, (function (param) {
+                    return FP_Utils$AdventOfCode.compose(roundFromResult, scoreRound, param);
+                  })));
+}
+
 function solvePart1(data) {
   var rounds = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), makeRound);
   return Utils$AdventOfCode.sumIntArray(Belt_Array.map(rounds, scoreRound));
 }
 
 function solvePart2(data) {
-  return 2;
+  return part2(Belt_Array.map(Utils$AdventOfCode.splitNewline(data), makeShapeResult));
 }
 
 export {
@@ -146,10 +212,15 @@ export {
   player2Result ,
   scoreShape ,
   scoreResult ,
+  InvalidResult ,
+  makeResult ,
   scoreRound ,
+  roundFromResult ,
   makeRound ,
+  makeShapeResult ,
   parse ,
   part1 ,
+  part2 ,
   solvePart1 ,
   solvePart2 ,
 }

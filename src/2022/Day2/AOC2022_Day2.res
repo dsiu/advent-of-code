@@ -57,6 +57,7 @@ let scoreResult: result => int = r => {
 }
 
 exception InvalidResult(string)
+
 let makeResult = s => {
   switch s {
   | "X" => Loss
@@ -73,8 +74,11 @@ let scoreRound: round => int = r => {
 
 let roundFromResult: shapeResult => round = (ShapeResult(shape, result)) => {
   let p2s =
+    [Rock, Paper, Scissors]
+    ->Array.keep(p2Shape => player2Result(Round(shape, p2Shape)) == result)
+    ->Array.getExn(0)
 
-  Round(shape p2s)
+  Round(shape, p2s)
 }
 
 @@warning("-8")
@@ -101,7 +105,7 @@ let part1: array<round> => int = rounds => {
   rounds->Array.map(scoreRound)->sumIntArray
 }
 
-let part1: array<round> => int = rounds => {
+let part2: array<shapeResult> => int = rounds => {
   open FP_Utils
   rounds->Array.map(compose(roundFromResult, scoreRound))->sumIntArray
 }
@@ -112,5 +116,4 @@ let solvePart1 = data => {
 
 let solvePart2 = data => {
   data->parse(makeShapeResult)->part2
-  2
 }
