@@ -4,7 +4,7 @@ include Belt.Array
 let append = concat
 let head = getExn(_, 0)
 let last = a => getExn(a, a->length - 1)
-let tail = sliceToEnd(_, 1)
+let tail = a => sliceToEnd(a, 1)
 // let init =
 // let uncons =
 let singleton = make(1, _)
@@ -25,7 +25,7 @@ let arrayToOption = get(_, 0)
  */
 let foldLeft: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
   let init = xs->getExn(0)
-  let rest = xs->sliceToEnd(1)
+  let rest = xs->tail
   rest->reduce(init, f)
 }
 

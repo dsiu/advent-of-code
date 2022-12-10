@@ -3,6 +3,22 @@
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
+function head(__x) {
+  return Belt_Array.getExn(__x, 0);
+}
+
+function last(a) {
+  return Belt_Array.getExn(a, a.length - 1 | 0);
+}
+
+function tail(a) {
+  return Belt_Array.sliceToEnd(a, 1);
+}
+
+function singleton(__x) {
+  return Belt_Array.make(1, __x);
+}
+
 function flatMap(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
@@ -241,6 +257,8 @@ var initU = Belt_Array.initU;
 
 var init = Belt_Array.init;
 
+var append = Belt_Array.concat;
+
 export {
   get ,
   getExn ,
@@ -313,6 +331,11 @@ export {
   eq ,
   initU ,
   init ,
+  append ,
+  head ,
+  last ,
+  tail ,
+  singleton ,
   flatMap ,
   arrayToOption ,
   foldLeft ,
