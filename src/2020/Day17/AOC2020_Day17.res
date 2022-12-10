@@ -45,7 +45,7 @@ let makeGrid = (lines: array<array<string>>) => {
   let maxY = lines->Array.length - 1
   let xs = Array.range(0, maxX)
   let ys = Array.range(0, maxY)
-  Stdlib.Array.combinationIfArray2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
+  Stdlib.Array.combinationIf2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
 }
 
 @@warning("-8")
@@ -59,11 +59,11 @@ let neighbourSpaces = (here: Coord.t) => {
   open Stdlib.Array
   switch here {
   | Coord_V3(_) as here =>
-    combinationIfArray3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z) => {
+    combinationIf3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z) => {
       x == 0 && y == 0 && z == 0 ? None : Some(Coord.add(Coord.Coord_V3(x, y, z), here))
     })->TC.Set.fromArray(module(Coord))
   | Coord_V4(_) as here =>
-    combinationIfArray4([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z, w) => {
+    combinationIf4([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z, w) => {
       x == 0 && y == 0 && z == 0 && w == 0
         ? None
         : Some(Coord.add(Coord.Coord_V4(x, y, z, w), here))

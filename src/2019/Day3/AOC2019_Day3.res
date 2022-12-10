@@ -101,7 +101,7 @@ let closest: visited => int = points => {
 let crossovers: array<path> => visited = travelledPaths => {
   travelledPaths
   ->Array.map(({visited}) => visited)
-  ->Stdlib.Array.foldLeftArray(
+  ->Stdlib.Array.foldLeft(
     TC.Map.merge(~f=(_k, a, b) => {
       switch (a, b) {
       | (Some(a), Some(b)) => Some(a + b)

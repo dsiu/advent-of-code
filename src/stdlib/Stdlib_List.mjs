@@ -4,7 +4,7 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
-function flatMapList(xs, f) {
+function flatMap(xs, f) {
   return Belt_List.reduce(Belt_List.map(xs, f), /* [] */0, Belt_List.concat);
 }
 
@@ -15,7 +15,7 @@ function listToOption(l) {
   
 }
 
-function combinationIfList2(a, b, f) {
+function combinationIf2(a, b, f) {
   return Belt_List.reduceU(a, /* [] */0, (function (acc, x) {
                 return Belt_List.concat(acc, Belt_List.reduceU(b, /* [] */0, (function (acc, y) {
                                   var r = f(x, y);
@@ -31,8 +31,8 @@ function combinationIfList2(a, b, f) {
               }));
 }
 
-function combinationList2(a, b, f) {
-  return combinationIfList2(a, b, (function (x, y) {
+function combination2(a, b, f) {
+  return combinationIf2(a, b, (function (x, y) {
                 return Caml_option.some(f(x, y));
               }));
 }
@@ -313,10 +313,10 @@ export {
   setAssoc ,
   sortU ,
   sort ,
-  flatMapList ,
+  flatMap ,
   listToOption ,
-  combinationIfList2 ,
-  combinationList2 ,
+  combinationIf2 ,
+  combination2 ,
   unfold ,
 }
 /* No side effect */

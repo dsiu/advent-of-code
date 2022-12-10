@@ -235,7 +235,7 @@ function snailAdd(a, b) {
 }
 
 function total(xs) {
-  return Stdlib_Array$AdventOfCode.foldLeftArray(xs, snailAdd);
+  return Stdlib_Array$AdventOfCode.foldLeft(xs, snailAdd);
 }
 
 function magnitude(t) {
@@ -247,11 +247,11 @@ function magnitude(t) {
 }
 
 function part1(numbers) {
-  return magnitude(Stdlib_Array$AdventOfCode.foldLeftArray(numbers, snailAdd));
+  return magnitude(Stdlib_Array$AdventOfCode.foldLeft(numbers, snailAdd));
 }
 
 function part2(numbers) {
-  return Utils$AdventOfCode.maxIntInArray(Stdlib_Array$AdventOfCode.combinationArray2(numbers, numbers, (function (a, b) {
+  return Utils$AdventOfCode.maxIntInArray(Stdlib_Array$AdventOfCode.combination2(numbers, numbers, (function (a, b) {
                     return magnitude(reduce({
                                     TAG: /* Pair */1,
                                     _0: a,
@@ -362,7 +362,7 @@ function parse$1(data) {
 
 function solvePart1(data) {
   var numbers = parse$1(data);
-  return magnitude(Stdlib_Array$AdventOfCode.foldLeftArray(numbers, snailAdd));
+  return magnitude(Stdlib_Array$AdventOfCode.foldLeft(numbers, snailAdd));
 }
 
 function solvePart2(data) {

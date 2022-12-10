@@ -1,4 +1,5 @@
-open Belt
+open Stdlib
+module Map = Belt.Map
 
 let sum = (x, y) => x + y
 let part1 = Array.reduce(AOC2018_Day1_Data.data, 0, sum)

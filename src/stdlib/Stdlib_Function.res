@@ -19,5 +19,5 @@ let compose4 = (f, g, h, i, x) => i(h(g(f(x))))
 let composeN = fs => {
   //  fs->Array.sliceToEnd(1)->Array.reduce(fs->Array.getExn(0), (a, f) => compose(a, f))
   open Stdlib_Array
-  fs->foldLeftArray(compose)
+  fs->foldLeft(compose)
 }

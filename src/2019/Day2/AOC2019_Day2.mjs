@@ -126,7 +126,7 @@ function part1(xs) {
 }
 
 function part2(xs) {
-  return Belt_Array.getExn(Stdlib_Array$AdventOfCode.combinationIfArray2(Belt_Array.range(0, 99), Belt_Array.range(0, 99), (function (noun, verb) {
+  return Belt_Array.getExn(Stdlib_Array$AdventOfCode.combinationIf2(Belt_Array.range(0, 99), Belt_Array.range(0, 99), (function (noun, verb) {
                     if (executeWithNounVerb({
                             prog: xs.slice(0),
                             pc: 0

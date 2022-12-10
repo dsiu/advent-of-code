@@ -79,7 +79,7 @@ function makeGrid(lines) {
   var maxY = lines.length - 1 | 0;
   var xs = Belt_Array.range(0, maxX);
   var ys = Belt_Array.range(0, maxY);
-  return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIfArray2(xs, ys, createActive), {
+  return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIf2(xs, ys, createActive), {
               comparator: comparator
             });
 }
@@ -116,7 +116,7 @@ function conv34(grid) {
 
 function neighbourSpaces(here) {
   if (here.TAG === /* Coord_V3 */0) {
-    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIfArray3([
+    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIf3([
                     -1,
                     0,
                     1
@@ -145,7 +145,7 @@ function neighbourSpaces(here) {
                 comparator: comparator
               });
   } else {
-    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIfArray4([
+    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIf4([
                     -1,
                     0,
                     1

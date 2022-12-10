@@ -28,7 +28,7 @@ function compose4(f, g, h, i, x) {
 }
 
 function composeN(fs) {
-  return Stdlib_Array$AdventOfCode.foldLeftArray(fs, compose);
+  return Stdlib_Array$AdventOfCode.foldLeft(fs, compose);
 }
 
 export {

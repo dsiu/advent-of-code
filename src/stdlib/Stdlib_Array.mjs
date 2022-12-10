@@ -3,7 +3,7 @@
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
-function flatMapArray(xs, f) {
+function flatMap(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
 
@@ -11,90 +11,90 @@ function arrayToOption(__x) {
   return Belt_Array.get(__x, 0);
 }
 
-function foldLeftArray(xs, f) {
+function foldLeft(xs, f) {
   var init = Belt_Array.getExn(xs, 0);
   var rest = Belt_Array.sliceToEnd(xs, 1);
   return Belt_Array.reduce(rest, init, f);
 }
 
-function foldRightArray(xs, f) {
+function foldRight(xs, f) {
   var end = xs.length - 1 | 0;
   var init = Belt_Array.getExn(xs, end);
   var rest = Belt_Array.slice(xs, 0, end);
   return Belt_Array.reduceReverse(rest, init, f);
 }
 
-function combinationIfArray2(a, b, f) {
+function combinationIf2(a, b, f) {
   var ret = {
     contents: []
   };
-  a.forEach(function (x) {
-        b.forEach(function (y) {
-              var r = f(x, y);
-              if (r !== undefined) {
-                ret.contents = ret.contents.concat([Caml_option.valFromOption(r)]);
-                return ;
-              }
-              
-            });
-      });
+  Belt_Array.forEach(a, (function (x) {
+          Belt_Array.forEach(b, (function (y) {
+                  var r = f(x, y);
+                  if (r !== undefined) {
+                    ret.contents = Belt_Array.concat(ret.contents, [Caml_option.valFromOption(r)]);
+                    return ;
+                  }
+                  
+                }));
+        }));
   return ret.contents;
 }
 
-function combinationArray2(a, b, f) {
-  return combinationIfArray2(a, b, (function (x, y) {
+function combination2(a, b, f) {
+  return combinationIf2(a, b, (function (x, y) {
                 return Caml_option.some(f(x, y));
               }));
 }
 
-function combinationIfArray3(a, b, c, f) {
+function combinationIf3(a, b, c, f) {
   var ret = {
     contents: []
   };
-  a.forEach(function (x) {
-        b.forEach(function (y) {
-              c.forEach(function (z) {
-                    var r = f(x, y, z);
-                    if (r !== undefined) {
-                      ret.contents = ret.contents.concat([Caml_option.valFromOption(r)]);
-                      return ;
-                    }
-                    
-                  });
-            });
-      });
+  Belt_Array.forEach(a, (function (x) {
+          Belt_Array.forEach(b, (function (y) {
+                  Belt_Array.forEach(c, (function (z) {
+                          var r = f(x, y, z);
+                          if (r !== undefined) {
+                            ret.contents = Belt_Array.concat(ret.contents, [Caml_option.valFromOption(r)]);
+                            return ;
+                          }
+                          
+                        }));
+                }));
+        }));
   return ret.contents;
 }
 
 function combinationArray3(a, b, c, f) {
-  return combinationIfArray3(a, b, c, (function (x, y, z) {
+  return combinationIf3(a, b, c, (function (x, y, z) {
                 return Caml_option.some(f(x, y, z));
               }));
 }
 
-function combinationIfArray4(a, b, c, d, f) {
+function combinationIf4(a, b, c, d, f) {
   var ret = {
     contents: []
   };
-  a.forEach(function (x) {
-        b.forEach(function (y) {
-              c.forEach(function (z) {
-                    d.forEach(function (w) {
-                          var r = f(x, y, z, w);
-                          if (r !== undefined) {
-                            ret.contents = ret.contents.concat([Caml_option.valFromOption(r)]);
-                            return ;
-                          }
-                          
-                        });
-                  });
-            });
-      });
+  Belt_Array.forEach(a, (function (x) {
+          Belt_Array.forEach(b, (function (y) {
+                  Belt_Array.forEach(c, (function (z) {
+                          Belt_Array.forEach(d, (function (w) {
+                                  var r = f(x, y, z, w);
+                                  if (r !== undefined) {
+                                    ret.contents = Belt_Array.concat(ret.contents, [Caml_option.valFromOption(r)]);
+                                    return ;
+                                  }
+                                  
+                                }));
+                        }));
+                }));
+        }));
   return ret.contents;
 }
 
-function combinationArray4(a, b, c, d, f) {
-  return combinationIfArray4(a, b, c, d, (function (x, y, z, w) {
+function combination4(a, b, c, d, f) {
+  return combinationIf4(a, b, c, d, (function (x, y, z, w) {
                 return Caml_option.some(f(x, y, z, w));
               }));
 }
@@ -160,8 +160,6 @@ var mapU = Belt_Array.mapU;
 var map = Belt_Array.map;
 
 var flatMapU = Belt_Array.flatMapU;
-
-var flatMap = Belt_Array.flatMap;
 
 var getByU = Belt_Array.getByU;
 
@@ -275,7 +273,6 @@ export {
   mapU ,
   map ,
   flatMapU ,
-  flatMap ,
   getByU ,
   getBy ,
   getIndexByU ,
@@ -316,15 +313,15 @@ export {
   eq ,
   initU ,
   init ,
-  flatMapArray ,
+  flatMap ,
   arrayToOption ,
-  foldLeftArray ,
-  foldRightArray ,
-  combinationIfArray2 ,
-  combinationArray2 ,
-  combinationIfArray3 ,
+  foldLeft ,
+  foldRight ,
+  combinationIf2 ,
+  combination2 ,
+  combinationIf3 ,
   combinationArray3 ,
-  combinationIfArray4 ,
-  combinationArray4 ,
+  combinationIf4 ,
+  combination4 ,
 }
 /* No side effect */

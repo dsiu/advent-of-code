@@ -114,7 +114,7 @@ var rbs = [
       ])
 ];
 
-var rotations = Stdlib_Array$AdventOfCode.combinationArray2(ras, rbs, (function (a, b) {
+var rotations = Stdlib_Array$AdventOfCode.combination2(ras, rbs, (function (a, b) {
         return function (param) {
           return Stdlib_Function$AdventOfCode.compose(a, b, param);
         };
@@ -185,7 +185,7 @@ function sign(bcns) {
     var x = match[0];
     return x * x + y * y + z * z;
   };
-  return bagFromArray(Stdlib_Array$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
+  return bagFromArray(Stdlib_Array$AdventOfCode.combinationIf2(bcns, bcns, (function (a, b) {
                     var b$1 = b._0;
                     var a$1 = a._0;
                     if (Linear$AdventOfCode.V3.cmp(b$1, a$1) > 0) {
@@ -229,7 +229,7 @@ function interact(a, b) {
 function matchingTransformAll(scanner1, scanner2) {
   var beacons1 = scanner1.beacons;
   var beacons2 = scanner2.beacons;
-  return Stdlib_Array$AdventOfCode.combinationIfArray3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
+  return Stdlib_Array$AdventOfCode.combinationIf3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
                 var t = minus(b1, Curry._1(rot, b2));
                 var translation = function (param) {
                   return translate(t, param);
@@ -424,7 +424,7 @@ function part2(scanners) {
               });
   };
   var origins = Belt_List.mapU(scanners, extractOrigin);
-  return Belt_Option.getExn(Stdlib_List$AdventOfCode.listToOption(Belt_List.sort(Stdlib_List$AdventOfCode.combinationList2(origins, origins, (function (a, b) {
+  return Belt_Option.getExn(Stdlib_List$AdventOfCode.listToOption(Belt_List.sort(Stdlib_List$AdventOfCode.combination2(origins, origins, (function (a, b) {
                             var a$1 = minus(a, b);
                             var a$2 = a$1._0;
                             return Math.abs(a$2[0]) + Math.abs(a$2[1]) + Math.abs(a$2[2]);

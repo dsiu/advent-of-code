@@ -25,14 +25,14 @@ let rec powersetListMap_ = set => {
   }
 }
 
-let {flatMapList} = module(List)
+let {flatMap} = module(List)
 
 let rec powersetListFlatMap_ = set => {
   switch set {
   | list{} => list{list{}}
   | list{x, ...xs} => {
       let tail_powersets = xs->powersetListFlatMap_
-      tail_powersets->flatMapList(it => list{it, List.concat(list{x}, it)})
+      tail_powersets->flatMap(it => list{it, List.concat(list{x}, it)})
     }
   }
 }
@@ -64,7 +64,7 @@ let rec powersetArrayMap_ = set => {
 //
 // powerset with flatmap
 //
-let {flatMapArray} = module(Array)
+let {flatMap} = module(Array)
 
 let rec powersetArrayFlatMap_ = set => {
   switch set->Array.size {
@@ -73,7 +73,7 @@ let rec powersetArrayFlatMap_ = set => {
       let x = set->Array.getExn(0)
       let xs = set->Array.sliceToEnd(1)
       let tail_powersets = xs->powersetArrayFlatMap_
-      tail_powersets->flatMapArray(it => [it, Array.concat([x], it)])
+      tail_powersets->flatMap(it => [it, Array.concat([x], it)])
     }
   }
 }

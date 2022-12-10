@@ -93,9 +93,9 @@ let part2 = xs => {
   //    }
   //  }
 
-  let {combinationIfArray2} = module(Stdlib.Array)
+  let {combinationIf2} = module(Stdlib.Array)
 
-  combinationIfArray2(Array.range(0, 99), Array.range(0, 99), (. noun, verb) => {
+  combinationIf2(Array.range(0, 99), Array.range(0, 99), (. noun, verb) => {
     executeWithNounVerb(make(xs->Array.copy), noun, verb) == 19690720
       ? Some(noun * 100 + verb)
       : None

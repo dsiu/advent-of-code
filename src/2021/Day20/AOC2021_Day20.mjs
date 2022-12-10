@@ -39,7 +39,7 @@ function findContents(grid, distant, region, here) {
   }
 }
 
-var neighbours = Stdlib_Array$AdventOfCode.combinationArray2([
+var neighbours = Stdlib_Array$AdventOfCode.combination2([
       -1,
       0,
       1

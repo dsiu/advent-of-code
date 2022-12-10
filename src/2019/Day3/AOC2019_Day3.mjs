@@ -158,7 +158,7 @@ function crossovers(travelledPaths) {
     }
     
   };
-  return Stdlib_Array$AdventOfCode.foldLeftArray(Belt_Array.map(travelledPaths, (function (param) {
+  return Stdlib_Array$AdventOfCode.foldLeft(Belt_Array.map(travelledPaths, (function (param) {
                     return param.visited;
                   })), (function (param) {
                 return function (param$1) {

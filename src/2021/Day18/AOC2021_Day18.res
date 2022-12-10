@@ -173,7 +173,7 @@ module SnailFish = {
     Pair(a, b)->reduce
   }
 
-  let total = xs => xs->Stdlib.Array.foldLeftArray(snailAdd)
+  let total = xs => xs->Stdlib.Array.foldLeft(snailAdd)
 
   type magnitude = tree => int
   let rec magnitude: magnitude = t => {
@@ -190,7 +190,7 @@ module SnailFish = {
   }
 
   let part2 = numbers => {
-    Stdlib.Array.combinationArray2(numbers, numbers, (. a, b) =>
+    Stdlib.Array.combination2(numbers, numbers, (. a, b) =>
       snailAdd(a, b)->magnitude
     )->maxIntInArray
   }

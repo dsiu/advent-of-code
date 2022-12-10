@@ -38,7 +38,7 @@ module Scanner = {
     ]
     let rbs = [nullTrans, rotX, compose(rotX, rotX), composeN([rotX, rotX, rotX])]
 
-    Stdlib.Array.combinationArray2(ras, rbs, (. a, b) => compose(a, b))
+    Stdlib.Array.combination2(ras, rbs, (. a, b) => compose(a, b))
   }
 
   //  rotations->Array.length->log
@@ -98,7 +98,7 @@ module Scanner = {
       x *. x +. y *. y +. z *. z
     }
 
-    Stdlib.Array.combinationIfArray2(bcns, bcns, (. Coord(a), Coord(b)) => {
+    Stdlib.Array.combinationIf2(bcns, bcns, (. Coord(a), Coord(b)) => {
       V3.cmp(b, a) > 0 ? Some(pythag(minus(Coord(a), Coord(b)))) : None
     })->bagFromArray
   }
@@ -132,7 +132,7 @@ module Scanner = {
     let beacons1 = scanner1.beacons
     let beacons2 = scanner2.beacons
 
-    Stdlib.Array.combinationIfArray3(beacons1, beacons2, rotations, (. b1, b2, rot) => {
+    Stdlib.Array.combinationIf3(beacons1, beacons2, rotations, (. b1, b2, rot) => {
       let t = minus(b1, rot(b2)) // apply rot to b2
       let translation = translate(t)
 
@@ -265,7 +265,7 @@ let part2 = scanners => {
     abs_float(x1) +. abs_float(y1) +. abs_float(z1)
   }
 
-  Stdlib.List.combinationList2(origins, origins, (. a, b) => {
+  Stdlib.List.combination2(origins, origins, (. a, b) => {
     minus(a, b)->manhatton
   })
   ->List.sort((a, b) => Float.toInt(b -. a))

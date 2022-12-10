@@ -30,7 +30,7 @@ function powersetListFlatMap_(set) {
   }
   var x = set.hd;
   var tail_powersets = powersetListFlatMap_(set.tl);
-  return Stdlib_List$AdventOfCode.flatMapList(tail_powersets, (function (it) {
+  return Stdlib_List$AdventOfCode.flatMap(tail_powersets, (function (it) {
                 return {
                         hd: it,
                         tl: {
@@ -70,7 +70,7 @@ function powersetArrayFlatMap_(set) {
   var x = Stdlib_Array$AdventOfCode.getExn(set, 0);
   var xs = Stdlib_Array$AdventOfCode.sliceToEnd(set, 1);
   var tail_powersets = powersetArrayFlatMap_(xs);
-  return Stdlib_Array$AdventOfCode.flatMapArray(tail_powersets, (function (it) {
+  return Stdlib_Array$AdventOfCode.flatMap(tail_powersets, (function (it) {
                 return [
                         it,
                         Stdlib_Array$AdventOfCode.concat([x], it)
@@ -80,26 +80,23 @@ function powersetArrayFlatMap_(set) {
 
 var List;
 
-var flatMapList = Stdlib_List$AdventOfCode.flatMapList;
-
 var powersetList = powersetListFlatMap_;
 
 var $$Array;
 
-var flatMapArray = Stdlib_Array$AdventOfCode.flatMapArray;
+var flatMap = Stdlib_Array$AdventOfCode.flatMap;
 
 var powersetArray = powersetArrayFlatMap_;
 
 export {
   List ,
   powersetListMap_ ,
-  flatMapList ,
   powersetListFlatMap_ ,
   powersetList ,
   powersetArrayWithList_ ,
   $$Array ,
   powersetArrayMap_ ,
-  flatMapArray ,
+  flatMap ,
   powersetArrayFlatMap_ ,
   powersetArray ,
 }

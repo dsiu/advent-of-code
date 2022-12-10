@@ -3,9 +3,8 @@ include Belt.List
 /**
   flatMap (ie: bind) on List
 */
-let flatMapList = (xs, f) => {
-  open Belt
-  List.reduce(List.map(xs, f), list{}, List.concat)
+let flatMap = (xs, f) => {
+  reduce(map(xs, f), list{}, concat)
 }
 
 let listToOption = l => {
@@ -19,14 +18,12 @@ let listToOption = l => {
   apply f(x,y) for each x in a and each y in b ONLY if f(x,y) returns Some()
   returns result in list
 */
-let combinationIfList2: (list<'a>, list<'b>, (. 'a, 'b) => option<'c>) => list<'c> = (a, b, f) => {
-  module List = Belt.List
-
-  a->List.reduceU(list{}, (. acc, x) => {
-    acc->List.concat(
-      b->List.reduceU(list{}, (. acc, y) => {
+let combinationIf2: (list<'a>, list<'b>, (. 'a, 'b) => option<'c>) => list<'c> = (a, b, f) => {
+  a->reduceU(list{}, (. acc, x) => {
+    acc->concat(
+      b->reduceU(list{}, (. acc, y) => {
         switch f(. x, y) {
-        | Some(r) => acc->List.concat(list{r})
+        | Some(r) => acc->concat(list{r})
         | None => acc
         }
       }),
@@ -38,8 +35,8 @@ let combinationIfList2: (list<'a>, list<'b>, (. 'a, 'b) => option<'c>) => list<'
   apply f(x,y) for each x in a and and each y in b
   returns result in list
 */
-let combinationList2: (list<'a>, list<'b>, (. 'a, 'b) => 'c) => list<'c> = (a, b, f) => {
-  combinationIfList2(a, b, (. x, y) => Some(f(. x, y)))
+let combination2: (list<'a>, list<'b>, (. 'a, 'b) => 'c) => list<'c> = (a, b, f) => {
+  combinationIf2(a, b, (. x, y) => Some(f(. x, y)))
 }
 
 // Iterate / Unfold2
