@@ -1,5 +1,16 @@
 include Belt.Array
 
+// Basic Functions
+let append = concat
+let head = getExn(_, 0)
+let last = a => getExn(a, a->length - 1)
+let tail = sliceToEnd(_, 1)
+// let init =
+// let uncons =
+let singleton = make(1, _)
+
+// Array transformations
+
 /**
   flatMap (ie: bind) on Array
  */
