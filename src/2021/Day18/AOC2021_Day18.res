@@ -1,5 +1,4 @@
 open Belt
-open! FP_Utils
 open Utils
 
 let log = Js.Console.log
@@ -33,7 +32,8 @@ module SnailFish = {
     let rec splittableC = loc => {
       switch loc {
       | Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
-      | Loc(Pair(_, _), _) => splittableC(left(loc))->optionOr(splittableC(right(loc)))
+      | Loc(Pair(_, _), _) =>
+        splittableC(left(loc))->Stdlib.Option.optionOr(splittableC(right(loc)))
       }
     }
     splittableC(top(t))
@@ -75,7 +75,7 @@ module SnailFish = {
       Some(l)
     | (n, Loc(Pair(_, _), _)) =>
       // pairAtDepthC(n - 1, left(l))->Option.flatMap(_ => pairAtDepthC(n - 1, right(l)))
-      pairAtDepthC(n - 1, left(l))->optionOr(pairAtDepthC(n - 1, right(l)))
+      pairAtDepthC(n - 1, left(l))->Stdlib.Option.optionOr(pairAtDepthC(n - 1, right(l)))
     }
   }
 
@@ -159,7 +159,7 @@ module SnailFish = {
 
   type reduce = tree => tree
   let rec reduce: reduce = num => {
-    switch explode(num)->optionOr(split(num)) {
+    switch explode(num)->Stdlib.Option.optionOr(split(num)) {
     | None => num
     | Some(num1) => reduce(num1)
     }
@@ -173,7 +173,7 @@ module SnailFish = {
     Pair(a, b)->reduce
   }
 
-  let total = xs => xs->foldLeftArray(snailAdd)
+  let total = xs => xs->Stdlib.Array.foldLeftArray(snailAdd)
 
   type magnitude = tree => int
   let rec magnitude: magnitude = t => {
@@ -190,7 +190,9 @@ module SnailFish = {
   }
 
   let part2 = numbers => {
-    combinationArray2(numbers, numbers, (. a, b) => snailAdd(a, b)->magnitude)->maxIntInArray
+    Stdlib.Array.combinationArray2(numbers, numbers, (. a, b) =>
+      snailAdd(a, b)->magnitude
+    )->maxIntInArray
   }
 
   // simple parser for elements

@@ -9,8 +9,7 @@
     https://gist.github.com/JadenGeller/6174b3461a34465791c5
 
 */
-
-module List = Belt.List
+module List = Stdlib.List
 
 //
 // powerset with map (easier to understand)
@@ -26,7 +25,7 @@ let rec powersetListMap_ = set => {
   }
 }
 
-let flatMapList = FP_Utils.flatMapList
+let {flatMapList} = module(List)
 
 let rec powersetListFlatMap_ = set => {
   switch set {
@@ -47,7 +46,7 @@ let powersetArrayWithList_ = xs => {
 //
 // powerset with map (easier to understand)
 //
-module Array = Belt.Array
+module Array = Stdlib.Array
 
 let rec powersetArrayMap_ = set => {
   switch set->Array.size {
@@ -65,7 +64,7 @@ let rec powersetArrayMap_ = set => {
 //
 // powerset with flatmap
 //
-let flatMapArray = FP_Utils.flatMapArray
+let {flatMapArray} = module(Array)
 
 let rec powersetArrayFlatMap_ = set => {
   switch set->Array.size {

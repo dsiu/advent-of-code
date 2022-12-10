@@ -32,7 +32,7 @@ let findContents = (
 }
 
 // refactor
-let neighbours = FP_Utils.combinationArray2([-1, 0, 1], [-1, 0, 1], (. x, y) => (x, y))
+let neighbours = Stdlib.Array.combinationArray2([-1, 0, 1], [-1, 0, 1], (. x, y) => (x, y))
 
 let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 

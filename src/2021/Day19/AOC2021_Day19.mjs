@@ -10,7 +10,9 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Linear$AdventOfCode from "../../Linear.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
+import * as Stdlib_List$AdventOfCode from "../../stdlib/Stdlib_List.mjs";
+import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
+import * as Stdlib_Function$AdventOfCode from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -81,18 +83,18 @@ function translate(param, param$1) {
 }
 
 var ras = [
-  FP_Utils$AdventOfCode.identity,
+  Utils$AdventOfCode.identity,
   rotY,
   (function (param) {
-      return FP_Utils$AdventOfCode.compose(rotY, rotY, param);
+      return Stdlib_Function$AdventOfCode.compose(rotY, rotY, param);
     }),
-  FP_Utils$AdventOfCode.composeN([
+  Stdlib_Function$AdventOfCode.composeN([
         rotY,
         rotY,
         rotY
       ]),
   rotZ,
-  FP_Utils$AdventOfCode.composeN([
+  Stdlib_Function$AdventOfCode.composeN([
         rotZ,
         rotZ,
         rotZ
@@ -100,21 +102,21 @@ var ras = [
 ];
 
 var rbs = [
-  FP_Utils$AdventOfCode.identity,
+  Utils$AdventOfCode.identity,
   rotX,
   (function (param) {
-      return FP_Utils$AdventOfCode.compose(rotX, rotX, param);
+      return Stdlib_Function$AdventOfCode.compose(rotX, rotX, param);
     }),
-  FP_Utils$AdventOfCode.composeN([
+  Stdlib_Function$AdventOfCode.composeN([
         rotX,
         rotX,
         rotX
       ])
 ];
 
-var rotations = FP_Utils$AdventOfCode.combinationArray2(ras, rbs, (function (a, b) {
+var rotations = Stdlib_Array$AdventOfCode.combinationArray2(ras, rbs, (function (a, b) {
         return function (param) {
-          return FP_Utils$AdventOfCode.compose(a, b, param);
+          return Stdlib_Function$AdventOfCode.compose(a, b, param);
         };
       }));
 
@@ -183,7 +185,7 @@ function sign(bcns) {
     var x = match[0];
     return x * x + y * y + z * z;
   };
-  return bagFromArray(FP_Utils$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
+  return bagFromArray(Stdlib_Array$AdventOfCode.combinationIfArray2(bcns, bcns, (function (a, b) {
                     var b$1 = b._0;
                     var a$1 = a._0;
                     if (Linear$AdventOfCode.V3.cmp(b$1, a$1) > 0) {
@@ -227,7 +229,7 @@ function interact(a, b) {
 function matchingTransformAll(scanner1, scanner2) {
   var beacons1 = scanner1.beacons;
   var beacons2 = scanner2.beacons;
-  return FP_Utils$AdventOfCode.combinationIfArray3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
+  return Stdlib_Array$AdventOfCode.combinationIfArray3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
                 var t = minus(b1, Curry._1(rot, b2));
                 var translation = function (param) {
                   return translate(t, param);
@@ -238,7 +240,7 @@ function matchingTransformAll(scanner1, scanner2) {
                 var len = Belt_Set.size(interact(beacons1, transB2));
                 if (len >= 12) {
                   return (function (param) {
-                            return FP_Utils$AdventOfCode.compose(rot, translation, param);
+                            return Stdlib_Function$AdventOfCode.compose(rot, translation, param);
                           });
                 }
                 
@@ -246,7 +248,7 @@ function matchingTransformAll(scanner1, scanner2) {
 }
 
 function matchingTransform(scanner1, scanner2) {
-  return FP_Utils$AdventOfCode.arrayToOption(matchingTransformAll(scanner1, scanner2));
+  return Stdlib_Array$AdventOfCode.arrayToOption(matchingTransformAll(scanner1, scanner2));
 }
 
 function mkReconstruction(scanners) {
@@ -289,7 +291,7 @@ function reconstructStep(param) {
             return vagueMatch(current, x);
           }));
     var matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.mapU(passMatches, (function (x) {
-                    return FP_Utils$AdventOfCode.arrayToOption(matchingTransformAll(current, x));
+                    return Stdlib_Array$AdventOfCode.arrayToOption(matchingTransformAll(current, x));
                   }))), (function (x) {
             return Belt_Option.isSome(x[1]);
           }));
@@ -335,7 +337,7 @@ function make(param) {
   return {
           scannerName: param[0],
           beacons: beacons,
-          transformation: FP_Utils$AdventOfCode.identity,
+          transformation: Utils$AdventOfCode.identity,
           signature: sign(beacons)
         };
 }
@@ -343,7 +345,7 @@ function make(param) {
 var Scanner = {
   coordToString: coordToString,
   transformToString: transformToString,
-  nullTrans: FP_Utils$AdventOfCode.identity,
+  nullTrans: Utils$AdventOfCode.identity,
   rotX: rotX,
   rotY: rotY,
   rotZ: rotZ,
@@ -422,7 +424,7 @@ function part2(scanners) {
               });
   };
   var origins = Belt_List.mapU(scanners, extractOrigin);
-  return Belt_Option.getExn(FP_Utils$AdventOfCode.listToOption(Belt_List.sort(FP_Utils$AdventOfCode.combinationList2(origins, origins, (function (a, b) {
+  return Belt_Option.getExn(Stdlib_List$AdventOfCode.listToOption(Belt_List.sort(Stdlib_List$AdventOfCode.combinationList2(origins, origins, (function (a, b) {
                             var a$1 = minus(a, b);
                             var a$2 = a$1._0;
                             return Math.abs(a$2[0]) + Math.abs(a$2[1]) + Math.abs(a$2[2]);
@@ -441,9 +443,15 @@ function solvePart2(data) {
   return part2(reconstructScanners(scanners));
 }
 
+var compose = Stdlib_Function$AdventOfCode.compose;
+
+var composeN = Stdlib_Function$AdventOfCode.composeN;
+
 export {
   log ,
   log2 ,
+  compose ,
+  composeN ,
   Scanner ,
   parse ,
   reconstructScanners ,

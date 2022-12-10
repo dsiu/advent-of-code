@@ -118,7 +118,7 @@ let parse = data =>
   data
   ->splitNewline
   ->Array.map(
-    FP_Utils.compose(Js.String2.trim, x => x->Utils.splitChars->Array.map(intFromStringExn)),
+    Stdlib.Function.compose(Js.String2.trim, x => x->Utils.splitChars->Array.map(intFromStringExn)),
   )
 
 let solvePart1 = data => {

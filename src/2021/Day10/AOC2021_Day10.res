@@ -101,7 +101,7 @@ module ParseTree = {
   }
 
   let makeNode = (l, r) => {
-    Node({l: l, tl: Empty, r: r})
+    Node({l, tl: Empty, r})
   }
 
   let makeNodeFromStr = (l, li, r, ri) => {
@@ -111,17 +111,17 @@ module ParseTree = {
   let rec add = (a, b) => {
     switch (a, b) {
     | (Node({tl: Empty, _}) as n, Node(_) as b) => NodeList(list{n, b})
-    | (Node({l, tl: Empty, r}), NodeList(_) as b) => Node({l: l, tl: b, r: r})
+    | (Node({l, tl: Empty, r}), NodeList(_) as b) => Node({l, tl: b, r})
 
-    | (Node({l, tl: NodeList(tl), r}), _ as b) => Node({l: l, tl: add(NodeList(tl), b), r: r})
+    | (Node({l, tl: NodeList(tl), r}), _ as b) => Node({l, tl: add(NodeList(tl), b), r})
 
     | (Node({tl: Node(_)}), _) => raise(NotSupported("nested nodes"))
 
     //    | (NodeList(tl), Node(_) as b) => NodeList(List.concat(tl, list{b}))
     | (NodeList(tl), Node({l, tl: NodeList(btl), r})) =>
-      Node({l: l, tl: NodeList(List.concat(tl, btl)), r: r})
+      Node({l, tl: NodeList(List.concat(tl, btl)), r})
 
-    | (NodeList(tl), Node({l, tl: Empty, r})) => Node({l: l, tl: NodeList(tl), r: r})
+    | (NodeList(tl), Node({l, tl: Empty, r})) => Node({l, tl: NodeList(tl), r})
 
     | (NodeList(tl), NodeList(bl)) => NodeList(List.concat(tl, bl))
 
@@ -150,6 +150,7 @@ module ParseTree = {
               // check if there is last token in stack
               inner(rest, tree->add(makeNode(last, this)), new_stack)
             }
+
           | (true, None)
           | (false, _) =>
             inner(rest, tree, stack->Stack.push(this))
@@ -205,7 +206,7 @@ let process = xs => {
 }
 
 let parse = data =>
-  data->splitNewline->Array.map(FP_Utils.compose(Js.String2.trim, Utils.splitChars))
+  data->splitNewline->Array.map(Stdlib.Function.compose(Js.String2.trim, Utils.splitChars))
 
 let examples = () => {
   let parent = ParseTree.makeNodeFromStr("(", 1, ")", 2)

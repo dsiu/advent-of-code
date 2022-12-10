@@ -128,5 +128,5 @@ let eq = (t, u) => {
 
 let toString = (t, f) => {
   let arrToStr = Utils.Printable.Array.toString
-  t->Array.map(x => x->Array.map(f))->arrToStr(x => x->arrToStr(FP_Utils.identity) ++ "\n")
+  t->Array.map(x => x->Array.map(f))->arrToStr(x => x->arrToStr(Stdlib.Function.identity) ++ "\n")
 }

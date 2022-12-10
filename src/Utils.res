@@ -1,10 +1,9 @@
 open Belt
+let identity = Stdlib.Function.identity
 
 // Logging
 let log = Js.Console.log
 @val @scope("console") external consoleDir: 'a => unit = "dir"
-
-let identity = FP_Utils.identity
 
 /**
  Printable
@@ -111,10 +110,8 @@ module Printable = {
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
 
-let intFromStringExn = FP_Utils.compose(
-  Js.String2.trim,
-  FP_Utils.compose(Int.fromString, Belt.Option.getExn),
-)
+let compose = Stdlib.Function.compose
+let intFromStringExn = compose(Js.String2.trim, compose(Int.fromString, Belt.Option.getExn))
 
 let add = (x, y) => x + y
 let sub = (x, y) => x - y

@@ -17,7 +17,7 @@ import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
 import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/belt_MutableMapInt.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/belt_MutableMapString.js";
-import * as FP_Utils$AdventOfCode from "./FP_Utils.mjs";
+import * as Stdlib_Function$AdventOfCode from "./stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -30,7 +30,7 @@ function toString(m, f) {
 }
 
 function toString$1(m) {
-  return toString(m, FP_Utils$AdventOfCode.identity);
+  return toString(m, Stdlib_Function$AdventOfCode.identity);
 }
 
 var $$String = {
@@ -60,7 +60,7 @@ function toString$3(m, f) {
 }
 
 function toString$4(m) {
-  return toString$3(m, FP_Utils$AdventOfCode.identity);
+  return toString$3(m, Stdlib_Function$AdventOfCode.identity);
 }
 
 var $$String$2 = {
@@ -195,10 +195,10 @@ function base2(__x) {
 }
 
 function intFromStringExn(param) {
-  return FP_Utils$AdventOfCode.compose((function (prim) {
+  return Stdlib_Function$AdventOfCode.compose((function (prim) {
                 return prim.trim();
               }), (function (param) {
-                return FP_Utils$AdventOfCode.compose(Belt_Int.fromString, Belt_Option.getExn, param);
+                return Stdlib_Function$AdventOfCode.compose(Belt_Int.fromString, Belt_Option.getExn, param);
               }), param);
 }
 
@@ -371,15 +371,18 @@ function mutableMapStringUpdate(h, k, f) {
   return h;
 }
 
-var identity = FP_Utils$AdventOfCode.identity;
+var identity = Stdlib_Function$AdventOfCode.identity;
+
+var compose = Stdlib_Function$AdventOfCode.compose;
 
 var transpose = JsArray2Ex.transpose;
 
 export {
-  log ,
   identity ,
+  log ,
   Printable ,
   base2 ,
+  compose ,
   intFromStringExn ,
   add ,
   sub ,

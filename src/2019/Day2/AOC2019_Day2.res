@@ -83,7 +83,6 @@ let part1 = xs => {
 
 let part2 = xs => {
   open IntCode
-  open FP_Utils
   //  let result = ref(None)
   //
   //  for noun in 0 to 99 {
@@ -93,6 +92,8 @@ let part2 = xs => {
   //      }
   //    }
   //  }
+
+  let {combinationIfArray2} = module(Stdlib.Array)
 
   combinationIfArray2(Array.range(0, 99), Array.range(0, 99), (. noun, verb) => {
     executeWithNounVerb(make(xs->Array.copy), noun, verb) == 19690720

@@ -34,6 +34,7 @@ module MakeStack = (Item: StackItem) => {
         let newStack = Contents(rest)
         (top, newStack)
       }
+
     | list{} => raise(Not_found)
     }
   }
@@ -126,7 +127,7 @@ module MakeStack = (Item: StackItem) => {
   // Words based on composition
   // ==============================================
 
-  open FP_Utils
+  let {composeN} = module(Stdlib.Function)
   let square = [dup, mul]->composeN
 
   let cube = [dup, dup, mul, mul]->composeN

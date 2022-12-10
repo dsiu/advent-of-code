@@ -4,7 +4,6 @@
 
 open Belt
 open Utils
-open! FP_Utils
 
 let log = Js.Console.log
 let log2 = Js.Console.log2

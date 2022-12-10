@@ -5,7 +5,6 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -59,7 +58,7 @@ function isValidTicket(rules, ticket) {
                     return validForAnyField(/* RuleSet */{
                                 _0: rules$1
                               }, __x);
-                  })), FP_Utils$AdventOfCode.identity);
+                  })), Utils$AdventOfCode.identity);
 }
 
 function possibleColumns(ticketCols, body) {
@@ -68,7 +67,7 @@ function possibleColumns(ticketCols, body) {
                   return matchesRule(body, __x);
                 }));
   };
-  var idx = Belt_Array.makeBy(ticketCols.length, FP_Utils$AdventOfCode.identity);
+  var idx = Belt_Array.makeBy(ticketCols.length, Utils$AdventOfCode.identity);
   return Belt_Array.map(Belt_Array.keep(Belt_Array.zip(idx, ticketCols), columnMatches), (function (prim) {
                 return prim[0];
               }));
@@ -135,7 +134,7 @@ function parse(data) {
     return prim.trim();
   };
   var intFromStrEx = function (param) {
-    return FP_Utils$AdventOfCode.compose(Belt_Int.fromString, Belt_Option.getExn, param);
+    return Utils$AdventOfCode.compose(Belt_Int.fromString, Belt_Option.getExn, param);
   };
   var match = Belt_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), (function (x) {
           return Belt_Array.map(Utils$AdventOfCode.splitNewline(x), trim);
@@ -145,7 +144,7 @@ function parse(data) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "AOC2020_Day16.res",
-            104,
+            103,
             6
           ],
           Error: new Error()
@@ -161,7 +160,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              107,
+              106,
               8
             ],
             Error: new Error()
@@ -181,7 +180,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              112,
+              111,
               8
             ],
             Error: new Error()
@@ -195,7 +194,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2020_Day16.res",
-              113,
+              112,
               8
             ],
             Error: new Error()

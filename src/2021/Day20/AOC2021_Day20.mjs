@@ -3,7 +3,7 @@
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as TableclothSet from "tablecloth-rescript/src/TableclothSet.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
+import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -39,7 +39,7 @@ function findContents(grid, distant, region, here) {
   }
 }
 
-var neighbours = FP_Utils$AdventOfCode.combinationArray2([
+var neighbours = Stdlib_Array$AdventOfCode.combinationArray2([
       -1,
       0,
       1

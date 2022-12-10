@@ -4,7 +4,7 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
+import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -126,7 +126,7 @@ function part1(xs) {
 }
 
 function part2(xs) {
-  return Belt_Array.getExn(FP_Utils$AdventOfCode.combinationIfArray2(Belt_Array.range(0, 99), Belt_Array.range(0, 99), (function (noun, verb) {
+  return Belt_Array.getExn(Stdlib_Array$AdventOfCode.combinationIfArray2(Belt_Array.range(0, 99), Belt_Array.range(0, 99), (function (noun, verb) {
                     if (executeWithNounVerb({
                             prog: xs.slice(0),
                             pc: 0

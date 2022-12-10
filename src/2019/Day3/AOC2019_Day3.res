@@ -56,7 +56,6 @@ type path = {
   travel a single segment of a path
   */
 let travelSegment: (path, segment) => path = (path, segment) => {
-  open FP_Utils
   let delta = facing(segment.direction)
   let distance = segment.steps
   let start = path.tip
@@ -68,6 +67,8 @@ let travelSegment: (path, segment) => path = (path, segment) => {
   let insertStep = (visits, (dist, loc)) => {
     visits->TC.Map.includes(loc) ? visits : visits->TC.Map.add(~key=loc, ~value=dist)
   }
+
+  let unfold = Stdlib.List.unfold
 
   let visited' = TC.List.zip(
     TC.List.initialize(distance, ~f=x => x + len + 1),
@@ -98,10 +99,9 @@ let closest: visited => int = points => {
 }
 
 let crossovers: array<path> => visited = travelledPaths => {
-  open FP_Utils
   travelledPaths
   ->Array.map(({visited}) => visited)
-  ->foldLeftArray(
+  ->Stdlib.Array.foldLeftArray(
     TC.Map.merge(~f=(_k, a, b) => {
       switch (a, b) {
       | (Some(a), Some(b)) => Some(a + b)

@@ -2,7 +2,6 @@
 
 open Belt
 open Utils
-open FP_Utils
 
 let log = Js.Console.log
 
@@ -46,7 +45,7 @@ let makeGrid = (lines: array<array<string>>) => {
   let maxY = lines->Array.length - 1
   let xs = Array.range(0, maxX)
   let ys = Array.range(0, maxY)
-  combinationIfArray2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
+  Stdlib.Array.combinationIfArray2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
 }
 
 @@warning("-8")
@@ -57,6 +56,7 @@ let conv34 = grid => {
 }
 
 let neighbourSpaces = (here: Coord.t) => {
+  open Stdlib.Array
   switch here {
   | Coord_V3(_) as here =>
     combinationIfArray3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z) => {

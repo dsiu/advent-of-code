@@ -9,7 +9,7 @@ import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as TableclothComparator from "tablecloth-rescript/src/TableclothComparator.mjs";
 import * as Coord_V3$AdventOfCode from "../../Coord_V3.mjs";
 import * as Coord_V4$AdventOfCode from "../../Coord_V4.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
+import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -79,7 +79,7 @@ function makeGrid(lines) {
   var maxY = lines.length - 1 | 0;
   var xs = Belt_Array.range(0, maxX);
   var ys = Belt_Array.range(0, maxY);
-  return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray2(xs, ys, createActive), {
+  return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIfArray2(xs, ys, createActive), {
               comparator: comparator
             });
 }
@@ -101,7 +101,7 @@ function conv34Cell(param) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2020_Day17.res",
-          53,
+          52,
           17
         ],
         Error: new Error()
@@ -116,7 +116,7 @@ function conv34(grid) {
 
 function neighbourSpaces(here) {
   if (here.TAG === /* Coord_V3 */0) {
-    return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray3([
+    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIfArray3([
                     -1,
                     0,
                     1
@@ -145,7 +145,7 @@ function neighbourSpaces(here) {
                 comparator: comparator
               });
   } else {
-    return TableclothSet.fromArray(FP_Utils$AdventOfCode.combinationIfArray4([
+    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIfArray4([
                     -1,
                     0,
                     1
@@ -238,7 +238,7 @@ function iterate(_grid, f, _times) {
 
 function parse(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
-                return FP_Utils$AdventOfCode.compose((function (prim) {
+                return Utils$AdventOfCode.compose((function (prim) {
                               return prim.trim();
                             }), Utils$AdventOfCode.splitChars, param);
               }));

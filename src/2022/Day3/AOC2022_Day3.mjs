@@ -37,10 +37,7 @@ function part1(xs) {
 }
 
 function solvePart1(data) {
-  var prim = part1(parse(data));
-  console.log(prim);
-  console.log(0);
-  return 1;
+  return part1(parse(data));
 }
 
 function solvePart2(data) {

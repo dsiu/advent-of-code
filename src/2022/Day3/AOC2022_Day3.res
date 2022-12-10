@@ -32,9 +32,7 @@ let part1 = xs => {
 }
 
 let solvePart1 = data => {
-  data->parse->part1->log
-  1->pred->log
-  1
+  data->parse->part1
 }
 
 let solvePart2 = data => {

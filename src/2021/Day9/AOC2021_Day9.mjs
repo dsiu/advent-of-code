@@ -9,8 +9,8 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Array2D$AdventOfCode from "../../Array2D.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 import * as Coordinate$AdventOfCode from "../../Coordinate.mjs";
+import * as Stdlib_Function$AdventOfCode from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -204,7 +204,7 @@ var HeightMap = {
 
 function parse(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
-                return FP_Utils$AdventOfCode.compose((function (prim) {
+                return Stdlib_Function$AdventOfCode.compose((function (prim) {
                               return prim.trim();
                             }), (function (x) {
                               return Belt_Array.map(Utils$AdventOfCode.splitChars(x), Utils$AdventOfCode.intFromStringExn);

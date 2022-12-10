@@ -10,7 +10,8 @@ import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Coord_V2$AdventOfCode from "../../Coord_V2.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
+import * as Stdlib_List$AdventOfCode from "../../stdlib/Stdlib_List.mjs";
+import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -106,7 +107,7 @@ function travelSegment(path, segment) {
   };
   var visited$p = TableclothList.fold(TableclothList.zip(TableclothList.initialize(distance, (function (x) {
                     return (x + len | 0) + 1 | 0;
-                  })))(FP_Utils$AdventOfCode.unfold((function (param) {
+                  })))(Stdlib_List$AdventOfCode.unfold((function (param) {
                   return param[0] >= distance;
                 }), (function (param) {
                   var x = param[1];
@@ -157,7 +158,7 @@ function crossovers(travelledPaths) {
     }
     
   };
-  return FP_Utils$AdventOfCode.foldLeftArray(Belt_Array.map(travelledPaths, (function (param) {
+  return Stdlib_Array$AdventOfCode.foldLeftArray(Belt_Array.map(travelledPaths, (function (param) {
                     return param.visited;
                   })), (function (param) {
                 return function (param$1) {

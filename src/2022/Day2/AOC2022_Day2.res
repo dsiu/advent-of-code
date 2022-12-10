@@ -106,7 +106,6 @@ let part1: array<round> => int = rounds => {
 }
 
 let part2: array<shapeResult> => int = rounds => {
-  open FP_Utils
   rounds->Array.map(compose(roundFromResult, scoreRound))->sumIntArray
 }
 

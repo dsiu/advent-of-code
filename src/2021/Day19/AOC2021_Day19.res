@@ -2,7 +2,8 @@ open Belt
 open Utils
 let log = Js.Console.log
 let log2 = Js.Console.log2
-open! FP_Utils
+
+let {compose, composeN} = module(Stdlib_Function)
 
 module Scanner = {
   // Coord Type [should refactor out]
@@ -37,7 +38,7 @@ module Scanner = {
     ]
     let rbs = [nullTrans, rotX, compose(rotX, rotX), composeN([rotX, rotX, rotX])]
 
-    combinationArray2(ras, rbs, (. a, b) => compose(a, b))
+    Stdlib.Array.combinationArray2(ras, rbs, (. a, b) => compose(a, b))
   }
 
   //  rotations->Array.length->log
@@ -97,7 +98,7 @@ module Scanner = {
       x *. x +. y *. y +. z *. z
     }
 
-    combinationIfArray2(bcns, bcns, (. Coord(a), Coord(b)) => {
+    Stdlib.Array.combinationIfArray2(bcns, bcns, (. Coord(a), Coord(b)) => {
       V3.cmp(b, a) > 0 ? Some(pythag(minus(Coord(a), Coord(b)))) : None
     })->bagFromArray
   }
@@ -131,7 +132,7 @@ module Scanner = {
     let beacons1 = scanner1.beacons
     let beacons2 = scanner2.beacons
 
-    combinationIfArray3(beacons1, beacons2, rotations, (. b1, b2, rot) => {
+    Stdlib.Array.combinationIfArray3(beacons1, beacons2, rotations, (. b1, b2, rot) => {
       let t = minus(b1, rot(b2)) // apply rot to b2
       let translation = translate(t)
 
@@ -143,7 +144,7 @@ module Scanner = {
   }
 
   let matchingTransform = (scanner1, scanner2): option<transform> => {
-    matchingTransformAll(scanner1, scanner2)->arrayToOption
+    matchingTransformAll(scanner1, scanner2)->Stdlib.Array.arrayToOption
   }
 
   type reconstruction = Reconstruction({found: list<t>, working: list<t>, waiting: list<t>})
@@ -264,11 +265,11 @@ let part2 = scanners => {
     abs_float(x1) +. abs_float(y1) +. abs_float(z1)
   }
 
-  combinationList2(origins, origins, (. a, b) => {
+  Stdlib.List.combinationList2(origins, origins, (. a, b) => {
     minus(a, b)->manhatton
   })
   ->List.sort((a, b) => Float.toInt(b -. a))
-  ->listToOption
+  ->Stdlib.List.listToOption
   ->Option.getExn
 }
 

@@ -3,7 +3,6 @@
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as FP_Utils$AdventOfCode from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -191,7 +190,7 @@ function part1(rounds) {
 
 function part2(rounds) {
   return Utils$AdventOfCode.sumIntArray(Belt_Array.map(rounds, (function (param) {
-                    return FP_Utils$AdventOfCode.compose(roundFromResult, scoreRound, param);
+                    return Utils$AdventOfCode.compose(roundFromResult, scoreRound, param);
                   })));
 }
 
