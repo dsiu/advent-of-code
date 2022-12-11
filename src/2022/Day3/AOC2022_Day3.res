@@ -4,38 +4,60 @@ module TC = Tablecloth
 
 let log = Js.Console.log
 
-let parse = data => {
+type contents = Set.String.t
+type rucksack = Rucksack(array<string>, array<string>)
+
+let parse: 'a. (string, array<string> => 'a) => array<'a> = (data, fn) => {
   data
   ->splitNewline
   ->Array.map(s => {
     let t = s->Js.String2.trim->splitChars
-    let mid = t->Array.length / 2
-    (t->Array.slice(~offset=0, ~len=mid), t->Array.slice(~offset=mid, ~len=mid))
+    fn(t)
   })
 }
 
-let charToPriority = str => {
-  let c = str->String.get(0)
+let stringToChar = String.get(_, 0)
+
+let charToPriority: string => int = item => {
+  let c = item->stringToChar
   let lowerA = Char.code('a')
   let upperA = Char.code('A')
   c->TC.Char.isUppercase ? c->TC.Char.toCode - upperA + 1 + 26 : c->TC.Char.toCode - lowerA + 1
 }
 
-let part1 = xs => {
-  xs
-  ->Array.map(((a, b)) => {
-    module S = Set.String
-    S.intersect(S.fromArray(a), S.fromArray(b))->S.toArray->Array.getExn(0)
-  })
-  ->Array.map(charToPriority)
-  ->sumIntArray
+let commonItem: rucksack => string = (Rucksack(a, b)) => {
+  module S = Set.String
+  S.intersect(S.fromArray(a), S.fromArray(b))->S.toArray->Array.getExn(0)
+}
+
+let part1: array<rucksack> => int = rucksacks => {
+  rucksacks->Array.map(compose(commonItem, charToPriority))->sumIntArray
+}
+
+//let badgeOf: array<rucksack> => string = rucksacks => {
+//  S.interact()
+//}
+
+let part2: array<rucksack> => int = rucksacks => {
+  let groups = rucksacks->TC.Array.chunksOf(~size=3)
+  //  let badges = groups->TC.Array.map(~f=badgeOf)
+  groups->log
+
+  2
+  //  badges->Array.map(charToPriority)->sumIntArray
+}
+
+let mkRucksack: array<string> => rucksack = xs => {
+  open Array
+  let mid = xs->length / 2
+  Rucksack(xs->slice(~offset=0, ~len=mid), xs->slice(~offset=mid, ~len=mid))
 }
 
 let solvePart1 = data => {
-  data->parse->part1
+  data->parse(mkRucksack)->part1
 }
 
 let solvePart2 = data => {
-  data->ignore
+  data->parse(identity)->part2
   2
 }
