@@ -4,7 +4,7 @@ module TC = Tablecloth
 
 let log = Js.Console.log
 
-type contents = Set.String.t
+type contents = Belt.Set.String.t
 type rucksack = Rucksack(array<string>, array<string>)
 
 let parse: 'a. (string, array<string> => 'a) => array<'a> = (data, fn) => {
@@ -26,7 +26,7 @@ let charToPriority: string => int = item => {
 }
 
 let commonItem: rucksack => string = (Rucksack(a, b)) => {
-  module S = Set.String
+  module S = Belt.Set.String
   S.intersect(S.fromArray(a), S.fromArray(b))->S.toArray->Array.getExn(0)
 }
 
@@ -34,17 +34,23 @@ let part1: array<rucksack> => int = rucksacks => {
   rucksacks->Array.map(compose(commonItem, charToPriority))->sumIntArray
 }
 
-//let badgeOf: array<rucksack> => string = rucksacks => {
-//  S.interact()
-//}
+let merge: rucksack => contents = (Rucksack(a, b)) => {
+  module S = Belt.Set.String
+  S.union(S.fromArray(a), S.fromArray(b))
+}
+
+let badgeOf: array<rucksack> => string = rucksacks => {
+  module S = Belt.Set.String
+  let foldLeft = Stdlib.Array.foldLeft
+  rucksacks->Array.map(merge)->foldLeft(S.intersect)->S.toArray->Array.getExn(0)
+}
 
 let part2: array<rucksack> => int = rucksacks => {
   let groups = rucksacks->TC.Array.chunksOf(~size=3)
-  //  let badges = groups->TC.Array.map(~f=badgeOf)
-  groups->log
 
-  2
-  //  badges->Array.map(charToPriority)->sumIntArray
+  let badges = groups->TC.Array.map(~f=badgeOf)
+
+  badges->Array.map(charToPriority)->sumIntArray
 }
 
 let mkRucksack: array<string> => rucksack = xs => {
@@ -58,6 +64,5 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->parse(identity)->part2
-  2
+  data->parse(mkRucksack)->part2
 }

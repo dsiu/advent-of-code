@@ -7,6 +7,7 @@ import * as Belt_SetString from "rescript/lib/es6/belt_SetString.js";
 import * as TableclothChar from "tablecloth-rescript/src/TableclothChar.mjs";
 import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
+import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -41,10 +42,18 @@ function part1(rucksacks) {
                   })));
 }
 
+function merge(param) {
+  return Belt_SetString.union(Belt_SetString.fromArray(param._0), Belt_SetString.fromArray(param._1));
+}
+
+function badgeOf(rucksacks) {
+  return Belt_Array.getExn(Belt_SetString.toArray(Stdlib_Array$AdventOfCode.foldLeft(Belt_Array.map(rucksacks, merge), Belt_SetString.intersect)), 0);
+}
+
 function part2(rucksacks) {
   var groups = TableclothArray.chunksOf(rucksacks, 3);
-  console.log(groups);
-  return 2;
+  var badges = TableclothArray.map(groups, badgeOf);
+  return Utils$AdventOfCode.sumIntArray(Belt_Array.map(badges, charToPriority));
 }
 
 function mkRucksack(xs) {
@@ -60,7 +69,7 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  return 2;
+  return part2(parse(data, mkRucksack));
 }
 
 var TC;
@@ -73,6 +82,8 @@ export {
   charToPriority ,
   commonItem ,
   part1 ,
+  merge ,
+  badgeOf ,
   part2 ,
   mkRucksack ,
   solvePart1 ,
