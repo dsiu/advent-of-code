@@ -8,7 +8,7 @@ let contains = (Interval(a, b), Interval(c, d)) => {
   a <= c && b >= d
 }
 
-let before = (Interval(a, b), Interval(c, d)) => {
+let before = (Interval(_a, b), Interval(c, _d)) => {
   b < c
 }
 
