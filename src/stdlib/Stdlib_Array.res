@@ -3,10 +3,19 @@ include Belt.Array
 // Basic Functions
 let append = concat
 let head = getExn(_, 0)
-let last = a => getExn(a, a->length - 1)
-let tail = a => sliceToEnd(a, 1)
-// let init =
-// let uncons =
+let last = xs => getExn(xs, xs->length - 1)
+let tail = sliceToEnd(_, 1)
+let init = xs => {
+  let l = length(xs)
+  l == 0 ? None : Some(Belt.Array.slice(xs, ~offset=0, ~len=l - 1))
+}
+
+let uncons = xs =>
+  switch xs {
+  | [] => None
+  | _ => Some((Belt.Array.getExn(xs, 0), Belt.Array.sliceToEnd(xs, 1)))
+  }
+
 let singleton = make(1, _)
 
 // Array transformations

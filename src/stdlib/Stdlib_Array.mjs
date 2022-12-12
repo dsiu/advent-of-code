@@ -7,12 +7,31 @@ function head(__x) {
   return Belt_Array.getExn(__x, 0);
 }
 
-function last(a) {
-  return Belt_Array.getExn(a, a.length - 1 | 0);
+function last(xs) {
+  return Belt_Array.getExn(xs, xs.length - 1 | 0);
 }
 
-function tail(a) {
-  return Belt_Array.sliceToEnd(a, 1);
+function tail(__x) {
+  return Belt_Array.sliceToEnd(__x, 1);
+}
+
+function init(xs) {
+  var l = xs.length;
+  if (l === 0) {
+    return ;
+  } else {
+    return Belt_Array.slice(xs, 0, l - 1 | 0);
+  }
+}
+
+function uncons(xs) {
+  if (xs.length !== 0) {
+    return [
+            Belt_Array.getExn(xs, 0),
+            Belt_Array.sliceToEnd(xs, 1)
+          ];
+  }
+  
 }
 
 function singleton(__x) {
@@ -255,8 +274,6 @@ var eq = Belt_Array.eq;
 
 var initU = Belt_Array.initU;
 
-var init = Belt_Array.init;
-
 var append = Belt_Array.concat;
 
 export {
@@ -330,11 +347,12 @@ export {
   eqU ,
   eq ,
   initU ,
-  init ,
   append ,
   head ,
   last ,
   tail ,
+  init ,
+  uncons ,
   singleton ,
   flatMap ,
   arrayToOption ,
