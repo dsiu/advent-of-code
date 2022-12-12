@@ -19,7 +19,7 @@ describe("2022 Day3", (function () {
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2022_Day3$AdventOfCode.solvePart2(AOC2022_Day3_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(2641);
               }));
       }));
 
