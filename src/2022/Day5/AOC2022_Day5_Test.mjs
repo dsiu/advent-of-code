@@ -7,11 +7,11 @@ import * as AOC2022_Day5_Data_Sample$AdventOfCode from "./AOC2022_Day5_Data_Samp
 describe("2022 Day5", (function () {
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2022_Day5$AdventOfCode.solvePart1(AOC2022_Day5_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual("CMZ");
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2022_Day5$AdventOfCode.solvePart1(AOC2022_Day5_Data$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual("PTWLTDSJV");
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2022_Day5$AdventOfCode.solvePart2(AOC2022_Day5_Data_Sample$AdventOfCode.data);

@@ -5,8 +5,8 @@ let {solvePart1, solvePart2} = module(AOC2022_Day5)
 
 let t1 = Js.Date.now()
 
-let part1 = solvePart1(sampleData)
-//let part1 = solvePart1(data)
+//let part1 = solvePart1(sampleData)
+let part1 = solvePart1(data)
 let t1_done = Js.Date.now()
 
 "Part 1 Result"->log

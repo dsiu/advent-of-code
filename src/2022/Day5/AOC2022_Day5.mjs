@@ -26,7 +26,9 @@ function getCratesForWharf(crates, wharf) {
                               if (x === " ") {
                                 return ;
                               } else {
-                                return x;
+                                return /* Crate */{
+                                        _0: x
+                                      };
                               }
                             }));
               }));
@@ -66,10 +68,37 @@ function parse(data) {
         ];
 }
 
+function makeMove1(wharf, param) {
+  var to_ = param._2;
+  var from = param._1;
+  var f = Belt_MapInt.getExn(wharf, from);
+  var c = Stdlib_Array$AdventOfCode.head(f);
+  var origin = Stdlib_Array$AdventOfCode.tail(f);
+  var dest = Stdlib_Array$AdventOfCode.append([c], Belt_MapInt.getExn(wharf, to_));
+  return Belt_MapInt.set(Belt_MapInt.set(wharf, to_, dest), from, origin);
+}
+
+function applyMove1(wharf, m) {
+  return Stdlib_Array$AdventOfCode.reduce(Stdlib_Array$AdventOfCode.makeBy(m._0, (function (param) {
+                    return m;
+                  })), wharf, makeMove1);
+}
+
+function applyMoves1(wharf, moves) {
+  return Stdlib_Array$AdventOfCode.reduce(moves, wharf, applyMove1);
+}
+
+function showTops(wharf) {
+  return Stdlib_Array$AdventOfCode.foldLeft(Stdlib_Array$AdventOfCode.map(Belt_MapInt.valuesToArray(wharf), (function (x) {
+                    return Stdlib_Array$AdventOfCode.head(x)._0;
+                  })), (function (a, x) {
+                return a + x;
+              }));
+}
+
 function solvePart1(data) {
-  var prim = parse(data);
-  console.log(prim);
-  return 1;
+  var match = parse(data);
+  return showTops(applyMoves1(match[0], match[1]));
 }
 
 function solvePart2(data) {
@@ -88,6 +117,10 @@ export {
   makeWharf ,
   makeMoves ,
   parse ,
+  makeMove1 ,
+  applyMove1 ,
+  applyMoves1 ,
+  showTops ,
   solvePart1 ,
   solvePart2 ,
 }

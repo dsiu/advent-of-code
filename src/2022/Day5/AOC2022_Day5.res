@@ -12,7 +12,7 @@ let extractName: crate => string = (Crate(c)) => c
 
 let getCratesForWharf = (crates, wharf) => {
   let idx = (wharf - 1) * 4 + 1
-  crates->Array.map(x => {x->Array.get(idx)->Option.flatMap(x => x == " " ? None : Some(x))})
+  crates->Array.map(x => {x->Array.get(idx)->Option.flatMap(x => x == " " ? None : Some(Crate(x)))})
 }
 
 let catMaybes = xs => {
@@ -26,7 +26,6 @@ let makeWharf = (wharfLines, colNames) => {
 }
 
 let makeMoves = xs => {
-  open Array
   module O = Option
   xs->Array.map(x => {
     let parts = x->String.split(" ")
@@ -48,18 +47,39 @@ let parse = data => {
 
   let moves = text->getExn(1)->init->Option.getExn->makeMoves
 
-  //  makeWharf(crates, colNames)->log
-  //  getCratesForWharf(crates, 1)->log
-  //  getCratesForWharf(crates, 2)->log
-  //  getCratesForWharf(crates, 3)->log
-  //  makeWharf(wharfLines, colNames)->Utils.Printable.MapInt.toString(x => `${x}`)->log
   let wharf = makeWharf(wharfLines, colNames)
   (wharf, moves)
 }
 
+let makeMove1 = (wharf, Move(_, from, to_)) => {
+  open Array
+  let f = wharf->M.getExn(from)
+  let c = f->head
+  let origin = f->tail
+  let dest = append([c], wharf->M.getExn(to_))
+
+  wharf->M.set(to_, dest)->M.set(from, origin)
+}
+
+let applyMove1 = (wharf, Move(n, _, _) as m) => {
+  open Array
+  Array.makeBy(n, _ => m)->reduce(wharf, (a, x) => makeMove1(a, x))
+}
+
+let applyMoves1 = (wharf, moves) => {
+  open Array
+  moves->reduce(wharf, (a, x) => applyMove1(a, x))
+}
+
+let showTops = wharf => {
+  open Array
+  wharf->M.valuesToArray->Array.map(x => x->Array.head->extractName)->foldLeft((a, x) => a ++ x)
+}
+
 let solvePart1 = data => {
-  data->parse->log
-  1
+  let (wharf, moves) = data->parse
+  //  wharf->log
+  applyMoves1(wharf, moves)->showTops
 }
 
 let solvePart2 = data => {
