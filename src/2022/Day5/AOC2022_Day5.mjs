@@ -88,6 +88,21 @@ function applyMoves1(wharf, moves) {
   return Stdlib_Array$AdventOfCode.reduce(moves, wharf, applyMove1);
 }
 
+function applyMove2(wharf, param) {
+  var to_ = param._2;
+  var from = param._1;
+  var n = param._0;
+  var origin = Belt_MapInt.getExn(wharf, from);
+  var moving = Stdlib_Array$AdventOfCode.take(origin, n);
+  var origin$p = Stdlib_Array$AdventOfCode.drop(origin, n);
+  var dest = Stdlib_Array$AdventOfCode.append(moving, Belt_MapInt.getExn(wharf, to_));
+  return Belt_MapInt.set(Belt_MapInt.set(wharf, to_, dest), from, origin$p);
+}
+
+function applyMoves2(wharf, moves) {
+  return Stdlib_Array$AdventOfCode.reduce(moves, wharf, applyMove2);
+}
+
 function showTops(wharf) {
   return Stdlib_Array$AdventOfCode.foldLeft(Stdlib_Array$AdventOfCode.map(Belt_MapInt.valuesToArray(wharf), (function (x) {
                     return Stdlib_Array$AdventOfCode.head(x)._0;
@@ -102,7 +117,8 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  return 2;
+  var match = parse(data);
+  return showTops(applyMoves2(match[0], match[1]));
 }
 
 var M;
@@ -120,6 +136,8 @@ export {
   makeMove1 ,
   applyMove1 ,
   applyMoves1 ,
+  applyMove2 ,
+  applyMoves2 ,
   showTops ,
   solvePart1 ,
   solvePart2 ,

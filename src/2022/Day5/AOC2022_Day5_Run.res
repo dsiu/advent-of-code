@@ -17,8 +17,8 @@ part1->log
 
 let t2 = Js.Date.now()
 
-let part2 = solvePart2(sampleData)
-//let part2 = solvePart2(data)
+//let part2 = solvePart2(sampleData)
+let part2 = solvePart2(data)
 let t2_done = Js.Date.now()
 
 "Part 2 Result"->log

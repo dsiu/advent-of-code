@@ -71,6 +71,21 @@ let applyMoves1 = (wharf, moves) => {
   moves->reduce(wharf, (a, x) => applyMove1(a, x))
 }
 
+let applyMove2 = (wharf, Move(n, from, to_)) => {
+  open Array
+  let origin = wharf->M.getExn(from)
+  let moving = origin->take(n)
+  let origin' = origin->drop(n)
+  let dest = moving->append(wharf->M.getExn(to_))
+
+  wharf->M.set(to_, dest)->M.set(from, origin')
+}
+
+let applyMoves2 = (wharf, moves) => {
+  open Array
+  moves->reduce(wharf, (a, x) => applyMove2(a, x))
+}
+
 let showTops = wharf => {
   open Array
   wharf->M.valuesToArray->Array.map(x => x->Array.head->extractName)->foldLeft((a, x) => a ++ x)
@@ -83,6 +98,6 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let (wharf, moves) = data->parse
+  applyMoves2(wharf, moves)->showTops
 }

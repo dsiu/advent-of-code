@@ -15,11 +15,11 @@ describe("2022 Day5", (function () {
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2022_Day5$AdventOfCode.solvePart2(AOC2022_Day5_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual("MCD");
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2022_Day5$AdventOfCode.solvePart2(AOC2022_Day5_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual("WZMFVGGZP");
               }));
       }));
 
