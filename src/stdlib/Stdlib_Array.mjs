@@ -90,6 +90,15 @@ function uniq(xs) {
               }));
 }
 
+function dropWhile(xs, predicateFn) {
+  return Belt_Array.reduceU(xs, [], (function (acc, element) {
+                if (!Curry._1(predicateFn, element)) {
+                  acc.push(element);
+                }
+                return acc;
+              }));
+}
+
 function flatMap(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
@@ -409,6 +418,7 @@ export {
   some ,
   uniqBy ,
   uniq ,
+  dropWhile ,
   flatMap ,
   arrayToOption ,
   foldLeft ,
