@@ -30,6 +30,10 @@ let drop = (xs, n) => {
   Belt.Array.sliceToEnd(xs, start)
 }
 
+let rec tails = xs => {
+  xs->length == 0 ? [[]] : concat([xs], tails(tail(xs)))
+}
+
 // Array transformations
 
 /**

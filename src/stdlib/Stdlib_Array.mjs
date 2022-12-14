@@ -54,6 +54,14 @@ function drop(xs, n) {
   return Belt_Array.sliceToEnd(xs, start);
 }
 
+function tails(xs) {
+  if (xs.length === 0) {
+    return [[]];
+  } else {
+    return Belt_Array.concat([xs], tails(Belt_Array.sliceToEnd(xs, 1)));
+  }
+}
+
 function flatMap(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
@@ -372,6 +380,7 @@ export {
   singleon ,
   take ,
   drop ,
+  tails ,
   flatMap ,
   arrayToOption ,
   foldLeft ,
