@@ -42,7 +42,8 @@ let parse = data => {
 }
 
 let count = (xs, fn) => {
-  xs->Array.keep(fn)->Array.length
+  open Array
+  xs->keep(fn)->length
 }
 
 let part1 = xs => {
