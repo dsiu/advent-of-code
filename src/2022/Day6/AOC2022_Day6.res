@@ -1,11 +1,25 @@
-open Belt
+open Stdlib
 open Utils
 let log = Js.Console.log
 
-let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+module A = Array
+
+let parse = data => data->splitChars
+
+let allDifferent = cs => {
+  A.uniq(cs)->A.eq(cs, \"==")
+}
+
+let hasSome = x => {!allDifferent(x)}
+
+let interestingPosition = (n, text) => {
+  let len = text->A.length
+  let candidates = zip(A.makeby)
+  n + fst(packetPos)
+}
 
 let solvePart1 = data => {
-  data->ignore
+  interestingPosition(4, data->parse)->log
   1
 }
 
