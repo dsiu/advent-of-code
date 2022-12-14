@@ -34,8 +34,24 @@ function uncons(xs) {
   
 }
 
-function singleton(__x) {
+function singleon(__x) {
   return Belt_Array.make(1, __x);
+}
+
+function take(xs, n) {
+  var l = xs.length;
+  var len = n < 0 ? 0 : (
+      l < n ? l : n
+    );
+  return Belt_Array.slice(xs, 0, len);
+}
+
+function drop(xs, n) {
+  var l = xs.length;
+  var start = n < 0 ? 0 : (
+      l < n ? l : n
+    );
+  return Belt_Array.sliceToEnd(xs, start);
 }
 
 function flatMap(xs, f) {
@@ -353,7 +369,9 @@ export {
   tail ,
   init ,
   uncons ,
-  singleton ,
+  singleon ,
+  take ,
+  drop ,
   flatMap ,
   arrayToOption ,
   foldLeft ,

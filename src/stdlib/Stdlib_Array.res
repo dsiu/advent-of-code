@@ -16,7 +16,19 @@ let uncons = xs =>
   | _ => Some((Belt.Array.getExn(xs, 0), Belt.Array.sliceToEnd(xs, 1)))
   }
 
-let singleton = make(1, _)
+let singleon = make(1, _)
+
+let take = (xs, n) => {
+  let l = length(xs)
+  let len = n < 0 ? 0 : l < n ? l : n
+  Belt.Array.slice(xs, ~offset=0, ~len)
+}
+
+let drop = (xs, n) => {
+  let l = length(xs)
+  let start = n < 0 ? 0 : l < n ? l : n
+  Belt.Array.sliceToEnd(xs, start)
+}
 
 // Array transformations
 
