@@ -11,13 +11,14 @@ type move = Move(int, int, int) // quantity, from, to
 let extractName: crate => string = (Crate(c)) => c
 
 let getCratesForWharf = (crates, wharf) => {
+  open Array
   let idx = (wharf - 1) * 4 + 1
-  crates->Array.map(x => {x->Array.get(idx)->Option.flatMap(x => x == " " ? None : Some(Crate(x)))})
+  crates->map(x => {
+    x->get(idx)->Option.flatMap(x => x == " " ? None : Some(Crate(x)))
+  })
 }
 
-let catMaybes = xs => {
-  xs->Array.keepMap(Function.identity)
-}
+let catMaybes = Array.keepMap(_, Function.identity)
 
 let makeWharf = (wharfLines, colNames) => {
   colNames->Array.reduce(M.empty, (acc, colName) => {
@@ -27,12 +28,16 @@ let makeWharf = (wharfLines, colNames) => {
 
 let makeMoves = xs => {
   module O = Option
-  xs->Array.map(x => {
+  let get = Array.get
+  let map = Array.map
+  let intFromString = Belt.Int.fromString
+
+  xs->map(x => {
     let parts = x->String.split(" ")
     Move(
-      parts->Array.get(1)->O.flatMap(x => Belt.Int.fromString(x))->O.getExn,
-      parts->Array.get(3)->O.flatMap(x => Belt.Int.fromString(x))->O.getExn,
-      parts->Array.get(5)->O.flatMap(x => Belt.Int.fromString(x))->O.getExn,
+      parts->get(1)->O.flatMap(intFromString)->O.getExn,
+      parts->get(3)->O.flatMap(intFromString)->O.getExn,
+      parts->get(5)->O.flatMap(intFromString)->O.getExn,
     )
   })
 }
@@ -41,11 +46,13 @@ let parse = data => {
   open Array
   open String
 
-  let text = data->splitDoubleNewline->map(x => x->splitNewline)
-  let wharfLines = text->getExn(0)->tail->init->Option.getExn->map(splitChars)
-  let colNames = text->getExn(0)->tail->last->split(" ")->keepMap(Belt.Int.fromString)
+  let text = data->splitDoubleNewline->map(splitNewline)
+  let firstSection = text->getExn(0)->tail // drop first empty line
+  let secondSection = text->getExn(1)->init // drop last empty line
 
-  let moves = text->getExn(1)->init->Option.getExn->makeMoves
+  let wharfLines = firstSection->init->Option.getExn->map(splitChars)
+  let colNames = firstSection->last->split(" ")->keepMap(Belt.Int.fromString)
+  let moves = secondSection->Option.getExn->makeMoves
 
   let wharf = makeWharf(wharfLines, colNames)
   (wharf, moves)
@@ -63,12 +70,12 @@ let makeMove1 = (wharf, Move(_, from, to_)) => {
 
 let applyMove1 = (wharf, Move(n, _, _) as m) => {
   open Array
-  Array.makeBy(n, _ => m)->reduce(wharf, (a, x) => makeMove1(a, x))
+  makeBy(n, _ => m)->reduce(wharf, makeMove1)
 }
 
 let applyMoves1 = (wharf, moves) => {
   open Array
-  moves->reduce(wharf, (a, x) => applyMove1(a, x))
+  moves->reduce(wharf, applyMove1)
 }
 
 let applyMove2 = (wharf, Move(n, from, to_)) => {
@@ -76,19 +83,19 @@ let applyMove2 = (wharf, Move(n, from, to_)) => {
   let origin = wharf->M.getExn(from)
   let moving = origin->take(n)
   let origin' = origin->drop(n)
-  let dest = moving->append(wharf->M.getExn(to_))
+  let dest = append(moving, wharf->M.getExn(to_))
 
   wharf->M.set(to_, dest)->M.set(from, origin')
 }
 
 let applyMoves2 = (wharf, moves) => {
   open Array
-  moves->reduce(wharf, (a, x) => applyMove2(a, x))
+  moves->reduce(wharf, applyMove2)
 }
 
 let showTops = wharf => {
   open Array
-  wharf->M.valuesToArray->Array.map(x => x->Array.head->extractName)->foldLeft((a, x) => a ++ x)
+  wharf->M.valuesToArray->map(compose(head, extractName))->foldLeft(String.concat)
 }
 
 let solvePart1 = data => {
