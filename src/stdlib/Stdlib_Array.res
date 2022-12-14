@@ -34,6 +34,30 @@ let rec tails = xs => {
   xs->length == 0 ? [[]] : concat([xs], tails(tail(xs)))
 }
 
+external coerce: 'a => 'b = "%identity"
+
+let some = (xs, fn) => Belt.Array.someU(xs, fn)
+
+let uniqBy = (xs, uniqFn) => {
+  let index = ref(0)
+  let arr = []
+
+  while index.contents < length(xs) {
+    let value = Belt.Array.getUnsafe(xs, index.contents)
+    let alreadyAdded = some(arr, (. x) => uniqFn(coerce(x)) == uniqFn(value))
+
+    if !alreadyAdded {
+      Js.Array2.push(arr, value)->ignore
+    }
+
+    index := succ(index.contents)
+  }
+
+  arr
+}
+
+let uniq = xs => uniqBy(xs, element => element)
+
 // Array transformations
 
 /**
