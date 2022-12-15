@@ -10,20 +10,19 @@ let allDifferent = cs => {
   A.uniq(cs)->A.eq(cs, \"==")
 }
 
-let hasSome = x => {!allDifferent(x)}
+let hasSame = x => {!allDifferent(x)}
 
-let interestingPosition = (n, text) => {
+let interestingPosition: (int, array<string>) => int = (n, text) => {
   let len = text->A.length
-  let candidates = zip(A.makeby)
+  let candidates = A.zip(A.makeBy(len, Function.identity), text->A.tails->A.map(A.take(_, n)))
+  let packetPos = candidates->A.dropWhile(compose(snd, hasSame))->A.head
   n + fst(packetPos)
 }
 
 let solvePart1 = data => {
-  interestingPosition(4, data->parse)->log
-  1
+  interestingPosition(4, data->parse)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  interestingPosition(14, data->parse)
 }

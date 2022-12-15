@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="AOC2022_Day2_Test.mjs" type="JavaScriptTestRunnerJest">
+  <configuration default="false" name="AOC2022_Day6_Test.mjs" type="JavaScriptTestRunnerJest">
     <node-interpreter value="project" />
     <node-options value="" />
     <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -7,7 +7,7 @@
     <jest-options value="--watch --maxWorkers=50%" />
     <envs />
     <scope-kind value="TEST_FILE" />
-    <test-file value="$PROJECT_DIR$/src/2022/Day2/AOC2022_Day2_Test.mjs" />
+    <test-file value="$PROJECT_DIR$/src/2022/Day6/AOC2022_Day6_Test.mjs" />
     <method v="2" />
   </configuration>
 </component>

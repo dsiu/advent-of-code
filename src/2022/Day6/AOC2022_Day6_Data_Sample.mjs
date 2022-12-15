@@ -3,7 +3,19 @@
 
 var data = "mjqjpqmgbljsphdztnvjfqwrcgsmlb";
 
+var data1 = "bvwbjplbgvbhsrlpgdmjqwftvncz";
+
+var data2 = "nppdvjthqldpwncqszvftbrmjlhg";
+
+var data3 = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg";
+
+var data4 = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw";
+
 export {
   data ,
+  data1 ,
+  data2 ,
+  data3 ,
+  data4 ,
 }
 /* No side effect */

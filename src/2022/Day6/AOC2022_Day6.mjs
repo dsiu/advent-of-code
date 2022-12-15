@@ -2,6 +2,7 @@
 
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
+import * as Stdlib_Function$AdventOfCode from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -15,22 +16,29 @@ function allDifferent(cs) {
               }));
 }
 
-function hasSome(x) {
+function hasSame(x) {
   return !allDifferent(x);
 }
 
 function interestingPosition(n, text) {
-  return text;
+  var len = text.length;
+  var candidates = Stdlib_Array$AdventOfCode.zip(Stdlib_Array$AdventOfCode.makeBy(len, Stdlib_Function$AdventOfCode.identity), Stdlib_Array$AdventOfCode.map(Stdlib_Array$AdventOfCode.tails(text), (function (__x) {
+              return Stdlib_Array$AdventOfCode.take(__x, n);
+            })));
+  var packetPos = Stdlib_Array$AdventOfCode.head(Stdlib_Array$AdventOfCode.dropWhile(candidates, (function (param) {
+              return Utils$AdventOfCode.compose((function (prim) {
+                            return prim[1];
+                          }), hasSame, param);
+            })));
+  return n + packetPos[0] | 0;
 }
 
 function solvePart1(data) {
-  var prim = Utils$AdventOfCode.splitChars(data);
-  console.log(prim);
-  return 1;
+  return interestingPosition(4, Utils$AdventOfCode.splitChars(data));
 }
 
 function solvePart2(data) {
-  return 2;
+  return interestingPosition(14, Utils$AdventOfCode.splitChars(data));
 }
 
 var A;
@@ -40,7 +48,7 @@ export {
   A ,
   parse ,
   allDifferent ,
-  hasSome ,
+  hasSame ,
   interestingPosition ,
   solvePart1 ,
   solvePart2 ,
