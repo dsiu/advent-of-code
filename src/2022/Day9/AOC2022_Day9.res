@@ -2,6 +2,7 @@ open Stdlib
 open Utils
 let log = Js.Console.log
 
+module A = Array
 module TC = Tablecloth
 
 module Position = Coord_V2
@@ -22,6 +23,36 @@ let newRope: int => rope = n => Rope({
 })
 
 exception ParseError(string)
+
+let expandPath: array<direction> => path = directions => {
+  let expandStep = step =>
+    switch step {
+    | U(n) => Array.make(n, (0, 1))
+    | L(n) => Array.make(n, (-1, 0))
+    | D(n) => Array.make(n, (0, -1))
+    | R(n) => Array.make(n, (1, 0))
+    }
+
+  directions->A.flatMap(expandStep)
+}
+
+let manhattan: (position, position) => int = (p1, p2) => {
+  let (x1, y1) = p1
+  let (x2, y2) = p2
+  max(abs(x1 - x2), abs(y1 - y2))
+}
+
+let touching: (position, position) => bool = (p1, p2) => {
+  manhattan(p1, p2) <= 1
+}
+
+let sign = n => compare(n, 0)
+
+let towards: (position, position) => position = (p1, p2) => {
+  let (x1, y1) = p1
+  let (x2, y2) = p2
+  (sign(x2 - x1), sign(y2 - y1))
+}
 
 let parse = data => {
   module S = String
