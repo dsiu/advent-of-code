@@ -24,11 +24,32 @@ let take = (xs, n) => {
   Belt.Array.slice(xs, ~offset=0, ~len)
 }
 
+let takeExactly = (xs, n) =>
+  n < 0 || n > length(xs) ? None : Some(Belt.Array.slice(xs, ~offset=0, ~len=n))
+
+let takeWhile = (xs, predicateFn) =>
+  Belt.Array.reduceU(xs, [], (. acc, element) => {
+    if predicateFn(element) {
+      Js.Array2.push(acc, element)->ignore
+    }
+    acc
+  })
+
 let drop = (xs, n) => {
   let l = length(xs)
   let start = n < 0 ? 0 : l < n ? l : n
   Belt.Array.sliceToEnd(xs, start)
 }
+
+let dropExactly = (xs, n) => n < 0 || n > length(xs) ? None : Some(Belt.Array.sliceToEnd(xs, n))
+
+let dropWhile = (xs, predicateFn) =>
+  Belt.Array.reduceU(xs, [], (. acc, element) => {
+    if !predicateFn(element) {
+      Js.Array2.push(acc, element)->ignore
+    }
+    acc
+  })
 
 let rec tails = xs => {
   xs->length == 0 ? [[]] : concat([xs], tails(tail(xs)))
@@ -65,6 +86,11 @@ let dropWhile = (xs, predicateFn) =>
     }
     acc
   })
+
+let splitAt = (xs, offset) =>
+  offset < 0 || offset > length(xs)
+    ? None
+    : Some((Belt.Array.slice(xs, ~offset=0, ~len=offset), Belt.Array.sliceToEnd(xs, offset)))
 
 // Array transformations
 

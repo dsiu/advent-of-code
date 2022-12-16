@@ -48,12 +48,37 @@ function take(xs, n) {
   return Belt_Array.slice(xs, 0, len);
 }
 
+function takeExactly(xs, n) {
+  if (n < 0 || n > xs.length) {
+    return ;
+  } else {
+    return Belt_Array.slice(xs, 0, n);
+  }
+}
+
+function takeWhile(xs, predicateFn) {
+  return Belt_Array.reduceU(xs, [], (function (acc, element) {
+                if (Curry._1(predicateFn, element)) {
+                  acc.push(element);
+                }
+                return acc;
+              }));
+}
+
 function drop(xs, n) {
   var l = xs.length;
   var start = n < 0 ? 0 : (
       l < n ? l : n
     );
   return Belt_Array.sliceToEnd(xs, start);
+}
+
+function dropExactly(xs, n) {
+  if (n < 0 || n > xs.length) {
+    return ;
+  } else {
+    return Belt_Array.sliceToEnd(xs, n);
+  }
 }
 
 function tails(xs) {
@@ -97,6 +122,17 @@ function dropWhile(xs, predicateFn) {
                 }
                 return acc;
               }));
+}
+
+function splitAt(xs, offset) {
+  if (offset < 0 || offset > xs.length) {
+    return ;
+  } else {
+    return [
+            Belt_Array.slice(xs, 0, offset),
+            Belt_Array.sliceToEnd(xs, offset)
+          ];
+  }
 }
 
 function flatMap(xs, f) {
@@ -413,12 +449,16 @@ export {
   uncons ,
   singleon ,
   take ,
+  takeExactly ,
+  takeWhile ,
   drop ,
+  dropExactly ,
   tails ,
   some ,
   uniqBy ,
   uniq ,
   dropWhile ,
+  splitAt ,
   flatMap ,
   arrayToOption ,
   foldLeft ,
