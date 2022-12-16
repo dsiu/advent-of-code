@@ -81,6 +81,15 @@ function dropExactly(xs, n) {
   }
 }
 
+function dropWhile(xs, predicateFn) {
+  return Belt_Array.reduceU(xs, [], (function (acc, element) {
+                if (!Curry._1(predicateFn, element)) {
+                  acc.push(element);
+                }
+                return acc;
+              }));
+}
+
 function tails(xs) {
   if (xs.length === 0) {
     return [[]];
@@ -112,15 +121,6 @@ function uniqBy(xs, uniqFn) {
 function uniq(xs) {
   return uniqBy(xs, (function (element) {
                 return element;
-              }));
-}
-
-function dropWhile(xs, predicateFn) {
-  return Belt_Array.reduceU(xs, [], (function (acc, element) {
-                if (!Curry._1(predicateFn, element)) {
-                  acc.push(element);
-                }
-                return acc;
               }));
 }
 
@@ -453,11 +453,11 @@ export {
   takeWhile ,
   drop ,
   dropExactly ,
+  dropWhile ,
   tails ,
   some ,
   uniqBy ,
   uniq ,
-  dropWhile ,
   splitAt ,
   flatMap ,
   arrayToOption ,

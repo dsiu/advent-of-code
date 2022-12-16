@@ -79,14 +79,6 @@ let uniqBy = (xs, uniqFn) => {
 
 let uniq = xs => uniqBy(xs, element => element)
 
-let dropWhile = (xs, predicateFn) =>
-  Belt.Array.reduceU(xs, [], (. acc, element) => {
-    if !predicateFn(element) {
-      Js.Array2.push(acc, element)->ignore
-    }
-    acc
-  })
-
 let splitAt = (xs, offset) =>
   offset < 0 || offset > length(xs)
     ? None
