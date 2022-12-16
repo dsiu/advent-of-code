@@ -7,7 +7,7 @@ let log3 = Js.Console.log3
 
 module P = Res_parser
 module Rjs = ReScriptJs.Js
-open Tree
+module T = Tree
 
 @@warning("-8")
 module SnailFish = {
@@ -31,12 +31,12 @@ module SnailFish = {
   let splittable: splittable = t => {
     let rec splittableC = loc => {
       switch loc {
-      | Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
-      | Loc(Pair(_, _), _) =>
-        splittableC(left(loc))->Stdlib.Option.optionOr(splittableC(right(loc)))
+      | T.Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
+      | T.Loc(Pair(_, _), _) =>
+        splittableC(T.left(loc))->Stdlib.Option.optionOr(splittableC(T.right(loc)))
       }
     }
-    splittableC(top(t))
+    splittableC(T.top(t))
   }
 
   // Given the ability to find splittable numbers, split will split the leftmost one. If there is
@@ -51,11 +51,11 @@ module SnailFish = {
     | None => None
     | Some(n0) => {
         //        let n0 = Option.getExn(mn0)
-        let Loc(Leaf(sn), _) = n0
+        let T.Loc(Leaf(sn), _) = n0
         let ln = sn / 2
         let rn = ln + mod(sn, 2)
-        let n1 = modify(n0, _ => {Pair(Leaf(ln), Leaf(rn))})
-        let Loc(num1, _) = upmost(n1)
+        let n1 = T.modify(n0, _ => {Pair(Leaf(ln), Leaf(rn))})
+        let T.Loc(num1, _) = T.upmost(n1)
         num1->Some
       }
     }
@@ -75,13 +75,13 @@ module SnailFish = {
       Some(l)
     | (n, Loc(Pair(_, _), _)) =>
       // pairAtDepthC(n - 1, left(l))->Option.flatMap(_ => pairAtDepthC(n - 1, right(l)))
-      pairAtDepthC(n - 1, left(l))->Stdlib.Option.optionOr(pairAtDepthC(n - 1, right(l)))
+      pairAtDepthC(n - 1, T.left(l))->Stdlib.Option.optionOr(pairAtDepthC(n - 1, T.right(l)))
     }
   }
 
   type pairAtDepth = (int, tree) => option<loc>
   let pairAtDepth: pairAtDepth = (n, t) => {
-    pairAtDepthC(n, top(t))
+    pairAtDepthC(n, T.top(t))
   }
 
   // Given a pair that explodes, I need to find the rightmost leaf that's to the left of this pair.
@@ -93,7 +93,7 @@ module SnailFish = {
   let rec rightmostNum: rightmostNum = loc => {
     switch loc {
     | Loc(Leaf(_), _) => loc
-    | Loc(Pair(_, _), _) => loc->right->rightmostNum
+    | Loc(Pair(_, _), _) => loc->T.right->rightmostNum
     }
   }
 
@@ -101,8 +101,8 @@ module SnailFish = {
   let rec rightmostOnLeft: rightmostOnLeft = loc => {
     switch loc {
     | Loc(_, Top) => None
-    | Loc(_, L(_, _)) => loc->up->rightmostOnLeft
-    | Loc(_, R(_, _)) => loc->up->left->rightmostNum->Some
+    | Loc(_, L(_, _)) => loc->T.up->rightmostOnLeft
+    | Loc(_, R(_, _)) => loc->T.up->T.left->rightmostNum->Some
     }
   }
 
@@ -110,7 +110,7 @@ module SnailFish = {
   let rec leftmostNum: leftmostNum = loc => {
     switch loc {
     | Loc(Leaf(_), _) => loc
-    | Loc(Pair(_, _), _) => loc->left->leftmostNum
+    | Loc(Pair(_, _), _) => loc->T.left->leftmostNum
     }
   }
 
@@ -118,8 +118,8 @@ module SnailFish = {
   let rec leftmostOnRight: leftmostOnRight = loc => {
     switch loc {
     | Loc(_, Top) => None
-    | Loc(_, R(_, _)) => loc->up->leftmostOnRight
-    | Loc(_, L(_, _)) => loc->up->right->leftmostNum->Some
+    | Loc(_, R(_, _)) => loc->T.up->leftmostOnRight
+    | Loc(_, L(_, _)) => loc->T.up->T.right->leftmostNum->Some
     }
   }
 
@@ -134,24 +134,24 @@ module SnailFish = {
         //        log("--> got depth 4")
         //        let p0 = Option.getExn(mp0)
 
-        let Loc(Pair(Leaf(nl), Leaf(nr)), _) = p0
+        let T.Loc(Pair(Leaf(nl), Leaf(nr)), _) = p0
 
         let p1 = switch rightmostOnLeft(p0) {
         | None => p0
-        | Some(leftReg) => modify(leftReg, (Leaf(n)) => {Leaf(n + nl)})
+        | Some(leftReg) => T.modify(leftReg, (Leaf(n)) => {Leaf(n + nl)})
         }
 
-        let p2 = switch pairAtDepthC(4, p1->upmost)->Option.flatMap(leftmostOnRight) {
+        let p2 = switch pairAtDepthC(4, p1->T.upmost)->Option.flatMap(leftmostOnRight) {
         | None => p1
-        | Some(rightReg) => modify(rightReg, (Leaf(n)) => {Leaf(n + nr)})
+        | Some(rightReg) => T.modify(rightReg, (Leaf(n)) => {Leaf(n + nr)})
         }
 
-        let p3 = switch pairAtDepthC(4, p2->upmost) {
+        let p3 = switch pairAtDepthC(4, p2->T.upmost) {
         | None => p2
-        | Some(centrePair) => modify(centrePair, _ => {Leaf(0)})
+        | Some(centrePair) => T.modify(centrePair, _ => {Leaf(0)})
         }
 
-        let Loc(num1, _) = p3->upmost
+        let T.Loc(num1, _) = p3->T.upmost
         Some(num1)
       }
     }
