@@ -97,11 +97,14 @@ function solvePart2(data) {
 
 var A;
 
+var M;
+
 export {
   log ,
   A ,
   parsedObjectToString ,
   CmdParser ,
+  M ,
   parse ,
   solvePart1 ,
   solvePart2 ,

@@ -56,6 +56,13 @@ module CmdParser = {
   let run = P.run(parser, _)
 }
 
+module M = Belt.Map.String
+type directory = Dir(string, M.t<int>)
+type containedSize = CSize(string, int)
+type dTree = Tree(directory)
+type zdTree = TreePos
+type sTree = Tree(containedSize)
+
 let parse = data => data->splitNewline->Array.map(Js.String2.trim)
 
 let solvePart1 = data => {
