@@ -3,6 +3,7 @@ open Utils
 let log = Js.Console.log
 
 module A = Array
+module O = Option
 
 type tree = Tree(int, bool) // height, isVisible
 type forest = array<array<tree>>
@@ -19,11 +20,12 @@ let setVisibility: array<tree> => array<tree> = row => {
 
   row->A.reduce((-1, []), vis)->snd->A.reverse
 }
+
 let setVisibilityOrient: forest => forest = A.map(_, setVisibility)
 
 let setVisibilityForest: forest => forest = forest => {
   let rotate = x => x->transpose->A.map(A.reverse)
-  let f = x => x->setVisibilityOrient->rotate
+  let f = compose(setVisibilityOrient, rotate)
   forest->f->f->f->f
 }
 
@@ -32,6 +34,48 @@ let countVisible: forest => int = forest => {
 }
 
 let part1: forest => int = compose(setVisibilityForest, countVisible)
+
+let tracks: (forest, int, int) => forest = (forest, row, col) => {
+  let (l, r) = forest->A.getExn(row)->A.splitAt(_, col)->O.getExn
+  let (u, d) = forest->transpose->A.getExn(col)->A.splitAt(_, row)->O.getExn
+
+  [l->A.reverse, r->A.drop(1), u->A.reverse, d->A.drop(1)]
+}
+
+// takeWhile1 stops once the predicate is false
+let rec takeWhile1 = (xs, f) => {
+  switch xs {
+  | [] => []
+  | _ => {
+      let (h, t) = (xs->A.head, xs->A.tail)
+      switch f(h) {
+      | true => A.concat([h], takeWhile1(t, f))
+      | _ => [h]
+      }
+    }
+  }
+}
+
+let viewDistance: (array<tree>, int) => int = (trees, h) => {
+  trees->A.map(treeHeight)->takeWhile1(x => x < h)->A.length
+}
+
+let scenicScore: (forest, int, int) => int = (forest, row, col) => {
+  let directions = tracks(forest, row, col)
+  let h = forest->A.getExn(row)->A.getExn(col)->treeHeight
+
+  directions->A.map(viewDistance(_, h))->A.reduce(1, (a, x) => a * x)
+}
+
+let part2: forest => int = forest => {
+  let id = Function.identity
+  let nrows = forest->A.length
+  let ncols = forest->A.head->A.length
+  let scores = A.combination2(A.makeBy(nrows - 1, id), A.makeBy(ncols - 1, id), (. r, c) =>
+    scenicScore(forest, r, c)
+  )
+  scores->maxIntInArray
+}
 
 let parse = data => {
   data
@@ -46,6 +90,5 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  data->parse->part2
 }

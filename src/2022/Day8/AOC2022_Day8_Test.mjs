@@ -15,11 +15,11 @@ describe("2022 Day8", (function () {
               }));
         test("Part 2 - Sample Data", (function () {
                 var result = AOC2022_Day8$AdventOfCode.solvePart2(AOC2022_Day8_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(8);
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2022_Day8$AdventOfCode.solvePart2(AOC2022_Day8_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(172224);
               }));
       }));
 
