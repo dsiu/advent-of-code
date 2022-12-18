@@ -84,6 +84,35 @@ let splitAt = (xs, offset) =>
     ? None
     : Some((Belt.Array.slice(xs, ~offset=0, ~len=offset), Belt.Array.sliceToEnd(xs, offset)))
 
+//
+// scanl [dsiu]
+//
+// https://kapeli.com/dash_share?docset_file=Haskell&docset_name=Haskell&path=libraries/base-4.17.0.0/Data-List.html%23v:scanl&platform=haskell&repo=Main&version=9.4.3
+//
+// [1, 2, 3, 4]->Array.scanl(0, \"+") -> [ 0, 1, 3, 6, 10 ]
+//
+//  []->Array.scanl(42, \"+") -> [ 42 ]/
+//
+//  [1, 2, 3, 4]->Array.scanl(100, \"-") -> [ 100, 99, 97, 94, 90 ]
+//
+//  ["a", "b", "c", "d"]->Array.scanl("foo", (rString, nextChar) => nextChar ++ rString)
+//  -> [ 'foo', 'afoo', 'bafoo', 'cbafoo', 'dcbafoo' ]
+//
+let rec scanl: (array<'b>, 'a, ('a, 'b) => 'a) => array<'a> = (xs, initial, fn) => {
+  concat(
+    [initial],
+    {
+      xs->length == 0
+        ? []
+        : {
+            let h = xs->head
+            let tails = xs->tail
+            tails->scanl(fn(initial, h), fn)
+          }
+    },
+  )
+}
+
 // Array transformations
 
 /**

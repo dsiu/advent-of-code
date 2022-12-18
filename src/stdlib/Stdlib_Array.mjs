@@ -135,6 +135,18 @@ function splitAt(xs, offset) {
   }
 }
 
+function scanl(xs, initial, fn) {
+  var tmp;
+  if (xs.length === 0) {
+    tmp = [];
+  } else {
+    var h = Belt_Array.getExn(xs, 0);
+    var tails = Belt_Array.sliceToEnd(xs, 1);
+    tmp = scanl(tails, Curry._2(fn, initial, h), fn);
+  }
+  return Belt_Array.concat([initial], tmp);
+}
+
 function flatMap(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
@@ -459,6 +471,7 @@ export {
   uniqBy ,
   uniq ,
   splitAt ,
+  scanl ,
   flatMap ,
   arrayToOption ,
   foldLeft ,
