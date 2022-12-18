@@ -7,19 +7,19 @@ import * as AOC2022_Day10_Data_Sample$AdventOfCode from "./AOC2022_Day10_Data_Sa
 describe("2022 Day10", (function () {
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2022_Day10$AdventOfCode.solvePart1(AOC2022_Day10_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(13140);
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2022_Day10$AdventOfCode.solvePart1(AOC2022_Day10_Data$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(14760);
               }));
-        test("Part 2 - Sample Data", (function () {
+        test("Part 2 - Sample Data - Bogus - read the log output", (function () {
                 var result = AOC2022_Day10$AdventOfCode.solvePart2(AOC2022_Day10_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual("EFGERURE");
               }));
-        test("Part 2 - Solve", (function () {
+        test("Part 2 - Solve - Bogus - read the log output", (function () {
                 var result = AOC2022_Day10$AdventOfCode.solvePart2(AOC2022_Day10_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual("EFGERURE");
               }));
       }));
 
