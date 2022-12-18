@@ -54,6 +54,43 @@ let towards: (position, position) => position = (p1, p2) => {
   (sign(x2 - x1), sign(y2 - y1))
 }
 
+let knotStep: ((position, array<position>), position) => (position, array<position>) = (
+  (h, ks),
+  kt,
+) => {
+  let kt' = {
+    kt->touching(h) ? kt : kt->Position.add(kt->towards(h))
+  }
+  (kt', A.concat([kt'], ks))
+}
+
+let ropeStep: (rope, position) => rope = (rope, step) => {
+  let Rope({headK, knots, trace}) = rope
+  let h = headK->Position.add(step)
+  let (kt, kts) = knots->A.reduce((h, []), knotStep)
+
+  Rope({
+    headK: h,
+    knots: A.reverse(kts),
+    trace: trace->TC.Set.add(kt),
+  })
+}
+
+let ropeSteps: (rope, path) => rope = (rope, steps) => {
+  steps->A.reduce(rope, ropeStep)
+}
+
+let part1: path => int = steps => {
+  let Rope(rope) = ropeSteps(newRope(1), steps)
+  rope.trace->TC.Set.length
+}
+
+let part2: path => int = steps => {
+  let Rope(rope) = ropeSteps(newRope(9), steps)
+  rope.trace->TC.Set.length
+}
+
+@@warning("-8")
 let parse = data => {
   module S = String
   data
@@ -71,11 +108,9 @@ let parse = data => {
 }
 
 let solvePart1 = data => {
-  data->parse->log
-  1
+  data->parse->expandPath->part1
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  data->parse->expandPath->part2
 }

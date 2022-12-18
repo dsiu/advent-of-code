@@ -84,6 +84,42 @@ function towards(p1, p2) {
         ];
 }
 
+function knotStep(param, kt) {
+  var h = param[0];
+  var kt$p = touching(kt, h) ? kt : Coord_V2$AdventOfCode.add(kt, towards(kt, h));
+  return [
+          kt$p,
+          Stdlib_Array$AdventOfCode.concat([kt$p], param[1])
+        ];
+}
+
+function ropeStep(rope, step) {
+  var h = Coord_V2$AdventOfCode.add(rope.headK, step);
+  var match = Stdlib_Array$AdventOfCode.reduce(rope.knots, [
+        h,
+        []
+      ], knotStep);
+  return /* Rope */{
+          headK: h,
+          knots: Stdlib_Array$AdventOfCode.reverse(match[1]),
+          trace: TableclothSet.add(rope.trace, match[0])
+        };
+}
+
+function ropeSteps(rope, steps) {
+  return Stdlib_Array$AdventOfCode.reduce(steps, rope, ropeStep);
+}
+
+function part1(steps) {
+  var rope = Stdlib_Array$AdventOfCode.reduce(steps, newRope(1), ropeStep);
+  return TableclothSet.length(rope.trace);
+}
+
+function part2(steps) {
+  var rope = Stdlib_Array$AdventOfCode.reduce(steps, newRope(9), ropeStep);
+  return TableclothSet.length(rope.trace);
+}
+
 function parse(data) {
   return Stdlib_Array$AdventOfCode.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
                 var match = x.trim().split(" ");
@@ -92,7 +128,7 @@ function parse(data) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2022_Day9.res",
-                          62,
+                          99,
                           8
                         ],
                         Error: new Error()
@@ -133,13 +169,11 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  var prim = parse(data);
-  console.log(prim);
-  return 1;
+  return part1(expandPath(parse(data)));
 }
 
 function solvePart2(data) {
-  return 2;
+  return part2(expandPath(parse(data)));
 }
 
 var A;
@@ -161,6 +195,11 @@ export {
   touching ,
   sign ,
   towards ,
+  knotStep ,
+  ropeStep ,
+  ropeSteps ,
+  part1 ,
+  part2 ,
   parse ,
   solvePart1 ,
   solvePart2 ,

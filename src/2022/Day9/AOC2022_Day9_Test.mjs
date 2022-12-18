@@ -7,25 +7,27 @@ import * as AOC2022_Day9_Data_Sample$AdventOfCode from "./AOC2022_Day9_Data_Samp
 describe("2022 Day9", (function () {
         test("Part 1 - Sample Data", (function () {
                 var result = AOC2022_Day9$AdventOfCode.solvePart1(AOC2022_Day9_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(13);
               }));
         test("Part 1 - Solve", (function () {
                 var result = AOC2022_Day9$AdventOfCode.solvePart1(AOC2022_Day9_Data$AdventOfCode.data);
-                expect(result).toEqual(1);
+                expect(result).toEqual(5874);
               }));
-        test("Part 2 - Sample Data", (function () {
-                var result = AOC2022_Day9$AdventOfCode.solvePart2(AOC2022_Day9_Data_Sample$AdventOfCode.data);
-                expect(result).toEqual(2);
+        test("Part 2 - Sample Data 1", (function () {
+                var result = AOC2022_Day9$AdventOfCode.solvePart2(AOC2022_Day9_Data_Sample$AdventOfCode.data1);
+                expect(result).toEqual(36);
               }));
         test("Part 2 - Solve", (function () {
                 var result = AOC2022_Day9$AdventOfCode.solvePart2(AOC2022_Day9_Data$AdventOfCode.data);
-                expect(result).toEqual(2);
+                expect(result).toEqual(2467);
               }));
       }));
 
 var data = AOC2022_Day9_Data$AdventOfCode.data;
 
 var sampleData = AOC2022_Day9_Data_Sample$AdventOfCode.data;
+
+var sampleData1 = AOC2022_Day9_Data_Sample$AdventOfCode.data1;
 
 var solvePart1 = AOC2022_Day9$AdventOfCode.solvePart1;
 
@@ -34,6 +36,7 @@ var solvePart2 = AOC2022_Day9$AdventOfCode.solvePart2;
 export {
   data ,
   sampleData ,
+  sampleData1 ,
   solvePart1 ,
   solvePart2 ,
 }
