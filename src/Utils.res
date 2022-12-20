@@ -181,7 +181,7 @@ let flatten = (xs: array<array<'a>>) => {
 
 let transpose = JsArray2Ex.transpose
 
-let maxKeyIntValuePair = Array.reduce(_, ("", 0), (acc, (k, v)) => {
+let maxKeyIntValuePair = Array.reduce(_, ("", min_int), (acc, (k, v)) => {
   let (_, va) = acc
   v > va ? (k, v) : acc
 })
@@ -191,7 +191,7 @@ let minKeyIntValuePair = Array.reduce(_, ("", max_int), (acc, (k, v)) => {
   v < va ? (k, v) : acc
 })
 
-let maxKeyInt64ValuePair = Array.reduce(_, ("", 0L), (acc, (k, v)) => {
+let maxKeyInt64ValuePair = Array.reduce(_, ("", Int64.min_int), (acc, (k, v)) => {
   let (_, va) = acc
   Int64.compare(v, va) > 0 ? (k, v) : acc
 })

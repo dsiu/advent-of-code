@@ -292,7 +292,7 @@ function flatten(xs) {
 function maxKeyIntValuePair(__x) {
   return Belt_Array.reduce(__x, [
               "",
-              0
+              Pervasives.min_int
             ], (function (acc, param) {
                 var v = param[1];
                 if (v > acc[1]) {
@@ -326,7 +326,7 @@ function minKeyIntValuePair(__x) {
 function maxKeyInt64ValuePair(__x) {
   return Belt_Array.reduce(__x, [
               "",
-              Caml_int64.zero
+              Int64.min_int
             ], (function (acc, param) {
                 var v = param[1];
                 if (Int64.compare(v, acc[1]) > 0) {
