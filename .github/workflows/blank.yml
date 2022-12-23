@@ -43,4 +43,4 @@ jobs:
           NODE_ENV: production
 
       - name: Test
-        run: npx jest
+        run: yarn test
