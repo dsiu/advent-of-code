@@ -42,7 +42,6 @@
   "dependencies": {
     "@resinfo/parser": "^2.0.0-alpha",
     "bs-bastet": "github:dsiu/bastet#rescript-v10",
-    "bsdoc": "^6.0.4-alpha",
     "debug": "^4.3.4",
     "js-array2-ex": "^0.0.4",
     "ms": "^2.1.3",
