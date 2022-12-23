@@ -3,11 +3,11 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_string from "rescript/lib/es6/caml_string.js";
+import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
 import * as Belt_SetString from "rescript/lib/es6/belt_SetString.js";
 import * as TableclothChar from "tablecloth-rescript/src/TableclothChar.mjs";
 import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -47,7 +47,7 @@ function merge(param) {
 }
 
 function badgeOf(rucksacks) {
-  return Belt_Array.getExn(Belt_SetString.toArray(Stdlib_Array$AdventOfCode.foldLeft(Belt_Array.map(rucksacks, merge), Belt_SetString.intersect)), 0);
+  return Belt_Array.getExn(Belt_SetString.toArray(Stdlib_Array.foldLeft(Belt_Array.map(rucksacks, merge), Belt_SetString.intersect)), 0);
 }
 
 function part2(rucksacks) {

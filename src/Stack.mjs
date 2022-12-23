@@ -2,7 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
-import * as Stdlib_Function$AdventOfCode from "./stdlib/Stdlib_Function.mjs";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 
 function MakeStack(Item) {
   var push = function (contents, x) {
@@ -96,17 +96,17 @@ function MakeStack(Item) {
                   return Curry._1(Item.neg, x);
                 }), __x);
   };
-  var square = Stdlib_Function$AdventOfCode.composeN([
+  var square = Stdlib_Function.composeN([
         dup,
         mul
       ]);
-  var cube = Stdlib_Function$AdventOfCode.composeN([
+  var cube = Stdlib_Function.composeN([
         dup,
         dup,
         mul,
         mul
       ]);
-  var sum_numbers_upto = Stdlib_Function$AdventOfCode.composeN([
+  var sum_numbers_upto = Stdlib_Function.composeN([
         dup,
         one,
         add,
@@ -136,7 +136,7 @@ function MakeStack(Item) {
           sub: sub,
           div: div,
           neg: neg,
-          composeN: Stdlib_Function$AdventOfCode.composeN,
+          composeN: Stdlib_Function.composeN,
           square: square,
           cube: cube,
           sum_numbers_upto: sum_numbers_upto
@@ -285,19 +285,19 @@ function neg$1(__x) {
               }), __x);
 }
 
-var square = Stdlib_Function$AdventOfCode.composeN([
+var square = Stdlib_Function.composeN([
       dup,
       mul$1
     ]);
 
-var cube = Stdlib_Function$AdventOfCode.composeN([
+var cube = Stdlib_Function.composeN([
       dup,
       dup,
       mul$1,
       mul$1
     ]);
 
-var sum_numbers_upto = Stdlib_Function$AdventOfCode.composeN([
+var sum_numbers_upto = Stdlib_Function.composeN([
       dup,
       one,
       add$1,
@@ -328,7 +328,7 @@ var StackInt = {
   sub: sub$1,
   div: div$1,
   neg: neg$1,
-  composeN: Stdlib_Function$AdventOfCode.composeN,
+  composeN: Stdlib_Function.composeN,
   square: square,
   cube: cube,
   sum_numbers_upto: sum_numbers_upto
@@ -478,19 +478,19 @@ function neg$3(__x) {
               }), __x);
 }
 
-var square$1 = Stdlib_Function$AdventOfCode.composeN([
+var square$1 = Stdlib_Function.composeN([
       dup$1,
       mul$3
     ]);
 
-var cube$1 = Stdlib_Function$AdventOfCode.composeN([
+var cube$1 = Stdlib_Function.composeN([
       dup$1,
       dup$1,
       mul$3,
       mul$3
     ]);
 
-var sum_numbers_upto$1 = Stdlib_Function$AdventOfCode.composeN([
+var sum_numbers_upto$1 = Stdlib_Function.composeN([
       dup$1,
       one$1,
       add$3,
@@ -521,7 +521,7 @@ var StackFloat = {
   sub: sub$3,
   div: div$3,
   neg: neg$3,
-  composeN: Stdlib_Function$AdventOfCode.composeN,
+  composeN: Stdlib_Function.composeN,
   square: square$1,
   cube: cube$1,
   sum_numbers_upto: sum_numbers_upto$1

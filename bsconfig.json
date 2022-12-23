@@ -34,7 +34,8 @@
     "bs-bastet",
     "relude",
     "js-array2-ex",
-    "tablecloth-rescript"
+    "tablecloth-rescript",
+    "@dsiu/rescript-stdlib-fp"
   ],
   "bs-dev-dependencies": [
     "@glennsl/rescript-jest"

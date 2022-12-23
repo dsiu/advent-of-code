@@ -31,7 +31,7 @@
       "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|)/)"
+      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|@dsiu/rescript-stdlib-fp|)/)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -42,6 +42,7 @@
   "dependencies": {
     "@resinfo/parser": "^2.0.0-alpha",
     "bs-bastet": "github:dsiu/bastet#rescript-v10",
+    "bsdoc": "^6.0.4-alpha",
     "debug": "^4.3.4",
     "js-array2-ex": "^0.0.4",
     "ms": "^2.1.3",
@@ -52,6 +53,7 @@
     "rescript-js": "latest",
     "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10",
     "rescript-vector": "^0.4.0",
-    "tablecloth-rescript": "github:darklang/tablecloth-rescript#main"
+    "tablecloth-rescript": "github:darklang/tablecloth-rescript#main",
+    "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp"
   }
 }

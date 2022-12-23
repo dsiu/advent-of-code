@@ -2,10 +2,10 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
+import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib_Option from "@dsiu/rescript-stdlib-fp/src/Stdlib_Option.mjs";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
-import * as Stdlib_Option$AdventOfCode from "../../stdlib/Stdlib_Option.mjs";
-import * as Stdlib_Function$AdventOfCode from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -27,7 +27,7 @@ function setVisibility(row) {
     if (height > highest) {
       return [
               height,
-              Stdlib_Array$AdventOfCode.concat([/* Tree */{
+              Stdlib_Array.concat([/* Tree */{
                       _0: height,
                       _1: true
                     }], tagged)
@@ -35,32 +35,32 @@ function setVisibility(row) {
     } else {
       return [
               highest,
-              Stdlib_Array$AdventOfCode.concat([/* Tree */{
+              Stdlib_Array.concat([/* Tree */{
                       _0: height,
                       _1: param$1._1
                     }], tagged)
             ];
     }
   };
-  return Stdlib_Array$AdventOfCode.reverse(Stdlib_Array$AdventOfCode.reduce(row, [
+  return Stdlib_Array.reverse(Stdlib_Array.reduce(row, [
                     -1,
                     []
                   ], vis)[1]);
 }
 
 function setVisibilityOrient(__x) {
-  return Stdlib_Array$AdventOfCode.map(__x, setVisibility);
+  return Stdlib_Array.map(__x, setVisibility);
 }
 
 function setVisibilityForest(forest) {
   var rotate = function (x) {
-    return Stdlib_Array$AdventOfCode.map(Utils$AdventOfCode.transpose(x), Stdlib_Array$AdventOfCode.reverse);
+    return Stdlib_Array.map(Utils$AdventOfCode.transpose(x), Stdlib_Array.reverse);
   };
   return Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, forest))));
 }
 
 function countVisible(forest) {
-  return Stdlib_Array$AdventOfCode.keep(Stdlib_Array$AdventOfCode.concatMany(forest), isVisible).length;
+  return Stdlib_Array.keep(Stdlib_Array.concatMany(forest), isVisible).length;
 }
 
 function part1(param) {
@@ -68,13 +68,13 @@ function part1(param) {
 }
 
 function tracks(forest, row, col) {
-  var match = Stdlib_Option$AdventOfCode.getExn(Stdlib_Array$AdventOfCode.splitAt(Stdlib_Array$AdventOfCode.getExn(forest, row), col));
-  var match$1 = Stdlib_Option$AdventOfCode.getExn(Stdlib_Array$AdventOfCode.splitAt(Stdlib_Array$AdventOfCode.getExn(Utils$AdventOfCode.transpose(forest), col), row));
+  var match = Stdlib_Option.getExn(Stdlib_Array.splitAt(Stdlib_Array.getExn(forest, row), col));
+  var match$1 = Stdlib_Option.getExn(Stdlib_Array.splitAt(Stdlib_Array.getExn(Utils$AdventOfCode.transpose(forest), col), row));
   return [
-          Stdlib_Array$AdventOfCode.reverse(match[0]),
-          Stdlib_Array$AdventOfCode.drop(match[1], 1),
-          Stdlib_Array$AdventOfCode.reverse(match$1[0]),
-          Stdlib_Array$AdventOfCode.drop(match$1[1], 1)
+          Stdlib_Array.reverse(match[0]),
+          Stdlib_Array.drop(match[1], 1),
+          Stdlib_Array.reverse(match$1[0]),
+          Stdlib_Array.drop(match$1[1], 1)
         ];
 }
 
@@ -82,26 +82,26 @@ function takeWhile1(xs, f) {
   if (xs.length === 0) {
     return [];
   }
-  var h = Stdlib_Array$AdventOfCode.head(xs);
-  var t = Stdlib_Array$AdventOfCode.tail(xs);
+  var h = Stdlib_Array.head(xs);
+  var t = Stdlib_Array.tail(xs);
   var match = Curry._1(f, h);
   if (match) {
-    return Stdlib_Array$AdventOfCode.concat([h], takeWhile1(t, f));
+    return Stdlib_Array.concat([h], takeWhile1(t, f));
   } else {
     return [h];
   }
 }
 
 function viewDistance(trees, h) {
-  return takeWhile1(Stdlib_Array$AdventOfCode.map(trees, treeHeight), (function (x) {
+  return takeWhile1(Stdlib_Array.map(trees, treeHeight), (function (x) {
                 return x < h;
               })).length;
 }
 
 function scenicScore(forest, row, col) {
   var directions = tracks(forest, row, col);
-  var h = treeHeight(Stdlib_Array$AdventOfCode.getExn(Stdlib_Array$AdventOfCode.getExn(forest, row), col));
-  return Stdlib_Array$AdventOfCode.reduce(Stdlib_Array$AdventOfCode.map(directions, (function (__x) {
+  var h = treeHeight(Stdlib_Array.getExn(Stdlib_Array.getExn(forest, row), col));
+  return Stdlib_Array.reduce(Stdlib_Array.map(directions, (function (__x) {
                     return viewDistance(__x, h);
                   })), 1, (function (a, x) {
                 return Math.imul(a, x);
@@ -110,15 +110,15 @@ function scenicScore(forest, row, col) {
 
 function part2(forest) {
   var nrows = forest.length;
-  var ncols = Stdlib_Array$AdventOfCode.head(forest).length;
-  return Utils$AdventOfCode.maxIntInArray(Stdlib_Array$AdventOfCode.combination2(Stdlib_Array$AdventOfCode.makeBy(nrows - 1 | 0, Stdlib_Function$AdventOfCode.identity), Stdlib_Array$AdventOfCode.makeBy(ncols - 1 | 0, Stdlib_Function$AdventOfCode.identity), (function (r, c) {
+  var ncols = Stdlib_Array.head(forest).length;
+  return Utils$AdventOfCode.maxIntInArray(Stdlib_Array.combination2(Stdlib_Array.makeBy(nrows - 1 | 0, Stdlib_Function.identity), Stdlib_Array.makeBy(ncols - 1 | 0, Stdlib_Function.identity), (function (r, c) {
                     return scenicScore(forest, r, c);
                   })));
 }
 
 function parse(data) {
-  return Stdlib_Array$AdventOfCode.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                return Stdlib_Array$AdventOfCode.map(Utils$AdventOfCode.splitChars(x.trim()), (function (x) {
+  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+                return Stdlib_Array.map(Utils$AdventOfCode.splitChars(x.trim()), (function (x) {
                               return /* Tree */{
                                       _0: Caml_format.int_of_string(x),
                                       _1: false

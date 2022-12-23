@@ -3,11 +3,11 @@
 import * as Caml from "rescript/lib/es6/caml.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
+import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
 import * as TableclothSet from "tablecloth-rescript/src/TableclothSet.mjs";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Coord_V2$AdventOfCode from "../../Coord_V2.mjs";
-import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -23,7 +23,7 @@ function newRope(n) {
             0,
             0
           ],
-          knots: Stdlib_Array$AdventOfCode.make(n, [
+          knots: Stdlib_Array.make(n, [
                 0,
                 0
               ]),
@@ -40,29 +40,29 @@ function expandPath(directions) {
   var expandStep = function (step) {
     switch (step.TAG | 0) {
       case /* U */0 :
-          return Stdlib_Array$AdventOfCode.make(step._0, [
+          return Stdlib_Array.make(step._0, [
                       0,
                       1
                     ]);
       case /* R */1 :
-          return Stdlib_Array$AdventOfCode.make(step._0, [
+          return Stdlib_Array.make(step._0, [
                       1,
                       0
                     ]);
       case /* D */2 :
-          return Stdlib_Array$AdventOfCode.make(step._0, [
+          return Stdlib_Array.make(step._0, [
                       0,
                       -1
                     ]);
       case /* L */3 :
-          return Stdlib_Array$AdventOfCode.make(step._0, [
+          return Stdlib_Array.make(step._0, [
                       -1,
                       0
                     ]);
       
     }
   };
-  return Stdlib_Array$AdventOfCode.flatMap(directions, expandStep);
+  return Stdlib_Array.flatMap(directions, expandStep);
 }
 
 function manhattan(p1, p2) {
@@ -89,39 +89,39 @@ function knotStep(param, kt) {
   var kt$p = touching(kt, h) ? kt : Coord_V2$AdventOfCode.add(kt, towards(kt, h));
   return [
           kt$p,
-          Stdlib_Array$AdventOfCode.concat([kt$p], param[1])
+          Stdlib_Array.concat([kt$p], param[1])
         ];
 }
 
 function ropeStep(rope, step) {
   var h = Coord_V2$AdventOfCode.add(rope.headK, step);
-  var match = Stdlib_Array$AdventOfCode.reduce(rope.knots, [
+  var match = Stdlib_Array.reduce(rope.knots, [
         h,
         []
       ], knotStep);
   return /* Rope */{
           headK: h,
-          knots: Stdlib_Array$AdventOfCode.reverse(match[1]),
+          knots: Stdlib_Array.reverse(match[1]),
           trace: TableclothSet.add(rope.trace, match[0])
         };
 }
 
 function ropeSteps(rope, steps) {
-  return Stdlib_Array$AdventOfCode.reduce(steps, rope, ropeStep);
+  return Stdlib_Array.reduce(steps, rope, ropeStep);
 }
 
 function part1(steps) {
-  var rope = Stdlib_Array$AdventOfCode.reduce(steps, newRope(1), ropeStep);
+  var rope = Stdlib_Array.reduce(steps, newRope(1), ropeStep);
   return TableclothSet.length(rope.trace);
 }
 
 function part2(steps) {
-  var rope = Stdlib_Array$AdventOfCode.reduce(steps, newRope(9), ropeStep);
+  var rope = Stdlib_Array.reduce(steps, newRope(9), ropeStep);
   return TableclothSet.length(rope.trace);
 }
 
 function parse(data) {
-  return Stdlib_Array$AdventOfCode.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
                 var match = x.trim().split(" ");
                 if (match.length !== 2) {
                   throw {

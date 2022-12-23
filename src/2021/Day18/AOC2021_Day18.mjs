@@ -4,10 +4,10 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Res_parser from "@resinfo/parser/src/res_parser.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
+import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib_Option from "@dsiu/rescript-stdlib-fp/src/Stdlib_Option.mjs";
 import * as Tree$AdventOfCode from "../../Tree.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
-import * as Stdlib_Option$AdventOfCode from "../../stdlib/Stdlib_Option.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -31,7 +31,7 @@ function splittable(t) {
         return ;
       }
     } else {
-      return Stdlib_Option$AdventOfCode.optionOr(splittableC(Tree$AdventOfCode.left(loc)), splittableC(Tree$AdventOfCode.right(loc)));
+      return Stdlib_Option.optionOr(splittableC(Tree$AdventOfCode.left(loc)), splittableC(Tree$AdventOfCode.right(loc)));
     }
   };
   return splittableC(Tree$AdventOfCode.top(t));
@@ -78,7 +78,7 @@ function pairAtDepthC(n, l) {
   if (l._0.TAG === /* Leaf */0) {
     return ;
   } else if (n !== 0) {
-    return Stdlib_Option$AdventOfCode.optionOr(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l)));
+    return Stdlib_Option.optionOr(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l)));
   } else {
     return l;
   }
@@ -217,7 +217,7 @@ function explode(num) {
 function reduce(_num) {
   while(true) {
     var num = _num;
-    var num1 = Stdlib_Option$AdventOfCode.optionOr(explode(num), split(num));
+    var num1 = Stdlib_Option.optionOr(explode(num), split(num));
     if (num1 === undefined) {
       return num;
     }
@@ -235,7 +235,7 @@ function snailAdd(a, b) {
 }
 
 function total(xs) {
-  return Stdlib_Array$AdventOfCode.foldLeft(xs, snailAdd);
+  return Stdlib_Array.foldLeft(xs, snailAdd);
 }
 
 function magnitude(t) {
@@ -247,11 +247,11 @@ function magnitude(t) {
 }
 
 function part1(numbers) {
-  return magnitude(Stdlib_Array$AdventOfCode.foldLeft(numbers, snailAdd));
+  return magnitude(Stdlib_Array.foldLeft(numbers, snailAdd));
 }
 
 function part2(numbers) {
-  return Utils$AdventOfCode.maxIntInArray(Stdlib_Array$AdventOfCode.combination2(numbers, numbers, (function (a, b) {
+  return Utils$AdventOfCode.maxIntInArray(Stdlib_Array.combination2(numbers, numbers, (function (a, b) {
                     return magnitude(reduce({
                                     TAG: /* Pair */1,
                                     _0: a,
@@ -362,7 +362,7 @@ function parse$1(data) {
 
 function solvePart1(data) {
   var numbers = parse$1(data);
-  return magnitude(Stdlib_Array$AdventOfCode.foldLeft(numbers, snailAdd));
+  return magnitude(Stdlib_Array.foldLeft(numbers, snailAdd));
 }
 
 function solvePart2(data) {

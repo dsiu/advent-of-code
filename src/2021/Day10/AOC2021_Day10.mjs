@@ -8,9 +8,9 @@ import * as Caml_int64 from "rescript/lib/es6/caml_int64.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_SortArray from "rescript/lib/es6/belt_SortArray.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Stack_Array$AdventOfCode from "../../Stack_Array.mjs";
-import * as Stdlib_Function$AdventOfCode from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -394,7 +394,7 @@ function $$process(xs) {
 
 function parse(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
-                return Stdlib_Function$AdventOfCode.compose((function (prim) {
+                return Stdlib_Function.compose((function (prim) {
                               return prim.trim();
                             }), Utils$AdventOfCode.splitChars, param);
               }));

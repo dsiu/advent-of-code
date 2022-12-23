@@ -3,13 +3,13 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
+import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
 import * as TableclothSet from "tablecloth-rescript/src/TableclothSet.mjs";
 import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as TableclothComparator from "tablecloth-rescript/src/TableclothComparator.mjs";
 import * as Coord_V3$AdventOfCode from "../../Coord_V3.mjs";
 import * as Coord_V4$AdventOfCode from "../../Coord_V4.mjs";
-import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -79,7 +79,7 @@ function makeGrid(lines) {
   var maxY = lines.length - 1 | 0;
   var xs = Belt_Array.range(0, maxX);
   var ys = Belt_Array.range(0, maxY);
-  return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIf2(xs, ys, createActive), {
+  return TableclothSet.fromArray(Stdlib_Array.combinationIf2(xs, ys, createActive), {
               comparator: comparator
             });
 }
@@ -116,7 +116,7 @@ function conv34(grid) {
 
 function neighbourSpaces(here) {
   if (here.TAG === /* Coord_V3 */0) {
-    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIf3([
+    return TableclothSet.fromArray(Stdlib_Array.combinationIf3([
                     -1,
                     0,
                     1
@@ -145,7 +145,7 @@ function neighbourSpaces(here) {
                 comparator: comparator
               });
   } else {
-    return TableclothSet.fromArray(Stdlib_Array$AdventOfCode.combinationIf4([
+    return TableclothSet.fromArray(Stdlib_Array.combinationIf4([
                     -1,
                     0,
                     1

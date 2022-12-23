@@ -3,9 +3,9 @@
 import * as JsArray2Ex from "js-array2-ex/src/JsArray2Ex.mjs";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
+import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as Stdlib_Array$AdventOfCode from "../../stdlib/Stdlib_Array.mjs";
-import * as Stdlib_Function$AdventOfCode from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -24,21 +24,21 @@ function applyOp(op) {
 
 function apply(ops) {
   var len = (ops.length << 1);
-  return Stdlib_Array$AdventOfCode.zip(Stdlib_Array$AdventOfCode.makeBy(len, (function (x) {
+  return Stdlib_Array.zip(Stdlib_Array.makeBy(len, (function (x) {
                     return x + 1 | 0;
-                  })), Stdlib_Array$AdventOfCode.scanl(Stdlib_Array$AdventOfCode.flatMap(ops, applyOp), 1, (function (prim0, prim1) {
+                  })), Stdlib_Array.scanl(Stdlib_Array.flatMap(ops, applyOp), 1, (function (prim0, prim1) {
                     return prim0 + prim1 | 0;
                   })));
 }
 
 function extractSignals(signals) {
-  return Stdlib_Array$AdventOfCode.keep(signals, (function (param) {
+  return Stdlib_Array.keep(signals, (function (param) {
                 return (param[0] + 20 | 0) % 40 === 0;
               }));
 }
 
 function calculateSixSignals(signals) {
-  return Utils$AdventOfCode.sumIntArray(Stdlib_Array$AdventOfCode.keepMap(signals, (function (param) {
+  return Utils$AdventOfCode.sumIntArray(Stdlib_Array.keepMap(signals, (function (param) {
                     var t = param[0];
                     if (t <= 220) {
                       return Math.imul(t, param[1]);
@@ -69,16 +69,16 @@ function isLit(param) {
 }
 
 function part2(regVals) {
-  var pixels = Stdlib_Array$AdventOfCode.map(regVals, (function (param) {
+  var pixels = Stdlib_Array.map(regVals, (function (param) {
           return Utils$AdventOfCode.compose(isLit, showPixel, param);
         }));
-  return Stdlib_Array$AdventOfCode.map(JsArray2Ex.chunkBySize(pixels, 40), (function (x) {
-                return Stdlib_Array$AdventOfCode.joinWith(x, "", Stdlib_Function$AdventOfCode.identity);
+  return Stdlib_Array.map(JsArray2Ex.chunkBySize(pixels, 40), (function (x) {
+                return Stdlib_Array.joinWith(x, "", Stdlib_Function.identity);
               }));
 }
 
 function parse(data) {
-  return Stdlib_Array$AdventOfCode.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
                 var l = x.trim();
                 if (l.startsWith("noop")) {
                   return /* Noop */0;

@@ -6,11 +6,11 @@ import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Array2D$AdventOfCode from "../../Array2D.mjs";
 import * as Coordinate$AdventOfCode from "../../Coordinate.mjs";
-import * as Stdlib_Function$AdventOfCode from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -204,7 +204,7 @@ var HeightMap = {
 
 function parse(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
-                return Stdlib_Function$AdventOfCode.compose((function (prim) {
+                return Stdlib_Function.compose((function (prim) {
                               return prim.trim();
                             }), (function (x) {
                               return Belt_Array.map(Utils$AdventOfCode.splitChars(x), Utils$AdventOfCode.intFromStringExn);
