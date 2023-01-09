@@ -7,12 +7,12 @@ import * as Stdlib_Option from "@dsiu/rescript-stdlib-fp/src/Stdlib_Option.mjs";
 import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
-function log(prim) {
-  console.log(prim);
-}
-
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
+}
+
+function log(prim) {
+  console.log(prim);
 }
 
 function extractName(c) {
@@ -123,12 +123,21 @@ function solvePart2(data) {
   return showTops(Stdlib_Array.reduce(match[1], match[0], applyMove2));
 }
 
+var A;
+
+var S;
+
+var O;
+
 var M;
 
 export {
-  log ,
-  log2 ,
+  A ,
+  S ,
+  O ,
   M ,
+  log2 ,
+  log ,
   extractName ,
   getCratesForWharf ,
   catMaybes ,

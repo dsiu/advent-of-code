@@ -1,5 +1,8 @@
 open Stdlib
 open Utils
+module A = Array
+module S = String
+
 let log = Js.Console.log
 
 type interval = Interval(int, int)
@@ -23,27 +26,24 @@ let disjoint = (x, y) => {
 let overlaps = (x, y) => !disjoint(x, y)
 
 let parse = data => {
-  open Array
-  open String
   data
   ->splitNewline
-  ->map(l => {
+  ->A.map(l => {
     l
-    ->trim
-    ->split(",")
-    ->map(p => {
-      let r = p->split("-")->map(intFromStringExn)
-      Interval(r->getExn(0), r->getExn(1))
+    ->S.trim
+    ->S.split(",")
+    ->A.map(p => {
+      let r = p->S.split("-")->A.map(intFromStringExn)
+      Interval(r->A.getExn(0), r->A.getExn(1))
     })
   })
-  ->map(l => {
-    (l->getExn(0), l->getExn(1))
+  ->A.map(l => {
+    (l->A.getExn(0), l->A.getExn(1))
   })
 }
 
 let count = (xs, fn) => {
-  open Array
-  xs->keep(fn)->length
+  xs->A.keep(fn)->A.length
 }
 
 let part1 = xs => {

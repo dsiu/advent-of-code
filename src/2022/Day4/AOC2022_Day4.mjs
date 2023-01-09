@@ -80,7 +80,13 @@ function solvePart2(data) {
   return part2(parse(data));
 }
 
+var A;
+
+var S;
+
 export {
+  A ,
+  S ,
   log ,
   contains ,
   before ,
