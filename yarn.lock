@@ -1187,11 +1187,6 @@ bs-stdlib-shims@^0.1.0:
   resolved "https://registry.yarnpkg.com/bs-stdlib-shims/-/bs-stdlib-shims-0.1.0.tgz#f64166392652a07c37b9be462beebb6c0c66a74e"
   integrity sha512-CszWow8iXOKgmzNCc5dR3kERaqzIp3f4nbV7lJF5vS9BHm70GqLlu7OBE/VCPKZ5noG1VtJAIVqIdLFqUdIRUQ==
 
-bsdoc@^6.0.4-alpha:
-  version "6.0.4-alpha"
-  resolved "https://registry.yarnpkg.com/bsdoc/-/bsdoc-6.0.4-alpha.tgz#b6e02c8967d1503b1f3a21d448a9108e99a6db59"
-  integrity sha512-9m4MebWxv2gWHpg563CGJ1yPkpNpElKV7fPvjDhAw5VPjD0+EXX2S0Qx6UM/xmOOBmfJtp1YTvXfA9/UFd7aOg==
-
 bser@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/bser/-/bser-2.1.1.tgz#e6787da20ece9d07998533cfd9de6f5c38f4bc05"
