@@ -10,7 +10,7 @@ function log(prim) {
 
 console.time("Part 1");
 
-var part1 = AOC2022_Day11$AdventOfCode.solvePart1(AOC2022_Day11_Data$AdventOfCode.data);
+var part1 = AOC2022_Day11$AdventOfCode.solvePart1(AOC2022_Day11_Data_Sample$AdventOfCode.data);
 
 console.log("Part 1 Result");
 

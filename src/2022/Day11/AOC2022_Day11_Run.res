@@ -5,8 +5,8 @@ let {solvePart1, solvePart2} = module(AOC2022_Day11)
 
 Js.Console.timeStart("Part 1")
 
-//let part1 = solvePart1(sampleData)
-let part1 = solvePart1(data)
+let part1 = solvePart1(sampleData)
+//let part1 = solvePart1(data)
 
 "Part 1 Result"->log
 part1->log
