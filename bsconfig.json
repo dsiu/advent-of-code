@@ -33,6 +33,7 @@
     "@resinfo/parser",
     "bs-bastet",
     "relude",
+    "relude-parse",
     "js-array2-ex",
     "tablecloth-rescript",
     "@dsiu/rescript-stdlib-fp"

@@ -3026,6 +3026,10 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
+"relude-parse@github:dsiu/relude-parse#rescript-v10":
+  version "0.8.0"
+  resolved "https://codeload.github.com/dsiu/relude-parse/tar.gz/413074510232cbeff2f3eca12db93783d6d0e766"
+
 "relude@github:dsiu/relude#rescript-v10":
   version "0.66.1"
   resolved "https://codeload.github.com/dsiu/relude/tar.gz/657305008e02e642373945c6228bbca01bc524a9"
