@@ -2,17 +2,17 @@
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
-open Relude
+open Reludeπ
 //open Utils
 
 // common functions
-let compose = Function.compose
 module S = String
 module A = Array
 module L = List
 module O = Option
 module R = Result
 module F = Function
+let compose = F.compose
 
 type operator = Plus | Times
 type operand = Literal(int) | Old
