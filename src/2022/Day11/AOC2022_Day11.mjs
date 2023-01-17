@@ -113,8 +113,6 @@ function solvePart2(data) {
   return 2;
 }
 
-var compose = Relude_Function.compose;
-
 var S;
 
 var A;
@@ -127,16 +125,18 @@ var R;
 
 var F;
 
+var compose = Relude_Function.compose;
+
 export {
   log ,
   log2 ,
-  compose ,
   S ,
   A ,
   L ,
   O ,
   R ,
   F ,
+  compose ,
   makeLiteral ,
   showExpression ,
   logExp ,

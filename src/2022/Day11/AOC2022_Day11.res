@@ -2,7 +2,7 @@
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
-open Reludeπ
+open Relude
 //open Utils
 
 // common functions
