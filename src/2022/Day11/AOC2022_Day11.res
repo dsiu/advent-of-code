@@ -46,6 +46,40 @@ type monkeyHolds = IntMap.t<array<int>> // state
 type monkeyLog = MonkeyLog(int, int) // writer -- monkey ID, number of items handled this round
 // type monkeyHandler = RWS MonkeyDescription [MonkeyLog] monkeyHolds
 
+let updateWorry: (int, expression, int => int) => int = (
+  current,
+  Expression(operator, operand),
+  threshold,
+) => {
+  let evalOperand = operand => {
+    switch operand {
+    | Literal(k) => k
+    | Old => current
+    }
+  }
+  let n = evalOperand(operand)
+
+  switch operator {
+  | Plus => threshold(current + n)
+  | Times => threshold(current * n)
+  }
+}
+
+let worryTest: (int, int) => bool = (divisor, worry) => {mod(worry, divisor) == 0}
+
+let receivesItem: (int, int, monkeyHolds) => monkeyHolds = (mId, worry, items) => {
+  IntMap.update(
+    mId,
+    maybeItems => {
+      switch maybeItems {
+      | Some(items) => Some(A.concat(items, [worry]))
+      | None => None
+      }
+    },
+    items,
+  )
+}
+
 module MonkeyParser = {
   module P = ReludeParse.Parser
   open P.Infix
@@ -87,8 +121,8 @@ module MonkeyParser = {
 
   let monkeyP = {
     let mkMonkeyPair = (mId, holding, operation, test, trueTarget, falseTarget) => {
-      //      ((mId, MonkeyCode({operation, test, trueTarget, falseTarget})), (mId, holding))
-      (mId, holding->L.toArray, operation->showExpression, test, trueTarget, falseTarget)
+      // (mId, holding->L.toArray, operation->showExpression, test, trueTarget, falseTarget)
+      ((mId, MonkeyCode({operation, test, trueTarget, falseTarget})), (mId, holding))
     }
 
     mkMonkeyPair
@@ -109,8 +143,7 @@ module MonkeyParser = {
 
   let monkeysP = {
     let makeMonkeyMaps = monkeys => {
-      //      monkeys->log2("monkeys")
-      monkeys
+      (IntMap.fromList(L.map(fst, monkeys)), IntMap.fromList(L.map(snd, monkeys)))
     }
     makeMonkeyMaps->\"<$>"(monkeyP->P.sepBy(P.eol->\"<*"(P.eol), _))
     //    monkeyP->P.sepBy(P.eol->\"<*"(P.eol), _)
@@ -124,7 +157,7 @@ module MonkeyParser = {
 
 let solvePart1 = data => {
   let result = data->MonkeyParser.parse
-  let _ = result->R.tap(x => x->L.toArray->log, _)
+  let _ = result->R.tap(log, _)
   1
 }
 
