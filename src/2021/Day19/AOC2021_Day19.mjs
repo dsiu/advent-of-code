@@ -42,7 +42,7 @@ function rotX(param) {
   return /* Coord */{
           _0: [
             match[0],
-            -match[2],
+            - match[2],
             match[1]
           ]
         };
@@ -54,7 +54,7 @@ function rotY(param) {
           _0: [
             match[2],
             match[1],
-            -match[0]
+            - match[0]
           ]
         };
 }
@@ -63,7 +63,7 @@ function rotZ(param) {
   var match = param._0;
   return /* Coord */{
           _0: [
-            -match[1],
+            - match[1],
             match[0],
             match[2]
           ]
