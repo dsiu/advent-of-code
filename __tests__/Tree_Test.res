@@ -1,3 +1,4 @@
+open RescriptCore
 open Jest2
 open Tree
 
@@ -15,7 +16,7 @@ describe("Tree", () => {
   let tr_2 = Pair(Leaf(4), trr_2)
   let tree_2 = Pair(tl_2, tr_2)
 
-  let toString = Array.map(((t, r)) => (t->locToString, r->locToString))
+  let toString = Js.Array.map(((t, r)) => (t->locToString, r->locToString))
   let left_tests =
     [
       (tree_1->top->left, Loc(tl_1, L(Top, tr_1))),

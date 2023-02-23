@@ -1,3 +1,5 @@
+open OCamlCompat
+
 type t<'a, 'b, 'c, 'd> = ('a, 'b, 'c, 'd)
 
 let make = (a, b, c, d) => (a, b, c, d)

@@ -24,6 +24,7 @@
   },
   "suffix": ".mjs",
   "bs-dependencies": [
+    "@rescript/core",
     "rationale",
     "@ryyppy/rescript-promise",
     "rescript-js",

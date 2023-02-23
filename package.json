@@ -40,6 +40,7 @@
     ]
   },
   "dependencies": {
+    "@rescript/core": "github:rescript-association/rescript-core",
     "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp",
     "@resinfo/parser": "^2.0.0-alpha",
     "bs-bastet": "github:dsiu/bastet#rescript-v10",

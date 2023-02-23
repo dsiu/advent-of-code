@@ -735,6 +735,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@rescript/core@github:rescript-association/rescript-core":
+  version "0.1.0"
+  resolved "https://codeload.github.com/rescript-association/rescript-core/tar.gz/64f449d032e7ab33a2cbc85ac81600aa66d69987"
+
 "@rescript/std@^10.0.0":
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/@rescript/std/-/std-10.0.1.tgz#2ffa229f3345fea3341fed4bbc9b15949cf182ba"
