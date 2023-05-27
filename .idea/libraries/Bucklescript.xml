@@ -3,6 +3,8 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/node_modules/@dsiu/rescript-stdlib-fp" />
+        <item url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-extras" />
+        <item url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-seq" />
         <item url="file://$PROJECT_DIR$/node_modules/@rescript/core" />
         <item url="file://$PROJECT_DIR$/node_modules/@resinfo/parser" />
         <item url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
@@ -20,6 +22,8 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/node_modules/@dsiu/rescript-stdlib-fp" />
+      <root url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-extras" />
+      <root url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-seq" />
       <root url="file://$PROJECT_DIR$/node_modules/@rescript/core" />
       <root url="file://$PROJECT_DIR$/node_modules/@resinfo/parser" />
       <root url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
