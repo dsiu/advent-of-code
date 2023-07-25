@@ -1209,9 +1209,9 @@ browserslist@^4.21.3:
     node-releases "^2.0.6"
     update-browserslist-db "^1.0.9"
 
-"bs-bastet@github:dsiu/bastet#rescript-v10":
+"bs-bastet@github:dsiu/rescript-bastet#main":
   version "2.0.0"
-  resolved "https://codeload.github.com/dsiu/bastet/tar.gz/dd4032ed49289a781613ca10b86535e3bef0b90d"
+  resolved "https://codeload.github.com/dsiu/rescript-bastet/tar.gz/181a66fccc1e988b747689534607299ea5c983ec"
   dependencies:
     bs-stdlib-shims "^0.1.0"
 
@@ -3063,13 +3063,13 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-"relude-parse@github:dsiu/relude-parse#rescript-v10":
+"relude-parse@github:dsiu/rescript-relude-parse#main":
   version "0.8.0"
-  resolved "https://codeload.github.com/dsiu/relude-parse/tar.gz/413074510232cbeff2f3eca12db93783d6d0e766"
+  resolved "https://codeload.github.com/dsiu/rescript-relude-parse/tar.gz/4913fe24b1cb16a06cd19e9299afa87ade3427ab"
 
-"relude@github:dsiu/relude#rescript-v10":
+"relude@github:dsiu/rescript-relude#main":
   version "0.66.1"
-  resolved "https://codeload.github.com/dsiu/relude/tar.gz/657305008e02e642373945c6228bbca01bc524a9"
+  resolved "https://codeload.github.com/dsiu/rescript-relude/tar.gz/2a445664be6eafb08d740874d2dcaa4fa3c49fc7"
 
 require-directory@^2.1.1:
   version "2.1.1"
