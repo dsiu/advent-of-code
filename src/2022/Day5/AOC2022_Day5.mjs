@@ -26,7 +26,8 @@ function getCratesForWharf(crates, wharf) {
                               if (x === " ") {
                                 return ;
                               } else {
-                                return /* Crate */{
+                                return {
+                                        TAG: "Crate",
                                         _0: x
                                       };
                               }
@@ -48,7 +49,8 @@ function makeWharf(wharfLines, colNames) {
 function makeMoves(xs) {
   return Stdlib_Array.map(xs, (function (x) {
                 var parts = x.split(" ");
-                return /* Move */{
+                return {
+                        TAG: "Move",
                         _0: Stdlib_Option.getExn(Stdlib_Option.flatMap(Stdlib_Array.get(parts, 1), Belt_Int.fromString)),
                         _1: Stdlib_Option.getExn(Stdlib_Option.flatMap(Stdlib_Array.get(parts, 3), Belt_Int.fromString)),
                         _2: Stdlib_Option.getExn(Stdlib_Option.flatMap(Stdlib_Array.get(parts, 5), Belt_Int.fromString))

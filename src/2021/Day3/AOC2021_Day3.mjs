@@ -56,7 +56,7 @@ var CountContainer = {
 };
 
 function getSafe(m, k) {
-  return Belt_MutableMapInt.getWithDefault(m, k, make(undefined));
+  return Belt_MutableMapInt.getWithDefault(m, k, make());
 }
 
 var Total = {
@@ -80,7 +80,7 @@ function bitArrayToInt(x) {
 }
 
 function calTotal(xs) {
-  return Belt_Array.reduce(xs, Belt_MutableMapInt.make(undefined), (function (a, bits) {
+  return Belt_Array.reduce(xs, Belt_MutableMapInt.make(), (function (a, bits) {
                 Belt_Array.forEachWithIndex(bits, (function (idx, bit_val) {
                         var orig_total = getSafe(a, idx);
                         Belt_MutableMapInt.set(a, idx, inc(orig_total, bit_val));

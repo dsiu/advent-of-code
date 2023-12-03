@@ -19,18 +19,19 @@ function log2(prim0, prim1) {
 }
 
 function makeLiteral(i) {
-  return /* Literal */{
+  return {
+          TAG: "Literal",
           _0: i
         };
 }
 
 function showExpression(param) {
   var operand = param._1;
-  return (
-          param._0 ? " * " : " + "
-        ) + (
-          operand ? String(operand._0) : "old"
-        );
+  var tmp;
+  tmp = param._0 === "Plus" ? " + " : " * ";
+  var tmp$1;
+  tmp$1 = typeof operand !== "object" ? "old" : String(operand._0);
+  return tmp + tmp$1;
 }
 
 function logExp(param) {
@@ -38,7 +39,8 @@ function logExp(param) {
 }
 
 function makeExpression(op, operand) {
-  return /* Expression */{
+  return {
+          TAG: "Expression",
           _0: op,
           _1: operand
         };
@@ -186,17 +188,17 @@ var IntMap = {
 
 function updateWorry(current, param, threshold) {
   var evalOperand = function (operand) {
-    if (operand) {
-      return operand._0;
-    } else {
+    if (typeof operand !== "object") {
       return current;
+    } else {
+      return operand._0;
     }
   };
   var n = evalOperand(param._1);
-  if (param._0) {
-    return Curry._1(threshold, Math.imul(current, n));
-  } else {
+  if (param._0 === "Plus") {
     return Curry._1(threshold, current + n | 0);
+  } else {
+    return Curry._1(threshold, Math.imul(current, n));
   }
 }
 
@@ -217,9 +219,9 @@ var mIdP = Curry._2(ReludeParse_Parser.Infix.$less$star, Curry._2(ReludeParse_Pa
 
 var startingP = Curry._2(ReludeParse_Parser.Infix.$less$star, Curry._2(ReludeParse_Parser.Infix.$star$great, ReludeParse_Parser.str("  Starting items: "), ReludeParse_Parser.sepBy(ReludeParse_Parser.str(", "), ReludeParse_Parser.anyInt)), ReludeParse_Parser.eol);
 
-var opP = Curry._2(ReludeParse_Parser.Infix.$less$pipe$great, Curry._2(ReludeParse_Parser.Infix.$less$, /* Plus */0, ReludeParse_Parser.str("+")), Curry._2(ReludeParse_Parser.Infix.$less$, /* Times */1, ReludeParse_Parser.str("*")));
+var opP = Curry._2(ReludeParse_Parser.Infix.$less$pipe$great, Curry._2(ReludeParse_Parser.Infix.$less$, "Plus", ReludeParse_Parser.str("+")), Curry._2(ReludeParse_Parser.Infix.$less$, "Times", ReludeParse_Parser.str("*")));
 
-var operandP = Curry._2(ReludeParse_Parser.Infix.$less$pipe$great, Curry._2(ReludeParse_Parser.Infix.$less$$great, makeLiteral, ReludeParse_Parser.anyInt), Curry._2(ReludeParse_Parser.Infix.$less$, /* Old */0, ReludeParse_Parser.str("old")));
+var operandP = Curry._2(ReludeParse_Parser.Infix.$less$pipe$great, Curry._2(ReludeParse_Parser.Infix.$less$$great, makeLiteral, ReludeParse_Parser.anyInt), Curry._2(ReludeParse_Parser.Infix.$less$, "Old", ReludeParse_Parser.str("old")));
 
 var expressionP = Curry._2(ReludeParse_Parser.Infix.$less$star$great, Curry._2(ReludeParse_Parser.Infix.$less$$great, makeExpression, Curry._2(ReludeParse_Parser.Infix.$less$star, opP, ReludeParse_Parser.str(" "))), operandP);
 
@@ -235,7 +237,8 @@ function mkMonkeyPair(mId, holding, operation, test, trueTarget, falseTarget) {
   return [
           [
             mId,
-            /* MonkeyCode */{
+            {
+              TAG: "MonkeyCode",
               operation: operation,
               test: test,
               trueTarget: trueTarget,

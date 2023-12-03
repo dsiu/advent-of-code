@@ -45,27 +45,27 @@ Jest.describe("2018 Day2", (function (param) {
                 Jest.test("diffOfTwoCharStr", (function (param) {
                         var expected = [
                           {
-                            TAG: /* Match */0,
+                            TAG: "Match",
                             _0: "a"
                           },
                           {
-                            TAG: /* Match */0,
+                            TAG: "Match",
                             _0: "b"
                           },
                           {
-                            TAG: /* Match */0,
+                            TAG: "Match",
                             _0: "c"
                           },
                           {
-                            TAG: /* Match */0,
+                            TAG: "Match",
                             _0: "d"
                           },
                           {
-                            TAG: /* Match */0,
+                            TAG: "Match",
                             _0: "e"
                           },
                           {
-                            TAG: /* NotMatch */1,
+                            TAG: "NotMatch",
                             _0: "f",
                             _1: "g"
                           }

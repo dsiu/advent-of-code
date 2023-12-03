@@ -34,15 +34,18 @@ module TrickShot = {
     | Miss(trajectory)
 
   let toString = (r: launchResult) => {
-    let trajectory_str = Array.map(_, ((x, y)) => j`($x, $y)\n`)
+    let trajectory_str = Array.map(_, ((x, y)) => `(${x->Int.toString}, ${y->Int.toString})\n`)
     switch r {
     | Hit((x, y), t) => {
         let t_str = t->trajectory_str
-        j`Hit: ($x, $y) | trajectory: [$t_str]`
+        `Hit: (${x->Int.toString}, ${y->Int.toString}) | trajectory: [${t_str->Utils.Printable.Array.toString(
+            _,
+            str => str,
+          )}]`
       }
     | Miss(t) => {
         let t_str = t->trajectory_str
-        j`Miss: trajectory: [$t_str]`
+        `Miss: trajectory: [${t_str->Utils.Printable.Array.toString(_, str => str)}]`
       }
     }
   }
@@ -71,7 +74,7 @@ module TrickShot = {
     let result = ref(([]: array<(velocity, launchResult)>))
     for x in vx_start to vx_end {
       for y in vy_start to vy_end {
-        let v = {x: x, y: y}
+        let v = {x, y}
         let r = launch(v, target)
         switch r {
         | Hit(_) => result := Array.concat(result.contents, [(v, r)])
@@ -117,7 +120,7 @@ let parse = (data): target => {
     x_str->Str.replace("x=", "")->Str.split("..")->Array.map(x => x->intFromStringExn)
   let [y_min, y_max] =
     y_str->Str.replace("y=", "")->Str.split("..")->Array.map(y => y->intFromStringExn)
-  {x_min: x_min, x_max: x_max, y_min: y_min, y_max: y_max}
+  {x_min, x_max, y_min, y_max}
 }
 
 let solvePart1 = data => {

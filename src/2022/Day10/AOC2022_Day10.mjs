@@ -12,13 +12,13 @@ function log(prim) {
 }
 
 function applyOp(op) {
-  if (op) {
+  if (typeof op !== "object") {
+    return [0];
+  } else {
     return [
             0,
             op._0
           ];
-  } else {
-    return [0];
   }
 }
 
@@ -81,7 +81,7 @@ function parse(data) {
   return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
                 var l = x.trim();
                 if (l.startsWith("noop")) {
-                  return /* Noop */0;
+                  return "Noop";
                 }
                 var match = l.split(" ");
                 if (match.length !== 2) {
@@ -96,7 +96,8 @@ function parse(data) {
                       };
                 }
                 var v = match[1];
-                return /* Addx */{
+                return {
+                        TAG: "Addx",
                         _0: Caml_format.int_of_string(v)
                       };
               }));

@@ -58,7 +58,8 @@ function part2(rucksacks) {
 
 function mkRucksack(xs) {
   var mid = (xs.length >> 1);
-  return /* Rucksack */{
+  return {
+          TAG: "Rucksack",
           _0: Belt_Array.slice(xs, 0, mid),
           _1: Belt_Array.slice(xs, mid, mid)
         };

@@ -1,4 +1,5 @@
-open Jest2
+open Jest
+open Expect
 
 //open Belt
 
@@ -11,7 +12,7 @@ describe("2020 Day11", () => {
 
   describe("SeatMap", () => {
     open SeatMap
-    let getAdj_tests = [
+    let getAdj_tests = list{
       (seats->getAdjacents((0, 0)), [#".", #L, #L]),
       (seats->getAdjacents((1, 0)), [#L, #L, #L, #L, #L]),
       (seats->getAdjacents((2, 0)), [#".", #L, #L, #L, #L]),
@@ -20,11 +21,15 @@ describe("2020 Day11", () => {
       (seats->getAdjacents((0, 9)), [#L, #".", #"."]),
       (seats->getAdjacents((8, 9)), [#L, #".", #L, #".", #L]),
       (seats->getAdjacents((9, 9)), [#".", #L, #L]),
-    ]
+    }
 
-    testEach2("getAdjacents", getAdj_tests, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "getAdjacents",
+      getAdj_tests,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
   })
 
   describe("next seat given a direction", () => {
@@ -44,7 +49,7 @@ describe("2020 Day11", () => {
 
     let init_1 = (3, 4)
 
-    let nextSeat_test1 = [
+    let nextSeat_test1 = list{
       (nextSeatIn(. map, init_1, stepN), #"#"),
       (nextSeatIn(. map, init_1, stepE), #"#"),
       (nextSeatIn(. map, init_1, stepS), #"#"),
@@ -53,14 +58,18 @@ describe("2020 Day11", () => {
       (nextSeatIn(. map, init_1, stepNW), #"#"),
       (nextSeatIn(. map, init_1, stepSE), #"#"),
       (nextSeatIn(. map, init_1, stepSW), #"#"),
-    ]
+    }
 
-    testEach2("test 1", nextSeat_test1, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "test 1",
+      nextSeat_test1,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
 
     let init_2 = (3, 5)
-    let nextSeat_test2 = [
+    let nextSeat_test2 = list{
       (nextSeatIn(. map, init_2, stepN), #L),
       (nextSeatIn(. map, init_2, stepE), #"#"),
       (nextSeatIn(. map, init_2, stepS), #"#"),
@@ -69,14 +78,18 @@ describe("2020 Day11", () => {
       (nextSeatIn(. map, init_2, stepNW), #"#"),
       (nextSeatIn(. map, init_2, stepSE), #"."),
       (nextSeatIn(. map, init_2, stepSW), #"."),
-    ]
+    }
 
-    testEach2("test 2", nextSeat_test2, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "test 2",
+      nextSeat_test2,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
 
     let init_3 = (0, 0)
-    let nextSeat_test3 = [
+    let nextSeat_test3 = list{
       (nextSeatIn(. map, init_3, stepN), #"."),
       (nextSeatIn(. map, init_3, stepE), #"#"),
       (nextSeatIn(. map, init_3, stepS), #"#"),
@@ -85,15 +98,19 @@ describe("2020 Day11", () => {
       (nextSeatIn(. map, init_3, stepNW), #"."),
       (nextSeatIn(. map, init_3, stepSE), #"."),
       (nextSeatIn(. map, init_3, stepSW), #"."),
-    ]
+    }
 
-    testEach2("test 3", nextSeat_test3, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "test 3",
+      nextSeat_test3,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
 
     let init_4 = (4, 4)
 
-    let nextSeat_test4 = [
+    let nextSeat_test4 = list{
       (nextSeatIn(. map, init_4, stepN), #"."),
       (nextSeatIn(. map, init_4, stepE), #"#"),
       (nextSeatIn(. map, init_4, stepS), #"#"),
@@ -102,25 +119,33 @@ describe("2020 Day11", () => {
       (nextSeatIn(. map, init_4, stepNW), #"."),
       (nextSeatIn(. map, init_4, stepSE), #"."),
       (nextSeatIn(. map, init_4, stepSW), #"."),
-    ]
+    }
 
-    testEach2("test 4", nextSeat_test4, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "test 4",
+      nextSeat_test4,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
 
     let data_2 = `.............
                   .L.L.#.#.#.#.
                   .............`
     let map_2 = data_2->parse
-    let nextSeat_test5 = [
+    let nextSeat_test5 = list{
       (nextSeatIn(. map_2, (1, 1), stepE), #L),
       (nextSeatIn(. map_2, (3, 1), stepE), #"#"),
       (nextSeatIn(. map_2, (3, 1), stepW), #L),
-    ]
+    }
 
-    testEach2("test 5", nextSeat_test5, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "test 5",
+      nextSeat_test5,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
   })
 
   test("Part 1 - Sample Data", () => {

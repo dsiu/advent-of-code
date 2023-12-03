@@ -7,7 +7,8 @@ import * as StringLabels from "rescript/lib/es6/stringLabels.js";
 
 function make(f, init) {
   var match = Curry._1(f, init);
-  return /* Node */{
+  return {
+          TAG: "Node",
           _0: [
             match[0],
             ListLabels.map((function (param) {
@@ -83,7 +84,8 @@ function flatten(t) {
 
 function map(f, param) {
   var match = param._0;
-  return /* Node */{
+  return {
+          TAG: "Node",
           _0: [
             Curry._1(f, match[0]),
             ListLabels.map((function (param) {

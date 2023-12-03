@@ -183,7 +183,8 @@ function sequenceN(parser, n) {
 }
 
 function sequenceN_(parser, n) {
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: (function (input) {
               var _i = n;
               var _input = input;
@@ -194,7 +195,7 @@ function sequenceN_(parser, n) {
                 var i = _i;
                 if (i <= 0) {
                   return {
-                          TAG: /* Ok */0,
+                          TAG: "Ok",
                           _0: [
                             Belt_List.reverse(result),
                             input$1
@@ -202,9 +203,9 @@ function sequenceN_(parser, n) {
                         };
                 }
                 var msg = Res_parser.runOnInput(parser, input$1);
-                if (msg.TAG !== /* Ok */0) {
+                if (msg.TAG !== "Ok") {
                   return {
-                          TAG: /* Error */1,
+                          TAG: "Error",
                           _0: msg._0
                         };
                 }
@@ -246,20 +247,23 @@ var binDigits_11_int = Res_parser.map(binDigits_11, binCharListToInt);
 var binDigits_11_str = Res_parser.map(binDigits_11, binCharListToStr);
 
 var version = Res_parser.map(binDigits_3_int, (function (x) {
-        return /* Version */{
+        return {
+                TAG: "Version",
                 _0: x
               };
       }));
 
 var typeId = Res_parser.map(binDigits_3_int, (function (x) {
-        return /* TypeID */{
+        return {
+                TAG: "TypeID",
                 _0: x
               };
       }));
 
 var literalTypeId = Res_parser.map(Res_parser.andThen(Res_parser.andThen(Res_parser.$$char(/* '1' */49), Res_parser.$$char(/* '0' */48)), Res_parser.$$char(/* '0' */48)), (function (param) {
         var match = param[0];
-        return /* TypeID */{
+        return {
+                TAG: "TypeID",
                 _0: parseInt(binCharArrayToStr([
                           match[0],
                           match[1],
@@ -276,19 +280,20 @@ var packet = Res_parser.makeRecursive(function (p) {
       var literal_payload = Res_parser.andThen(Res_parser.many(oneAndFourBit), zeroAndFourBit);
       var literalPayload = Res_parser.map(literal_payload, (function (param) {
               return {
-                      TAG: /* Literal */0,
+                      TAG: "Literal",
                       _0: binStrToInt64(Belt_List.reduce(param[0], "", (function (a, param) {
                                   return a + param[1];
                                 })) + param[1][1])
                     };
             }));
       var opPayloadType0 = function (parser) {
-        return /* Parser */{
+        return {
+                TAG: "Parser",
                 _0: (function (input) {
                     var result = Res_parser.runOnInput(parser, input);
-                    if (result.TAG !== /* Ok */0) {
+                    if (result.TAG !== "Ok") {
                       return {
-                              TAG: /* Error */1,
+                              TAG: "Error",
                               _0: result._0
                             };
                     }
@@ -296,17 +301,17 @@ var packet = Res_parser.makeRecursive(function (p) {
                     var p1Result = match[0];
                     var reminderPackets = Res_parser.map(sequenceN_(binDigit, p1Result[1]), binCharListToStr);
                     var reminderResult = Res_parser.runOnInput(reminderPackets, match[1]);
-                    if (reminderResult.TAG !== /* Ok */0) {
+                    if (reminderResult.TAG !== "Ok") {
                       return {
-                              TAG: /* Error */1,
+                              TAG: "Error",
                               _0: reminderResult._0
                             };
                     }
                     var match$1 = reminderResult._0;
                     var packetsResult = Res_parser.run(Res_parser.many(p), match$1[0]);
-                    if (packetsResult.TAG === /* Ok */0) {
+                    if (packetsResult.TAG === "Ok") {
                       return {
-                              TAG: /* Ok */0,
+                              TAG: "Ok",
                               _0: [
                                 [
                                   p1Result,
@@ -317,7 +322,7 @@ var packet = Res_parser.makeRecursive(function (p) {
                             };
                     } else {
                       return {
-                              TAG: /* Error */1,
+                              TAG: "Error",
                               _0: packetsResult._0
                             };
                     }
@@ -325,12 +330,13 @@ var packet = Res_parser.makeRecursive(function (p) {
               };
       };
       var opPayloadType1 = function (parser) {
-        return /* Parser */{
+        return {
+                TAG: "Parser",
                 _0: (function (input) {
                     var result = Res_parser.runOnInput(parser, input);
-                    if (result.TAG !== /* Ok */0) {
+                    if (result.TAG !== "Ok") {
                       return {
-                              TAG: /* Error */1,
+                              TAG: "Error",
                               _0: result._0
                             };
                     }
@@ -340,15 +346,15 @@ var packet = Res_parser.makeRecursive(function (p) {
                                 return p;
                               })));
                     var reminderPacketsResult = Res_parser.runOnInput(reminderPackets, match[1]);
-                    if (reminderPacketsResult.TAG !== /* Ok */0) {
+                    if (reminderPacketsResult.TAG !== "Ok") {
                       return {
-                              TAG: /* Error */1,
+                              TAG: "Error",
                               _0: reminderPacketsResult._0
                             };
                     }
                     var match$1 = reminderPacketsResult._0;
                     return {
-                            TAG: /* Ok */0,
+                            TAG: "Ok",
                             _0: [
                               [
                                 p1Result,
@@ -372,7 +378,7 @@ var packet = Res_parser.makeRecursive(function (p) {
               var len_type = match[0];
               if (len_type === 48) {
                 return {
-                        TAG: /* Op_Len_Kind_0 */1,
+                        TAG: "Op_Len_Kind_0",
                         _0: len,
                         _1: rest_packets
                       };
@@ -385,7 +391,7 @@ var packet = Res_parser.makeRecursive(function (p) {
                     };
               }
               return {
-                      TAG: /* Op_Len_Kind_1 */2,
+                      TAG: "Op_Len_Kind_1",
                       _0: len,
                       _1: rest_packets
                     };
@@ -397,7 +403,8 @@ var packet = Res_parser.makeRecursive(function (p) {
                           operatorAndPayload
                         ])), (function (param) {
                     var match = param[1];
-                    return /* Packet */{
+                    return {
+                            TAG: "Packet",
                             _0: param[0],
                             _1: match[0],
                             _2: match[1]
@@ -414,15 +421,15 @@ function dumpPacket(p) {
                   return a + "\n    " + dumpPacket(p);
                 }));
   };
-  switch (p$1.TAG | 0) {
-    case /* Literal */0 :
-        return "ver = " + version + " | typeId = " + typeId + " | literal payload = " + p$1._0;
-    case /* Op_Len_Kind_0 */1 :
+  switch (p$1.TAG) {
+    case "Literal" :
+        return "ver = " + String(version) + " | typeId = " + String(typeId) + " | literal payload = " + Int64.to_string(p$1._0);
+    case "Op_Len_Kind_0" :
         var sub_packets_str = rest_packet_str(p$1._1);
-        return "{ ver = " + version + " | typeId = " + typeId + " | op payload = type_0(n_bits: " + p$1._0 + ", " + sub_packets_str + ") }\n";
-    case /* Op_Len_Kind_1 */2 :
+        return "{ ver = " + String(version) + " | typeId = " + String(typeId) + " | op payload = type_0(n_bits: " + String(p$1._0) + ", " + sub_packets_str + ") }\n";
+    case "Op_Len_Kind_1" :
         var sub_packets_str$1 = rest_packet_str(p$1._1);
-        return "{ ver = " + version + " | typeId = " + typeId + " | op payload = type_1(n_packats: " + p$1._0 + ", " + sub_packets_str$1 + ") }\n";
+        return "{ ver = " + String(version) + " | typeId = " + String(typeId) + " | op payload = type_1(n_packats: " + String(p$1._0) + ", " + sub_packets_str$1 + ") }\n";
     
   }
 }
@@ -431,11 +438,11 @@ function version_sum(p) {
   var inner = function (p, sum) {
     var payload = p._2;
     var version = p._0._0;
-    switch (payload.TAG | 0) {
-      case /* Literal */0 :
+    switch (payload.TAG) {
+      case "Literal" :
           return sum + version | 0;
-      case /* Op_Len_Kind_0 */1 :
-      case /* Op_Len_Kind_1 */2 :
+      case "Op_Len_Kind_0" :
+      case "Op_Len_Kind_1" :
           break;
       
     }
@@ -479,8 +486,9 @@ var Packet = {
 
 function intVal(x) {
   return {
-          TAG: /* Value */0,
-          _0: /* Int */{
+          TAG: "Value",
+          _0: {
+            TAG: "Int",
             _0: Caml_int64.of_int32(x)
           }
         };
@@ -491,18 +499,18 @@ function eval_value(v) {
 }
 
 function $$eval(e) {
-  switch (e.TAG | 0) {
-    case /* Value */0 :
+  switch (e.TAG) {
+    case "Value" :
         return e._0._0;
-    case /* Sum */1 :
+    case "Sum" :
         return Belt_List.reduce(e._0, Int64.zero, (function (a, v) {
                       return Caml_int64.add(a, $$eval(v));
                     }));
-    case /* Product */2 :
+    case "Product" :
         return Belt_List.reduce(e._0, Int64.one, (function (a, v) {
                       return Caml_int64.mul(a, $$eval(v));
                     }));
-    case /* Min */3 :
+    case "Min" :
         return Belt_List.reduce(e._0, Int64.max_int, (function (a, v) {
                       var v$p = $$eval(v);
                       if (Int64.compare(v$p, a) < 0) {
@@ -511,7 +519,7 @@ function $$eval(e) {
                         return a;
                       }
                     }));
-    case /* Max */4 :
+    case "Max" :
         return Belt_List.reduce(e._0, Int64.min_int, (function (a, v) {
                       var v$p = $$eval(v);
                       if (Int64.compare(v$p, a) > 0) {
@@ -520,19 +528,19 @@ function $$eval(e) {
                         return a;
                       }
                     }));
-    case /* Greater */5 :
+    case "Greater" :
         if (Int64.compare($$eval(e._0), $$eval(e._1)) > 0) {
           return Int64.one;
         } else {
           return Int64.zero;
         }
-    case /* Less */6 :
+    case "Less" :
         if (Int64.compare($$eval(e._0), $$eval(e._1)) < 0) {
           return Int64.one;
         } else {
           return Int64.zero;
         }
-    case /* Equal */7 :
+    case "Equal" :
         if (Int64.compare($$eval(e._0), $$eval(e._1)) === 0) {
           return Int64.one;
         } else {
@@ -543,39 +551,39 @@ function $$eval(e) {
 }
 
 function toString(e) {
-  switch (e.TAG | 0) {
-    case /* Value */0 :
+  switch (e.TAG) {
+    case "Value" :
         var v$p = e._0._0;
-        return " Value=" + v$p + ";";
-    case /* Sum */1 :
+        return " Value=" + Int64.to_string(v$p) + ";";
+    case "Sum" :
         var v$p$1 = Belt_List.reduce(e._0, "", (function (a, v) {
                 return a + toString(v);
               }));
         return "Sum:{ " + v$p$1 + " }";
-    case /* Product */2 :
+    case "Product" :
         var v$p$2 = Belt_List.reduce(e._0, "", (function (a, v) {
                 return a + toString(v);
               }));
         return "Product:{ " + v$p$2 + " }";
-    case /* Min */3 :
+    case "Min" :
         var v$p$3 = Belt_List.reduce(e._0, "", (function (a, v) {
                 return a + toString(v);
               }));
         return "Min:{ " + v$p$3 + " }";
-    case /* Max */4 :
+    case "Max" :
         var v$p$4 = Belt_List.reduce(e._0, "", (function (a, v) {
                 return a + toString(v);
               }));
         return "Max:{ " + v$p$4 + " }";
-    case /* Greater */5 :
+    case "Greater" :
         var v1 = toString(e._0);
         var v2 = toString(e._1);
         return "Greater:{ " + v1 + ", " + v2 + " }";
-    case /* Less */6 :
+    case "Less" :
         var v1$1 = toString(e._0);
         var v2$1 = toString(e._1);
         return "LessThan:{ " + v1$1 + ", " + v2$1 + " }";
-    case /* Equal */7 :
+    case "Equal" :
         var v1$2 = toString(e._0);
         var v2$2 = toString(e._1);
         return "Equal:{ " + v1$2 + ", " + v2$2 + " }";
@@ -585,16 +593,17 @@ function toString(e) {
 
 function makeFromPacket(p) {
   var p$1 = p._2;
-  switch (p$1.TAG | 0) {
-    case /* Literal */0 :
+  switch (p$1.TAG) {
+    case "Literal" :
         return {
-                TAG: /* Value */0,
-                _0: /* Int */{
+                TAG: "Value",
+                _0: {
+                  TAG: "Int",
                   _0: p$1._0
                 }
               };
-    case /* Op_Len_Kind_0 */1 :
-    case /* Op_Len_Kind_1 */2 :
+    case "Op_Len_Kind_0" :
+    case "Op_Len_Kind_1" :
         break;
     
   }
@@ -602,22 +611,22 @@ function makeFromPacket(p) {
   switch (p._1._0) {
     case 0 :
         return {
-                TAG: /* Sum */1,
+                TAG: "Sum",
                 _0: Belt_List.map(rest, makeFromPacket)
               };
     case 1 :
         return {
-                TAG: /* Product */2,
+                TAG: "Product",
                 _0: Belt_List.map(rest, makeFromPacket)
               };
     case 2 :
         return {
-                TAG: /* Min */3,
+                TAG: "Min",
                 _0: Belt_List.map(rest, makeFromPacket)
               };
     case 3 :
         return {
-                TAG: /* Max */4,
+                TAG: "Max",
                 _0: Belt_List.map(rest, makeFromPacket)
               };
     case 4 :
@@ -628,19 +637,19 @@ function makeFromPacket(p) {
             };
     case 5 :
         return {
-                TAG: /* Greater */5,
+                TAG: "Greater",
                 _0: makeFromPacket(Belt_List.headExn(rest)),
                 _1: makeFromPacket(Belt_List.headExn(Belt_List.tailExn(rest)))
               };
     case 6 :
         return {
-                TAG: /* Less */6,
+                TAG: "Less",
                 _0: makeFromPacket(Belt_List.headExn(rest)),
                 _1: makeFromPacket(Belt_List.headExn(Belt_List.tailExn(rest)))
               };
     case 7 :
         return {
-                TAG: /* Equal */7,
+                TAG: "Equal",
                 _0: makeFromPacket(Belt_List.headExn(rest)),
                 _1: makeFromPacket(Belt_List.headExn(Belt_List.tailExn(rest)))
               };
@@ -669,7 +678,7 @@ function solvePart1(data) {
   var d = hexStrToBinStr(data);
   var l = Res_parser.run(packet, d);
   var p = Belt_Result.getExn(l)[0];
-  if (l.TAG === /* Ok */0) {
+  if (l.TAG === "Ok") {
     return version_sum(p);
   }
   console.log(l._0);
@@ -681,7 +690,7 @@ function solvePart2(data) {
   var d = hexStrToBinStr(data);
   var l = Res_parser.run(packet, d);
   var p = Belt_Result.getExn(l)[0];
-  if (l.TAG === /* Ok */0) {
+  if (l.TAG === "Ok") {
     var e = makeFromPacket(p);
     return Int64.to_string($$eval(e));
   }
@@ -692,8 +701,6 @@ function solvePart2(data) {
 
 var P;
 
-var Rjs;
-
 var $$BigInt$1;
 
 export {
@@ -701,7 +708,6 @@ export {
   log2 ,
   log3 ,
   P ,
-  Rjs ,
   $$BigInt$1 as $$BigInt,
   binStrToInt64 ,
   hexTable ,

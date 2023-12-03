@@ -6,7 +6,8 @@ import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.m
 
 function MakeStack(Item) {
   var push = function (contents, x) {
-    return /* Contents */{
+    return {
+            TAG: "Contents",
             _0: {
               hd: x,
               tl: contents._0
@@ -16,7 +17,8 @@ function MakeStack(Item) {
   var pop = function (contents) {
     var contents$1 = contents._0;
     if (contents$1) {
-      var newStack = /* Contents */{
+      var newStack = {
+        TAG: "Contents",
         _0: contents$1.tl
       };
       return [
@@ -61,7 +63,8 @@ function MakeStack(Item) {
   var drop = function (stack) {
     return pop(stack)[1];
   };
-  var empty = /* Contents */{
+  var empty = {
+    TAG: "Contents",
     _0: /* [] */0
   };
   var one = function (__x) {
@@ -175,7 +178,8 @@ var IntOps = {
 };
 
 function push(contents, x) {
-  return /* Contents */{
+  return {
+          TAG: "Contents",
           _0: {
             hd: x,
             tl: contents._0
@@ -186,7 +190,8 @@ function push(contents, x) {
 function pop(contents) {
   var contents$1 = contents._0;
   if (contents$1) {
-    var newStack = /* Contents */{
+    var newStack = {
+      TAG: "Contents",
       _0: contents$1.tl
     };
     return [
@@ -239,7 +244,8 @@ function drop(stack) {
   return pop(stack)[1];
 }
 
-var empty = /* Contents */{
+var empty = {
+  TAG: "Contents",
   _0: /* [] */0
 };
 
@@ -368,7 +374,8 @@ var FloatOps = {
 };
 
 function push$1(contents, x) {
-  return /* Contents */{
+  return {
+          TAG: "Contents",
           _0: {
             hd: x,
             tl: contents._0
@@ -379,7 +386,8 @@ function push$1(contents, x) {
 function pop$1(contents) {
   var contents$1 = contents._0;
   if (contents$1) {
-    var newStack = /* Contents */{
+    var newStack = {
+      TAG: "Contents",
       _0: contents$1.tl
     };
     return [
@@ -432,7 +440,8 @@ function drop$1(stack) {
   return pop$1(stack)[1];
 }
 
-var empty$1 = /* Contents */{
+var empty$1 = {
+  TAG: "Contents",
   _0: /* [] */0
 };
 

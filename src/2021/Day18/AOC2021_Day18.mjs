@@ -24,7 +24,7 @@ function log3(prim0, prim1, prim2) {
 function splittable(t) {
   var splittableC = function (loc) {
     var n = loc._0;
-    if (n.TAG === /* Leaf */0) {
+    if (n.TAG === "Leaf") {
       if (n._0 >= 10) {
         return loc;
       } else {
@@ -43,19 +43,19 @@ function split(num) {
     return ;
   }
   var sn = mn0._0;
-  if (sn.TAG === /* Leaf */0) {
+  if (sn.TAG === "Leaf") {
     var sn$1 = sn._0;
     var ln = sn$1 / 2 | 0;
     var rn = ln + sn$1 % 2 | 0;
     var n1 = Tree$AdventOfCode.modify(mn0, (function (param) {
             return {
-                    TAG: /* Pair */1,
+                    TAG: "Pair",
                     _0: {
-                      TAG: /* Leaf */0,
+                      TAG: "Leaf",
                       _0: ln
                     },
                     _1: {
-                      TAG: /* Leaf */0,
+                      TAG: "Leaf",
                       _0: rn
                     }
                   };
@@ -67,7 +67,7 @@ function split(num) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day18.res",
-          54,
+          53,
           12
         ],
         Error: new Error()
@@ -75,7 +75,7 @@ function split(num) {
 }
 
 function pairAtDepthC(n, l) {
-  if (l._0.TAG === /* Leaf */0) {
+  if (l._0.TAG === "Leaf") {
     return ;
   } else if (n !== 0) {
     return Stdlib_Option.optionOr(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l)));
@@ -91,7 +91,7 @@ function pairAtDepth(n, t) {
 function rightmostNum(_loc) {
   while(true) {
     var loc = _loc;
-    if (loc._0.TAG === /* Leaf */0) {
+    if (loc._0.TAG === "Leaf") {
       return loc;
     }
     _loc = Tree$AdventOfCode.right(loc);
@@ -103,10 +103,10 @@ function rightmostOnLeft(_loc) {
   while(true) {
     var loc = _loc;
     var tmp = loc._1;
-    if (typeof tmp === "number") {
+    if (typeof tmp !== "object") {
       return ;
     }
-    if (tmp.TAG !== /* L */0) {
+    if (tmp.TAG !== "L") {
       return rightmostNum(Tree$AdventOfCode.left(Tree$AdventOfCode.up(loc)));
     }
     _loc = Tree$AdventOfCode.up(loc);
@@ -117,7 +117,7 @@ function rightmostOnLeft(_loc) {
 function leftmostNum(_loc) {
   while(true) {
     var loc = _loc;
-    if (loc._0.TAG === /* Leaf */0) {
+    if (loc._0.TAG === "Leaf") {
       return loc;
     }
     _loc = Tree$AdventOfCode.left(loc);
@@ -129,10 +129,10 @@ function leftmostOnRight(_loc) {
   while(true) {
     var loc = _loc;
     var tmp = loc._1;
-    if (typeof tmp === "number") {
+    if (typeof tmp !== "object") {
       return ;
     }
-    if (tmp.TAG === /* L */0) {
+    if (tmp.TAG === "L") {
       return leftmostNum(Tree$AdventOfCode.right(Tree$AdventOfCode.up(loc)));
     }
     _loc = Tree$AdventOfCode.up(loc);
@@ -146,18 +146,18 @@ function explode(num) {
     return ;
   }
   var match = mp0._0;
-  if (match.TAG !== /* Leaf */0) {
+  if (match.TAG !== "Leaf") {
     var nl = match._0;
-    if (nl.TAG === /* Leaf */0) {
+    if (nl.TAG === "Leaf") {
       var nr = match._1;
       var nl$1 = nl._0;
-      if (nr.TAG === /* Leaf */0) {
+      if (nr.TAG === "Leaf") {
         var nr$1 = nr._0;
         var leftReg = rightmostOnLeft(mp0);
         var p1 = leftReg !== undefined ? Tree$AdventOfCode.modify(leftReg, (function (n) {
-                  if (n.TAG === /* Leaf */0) {
+                  if (n.TAG === "Leaf") {
                     return {
-                            TAG: /* Leaf */0,
+                            TAG: "Leaf",
                             _0: n._0 + nl$1 | 0
                           };
                   }
@@ -165,7 +165,7 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          141,
+                          140,
                           45
                         ],
                         Error: new Error()
@@ -173,9 +173,9 @@ function explode(num) {
                 })) : mp0;
         var rightReg = Belt_Option.flatMap(pairAtDepthC(4, Tree$AdventOfCode.upmost(p1)), leftmostOnRight);
         var p2 = rightReg !== undefined ? Tree$AdventOfCode.modify(rightReg, (function (n) {
-                  if (n.TAG === /* Leaf */0) {
+                  if (n.TAG === "Leaf") {
                     return {
-                            TAG: /* Leaf */0,
+                            TAG: "Leaf",
                             _0: n._0 + nr$1 | 0
                           };
                   }
@@ -183,7 +183,7 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          146,
+                          145,
                           47
                         ],
                         Error: new Error()
@@ -192,7 +192,7 @@ function explode(num) {
         var centrePair = pairAtDepthC(4, Tree$AdventOfCode.upmost(p2));
         var p3 = centrePair !== undefined ? Tree$AdventOfCode.modify(centrePair, (function (param) {
                   return {
-                          TAG: /* Leaf */0,
+                          TAG: "Leaf",
                           _0: 0
                         };
                 })) : p2;
@@ -207,7 +207,7 @@ function explode(num) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day18.res",
-          137,
+          136,
           12
         ],
         Error: new Error()
@@ -228,7 +228,7 @@ function reduce(_num) {
 
 function snailAdd(a, b) {
   return reduce({
-              TAG: /* Pair */1,
+              TAG: "Pair",
               _0: a,
               _1: b
             });
@@ -239,7 +239,7 @@ function total(xs) {
 }
 
 function magnitude(t) {
-  if (t.TAG === /* Leaf */0) {
+  if (t.TAG === "Leaf") {
     return t._0;
   } else {
     return Math.imul(3, magnitude(t._0)) + (magnitude(t._1) << 1) | 0;
@@ -253,7 +253,7 @@ function part1(numbers) {
 function part2(numbers) {
   return Utils$AdventOfCode.maxIntInArray(Stdlib_Array.combination2(numbers, numbers, (function (a, b) {
                     return magnitude(reduce({
-                                    TAG: /* Pair */1,
+                                    TAG: "Pair",
                                     _0: a,
                                     _1: b
                                   }));
@@ -294,7 +294,7 @@ var pair = Res_parser.makeRecursive(function (p) {
       };
       var makeIntElem = function (x) {
         return {
-                TAG: /* Leaf */0,
+                TAG: "Leaf",
                 _0: Utils$AdventOfCode.intFromStringExn(x)
               };
       };
@@ -304,7 +304,7 @@ var pair = Res_parser.makeRecursive(function (p) {
           ]);
       return Res_parser.map(betweenBraces(Res_parser.andThen(Res_parser.keepLeft(pairOrNumber, comma), pairOrNumber)), (function (param) {
                     return {
-                            TAG: /* Pair */1,
+                            TAG: "Pair",
                             _0: param[0],
                             _1: param[1]
                           };
@@ -371,8 +371,6 @@ function solvePart2(data) {
 
 var P;
 
-var Rjs;
-
 var T;
 
 export {
@@ -380,7 +378,6 @@ export {
   log2 ,
   log3 ,
   P ,
-  Rjs ,
   T ,
   SnailFish ,
   parse$1 as parse,

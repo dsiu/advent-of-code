@@ -1,4 +1,6 @@
-open Jest2
+open Jest
+open Expect
+
 open Belt
 
 describe("make", () => {
@@ -50,14 +52,14 @@ describe("get / set", () => {
     s->Array2D.set((1, 1), "h"),
   ]
 
-  let get_string_tests = [
+  let get_string_tests = list{
     (s->Array2D.get((1, 0))->Option.getExn, "f"),
     (s->Array2D.get((0, 1))->Option.getExn, "g"),
     (s->Array2D.get((0, 0))->Option.getExn, "e"),
     (s->Array2D.get((1, 1))->Option.getExn, "h"),
-  ]
+  }
 
-  testEach2("get - string", get_string_tests, (result, expected) => {
+  testAll("get - string", get_string_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 
@@ -72,40 +74,40 @@ describe("get / set", () => {
 
   let b = a->Array2D.copy
 
-  let get_tests = [
+  let get_tests = list{
     (a->Array2D.get((0, 0)), Some(1)),
     (a->Array2D.get((1, 0)), Some(2)),
     (a->Array2D.get((0, 1)), Some(3)),
     (a->Array2D.get((1, 1)), Some(4)),
-  ]
+  }
 
-  testEach2("get - int", get_tests, (result, expected) => {
+  testAll("get - int", get_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 
   let _ = [a->Array2D.set((0, 0), 5), a->Array2D.set((0, 1), 7)]
 
-  let set_tests = [
+  let set_tests = list{
     (a->Array2D.get((0, 0)), Some(5)),
     (a->Array2D.get((1, 0)), Some(2)),
     (a->Array2D.get((0, 1)), Some(7)),
     (a->Array2D.get((1, 1)), Some(4)),
-  ]
+  }
 
-  testEach2("set - int", set_tests, (result, expected) => {
+  testAll("set - int", set_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 
   let _ = [b->Array2D.setYEquals(1, [9, 11])]
 
-  let setYEquals_test = [
+  let setYEquals_test = list{
     (b->Array2D.get((0, 0)), Some(1)),
     (b->Array2D.get((1, 0)), Some(2)),
     (b->Array2D.get((0, 1)), Some(9)),
     (b->Array2D.get((1, 1)), Some(11)),
-  ]
+  }
 
-  testEach2("setYEquals", setYEquals_test, (result, expected) => {
+  testAll("setYEquals", setYEquals_test, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 })
@@ -146,32 +148,32 @@ describe("keep / map / getXYEquals / crop", () => {
     expect(result)->toEqual(expected)
   })
 
-  let getXEquals_tests = [
+  let getXEquals_tests = list{
     (a->Array2D.getXEquals(0), Some([355, 404, 320, 744])),
     (a->Array2D.getXEquals(1), Some([907, 559, 891, 97])),
     (a->Array2D.getXEquals(2), Some([707, 514, 982, 876])),
-  ]
+  }
 
-  testEach2("getXEquals", getXEquals_tests, (result, expected) => {
+  testAll("getXEquals", getXEquals_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 
-  let getYEquals_tests = [
+  let getYEquals_tests = list{
     (a->Array2D.getYEquals(0), Some([355, 907, 707])),
     (a->Array2D.getYEquals(1), Some([404, 559, 514])),
     (a->Array2D.getYEquals(2), Some([320, 891, 982])),
-  ]
+  }
 
-  testEach2("getYEquals", getYEquals_tests, (result, expected) => {
+  testAll("getYEquals", getYEquals_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 
-  let crop_tests = [
+  let crop_tests = list{
     (a->Array2D.crop((1, 2), ~len_x=1, ~len_y=2), [[891], [97]]),
     (a->Array2D.crop((1, 1), ~len_x=2, ~len_y=2), [[559, 514], [891, 982]]),
-  ]
+  }
 
-  testEach2("crop", crop_tests, (result, expected) => {
+  testAll("crop", crop_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 })

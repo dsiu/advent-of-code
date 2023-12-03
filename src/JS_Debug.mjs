@@ -18,11 +18,9 @@ var JSD = {
 
 function make(moduleName) {
   var jsd = Debug(moduleName);
-  var debug$1 = function (message) {
-    debug(jsd, message);
-  };
+  var debug = Curry.__1(jsd);
   return {
-          debug: debug$1
+          debug: debug
         };
 }
 

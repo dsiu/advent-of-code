@@ -55,7 +55,8 @@ function ticketErrorRate(rules, tickets) {
 function isValidTicket(rules, ticket) {
   var rules$1 = rules._0;
   return Belt_Array.every(Belt_Array.map(ticket, (function (__x) {
-                    return validForAnyField(/* RuleSet */{
+                    return validForAnyField({
+                                TAG: "RuleSet",
                                 _0: rules$1
                               }, __x);
                   })), Utils$AdventOfCode.identity);
@@ -75,7 +76,8 @@ function possibleColumns(ticketCols, body) {
 
 function possibleColumnsAll(rules, tickets) {
   var rules$1 = rules._0;
-  var partial_arg = /* RuleSet */{
+  var partial_arg = {
+    TAG: "RuleSet",
     _0: rules$1
   };
   var validTickets = Belt_Array.keep(tickets, (function (param) {
@@ -94,7 +96,8 @@ function reduceCandidate(candidates) {
     };
     return Belt_MapString.findFirstBy(candidates._0, only1Elem);
   };
-  var _c = /* ColCandidateSet */{
+  var _c = {
+    TAG: "ColCandidateSet",
     _0: candidates._0
   };
   var _solved = [];
@@ -102,7 +105,8 @@ function reduceCandidate(candidates) {
     var c = _c;
     var solved = _solved;
     var c$1 = c._0;
-    var match = findNextCandidate(/* ColCandidateSet */{
+    var match = findNextCandidate({
+          TAG: "ColCandidateSet",
           _0: c$1
         });
     if (match === undefined) {
@@ -122,7 +126,8 @@ function reduceCandidate(candidates) {
     }
     }(v$p));
     _solved = solved$p;
-    _c = /* ColCandidateSet */{
+    _c = {
+      TAG: "ColCandidateSet",
       _0: Belt_MapString.map(Belt_MapString.remove(c$1, k), removeFound)
     };
     continue ;
@@ -168,7 +173,8 @@ function parse(data) {
     }
     var a = match[0];
     var b = match[1];
-    return /* Range */{
+    return {
+            TAG: "Range",
             _0: a,
             _1: b
           };
@@ -204,13 +210,15 @@ function parse(data) {
     var r2 = match$1[1];
     return [
             ruleStr,
-            /* Body */{
+            {
+              TAG: "Body",
               _0: r1,
               _1: r2
             }
           ];
   };
-  var ruleSet = /* RuleSet */{
+  var ruleSet = {
+    TAG: "RuleSet",
     _0: Belt_MapString.fromArray(Belt_Array.map(rules, parseRule))
   };
   var parseTicket = function (s) {
@@ -234,7 +242,8 @@ function solvePart2(data) {
   var match = parse(data);
   var myTicket = match[1];
   var pc = possibleColumnsAll(match[0], match[2]);
-  var colMapping = reduceCandidate(/* ColCandidateSet */{
+  var colMapping = reduceCandidate({
+        TAG: "ColCandidateSet",
         _0: pc
       });
   return Belt_Array.reduce(Belt_Array.keepMap(colMapping, (function (param) {

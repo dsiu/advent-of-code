@@ -32,7 +32,7 @@ let parse = data => {
 }
 
 let solvePart2BruteForce = xs => {
-  open ReScriptJs.Js
+  open RescriptCore
 
   let big_zero = BigInt.fromInt(0)
   let big_one = BigInt.fromInt(1)
@@ -66,7 +66,7 @@ let part2 = xs => {
   let rem = ref([])
   let num = ref([])
   xs->Array.forEach(((bus, delta)) => {
-    rem := rem.contents->Array.concat([ReScriptJs.Js.BigInt.sub(bus, delta)])
+    rem := rem.contents->Array.concat([RescriptCore.BigInt.sub(bus, delta)])
     num := num.contents->Array.concat([bus])
   })
 
@@ -89,7 +89,7 @@ let parse2 = data => {
     ->Js.String2.split(",")
     ->Array.reduceWithIndex([], (acc, x, i) => {
       x !== "x"
-        ? acc->Array.concat([(x->ReScriptJs.Js.BigInt.fromString, i->ReScriptJs.Js.BigInt.fromInt)])
+        ? acc->Array.concat([(x->RescriptCore.BigInt.fromString, i->RescriptCore.BigInt.fromInt)])
         : acc
     })
   bus_list

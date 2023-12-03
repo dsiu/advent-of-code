@@ -40,7 +40,8 @@ function getAdjacents(t, param) {
                   param[1]
                 ]), (function (c) {
                 if (Array2D$AdventOfCode.isValidXY(t, c)) {
-                  return /* CoordAndVal */{
+                  return {
+                          TAG: "CoordAndVal",
                           _0: c,
                           _1: Array2D$AdventOfCode.getExn(t, c)
                         };
@@ -71,7 +72,8 @@ function getLowPoints(t) {
                             x,
                             y
                           ]))) {
-                  return Belt_Array.concat(a, [/* CoordAndVal */{
+                  return Belt_Array.concat(a, [{
+                                TAG: "CoordAndVal",
                                 _0: [
                                   x,
                                   y
@@ -86,7 +88,8 @@ function getLowPoints(t) {
 
 function getAllPoints(t) {
   return Array2D$AdventOfCode.reduceWithIndex(t, [], (function (a, p, param) {
-                return Belt_Array.concat(a, [/* CoordAndVal */{
+                return Belt_Array.concat(a, [{
+                              TAG: "CoordAndVal",
                               _0: [
                                 param[0],
                                 param[1]

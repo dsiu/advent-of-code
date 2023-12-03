@@ -18,7 +18,8 @@ var emptyPositionSet = TableclothSet.empty({
     });
 
 function newRope(n) {
-  return /* Rope */{
+  return {
+          TAG: "Rope",
           headK: [
             0,
             0
@@ -38,23 +39,23 @@ var ParseError = /* @__PURE__ */Caml_exceptions.create("AOC2022_Day9-AdventOfCod
 
 function expandPath(directions) {
   var expandStep = function (step) {
-    switch (step.TAG | 0) {
-      case /* U */0 :
+    switch (step.TAG) {
+      case "U" :
           return Stdlib_Array.make(step._0, [
                       0,
                       1
                     ]);
-      case /* R */1 :
+      case "R" :
           return Stdlib_Array.make(step._0, [
                       1,
                       0
                     ]);
-      case /* D */2 :
+      case "D" :
           return Stdlib_Array.make(step._0, [
                       0,
                       -1
                     ]);
-      case /* L */3 :
+      case "L" :
           return Stdlib_Array.make(step._0, [
                       -1,
                       0
@@ -99,7 +100,8 @@ function ropeStep(rope, step) {
         h,
         []
       ], knotStep);
-  return /* Rope */{
+  return {
+          TAG: "Rope",
           headK: h,
           knots: Stdlib_Array.reverse(match[1]),
           trace: TableclothSet.add(rope.trace, match[0])
@@ -140,22 +142,22 @@ function parse(data) {
                 switch (dStr) {
                   case "D" :
                       return {
-                              TAG: /* D */2,
+                              TAG: "D",
                               _0: match$1
                             };
                   case "L" :
                       return {
-                              TAG: /* L */3,
+                              TAG: "L",
                               _0: match$1
                             };
                   case "R" :
                       return {
-                              TAG: /* R */1,
+                              TAG: "R",
                               _0: match$1
                             };
                   case "U" :
                       return {
-                              TAG: /* U */0,
+                              TAG: "U",
                               _0: match$1
                             };
                   default:

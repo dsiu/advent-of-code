@@ -60,7 +60,7 @@ function Make(BASE) {
       contents: ""
     };
     Belt_MutableMapString.forEachU(t, (function (k, v) {
-            str.contents = "" + str.contents + "" + k + ": [ " + Curry._1(containerToArray, v).join(",") + " ]\n";
+            str.contents = str.contents + k + ": [ " + Curry._1(containerToArray, v).join(",") + " ]\n";
           }));
     return str.contents;
   };
@@ -82,7 +82,7 @@ function addVertex(t, x) {
   if (match !== undefined) {
     return ;
   } else {
-    return Belt_MutableMapString.set(t, x, Belt_MutableSetString.make(undefined));
+    return Belt_MutableMapString.set(t, x, Belt_MutableSetString.make());
   }
 }
 
@@ -121,7 +121,7 @@ function adjacent(t, x, y) {
 }
 
 function neighbors(t, x) {
-  return Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), Belt_MutableSetString.make(undefined));
+  return Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), Belt_MutableSetString.make());
 }
 
 function toString(t) {
@@ -129,7 +129,7 @@ function toString(t) {
     contents: ""
   };
   Belt_MutableMapString.forEachU(t, (function (k, v) {
-          str.contents = "" + str.contents + "" + k + ": [ " + Belt_MutableSetString.toArray(v).join(",") + " ]\n";
+          str.contents = str.contents + k + ": [ " + Belt_MutableSetString.toArray(v).join(",") + " ]\n";
         }));
   return str.contents;
 }
@@ -225,7 +225,7 @@ function toString$1(t) {
     contents: ""
   };
   Belt_MutableMapString.forEachU(t, (function (k, v) {
-          str.contents = "" + str.contents + "" + k + ": [ " + Belt_MutableSet.toArray(v).join(",") + " ]\n";
+          str.contents = str.contents + k + ": [ " + Belt_MutableSet.toArray(v).join(",") + " ]\n";
         }));
   return str.contents;
 }

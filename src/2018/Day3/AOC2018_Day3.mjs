@@ -125,7 +125,7 @@ function make$2(w, h) {
           w: w,
           h: h,
           matrix: Belt_Array.reduce(Belt_Array.range(0, w), undefined, (function (acc, i) {
-                  return Belt_MapInt.set(acc, i, Belt_MutableMapInt.make(undefined));
+                  return Belt_MapInt.set(acc, i, Belt_MutableMapInt.make());
                 }))
         };
 }
@@ -133,7 +133,7 @@ function make$2(w, h) {
 function toString(t) {
   Belt_MapInt.forEach(t.matrix, (function (x, col) {
           Belt_MutableMapInt.forEach(col, (function (y, vs) {
-                  console.log("x:" + String(x) + " y:" + String(y) + "");
+                  console.log("x:" + String(x) + " y:" + String(y));
                   Belt_Array.forEach(vs, (function (v) {
                           console.log("  " + String(v));
                         }));

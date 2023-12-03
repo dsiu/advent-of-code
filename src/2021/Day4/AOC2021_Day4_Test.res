@@ -1,4 +1,6 @@
-open Jest2
+open Jest
+open Expect
+
 //open Belt
 
 let data = AOC2021_Day4_Data.data
@@ -14,7 +16,7 @@ describe("2021 Day4", () => {
              2  0 12  3  7`
     let board = b->Utils.splitNewline->Board.make
 
-    let board_tests = [
+    let board_tests = list{
       (
         board->Board.solve([7, 3, 0, 12, 2]),
         Some([4, 5, 6, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26]),
@@ -31,11 +33,15 @@ describe("2021 Day4", () => {
         board->Board.solve([24, 9, 12, 6, 3, 26]),
         Some([0, 2, 4, 5, 7, 8, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]),
       ),
-    ]
+    }
 
-    testEach2("board tests", board_tests, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "board tests",
+      board_tests,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
   })
 
   test("Part 1 - Sample Data", () => {

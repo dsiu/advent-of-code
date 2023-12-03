@@ -2,11 +2,12 @@
 
 @val external describe: (string, @uncurry (unit => unit)) => unit = "describe"
 @val external test: (string, @uncurry (unit => unit)) => unit = "test"
-@val external _each1: (array<'a>, . string, 'a => unit) => unit = "test.each"
-@val external _each2: (array<('a, 'b)>, . string, ('a, 'b) => unit) => unit = "test.each"
-@val external _each3: (array<('a, 'b, 'c)>, . string, ('a, 'b, 'c) => unit) => unit = "test.each"
+@val external _each1: array<'a> => (. string, 'a => unit) => unit = "test.each"
+@val external _each2: array<('a, 'b)> => (. string, ('a, 'b) => unit) => unit = "test.each"
+@val external _each3: array<('a, 'b, 'c)> => (. string, ('a, 'b, 'c) => unit) => unit = "test.each"
 @val
-external _each4: (array<('a, 'b, 'c, 'd)>, . string, ('a, 'b, 'c, 'd) => unit) => unit = "test.each"
+external _each4: array<('a, 'b, 'c, 'd)> => (. string, ('a, 'b, 'c, 'd) => unit) => unit =
+  "test.each"
 
 // Helper methods that seem easier to use for me. Also automatically makes the
 // title of the tests include the test index and parameters. Make sure to put ->

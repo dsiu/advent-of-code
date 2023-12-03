@@ -285,7 +285,7 @@ function solvePart1(data) {
           }
         }));
   console.log(" ======== answer");
-  var prim$4 = "maxArea = " + String(maxArea) + "";
+  var prim$4 = "maxArea = " + String(maxArea);
   console.log(prim$4);
 }
 

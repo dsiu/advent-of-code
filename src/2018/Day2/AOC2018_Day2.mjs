@@ -76,19 +76,19 @@ function diffOfTwoCharStr(s1, s2) {
                 if (y !== undefined) {
                   if (x === y) {
                     return {
-                            TAG: /* Match */0,
+                            TAG: "Match",
                             _0: x
                           };
                   } else {
                     return {
-                            TAG: /* NotMatch */1,
+                            TAG: "NotMatch",
                             _0: x,
                             _1: y
                           };
                   }
                 } else {
                   return {
-                          TAG: /* NotMatch */1,
+                          TAG: "NotMatch",
                           _0: x,
                           _1: x
                         };
@@ -98,7 +98,7 @@ function diffOfTwoCharStr(s1, s2) {
 
 function countTrue(xs) {
   return Belt_Array.keep(xs, (function (x) {
-                if (x.TAG === /* Match */0) {
+                if (x.TAG === "Match") {
                   return true;
                 } else {
                   return false;
@@ -108,7 +108,7 @@ function countTrue(xs) {
 
 function countFalse(xs) {
   return Belt_Array.keep(xs, (function (x) {
-                if (x.TAG === /* Match */0) {
+                if (x.TAG === "Match") {
                   return false;
                 } else {
                   return true;
@@ -155,7 +155,7 @@ function findAllMatch(predicate, lines) {
 function runDay2Part2(lines) {
   return Belt_Array.map(findAllMatch(isDiffBy1, lines), (function (x) {
                 return Belt_Array.keepMap(diffOfTwoCharStr(x.src, Caml_array.get(x.matched, 0)), (function (x) {
-                                if (x.TAG === /* Match */0) {
+                                if (x.TAG === "Match") {
                                   return x._0;
                                 }
                                 

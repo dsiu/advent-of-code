@@ -16,13 +16,13 @@ function log(prim) {
 }
 
 function compare(a, b) {
-  if (a.TAG === /* Coord_V3 */0) {
-    if (b.TAG === /* Coord_V3 */0) {
+  if (a.TAG === "Coord_V3") {
+    if (b.TAG === "Coord_V3") {
       return Coord_V3$AdventOfCode.compare(a._0)(b._0);
     } else {
       return Pervasives.failwith("Invalid comparison");
     }
-  } else if (b.TAG === /* Coord_V3 */0) {
+  } else if (b.TAG === "Coord_V3") {
     return Pervasives.failwith("Invalid comparison");
   } else {
     return Coord_V4$AdventOfCode.compare(a._0)(b._0);
@@ -36,20 +36,20 @@ var include = TableclothComparator.Make({
 var comparator = include.comparator;
 
 function add(a, b) {
-  if (a.TAG === /* Coord_V3 */0) {
-    if (b.TAG === /* Coord_V3 */0) {
+  if (a.TAG === "Coord_V3") {
+    if (b.TAG === "Coord_V3") {
       return {
-              TAG: /* Coord_V3 */0,
+              TAG: "Coord_V3",
               _0: Coord_V3$AdventOfCode.add(a._0, b._0)
             };
     } else {
       return Pervasives.failwith("Invalid addition");
     }
-  } else if (b.TAG === /* Coord_V3 */0) {
+  } else if (b.TAG === "Coord_V3") {
     return Pervasives.failwith("Invalid addition");
   } else {
     return {
-            TAG: /* Coord_V4 */1,
+            TAG: "Coord_V4",
             _0: Coord_V4$AdventOfCode.add(a._0, b._0)
           };
   }
@@ -65,7 +65,7 @@ function makeGrid(lines) {
   var createActive = function (x, y) {
     if (Belt_Array.getExn(Belt_Array.getExn(lines, y), x) === "#") {
       return {
-              TAG: /* Coord_V3 */0,
+              TAG: "Coord_V3",
               _0: [
                 x,
                 y,
@@ -85,10 +85,10 @@ function makeGrid(lines) {
 }
 
 function conv34Cell(param) {
-  if (param.TAG === /* Coord_V3 */0) {
+  if (param.TAG === "Coord_V3") {
     var match = param._0;
     return {
-            TAG: /* Coord_V4 */1,
+            TAG: "Coord_V4",
             _0: [
               match[0],
               match[1],
@@ -115,7 +115,7 @@ function conv34(grid) {
 }
 
 function neighbourSpaces(here) {
-  if (here.TAG === /* Coord_V3 */0) {
+  if (here.TAG === "Coord_V3") {
     return TableclothSet.fromArray(Stdlib_Array.combinationIf3([
                     -1,
                     0,
@@ -133,7 +133,7 @@ function neighbourSpaces(here) {
                         return ;
                       } else {
                         return add({
-                                    TAG: /* Coord_V3 */0,
+                                    TAG: "Coord_V3",
                                     _0: [
                                       x,
                                       y,
@@ -166,7 +166,7 @@ function neighbourSpaces(here) {
                         return ;
                       } else {
                         return add({
-                                    TAG: /* Coord_V4 */1,
+                                    TAG: "Coord_V4",
                                     _0: [
                                       x,
                                       y,

@@ -27,8 +27,6 @@
     "@rescript/core",
     "rationale",
     "@ryyppy/rescript-promise",
-    "rescript-js",
-    "re-fp",
     "rescript-ocamlgraph",
     "rescript-bag",
     "@resinfo/parser",
@@ -48,5 +46,6 @@
     "error": "+101"
   },
   "namespace": true,
-  "refmt": 3
+  "refmt": 3,
+  "uncurried": false
 }

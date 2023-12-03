@@ -1,4 +1,5 @@
-open Jest2
+open Jest
+open Expect
 
 //open Belt
 let data = AOC2021_Day17_Data.data
@@ -12,10 +13,10 @@ describe("2021 Day17", () => {
   describe("launch", () => {
     let t = sampleData->parse
 
-    let makeLaunchTests = Array.map(((v, r)) => {(launch(v, t), r)})
+    let makeLaunchTests = List.map(((v, r)) => {(launch(v, t), r)})
 
     let example_tests =
-      [
+      list{
         (
           {x: 7, y: 2},
           Hit((28, -7), [(0, 0), (7, 2), (13, 3), (18, 3), (22, 2), (25, 0), (27, -3)]),
@@ -57,11 +58,15 @@ describe("2021 Day17", () => {
             ],
           ),
         ),
-      ]->makeLaunchTests
+      }->makeLaunchTests
 
-    testEach2("examples", example_tests, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testAll(
+      "examples",
+      example_tests,
+      ((result, expected)) => {
+        expect(result)->toEqual(expected)
+      },
+    )
   })
 
   test("Part 1 - Sample Data", () => {

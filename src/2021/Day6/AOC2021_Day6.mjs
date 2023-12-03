@@ -15,12 +15,12 @@ var Log = JS_Debug$AdventOfCode.make("AOC2021_Day6-AdventOfCode");
 function make(s) {
   if (s === 6) {
     return {
-            TAG: /* Respawn */1,
+            TAG: "Respawn",
             _0: s
           };
   } else {
     return {
-            TAG: /* Decr */0,
+            TAG: "Decr",
             _0: s
           };
   }
@@ -28,34 +28,34 @@ function make(s) {
 
 function makeRespawned(param) {
   return {
-          TAG: /* Decr */0,
+          TAG: "Decr",
           _0: 8
         };
 }
 
 function getNextState(t) {
-  if (t.TAG !== /* Decr */0) {
+  if (t.TAG !== "Decr") {
     return {
-            TAG: /* Decr */0,
+            TAG: "Decr",
             _0: t._0 - 1 | 0
           };
   }
   var s = t._0;
   if (s !== 0) {
     return {
-            TAG: /* Decr */0,
+            TAG: "Decr",
             _0: s - 1 | 0
           };
   } else {
     return {
-            TAG: /* Respawn */1,
+            TAG: "Respawn",
             _0: 6
           };
   }
 }
 
 function isRespawned(t) {
-  if (t.TAG === /* Decr */0) {
+  if (t.TAG === "Decr") {
     return false;
   } else {
     return true;
@@ -91,7 +91,7 @@ function runDumb(_fs, _days) {
     var spawn = Belt_Array.keepMapU(next, (function (f) {
             if (isRespawned(f)) {
               return {
-                      TAG: /* Decr */0,
+                      TAG: "Decr",
                       _0: 8
                     };
             }
