@@ -6,26 +6,26 @@ function prependDate(message) {
   var hours = now.getHours().toString().padStart(2, "0");
   var minutes = now.getMinutes().toString().padStart(2, "0");
   var seconds = now.getSeconds().toString().padStart(2, "0");
-  return "" + hours + ":" + minutes + ":" + seconds + " " + message + "";
+  return hours + ":" + minutes + ":" + seconds + " " + message;
 }
 
 function log(level, msg) {
   var msg$1 = prependDate(msg);
   switch (level) {
-    case /* Debug */0 :
+    case "Debug" :
         if (process.env.NODE_ENV === "development") {
           console.log(msg$1);
           return ;
         } else {
           return ;
         }
-    case /* Info */1 :
+    case "Info" :
         console.info(msg$1);
         return ;
-    case /* Warn */2 :
+    case "Warn" :
         console.warn(msg$1);
         return ;
-    case /* Error */3 :
+    case "Error" :
         console.error(msg$1);
         return ;
     
@@ -35,20 +35,20 @@ function log(level, msg) {
 function log2(level, msg, obj) {
   var msg$1 = prependDate(msg);
   switch (level) {
-    case /* Debug */0 :
+    case "Debug" :
         if (process.env.NODE_ENV === "development") {
           console.log(msg$1, obj);
           return ;
         } else {
           return ;
         }
-    case /* Info */1 :
+    case "Info" :
         console.info(msg$1, obj);
         return ;
-    case /* Warn */2 :
+    case "Warn" :
         console.warn(msg$1, obj);
         return ;
-    case /* Error */3 :
+    case "Error" :
         console.error(msg$1, obj);
         return ;
     
@@ -72,35 +72,35 @@ function make(moduleName) {
   var prefix = "[" + moduleName + "] ";
   var debug = function (message) {
     var I = loggerImpl.contents;
-    I.log(/* Debug */0, prefix + message);
+    I.log("Debug", prefix + message);
   };
   var info = function (message) {
     var I = loggerImpl.contents;
-    I.log(/* Info */1, prefix + message);
+    I.log("Info", prefix + message);
   };
   var warn = function (message) {
     var I = loggerImpl.contents;
-    I.log(/* Warn */2, prefix + message);
+    I.log("Warn", prefix + message);
   };
   var error = function (message) {
     var I = loggerImpl.contents;
-    I.log(/* Error */3, prefix + message);
+    I.log("Error", prefix + message);
   };
   var debug2 = function (message, obj) {
     var I = loggerImpl.contents;
-    I.log2(/* Debug */0, prefix + message, obj);
+    I.log2("Debug", prefix + message, obj);
   };
   var info2 = function (message, obj) {
     var I = loggerImpl.contents;
-    I.log2(/* Info */1, prefix + message, obj);
+    I.log2("Info", prefix + message, obj);
   };
   var warn2 = function (message, obj) {
     var I = loggerImpl.contents;
-    I.log2(/* Warn */2, prefix + message, obj);
+    I.log2("Warn", prefix + message, obj);
   };
   var error2 = function (message, obj) {
     var I = loggerImpl.contents;
-    I.log2(/* Error */3, prefix + message, obj);
+    I.log2("Error", prefix + message, obj);
   };
   return {
           debug: debug,

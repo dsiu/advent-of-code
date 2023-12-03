@@ -23,7 +23,7 @@ function tally(xs) {
   var max = Utils$AdventOfCode.maxIntInArray(xs);
   var min = Utils$AdventOfCode.minIntInArray(xs);
   var keyRange = Belt_Array.range(min, max);
-  var result = Belt_MutableMapInt.make(undefined);
+  var result = Belt_MutableMapInt.make();
   Belt_Array.forEach(keyRange, (function (k) {
           var match = Belt_Array.partition(xs, (function (x) {
                   return x === k;

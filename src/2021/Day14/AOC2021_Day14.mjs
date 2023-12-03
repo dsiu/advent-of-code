@@ -22,7 +22,7 @@ function update_value_inc_by_n(h, k, n) {
 }
 
 function make(template, rules) {
-  var r = Belt_MutableMapString.make(undefined);
+  var r = Belt_MutableMapString.make();
   return {
           template: Belt_List.fromArray(template),
           rules: (Belt_Array.forEach(rules, (function (param) {
@@ -119,7 +119,7 @@ function iterateN_tail_opt(param, n) {
 
 function solve_with_result(t, n) {
   var ret = iterateN_tail_opt(t, n);
-  var r = Belt_MutableMapString.toArray(Belt_List.reduce(ret, Belt_MutableMapString.make(undefined), (function (acc, k) {
+  var r = Belt_MutableMapString.toArray(Belt_List.reduce(ret, Belt_MutableMapString.make(), (function (acc, k) {
               return Utils$AdventOfCode.mutableMapStringUpdate(acc, k, Utils$AdventOfCode.increaseBy1L);
             })));
   var match = Utils$AdventOfCode.maxKeyInt64ValuePair(r);
@@ -128,7 +128,7 @@ function solve_with_result(t, n) {
 }
 
 function genPairsMap(template) {
-  var acc = Belt_MutableMapString.make(undefined);
+  var acc = Belt_MutableMapString.make();
   var _l = template;
   while(true) {
     var l = _l;
@@ -171,7 +171,7 @@ function genNewKeys(k, rules) {
 }
 
 function iterate(m, rules) {
-  var m$p = Belt_MutableMapString.make(undefined);
+  var m$p = Belt_MutableMapString.make();
   Belt_MutableMapString.forEach(m, (function (k, v) {
           Belt_Array.forEach(genNewKeys(k, rules), (function (k$p) {
                   update_value_inc_by_n(m$p, k$p, v);
@@ -198,7 +198,7 @@ function iterateN(param, n) {
 }
 
 function countPolymers(m, template) {
-  var r = Belt_MutableMapString.make(undefined);
+  var r = Belt_MutableMapString.make();
   Belt_MutableMapString.forEach(m, (function (k, v) {
           Belt_Array.forEach(Utils$AdventOfCode.splitChars(k), (function (c) {
                   update_value_inc_by_n(r, c, v);

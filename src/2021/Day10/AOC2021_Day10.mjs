@@ -71,7 +71,7 @@ function make(c) {
     default:
       throw {
             RE_EXN_ID: ParseError,
-            _1: "" + c + " is not supported",
+            _1: c + " is not supported",
             Error: new Error()
           };
   }
@@ -95,7 +95,8 @@ function tokenAtToString(param) {
 
 function tokenize(xs) {
   return Belt_Array.mapWithIndex(xs, (function (i, x) {
-                return /* TokenAt */{
+                return {
+                        TAG: "TokenAt",
                         _0: make(x),
                         _1: i
                       };
@@ -103,12 +104,12 @@ function tokenize(xs) {
 }
 
 function map(t, f) {
-  if (typeof t === "number") {
-    return /* Empty */0;
+  if (typeof t !== "object") {
+    return "Empty";
   }
-  if (t.TAG !== /* Node */0) {
+  if (t.TAG !== "Node") {
     return {
-            TAG: /* NodeList */1,
+            TAG: "NodeList",
             _0: Belt_List.map(t._0, (function (__x) {
                     return map(__x, f);
                   }))
@@ -116,20 +117,20 @@ function map(t, f) {
   }
   var tl = t.tl;
   var b1 = t.l;
-  if (typeof tl === "number") {
+  if (typeof tl !== "object") {
     return {
-            TAG: /* Node */0,
+            TAG: "Node",
             l: Curry._1(f, b1),
-            tl: /* Empty */0,
+            tl: "Empty",
             r: Curry._1(f, t.r)
           };
   }
-  if (tl.TAG !== /* Node */0) {
+  if (tl.TAG !== "Node") {
     return {
-            TAG: /* Node */0,
+            TAG: "Node",
             l: Curry._1(f, b1),
             tl: map({
-                  TAG: /* NodeList */1,
+                  TAG: "NodeList",
                   _0: tl._0
                 }, f),
             r: Curry._1(f, t.r)
@@ -143,39 +144,41 @@ function map(t, f) {
 }
 
 function toString$1(t) {
-  if (typeof t === "number") {
+  if (typeof t !== "object") {
     return "Empty";
   }
-  if (t.TAG !== /* Node */0) {
+  if (t.TAG !== "Node") {
     return "NodeList:{ " + Belt_List.toArray(Belt_List.map(t._0, toString$1)).join(", ") + " }";
   }
   var tl = t.tl;
   var b1 = t.l;
-  if (typeof tl === "number") {
+  if (typeof tl !== "object") {
     return "Node(" + tokenAtToString(b1) + ", tl: Empty, " + tokenAtToString(t.r) + "})";
-  } else {
-    return "Node(" + tokenAtToString(b1) + ", tl: " + toString$1(tl) + ", " + tokenAtToString(t.r) + "})";
   }
+  tl.TAG === "Node";
+  return "Node(" + tokenAtToString(b1) + ", tl: " + toString$1(tl) + ", " + tokenAtToString(t.r) + "})";
 }
 
 function makeNode(l, r) {
   return {
-          TAG: /* Node */0,
+          TAG: "Node",
           l: l,
-          tl: /* Empty */0,
+          tl: "Empty",
           r: r
         };
 }
 
 function makeNodeFromStr(l, li, r, ri) {
   return {
-          TAG: /* Node */0,
-          l: /* TokenAt */{
+          TAG: "Node",
+          l: {
+            TAG: "TokenAt",
             _0: make(l),
             _1: li
           },
-          tl: /* Empty */0,
-          r: /* TokenAt */{
+          tl: "Empty",
+          r: {
+            TAG: "TokenAt",
             _0: make(r),
             _1: ri
           }
@@ -183,18 +186,18 @@ function makeNodeFromStr(l, li, r, ri) {
 }
 
 function add(a, b) {
-  if (typeof a === "number") {
+  if (typeof a !== "object") {
     return b;
   }
-  if (a.TAG === /* Node */0) {
+  if (a.TAG === "Node") {
     var tl = a.tl;
     var l = a.l;
-    if (typeof tl === "number") {
-      if (typeof b === "number") {
+    if (typeof tl !== "object") {
+      if (typeof b !== "object") {
         return a;
-      } else if (b.TAG === /* Node */0) {
+      } else if (b.TAG === "Node") {
         return {
-                TAG: /* NodeList */1,
+                TAG: "NodeList",
                 _0: {
                   hd: a,
                   tl: {
@@ -205,19 +208,19 @@ function add(a, b) {
               };
       } else {
         return {
-                TAG: /* Node */0,
+                TAG: "Node",
                 l: l,
                 tl: b,
                 r: a.r
               };
       }
     }
-    if (tl.TAG !== /* Node */0) {
+    if (tl.TAG !== "Node") {
       return {
-              TAG: /* Node */0,
+              TAG: "Node",
               l: l,
               tl: add({
-                    TAG: /* NodeList */1,
+                    TAG: "NodeList",
                     _0: tl._0
                   }, b),
               r: a.r
@@ -230,34 +233,34 @@ function add(a, b) {
         };
   } else {
     var tl$1 = a._0;
-    if (typeof b === "number") {
+    if (typeof b !== "object") {
       return a;
     }
-    if (b.TAG !== /* Node */0) {
+    if (b.TAG !== "Node") {
       return {
-              TAG: /* NodeList */1,
+              TAG: "NodeList",
               _0: Belt_List.concat(tl$1, b._0)
             };
     }
     var btl = b.tl;
     var l$1 = b.l;
-    if (typeof btl === "number") {
+    if (typeof btl !== "object") {
       return {
-              TAG: /* Node */0,
+              TAG: "Node",
               l: l$1,
               tl: {
-                TAG: /* NodeList */1,
+                TAG: "NodeList",
                 _0: tl$1
               },
               r: b.r
             };
     }
-    if (btl.TAG !== /* Node */0) {
+    if (btl.TAG !== "Node") {
       return {
-              TAG: /* Node */0,
+              TAG: "Node",
               l: l$1,
               tl: {
-                TAG: /* NodeList */1,
+                TAG: "NodeList",
                 _0: Belt_List.concat(tl$1, btl._0)
               },
               r: b.r
@@ -287,7 +290,7 @@ function makeParseTree(xs) {
         };
   }
   var _inputs = match$1[1];
-  var _tree = /* Empty */0;
+  var _tree = "Empty";
   var _stack = [match$1[0]];
   while(true) {
     var stack = _stack;
@@ -311,9 +314,9 @@ function makeParseTree(xs) {
         var match$3 = Stack_Array$AdventOfCode.pop(stack);
         _stack = match$3[1];
         _tree = add(tree, {
-              TAG: /* Node */0,
+              TAG: "Node",
               l: last,
-              tl: /* Empty */0,
+              tl: "Empty",
               r: $$this
             });
         _inputs = rest;
@@ -360,7 +363,7 @@ function $$process(xs) {
     var inputs = _inputs;
     if (!inputs) {
       return {
-              TAG: /* Incomplete */1,
+              TAG: "Incomplete",
               _0: stack
             };
     }
@@ -373,7 +376,7 @@ function $$process(xs) {
       if (last !== undefined) {
         if (!matches(last._0, this_token)) {
           return {
-                  TAG: /* Corrupted */0,
+                  TAG: "Corrupted",
                   _0: $$this
                 };
         }
@@ -415,7 +418,8 @@ function examples(param) {
           } else {
             console.log(i, "Open");
           }
-          return /* TokenAt */{
+          return {
+                  TAG: "TokenAt",
                   _0: a,
                   _1: i
                 };
@@ -466,7 +470,7 @@ function getIncompleteScore(param) {
 
 function solvePart1(data) {
   var corruptedOnly = function (r) {
-    if (r.TAG === /* Corrupted */0) {
+    if (r.TAG === "Corrupted") {
       return r._0;
     }
     
@@ -476,7 +480,7 @@ function solvePart1(data) {
 
 function solvePart2(data) {
   var incompleteOnly = function (r) {
-    if (r.TAG === /* Corrupted */0) {
+    if (r.TAG === "Corrupted") {
       return ;
     } else {
       return r._0;

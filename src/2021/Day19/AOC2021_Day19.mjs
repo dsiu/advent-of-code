@@ -24,11 +24,12 @@ function log2(prim0, prim1) {
 
 function coordToString(param) {
   var match = param._0;
-  return "(" + match[0] + ", " + match[1] + ", " + match[2] + ")";
+  return "(" + String(match[0]) + ", " + String(match[1]) + ", " + String(match[2]) + ")";
 }
 
 function transformToString(trans) {
-  return coordToString(Curry._1(trans, /* Coord */{
+  return coordToString(Curry._1(trans, {
+                  TAG: "Coord",
                   _0: [
                     0,
                     0,
@@ -39,7 +40,8 @@ function transformToString(trans) {
 
 function rotX(param) {
   var match = param._0;
-  return /* Coord */{
+  return {
+          TAG: "Coord",
           _0: [
             match[0],
             - match[2],
@@ -50,7 +52,8 @@ function rotX(param) {
 
 function rotY(param) {
   var match = param._0;
-  return /* Coord */{
+  return {
+          TAG: "Coord",
           _0: [
             match[2],
             match[1],
@@ -61,7 +64,8 @@ function rotY(param) {
 
 function rotZ(param) {
   var match = param._0;
-  return /* Coord */{
+  return {
+          TAG: "Coord",
           _0: [
             - match[1],
             match[0],
@@ -73,7 +77,8 @@ function rotZ(param) {
 function translate(param, param$1) {
   var match = param$1._0;
   var match$1 = param._0;
-  return /* Coord */{
+  return {
+          TAG: "Coord",
           _0: [
             match$1[0] + match[0],
             match$1[1] + match[1],
@@ -147,7 +152,7 @@ function bagToString(b) {
     contents: ""
   };
   Curry._2(B.iter, (function (x, m) {
-          str.contents = str.contents + ("@ " + x + ":" + m + ",");
+          str.contents = str.contents + ("@ " + String(x) + ":" + String(m) + ",");
         }), b);
   return "{" + str.contents + "}";
 }
@@ -158,17 +163,18 @@ function eq(a, b) {
 
 function toString(t) {
   return Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, t, (function (param) {
-                return "scannerName: " + param.scannerName + ", beacons: " + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, param.beacons, (function (param) {
+                return "scannerName: " + String(param.scannerName) + ", beacons: " + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, param.beacons, (function (param) {
                               var match = param._0;
-                              return "(" + match[0] + ", " + match[1] + ", " + match[2] + ")";
-                            })) + ", " + ("signature: " + bagToString(param.signature) + "") + "\n";
+                              return "(" + String(match[0]) + ", " + String(match[1]) + ", " + String(match[2]) + ")";
+                            })) + ", signature: " + bagToString(param.signature) + "\n";
               }));
 }
 
 function minus(a, b) {
   var b$1 = b._0;
   var a$1 = a._0;
-  return /* Coord */{
+  return {
+          TAG: "Coord",
           _0: [
             a$1[0] - b$1[0],
             a$1[1] - b$1[1],
@@ -189,9 +195,11 @@ function sign(bcns) {
                     var b$1 = b._0;
                     var a$1 = a._0;
                     if (Linear$AdventOfCode.V3.cmp(b$1, a$1) > 0) {
-                      return pythag(minus(/* Coord */{
+                      return pythag(minus({
+                                      TAG: "Coord",
                                       _0: a$1
-                                    }, /* Coord */{
+                                    }, {
+                                      TAG: "Coord",
                                       _0: b$1
                                     }));
                     }
@@ -253,7 +261,8 @@ function matchingTransform(scanner1, scanner2) {
 
 function mkReconstruction(scanners) {
   if (scanners) {
-    return /* Reconstruction */{
+    return {
+            TAG: "Reconstruction",
             found: /* [] */0,
             working: {
               hd: scanners.hd,
@@ -305,7 +314,8 @@ function reconstructStep(param) {
             }
           }));
     var newWorker = Belt_List.mapU(matches, transformScanner);
-    return /* Reconstruction */{
+    return {
+            TAG: "Reconstruction",
             found: {
               hd: current,
               tl: param.found
@@ -386,7 +396,8 @@ function parse(data) {
     var name = Utils$AdventOfCode.intFromStringExn(Belt_Array.getExn(lines, 0).replace("--- scanner ", "").replace(" ---", ""));
     var coords = Belt_Array.map(Belt_Array.sliceToEnd(lines, 1), (function (line) {
             var c = Belt_Array.map(line.split(","), floatFromStr);
-            return /* Coord */{
+            return {
+                    TAG: "Coord",
                     _0: [
                       Belt_Array.getExn(c, 0),
                       Belt_Array.getExn(c, 1),
@@ -415,7 +426,8 @@ function part1(scanners) {
 
 function part2(scanners) {
   var extractOrigin = function (sc) {
-    return Curry._1(sc.transformation, /* Coord */{
+    return Curry._1(sc.transformation, {
+                TAG: "Coord",
                 _0: [
                   0.0,
                   0.0,

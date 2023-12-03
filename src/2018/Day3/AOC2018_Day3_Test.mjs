@@ -97,7 +97,7 @@ Jest.describe("2018 Day3", (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(countOverlapTwoMore), 4);
                       }));
                 Jest.test("solve Part1", (function (param) {
-                        var result = AOC2018_Day3$AdventOfCode.solvePart1(undefined);
+                        var result = AOC2018_Day3$AdventOfCode.solvePart1();
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), 118223);
                       }));
                 Jest.test("part 2 (demo case)", (function (param) {
@@ -116,7 +116,7 @@ Jest.describe("2018 Day3", (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), [11]);
                       }));
                 Jest.test("solve part2", (function (param) {
-                        var result = AOC2018_Day3$AdventOfCode.solvePart2(undefined);
+                        var result = AOC2018_Day3$AdventOfCode.solvePart2();
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), [412]);
                       }));
               }));

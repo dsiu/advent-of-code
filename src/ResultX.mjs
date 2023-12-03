@@ -4,11 +4,11 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 function mapError(result, fn) {
-  if (result.TAG === /* Ok */0) {
+  if (result.TAG === "Ok") {
     return result;
   } else {
     return {
-            TAG: /* Error */1,
+            TAG: "Error",
             _0: Curry._1(fn, result._0)
           };
   }
@@ -17,19 +17,19 @@ function mapError(result, fn) {
 function fromOption(option, error) {
   if (option !== undefined) {
     return {
-            TAG: /* Ok */0,
+            TAG: "Ok",
             _0: Caml_option.valFromOption(option)
           };
   } else {
     return {
-            TAG: /* Error */1,
+            TAG: "Error",
             _0: error
           };
   }
 }
 
 function asyncFlatMap(result, fn) {
-  if (result.TAG === /* Ok */0) {
+  if (result.TAG === "Ok") {
     return Curry._1(fn, result._0);
   } else {
     return Promise.resolve(result);

@@ -24,7 +24,7 @@ describe("2020 Day13", () => {
 
   test("Part 2 - Solve", () => {
     let result = AOC2020_Day13.solvePart2(data)
-    let expected = "842186186521918"->ReScriptJs.Js.BigInt.fromString
+    let expected = "842186186521918"->RescriptCore.BigInt.fromString
 
     expect(result)->toEqual(expected)
   })

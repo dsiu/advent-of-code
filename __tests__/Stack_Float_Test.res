@@ -1,5 +1,7 @@
-open Jest2
+open Jest
+open Expect
 
+open Jest2
 //module Stack = Stack_List_Float
 module S = Stack.StackFloat
 

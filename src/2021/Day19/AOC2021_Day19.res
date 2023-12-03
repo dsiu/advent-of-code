@@ -11,7 +11,8 @@ module Scanner = {
   open Linear
   type coord = Coord(V3.t<float>)
 
-  let coordToString: coord => string = (Coord((x, y, z))) => j`($x, $y, $z)`
+  let coordToString: coord => string = (Coord((x, y, z))) =>
+    `(${x->Float.toString}, ${y->Float.toString}, ${z->Float.toString})`
 
   type transform = coord => coord
 
@@ -60,7 +61,7 @@ module Scanner = {
   let bagToString = b => {
     let str = ref("")
     b->B.iter((x, m) => {
-      str := str.contents ++ j`@ $x:$m,`
+      str := str.contents ++ `@ ${x->Float.toString}:${m->Int.toString},`
     }, _)
     "{" ++ str.contents ++ "}"
   }
@@ -79,9 +80,11 @@ module Scanner = {
 
   let toString = t =>
     t->Printable.Array.toString(({scannerName, beacons, transformation: _, signature}) => {
-      j`scannerName: $scannerName, ` ++
+      `scannerName: ${scannerName->Int.toString}, ` ++
       "beacons: " ++
-      beacons->Printable.Array.toString((Coord(x, y, z)) => j`($x, $y, $z)`) ++
+      beacons->Printable.Array.toString((Coord(x, y, z)) =>
+        `(${x->Float.toString}, ${y->Float.toString}, ${z->Float.toString})`
+      ) ++
       ", " ++
       `signature: ${signature->bagToString}` ++ "\n"
     })

@@ -37,22 +37,22 @@ function makeSegment(str) {
   switch (direction) {
     case "D" :
         return {
-                direction: /* South */1,
+                direction: "South",
                 steps: steps
               };
     case "L" :
         return {
-                direction: /* West */2,
+                direction: "West",
                 steps: steps
               };
     case "R" :
         return {
-                direction: /* East */0,
+                direction: "East",
                 steps: steps
               };
     case "U" :
         return {
-                direction: /* North */3,
+                direction: "North",
                 steps: steps
               };
     default:
@@ -66,22 +66,22 @@ function makeSegment(str) {
 
 function facing(direction) {
   switch (direction) {
-    case /* East */0 :
+    case "East" :
         return [
                 1,
                 0
               ];
-    case /* South */1 :
+    case "South" :
         return [
                 0,
                 -1
               ];
-    case /* West */2 :
+    case "West" :
         return [
                 -1,
                 0
               ];
-    case /* North */3 :
+    case "North" :
         return [
                 0,
                 1
@@ -106,8 +106,8 @@ function travelSegment(path, segment) {
     }
   };
   var visited$p = TableclothList.fold(TableclothList.zip(TableclothList.initialize(distance, (function (x) {
-                    return (x + len | 0) + 1 | 0;
-                  })))(Stdlib_List.unfold((function (param) {
+                  return (x + len | 0) + 1 | 0;
+                })), Stdlib_List.unfold((function (param) {
                   return param[0] >= distance;
                 }), (function (param) {
                   var x = param[1];

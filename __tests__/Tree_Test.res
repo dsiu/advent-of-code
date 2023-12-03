@@ -1,4 +1,6 @@
 open RescriptCore
+open Jest
+open Expect
 open Jest2
 open Tree
 

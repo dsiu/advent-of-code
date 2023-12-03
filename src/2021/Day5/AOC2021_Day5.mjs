@@ -40,17 +40,17 @@ function toString(t) {
   var start = line.start;
   var end = line.end;
   var tmp;
-  switch (t.TAG | 0) {
-    case /* Horizontal */0 :
+  switch (t.TAG) {
+    case "Horizontal" :
         tmp = "Horizontal";
         break;
-    case /* Vertical */1 :
+    case "Vertical" :
         tmp = "Vertical";
         break;
-    case /* Diagonal */2 :
+    case "Diagonal" :
         tmp = "Diagonal";
         break;
-    case /* Other */3 :
+    case "Other" :
         tmp = "Other";
         break;
     
@@ -63,7 +63,7 @@ function fromArray$1(xs) {
   var end = fromArray(Belt_Option.getExn(Belt_Array.get(xs, 1)));
   if (start.x === end.x) {
     return {
-            TAG: /* Vertical */1,
+            TAG: "Vertical",
             _0: {
               start: start,
               end: end
@@ -71,7 +71,7 @@ function fromArray$1(xs) {
           };
   } else if (start.y === end.y) {
     return {
-            TAG: /* Horizontal */0,
+            TAG: "Horizontal",
             _0: {
               start: start,
               end: end
@@ -79,7 +79,7 @@ function fromArray$1(xs) {
           };
   } else if (Math.abs(start.x - end.x | 0) === Math.abs(start.y - end.y | 0)) {
     return {
-            TAG: /* Diagonal */2,
+            TAG: "Diagonal",
             _0: {
               start: start,
               end: end
@@ -87,7 +87,7 @@ function fromArray$1(xs) {
           };
   } else {
     return {
-            TAG: /* Other */3,
+            TAG: "Other",
             _0: {
               start: start,
               end: end
@@ -97,8 +97,8 @@ function fromArray$1(xs) {
 }
 
 function toPoints2(t) {
-  switch (t.TAG | 0) {
-    case /* Horizontal */0 :
+  switch (t.TAG) {
+    case "Horizontal" :
         var l = t._0;
         var start = l.start;
         var end = l.end;
@@ -120,7 +120,7 @@ function toPoints2(t) {
                       }]);
               }));
         return points.contents;
-    case /* Vertical */1 :
+    case "Vertical" :
         var l$1 = t._0;
         var start$1 = l$1.start;
         var end$1 = l$1.end;
@@ -142,9 +142,9 @@ function toPoints2(t) {
                       }]);
               }));
         return points$1.contents;
-    case /* Diagonal */2 :
+    case "Diagonal" :
         return [];
-    case /* Other */3 :
+    case "Other" :
         throw {
               RE_EXN_ID: "Not_found",
               Error: new Error()
@@ -191,7 +191,7 @@ function makePoints(start, end) {
 }
 
 function toPoints(t) {
-  if (t.TAG === /* Other */3) {
+  if (t.TAG === "Other") {
     throw {
           RE_EXN_ID: "Not_found",
           Error: new Error()
@@ -204,19 +204,19 @@ function toPoints(t) {
 }
 
 function onlyVertOrHoriz(t) {
-  switch (t.TAG | 0) {
-    case /* Horizontal */0 :
-    case /* Vertical */1 :
+  switch (t.TAG) {
+    case "Horizontal" :
+    case "Vertical" :
         return true;
-    case /* Diagonal */2 :
-    case /* Other */3 :
+    case "Diagonal" :
+    case "Other" :
         return false;
     
   }
 }
 
 function onlyVertOrHorizOrDiagonal(t) {
-  if (t.TAG === /* Other */3) {
+  if (t.TAG === "Other") {
     return false;
   } else {
     return true;

@@ -24,7 +24,7 @@ function insertDayRec(dr, date, from_min, to_min) {
           if (hr !== undefined) {
             return insertHourRec(Caml_option.valFromOption(hr), from_min, to_min);
           } else {
-            return insertHourRec(Belt_MutableSetInt.make(undefined), from_min, to_min);
+            return insertHourRec(Belt_MutableSetInt.make(), from_min, to_min);
           }
         }));
   return Caml_option.some(dr);
@@ -35,7 +35,7 @@ function insertGuardRec(gAtt, gid, date, from_min, to_min) {
           if (dr !== undefined) {
             return insertDayRec(Caml_option.valFromOption(dr), date, from_min, to_min);
           } else {
-            return insertDayRec(Belt_MutableMapString.make(undefined), date, from_min, to_min);
+            return insertDayRec(Belt_MutableMapString.make(), date, from_min, to_min);
           }
         }));
 }
@@ -67,7 +67,7 @@ function findLaziestGuard(gAtt) {
 }
 
 function tallySleptPerMin(dr) {
-  return Belt_MutableMapString.reduce(dr, Belt_MutableMapInt.make(undefined), (function (a, _k, hr) {
+  return Belt_MutableMapString.reduce(dr, Belt_MutableMapInt.make(), (function (a, _k, hr) {
                 Belt_MutableSetInt.forEach(hr, (function (m) {
                         Belt_MutableMapInt.update(a, m, (function (prev) {
                                 if (prev !== undefined) {
@@ -124,10 +124,10 @@ function busiestMin(gAtt) {
 
 function toString(gAtt) {
   Belt_MutableMapInt.forEach(gAtt, (function (gid, drs) {
-          console.log("gid:" + String(gid) + "");
+          console.log("gid:" + String(gid));
           Belt_MutableMapString.forEach(drs, (function (date, hr) {
-                  console.log("  date:" + date + "");
-                  console.log("    Set Size:" + String(Belt_MutableSetInt.size(hr)) + "");
+                  console.log("  date:" + date);
+                  console.log("    Set Size:" + String(Belt_MutableSetInt.size(hr)));
                   console.log(Belt_MutableSetInt.toArray(hr));
                 }));
         }));
@@ -255,7 +255,7 @@ function parseLine(l) {
           };
     }
     return {
-            TAG: /* Begin */0,
+            TAG: "Begin",
             _0: unboxBeginLine(parseRegexResult(match))
           };
   }
@@ -267,13 +267,13 @@ function parseLine(l) {
           };
     }
     return {
-            TAG: /* Asleep */1,
+            TAG: "Asleep",
             _0: unboxAsleepLine(parseRegexResult(match$1))
           };
   }
   if (match$2 !== null) {
     return {
-            TAG: /* Awake */2,
+            TAG: "Awake",
             _0: unboxAwakeLine(parseRegexResult(match$2))
           };
   }
@@ -286,16 +286,16 @@ function parseLine(l) {
 function processLineReducer(a, x) {
   var state = a.state;
   var d = parseLine(x);
-  switch (d.TAG | 0) {
-    case /* Begin */0 :
+  switch (d.TAG) {
+    case "Begin" :
         return {
-                state: /* AtBegin */1,
+                state: "AtBegin",
                 gid: d._0.gid,
                 sleptSince: -1,
                 gAtt: a.gAtt
               };
-    case /* Asleep */1 :
-        if (!(state === /* AtAwake */3 || state === /* AtBegin */1)) {
+    case "Asleep" :
+        if (!(state === "AtAwake" || state === "AtBegin")) {
           throw {
                 RE_EXN_ID: "Assert_failure",
                 _1: [
@@ -307,14 +307,14 @@ function processLineReducer(a, x) {
               };
         }
         return {
-                state: /* AtAsleep */2,
+                state: "AtAsleep",
                 gid: a.gid,
                 sleptSince: d._0.m,
                 gAtt: a.gAtt
               };
-    case /* Awake */2 :
+    case "Awake" :
         var d$1 = d._0;
-        if (state !== /* AtAsleep */2) {
+        if (state !== "AtAsleep") {
           throw {
                 RE_EXN_ID: "Assert_failure",
                 _1: [
@@ -327,7 +327,7 @@ function processLineReducer(a, x) {
         }
         insertGuardRec(a.gAtt, a.gid, d$1.date, a.sleptSince, d$1.m - 1 | 0);
         return {
-                state: /* AtAwake */3,
+                state: "AtAwake",
                 gid: a.gid,
                 sleptSince: -1,
                 gAtt: a.gAtt
@@ -350,9 +350,9 @@ var Parser = {
 
 function solvePart1(data) {
   var sortLines = Belt_SortArrayString.stableSort(data.split("\n"));
-  var initState_gAtt = Belt_MutableMapInt.make(undefined);
+  var initState_gAtt = Belt_MutableMapInt.make();
   var initState = {
-    state: /* AtInit */0,
+    state: "AtInit",
     gid: 0,
     sleptSince: 0,
     gAtt: initState_gAtt
@@ -368,9 +368,9 @@ function solvePart1(data) {
 
 function solvePart2(data) {
   var sortLines = Belt_SortArrayString.stableSort(data.split("\n"));
-  var initState_gAtt = Belt_MutableMapInt.make(undefined);
+  var initState_gAtt = Belt_MutableMapInt.make();
   var initState = {
-    state: /* AtInit */0,
+    state: "AtInit",
     gid: 0,
     sleptSince: 0,
     gAtt: initState_gAtt

@@ -2,7 +2,8 @@
 //
 // ref: https://github.com/frerich/aoc2019
 //
-open Jest2
+open Jest
+open Expect
 
 //open Belt
 let data = AOC2019_Day4_Data.data

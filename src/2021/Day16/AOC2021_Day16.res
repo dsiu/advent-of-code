@@ -5,7 +5,6 @@ let log2 = Js.Console.log2
 let log3 = Js.Console.log3
 
 module P = Res_parser
-module Rjs = ReScriptJs.Js
 
 @val
 external hexToInt: (string, @as(16) _) => int = "parseInt"
@@ -13,7 +12,7 @@ external hexToInt: (string, @as(16) _) => int = "parseInt"
 @val
 external binToInt: (string, @as(2) _) => int = "parseInt"
 
-module BigInt = ReScriptJs.Js.BigInt
+module BigInt = RescriptCore.BigInt
 let binStrToInt64 = s => ("0b" ++ s)->BigInt.fromString->BigInt.toFloat->Int64.of_float
 
 let hexTable = Js.Dict.fromList(list{
@@ -272,17 +271,18 @@ module Packet = {
     let rest_packet_str = rest => rest->List.reduce("", (a, p) => a ++ "\n    " ++ dumpPacket(p))
 
     switch p {
-    | Literal(l) => j`ver = $version | typeId = $typeId | literal payload = $l`
+    | Literal(l) =>
+      `ver = ${version->Int.toString} | typeId = ${typeId->Int.toString} | literal payload = ${l->Int64.to_string}`
 
     | Op_Len_Kind_0(len, rest) => {
         let sub_packets_str = rest_packet_str(rest)
 
-        j`{ ver = $version | typeId = $typeId | op payload = type_0(n_bits: $len, $sub_packets_str) }\n`
+        `{ ver = ${version->Int.toString} | typeId = ${typeId->Int.toString} | op payload = type_0(n_bits: ${len->Int.toString}, ${sub_packets_str}) }\n`
       }
     | Op_Len_Kind_1(len, rest) => {
         let sub_packets_str = rest_packet_str(rest)
 
-        j`{ ver = $version | typeId = $typeId | op payload = type_1(n_packats: $len, $sub_packets_str) }\n`
+        `{ ver = ${version->Int.toString} | typeId = ${typeId->Int.toString} | op payload = type_1(n_packats: ${len->Int.toString}, ${sub_packets_str}) }\n`
       }
     }
   }
@@ -360,38 +360,38 @@ module Expression = {
     switch e {
     | Value(v) => {
         let v' = eval_value(v)
-        j` Value=$v';`
+        ` Value=${v'->Int64.to_string};`
       }
     | Sum(e) => {
         let v' = e->List.reduce("", (a, v) => a ++ toString(v))
-        j`Sum:{ $v' }`
+        `Sum:{ ${v'} }`
       }
     | Product(e) => {
         let v' = e->List.reduce("", (a, v) => a ++ toString(v))
-        j`Product:{ $v' }`
+        `Product:{ ${v'} }`
       }
     | Min(e) => {
         let v' = e->List.reduce("", (a, v) => a ++ toString(v))
-        j`Min:{ $v' }`
+        `Min:{ ${v'} }`
       }
     | Max(e) => {
         let v' = e->List.reduce("", (a, v) => a ++ toString(v))
-        j`Max:{ $v' }`
+        `Max:{ ${v'} }`
       }
     | Greater(e1, e2) => {
         let v1 = toString(e1)
         let v2 = toString(e2)
-        j`Greater:{ $v1, $v2 }`
+        `Greater:{ ${v1}, ${v2} }`
       }
     | Less(e1, e2) => {
         let v1 = toString(e1)
         let v2 = toString(e2)
-        j`LessThan:{ $v1, $v2 }`
+        `LessThan:{ ${v1}, ${v2} }`
       }
     | Equal(e1, e2) => {
         let v1 = toString(e1)
         let v2 = toString(e2)
-        j`Equal:{ $v1, $v2 }`
+        `Equal:{ ${v1}, ${v2} }`
       }
     }
   }

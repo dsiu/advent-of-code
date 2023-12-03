@@ -6,7 +6,7 @@ import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 var Not_Expected = /* @__PURE__ */Caml_exceptions.create("Tree-AdventOfCode.Not_Expected");
 
 function treeToString(e) {
-  if (e.TAG === /* Leaf */0) {
+  if (e.TAG === "Leaf") {
     return String(e._0);
   }
   var s1 = treeToString(e._0);
@@ -15,10 +15,10 @@ function treeToString(e) {
 }
 
 function cxtToString(c) {
-  if (typeof c === "number") {
+  if (typeof c !== "object") {
     return "Top";
   }
-  if (c.TAG === /* L */0) {
+  if (c.TAG === "L") {
     var t_str = treeToString(c._1);
     var c_str = cxtToString(c._0);
     return "L(" + c_str + "," + t_str + ")";
@@ -36,11 +36,12 @@ function locToString(param) {
 
 function left(param) {
   var t = param._0;
-  if (t.TAG !== /* Leaf */0) {
-    return /* Loc */{
+  if (t.TAG !== "Leaf") {
+    return {
+            TAG: "Loc",
             _0: t._0,
             _1: {
-              TAG: /* L */0,
+              TAG: "L",
               _0: param._1,
               _1: t._1
             }
@@ -55,11 +56,12 @@ function left(param) {
 
 function right(param) {
   var t = param._0;
-  if (t.TAG !== /* Leaf */0) {
-    return /* Loc */{
+  if (t.TAG !== "Leaf") {
+    return {
+            TAG: "Loc",
             _0: t._1,
             _1: {
-              TAG: /* R */1,
+              TAG: "R",
               _0: t._0,
               _1: param._1
             }
@@ -73,29 +75,32 @@ function right(param) {
 }
 
 function top(t) {
-  return /* Loc */{
+  return {
+          TAG: "Loc",
           _0: t,
-          _1: /* Top */0
+          _1: "Top"
         };
 }
 
 function up(param) {
   var c = param._1;
   var t = param._0;
-  if (typeof c !== "number") {
-    if (c.TAG === /* L */0) {
-      return /* Loc */{
+  if (typeof c === "object") {
+    if (c.TAG === "L") {
+      return {
+              TAG: "Loc",
               _0: {
-                TAG: /* Pair */1,
+                TAG: "Pair",
                 _0: t,
                 _1: c._1
               },
               _1: c._0
             };
     } else {
-      return /* Loc */{
+      return {
+              TAG: "Loc",
               _0: {
-                TAG: /* Pair */1,
+                TAG: "Pair",
                 _0: c._0,
                 _1: t
               },
@@ -113,8 +118,13 @@ function up(param) {
 function upmost(_l) {
   while(true) {
     var l = _l;
-    if (typeof l._1 === "number") {
+    var tmp = l._1;
+    if (typeof tmp !== "object") {
       return l;
+    }
+    if (tmp.TAG === "L") {
+      _l = up(l);
+      continue ;
     }
     _l = up(l);
     continue ;
@@ -122,7 +132,8 @@ function upmost(_l) {
 }
 
 function modify(param, f) {
-  return /* Loc */{
+  return {
+          TAG: "Loc",
           _0: Curry._1(f, param._0),
           _1: param._1
         };

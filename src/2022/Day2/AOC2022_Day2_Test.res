@@ -1,5 +1,7 @@
-open Jest2
+open Jest
+open Expect
 
+open Jest2
 //open Belt
 let data = AOC2022_Day2_Data.data
 let sampleData = AOC2022_Day2_Data_Sample.data

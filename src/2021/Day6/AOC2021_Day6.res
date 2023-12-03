@@ -42,7 +42,7 @@ module LanternFish = {
 
 let rec runDumb = (fs, days) => {
   Js.log2("days", days)
-  Log.debug("run " ++ j`days`)
+  Log.debug("run " ++ `days`)
   Log.debug("fs size " ++ fs->Array.length->Belt.Int.toString)
   //  Js.log2("fs", fs->Array.map(LanternFish.toString))
   switch days {
@@ -65,7 +65,7 @@ let rec runDumb = (fs, days) => {
     }
   }
 }
-module BigInt = ReScriptJs.Js.BigInt
+module BigInt = RescriptCore.BigInt
 let big_zero = BigInt.fromInt(0)
 let big_one = BigInt.fromInt(1)
 let add = BigInt.add

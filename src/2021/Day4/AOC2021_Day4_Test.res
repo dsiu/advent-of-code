@@ -1,3 +1,6 @@
+open Jest
+open Expect
+
 open Jest2
 //open Belt
 
@@ -33,9 +36,13 @@ describe("2021 Day4", () => {
       ),
     ]
 
-    testEach2("board tests", board_tests, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testEach2(
+      "board tests",
+      board_tests,
+      (result, expected) => {
+        expect(result)->toEqual(expected)
+      },
+    )
   })
 
   test("Part 1 - Sample Data", () => {

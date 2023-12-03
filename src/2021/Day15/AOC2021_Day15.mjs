@@ -119,7 +119,8 @@ function getAdjacents(t, param) {
                   param[1]
                 ]), (function (c) {
                 if (Array2D$AdventOfCode.isValidXY(t, c)) {
-                  return /* CoordAndVal */{
+                  return {
+                          TAG: "CoordAndVal",
                           _0: c,
                           _1: Array2D$AdventOfCode.getExn(t, c)
                         };

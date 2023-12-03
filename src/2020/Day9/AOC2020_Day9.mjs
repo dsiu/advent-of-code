@@ -33,7 +33,7 @@ function preambles(t) {
 function make(codes, runLength) {
   if (codes.length > runLength) {
     return {
-            TAG: /* Ok */0,
+            TAG: "Ok",
             _0: {
               codes: codes,
               runLength: runLength
@@ -41,8 +41,8 @@ function make(codes, runLength) {
           };
   } else {
     return {
-            TAG: /* Error */1,
-            _0: /* InvalidRunLength */0
+            TAG: "Error",
+            _0: "InvalidRunLength"
           };
   }
 }
@@ -77,13 +77,13 @@ function isCodeValid(t, i) {
   var code = Belt_Array.get(t.codes, i);
   if (code !== undefined) {
     return {
-            TAG: /* Ok */0,
+            TAG: "Ok",
             _0: findSumOf(lastSet, code)
           };
   } else {
     return {
-            TAG: /* Error */1,
-            _0: /* InvalidIndex */1
+            TAG: "Error",
+            _0: "InvalidIndex"
           };
   }
 }
@@ -96,7 +96,7 @@ function findInvalidCode(t) {
       return ;
     }
     var sumOk = isCodeValid(t, i);
-    if (sumOk.TAG !== /* Ok */0) {
+    if (sumOk.TAG !== "Ok") {
       return ;
     }
     if (sumOk._0 === undefined) {

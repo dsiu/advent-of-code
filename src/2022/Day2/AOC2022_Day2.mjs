@@ -13,11 +13,11 @@ var InvalidShape = /* @__PURE__ */Caml_exceptions.create("AOC2022_Day2-AdventOfC
 function makeP1Shape(s) {
   switch (s) {
     case "A" :
-        return /* Rock */0;
+        return "Rock";
     case "B" :
-        return /* Paper */1;
+        return "Paper";
     case "C" :
-        return /* Scissors */2;
+        return "Scissors";
     default:
       throw {
             RE_EXN_ID: InvalidShape,
@@ -30,11 +30,11 @@ function makeP1Shape(s) {
 function makeP2Shape(s) {
   switch (s) {
     case "X" :
-        return /* Rock */0;
+        return "Rock";
     case "Y" :
-        return /* Paper */1;
+        return "Paper";
     case "Z" :
-        return /* Scissors */2;
+        return "Scissors";
     default:
       throw {
             RE_EXN_ID: InvalidShape,
@@ -46,34 +46,34 @@ function makeP2Shape(s) {
 
 function player2Result(round) {
   switch (round._0) {
-    case /* Rock */0 :
+    case "Rock" :
         switch (round._1) {
-          case /* Rock */0 :
-              return /* Draw */1;
-          case /* Paper */1 :
-              return /* Win */2;
-          case /* Scissors */2 :
-              return /* Loss */0;
+          case "Rock" :
+              return "Draw";
+          case "Paper" :
+              return "Win";
+          case "Scissors" :
+              return "Loss";
           
         }
-    case /* Paper */1 :
+    case "Paper" :
         switch (round._1) {
-          case /* Rock */0 :
-              return /* Loss */0;
-          case /* Paper */1 :
-              return /* Draw */1;
-          case /* Scissors */2 :
-              return /* Win */2;
+          case "Rock" :
+              return "Loss";
+          case "Paper" :
+              return "Draw";
+          case "Scissors" :
+              return "Win";
           
         }
-    case /* Scissors */2 :
+    case "Scissors" :
         switch (round._1) {
-          case /* Rock */0 :
-              return /* Win */2;
-          case /* Paper */1 :
-              return /* Loss */0;
-          case /* Scissors */2 :
-              return /* Draw */1;
+          case "Rock" :
+              return "Win";
+          case "Paper" :
+              return "Loss";
+          case "Scissors" :
+              return "Draw";
           
         }
     
@@ -81,16 +81,24 @@ function player2Result(round) {
 }
 
 function scoreShape(s) {
-  return s + 1 | 0;
+  switch (s) {
+    case "Rock" :
+        return 1;
+    case "Paper" :
+        return 2;
+    case "Scissors" :
+        return 3;
+    
+  }
 }
 
 function scoreResult(r) {
   switch (r) {
-    case /* Loss */0 :
+    case "Loss" :
         return 0;
-    case /* Draw */1 :
+    case "Draw" :
         return 3;
-    case /* Win */2 :
+    case "Win" :
         return 6;
     
   }
@@ -101,11 +109,11 @@ var InvalidResult = /* @__PURE__ */Caml_exceptions.create("AOC2022_Day2-AdventOf
 function makeResult(s) {
   switch (s) {
     case "X" :
-        return /* Loss */0;
+        return "Loss";
     case "Y" :
-        return /* Draw */1;
+        return "Draw";
     case "Z" :
-        return /* Win */2;
+        return "Win";
     default:
       throw {
             RE_EXN_ID: InvalidResult,
@@ -116,23 +124,25 @@ function makeResult(s) {
 }
 
 function scoreRound(r) {
-  return scoreResult(player2Result(r)) + (r._1 + 1 | 0) | 0;
+  return scoreResult(player2Result(r)) + scoreShape(r._1) | 0;
 }
 
 function roundFromResult(param) {
   var result = param._1;
   var shape = param._0;
   var p2s = Belt_Array.getExn(Belt_Array.keep([
-            /* Rock */0,
-            /* Paper */1,
-            /* Scissors */2
+            "Rock",
+            "Paper",
+            "Scissors"
           ], (function (p2Shape) {
-              return player2Result(/* Round */{
+              return player2Result({
+                          TAG: "Round",
                           _0: shape,
                           _1: p2Shape
                         }) === result;
             })), 0);
-  return /* Round */{
+  return {
+          TAG: "Round",
           _0: shape,
           _1: p2s
         };
@@ -153,7 +163,8 @@ function makeRound(s) {
   }
   var p1 = match[0];
   var p2 = match[1];
-  return /* Round */{
+  return {
+          TAG: "Round",
           _0: makeP1Shape(p1),
           _1: makeP2Shape(p2)
         };
@@ -174,7 +185,8 @@ function makeShapeResult(s) {
   }
   var p1 = match[0];
   var r = match[1];
-  return /* ShapeResult */{
+  return {
+          TAG: "ShapeResult",
           _0: makeP1Shape(p1),
           _1: makeResult(r)
         };

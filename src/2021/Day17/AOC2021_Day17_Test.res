@@ -1,3 +1,5 @@
+open Jest
+open Expect
 open Jest2
 
 //open Belt
@@ -59,9 +61,13 @@ describe("2021 Day17", () => {
         ),
       ]->makeLaunchTests
 
-    testEach2("examples", example_tests, (result, expected) => {
-      expect(result)->toEqual(expected)
-    })
+    testEach2(
+      "examples",
+      example_tests,
+      (result, expected) => {
+        expect(result)->toEqual(expected)
+      },
+    )
   })
 
   test("Part 1 - Sample Data", () => {

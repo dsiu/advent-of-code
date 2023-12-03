@@ -6,7 +6,6 @@ let log2 = Js.Console.log2
 let log3 = Js.Console.log3
 
 module P = Res_parser
-module Rjs = ReScriptJs.Js
 module T = Tree
 
 @@warning("-8")

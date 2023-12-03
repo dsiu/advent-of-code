@@ -43,7 +43,8 @@ function parse(data) {
   return Stdlib_Array.map(Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (l) {
                     return Stdlib_Array.map(l.trim().split(","), (function (p) {
                                   var r = Stdlib_Array.map(p.split("-"), Utils$AdventOfCode.intFromStringExn);
-                                  return /* Interval */{
+                                  return {
+                                          TAG: "Interval",
                                           _0: Stdlib_Array.getExn(r, 0),
                                           _1: Stdlib_Array.getExn(r, 1)
                                         };

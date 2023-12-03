@@ -45,7 +45,7 @@ function makeMask(m, f) {
 }
 
 function toString(param) {
-  return "mask: " + param.mask + "\n" + ("mask_x: " + Int64.to_string(param.mask_x) + "\n") + ("mask_x_str: " + param.mask_x_str + "") + ("mask_one: " + Int64.to_string(param.mask_one) + "\n") + ("mask_zero: " + Int64.to_string(param.mask_zero) + "");
+  return "mask: " + param.mask + "\n" + ("mask_x: " + Int64.to_string(param.mask_x) + "\n") + ("mask_x_str: " + param.mask_x_str) + ("mask_one: " + Int64.to_string(param.mask_one) + "\n") + ("mask_zero: " + Int64.to_string(param.mask_zero));
 }
 
 function makePassThurMask(__x) {
@@ -94,7 +94,7 @@ function make$1(str) {
 }
 
 function toString$1(t) {
-  return "address: " + Int64.to_string(t.address) + "\n" + ("value: " + Int64.to_string(t.value) + "");
+  return "address: " + Int64.to_string(t.address) + "\nvalue: " + Int64.to_string(t.value);
 }
 
 var Memory = {
@@ -103,7 +103,7 @@ var Memory = {
 };
 
 function instructionToString(i) {
-  if (i.TAG === /* MaskOp */0) {
+  if (i.TAG === "MaskOp") {
     return "MaskOp(" + toString(i._0) + ")";
   } else {
     return "MemOp(" + toString$1(i._0) + ")";
@@ -118,12 +118,12 @@ function parse(lines) {
                 switch (match) {
                   case "mask" :
                       return {
-                              TAG: /* MaskOp */0,
+                              TAG: "MaskOp",
                               _0: make(l)
                             };
                   case "mem[" :
                       return {
-                              TAG: /* MemOp */1,
+                              TAG: "MemOp",
                               _0: make$1(l)
                             };
                   default:
@@ -139,7 +139,7 @@ function parse(lines) {
 function make$2(instructions) {
   return {
           instructions: parse(instructions),
-          memory: Belt_MutableMapString.make(undefined)
+          memory: Belt_MutableMapString.make()
         };
 }
 
@@ -192,7 +192,7 @@ function run(t, algo) {
     contents: make("mask = 11110000XXXX")
   };
   Belt_Array.forEach(t.instructions, (function (x) {
-          if (x.TAG === /* MaskOp */0) {
+          if (x.TAG === "MaskOp") {
             cur_m.contents = x._0;
             return ;
           } else {

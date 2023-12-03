@@ -11,15 +11,15 @@ function log(prim) {
 }
 
 function parsedObjectToString(obj) {
-  if (typeof obj === "number") {
+  if (typeof obj !== "object") {
     return "LS";
   }
-  switch (obj.TAG | 0) {
-    case /* CD */0 :
+  switch (obj.TAG) {
+    case "CD" :
         return "CD " + obj._0;
-    case /* PDirectory */1 :
+    case "PDirectory" :
         return "PDirectory " + obj._0;
-    case /* PFile */2 :
+    case "PFile" :
         return "PFile " + String(obj._0) + " " + obj._1;
     
   }
@@ -27,25 +27,25 @@ function parsedObjectToString(obj) {
 
 var cmdCD = Res_parser.map(Res_parser.andThen(Res_parser.string("$ cd "), ResParser_Utils$AdventOfCode.string), (function (param) {
         return {
-                TAG: /* CD */0,
+                TAG: "CD",
                 _0: param[1]
               };
       }));
 
 var cmdLS = Res_parser.map(Res_parser.string("$ ls"), (function (param) {
-        return /* LS */0;
+        return "LS";
       }));
 
 var outputDir = Res_parser.map(Res_parser.andThen(Res_parser.string("dir "), ResParser_Utils$AdventOfCode.string), (function (param) {
         return {
-                TAG: /* PDirectory */1,
+                TAG: "PDirectory",
                 _0: param[1]
               };
       }));
 
 var outputFile = Res_parser.map(Res_parser.andThen(Res_parser.andThen(ResParser_Utils$AdventOfCode.digits, ResParser_Utils$AdventOfCode.manyWhitespace), ResParser_Utils$AdventOfCode.string), (function (param) {
         return {
-                TAG: /* PFile */2,
+                TAG: "PFile",
                 _0: Caml_format.int_of_string(param[0][0]),
                 _1: param[1]
               };
@@ -82,7 +82,7 @@ function parse(data) {
 
 function solvePart1(data) {
   var prim = Stdlib_Array.keepMap(Stdlib_Array.map(parse(data), run), (function (result) {
-          if (result.TAG === /* Ok */0) {
+          if (result.TAG === "Ok") {
             return parsedObjectToString(result._0[0]);
           }
           

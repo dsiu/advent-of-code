@@ -27,7 +27,8 @@ function setVisibility(row) {
     if (height > highest) {
       return [
               height,
-              Stdlib_Array.concat([/* Tree */{
+              Stdlib_Array.concat([{
+                      TAG: "Tree",
                       _0: height,
                       _1: true
                     }], tagged)
@@ -35,7 +36,8 @@ function setVisibility(row) {
     } else {
       return [
               highest,
-              Stdlib_Array.concat([/* Tree */{
+              Stdlib_Array.concat([{
+                      TAG: "Tree",
                       _0: height,
                       _1: param$1._1
                     }], tagged)
@@ -119,7 +121,8 @@ function part2(forest) {
 function parse(data) {
   return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
                 return Stdlib_Array.map(Utils$AdventOfCode.splitChars(x.trim()), (function (x) {
-                              return /* Tree */{
+                              return {
+                                      TAG: "Tree",
                                       _0: Caml_format.int_of_string(x),
                                       _1: false
                                     };

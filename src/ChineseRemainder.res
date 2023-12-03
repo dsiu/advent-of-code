@@ -52,15 +52,15 @@ let crt = (rem, num) => {
 //
 // BigInt version of crt
 //
-let big_zero = ReScriptJs.Js.BigInt.fromInt(0)
-let big_one = ReScriptJs.Js.BigInt.fromInt(1)
-let add = ReScriptJs.Js.BigInt.add
-let sub = ReScriptJs.Js.BigInt.sub
-let mul = ReScriptJs.Js.BigInt.mul
-let div = ReScriptJs.Js.BigInt.div
-let mod = ReScriptJs.Js.BigInt.mod
+let big_zero = RescriptCore.BigInt.fromInt(0)
+let big_one = RescriptCore.BigInt.fromInt(1)
+let add = RescriptCore.BigInt.add
+let sub = RescriptCore.BigInt.sub
+let mul = RescriptCore.BigInt.mul
+let div = RescriptCore.BigInt.div
+let mod = RescriptCore.BigInt.mod
 
-let mulInvBigInt = (a: ReScriptJs.Js.BigInt.t, b: ReScriptJs.Js.BigInt.t) => {
+let mulInvBigInt = (a: RescriptCore.BigInt.t, b: RescriptCore.BigInt.t) => {
   let b0 = b
   let (x0, x1) = (ref(big_zero), ref(big_one))
 
@@ -81,6 +81,7 @@ let mulInvBigInt = (a: ReScriptJs.Js.BigInt.t, b: ReScriptJs.Js.BigInt.t) => {
       x0 := sub(x1.contents, mul(q, x0.contents))
       x1 := tmp
     }
+
     // need to coerce to prevent using caml
     if %raw(`x1 < big_zero`) {
       x1 := add(x1.contents, b0)

@@ -69,7 +69,7 @@ let solvePart2 = data => {
   let trees = slopes->Array.map(s => tm->TreeMap.walk(_, s))
   //  trees->log
 
-  open ReScriptJs.Js
+  open RescriptCore
   let acc = BigInt.fromInt(1)
   trees
   ->Belt.Array.reduce(acc, (a, s) => {

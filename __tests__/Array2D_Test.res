@@ -1,4 +1,7 @@
-open Jest2
+open Jest
+open Expect
+
+include Jest2
 open Belt
 
 describe("make", () => {

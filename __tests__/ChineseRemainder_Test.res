@@ -1,4 +1,7 @@
+open Jest
+open Expect
 open Jest2
+
 open ChineseRemainder
 
 describe("ChineseRemainder", () => {
@@ -9,12 +12,13 @@ describe("ChineseRemainder", () => {
     (crt([2, 12, 22], [13, 3, 2]), 54),
     (crt([44, 12, 10], [2, 5, 3]), 22),
   ]
+  test("", () => true->expect->toEqual(true))
 
   testEach2("int", int_tests, (result, expected) => {
     expect(result)->toEqual(expected)
   })
 
-  open ReScriptJs.Js
+  open RescriptCore
   let bigint_tests = [
     (
       crtBigInt([3->BigInt.fromInt, 4->BigInt.fromInt], [2->BigInt.fromInt, 5->BigInt.fromInt]),

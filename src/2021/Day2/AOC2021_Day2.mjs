@@ -16,17 +16,17 @@ function make(s, n) {
   switch (s) {
     case "down" :
         return {
-                TAG: /* Down */1,
+                TAG: "Down",
                 _0: n
               };
     case "forward" :
         return {
-                TAG: /* Forward */0,
+                TAG: "Forward",
                 _0: n
               };
     case "up" :
         return {
-                TAG: /* Up */2,
+                TAG: "Up",
                 _0: n
               };
     default:
@@ -50,20 +50,20 @@ var make$1 = {
 };
 
 function move(t, move$1) {
-  switch (move$1.TAG | 0) {
-    case /* Forward */0 :
+  switch (move$1.TAG) {
+    case "Forward" :
         return {
                 h: t.h + move$1._0 | 0,
                 d: t.d,
                 aim: t.aim
               };
-    case /* Down */1 :
+    case "Down" :
         return {
                 h: t.h,
                 d: t.d + move$1._0 | 0,
                 aim: t.aim
               };
-    case /* Up */2 :
+    case "Up" :
         return {
                 h: t.h,
                 d: t.d - move$1._0 | 0,
@@ -74,21 +74,21 @@ function move(t, move$1) {
 }
 
 function moveWithAim(t, move) {
-  switch (move.TAG | 0) {
-    case /* Forward */0 :
+  switch (move.TAG) {
+    case "Forward" :
         var n = move._0;
         return {
                 h: t.h + n | 0,
                 d: t.d + Math.imul(t.aim, n) | 0,
                 aim: t.aim
               };
-    case /* Down */1 :
+    case "Down" :
         return {
                 h: t.h,
                 d: t.d,
                 aim: t.aim + move._0 | 0
               };
-    case /* Up */2 :
+    case "Up" :
         return {
                 h: t.h,
                 d: t.d,
