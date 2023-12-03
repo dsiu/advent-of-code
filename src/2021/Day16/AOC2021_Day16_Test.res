@@ -1,6 +1,5 @@
 open Jest
 open Expect
-open Jest2
 
 open Belt
 
@@ -225,74 +224,74 @@ describe("2021 Day16", () => {
   })
 
   describe("Expression", () => {
-    let withBigIntResult = Belt.Array.map(_, ((t, r)) => {(t, r->Int64.of_int)})
+    let withBigIntResult = List.map(_, ((t, r)) => {(t, r->Int64.of_int)})
 
     open Expression
     let sum_tests =
-      [
+      list{
         (Sum(list{intVal(1), intVal(2)})->eval, 3),
         (Sum(list{Sum(list{intVal(3), intVal(4)}), intVal(2)})->eval, 9),
         (Sum(list{intVal(11), intVal(12), intVal(13)})->eval, 36),
-      ]->withBigIntResult
+      }->withBigIntResult
 
-    testEach2(
+    testAll(
       "sum",
       sum_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result)->toEqual(expected)
       },
     )
 
     let product_tests =
-      [
+      list{
         (Product(list{intVal(2), intVal(3)})->eval, 6),
         (Product(list{Product(list{intVal(3), intVal(4)}), intVal(2)})->eval, 24),
         (Product(list{intVal(11), intVal(12), intVal(13)})->eval, 1716),
         (Product(list{Sum(list{intVal(3), intVal(4)}), Sum(list{intVal(2), intVal(1)})})->eval, 21),
-      ]->withBigIntResult
+      }->withBigIntResult
 
-    testEach2(
+    testAll(
       "product",
       product_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result)->toEqual(expected)
       },
     )
 
     let min_tests =
-      [
+      list{
         (Min(list{intVal(2), intVal(3)})->eval, 2),
         (Min(list{intVal(9), intVal(-1), intVal(12)})->eval, -1),
         (Min(list{Min(list{intVal(4), intVal(5)}), Min(list{intVal(6), intVal(7)})})->eval, 4),
         (Min(list{Sum(list{intVal(3), intVal(4)}), Sum(list{intVal(0), intVal(7)})})->eval, 7),
-      ]->withBigIntResult
+      }->withBigIntResult
 
-    testEach2(
+    testAll(
       "min",
       min_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result)->toEqual(expected)
       },
     )
 
     let max_tests =
-      [
+      list{
         (Max(list{intVal(2), intVal(3)})->eval, 3),
         (Max(list{intVal(9), intVal(-1), intVal(12)})->eval, 12),
         (Max(list{Max(list{intVal(4), intVal(5)}), Max(list{intVal(6), intVal(7)})})->eval, 7),
         (Max(list{Sum(list{intVal(3), intVal(4)}), Sum(list{intVal(0), intVal(7)})})->eval, 7),
-      ]->withBigIntResult
+      }->withBigIntResult
 
-    testEach2(
+    testAll(
       "max",
       max_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result)->toEqual(expected)
       },
     )
 
     let greater_tests =
-      [
+      list{
         (Greater(intVal(2), intVal(3))->eval, 0),
         (Greater(intVal(0), intVal(0))->eval, 0),
         (Greater(intVal(1), intVal(-1))->eval, 1),
@@ -303,18 +302,18 @@ describe("2021 Day16", () => {
           )->eval,
           1,
         ),
-      ]->withBigIntResult
+      }->withBigIntResult
 
-    testEach2(
+    testAll(
       "greater",
       greater_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result)->toEqual(expected)
       },
     )
 
     let less_tests =
-      [
+      list{
         (Less(intVal(2), intVal(3))->eval, 1),
         (Less(intVal(0), intVal(0))->eval, 0),
         (Less(intVal(1), intVal(-1))->eval, 0),
@@ -325,18 +324,18 @@ describe("2021 Day16", () => {
           )->eval,
           0,
         ),
-      ]->withBigIntResult
+      }->withBigIntResult
 
-    testEach2(
+    testAll(
       "less",
       less_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result)->toEqual(expected)
       },
     )
 
     let equal_tests =
-      [
+      list{
         (Equal(intVal(0), intVal(0))->eval, 1),
         (Equal(intVal(1), intVal(0))->eval, 0),
         (Equal(intVal(2), intVal(3))->eval, 0),
@@ -349,12 +348,12 @@ describe("2021 Day16", () => {
           1,
         ),
         (Equal(Product(list{intVal(3), intVal(4)}), Product(list{intVal(2), intVal(6)}))->eval, 1),
-      ]->withBigIntResult
+      }->withBigIntResult
 
-    testEach2(
+    testAll(
       "equal",
       equal_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result)->toEqual(expected)
       },
     )
@@ -363,7 +362,7 @@ describe("2021 Day16", () => {
       "Packet with Expression",
       () => {
         let expr_tests =
-          [
+          list{
             ("C200B40A82", 3),
             ("04005AC33890", 54),
             ("880086C3E88112", 7),
@@ -372,18 +371,18 @@ describe("2021 Day16", () => {
             ("F600BC2D8F", 0),
             ("9C005AC2F8F0", 0),
             ("9C0141080250320F1802104A08", 1),
-          ]->withBigIntResult
+          }->withBigIntResult
 
-        let expr_tests = expr_tests->Array.map(
+        let expr_tests = expr_tests->List.map(
           ((t, r)) => {
             (t->hexStrToBinStr->Packet.parse->Result.getExn->fst->makeFromPacket->eval, r)
           },
         )
 
-        testEach2(
+        testAll(
           "examples",
           expr_tests,
-          (result, expected) => {
+          ((result, expected)) => {
             expect(result)->toEqual(expected)
           },
         )

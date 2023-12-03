@@ -2,7 +2,6 @@
 
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-import * as Jest2$AdventOfCode from "../interop/Jest2.mjs";
 import * as Array2D$AdventOfCode from "../src/Array2D.mjs";
 
 Jest.describe("make", (function (param) {
@@ -121,38 +120,47 @@ Jest.describe("get / set", (function (param) {
                 1
               ], "h")
         ];
-        var get_string_tests = [
-          [
-            Belt_Option.getExn(Array2D$AdventOfCode.get(s, [
-                      1,
-                      0
-                    ])),
-            "f"
-          ],
-          [
+        var get_string_tests_0 = [
+          Belt_Option.getExn(Array2D$AdventOfCode.get(s, [
+                    1,
+                    0
+                  ])),
+          "f"
+        ];
+        var get_string_tests_1 = {
+          hd: [
             Belt_Option.getExn(Array2D$AdventOfCode.get(s, [
                       0,
                       1
                     ])),
             "g"
           ],
-          [
-            Belt_Option.getExn(Array2D$AdventOfCode.get(s, [
-                      0,
-                      0
-                    ])),
-            "e"
-          ],
-          [
-            Belt_Option.getExn(Array2D$AdventOfCode.get(s, [
-                      1,
-                      1
-                    ])),
-            "h"
-          ]
-        ];
-        Jest2$AdventOfCode.testEach2("get - string", get_string_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+          tl: {
+            hd: [
+              Belt_Option.getExn(Array2D$AdventOfCode.get(s, [
+                        0,
+                        0
+                      ])),
+              "e"
+            ],
+            tl: {
+              hd: [
+                Belt_Option.getExn(Array2D$AdventOfCode.get(s, [
+                          1,
+                          1
+                        ])),
+                "h"
+              ],
+              tl: /* [] */0
+            }
+          }
+        };
+        var get_string_tests = {
+          hd: get_string_tests_0,
+          tl: get_string_tests_1
+        };
+        Jest.testAll("get - string", get_string_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
         var a = Array2D$AdventOfCode.make([
               2,
@@ -177,38 +185,47 @@ Jest.describe("get / set", (function (param) {
               ], 4)
         ];
         var b = Array2D$AdventOfCode.copy(a);
-        var get_tests = [
-          [
-            Array2D$AdventOfCode.get(a, [
-                  0,
-                  0
-                ]),
-            1
-          ],
-          [
+        var get_tests_0 = [
+          Array2D$AdventOfCode.get(a, [
+                0,
+                0
+              ]),
+          1
+        ];
+        var get_tests_1 = {
+          hd: [
             Array2D$AdventOfCode.get(a, [
                   1,
                   0
                 ]),
             2
           ],
-          [
-            Array2D$AdventOfCode.get(a, [
-                  0,
-                  1
-                ]),
-            3
-          ],
-          [
-            Array2D$AdventOfCode.get(a, [
-                  1,
-                  1
-                ]),
-            4
-          ]
-        ];
-        Jest2$AdventOfCode.testEach2("get - int", get_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+          tl: {
+            hd: [
+              Array2D$AdventOfCode.get(a, [
+                    0,
+                    1
+                  ]),
+              3
+            ],
+            tl: {
+              hd: [
+                Array2D$AdventOfCode.get(a, [
+                      1,
+                      1
+                    ]),
+                4
+              ],
+              tl: /* [] */0
+            }
+          }
+        };
+        var get_tests = {
+          hd: get_tests_0,
+          tl: get_tests_1
+        };
+        Jest.testAll("get - int", get_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
         [
           Array2D$AdventOfCode.set(a, [
@@ -220,75 +237,93 @@ Jest.describe("get / set", (function (param) {
                 1
               ], 7)
         ];
-        var set_tests = [
-          [
-            Array2D$AdventOfCode.get(a, [
-                  0,
-                  0
-                ]),
-            5
-          ],
-          [
+        var set_tests_0 = [
+          Array2D$AdventOfCode.get(a, [
+                0,
+                0
+              ]),
+          5
+        ];
+        var set_tests_1 = {
+          hd: [
             Array2D$AdventOfCode.get(a, [
                   1,
                   0
                 ]),
             2
           ],
-          [
-            Array2D$AdventOfCode.get(a, [
-                  0,
-                  1
-                ]),
-            7
-          ],
-          [
-            Array2D$AdventOfCode.get(a, [
-                  1,
-                  1
-                ]),
-            4
-          ]
-        ];
-        Jest2$AdventOfCode.testEach2("set - int", set_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+          tl: {
+            hd: [
+              Array2D$AdventOfCode.get(a, [
+                    0,
+                    1
+                  ]),
+              7
+            ],
+            tl: {
+              hd: [
+                Array2D$AdventOfCode.get(a, [
+                      1,
+                      1
+                    ]),
+                4
+              ],
+              tl: /* [] */0
+            }
+          }
+        };
+        var set_tests = {
+          hd: set_tests_0,
+          tl: set_tests_1
+        };
+        Jest.testAll("set - int", set_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
         [Array2D$AdventOfCode.setYEquals(b, 1, [
                 9,
                 11
               ])];
-        var setYEquals_test = [
-          [
-            Array2D$AdventOfCode.get(b, [
-                  0,
-                  0
-                ]),
-            1
-          ],
-          [
+        var setYEquals_test_0 = [
+          Array2D$AdventOfCode.get(b, [
+                0,
+                0
+              ]),
+          1
+        ];
+        var setYEquals_test_1 = {
+          hd: [
             Array2D$AdventOfCode.get(b, [
                   1,
                   0
                 ]),
             2
           ],
-          [
-            Array2D$AdventOfCode.get(b, [
-                  0,
-                  1
-                ]),
-            9
-          ],
-          [
-            Array2D$AdventOfCode.get(b, [
-                  1,
-                  1
-                ]),
-            11
-          ]
-        ];
-        Jest2$AdventOfCode.testEach2("setYEquals", setYEquals_test, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+          tl: {
+            hd: [
+              Array2D$AdventOfCode.get(b, [
+                    0,
+                    1
+                  ]),
+              9
+            ],
+            tl: {
+              hd: [
+                Array2D$AdventOfCode.get(b, [
+                      1,
+                      1
+                    ]),
+                11
+              ],
+              tl: /* [] */0
+            }
+          }
+        };
+        var setYEquals_test = {
+          hd: setYEquals_test_0,
+          tl: setYEquals_test_1
+        };
+        Jest.testAll("setYEquals", setYEquals_test, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
       }));
 
@@ -400,17 +435,17 @@ Jest.describe("keep / map / getXYEquals / crop", (function (param) {
                 ];
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
-        var getXEquals_tests = [
+        var getXEquals_tests_0 = [
+          Array2D$AdventOfCode.getXEquals(a, 0),
           [
-            Array2D$AdventOfCode.getXEquals(a, 0),
-            [
-              355,
-              404,
-              320,
-              744
-            ]
-          ],
-          [
+            355,
+            404,
+            320,
+            744
+          ]
+        ];
+        var getXEquals_tests_1 = {
+          hd: [
             Array2D$AdventOfCode.getXEquals(a, 1),
             [
               907,
@@ -419,29 +454,36 @@ Jest.describe("keep / map / getXYEquals / crop", (function (param) {
               97
             ]
           ],
+          tl: {
+            hd: [
+              Array2D$AdventOfCode.getXEquals(a, 2),
+              [
+                707,
+                514,
+                982,
+                876
+              ]
+            ],
+            tl: /* [] */0
+          }
+        };
+        var getXEquals_tests = {
+          hd: getXEquals_tests_0,
+          tl: getXEquals_tests_1
+        };
+        Jest.testAll("getXEquals", getXEquals_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
+              }));
+        var getYEquals_tests_0 = [
+          Array2D$AdventOfCode.getYEquals(a, 0),
           [
-            Array2D$AdventOfCode.getXEquals(a, 2),
-            [
-              707,
-              514,
-              982,
-              876
-            ]
+            355,
+            907,
+            707
           ]
         ];
-        Jest2$AdventOfCode.testEach2("getXEquals", getXEquals_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-              }));
-        var getYEquals_tests = [
-          [
-            Array2D$AdventOfCode.getYEquals(a, 0),
-            [
-              355,
-              907,
-              707
-            ]
-          ],
-          [
+        var getYEquals_tests_1 = {
+          hd: [
             Array2D$AdventOfCode.getYEquals(a, 1),
             [
               404,
@@ -449,30 +491,37 @@ Jest.describe("keep / map / getXYEquals / crop", (function (param) {
               514
             ]
           ],
+          tl: {
+            hd: [
+              Array2D$AdventOfCode.getYEquals(a, 2),
+              [
+                320,
+                891,
+                982
+              ]
+            ],
+            tl: /* [] */0
+          }
+        };
+        var getYEquals_tests = {
+          hd: getYEquals_tests_0,
+          tl: getYEquals_tests_1
+        };
+        Jest.testAll("getYEquals", getYEquals_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
+              }));
+        var crop_tests_0 = [
+          Array2D$AdventOfCode.crop(a, [
+                1,
+                2
+              ], 1, 2),
           [
-            Array2D$AdventOfCode.getYEquals(a, 2),
-            [
-              320,
-              891,
-              982
-            ]
+            [891],
+            [97]
           ]
         ];
-        Jest2$AdventOfCode.testEach2("getYEquals", getYEquals_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-              }));
-        var crop_tests = [
-          [
-            Array2D$AdventOfCode.crop(a, [
-                  1,
-                  2
-                ], 1, 2),
-            [
-              [891],
-              [97]
-            ]
-          ],
-          [
+        var crop_tests_1 = {
+          hd: [
             Array2D$AdventOfCode.crop(a, [
                   1,
                   1
@@ -487,25 +536,19 @@ Jest.describe("keep / map / getXYEquals / crop", (function (param) {
                 982
               ]
             ]
-          ]
-        ];
-        Jest2$AdventOfCode.testEach2("crop", crop_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+          ],
+          tl: /* [] */0
+        };
+        var crop_tests = {
+          hd: crop_tests_0,
+          tl: crop_tests_1
+        };
+        Jest.testAll("crop", crop_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
       }));
 
-var testEach = Jest2$AdventOfCode.testEach;
-
-var testEach2 = Jest2$AdventOfCode.testEach2;
-
-var testEach3 = Jest2$AdventOfCode.testEach3;
-
-var testEach4 = Jest2$AdventOfCode.testEach4;
-
 export {
-  testEach ,
-  testEach2 ,
-  testEach3 ,
-  testEach4 ,
+  
 }
 /*  Not a pure module */

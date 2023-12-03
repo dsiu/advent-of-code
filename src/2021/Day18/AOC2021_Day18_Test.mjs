@@ -2,9 +2,8 @@
 
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Curry from "rescript/lib/es6/curry.js";
-import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Tree$AdventOfCode from "../../Tree.mjs";
-import * as Jest2$AdventOfCode from "../../../interop/Jest2.mjs";
 import * as AOC2021_Day18$AdventOfCode from "./AOC2021_Day18.mjs";
 import * as AOC2021_Day18_Data$AdventOfCode from "./AOC2021_Day18_Data.mjs";
 import * as AOC2021_Day18_Data_Sample$AdventOfCode from "./AOC2021_Day18_Data_Sample.mjs";
@@ -14,73 +13,91 @@ Jest.describe("2021 Day18", (function (param) {
           return AOC2021_Day18$AdventOfCode.SnailFish.reduce(Curry._1(AOC2021_Day18$AdventOfCode.SnailFish.Parser.parseAndGetResult, x));
         };
         var makeReduceTests = function (__x) {
-          return Belt_Array.map(__x, (function (param) {
+          return Belt_List.map(__x, (function (param) {
                         return [
                                 Tree$AdventOfCode.treeToString(parseAndReduce(param[0])),
                                 param[1]
                               ];
                       }));
         };
-        var reduce_tests = makeReduceTests([
-              [
+        var reduce_tests = makeReduceTests({
+              hd: [
                 "[[[[[9,8],1],2],3],4]",
                 "[[[[0,9],2],3],4]"
               ],
-              [
-                "[7,[6,[5,[4,[3,2]]]]]",
-                "[7,[6,[5,[7,0]]]]"
-              ],
-              [
-                "[[6,[5,[4,[3,2]]]],1]",
-                "[[6,[5,[7,0]]],3]"
-              ],
-              [
-                "[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]",
-                "[[3,[2,[8,0]]],[9,[5,[7,0]]]]"
-              ]
-            ]);
-        Jest2$AdventOfCode.testEach2("reduce", reduce_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+              tl: {
+                hd: [
+                  "[7,[6,[5,[4,[3,2]]]]]",
+                  "[7,[6,[5,[7,0]]]]"
+                ],
+                tl: {
+                  hd: [
+                    "[[6,[5,[4,[3,2]]]],1]",
+                    "[[6,[5,[7,0]]],3]"
+                  ],
+                  tl: {
+                    hd: [
+                      "[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]",
+                      "[[3,[2,[8,0]]],[9,[5,[7,0]]]]"
+                    ],
+                    tl: /* [] */0
+                  }
+                }
+              }
+            });
+        Jest.testAll("reduce", reduce_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
         var makeMagnitudeTests = function (__x) {
-          return Belt_Array.map(__x, (function (param) {
+          return Belt_List.map(__x, (function (param) {
                         return [
                                 AOC2021_Day18$AdventOfCode.SnailFish.magnitude(parseAndReduce(param[0])),
                                 param[1]
                               ];
                       }));
         };
-        var magnitude_tests = makeMagnitudeTests([
-              [
+        var magnitude_tests = makeMagnitudeTests({
+              hd: [
                 "[[1,2],[[3,4],5]]",
                 143
               ],
-              [
-                "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]",
-                1384
-              ],
-              [
-                "[[[[1,1],[2,2]],[3,3]],[4,4]]",
-                445
-              ],
-              [
-                "[[[[3,0],[5,3]],[4,4]],[5,5]]",
-                791
-              ],
-              [
-                "[[[[5,0],[7,4]],[5,5]],[6,6]]",
-                1137
-              ],
-              [
-                "[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]",
-                3488
-              ]
-            ]);
-        Jest2$AdventOfCode.testEach2("magnitude", magnitude_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+              tl: {
+                hd: [
+                  "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]",
+                  1384
+                ],
+                tl: {
+                  hd: [
+                    "[[[[1,1],[2,2]],[3,3]],[4,4]]",
+                    445
+                  ],
+                  tl: {
+                    hd: [
+                      "[[[[3,0],[5,3]],[4,4]],[5,5]]",
+                      791
+                    ],
+                    tl: {
+                      hd: [
+                        "[[[[5,0],[7,4]],[5,5]],[6,6]]",
+                        1137
+                      ],
+                      tl: {
+                        hd: [
+                          "[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]",
+                          3488
+                        ],
+                        tl: /* [] */0
+                      }
+                    }
+                  }
+                }
+              }
+            });
+        Jest.testAll("magnitude", magnitude_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
         var makeSumOfTests = function (__x) {
-          return Belt_Array.map(__x, (function (param) {
+          return Belt_List.map(__x, (function (param) {
                         var match = param[0];
                         return [
                                 Tree$AdventOfCode.treeToString(AOC2021_Day18$AdventOfCode.SnailFish.snailAdd(Curry._1(AOC2021_Day18$AdventOfCode.SnailFish.Parser.parseAndGetResult, match[0]), Curry._1(AOC2021_Day18$AdventOfCode.SnailFish.Parser.parseAndGetResult, match[1]))),
@@ -88,15 +105,18 @@ Jest.describe("2021 Day18", (function (param) {
                               ];
                       }));
         };
-        var sumOf_tests = makeSumOfTests([[
+        var sumOf_tests = makeSumOfTests({
+              hd: [
                 [
                   "[[[[4,3],4],4],[7,[[8,4],9]]]",
                   "[1,1]"
                 ],
                 "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"
-              ]]);
-        Jest2$AdventOfCode.testEach2("sumOf", sumOf_tests, (function (result, expected) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+              ],
+              tl: /* [] */0
+            });
+        Jest.testAll("sumOf", sumOf_tests, (function (param) {
+                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
         Jest.test("Part 1 - Sample Data", (function (param) {
                 var result = AOC2021_Day18$AdventOfCode.solvePart1(AOC2021_Day18_Data_Sample$AdventOfCode.data);

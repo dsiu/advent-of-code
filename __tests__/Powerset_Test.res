@@ -1,7 +1,6 @@
 open Jest
 open Expect
 
-open Jest2
 open Powerset
 
 module Array = Belt.Array
@@ -35,42 +34,42 @@ describe("Powerset", () => {
     [[], ["c"], ["b"], ["b", "c"], ["a"], ["a", "c"], ["a", "b"], ["a", "b", "c"]]->sortResultString
 
   describe("powerset_array_with_list()", () => {
-    let int_tests = [(int_array_1->powersetArrayWithList_, int_array_1_result)]
-    let string_tests = [(string_array_1->powersetArrayWithList_, string_array_1_result)]
+    let int_tests = list{(int_array_1->powersetArrayWithList_, int_array_1_result)}
+    let string_tests = list{(string_array_1->powersetArrayWithList_, string_array_1_result)}
 
-    testEach2(
+    testAll(
       "int",
       int_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result->sortResultInt)->toEqual(expected)
       },
     )
 
-    testEach2(
+    testAll(
       "string",
       string_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result->sortResultString)->toEqual(expected)
       },
     )
   })
 
   describe("powerset_array()", () => {
-    let int_tests = [(int_array_1->powersetArray, int_array_1_result)]
-    let string_tests = [(string_array_1->powersetArray, string_array_1_result)]
+    let int_tests = list{(int_array_1->powersetArray, int_array_1_result)}
+    let string_tests = list{(string_array_1->powersetArray, string_array_1_result)}
 
-    testEach2(
+    testAll(
       "int",
       int_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result->sortResultInt)->toEqual(expected)
       },
     )
 
-    testEach2(
+    testAll(
       "string",
       string_tests,
-      (result, expected) => {
+      ((result, expected)) => {
         expect(result->sortResultString)->toEqual(expected)
       },
     )

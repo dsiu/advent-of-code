@@ -4,7 +4,6 @@ import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_SortArray from "rescript/lib/es6/belt_SortArray.js";
 import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
-import * as Jest2$AdventOfCode from "../interop/Jest2.mjs";
 import * as Belt_SortArrayString from "rescript/lib/es6/belt_SortArrayString.js";
 import * as Powerset$AdventOfCode from "../src/Powerset.mjs";
 
@@ -86,35 +85,51 @@ Jest.describe("Powerset", (function (param) {
               ]
             ]);
         Jest.describe("powerset_array_with_list()", (function (param) {
-                var int_tests = [[
-                    Powerset$AdventOfCode.powersetArrayWithList_(int_array_1),
-                    int_array_1_result
-                  ]];
-                var string_tests = [[
-                    Powerset$AdventOfCode.powersetArrayWithList_(string_array_1),
-                    string_array_1_result
-                  ]];
-                Jest2$AdventOfCode.testEach2("int", int_tests, (function (result, expected) {
-                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultInt(result)), expected);
+                var int_tests_0 = [
+                  Powerset$AdventOfCode.powersetArrayWithList_(int_array_1),
+                  int_array_1_result
+                ];
+                var int_tests = {
+                  hd: int_tests_0,
+                  tl: /* [] */0
+                };
+                var string_tests_0 = [
+                  Powerset$AdventOfCode.powersetArrayWithList_(string_array_1),
+                  string_array_1_result
+                ];
+                var string_tests = {
+                  hd: string_tests_0,
+                  tl: /* [] */0
+                };
+                Jest.testAll("int", int_tests, (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultInt(param[0])), param[1]);
                       }));
-                Jest2$AdventOfCode.testEach2("string", string_tests, (function (result, expected) {
-                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultString(result)), expected);
+                Jest.testAll("string", string_tests, (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultString(param[0])), param[1]);
                       }));
               }));
         Jest.describe("powerset_array()", (function (param) {
-                var int_tests = [[
-                    Powerset$AdventOfCode.powersetArray(int_array_1),
-                    int_array_1_result
-                  ]];
-                var string_tests = [[
-                    Powerset$AdventOfCode.powersetArray(string_array_1),
-                    string_array_1_result
-                  ]];
-                Jest2$AdventOfCode.testEach2("int", int_tests, (function (result, expected) {
-                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultInt(result)), expected);
+                var int_tests_0 = [
+                  Powerset$AdventOfCode.powersetArray(int_array_1),
+                  int_array_1_result
+                ];
+                var int_tests = {
+                  hd: int_tests_0,
+                  tl: /* [] */0
+                };
+                var string_tests_0 = [
+                  Powerset$AdventOfCode.powersetArray(string_array_1),
+                  string_array_1_result
+                ];
+                var string_tests = {
+                  hd: string_tests_0,
+                  tl: /* [] */0
+                };
+                Jest.testAll("int", int_tests, (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultInt(param[0])), param[1]);
                       }));
-                Jest2$AdventOfCode.testEach2("string", string_tests, (function (result, expected) {
-                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultString(result)), expected);
+                Jest.testAll("string", string_tests, (function (param) {
+                        return Jest.Expect.toEqual(Jest.Expect.expect(sortResultString(param[0])), param[1]);
                       }));
               }));
       }));

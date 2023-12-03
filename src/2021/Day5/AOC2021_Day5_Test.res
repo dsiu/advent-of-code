@@ -1,7 +1,7 @@
 open Jest
 open Expect
 //open! Expect.Operators
-open Jest2
+
 //open Belt
 
 let data = AOC2021_Day5_Data.data
@@ -24,7 +24,7 @@ describe("2021 Day5", () => {
 
   open AOC2021_Day5
 
-  let point_tests = [
+  let point_tests = list{
     (
       Line.makePoints({Point.x: 0, y: 0}, {Point.x: 0, y: 2}),
       //      [{Point.x: 0, y: 2}],
@@ -40,9 +40,9 @@ describe("2021 Day5", () => {
       //      [{Point.x: 0, y: 2}],
       [{Point.x: 9, y: 7}, {Point.x: 8, y: 8}, {Point.x: 7, y: 9}],
     ),
-  ]
+  }
 
-  testEach2("makePoints", point_tests, (result, expected) => {
+  testAll("makePoints", point_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 

@@ -1,6 +1,5 @@
 open Jest
 open Expect
-open Jest2
 
 open Belt
 
@@ -16,50 +15,50 @@ describe("2021 Day18", () => {
     x->parseAndGetResult->reduce
   }
 
-  let makeReduceTests = Array.map(_, ((t, r)) => {
+  let makeReduceTests = List.map(_, ((t, r)) => {
     (t->parseAndReduce->treeToString, r)
   })
 
   let reduce_tests =
-    [
+    list{
       ("[[[[[9,8],1],2],3],4]", "[[[[0,9],2],3],4]"),
       ("[7,[6,[5,[4,[3,2]]]]]", "[7,[6,[5,[7,0]]]]"),
       ("[[6,[5,[4,[3,2]]]],1]", "[[6,[5,[7,0]]],3]"),
       ("[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]", "[[3,[2,[8,0]]],[9,[5,[7,0]]]]"),
-    ]->makeReduceTests
+    }->makeReduceTests
 
-  testEach2("reduce", reduce_tests, (result, expected) => {
+  testAll("reduce", reduce_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 
-  let makeMagnitudeTests = Array.map(_, ((t, r)) => {
+  let makeMagnitudeTests = List.map(_, ((t, r)) => {
     (t->parseAndReduce->magnitude, r)
   })
 
   let magnitude_tests =
-    [
+    list{
       ("[[1,2],[[3,4],5]]", 143),
       ("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]", 1384),
       ("[[[[1,1],[2,2]],[3,3]],[4,4]]", 445),
       ("[[[[3,0],[5,3]],[4,4]],[5,5]]", 791),
       ("[[[[5,0],[7,4]],[5,5]],[6,6]]", 1137),
       ("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]", 3488),
-    ]->makeMagnitudeTests
+    }->makeMagnitudeTests
 
-  testEach2("magnitude", magnitude_tests, (result, expected) => {
+  testAll("magnitude", magnitude_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 
-  let makeSumOfTests = Array.map(_, (((a, b), r)) => {
+  let makeSumOfTests = List.map(_, (((a, b), r)) => {
     (snailAdd(a->parseAndGetResult, b->parseAndGetResult)->treeToString, r)
   })
 
   let sumOf_tests =
-    [
+    list{
       (("[[[[4,3],4],4],[7,[[8,4],9]]]", "[1,1]"), "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"),
-    ]->makeSumOfTests
+    }->makeSumOfTests
 
-  testEach2("sumOf", sumOf_tests, (result, expected) => {
+  testAll("sumOf", sumOf_tests, ((result, expected)) => {
     expect(result)->toEqual(expected)
   })
 

@@ -24,14 +24,13 @@
   },
   "jest": {
     "testMatch": [
-      "**/__tests__/**/*.(js|ts|jsx|tsx|mjs)",
-      "**/?(*.)+(spec|test).[jt]s?(x)"
+      "**/*_Test.(js|ts|jsx|tsx|mjs)"
     ],
     "transform": {
       "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|@dsiu/rescript-stdlib-fp|relude|bs-bastet|relude-parse|)/)"
+      "<rootDir>/node_modules/(?!(rescript|@rescript/core|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|@dsiu/rescript-stdlib-fp|relude|bs-bastet|relude-parse|)/)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -43,7 +42,7 @@
     "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp",
     "@jmagaram/rescript-extras": "^3.0.0",
     "@jmagaram/rescript-seq": "^3.0.1",
-    "@rescript/core": "github:rescript-association/rescript-core",
+    "@rescript/core": "^0.6.0",
     "@resinfo/parser": "^2.0.0-alpha",
     "bs-bastet": "github:dsiu/rescript-bastet#rescript-v11-curried-mode",
     "debug": "^4.3.4",
