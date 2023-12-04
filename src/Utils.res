@@ -1,8 +1,12 @@
-open Belt
+open RescriptCore
+module Map = Belt.Map
+module MutableMap = Belt.MutableMap
+module HashMap = Belt.HashMap
+
 let identity = Stdlib.Function.identity
 
 // Logging
-let log = Js.Console.log
+let log = Console.log
 @val @scope("console") external consoleDir: 'a => unit = "dir"
 
 /**
@@ -91,13 +95,13 @@ module Printable = {
 
   module Array = {
     let toString = (a, f) => {
-      "[" ++ a->Belt.Array.map(f)->Js.Array2.joinWith(",") ++ "]"
+      "[" ++ a->Array.map(f)->Array.joinWith(",") ++ "]"
     }
   }
 
   module List = {
     let toString = (a, f) => {
-      a->Belt.Array.reduce("{", (a, v) => a ++ f(v) ++ ",") ++ "}"
+      a->List.reduce("{", (a, v) => a ++ f(v) ++ ",") ++ "}"
     }
   }
 }
@@ -111,7 +115,10 @@ external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
 
 let compose = Stdlib.Function.compose
-let intFromStringExn = compose(Js.String2.trim, compose(Int.fromString, Belt.Option.getExn))
+let intFromStringExn = compose(
+  Js.String2.trim,
+  compose(Int.fromString(~radix=10), Option.getUnsafe),
+)
 
 let add = (x, y) => x + y
 let sub = (x, y) => x - y
@@ -120,18 +127,17 @@ let div = (x, y) => x / y
 
 // Unsigned Int conversion
 let int32ToUint32 = x => {
-  open Js.TypedArray2
-  Uint32Array.make([x])->Uint32Array.unsafe_get(0)
+  Js.TypedArray2.Uint32Array.make([x])->Js.TypedArray2.Uint32Array.unsafe_get(0)
 }
 
 let increaseByInt64 = (v, n) => {
-  v->Option.mapWithDefault(n, x => x->Int64.add(n))
+  v->Option.mapOr(n, x => x->Int64.add(n))
 }
 
 let increaseBy1L = increaseByInt64(_, 1L)
 
 let increaseBy = (v, n) => {
-  v->Option.mapWithDefault(n, x => x + n)
+  v->Option.mapOr(n, x => x + n)
 }
 
 let increaseBy1 = increaseBy(_, 1)
@@ -156,20 +162,20 @@ let join = Js.Array2.joinWith(_, "")
 
 // sum up elements of array from ~offset with ~len (same as Array.slice)
 let sumRange = (xs, ~offset, ~len) => {
-  let elems = xs->Array.slice(~offset, ~len)
+  let elems = xs->Belt.Array.slice(~offset, ~len)
   let total = ref(0)
   elems->Array.forEach(x => total := total.contents + x)
   total.contents
 }
 
 let maxIntInArray = xs => {
-  let sorted = xs->SortArray.Int.stableSort
-  sorted->Array.getExn(sorted->Array.length - 1)
+  let sorted = xs->Belt.SortArray.Int.stableSort
+  sorted->Array.getUnsafe(sorted->Array.length - 1)
 }
 
 let minIntInArray = xs => {
-  let sorted = xs->SortArray.Int.stableSort
-  sorted->Array.getExn(0)
+  let sorted = xs->Belt.SortArray.Int.stableSort
+  sorted->Array.getUnsafe(0)
 }
 
 let flatten = (xs: array<array<'a>>) => {
@@ -206,17 +212,11 @@ let minKeyInt64ValuePair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) =>
 //
 
 let hashMapStringUpdate = (h, k, f) => {
-  h->HashMap.String.set(
-    k,
-    h->HashMap.String.get(k)->Option.mapWithDefaultU(f(None), (. x) => f(Some(x))),
-  )
+  h->HashMap.String.set(k, h->HashMap.String.get(k)->Option.mapOr(f(None), x => f(Some(x))))
   h
 }
 
 let mutableMapStringUpdate = (h, k, f) => {
-  h->MutableMap.String.set(
-    k,
-    h->MutableMap.String.get(k)->Option.mapWithDefaultU(f(None), (. x) => f(Some(x))),
-  )
+  h->MutableMap.String.set(k, h->MutableMap.String.get(k)->Option.mapOr(f(None), x => f(Some(x))))
   h
 }
