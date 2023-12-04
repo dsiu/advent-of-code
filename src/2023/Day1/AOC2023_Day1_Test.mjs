@@ -15,18 +15,20 @@ Jest.describe("2023 Day1", (function () {
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 54159);
               }));
         Jest.test("Part 2 - Sample Data", (function () {
-                var result = AOC2023_Day1$AdventOfCode.solvePart2(AOC2023_Day1_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                var result = AOC2023_Day1$AdventOfCode.solvePart2(AOC2023_Day1_Data_Sample$AdventOfCode.data2);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 281);
               }));
         Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2023_Day1$AdventOfCode.solvePart2(AOC2023_Day1_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 53866);
               }));
       }));
 
 var data = AOC2023_Day1_Data$AdventOfCode.data;
 
 var sampleData = AOC2023_Day1_Data_Sample$AdventOfCode.data;
+
+var sampleData2 = AOC2023_Day1_Data_Sample$AdventOfCode.data2;
 
 var solvePart1 = AOC2023_Day1$AdventOfCode.solvePart1;
 
@@ -35,6 +37,7 @@ var solvePart2 = AOC2023_Day1$AdventOfCode.solvePart2;
 export {
   data ,
   sampleData ,
+  sampleData2 ,
   solvePart1 ,
   solvePart2 ,
 }

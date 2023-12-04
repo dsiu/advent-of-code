@@ -2,16 +2,18 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Int64 from "rescript/lib/es6/int64.js";
-import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
+import * as Core__Int from "@rescript/core/src/Core__Int.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
 import * as Caml_int64 from "rescript/lib/es6/caml_int64.js";
+import * as Core__List from "@rescript/core/src/Core__List.mjs";
 import * as JsArray2Ex from "js-array2-ex/src/JsArray2Ex.mjs";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Belt_MapInt from "rescript/lib/es6/belt_MapInt.js";
-import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as Core__Array from "@rescript/core/src/Core__Array.mjs";
+import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
 import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
@@ -39,7 +41,7 @@ var $$String = {
 
 function toString$2(m) {
   return toString(m, (function (prim) {
-                return String(prim);
+                return prim.toString();
               }));
 }
 
@@ -55,7 +57,7 @@ var MapString = {
 
 function toString$3(m, f) {
   return Belt_MapInt.reduce(m, "", (function (a, k, v) {
-                return a + ("key:" + String(k) + ", val:" + Curry._1(f, v) + "\n");
+                return a + ("key:" + k.toString() + ", val:" + Curry._1(f, v) + "\n");
               }));
 }
 
@@ -63,13 +65,13 @@ function toString$4(m) {
   return toString$3(m, Stdlib_Function.identity);
 }
 
-var $$String$2 = {
+var $$String$1 = {
   toString: toString$4
 };
 
 function toString$5(m) {
   return toString$3(m, (function (prim) {
-                return String(prim);
+                return prim.toString();
               }));
 }
 
@@ -87,20 +89,20 @@ var Int64$1 = {
 
 var MapInt = {
   toString: toString$3,
-  $$String: $$String$2,
+  $$String: $$String$1,
   Int: Int$1,
   Int64: Int64$1
 };
 
 function toString$7(m, f) {
   return Belt_MutableMapInt.reduce(m, "", (function (a, k, v) {
-                return a + ("key:" + String(k) + ", val:" + Curry._1(f, v) + "\n");
+                return a + ("key:" + k.toString() + ", val:" + Curry._1(f, v) + "\n");
               }));
 }
 
 function toString$8(m) {
   return toString$7(m, (function (prim) {
-                return String(prim);
+                return prim.toString();
               }));
 }
 
@@ -141,7 +143,7 @@ function toString$11(m, f) {
 
 function toString$12(m) {
   return toString$11(m, (function (prim) {
-                return String(prim);
+                return prim.toString();
               }));
 }
 
@@ -164,7 +166,7 @@ var MutableMapString = {
 };
 
 function toString$14(a, f) {
-  return "[" + Belt_Array.map(a, f).join(",") + "]";
+  return "[" + a.map(f).join(",") + "]";
 }
 
 var $$Array = {
@@ -172,7 +174,7 @@ var $$Array = {
 };
 
 function toString$15(a, f) {
-  return Belt_Array.reduce(a, "{", (function (a, v) {
+  return Core__List.reduce(a, "{", (function (a, v) {
                 return a + Curry._1(f, v) + ",";
               })) + "}";
 }
@@ -194,12 +196,22 @@ function base2(__x) {
   return __x.toString(2);
 }
 
+var partial_arg = 10;
+
+function partial_arg$1(param) {
+  return Core__Int.fromString(partial_arg, param);
+}
+
+function partial_arg$2(param) {
+  return Stdlib_Function.compose(partial_arg$1, (function (prim) {
+                return prim;
+              }), param);
+}
+
 function intFromStringExn(param) {
   return Stdlib_Function.compose((function (prim) {
                 return prim.trim();
-              }), (function (param) {
-                return Stdlib_Function.compose(Belt_Int.fromString, Belt_Option.getExn, param);
-              }), param);
+              }), partial_arg$2, param);
 }
 
 function add(x, y) {
@@ -221,7 +233,7 @@ function int32ToUint32(x) {
 }
 
 function increaseByInt64(v, n) {
-  return Belt_Option.mapWithDefault(v, n, (function (x) {
+  return Core__Option.mapOr(v, n, (function (x) {
                 return Caml_int64.add(x, n);
               }));
 }
@@ -231,7 +243,7 @@ function increaseBy1L(__x) {
 }
 
 function increaseBy(v, n) {
-  return Belt_Option.mapWithDefault(v, n, (function (x) {
+  return Core__Option.mapOr(v, n, (function (x) {
                 return x + n | 0;
               }));
 }
@@ -257,7 +269,7 @@ function splitDoubleNewline(__x) {
 }
 
 function sumIntArray(__x) {
-  return Belt_Array.reduce(__x, 0, add);
+  return Core__Array.reduce(__x, 0, add);
 }
 
 function join(__x) {
@@ -269,28 +281,30 @@ function sumRange(xs, offset, len) {
   var total = {
     contents: 0
   };
-  Belt_Array.forEach(elems, (function (x) {
-          total.contents = total.contents + x | 0;
-        }));
+  elems.forEach(function (x) {
+        total.contents = total.contents + x | 0;
+      });
   return total.contents;
 }
 
 function maxIntInArray(xs) {
   var sorted = Belt_SortArrayInt.stableSort(xs);
-  return Belt_Array.getExn(sorted, sorted.length - 1 | 0);
+  return sorted[sorted.length - 1 | 0];
 }
 
 function minIntInArray(xs) {
   var sorted = Belt_SortArrayInt.stableSort(xs);
-  return Belt_Array.getExn(sorted, 0);
+  return sorted[0];
 }
 
 function flatten(xs) {
-  return Belt_Array.reduce(xs, [], Belt_Array.concat);
+  return Core__Array.reduce(xs, [], (function (a, x) {
+                return a.concat(x);
+              }));
 }
 
 function maxKeyIntValuePair(__x) {
-  return Belt_Array.reduce(__x, [
+  return Core__Array.reduce(__x, [
               "",
               Pervasives.min_int
             ], (function (acc, param) {
@@ -307,7 +321,7 @@ function maxKeyIntValuePair(__x) {
 }
 
 function minKeyIntValuePair(__x) {
-  return Belt_Array.reduce(__x, [
+  return Core__Array.reduce(__x, [
               "",
               Pervasives.max_int
             ], (function (acc, param) {
@@ -324,7 +338,7 @@ function minKeyIntValuePair(__x) {
 }
 
 function maxKeyInt64ValuePair(__x) {
-  return Belt_Array.reduce(__x, [
+  return Core__Array.reduce(__x, [
               "",
               Int64.min_int
             ], (function (acc, param) {
@@ -341,7 +355,7 @@ function maxKeyInt64ValuePair(__x) {
 }
 
 function minKeyInt64ValuePair(__x) {
-  return Belt_Array.reduce(__x, [
+  return Core__Array.reduce(__x, [
               "",
               Int64.max_int
             ], (function (acc, param) {
@@ -358,18 +372,24 @@ function minKeyInt64ValuePair(__x) {
 }
 
 function hashMapStringUpdate(h, k, f) {
-  Belt_HashMapString.set(h, k, Belt_Option.mapWithDefaultU(Belt_HashMapString.get(h, k), Curry._1(f, undefined), (function (x) {
+  Belt_HashMapString.set(h, k, Core__Option.mapOr(Belt_HashMapString.get(h, k), Curry._1(f, undefined), (function (x) {
               return Curry._1(f, Caml_option.some(x));
             })));
   return h;
 }
 
 function mutableMapStringUpdate(h, k, f) {
-  Belt_MutableMapString.set(h, k, Belt_Option.mapWithDefaultU(Belt_MutableMapString.get(h, k), Curry._1(f, undefined), (function (x) {
+  Belt_MutableMapString.set(h, k, Core__Option.mapOr(Belt_MutableMapString.get(h, k), Curry._1(f, undefined), (function (x) {
               return Curry._1(f, Caml_option.some(x));
             })));
   return h;
 }
+
+var $$Map;
+
+var MutableMap;
+
+var HashMap;
 
 var identity = Stdlib_Function.identity;
 
@@ -378,6 +398,9 @@ var compose = Stdlib_Function.compose;
 var transpose = JsArray2Ex.transpose;
 
 export {
+  $$Map ,
+  MutableMap ,
+  HashMap ,
   identity ,
   log ,
   Printable ,
