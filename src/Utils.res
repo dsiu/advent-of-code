@@ -75,7 +75,7 @@ module Printable = {
     }
 
     module IntBase2 = {
-      let toString = m => toString(m, x => x->Js.Int.toStringWithRadix(~radix=2))
+      let toString = m => toString(m, x => x->RescriptCore.Int.toStringWithRadix(~radix=2))
     }
   }
 
@@ -112,13 +112,10 @@ module Printable = {
 //@scope("Math") @val
 @val
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
-let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
+let base2 = Int.toStringWithRadix(_, ~radix=2)
 
 let compose = Stdlib.Function.compose
-let intFromStringExn = compose(
-  Js.String2.trim,
-  compose(Int.fromString(~radix=10), Option.getUnsafe),
-)
+let intFromStringExn = compose(String.trim, compose(Int.fromString(~radix=10), Option.getUnsafe))
 
 let add = (x, y) => x + y
 let sub = (x, y) => x - y
@@ -150,15 +147,15 @@ let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
 //
 // strings
 //
-let splitChars = Js.String2.split(_, "")
-let splitNewline = Js.String2.split(_, "\n")
-let splitDoubleNewline = Js.String2.split(_, "\n\n")
+let splitChars = String.split(_, "")
+let splitNewline = String.split(_, "\n")
+let splitDoubleNewline = String.split(_, "\n\n")
 
 //
 // array
 //
 let sumIntArray = Array.reduce(_, 0, add)
-let join = Js.Array2.joinWith(_, "")
+let join = Array.joinWith(_, "")
 
 // sum up elements of array from ~offset with ~len (same as Array.slice)
 let sumRange = (xs, ~offset, ~len) => {
@@ -169,12 +166,12 @@ let sumRange = (xs, ~offset, ~len) => {
 }
 
 let maxIntInArray = xs => {
-  let sorted = xs->Belt.SortArray.Int.stableSort
+  let sorted = xs->Array.toSorted(Int.compare)
   sorted->Array.getUnsafe(sorted->Array.length - 1)
 }
 
 let minIntInArray = xs => {
-  let sorted = xs->Belt.SortArray.Int.stableSort
+  let sorted = xs->Array.toSorted(Int.compare)
   sorted->Array.getUnsafe(0)
 }
 

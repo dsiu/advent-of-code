@@ -16,7 +16,6 @@ import * as Core__Array from "@rescript/core/src/Core__Array.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
 import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
-import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
 import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/belt_MutableMapInt.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/belt_MutableMapString.js";
@@ -288,12 +287,12 @@ function sumRange(xs, offset, len) {
 }
 
 function maxIntInArray(xs) {
-  var sorted = Belt_SortArrayInt.stableSort(xs);
+  var sorted = xs.toSorted(Core__Int.compare);
   return sorted[sorted.length - 1 | 0];
 }
 
 function minIntInArray(xs) {
-  var sorted = Belt_SortArrayInt.stableSort(xs);
+  var sorted = xs.toSorted(Core__Int.compare);
   return sorted[0];
 }
 
