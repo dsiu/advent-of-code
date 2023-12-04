@@ -1472,9 +1472,8 @@ browserslist@^4.21.9:
 
 "bs-bastet@github:dsiu/rescript-bastet#rescript-v11-curried-mode":
   version "2.0.1"
-  resolved "https://codeload.github.com/dsiu/rescript-bastet/tar.gz/cc639aae754fc76baa0f790cccd980a678d80027"
+  resolved "https://codeload.github.com/dsiu/rescript-bastet/tar.gz/5eab19c09820235eb36fbedc4865f5f9ade57641"
   dependencies:
-    "@rescript/core" "^0.5.0"
     bs-stdlib-shims "^0.1.0"
 
 bs-stdlib-shims@^0.1.0:
