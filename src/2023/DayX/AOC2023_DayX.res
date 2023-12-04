@@ -2,9 +2,9 @@
 
 open RescriptCore
 open Utils
-let log = Js.Console.log
+let log = Console.log
 
-let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+let parse = data => data->splitNewline->Array.map(String.trim)
 
 let solvePart1 = data => {
   data->ignore
