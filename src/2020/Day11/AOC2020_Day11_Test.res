@@ -34,7 +34,7 @@ describe("2020 Day11", () => {
 
   describe("next seat given a direction", () => {
     open SeatMap
-    open Coordinate
+    open Coordinate.StepFunctions
 
     let data_1 = `.......#.
                  ...#.....

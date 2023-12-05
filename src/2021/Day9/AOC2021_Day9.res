@@ -6,7 +6,7 @@ module HeightMap = {
   type t = Array2D.t<int>
 
   let adjCoords = c => {
-    open Coordinate
+    open Coordinate.StepFunctions
     list{stepN, stepW, stepE, stepS}->List.map(f => f(. c))
   }
 

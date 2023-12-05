@@ -6,7 +6,7 @@ module Octopus = {
   type t = Array2D.t<int>
 
   let adjCoords = c => {
-    open Coordinate
+    open Coordinate.StepFunctions
     [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => f(. c))
   }
 

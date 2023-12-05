@@ -1,6 +1,6 @@
 open Jest
 open Expect
-open Coordinate
+open Coordinate.StepFunctions
 
 describe("Step Functions", () => {
   let init = (4, 4)

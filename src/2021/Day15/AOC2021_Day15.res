@@ -38,7 +38,7 @@ module Cave = {
   module Dij = Path.Dijkstra(G, W(G.E))
 
   let adjCoords = c => {
-    open Coordinate
+    open Coordinate.StepFunctions
     list{stepN, stepW, stepE, stepS}->List.map(f => f(. c))
   }
 

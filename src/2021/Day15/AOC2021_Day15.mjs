@@ -97,13 +97,13 @@ var Dij = (function (param) {
 
 function adjCoords(c) {
   return Belt_List.map({
-              hd: Coordinate$AdventOfCode.stepN,
+              hd: Coordinate$AdventOfCode.StepFunctions.stepN,
               tl: {
-                hd: Coordinate$AdventOfCode.stepW,
+                hd: Coordinate$AdventOfCode.StepFunctions.stepW,
                 tl: {
-                  hd: Coordinate$AdventOfCode.stepE,
+                  hd: Coordinate$AdventOfCode.StepFunctions.stepE,
                   tl: {
-                    hd: Coordinate$AdventOfCode.stepS,
+                    hd: Coordinate$AdventOfCode.StepFunctions.stepS,
                     tl: /* [] */0
                   }
                 }

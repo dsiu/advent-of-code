@@ -28,7 +28,7 @@ module SeatMap = {
   }
 
   let adjCoords = (. c) => {
-    open Coordinate
+    open Coordinate.StepFunctions
     [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.mapU((. f) => f(. c))
   }
 
@@ -78,7 +78,7 @@ module SeatMap = {
   }
 
   let getDirectionals = (t, c) => {
-    open Coordinate
+    open Coordinate.StepFunctions
     [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.mapU((. f) =>
       nextSeatIn(. t, c, f)
     )

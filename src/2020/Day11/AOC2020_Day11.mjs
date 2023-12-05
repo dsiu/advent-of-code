@@ -48,14 +48,14 @@ function isValidCoord(param, len_x, len_y) {
 
 function adjCoords(c) {
   return Belt_Array.mapU([
-              Coordinate$AdventOfCode.stepNW,
-              Coordinate$AdventOfCode.stepN,
-              Coordinate$AdventOfCode.stepNE,
-              Coordinate$AdventOfCode.stepW,
-              Coordinate$AdventOfCode.stepE,
-              Coordinate$AdventOfCode.stepSW,
-              Coordinate$AdventOfCode.stepS,
-              Coordinate$AdventOfCode.stepSE
+              Coordinate$AdventOfCode.StepFunctions.stepNW,
+              Coordinate$AdventOfCode.StepFunctions.stepN,
+              Coordinate$AdventOfCode.StepFunctions.stepNE,
+              Coordinate$AdventOfCode.StepFunctions.stepW,
+              Coordinate$AdventOfCode.StepFunctions.stepE,
+              Coordinate$AdventOfCode.StepFunctions.stepSW,
+              Coordinate$AdventOfCode.StepFunctions.stepS,
+              Coordinate$AdventOfCode.StepFunctions.stepSE
             ], (function (f) {
                 return f(c);
               }));
@@ -142,14 +142,14 @@ function nextSeatIn(t, _param, step) {
 
 function getDirectionals(t, c) {
   return Belt_Array.mapU([
-              Coordinate$AdventOfCode.stepNW,
-              Coordinate$AdventOfCode.stepN,
-              Coordinate$AdventOfCode.stepNE,
-              Coordinate$AdventOfCode.stepW,
-              Coordinate$AdventOfCode.stepE,
-              Coordinate$AdventOfCode.stepSW,
-              Coordinate$AdventOfCode.stepS,
-              Coordinate$AdventOfCode.stepSE
+              Coordinate$AdventOfCode.StepFunctions.stepNW,
+              Coordinate$AdventOfCode.StepFunctions.stepN,
+              Coordinate$AdventOfCode.StepFunctions.stepNE,
+              Coordinate$AdventOfCode.StepFunctions.stepW,
+              Coordinate$AdventOfCode.StepFunctions.stepE,
+              Coordinate$AdventOfCode.StepFunctions.stepSW,
+              Coordinate$AdventOfCode.StepFunctions.stepS,
+              Coordinate$AdventOfCode.StepFunctions.stepSE
             ], (function (f) {
                 return nextSeatIn(t, c, f);
               }));
