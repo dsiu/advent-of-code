@@ -70,12 +70,10 @@ let makeElemMap = Array2D.mapU(_, makeElem)
 let elemMapFilter = (elemMap, fn): array<Coordinate.t> => {
   elemMap->Array2D.reduceWithIndex([], (acc, e, c) => {
     switch fn(e) {
-    | true => {
-        acc->Array.push(c)
-        acc
-      }
-    | false => acc
+    | true => acc->Array.push(c)
+    | false => ()
     }
+    acc
   })
 }
 
