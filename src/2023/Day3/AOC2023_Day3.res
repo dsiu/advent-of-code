@@ -116,21 +116,32 @@ let part1 = charMap => {
   let groupedByIncX =
     groupedByY
     ->Array.map(Array.toSorted(_, Coordinate.Compare.xy))
-    ->Array.map(
-      Array.reduce([], (acc, (x, y)) => {
-        let last = acc->Array.at(acc->Array.length - 1)
+    ->Array.map(l => {
+      l->Array.push((0, 0)) // hack to add extra last arg so reduce can end correctly
+      l
+      ->Array.reduce(([], []), ((parsed, buf), (x, y)) => {
+        let last = buf->Array.at(buf->Array.length - 1)
         switch last {
-        | Some((lastExistX, lastExistY)) if (lastExist === x - 1) => {
-            acc->Array.push((x, y))
-            acc
+        | Some((lastExistX, _)) if lastExistX === x - 1 => {
+            buf->Array.push((x, y))
+            (parsed, buf)
+          }
+        | Some(_) => {
+            parsed->Array.pushMany([buf])
+            (parsed, [(x, y)])
+          }
+        | None => {
+            buf->Array.push((x, y))
+            (parsed, buf)
           }
         }
-        | Some(_)
-        | None => {
+      })
+      ->fst
+    })
 
-        }
-      }),
-    )
+  "groupedByIncX"->log
+  groupedByIncX->log
+  groupedByIncX->Array.forEach(log)
 
   let symCoords = elemMap->elemMapFilter(isSymbol)
   "symCoords"->log

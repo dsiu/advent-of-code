@@ -83,10 +83,8 @@ function elemMapFilter(elemMap, fn) {
   return Array2D$AdventOfCode.reduceWithIndex(elemMap, [], (function (acc, e, c) {
                 if (fn(e)) {
                   acc.push(c);
-                  return acc;
-                } else {
-                  return acc;
                 }
+                return acc;
               }));
 }
 
@@ -101,8 +99,8 @@ function part1(charMap) {
   var uniqueYs = Core__Array.reduce(sortedNumberCoords.map(function (param) {
               return param[1];
             }).toSorted(Core__Int.compare), [], (function (acc, e) {
-          var exist = acc.at(acc.length - 1 | 0);
-          if (exist !== undefined && exist === e) {
+          var last = acc.at(acc.length - 1 | 0);
+          if (last !== undefined && last === e) {
             return acc;
           } else {
             acc.push(e);
@@ -111,14 +109,54 @@ function part1(charMap) {
         }));
   console.log("uniqueYs");
   console.log(uniqueYs);
-  var groupByY = Core__Array.reduce(uniqueYs, [], (function (acc, y) {
+  var groupedByY = Core__Array.reduce(uniqueYs, [], (function (acc, y) {
           acc.push(sortedNumberCoords.filter(function (param) {
                     return param[1] === y;
                   }));
           return acc;
         }));
-  console.log("groupByY");
-  console.log(groupByY);
+  console.log("groupedByY");
+  console.log(groupedByY);
+  var groupedByIncX = groupedByY.map(function (__x) {
+          return __x.toSorted(Coordinate$AdventOfCode.Compare.xy);
+        }).map(function (l) {
+        l.push([
+              0,
+              0
+            ]);
+        return Core__Array.reduce(l, [
+                      [],
+                      []
+                    ], (function (param, param$1) {
+                        var y = param$1[1];
+                        var x = param$1[0];
+                        var buf = param[1];
+                        var parsed = param[0];
+                        var last = buf.at(buf.length - 1 | 0);
+                        if (last !== undefined && last[0] !== (x - 1 | 0)) {
+                          parsed.push(buf);
+                          return [
+                                  parsed,
+                                  [[
+                                      x,
+                                      y
+                                    ]]
+                                ];
+                        } else {
+                          buf.push([
+                                x,
+                                y
+                              ]);
+                          return [
+                                  parsed,
+                                  buf
+                                ];
+                        }
+                      }))[0];
+      });
+  console.log("groupedByIncX");
+  console.log(groupedByIncX);
+  groupedByIncX.forEach(log);
   var symCoords = elemMapFilter(elemMap, isSymbol);
   console.log("symCoords");
   console.log(symCoords);

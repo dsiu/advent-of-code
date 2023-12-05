@@ -970,11 +970,6 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@rescript/core@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@rescript/core/-/core-0.5.0.tgz#3e83e75aaa60f42f4279e0d184358f2db5d40955"
-  integrity sha512-Keqnpi+8VqyhCk/3aMwar8hJbNy2IsINAAfIFeQC65IIegCR0QXFDBpQxfVcmbbtoHq6HnW4B3RLm/9GCUJQhQ==
-
 "@rescript/core@^0.6.0":
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/@rescript/core/-/core-0.6.0.tgz#d2aae335c2a91dd68acce0ec11716861e08500d5"
@@ -1474,6 +1469,7 @@ browserslist@^4.21.9:
   version "2.0.1"
   resolved "https://codeload.github.com/dsiu/rescript-bastet/tar.gz/5eab19c09820235eb36fbedc4865f5f9ade57641"
   dependencies:
+    "@rescript/core" "^0.5.0"
     bs-stdlib-shims "^0.1.0"
 
 bs-stdlib-shims@^0.1.0:
