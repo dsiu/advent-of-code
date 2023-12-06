@@ -8,11 +8,11 @@ import * as AOC2023_Day3_Data_Sample$AdventOfCode from "./AOC2023_Day3_Data_Samp
 Jest.describe("2023 Day3", (function () {
         Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2023_Day3$AdventOfCode.solvePart1(AOC2023_Day3_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 4361);
               }));
         Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2023_Day3$AdventOfCode.solvePart1(AOC2023_Day3_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 530495);
               }));
         Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2023_Day3$AdventOfCode.solvePart2(AOC2023_Day3_Data_Sample$AdventOfCode.data);
