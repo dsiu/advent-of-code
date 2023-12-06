@@ -21,6 +21,7 @@ let numberNames = [
 
 type matchDirection = Left2Right | Right2Left
 
+// only need to run with Right2Left to work
 let spelledOutToDigits = (str, matchDir: matchDirection) => {
   switch matchDir {
   | Left2Right => str
@@ -53,8 +54,8 @@ let combineFirstAndLast = ((first, last)) => {first * 10 + last}
 
 let part2 = xs => {
   let result = xs->Array.map(x => {
-    let (first, _) = x->spelledOutToDigits(Left2Right)->get2Digits
-    let (_, last) = x->spelledOutToDigits(Right2Left)->get2Digits
+    //    let (first, _) = x->spelledOutToDigits(Left2Right)->get2Digits
+    let (first, last) = x->spelledOutToDigits(Right2Left)->get2Digits
     combineFirstAndLast((first, last))
   })
   result->sumIntArray
