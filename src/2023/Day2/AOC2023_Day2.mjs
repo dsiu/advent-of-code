@@ -34,7 +34,7 @@ function makeDraw(str, n) {
 function parse(data) {
   return Utils$AdventOfCode.splitNewline(data).map(function (l) {
               var ll = l.trim().split(": ");
-              var round = Core__Int.fromString(10, ll.at(0).replace("Game ", ""));
+              var id = Core__Int.fromString(10, ll.at(0).replace("Game ", ""));
               var draws = ll.at(1).split("; ").map(function (eachDraw) {
                       return eachDraw.split(", ").map(function (singleDraw) {
                                   var d = singleDraw.split(" ");
@@ -44,7 +44,7 @@ function parse(data) {
                                 });
                     }).flat();
               return {
-                      round: round,
+                      id: id,
                       draws: draws
                     };
             });
@@ -200,7 +200,7 @@ function maxColorWithLimits(games, colorLimits) {
                                                   case "Blue" :
                                                       if (r._0 <= max_r._0 && g._0 <= max_g._0 && b._0 <= max_b._0) {
                                                         return [
-                                                                param.round,
+                                                                param.id,
                                                                 maxColors
                                                               ];
                                                       } else {

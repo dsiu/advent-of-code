@@ -19,7 +19,7 @@ let makeDraw = (str, n) => {
 }
 
 type game = {
-  round: int,
+  id: int,
   draws: array<draw>,
 }
 
@@ -29,7 +29,7 @@ let parse = data =>
   ->Array.map(l => {
     let ll = l->String.trim->String.split(": ")
 
-    let round =
+    let id =
       ll
       ->Array.at(0)
       ->Option.getUnsafe
@@ -57,7 +57,7 @@ let parse = data =>
       )
       ->Array.flat
 
-    {round, draws} //draws
+    {id, draws} //draws
   })
 
 let maxNumColorsEachGame = draws => {
@@ -75,13 +75,13 @@ let maxNumColorsEachGame = draws => {
 
 let maxColorWithLimits = (games, colorLimits) => {
   games
-  ->Array.map(({round, draws}) => {
+  ->Array.map(({id, draws}) => {
     let maxColors = draws->maxNumColorsEachGame
     let (Red(r), Green(g), Blue(b)) = maxColors
     let (Red(max_r), Green(max_g), Blue(max_b)) = colorLimits
 
     switch r <= max_r && g <= max_g && b <= max_b {
-    | true => Some((round, maxColors))
+    | true => Some((id, maxColors))
     | false => None
     }
   })
