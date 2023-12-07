@@ -10,13 +10,13 @@ let {solvePart1, solvePart2} = module(AOC2023_Day3)
 Console.time("Part 1")
 
 //let part1 = solvePart1(sampleData)
-//let part1 = solvePart1(data)
-//
-//"Part 1 Result"->log
-//part1->log
-//Console.timeEnd("Part 1")
-//
-//"----------"->log
+let part1 = solvePart1(data)
+
+"Part 1 Result"->log
+part1->log
+Console.timeEnd("Part 1")
+
+"----------"->log
 
 Console.time("Part 2")
 
