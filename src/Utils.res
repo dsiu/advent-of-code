@@ -155,6 +155,7 @@ let splitDoubleNewline = String.split(_, "\n\n")
 // array
 //
 let sumIntArray = Array.reduce(_, 0, add)
+let mulIntArray = Array.reduce(_, 1, mul)
 let join = Array.joinWith(_, "")
 
 // sum up elements of array from ~offset with ~len (same as Array.slice)

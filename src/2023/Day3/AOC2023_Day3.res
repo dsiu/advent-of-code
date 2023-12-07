@@ -7,13 +7,16 @@ open Coordinate.Direction
 let log = Console.log
 let log2 = Console.log2
 
-type elem = Dot | Symbol | Digit(int)
+type elem = Dot | Symbol(string) | Digit(int)
 
 let makeElem = char => {
   switch char->Int.fromString(~radix=10) {
   | Some(d) => Digit(d)
-  | None if char == "." => Dot
-  | _ => Symbol
+  | None =>
+    switch char {
+    | "." => Dot
+    | c => Symbol(c)
+    }
   }
 }
 
@@ -26,7 +29,14 @@ let isDigit = e => {
 
 let isSymbol = e => {
   switch e {
-  | Symbol => true
+  | Symbol(_) => true
+  | _ => false
+  }
+}
+
+let isStar = e => {
+  switch e {
+  | Symbol("*") => true
   | _ => false
   }
 }
@@ -40,9 +50,9 @@ let getNeighborsIf: (position, position => option<position>) => region = (
   c: position,
   fn,
 ): region => {
-  let nextTo = [north, south, east, west, northEast, northWest, southEast, southWest]
+  let directions = [north, south, east, west, northEast, northWest, southEast, southWest]
 
-  nextTo->Array.filterMap(dir => {
+  directions->Array.filterMap(dir => {
     fn(c->dir)
   })
 }
@@ -121,36 +131,18 @@ let findNumbers: engine => array<region> = engine => {
   ->Array.flat // flatten so that each elem is a number with all of digits positions
 }
 
-let findSymbols: engine => region = engine => {
-  engine->engineFilter(isSymbol)
-}
+let findSymbols: engine => region = engineFilter(_, isSymbol)
+let findStars: engine => region = engineFilter(_, isStar)
 
 // returns region that is digit touched by a symbol
 let touchedDigit: (engine, region) => region = (engine, symbols) => {
-  symbols->Array.flatMap(c => getNeighborsIf(c, isElemDigit(engine, _)))
+  symbols->Array.flatMap(getNeighborsIf(_, isElemDigit(engine, _)))
 }
 
 let isNumberTouched: (region, region) => bool = (number, symTouched) => {
-  //  log("-- isNumberTouched --")
-  //  log2("number", number)
-
-  let ret =
-    symTouched->Array.reduce(0, (acc, sPos) => {
-      //      log2(" sPos", sPos)
-      number->Array.reduce(0, (acc, nPos) => {
-        nPos == sPos ? acc + 1 : acc
-      }) > 0
-        ? acc + 1
-        : acc
-    }) > 0
-
-  //  log2("-- isNumberTouched --", ret)
-  ret
-}
-
-let isNumberTouched_opt: (region, region) => bool = (number, symTouched) => {
-  // todo: why Array.includes NOT working with tuples??
-  symTouched->Array.some(sPos => number->RescriptCore.Array.includes(sPos))
+  symTouched->Array.some(sPos => {
+    number->Array.some(nPos => nPos == sPos)
+  })
 }
 
 let getNumber: (engine, region) => int = (engine, number) => {
@@ -176,19 +168,39 @@ let findNumbersTouched: (engine, array<region>, region) => array<int> = (
 
 let part1: engine => int = engine => {
   let symbols = findSymbols(engine)
-  "symbols"->log
-  symbols->log
+  //  log2("symbols", symbols)
 
   let numbers = findNumbers(engine)
-  "numbers"->log
-  numbers->log
+  //  log2("numbers", numbers)
 
   let symTouched = touchedDigit(engine, symbols)
-  "symTouched"->log
-  symTouched->log
+  //  log2("symTouched", symTouched)
 
   let nums = findNumbersTouched(engine, numbers, symTouched)
   nums->sumIntArray
+}
+
+let part2: engine => int = engine => {
+  let stars = findStars(engine)
+  //  log2("stars", stars)
+
+  let numbers = findNumbers(engine)
+  //  log2("numbers", numbers)
+
+  let starTouched = stars->Array.filterMap(s => {
+    let t = touchedDigit(engine, [s])
+    // number of position touched must be at least 2 for gear to be valid
+    t->Array.length >= 2 ? Some(t) : None
+  })
+  //  log2("starTouched", starTouched)
+
+  let gearParts = starTouched->Array.filterMap(x => {
+    let touchedNums = findNumbersTouched(engine, numbers, x)
+    // number of numbers must be exactly 2 for gear to be valid
+    touchedNums->Array.length == 2 ? Some(touchedNums->mulIntArray) : None
+  })
+  //  log2("gearParts", gearParts)
+  gearParts->sumIntArray
 }
 
 let parse: string => Array2D.t<string> = data =>
@@ -199,6 +211,5 @@ let solvePart1: string => int = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  data->parse->makeEngine->part2
 }

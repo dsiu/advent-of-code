@@ -27,12 +27,15 @@ function makeElem($$char) {
   } else if ($$char === ".") {
     return "Dot";
   } else {
-    return "Symbol";
+    return {
+            TAG: "Symbol",
+            _0: $$char
+          };
   }
 }
 
 function isDigit(e) {
-  if (typeof e !== "object") {
+  if (typeof e !== "object" || e.TAG === "Symbol") {
     return false;
   } else {
     return true;
@@ -40,15 +43,23 @@ function isDigit(e) {
 }
 
 function isSymbol(e) {
-  if (typeof e !== "object" && e !== "Dot") {
-    return true;
-  } else {
+  if (typeof e !== "object" || e.TAG !== "Symbol") {
     return false;
+  } else {
+    return true;
+  }
+}
+
+function isStar(e) {
+  if (typeof e !== "object" || !(e.TAG === "Symbol" && e._0 === "*")) {
+    return false;
+  } else {
+    return true;
   }
 }
 
 function getNeighborsIf(c, fn) {
-  var nextTo = [
+  var directions = [
     Coordinate$AdventOfCode.Direction.north,
     Coordinate$AdventOfCode.Direction.south,
     Coordinate$AdventOfCode.Direction.east,
@@ -58,7 +69,7 @@ function getNeighborsIf(c, fn) {
     Coordinate$AdventOfCode.Direction.southEast,
     Coordinate$AdventOfCode.Direction.southWest
   ];
-  return Core__Array.filterMap(nextTo, (function (dir) {
+  return Core__Array.filterMap(directions, (function (dir) {
                 return fn(dir(c));
               }));
 }
@@ -146,40 +157,34 @@ function findNumbers(engine) {
               }).flat();
 }
 
-function findSymbols(engine) {
-  return engineFilter(engine, isSymbol);
+function findSymbols(__x) {
+  return engineFilter(__x, isSymbol);
+}
+
+function findStars(__x) {
+  return engineFilter(__x, isStar);
 }
 
 function touchedDigit(engine, symbols) {
-  return symbols.flatMap(function (c) {
-              return getNeighborsIf(c, (function (__x) {
+  return symbols.flatMap(function (__x) {
+              return getNeighborsIf(__x, (function (__x) {
                             return isElemDigit(engine, __x);
                           }));
             });
 }
 
 function isNumberTouched(number, symTouched) {
-  return Core__Array.reduce(symTouched, 0, (function (acc, sPos) {
-                if (Core__Array.reduce(number, 0, (function (acc, nPos) {
-                          return Caml_obj.equal(nPos, sPos) ? acc + 1 | 0 : acc;
-                        })) > 0) {
-                  return acc + 1 | 0;
-                } else {
-                  return acc;
-                }
-              })) > 0;
-}
-
-function isNumberTouched_opt(number, symTouched) {
   return symTouched.some(function (sPos) {
-              return number.includes(sPos);
+              return number.some(function (nPos) {
+                          return Caml_obj.equal(nPos, sPos);
+                        });
             });
 }
 
 function getNumber(engine, number) {
   return Core__Array.reduce(number.map(function (n) {
                   var match = Array2D$AdventOfCode.get(engine, n);
-                  if (match !== undefined && typeof match === "object") {
+                  if (match !== undefined && !(typeof match !== "object" || match.TAG === "Symbol")) {
                     return match._0;
                   } else {
                     return PervasivesU.failwith("expected digit");
@@ -199,15 +204,28 @@ function findNumbersTouched(engine, numbers, symTouched) {
 
 function part1(engine) {
   var symbols = engineFilter(engine, isSymbol);
-  console.log("symbols");
-  console.log(symbols);
   var numbers = findNumbers(engine);
-  console.log("numbers");
-  console.log(numbers);
   var symTouched = touchedDigit(engine, symbols);
-  console.log("symTouched");
-  console.log(symTouched);
   return Utils$AdventOfCode.sumIntArray(findNumbersTouched(engine, numbers, symTouched));
+}
+
+function part2(engine) {
+  var stars = engineFilter(engine, isStar);
+  var numbers = findNumbers(engine);
+  var starTouched = Core__Array.filterMap(stars, (function (s) {
+          var t = touchedDigit(engine, [s]);
+          if (t.length >= 2) {
+            return t;
+          }
+          
+        }));
+  return Utils$AdventOfCode.sumIntArray(Core__Array.filterMap(starTouched, (function (x) {
+                    var touchedNums = findNumbersTouched(engine, numbers, x);
+                    if (touchedNums.length === 2) {
+                      return Utils$AdventOfCode.mulIntArray(touchedNums);
+                    }
+                    
+                  })));
 }
 
 function parse(data) {
@@ -223,7 +241,7 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  return 2;
+  return part2(Array2D$AdventOfCode.mapU(parse(data), makeElem));
 }
 
 export {
@@ -232,6 +250,7 @@ export {
   makeElem ,
   isDigit ,
   isSymbol ,
+  isStar ,
   getNeighborsIf ,
   isElemDigit ,
   makeEngine ,
@@ -239,12 +258,13 @@ export {
   rowsFromRegion ,
   findNumbers ,
   findSymbols ,
+  findStars ,
   touchedDigit ,
   isNumberTouched ,
-  isNumberTouched_opt ,
   getNumber ,
   findNumbersTouched ,
   part1 ,
+  part2 ,
   parse ,
   solvePart1 ,
   solvePart2 ,

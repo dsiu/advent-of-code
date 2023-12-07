@@ -271,6 +271,10 @@ function sumIntArray(__x) {
   return Core__Array.reduce(__x, 0, add);
 }
 
+function mulIntArray(__x) {
+  return Core__Array.reduce(__x, 1, mul);
+}
+
 function join(__x) {
   return __x.join("");
 }
@@ -420,6 +424,7 @@ export {
   splitNewline ,
   splitDoubleNewline ,
   sumIntArray ,
+  mulIntArray ,
   join ,
   sumRange ,
   maxIntInArray ,
