@@ -161,9 +161,9 @@ let findNumbersTouched: (engine, array<region>, region) => array<int> = (
   numbers,
   symTouched,
 ) => {
-  numbers
-  ->Array.filter(isNumberTouched(_, symTouched))
-  ->Array.map(getNumber(engine, _))
+  numbers->Array.filterMap(num => {
+    isNumberTouched(num, symTouched) ? Some(getNumber(engine, num)) : None
+  })
 }
 
 let part1: engine => int = engine => {

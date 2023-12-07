@@ -195,11 +195,12 @@ function getNumber(engine, number) {
 }
 
 function findNumbersTouched(engine, numbers, symTouched) {
-  return numbers.filter(function (__x) {
-                return isNumberTouched(__x, symTouched);
-              }).map(function (__x) {
-              return getNumber(engine, __x);
-            });
+  return Core__Array.filterMap(numbers, (function (num) {
+                if (isNumberTouched(num, symTouched)) {
+                  return getNumber(engine, num);
+                }
+                
+              }));
 }
 
 function part1(engine) {
