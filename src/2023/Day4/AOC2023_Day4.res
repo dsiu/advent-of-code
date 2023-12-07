@@ -3,6 +3,7 @@
 open RescriptCore
 open Utils
 let log = Console.log
+let log2 = Console.log2
 
 type card = {
   id: int,
@@ -35,8 +36,22 @@ let parse = data =>
     }
   })
 
+let part1: array<card> => int = cards => {
+  cards
+  ->Array.map(({id, winners, actuals}) => {
+    open Belt.Set.Int
+    let winnerSet = Belt.Set.Int.fromArray(winners)
+    let actualsSet = Belt.Set.Int.fromArray(actuals)
+    let match = Belt.Set.Int.intersect(winnerSet, actualsSet)
+    log2("match", match->toArray)
+    let nMatches = match->size
+    nMatches == 0 ? 0 : Math.Int.pow(2, ~exp=nMatches - 1)
+  })
+  ->sumIntArray
+}
+
 let solvePart1 = data => {
-  data->parse->log
+  data->parse->part1->log
   1
 }
 
