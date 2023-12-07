@@ -84,10 +84,11 @@ function combineFirstAndLast(param) {
 
 function part2(xs) {
   return Utils$AdventOfCode.sumIntArray(xs.map(function (x) {
-                  var match = get2Digits(spelledOutToDigits(x, "Right2Left"));
+                  var match = get2Digits(spelledOutToDigits(x, "Left2Right"));
+                  var match$1 = get2Digits(spelledOutToDigits(x, "Right2Left"));
                   return combineFirstAndLast([
                               match[0],
-                              match[1]
+                              match$1[1]
                             ]);
                 }));
 }
