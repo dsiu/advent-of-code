@@ -14,6 +14,68 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
+function matchPerCard(param) {
+  var winnerSet = Belt_SetInt.fromArray(param.winners);
+  var actualSet = Belt_SetInt.fromArray(param.actuals);
+  return Belt_SetInt.size(Belt_SetInt.intersect(winnerSet, actualSet));
+}
+
+function mkQueue(cards) {
+  return cards.map(function (c) {
+              return {
+                      numMatches: matchPerCard(c),
+                      queuedQuantity: 1
+                    };
+            });
+}
+
+function duplicateCards(n, scale, queue) {
+  var qPre = queue.slice(0, n);
+  var qPost = queue.slice(n);
+  var dup = qPre.map(function (param) {
+        return {
+                numMatches: param.numMatches,
+                queuedQuantity: param.queuedQuantity + scale | 0
+              };
+      });
+  return dup.concat(qPost);
+}
+
+function calculatePoint(n) {
+  if (n === 0) {
+    return 0;
+  } else {
+    return Math.pow(2, n - 1 | 0);
+  }
+}
+
+function part1(cards) {
+  return Utils$AdventOfCode.sumIntArray(cards.map(function (param) {
+                  return Utils$AdventOfCode.compose(matchPerCard, calculatePoint, param);
+                }));
+}
+
+function part2(cards) {
+  var queue = mkQueue(cards);
+  var _n = 0;
+  var _q = queue;
+  while(true) {
+    var q = _q;
+    var n = _n;
+    var match = q.length;
+    if (match === 0) {
+      return n;
+    }
+    var match$1 = Core__Option.getExn(q[0]);
+    var queuedQuantity = match$1.queuedQuantity;
+    var n$p = n + queuedQuantity | 0;
+    var queue$p = duplicateCards(match$1.numMatches, queuedQuantity, q.slice(1));
+    _q = queue$p;
+    _n = n$p;
+    continue ;
+  };
+}
+
 function parse(data) {
   return Utils$AdventOfCode.splitNewline(data).map(function (l) {
               var cardAndNumbers = l.trim().split(": ");
@@ -40,37 +102,24 @@ function parse(data) {
             });
 }
 
-function part1(cards) {
-  return Utils$AdventOfCode.sumIntArray(cards.map(function (param) {
-                  var winnerSet = Belt_SetInt.fromArray(param.winners);
-                  var actualsSet = Belt_SetInt.fromArray(param.actuals);
-                  var match = Belt_SetInt.intersect(winnerSet, actualsSet);
-                  var prim1 = Belt_SetInt.toArray(match);
-                  console.log("match", prim1);
-                  var nMatches = Belt_SetInt.size(match);
-                  if (nMatches === 0) {
-                    return 0;
-                  } else {
-                    return Math.pow(2, nMatches - 1 | 0);
-                  }
-                }));
-}
-
 function solvePart1(data) {
-  var prim = part1(parse(data));
-  console.log(prim);
-  return 1;
+  return part1(parse(data));
 }
 
 function solvePart2(data) {
-  return 2;
+  return part2(parse(data));
 }
 
 export {
   log ,
   log2 ,
-  parse ,
+  matchPerCard ,
+  mkQueue ,
+  duplicateCards ,
+  calculatePoint ,
   part1 ,
+  part2 ,
+  parse ,
   solvePart1 ,
   solvePart2 ,
 }
