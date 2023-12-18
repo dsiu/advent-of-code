@@ -67,9 +67,9 @@ function spelledOutToDigits(str, matchDir) {
 
 function get2Digits(str) {
   var partial_arg = 10;
-  var digits = Core__Array.keepSome(Utils$AdventOfCode.splitChars(str).map(function (param) {
-            return Core__Int.fromString(partial_arg, param);
-          }));
+  var digits = Core__Array.filterMap(Utils$AdventOfCode.splitChars(str), (function (param) {
+          return Core__Int.fromString(partial_arg, param);
+        }));
   var first = digits.at(0);
   var last = digits.at(-1);
   return [
@@ -94,8 +94,8 @@ function part2(xs) {
 }
 
 function part1(xs) {
-  return Utils$AdventOfCode.sumIntArray(xs.map(function (x) {
-                  return combineFirstAndLast(get2Digits(x));
+  return Utils$AdventOfCode.sumIntArray(xs.map(function (param) {
+                  return Utils$AdventOfCode.compose(get2Digits, combineFirstAndLast, param);
                 }));
 }
 
