@@ -259,6 +259,10 @@ function splitChars(__x) {
   return __x.split("");
 }
 
+function splitSpace(__x) {
+  return __x.split(" ");
+}
+
 function splitNewline(__x) {
   return __x.split("\n");
 }
@@ -421,6 +425,7 @@ export {
   increaseBy1 ,
   int64FromBitString ,
   splitChars ,
+  splitSpace ,
   splitNewline ,
   splitDoubleNewline ,
   sumIntArray ,

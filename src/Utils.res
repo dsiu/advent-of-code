@@ -148,6 +148,7 @@ let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
 // strings
 //
 let splitChars = String.split(_, "")
+let splitSpace = String.split(_, " ")
 let splitNewline = String.split(_, "\n")
 let splitDoubleNewline = String.split(_, "\n\n")
 
