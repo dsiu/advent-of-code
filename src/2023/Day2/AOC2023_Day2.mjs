@@ -3,6 +3,7 @@
 import * as Core__Int from "@rescript/core/src/Core__Int.mjs";
 import * as Core__Array from "@rescript/core/src/Core__Array.mjs";
 import * as PervasivesU from "rescript/lib/es6/pervasivesU.js";
+import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
@@ -34,11 +35,20 @@ function makeDraw(str, n) {
 function parse(data) {
   return Utils$AdventOfCode.splitNewline(data).map(function (l) {
               var ll = l.trim().split(": ");
-              var id = Core__Int.fromString(10, ll.at(0).replace("Game ", ""));
+              var id = Core__Option.flatMap(ll.at(0), (function (param) {
+                      return Utils$AdventOfCode.compose((function (__x) {
+                                    return __x.replace("Game ", "");
+                                  }), (function (__x) {
+                                    return Core__Int.fromString(10, __x);
+                                  }), param);
+                    }));
               var draws = ll.at(1).split("; ").map(function (eachDraw) {
                       return eachDraw.split(", ").map(function (singleDraw) {
                                   var d = singleDraw.split(" ");
-                                  var nColor = Core__Int.fromString(10, d.at(0));
+                                  var partial_arg = 10;
+                                  var nColor = Core__Option.flatMap(d.at(0), (function (param) {
+                                          return Core__Int.fromString(partial_arg, param);
+                                        }));
                                   var color = d.at(1);
                                   return makeDraw(color, nColor);
                                 });
@@ -82,65 +92,50 @@ function maxNumColorsEachGame(draws) {
                                   var b$1 = b._0;
                                   switch (x.TAG) {
                                     case "Red" :
-                                        var n = x._0;
-                                        if (n > r$1) {
-                                          return [
-                                                  {
-                                                    TAG: "Red",
-                                                    _0: n
-                                                  },
-                                                  {
-                                                    TAG: "Green",
-                                                    _0: g$1
-                                                  },
-                                                  {
-                                                    TAG: "Blue",
-                                                    _0: b$1
-                                                  }
-                                                ];
-                                        } else {
-                                          return acc;
-                                        }
+                                        return [
+                                                {
+                                                  TAG: "Red",
+                                                  _0: x._0 > r$1 ? x._0 : r$1
+                                                },
+                                                {
+                                                  TAG: "Green",
+                                                  _0: g$1
+                                                },
+                                                {
+                                                  TAG: "Blue",
+                                                  _0: b$1
+                                                }
+                                              ];
                                     case "Blue" :
-                                        var n$1 = x._0;
-                                        if (n$1 > b$1) {
-                                          return [
-                                                  {
-                                                    TAG: "Red",
-                                                    _0: r$1
-                                                  },
-                                                  {
-                                                    TAG: "Green",
-                                                    _0: g$1
-                                                  },
-                                                  {
-                                                    TAG: "Blue",
-                                                    _0: n$1
-                                                  }
-                                                ];
-                                        } else {
-                                          return acc;
-                                        }
+                                        return [
+                                                {
+                                                  TAG: "Red",
+                                                  _0: r$1
+                                                },
+                                                {
+                                                  TAG: "Green",
+                                                  _0: g$1
+                                                },
+                                                {
+                                                  TAG: "Blue",
+                                                  _0: x._0 > b$1 ? x._0 : b$1
+                                                }
+                                              ];
                                     case "Green" :
-                                        var n$2 = x._0;
-                                        if (n$2 > g$1) {
-                                          return [
-                                                  {
-                                                    TAG: "Red",
-                                                    _0: r$1
-                                                  },
-                                                  {
-                                                    TAG: "Green",
-                                                    _0: n$2
-                                                  },
-                                                  {
-                                                    TAG: "Blue",
-                                                    _0: b$1
-                                                  }
-                                                ];
-                                        } else {
-                                          return acc;
-                                        }
+                                        return [
+                                                {
+                                                  TAG: "Red",
+                                                  _0: r$1
+                                                },
+                                                {
+                                                  TAG: "Green",
+                                                  _0: x._0 > g$1 ? x._0 : g$1
+                                                },
+                                                {
+                                                  TAG: "Blue",
+                                                  _0: b$1
+                                                }
+                                              ];
                                     
                                   }
                               case "Red" :
@@ -161,7 +156,7 @@ function maxNumColorsEachGame(draws) {
                       RE_EXN_ID: "Match_failure",
                       _1: [
                         "AOC2023_Day2.res",
-                        66,
+                        74,
                         8
                       ],
                       Error: new Error()
@@ -170,94 +165,94 @@ function maxNumColorsEachGame(draws) {
 }
 
 function maxColorWithLimits(games, colorLimits) {
-  return Core__Array.keepSome(games.map(function (param) {
-                  var maxColors = maxNumColorsEachGame(param.draws);
-                  var r = maxColors[0];
-                  switch (r.TAG) {
-                    case "Red" :
-                        var g = maxColors[1];
-                        switch (g.TAG) {
-                          case "Red" :
-                          case "Blue" :
-                              break;
-                          case "Green" :
-                              var b = maxColors[2];
-                              switch (b.TAG) {
-                                case "Blue" :
-                                    var exit = 0;
-                                    var max_r = colorLimits[0];
-                                    switch (max_r.TAG) {
-                                      case "Red" :
-                                          var max_g = colorLimits[1];
-                                          switch (max_g.TAG) {
-                                            case "Red" :
-                                            case "Blue" :
-                                                exit = 2;
-                                                break;
-                                            case "Green" :
-                                                var max_b = colorLimits[2];
-                                                switch (max_b.TAG) {
-                                                  case "Blue" :
-                                                      if (r._0 <= max_r._0 && g._0 <= max_g._0 && b._0 <= max_b._0) {
-                                                        return [
-                                                                param.id,
-                                                                maxColors
-                                                              ];
-                                                      } else {
-                                                        return ;
-                                                      }
-                                                  case "Red" :
-                                                  case "Green" :
-                                                      exit = 2;
-                                                      break;
-                                                  
-                                                }
-                                                break;
-                                            
-                                          }
-                                          break;
-                                      case "Blue" :
-                                      case "Green" :
-                                          exit = 2;
-                                          break;
-                                      
-                                    }
-                                    if (exit === 2) {
-                                      throw {
-                                            RE_EXN_ID: "Match_failure",
-                                            _1: [
-                                              "AOC2023_Day2.res",
-                                              81,
-                                              8
-                                            ],
-                                            Error: new Error()
-                                          };
-                                    }
-                                    break;
-                                case "Red" :
-                                case "Green" :
-                                    break;
-                                
-                              }
-                              break;
-                          
-                        }
-                        break;
-                    case "Blue" :
-                    case "Green" :
-                        break;
-                    
-                  }
-                  throw {
-                        RE_EXN_ID: "Match_failure",
-                        _1: [
-                          "AOC2023_Day2.res",
-                          80,
-                          8
-                        ],
-                        Error: new Error()
-                      };
-                }));
+  return Core__Array.filterMap(games, (function (param) {
+                var maxColors = maxNumColorsEachGame(param.draws);
+                var r = maxColors[0];
+                switch (r.TAG) {
+                  case "Red" :
+                      var g = maxColors[1];
+                      switch (g.TAG) {
+                        case "Red" :
+                        case "Blue" :
+                            break;
+                        case "Green" :
+                            var b = maxColors[2];
+                            switch (b.TAG) {
+                              case "Blue" :
+                                  var exit = 0;
+                                  var max_r = colorLimits[0];
+                                  switch (max_r.TAG) {
+                                    case "Red" :
+                                        var max_g = colorLimits[1];
+                                        switch (max_g.TAG) {
+                                          case "Red" :
+                                          case "Blue" :
+                                              exit = 2;
+                                              break;
+                                          case "Green" :
+                                              var max_b = colorLimits[2];
+                                              switch (max_b.TAG) {
+                                                case "Blue" :
+                                                    if (r._0 <= max_r._0 && g._0 <= max_g._0 && b._0 <= max_b._0) {
+                                                      return [
+                                                              param.id,
+                                                              maxColors
+                                                            ];
+                                                    } else {
+                                                      return ;
+                                                    }
+                                                case "Red" :
+                                                case "Green" :
+                                                    exit = 2;
+                                                    break;
+                                                
+                                              }
+                                              break;
+                                          
+                                        }
+                                        break;
+                                    case "Blue" :
+                                    case "Green" :
+                                        exit = 2;
+                                        break;
+                                    
+                                  }
+                                  if (exit === 2) {
+                                    throw {
+                                          RE_EXN_ID: "Match_failure",
+                                          _1: [
+                                            "AOC2023_Day2.res",
+                                            106,
+                                            8
+                                          ],
+                                          Error: new Error()
+                                        };
+                                  }
+                                  break;
+                              case "Red" :
+                              case "Green" :
+                                  break;
+                              
+                            }
+                            break;
+                        
+                      }
+                      break;
+                  case "Blue" :
+                  case "Green" :
+                      break;
+                  
+                }
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2023_Day2.res",
+                        105,
+                        8
+                      ],
+                      Error: new Error()
+                    };
+              }));
 }
 
 function part1(games) {
@@ -299,17 +294,17 @@ function part2(games) {
     colorLimits_2
   ];
   return Utils$AdventOfCode.sumIntArray(maxColorWithLimits(games, colorLimits).map(function (param) {
-                  var draws = param[1];
-                  var r = draws[0];
+                  var match = param[1];
+                  var r = match[0];
                   switch (r.TAG) {
                     case "Red" :
-                        var g = draws[1];
+                        var g = match[1];
                         switch (g.TAG) {
                           case "Red" :
                           case "Blue" :
                               break;
                           case "Green" :
-                              var b = draws[2];
+                              var b = match[2];
                               switch (b.TAG) {
                                 case "Blue" :
                                     return Math.imul(Math.imul(r._0, g._0), b._0);
@@ -331,8 +326,8 @@ function part2(games) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2023_Day2.res",
-                          101,
-                          8
+                          122,
+                          15
                         ],
                         Error: new Error()
                       };
