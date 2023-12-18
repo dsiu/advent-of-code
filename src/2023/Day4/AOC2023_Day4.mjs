@@ -15,9 +15,7 @@ function log2(prim0, prim1) {
 }
 
 function matchPerCard(param) {
-  var winnerSet = Belt_SetInt.fromArray(param.winners);
-  var actualSet = Belt_SetInt.fromArray(param.actuals);
-  return Belt_SetInt.size(Belt_SetInt.intersect(winnerSet, actualSet));
+  return Belt_SetInt.size(Belt_SetInt.intersect(Belt_SetInt.fromArray(param.winners), Belt_SetInt.fromArray(param.actuals)));
 }
 
 function mkQueue(cards) {
@@ -78,26 +76,47 @@ function part2(cards) {
 
 function parse(data) {
   return Utils$AdventOfCode.splitNewline(data).map(function (l) {
-              var cardAndNumbers = l.trim().split(": ");
-              var cardId = Core__Option.flatMap(cardAndNumbers[0], (function (s) {
-                      return Core__Int.fromString(undefined, s.replace("Card ", ""));
+              var match = l.trim().split(": ");
+              if (match.length !== 2) {
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2023_Day4.res",
+                        163,
+                        8
+                      ],
+                      Error: new Error()
+                    };
+              }
+              var cardIdStr = match[0];
+              var numberStrs = match[1];
+              var cardId = Core__Option.getExn(Core__Int.fromString(undefined, cardIdStr.replace("Card ", "")));
+              var match$1 = numberStrs.split(" | ");
+              if (match$1.length !== 2) {
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2023_Day4.res",
+                        165,
+                        8
+                      ],
+                      Error: new Error()
+                    };
+              }
+              var winnersStr = match$1[0];
+              var actualsStr = match$1[1];
+              var partial_arg = 10;
+              var winners = Core__Array.filterMap(winnersStr.split(" "), (function (param) {
+                      return Core__Int.fromString(partial_arg, param);
                     }));
-              var numberStrs = Core__Option.flatMap(cardAndNumbers[1], (function (s) {
-                      return s.split(" | ").map(function (nums) {
-                                  var partial_arg = 10;
-                                  return Core__Array.filterMap(nums.trim().split(" "), (function (param) {
-                                                return Core__Int.fromString(partial_arg, param);
-                                              }));
-                                });
+              var partial_arg$1 = 10;
+              var actuals = Core__Array.filterMap(actualsStr.split(" "), (function (param) {
+                      return Core__Int.fromString(partial_arg$1, param);
                     }));
               return {
-                      id: Core__Option.getExn(cardId),
-                      winners: Core__Option.getExn(Core__Option.flatMap(numberStrs, (function (__x) {
-                                  return __x.at(0);
-                                }))),
-                      actuals: Core__Option.getExn(Core__Option.flatMap(numberStrs, (function (__x) {
-                                  return __x.at(1);
-                                })))
+                      id: cardId,
+                      winners: winners,
+                      actuals: actuals
                     };
             });
 }
