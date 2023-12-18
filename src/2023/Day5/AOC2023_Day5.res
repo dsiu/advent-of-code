@@ -118,6 +118,25 @@ let parse: string => Almanac.t = data => {
   {seeds, maps}
 }
 
+let part1 = ({seeds, _} as almanac: Almanac.t) => {
+  let startCat = "seed"
+  let endCat = "location"
+
+  let locations = seeds->Array.map(s => {
+    let rec loop = (endCat, curCat, curNum) => {
+      let map = almanac->Almanac.getMap(curCat)
+      let {destCategory} = map
+      let nextNum = AlmanacMap.srcToDest(map, curNum)
+      destCategory == endCat ? nextNum : loop(endCat, destCategory, nextNum)
+    }
+
+    loop(endCat, startCat, s)
+  })
+
+  locations->log
+  locations->Utils.minBigIntInArray
+}
+
 let solvePart1 = data => {
   let almanac = data->parse
   almanac->Almanac.toString->log
@@ -126,7 +145,8 @@ let solvePart1 = data => {
   AlmanacMap.srcToDest(m, BigInt.fromInt(14))->BigInt.toString->log
   AlmanacMap.srcToDest(m, BigInt.fromInt(55))->BigInt.toString->log
   AlmanacMap.srcToDest(m, BigInt.fromInt(13))->BigInt.toString->log
-  1
+
+  part1(almanac)
 }
 
 let solvePart2 = data => {

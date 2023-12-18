@@ -163,6 +163,29 @@ function parse(data) {
         };
 }
 
+function part1(almanac) {
+  var locations = almanac.seeds.map(function (s) {
+        var endCat = "location";
+        var _curCat = "seed";
+        var _curNum = s;
+        while(true) {
+          var curNum = _curNum;
+          var curCat = _curCat;
+          var map = getMap(almanac, curCat);
+          var destCategory = map.destCategory;
+          var nextNum = srcToDest$1(map, curNum);
+          if (destCategory === endCat) {
+            return nextNum;
+          }
+          _curNum = nextNum;
+          _curCat = destCategory;
+          continue ;
+        };
+      });
+  console.log(locations);
+  return Utils$AdventOfCode.minBigIntInArray(locations);
+}
+
 function solvePart1(data) {
   var almanac = parse(data);
   var prim = toString$3(almanac);
@@ -176,7 +199,7 @@ function solvePart1(data) {
   console.log(prim$3);
   var prim$4 = srcToDest$1(m, BigInt(13)).toString();
   console.log(prim$4);
-  return 1;
+  return part1(almanac);
 }
 
 function solvePart2(data) {
@@ -191,6 +214,7 @@ export {
   AlmanacMap ,
   Almanac ,
   parse ,
+  part1 ,
   solvePart1 ,
   solvePart2 ,
 }

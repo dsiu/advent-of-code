@@ -2,6 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Int64 from "rescript/lib/es6/int64.js";
+import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Core__Int from "@rescript/core/src/Core__Int.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
@@ -304,6 +305,30 @@ function minIntInArray(xs) {
   return sorted[0];
 }
 
+function compare(a, b) {
+  if (Caml_obj.lessthan(a, b)) {
+    return -1;
+  } else if (Caml_obj.greaterthan(a, b)) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+var BigIntExt = {
+  compare: compare
+};
+
+function maxBigIntInArray(xs) {
+  var sorted = xs.toSorted(compare);
+  return sorted[sorted.length - 1 | 0];
+}
+
+function minBigIntInArray(xs) {
+  var sorted = xs.toSorted(compare);
+  return sorted[0];
+}
+
 function flatten(xs) {
   return Core__Array.reduce(xs, [], (function (a, x) {
                 return a.concat(x);
@@ -434,6 +459,9 @@ export {
   sumRange ,
   maxIntInArray ,
   minIntInArray ,
+  BigIntExt ,
+  maxBigIntInArray ,
+  minBigIntInArray ,
   flatten ,
   transpose ,
   maxKeyIntValuePair ,
