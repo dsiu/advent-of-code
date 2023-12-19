@@ -5,6 +5,7 @@
 ### 2022
 
 Dr. Neil Smith Haskell - https://work.njae.me.uk/2023/12/01/advent-of-code-2023-day-01/
+
 Monday Morning Haskell - https://mmhaskell.com/advent-of-code-2022
 
 ### 2021
