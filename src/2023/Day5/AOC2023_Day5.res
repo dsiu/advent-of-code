@@ -5,38 +5,23 @@ open Utils
 let log = Console.log
 let log2 = Console.log2
 
-module Range = {
+module IntervalMap = {
   type t = {
-    start: BigInt.t,
-    end: BigInt.t,
+    srcInterval: Interval.t,
+    destInterval: Interval.t,
   }
 
   let toString: t => string = t => {
-    `Range(${t.start->BigInt.toString}, ${t.end->BigInt.toString})`
-  }
-
-  let inRange: (t, BigInt.t) => bool = (t, num) => {
-    num >= t.start && num <= t.end
-  }
-}
-
-module SrcDestRange = {
-  type t = {
-    srcRange: Range.t,
-    destRange: Range.t,
-  }
-
-  let toString: t => string = t => {
-    `SrcDestRange(Src:${t.srcRange->Range.toString}, Dest:${t.destRange->Range.toString})`
+    `SrcDestInterval(Src:${t.srcInterval->Interval.toString}, Dest:${t.destInterval->Interval.toString})`
   }
 
   let srcToDest: (t, BigInt.t) => option<BigInt.t> = (t, srcNum) => {
     open! BigInt
-    t.srcRange->Range.inRange(srcNum)
+    t.srcInterval->Interval.inInterval(srcNum)
       ? {
-          let offset = srcNum - t.srcRange.start
+          let offset = srcNum - t.srcInterval.lower
 
-          Some(t.destRange.start + offset)
+          Some(t.destInterval.lower + offset)
         }
       : None
   }
@@ -46,17 +31,19 @@ module AlmanacMap = {
   type t = {
     srcCategory: string,
     destCategory: string,
-    ranges: array<SrcDestRange.t>,
+    intervals: array<IntervalMap.t>,
   }
 
   let toString: t => string = t => {
-    `AlmanacMap(${t.srcCategory}, ${t.destCategory}, ${t.ranges
-      ->Array.map(SrcDestRange.toString)
+    `AlmanacMap(${t.srcCategory}, ${t.destCategory}, ${t.intervals
+      ->Array.map(IntervalMap.toString)
       ->Array.joinWith(", ")})`
   }
 
   let srcToDest: (t, BigInt.t) => BigInt.t = (t, srcNum) => {
-    t.ranges->Array.findMap(r => r->SrcDestRange.srcToDest(srcNum))->Option.getWithDefault(srcNum)
+    t.intervals
+    ->Array.findMap(r => r->IntervalMap.srcToDest(srcNum))
+    ->Option.getWithDefault(srcNum)
   }
 }
 
@@ -97,18 +84,18 @@ let parse: string => Almanac.t = data => {
       ->Option.flatMap(s => s->String.split(_, "-to-")->Some)
       ->Option.getExn
 
-    let parseRangeLine: string => SrcDestRange.t = l => {
+    let parseIntervalLine: string => IntervalMap.t = l => {
       let [destStart, srcStart, len] = l->splitSpace->Array.map(BigInt.fromString)
       let one = BigInt.fromInt(1)
       open! BigInt
       {
-        srcRange: {start: srcStart, end: srcStart + len - one},
-        destRange: {start: destStart, end: destStart + len - one},
+        srcInterval: {lower: srcStart, upper: srcStart + len - one},
+        destInterval: {lower: destStart, upper: destStart + len - one},
       }
     }
 
-    let ranges = srcDestLines->Array.map(parseRangeLine)
-    {srcCategory, destCategory, ranges}
+    let intervals = srcDestLines->Array.map(parseIntervalLine)
+    {srcCategory, destCategory, intervals}
   }
 
   let seeds = parseSeed(seedLine)
