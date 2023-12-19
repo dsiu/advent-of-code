@@ -4,7 +4,6 @@ open Expect
 open RescriptCore
 
 describe("Interval", () => {
-  open AOC2023_Day5
   open Interval
   test("sort - ascending order", () => {
     let intervals = [

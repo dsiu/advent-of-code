@@ -15,15 +15,17 @@ function log2(prim0, prim1) {
 }
 
 function toString(t) {
-  return "SrcDestInterval(Src:" + Interval$AdventOfCode.toString(t.srcInterval) + ", Dest:" + Interval$AdventOfCode.toString(t.destInterval) + ")";
+  return "SrcDestInterval(Src:" + Interval$AdventOfCode.toString(t.srcInterval) + ", Dest:" + t.dest.toString() + ", Offset:" + t.offset.toString() + ")";
 }
 
 function srcToDest(t, srcNum) {
-  if (!Interval$AdventOfCode.inInterval(t.srcInterval, srcNum)) {
-    return ;
+  console.log("srcNum", srcNum);
+  var prim = toString(t);
+  console.log(prim);
+  if (Interval$AdventOfCode.inInterval(t.srcInterval, srcNum)) {
+    return Caml_option.some(srcNum + t.offset);
   }
-  var offset = srcNum - t.srcInterval.lower;
-  return Caml_option.some(t.destInterval.lower + offset);
+  
 }
 
 var IntervalMap = {
@@ -47,9 +49,7 @@ var AlmanacMap = {
 };
 
 function toString$2(t) {
-  return "Almanac (Seeds: " + t.seeds.map(function (prim) {
-                return prim.toString();
-              }).join(", ") + "\n" + t.maps.map(toString$1).join("\n") + ")";
+  return "Almanac (Seeds: " + t.seeds.map(Interval$AdventOfCode.toString).join(", ") + "\n" + t.maps.map(toString$1).join("\n") + ")";
 }
 
 function getMap(t, src) {
@@ -93,7 +93,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day5.res",
-              80,
+              93,
               8
             ],
             Error: new Error()
@@ -110,7 +110,7 @@ function parse(data) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "AOC2023_Day5.res",
-                88,
+                101,
                 10
               ],
               Error: new Error()
@@ -125,10 +125,8 @@ function parse(data) {
                 lower: srcStart,
                 upper: srcStart + len - one
               },
-              destInterval: {
-                lower: destStart,
-                upper: destStart + len - one
-              }
+              dest: destStart,
+              offset: destStart - srcStart
             };
     };
     var intervals = srcDestLines.map(parseIntervalLine);
@@ -138,7 +136,12 @@ function parse(data) {
             intervals: intervals
           };
   };
-  var seeds = parseSeed(seedLine);
+  var makeSeedsInterval = function (seeds) {
+    return seeds.map(function (s) {
+                return Interval$AdventOfCode.makeWithLength(s, BigInt(1));
+              });
+  };
+  var seeds = makeSeedsInterval(parseSeed(seedLine));
   var maps = mapLines.map(parseMap);
   return {
           seeds: seeds,
@@ -150,7 +153,7 @@ function part1(almanac) {
   var locations = almanac.seeds.map(function (s) {
         var endCat = "location";
         var _curCat = "seed";
-        var _curNum = s;
+        var _curNum = s.lower;
         while(true) {
           var curNum = _curNum;
           var curCat = _curCat;

@@ -8,22 +8,29 @@ let log2 = Console.log2
 module IntervalMap = {
   type t = {
     srcInterval: Interval.t,
-    destInterval: Interval.t,
+    // destInterval: Interval.t,
+    dest: BigInt.t,
+    offset: BigInt.t,
   }
 
   let toString: t => string = t => {
-    `SrcDestInterval(Src:${t.srcInterval->Interval.toString}, Dest:${t.destInterval->Interval.toString})`
+    // `SrcDestInterval(Src:${t.srcInterval->Interval.toString}, Dest:${t.destInterval->Interval.toString})`
+    `SrcDestInterval(Src:${t.srcInterval->Interval.toString}, Dest:${t.dest->BigInt.toString}, Offset:${t.offset->BigInt.toString})`
   }
 
   let srcToDest: (t, BigInt.t) => option<BigInt.t> = (t, srcNum) => {
-    open! BigInt
+    log2("srcNum", srcNum)
+    t->toString->log
     t.srcInterval->Interval.inInterval(srcNum)
       ? {
-          let offset = srcNum - t.srcInterval.lower
-
-          Some(t.destInterval.lower + offset)
+          open BigInt
+          //   log2("(srcNum + t.offset)", srcNum + t.offset)
+          Some(srcNum + t.offset)
         }
-      : None
+      : {
+          // log("Not in interval")
+          None
+        }
   }
 }
 
@@ -45,16 +52,22 @@ module AlmanacMap = {
     ->Array.findMap(r => r->IntervalMap.srcToDest(srcNum))
     ->Option.getWithDefault(srcNum)
   }
+
+  //  let srcToDestInterval: (t, array<Interval.t>) => array<Interval.t> = (t, src) => {
+  //    t.intervals
+  //    ->Array.findMap(r => r->IntervalMap.srcToDestInterval(src))
+  //    ->Option.getWithDefault(src)
+  //  }
 }
 
 module Almanac = {
   type t = {
-    seeds: array<BigInt.t>,
+    seeds: array<Interval.t>,
     maps: array<AlmanacMap.t>,
   }
 
   let toString: t => string = t => {
-    `Almanac (Seeds: ${t.seeds->Array.map(BigInt.toString)->Array.joinWith(", ")}\n${t.maps
+    `Almanac (Seeds: ${t.seeds->Array.map(Interval.toString)->Array.joinWith(", ")}\n${t.maps
       ->Array.map(AlmanacMap.toString)
       ->Array.joinWith("\n")})`
   }
@@ -90,7 +103,9 @@ let parse: string => Almanac.t = data => {
       open! BigInt
       {
         srcInterval: {lower: srcStart, upper: srcStart + len - one},
-        destInterval: {lower: destStart, upper: destStart + len - one},
+        //        destInterval: {lower: destStart, upper: destStart + len - one},
+        dest: destStart,
+        offset: destStart - srcStart,
       }
     }
 
@@ -98,7 +113,12 @@ let parse: string => Almanac.t = data => {
     {srcCategory, destCategory, intervals}
   }
 
-  let seeds = parseSeed(seedLine)
+  // make seeds interval with 1 element
+  let makeSeedsInterval: array<BigInt.t> => array<Interval.t> = seeds => {
+    seeds->Array.map(s => Interval.makeWithLength(s, ~length=BigInt.fromInt(1)))
+  }
+
+  let seeds = parseSeed(seedLine)->makeSeedsInterval
 
   let maps = mapLines->Array.map(parseMap)
   //  {seeds, maps}
@@ -109,20 +129,40 @@ let part1 = ({seeds, _} as almanac: Almanac.t) => {
   let startCat = "seed"
   let endCat = "location"
 
-  let locations = seeds->Array.map(s => {
-    let rec loop = (endCat, curCat, curNum) => {
-      let map = almanac->Almanac.getMap(curCat)
-      let {destCategory} = map
-      let nextNum = AlmanacMap.srcToDest(map, curNum)
-      destCategory == endCat ? nextNum : loop(endCat, destCategory, nextNum)
-    }
+  let rec loop = (endCat, curCat, curNum) => {
+    let map = almanac->Almanac.getMap(curCat)
+    let {destCategory} = map
+    let nextNum = AlmanacMap.srcToDest(map, curNum)
+    destCategory == endCat ? nextNum : loop(endCat, destCategory, nextNum)
+  }
 
-    loop(endCat, startCat, s)
+  let locations = seeds->Array.map(({lower, upper} as s) => {
+    loop(endCat, startCat, lower)
   })
 
   locations->log
   locations->Utils.minBigIntInArray
 }
+
+// use interval to find the location
+//let part1 = ({seeds, _} as almanac: Almanac.t) => {
+//  let startCat = "seed"
+//  let endCat = "location"
+//
+//  let rec loop = (endCat, curCat, curNumIntervals) => {
+//    let map = almanac->Almanac.getMap(curCat)
+//    let {destCategory} = map
+//    let nextNum = AlmanacMap.srcToDest(map, curNumIntervals)
+//    destCategory == endCat ? nextNum : loop(endCat, destCategory, nextNum)
+//  }
+//
+//  let locations = seeds->Array.map(s => {
+//    loop(endCat, startCat, [s])
+//  })
+//
+//  locations->log
+//  locations->Utils.minBigIntInArray
+//}
 
 let solvePart1 = data => {
   let almanac = data->parse
