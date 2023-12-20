@@ -21,11 +21,10 @@ module IntervalMap = {
   let srcToDest: (t, BigInt.t) => option<BigInt.t> = (t, srcNum) => {
     log2("srcNum", srcNum)
     t->toString->log
-    t.srcInterval->Interval.inInterval(srcNum)
+    t.srcInterval->Interval.contains(srcNum)
       ? {
-          open BigInt
           //   log2("(srcNum + t.offset)", srcNum + t.offset)
-          Some(srcNum + t.offset)
+          Some(BigInt.add(srcNum, t.offset))
         }
       : {
           // log("Not in interval")
@@ -50,7 +49,7 @@ module AlmanacMap = {
   let srcToDest: (t, BigInt.t) => BigInt.t = (t, srcNum) => {
     t.intervals
     ->Array.findMap(r => r->IntervalMap.srcToDest(srcNum))
-    ->Option.getWithDefault(srcNum)
+    ->Option.getOr(srcNum)
   }
 
   //  let srcToDestInterval: (t, array<Interval.t>) => array<Interval.t> = (t, src) => {
@@ -102,7 +101,7 @@ let parse: string => Almanac.t = data => {
       let one = BigInt.fromInt(1)
       open! BigInt
       {
-        srcInterval: {lower: srcStart, upper: srcStart + len - one},
+        srcInterval: Interval.make(srcStart, srcStart + len - one),
         //        destInterval: {lower: destStart, upper: destStart + len - one},
         dest: destStart,
         offset: destStart - srcStart,
@@ -136,7 +135,7 @@ let part1 = ({seeds, _} as almanac: Almanac.t) => {
     destCategory == endCat ? nextNum : loop(endCat, destCategory, nextNum)
   }
 
-  let locations = seeds->Array.map(({lower, upper} as s) => {
+  let locations = seeds->Array.map(((lower, _)) => {
     loop(endCat, startCat, lower)
   })
 

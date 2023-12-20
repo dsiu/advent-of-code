@@ -22,7 +22,7 @@ function srcToDest(t, srcNum) {
   console.log("srcNum", srcNum);
   var prim = toString(t);
   console.log(prim);
-  if (Interval$AdventOfCode.inInterval(t.srcInterval, srcNum)) {
+  if (Interval$AdventOfCode.contains(t.srcInterval, srcNum)) {
     return Caml_option.some(srcNum + t.offset);
   }
   
@@ -38,7 +38,7 @@ function toString$1(t) {
 }
 
 function srcToDest$1(t, srcNum) {
-  return Core__Option.getWithDefault(Core__Array.findMap(t.intervals, (function (r) {
+  return Core__Option.getOr(Core__Array.findMap(t.intervals, (function (r) {
                     return srcToDest(r, srcNum);
                   })), srcNum);
 }
@@ -93,7 +93,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day5.res",
-              93,
+              92,
               8
             ],
             Error: new Error()
@@ -110,7 +110,7 @@ function parse(data) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "AOC2023_Day5.res",
-                101,
+                100,
                 10
               ],
               Error: new Error()
@@ -121,10 +121,7 @@ function parse(data) {
       var len = match[2];
       var one = BigInt(1);
       return {
-              srcInterval: {
-                lower: srcStart,
-                upper: srcStart + len - one
-              },
+              srcInterval: Interval$AdventOfCode.make(srcStart, srcStart + len - one),
               dest: destStart,
               offset: destStart - srcStart
             };
@@ -150,10 +147,10 @@ function parse(data) {
 }
 
 function part1(almanac) {
-  var locations = almanac.seeds.map(function (s) {
+  var locations = almanac.seeds.map(function (param) {
         var endCat = "location";
         var _curCat = "seed";
-        var _curNum = s.lower;
+        var _curNum = param[0];
         while(true) {
           var curNum = _curNum;
           var curCat = _curCat;

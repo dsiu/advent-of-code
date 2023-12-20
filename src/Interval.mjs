@@ -3,18 +3,22 @@
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 
-function toString(t) {
-  return "Interval(" + t.lower.toString() + ", " + t.upper.toString() + ")";
+function toString(param) {
+  return "Interval(" + param[0].toString() + ", " + param[1].toString() + ")";
 }
 
-function makeWithBounds(lower, upper) {
+function make(lower, upper) {
   if (Caml_obj.greaterthan(lower, upper)) {
-    Pervasives.failwith("lower bound must be less than or equal to upper bound");
+    return [
+            upper,
+            lower
+          ];
+  } else {
+    return [
+            lower,
+            upper
+          ];
   }
-  return {
-          lower: lower,
-          upper: upper
-        };
 }
 
 function makeWithLength(lower, length) {
@@ -22,43 +26,61 @@ function makeWithLength(lower, length) {
     Pervasives.failwith("length must be non-negative");
   }
   var upper = lower + length - BigInt(1);
-  return makeWithBounds(lower, upper);
+  return make(lower, upper);
 }
 
-function belowNotConnected(a, b) {
-  return Caml_obj.lessthan(a.upper + BigInt(1), b.lower);
-}
-
-function merge(a, b) {
-  if (belowNotConnected(a, b)) {
-    return Pervasives.failwith("intervals must be all below and not connected");
+function length(param) {
+  var upper = param[1];
+  var lower = param[0];
+  if (Caml_obj.greaterthan(upper, lower)) {
+    return upper - lower + BigInt(1);
+  } else {
+    return lower - upper + BigInt(1);
   }
-  var lower = Caml_obj.min(a.lower, b.lower);
-  var upper = Caml_obj.max(a.upper, b.upper);
-  return makeWithBounds(lower, upper);
 }
 
-function inInterval(t, num) {
-  if (Caml_obj.greaterequal(num, t.lower)) {
-    return Caml_obj.lessequal(num, t.upper);
+function contains(param, num) {
+  if (Caml_obj.greaterequal(num, param[0])) {
+    return Caml_obj.lessequal(num, param[1]);
   } else {
     return false;
   }
 }
 
+function overlaps(a, b) {
+  if (contains(a, b[0])) {
+    return true;
+  } else {
+    return contains(a, b[1]);
+  }
+}
+
+function adjacent(a, b) {
+  return Caml_obj.lessthan(a[1] + BigInt(1), b[0]);
+}
+
+function merge(a, b) {
+  if (adjacent(a, b)) {
+    return Pervasives.failwith("intervals must be all below and not connected");
+  }
+  var lower = Caml_obj.min(a[0], b[0]);
+  var upper = Caml_obj.max(a[1], b[1]);
+  return make(lower, upper);
+}
+
 function sort(intervals) {
-  var lowerBoundAscendingCmp = function (a, b) {
-    var match = a.lower;
-    var match$1 = b.lower;
-    var match$2 = a.upper;
-    var match$3 = b.upper;
-    if (Caml_obj.lessthan(match, match$1)) {
+  var lowerBoundAscendingCmp = function (param, param$1) {
+    var bUpper = param$1[1];
+    var bLower = param$1[0];
+    var aUpper = param[1];
+    var aLower = param[0];
+    if (Caml_obj.lessthan(aLower, bLower)) {
       return -1;
-    } else if (Caml_obj.greaterthan(match, match$1)) {
+    } else if (Caml_obj.greaterthan(aLower, bLower)) {
       return 1;
-    } else if (Caml_obj.lessthan(match$2, match$3)) {
+    } else if (Caml_obj.lessthan(aUpper, bUpper)) {
       return -1;
-    } else if (Caml_obj.greaterthan(match$2, match$3)) {
+    } else if (Caml_obj.greaterthan(aUpper, bUpper)) {
       return 1;
     } else {
       return 0;
@@ -81,7 +103,7 @@ function sortAndMergeOverlaps(intervals) {
       }
       var a = sortedIntervals[0];
       var b = sortedIntervals[1];
-      if (belowNotConnected(a, b)) {
+      if (adjacent(a, b)) {
         return [a].concat(loop(sortedIntervals.slice(1)));
       }
       _sortedIntervals = [merge(a, b)].concat(sortedIntervals.slice(2));
@@ -93,11 +115,13 @@ function sortAndMergeOverlaps(intervals) {
 
 export {
   toString ,
-  makeWithBounds ,
+  make ,
   makeWithLength ,
-  belowNotConnected ,
+  length ,
+  contains ,
+  overlaps ,
+  adjacent ,
   merge ,
-  inInterval ,
   sort ,
   sortAndMergeOverlaps ,
 }

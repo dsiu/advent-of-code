@@ -5,185 +5,279 @@ open RescriptCore
 
 describe("Interval", () => {
   open Interval
-  test("sort - ascending order", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(3), upper: BigInt.fromInt(5)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-      {lower: BigInt.fromInt(2), upper: BigInt.fromInt(4)},
-    ]
-    let result = Interval.sort(intervals)
-    let expected = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-      {lower: BigInt.fromInt(2), upper: BigInt.fromInt(4)},
-      {lower: BigInt.fromInt(3), upper: BigInt.fromInt(5)},
-    ]
+  describe("length", () => {
+    test(
+      "length - returns correct length for positive interval",
+      () => {
+        let interval = (BigInt.fromInt(1), BigInt.fromInt(5))
+        let expected = BigInt.fromInt(5)
+        expect(Interval.length(interval))->toEqual(expected)
+      },
+    )
 
-    expect(result)->toEqual(expected)
+    test(
+      "length - returns correct length for zero-length interval",
+      () => {
+        let interval = (BigInt.fromInt(3), BigInt.fromInt(3))
+        let expected = BigInt.fromInt(1)
+        expect(Interval.length(interval))->toEqual(expected)
+      },
+    )
+
+    test(
+      "length - returns correct length for negative interval",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(1))
+        let expected = BigInt.fromInt(5)
+        expect(Interval.length(interval))->toEqual(expected)
+      },
+    )
+  })
+  describe("Sort", () => {
+    test(
+      "sort - sorts intervals by lower bound ascending, then upper bound ascending",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(3), BigInt.fromInt(5)),
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(4)),
+        ]
+        let expected = [
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(4)),
+          (BigInt.fromInt(3), BigInt.fromInt(5)),
+        ]
+        expect(Interval.sort(intervals))->toEqual(expected)
+      },
+    )
+
+    test(
+      "sort - handles equal lower bounds by sorting by upper bound",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(4)),
+        ]
+        let expected = [
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(4)),
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+        ]
+        expect(Interval.sort(intervals))->toEqual(expected)
+      },
+    )
+
+    test(
+      "sort - handles equal intervals correctly",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+        ]
+        let expected = [
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+        ]
+        expect(Interval.sort(intervals))->toEqual(expected)
+      },
+    )
+
+    test(
+      "sort - handles empty array correctly",
+      () => {
+        let intervals = []
+        let expected = []
+        expect(Interval.sort(intervals))->toEqual(expected)
+      },
+    )
   })
 
-  test("sort - descending order", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(3), upper: BigInt.fromInt(5)},
-      {lower: BigInt.fromInt(5), upper: BigInt.fromInt(7)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-    ]
-    let result = Interval.sort(intervals)
-    let expected = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-      {lower: BigInt.fromInt(3), upper: BigInt.fromInt(5)},
-      {lower: BigInt.fromInt(5), upper: BigInt.fromInt(7)},
-    ]
+  describe("belowNotConnected", () => {
+    test(
+      "belowNotConnected - intervals are below and not connected",
+      () => {
+        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(2))
+        let interval2 = (BigInt.fromInt(4), BigInt.fromInt(5))
+        expect(Interval.adjacent(interval1, interval2))->toBe(true)
+      },
+    )
 
-    expect(result)->toEqual(expected)
+    test(
+      "belowNotConnected - intervals are connected",
+      () => {
+        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(2))
+        let interval2 = (BigInt.fromInt(3), BigInt.fromInt(4))
+        expect(Interval.adjacent(interval1, interval2))->toBe(false)
+      },
+    )
+
+    test(
+      "belowNotConnected - intervals are overlapping",
+      () => {
+        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(3))
+        let interval2 = (BigInt.fromInt(2), BigInt.fromInt(4))
+        expect(Interval.adjacent(interval1, interval2))->toBe(false)
+      },
+    )
+
+    test(
+      "belowNotConnected - intervals are above and not connected",
+      () => {
+        let interval1 = (BigInt.fromInt(4), BigInt.fromInt(5))
+        let interval2 = (BigInt.fromInt(1), BigInt.fromInt(2))
+        expect(Interval.adjacent(interval1, interval2))->toBe(false)
+      },
+    )
   })
 
-  test("sort - same lower bounds", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(4)},
-    ]
-    let result = Interval.sort(intervals)
-    let expected = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(4)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)},
-    ]
+  describe("merge", () => {
+    test(
+      "merge - merges two overlapping intervals",
+      () => {
+        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(3))
+        let interval2 = (BigInt.fromInt(2), BigInt.fromInt(4))
+        let expected = (BigInt.fromInt(1), BigInt.fromInt(4))
+        expect(Interval.merge(interval1, interval2))->toEqual(expected)
+      },
+    )
 
-    expect(result)->toEqual(expected)
+    test(
+      "merge - merges two connected intervals",
+      () => {
+        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(2))
+        let interval2 = (BigInt.fromInt(3), BigInt.fromInt(4))
+        let expected = (BigInt.fromInt(1), BigInt.fromInt(4))
+        expect(Interval.merge(interval1, interval2))->toEqual(expected)
+      },
+    )
+
+    test(
+      "merge - throws error when intervals are not connected or overlapping",
+      () => {
+        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(2))
+        let interval2 = (BigInt.fromInt(4), BigInt.fromInt(5))
+        let mergeFunction = () => Interval.merge(interval1, interval2)
+        expect(mergeFunction)->toThrow
+      },
+    )
+
+    test(
+      "merge - interval within another interval",
+      () => {
+        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(5))
+        let interval2 = (BigInt.fromInt(2), BigInt.fromInt(4))
+        let expected = (BigInt.fromInt(1), BigInt.fromInt(5))
+        expect(Interval.merge(interval1, interval2))->toEqual(expected)
+      },
+    )
   })
 
-  test("sort - empty array", () => {
-    let intervals = []
-    let result = Interval.sort(intervals)
-    let expected = []
+  describe("sortAndMergeOverlaps", () => {
+    test(
+      "sortAndMergeOverlaps - overlapping intervals",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(3), BigInt.fromInt(7)),
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+          (BigInt.fromInt(2), BigInt.fromInt(6)),
+          (BigInt.fromInt(4), BigInt.fromInt(8)),
+        ]
+        let result = Interval.sortAndMergeOverlaps(intervals)
+        let expected = [(BigInt.fromInt(1), BigInt.fromInt(8))]
 
-    expect(result)->toEqual(expected)
-  })
+        expect(result)->toEqual(expected)
+      },
+    )
 
-  test("belowNotConnected - intervals are below and not connected", () => {
-    let interval1 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)}
-    let interval2 = {lower: BigInt.fromInt(4), upper: BigInt.fromInt(5)}
-    let result = Interval.belowNotConnected(interval1, interval2)
+    test(
+      "sortAndMergeOverlaps - non-overlapping connecting intervals",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(3), BigInt.fromInt(4)),
+          (BigInt.fromInt(5), BigInt.fromInt(6)),
+          (BigInt.fromInt(7), BigInt.fromInt(8)),
+        ]
+        let result = Interval.sortAndMergeOverlaps(intervals)
+        let expected = [(BigInt.fromInt(1), BigInt.fromInt(8))]
 
-    expect(result)->toBe(true)
-  })
+        expect(result)->toEqual(expected)
+      },
+    )
 
-  test("belowNotConnected - intervals are connected", () => {
-    let interval1 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)}
-    let interval2 = {lower: BigInt.fromInt(3), upper: BigInt.fromInt(4)}
-    let result = Interval.belowNotConnected(interval1, interval2)
+    test(
+      "sortAndMergeOverlaps - non-overlapping non-connecting intervals",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(4), BigInt.fromInt(5)),
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(10), BigInt.fromInt(11)),
+          (BigInt.fromInt(7), BigInt.fromInt(8)),
+        ]
+        let result = Interval.sortAndMergeOverlaps(intervals)
+        let expected = [
+          (BigInt.fromInt(1), BigInt.fromInt(2)),
+          (BigInt.fromInt(4), BigInt.fromInt(5)),
+          (BigInt.fromInt(7), BigInt.fromInt(8)),
+          (BigInt.fromInt(10), BigInt.fromInt(11)),
+        ]
 
-    expect(result)->toBe(false)
-  })
+        expect(result)->toEqual(expected)
+      },
+    )
 
-  test("belowNotConnected - intervals are overlapping", () => {
-    let interval1 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(3)}
-    let interval2 = {lower: BigInt.fromInt(2), upper: BigInt.fromInt(4)}
-    let result = Interval.belowNotConnected(interval1, interval2)
+    test(
+      "sortAndMergeOverlaps - some overlapping some connecting intervals",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(3), BigInt.fromInt(5)),
+          (BigInt.fromInt(1), BigInt.fromInt(4)),
+          (BigInt.fromInt(9), BigInt.fromInt(10)),
+          (BigInt.fromInt(7), BigInt.fromInt(8)),
+        ]
+        let result = Interval.sortAndMergeOverlaps(intervals)
+        let expected = [
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+          (BigInt.fromInt(7), BigInt.fromInt(10)),
+        ]
 
-    expect(result)->toBe(false)
-  })
+        expect(result)->toEqual(expected)
+      },
+    )
 
-  test("belowNotConnected - intervals are above and not connected", () => {
-    let interval1 = {lower: BigInt.fromInt(4), upper: BigInt.fromInt(5)}
-    let interval2 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)}
-    let result = Interval.belowNotConnected(interval1, interval2)
+    test(
+      "sortAndMergeOverlaps - identical intervals",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+        ]
+        let result = Interval.sortAndMergeOverlaps(intervals)
+        let expected = [(BigInt.fromInt(1), BigInt.fromInt(5))]
 
-    expect(result)->toBe(false)
-  })
+        expect(result)->toEqual(expected)
+      },
+    )
 
-  test("merge - overlapping intervals", () => {
-    let interval1 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}
-    let interval2 = {lower: BigInt.fromInt(3), upper: BigInt.fromInt(7)}
-    let result = Interval.merge(interval1, interval2)
-    let expected = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(7)}
+    test(
+      "sortAndMergeOverlaps - interval within another interval",
+      () => {
+        let intervals = [
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+          (BigInt.fromInt(2), BigInt.fromInt(4)),
+          (BigInt.fromInt(3), BigInt.fromInt(3)),
+          (BigInt.fromInt(1), BigInt.fromInt(5)),
+        ]
+        let result = Interval.sortAndMergeOverlaps(intervals)
+        let expected = [(BigInt.fromInt(1), BigInt.fromInt(5))]
 
-    expect(result)->toEqual(expected)
-  })
-
-  test("merge - non-overlapping intervals", () => {
-    let interval1 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)}
-    let interval2 = {lower: BigInt.fromInt(3), upper: BigInt.fromInt(4)}
-    let result = Interval.merge(interval1, interval2)
-    let expected = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(4)}
-
-    expect(result)->toEqual(expected)
-  })
-
-  test("merge - identical intervals", () => {
-    let interval1 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}
-    let interval2 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}
-    let result = Interval.merge(interval1, interval2)
-    let expected = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}
-
-    expect(result)->toEqual(expected)
-  })
-
-  test("merge - interval within another interval", () => {
-    let interval1 = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}
-    let interval2 = {lower: BigInt.fromInt(2), upper: BigInt.fromInt(4)}
-    let result = Interval.merge(interval1, interval2)
-    let expected = {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}
-
-    expect(result)->toEqual(expected)
-  })
-
-  test("sortAndMergeOverlaps - overlapping intervals", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(3), upper: BigInt.fromInt(7)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)},
-    ]
-    let result = Interval.sortAndMergeOverlaps(intervals)
-    let expected = [{lower: BigInt.fromInt(1), upper: BigInt.fromInt(7)}]
-
-    expect(result)->toEqual(expected)
-  })
-
-  test("sortAndMergeOverlaps - non-overlapping connecting intervals", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-      {lower: BigInt.fromInt(3), upper: BigInt.fromInt(4)},
-    ]
-    let result = Interval.sortAndMergeOverlaps(intervals)
-    let expected = [{lower: BigInt.fromInt(1), upper: BigInt.fromInt(4)}]
-
-    expect(result)->toEqual(expected)
-  })
-
-  test("sortAndMergeOverlaps - non-overlapping non-connecting intervals", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(4), upper: BigInt.fromInt(5)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-    ]
-    let result = Interval.sortAndMergeOverlaps(intervals)
-    let expected = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(2)},
-      {lower: BigInt.fromInt(4), upper: BigInt.fromInt(5)},
-    ]
-
-    expect(result)->toEqual(expected)
-  })
-
-  test("sortAndMergeOverlaps - identical intervals", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)},
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)},
-    ]
-    let result = Interval.sortAndMergeOverlaps(intervals)
-    let expected = [{lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}]
-
-    expect(result)->toEqual(expected)
-  })
-
-  test("sortAndMergeOverlaps - interval within another interval", () => {
-    let intervals = [
-      {lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)},
-      {lower: BigInt.fromInt(2), upper: BigInt.fromInt(4)},
-    ]
-    let result = Interval.sortAndMergeOverlaps(intervals)
-    let expected = [{lower: BigInt.fromInt(1), upper: BigInt.fromInt(5)}]
-
-    expect(result)->toEqual(expected)
+        expect(result)->toEqual(expected)
+      },
+    )
   })
 })
