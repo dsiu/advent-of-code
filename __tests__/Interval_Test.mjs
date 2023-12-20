@@ -36,6 +36,126 @@ Jest.describe("Interval", (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(Interval$AdventOfCode.length(interval)), expected);
                       }));
               }));
+        Jest.describe("contains", (function (param) {
+                Jest.test("contains - returns true when number is within the interval", (function (param) {
+                        var interval_0 = BigInt(5);
+                        var interval_1 = BigInt(10);
+                        var interval = [
+                          interval_0,
+                          interval_1
+                        ];
+                        var num = BigInt(7);
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.contains(interval, num)), true);
+                      }));
+                Jest.test("contains - returns true when number is equal to the lower bound", (function (param) {
+                        var interval_0 = BigInt(5);
+                        var interval_1 = BigInt(10);
+                        var interval = [
+                          interval_0,
+                          interval_1
+                        ];
+                        var num = BigInt(5);
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.contains(interval, num)), true);
+                      }));
+                Jest.test("contains - returns true when number is equal to the upper bound", (function (param) {
+                        var interval_0 = BigInt(5);
+                        var interval_1 = BigInt(10);
+                        var interval = [
+                          interval_0,
+                          interval_1
+                        ];
+                        var num = BigInt(10);
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.contains(interval, num)), true);
+                      }));
+                Jest.test("contains - returns false when number is less than the lower bound", (function (param) {
+                        var interval_0 = BigInt(5);
+                        var interval_1 = BigInt(10);
+                        var interval = [
+                          interval_0,
+                          interval_1
+                        ];
+                        var num = BigInt(4);
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.contains(interval, num)), false);
+                      }));
+                Jest.test("contains - returns false when number is greater than the upper bound", (function (param) {
+                        var interval_0 = BigInt(5);
+                        var interval_1 = BigInt(10);
+                        var interval = [
+                          interval_0,
+                          interval_1
+                        ];
+                        var num = BigInt(11);
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.contains(interval, num)), false);
+                      }));
+              }));
+        Jest.describe("isOverlap", (function (param) {
+                Jest.test("isOverlap - returns true when intervals overlap", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(7), BigInt(12));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.isOverlap(interval1, interval2)), true);
+                      }));
+                Jest.test("isOverlap - returns false when intervals do not overlap", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(11), BigInt(15));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.isOverlap(interval1, interval2)), false);
+                      }));
+                Jest.test("isOverlap - returns true when intervals touch at one point", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(10), BigInt(15));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.isOverlap(interval1, interval2)), true);
+                      }));
+              }));
+        Jest.describe("intersect", (function (param) {
+                Jest.test("intersect - returns intersection when intervals overlap", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(7), BigInt(12));
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Interval$AdventOfCode.intersect(interval1, interval2)), Interval$AdventOfCode.make(BigInt(7), BigInt(10)));
+                      }));
+                Jest.test("intersect - returns None when intervals do not overlap", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(11), BigInt(15));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.intersect(interval1, interval2)), undefined);
+                      }));
+                Jest.test("intersect - returns intersection when intervals touch at one point", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(10), BigInt(15));
+                        return Jest.Expect.toEqual(Jest.Expect.expect(Interval$AdventOfCode.intersect(interval1, interval2)), Interval$AdventOfCode.make(BigInt(10), BigInt(10)));
+                      }));
+              }));
+        Jest.describe("below", (function (param) {
+                Jest.test("below - returns true when first interval is below the second", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(12), BigInt(15));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.below(interval1, interval2)), true);
+                      }));
+                Jest.test("below - returns false when first interval is above the second", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(12), BigInt(15));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.below(interval1, interval2)), false);
+                      }));
+                Jest.test("below - returns false when intervals overlap", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(7), BigInt(12));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.below(interval1, interval2)), false);
+                      }));
+              }));
+        Jest.describe("adjacent", (function (param) {
+                Jest.test("adjacent - returns true when intervals are adjacent and not overlapping", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(11), BigInt(15));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.adjacent(interval1, interval2)), true);
+                      }));
+                Jest.test("adjacent - returns false when intervals are overlapping", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(7), BigInt(12));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.adjacent(interval1, interval2)), false);
+                      }));
+                Jest.test("adjacent - returns false when intervals are not adjacent and not overlapping", (function (param) {
+                        var interval1 = Interval$AdventOfCode.make(BigInt(5), BigInt(10));
+                        var interval2 = Interval$AdventOfCode.make(BigInt(15), BigInt(20));
+                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.adjacent(interval1, interval2)), false);
+                      }));
+              }));
         Jest.describe("Sort", (function (param) {
                 Jest.test("sort - sorts intervals by lower bound ascending, then upper bound ascending", (function (param) {
                         var intervals = [
@@ -134,68 +254,6 @@ Jest.describe("Interval", (function (param) {
                         var intervals = [];
                         var expected = [];
                         return Jest.Expect.toEqual(Jest.Expect.expect(Interval$AdventOfCode.sort(intervals)), expected);
-                      }));
-              }));
-        Jest.describe("belowNotConnected", (function (param) {
-                Jest.test("belowNotConnected - intervals are below and not connected", (function (param) {
-                        var interval1_0 = BigInt(1);
-                        var interval1_1 = BigInt(2);
-                        var interval1 = [
-                          interval1_0,
-                          interval1_1
-                        ];
-                        var interval2_0 = BigInt(4);
-                        var interval2_1 = BigInt(5);
-                        var interval2 = [
-                          interval2_0,
-                          interval2_1
-                        ];
-                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.adjacent(interval1, interval2)), true);
-                      }));
-                Jest.test("belowNotConnected - intervals are connected", (function (param) {
-                        var interval1_0 = BigInt(1);
-                        var interval1_1 = BigInt(2);
-                        var interval1 = [
-                          interval1_0,
-                          interval1_1
-                        ];
-                        var interval2_0 = BigInt(3);
-                        var interval2_1 = BigInt(4);
-                        var interval2 = [
-                          interval2_0,
-                          interval2_1
-                        ];
-                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.adjacent(interval1, interval2)), false);
-                      }));
-                Jest.test("belowNotConnected - intervals are overlapping", (function (param) {
-                        var interval1_0 = BigInt(1);
-                        var interval1_1 = BigInt(3);
-                        var interval1 = [
-                          interval1_0,
-                          interval1_1
-                        ];
-                        var interval2_0 = BigInt(2);
-                        var interval2_1 = BigInt(4);
-                        var interval2 = [
-                          interval2_0,
-                          interval2_1
-                        ];
-                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.adjacent(interval1, interval2)), false);
-                      }));
-                Jest.test("belowNotConnected - intervals are above and not connected", (function (param) {
-                        var interval1_0 = BigInt(4);
-                        var interval1_1 = BigInt(5);
-                        var interval1 = [
-                          interval1_0,
-                          interval1_1
-                        ];
-                        var interval2_0 = BigInt(1);
-                        var interval2_1 = BigInt(2);
-                        var interval2 = [
-                          interval2_0,
-                          interval2_1
-                        ];
-                        return Jest.Expect.toBe(Jest.Expect.expect(Interval$AdventOfCode.adjacent(interval1, interval2)), false);
                       }));
               }));
         Jest.describe("merge", (function (param) {

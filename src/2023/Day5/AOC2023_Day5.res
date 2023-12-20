@@ -19,8 +19,8 @@ module IntervalMap = {
   }
 
   let srcToDest: (t, BigInt.t) => option<BigInt.t> = (t, srcNum) => {
-    log2("srcNum", srcNum)
-    t->toString->log
+    //    log2("srcNum", srcNum)
+    //    t->toString->log
     t.srcInterval->Interval.contains(srcNum)
       ? {
           //   log2("(srcNum + t.offset)", srcNum + t.offset)
@@ -30,6 +30,16 @@ module IntervalMap = {
           // log("Not in interval")
           None
         }
+  }
+
+  let srcToDestInterval: (t, array<Interval.t>) => array<Interval.t> = (t, src) => {
+    src->Array.reduce([], (acc, s) => {
+      switch s->Interval.intersect(t.srcInterval) {
+      | Some((lower, upper)) =>
+        Array.concat([(BigInt.add(lower, t.offset), BigInt.add(upper, t.offset))], acc)
+      | None => acc
+      }
+    })
   }
 }
 
@@ -52,11 +62,11 @@ module AlmanacMap = {
     ->Option.getOr(srcNum)
   }
 
-  //  let srcToDestInterval: (t, array<Interval.t>) => array<Interval.t> = (t, src) => {
-  //    t.intervals
-  //    ->Array.findMap(r => r->IntervalMap.srcToDestInterval(src))
-  //    ->Option.getWithDefault(src)
-  //  }
+  let srcToDestInterval: (t, array<Interval.t>) => array<Interval.t> = (t, src) => {
+    t.intervals->Array.reduce([], (acc, s) => {
+      Array.concat(IntervalMap.srcToDestInterval(s, src), acc)
+    })
+  }
 }
 
 module Almanac = {

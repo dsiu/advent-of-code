@@ -3,6 +3,14 @@
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 
+function log(prim) {
+  console.log(prim);
+}
+
+function log2(prim0, prim1) {
+  console.log(prim0, prim1);
+}
+
 function toString(param) {
   return "Interval(" + param[0].toString() + ", " + param[1].toString() + ")";
 }
@@ -47,7 +55,7 @@ function contains(param, num) {
   }
 }
 
-function overlaps(a, b) {
+function isOverlap(a, b) {
   if (contains(a, b[0])) {
     return true;
   } else {
@@ -55,13 +63,42 @@ function overlaps(a, b) {
   }
 }
 
+function intersect(a, b) {
+  if (isOverlap(a, b)) {
+    return make(Caml_obj.max(a[0], b[0]), Caml_obj.min(a[1], b[1]));
+  }
+  
+}
+
+function below(a, b) {
+  return Caml_obj.lessthan(a[1], b[0]);
+}
+
 function adjacent(a, b) {
-  return Caml_obj.lessthan(a[1] + BigInt(1), b[0]);
+  if (Caml_obj.equal(a[1] + BigInt(1), b[0])) {
+    return true;
+  } else {
+    return Caml_obj.equal(b[1] + BigInt(1), a[0]);
+  }
+}
+
+function belowAndAdjacent(a, b) {
+  if (below(a, b)) {
+    return adjacent(a, b);
+  } else {
+    return false;
+  }
 }
 
 function merge(a, b) {
-  if (adjacent(a, b)) {
-    return Pervasives.failwith("intervals must be all below and not connected");
+  console.log("a=", a);
+  console.log("b=", b);
+  var prim1 = adjacent(a, b);
+  console.log("adjacent=", prim1);
+  var prim1$1 = isOverlap(a, b);
+  console.log("overlap=", prim1$1);
+  if (!(adjacent(a, b) || isOverlap(a, b))) {
+    return Pervasives.failwith("intervals must be adjacent or overlapping");
   }
   var lower = Caml_obj.min(a[0], b[0]);
   var upper = Caml_obj.max(a[1], b[1]);
@@ -103,7 +140,7 @@ function sortAndMergeOverlaps(intervals) {
       }
       var a = sortedIntervals[0];
       var b = sortedIntervals[1];
-      if (adjacent(a, b)) {
+      if (below(a, b) && !adjacent(a, b)) {
         return [a].concat(loop(sortedIntervals.slice(1)));
       }
       _sortedIntervals = [merge(a, b)].concat(sortedIntervals.slice(2));
@@ -114,13 +151,18 @@ function sortAndMergeOverlaps(intervals) {
 }
 
 export {
+  log ,
+  log2 ,
   toString ,
   make ,
   makeWithLength ,
   length ,
   contains ,
-  overlaps ,
+  isOverlap ,
+  intersect ,
+  below ,
   adjacent ,
+  belowAndAdjacent ,
   merge ,
   sort ,
   sortAndMergeOverlaps ,

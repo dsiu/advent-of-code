@@ -33,6 +33,174 @@ describe("Interval", () => {
       },
     )
   })
+
+  describe("contains", () => {
+    test(
+      "contains - returns true when number is within the interval",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(10))
+        let num = BigInt.fromInt(7)
+        expect(contains(interval, num))->toBe(true)
+      },
+    )
+
+    test(
+      "contains - returns true when number is equal to the lower bound",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(10))
+        let num = BigInt.fromInt(5)
+        expect(contains(interval, num))->toBe(true)
+      },
+    )
+
+    test(
+      "contains - returns true when number is equal to the upper bound",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(10))
+        let num = BigInt.fromInt(10)
+        expect(contains(interval, num))->toBe(true)
+      },
+    )
+
+    test(
+      "contains - returns false when number is less than the lower bound",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(10))
+        let num = BigInt.fromInt(4)
+        expect(contains(interval, num))->toBe(false)
+      },
+    )
+
+    test(
+      "contains - returns false when number is greater than the upper bound",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(10))
+        let num = BigInt.fromInt(11)
+        expect(contains(interval, num))->toBe(false)
+      },
+    )
+  })
+
+  describe("isOverlap", () => {
+    test(
+      "isOverlap - returns true when intervals overlap",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(7), BigInt.fromInt(12))
+        expect(isOverlap(interval1, interval2))->toBe(true)
+      },
+    )
+
+    test(
+      "isOverlap - returns false when intervals do not overlap",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(11), BigInt.fromInt(15))
+        expect(isOverlap(interval1, interval2))->toBe(false)
+      },
+    )
+
+    test(
+      "isOverlap - returns true when intervals touch at one point",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(10), BigInt.fromInt(15))
+        expect(isOverlap(interval1, interval2))->toBe(true)
+      },
+    )
+  })
+
+  describe("intersect", () => {
+    test(
+      "intersect - returns intersection when intervals overlap",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(7), BigInt.fromInt(12))
+        expect(intersect(interval1, interval2))->toEqual(
+          Some(make(BigInt.fromInt(7), BigInt.fromInt(10))),
+        )
+      },
+    )
+
+    test(
+      "intersect - returns None when intervals do not overlap",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(11), BigInt.fromInt(15))
+        expect(intersect(interval1, interval2))->toBe(None)
+      },
+    )
+
+    test(
+      "intersect - returns intersection when intervals touch at one point",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(10), BigInt.fromInt(15))
+        expect(intersect(interval1, interval2))->toEqual(
+          Some(make(BigInt.fromInt(10), BigInt.fromInt(10))),
+        )
+      },
+    )
+  })
+
+  describe("below", () => {
+    test(
+      "below - returns true when first interval is below the second",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(12), BigInt.fromInt(15))
+        expect(below(interval1, interval2))->toBe(true)
+      },
+    )
+
+    test(
+      "below - returns false when first interval is above the second",
+      () => {
+        let interval1 = make(BigInt.fromInt(12), BigInt.fromInt(15))
+        let interval2 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        expect(below(interval1, interval2))->toBe(false)
+      },
+    )
+
+    test(
+      "below - returns false when intervals overlap",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(7), BigInt.fromInt(12))
+        expect(below(interval1, interval2))->toBe(false)
+      },
+    )
+  })
+
+  describe("adjacent", () => {
+    test(
+      "adjacent - returns true when intervals are adjacent and not overlapping",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(11), BigInt.fromInt(15))
+        expect(adjacent(interval1, interval2))->toBe(true)
+      },
+    )
+
+    test(
+      "adjacent - returns false when intervals are overlapping",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(7), BigInt.fromInt(12))
+        expect(adjacent(interval1, interval2))->toBe(false)
+      },
+    )
+
+    test(
+      "adjacent - returns false when intervals are not adjacent and not overlapping",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(15), BigInt.fromInt(20))
+        expect(adjacent(interval1, interval2))->toBe(false)
+      },
+    )
+  })
+
   describe("Sort", () => {
     test(
       "sort - sorts intervals by lower bound ascending, then upper bound ascending",
@@ -91,44 +259,6 @@ describe("Interval", () => {
         let intervals = []
         let expected = []
         expect(Interval.sort(intervals))->toEqual(expected)
-      },
-    )
-  })
-
-  describe("belowNotConnected", () => {
-    test(
-      "belowNotConnected - intervals are below and not connected",
-      () => {
-        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(2))
-        let interval2 = (BigInt.fromInt(4), BigInt.fromInt(5))
-        expect(Interval.adjacent(interval1, interval2))->toBe(true)
-      },
-    )
-
-    test(
-      "belowNotConnected - intervals are connected",
-      () => {
-        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(2))
-        let interval2 = (BigInt.fromInt(3), BigInt.fromInt(4))
-        expect(Interval.adjacent(interval1, interval2))->toBe(false)
-      },
-    )
-
-    test(
-      "belowNotConnected - intervals are overlapping",
-      () => {
-        let interval1 = (BigInt.fromInt(1), BigInt.fromInt(3))
-        let interval2 = (BigInt.fromInt(2), BigInt.fromInt(4))
-        expect(Interval.adjacent(interval1, interval2))->toBe(false)
-      },
-    )
-
-    test(
-      "belowNotConnected - intervals are above and not connected",
-      () => {
-        let interval1 = (BigInt.fromInt(4), BigInt.fromInt(5))
-        let interval2 = (BigInt.fromInt(1), BigInt.fromInt(2))
-        expect(Interval.adjacent(interval1, interval2))->toBe(false)
       },
     )
   })

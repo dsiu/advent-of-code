@@ -3,6 +3,8 @@
 //
 open RescriptCore
 open BigInt
+let log = Console.log
+let log2 = Console.log2
 
 // lower and upper bound are inclusive
 type t = (BigInt.t, BigInt.t)
@@ -31,25 +33,41 @@ let contains: (t, BigInt.t) => bool = ((lower, upper), num) => {
   num >= lower && num <= upper
 }
 
-let overlaps: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+let isOverlap: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
   contains(a, bLower) || contains(a, bUpper)
+}
+
+let intersect: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+  isOverlap(a, b) ? make(max(aLower, bLower), min(aUpper, bUpper))->Some : None
+}
+
+let below: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+  aUpper < bLower
 }
 
 // a is adjacent to b but not overlapping asssuming a is below b
 let adjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
   // make sure t1 is all below t2 and both are not connected
-  aUpper + fromInt(1) < bLower
+  add(aUpper, fromInt(1)) == bLower || add(bUpper, fromInt(1)) == aLower
+}
+
+let belowAndAdjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+  below(a, b) && adjacent(a, b)
 }
 
 // requirement range a must be below range b and a is adjacent to b
 let merge: (t, t) => t = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
-  adjacent(a, b)
-    ? failwith("intervals must be all below and not connected")
-    : {
+  log2("a=", a)
+  log2("b=", b)
+  log2("adjacent=", adjacent(a, b))
+  log2("overlap=", isOverlap(a, b))
+  adjacent(a, b) || isOverlap(a, b)
+    ? {
         let lower = min(aLower, bLower)
         let upper = max(aUpper, bUpper)
         make(lower, upper)
       }
+    : failwith("intervals must be adjacent or overlapping")
 }
 
 // sort intervals by lower bound ascending, then upper bound ascending
@@ -76,7 +94,7 @@ let sortAndMergeOverlaps: array<t> => array<t> = intervals => {
     | _ as xs => {
         let a = xs->Array.getUnsafe(0)
         let b = xs->Array.getUnsafe(1)
-        adjacent(a, b)
+        below(a, b) && !adjacent(a, b)
           ? Array.concat([a], loop(xs->Array.sliceToEnd(~start=1)))
           : loop(Array.concat([merge(a, b)], xs->Array.sliceToEnd(~start=2)))
       }

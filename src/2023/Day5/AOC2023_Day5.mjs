@@ -19,18 +19,30 @@ function toString(t) {
 }
 
 function srcToDest(t, srcNum) {
-  console.log("srcNum", srcNum);
-  var prim = toString(t);
-  console.log(prim);
   if (Interval$AdventOfCode.contains(t.srcInterval, srcNum)) {
     return Caml_option.some(srcNum + t.offset);
   }
   
 }
 
+function srcToDestInterval(t, src) {
+  return Core__Array.reduce(src, [], (function (acc, s) {
+                var match = Interval$AdventOfCode.intersect(s, t.srcInterval);
+                if (match !== undefined) {
+                  return [[
+                              match[0] + t.offset,
+                              match[1] + t.offset
+                            ]].concat(acc);
+                } else {
+                  return acc;
+                }
+              }));
+}
+
 var IntervalMap = {
   toString: toString,
-  srcToDest: srcToDest
+  srcToDest: srcToDest,
+  srcToDestInterval: srcToDestInterval
 };
 
 function toString$1(t) {
@@ -43,9 +55,16 @@ function srcToDest$1(t, srcNum) {
                   })), srcNum);
 }
 
+function srcToDestInterval$1(t, src) {
+  return Core__Array.reduce(t.intervals, [], (function (acc, s) {
+                return srcToDestInterval(s, src).concat(acc);
+              }));
+}
+
 var AlmanacMap = {
   toString: toString$1,
-  srcToDest: srcToDest$1
+  srcToDest: srcToDest$1,
+  srcToDestInterval: srcToDestInterval$1
 };
 
 function toString$2(t) {
@@ -93,7 +112,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day5.res",
-              92,
+              102,
               8
             ],
             Error: new Error()
@@ -110,7 +129,7 @@ function parse(data) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "AOC2023_Day5.res",
-                100,
+                110,
                 10
               ],
               Error: new Error()
