@@ -8,7 +8,7 @@ import * as AOC2023_Day5_Data_Sample$AdventOfCode from "./AOC2023_Day5_Data_Samp
 Jest.describe("2023 Day5", (function () {
         Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2023_Day5$AdventOfCode.solvePart1(AOC2023_Day5_Data_Sample$AdventOfCode.data);
-                var expected = BigInt("35");
+                var expected = BigInt(35);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
         Jest.test("Part 1 - Solve", (function () {
@@ -18,11 +18,13 @@ Jest.describe("2023 Day5", (function () {
               }));
         Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2023_Day5$AdventOfCode.solvePart2(AOC2023_Day5_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                var expected = BigInt(46);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
         Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2023_Day5$AdventOfCode.solvePart2(AOC2023_Day5_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                var expected = BigInt("78775051");
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
       }));
 

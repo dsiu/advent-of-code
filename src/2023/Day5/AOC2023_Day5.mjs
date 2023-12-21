@@ -28,20 +28,16 @@ function run(t, srcNum) {
 function runWithInterval(t, src) {
   var i = Interval$AdventOfCode.intersect(src, t.srcInterval);
   if (i !== undefined) {
-    var prim1 = Interval$AdventOfCode.add(i, t.offset);
-    console.log("  intersect Some: ", prim1);
-    console.log("  src: ", src);
-    console.log("  i: ", i);
     return [
             Interval$AdventOfCode.remove(src, i),
             Interval$AdventOfCode.add(i, t.offset)
           ];
+  } else {
+    return [
+            src,
+            undefined
+          ];
   }
-  console.log("  intersect None: ");
-  return [
-          src,
-          undefined
-        ];
 }
 
 var Rule = {
@@ -61,8 +57,6 @@ function runRules(t, srcNum) {
 }
 
 function runRulesWithInterval(t, src) {
-  var prim = toString$1(t);
-  console.log(prim);
   return Core__Array.reduce(t.rules, [
               src,
               []
@@ -102,7 +96,9 @@ var AlmanacMap = {
 };
 
 function toString$2(t) {
-  return "Almanac (Seeds: [" + t.seeds.map(Interval$AdventOfCode.toString).join(", ") + "],\n[" + t.maps.map(toString$1).join("\n") + ")]";
+  return "Almanac (Seeds: [" + t.seeds.map(function (prim) {
+                return prim.toString();
+              }).join(", ") + "],\n[" + t.maps.map(toString$1).join("\n") + ")]";
 }
 
 function getMap(t, src) {
@@ -146,7 +142,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day5.res",
-              136,
+              115,
               8
             ],
             Error: new Error()
@@ -163,7 +159,7 @@ function parse(data) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "AOC2023_Day5.res",
-                144,
+                123,
                 10
               ],
               Error: new Error()
@@ -186,12 +182,7 @@ function parse(data) {
             rules: rules
           };
   };
-  var makeSeedsInterval = function (seeds) {
-    return seeds.map(function (s) {
-                return Interval$AdventOfCode.makeWithLength(s, BigInt(1));
-              });
-  };
-  var seeds = makeSeedsInterval(parseSeed(seedLine));
+  var seeds = parseSeed(seedLine);
   var maps = mapLines.map(parseMap);
   return {
           seeds: seeds,
@@ -199,11 +190,11 @@ function parse(data) {
         };
 }
 
-function part1(almanac) {
-  var locations = almanac.seeds.map(function (param) {
+function part1_simple(almanac) {
+  var locations = almanac.seeds.map(function (s) {
         var endCat = "location";
         var _curCat = "seed";
-        var _curNum = param[0];
+        var _curNum = s;
         while(true) {
           var curNum = _curNum;
           var curCat = _curCat;
@@ -222,11 +213,12 @@ function part1(almanac) {
   return Utils$AdventOfCode.minBigIntInArray(locations);
 }
 
-function part1_Interval(almanac) {
-  var locations = almanac.seeds.flatMap(function (param) {
+function findLocation(almanac, seedTransform) {
+  var newSeeds = seedTransform(almanac.seeds);
+  var locations = newSeeds.flatMap(function (s) {
         var endCat = "location";
         var _curCat = "seed";
-        var _cur = [Interval$AdventOfCode.makeWithLength(param[0], BigInt(1))];
+        var _cur = [s];
         while(true) {
           var cur = _cur;
           var curCat = _curCat;
@@ -241,40 +233,52 @@ function part1_Interval(almanac) {
           continue ;
         };
       });
-  ((function (__x) {
-          console.log("locations =", __x);
-        })(locations));
   return Utils$AdventOfCode.minBigIntInArray(locations.map(function (param) {
                   return param[0];
                 }));
 }
 
+function makeSeedsInterval(seeds) {
+  return seeds.map(function (s) {
+              return Interval$AdventOfCode.makeWithLength(s, BigInt(1));
+            });
+}
+
+function makeSeedsPair(seeds) {
+  var len = seeds.length;
+  var _acc = [];
+  var _i = 0;
+  while(true) {
+    var i = _i;
+    var acc = _acc;
+    if (i >= len) {
+      return acc;
+    }
+    var a = Core__Option.getExn(seeds[i]);
+    var b = Core__Option.getExn(seeds[i + 1 | 0]);
+    var newAcc = [Interval$AdventOfCode.makeWithLength(a, b)].concat(acc);
+    _i = i + 2 | 0;
+    _acc = newAcc;
+    continue ;
+  };
+}
+
+function part1(__x) {
+  return findLocation(__x, makeSeedsInterval);
+}
+
+function part2(__x) {
+  return findLocation(__x, makeSeedsPair);
+}
+
 function solvePart1(data) {
   var almanac = parse(data);
-  var prim = toString$2(almanac);
-  console.log(prim);
-  var m = getMap(almanac, "seed");
-  console.log("runRulesWithInterval");
-  ((function (__x) {
-          console.log("--> 79", __x);
-        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(79), BigInt(1))])));
-  ((function (__x) {
-          console.log("--> 14", __x);
-        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(14), BigInt(1))])));
-  ((function (__x) {
-          console.log("--> 55", __x);
-        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(55), BigInt(1))])));
-  ((function (__x) {
-          console.log("--> 13", __x);
-        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(13), BigInt(1))])));
-  var p1i = part1_Interval(almanac);
-  console.log("part1_Intervals");
-  console.log(p1i);
-  return BigInt(1);
+  return findLocation(almanac, makeSeedsInterval);
 }
 
 function solvePart2(data) {
-  return 2;
+  var almanac = parse(data);
+  return findLocation(almanac, makeSeedsPair);
 }
 
 export {
@@ -284,8 +288,12 @@ export {
   AlmanacMap ,
   Almanac ,
   parse ,
+  part1_simple ,
+  findLocation ,
+  makeSeedsInterval ,
+  makeSeedsPair ,
   part1 ,
-  part1_Interval ,
+  part2 ,
   solvePart1 ,
   solvePart2 ,
 }

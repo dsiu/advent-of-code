@@ -8,7 +8,6 @@ let log2 = Console.log2
 module Rule = {
   type t = {
     srcInterval: Interval.t,
-    // destInterval: Interval.t,
     dest: BigInt.t,
     offset: BigInt.t,
   }
@@ -19,32 +18,14 @@ module Rule = {
 
   // run the rule with single input
   let run: (t, BigInt.t) => option<BigInt.t> = (t, srcNum) => {
-    //    log2("srcNum", srcNum)
-    //    t->toString->log
-    t.srcInterval->Interval.contains(srcNum)
-      ? {
-          //   log2("(srcNum + t.offset)", srcNum + t.offset)
-          Some(BigInt.add(srcNum, t.offset))
-        }
-      : {
-          // log("Not in interval")
-          None
-        }
+    t.srcInterval->Interval.contains(srcNum) ? Some(BigInt.add(srcNum, t.offset)) : None
   }
 
   // run the rule with array of intervals
   let runWithInterval: (t, Interval.t) => (option<Interval.t>, option<Interval.t>) = (t, src) => {
     switch src->Interval.intersect(t.srcInterval) {
-    | Some(i) => {
-        log2("  intersect Some: ", i->Interval.add(t.offset))
-        log2("  src: ", src)
-        log2("  i: ", i)
-        (Interval.remove(src, i), Some(i->Interval.add(t.offset)))
-      }
-    | None => {
-        log("  intersect None: ")
-        (src->Some, None)
-      }
+    | Some(i) => (Interval.remove(src, i), Some(i->Interval.add(t.offset)))
+    | None => (src->Some, None)
     }
   }
 }
@@ -72,7 +53,6 @@ module AlmanacMap = {
     t,
     src,
   ) => {
-    t->toString->log
     t.rules->Array.reduce((Some(src), []), ((s, d), r) => {
       switch s {
       | Some(s) => {
@@ -88,7 +68,6 @@ module AlmanacMap = {
       | None => (None, d)
       }
     })
-    //->Interval.sortAndMergeOverlaps
   }
 
   let runRulesWithMultiIntervals: (t, array<Interval.t>) => array<Interval.t> = (t, xs) => {
@@ -105,12 +84,12 @@ module AlmanacMap = {
 
 module Almanac = {
   type t = {
-    seeds: array<Interval.t>,
+    seeds: array<BigInt.t>,
     maps: array<AlmanacMap.t>,
   }
 
   let toString: t => string = t => {
-    `Almanac (Seeds: [${t.seeds->Array.map(Interval.toString)->Array.joinWith(", ")}],\n[${t.maps
+    `Almanac (Seeds: [${t.seeds->Array.map(BigInt.toString)->Array.joinWith(", ")}],\n[${t.maps
       ->Array.map(AlmanacMap.toString)
       ->Array.joinWith("\n")})]`
   }
@@ -156,19 +135,14 @@ let parse: string => Almanac.t = data => {
     {srcCategory, destCategory, rules}
   }
 
-  // make seeds interval with 1 element
-  let makeSeedsInterval: array<BigInt.t> => array<Interval.t> = seeds => {
-    seeds->Array.map(s => Interval.makeWithLength(s, ~length=BigInt.fromInt(1)))
-  }
-
-  let seeds = parseSeed(seedLine)->makeSeedsInterval
+  let seeds = parseSeed(seedLine)
 
   let maps = mapLines->Array.map(parseMap)
   //  {seeds, maps}
   {seeds, maps}
 }
 
-let part1 = ({seeds, _} as almanac: Almanac.t) => {
+let part1_simple = ({seeds, _} as almanac: Almanac.t) => {
   let startCat = "seed"
   let endCat = "location"
 
@@ -179,15 +153,15 @@ let part1 = ({seeds, _} as almanac: Almanac.t) => {
     destCategory == endCat ? nextNum : loop(endCat, destCategory, nextNum)
   }
 
-  let locations = seeds->Array.map(((lower, _)) => {
-    loop(endCat, startCat, lower)
+  let locations = seeds->Array.map(s => {
+    loop(endCat, startCat, s)
   })
 
   locations->log
   locations->Utils.minBigIntInArray
 }
 
-let part1_Interval = ({seeds, _} as almanac: Almanac.t) => {
+let findLocation = ({seeds, _} as almanac: Almanac.t, seedTransform) => {
   let startCat = "seed"
   let endCat = "location"
 
@@ -202,51 +176,44 @@ let part1_Interval = ({seeds, _} as almanac: Almanac.t) => {
     destCategory == endCat ? next : loop(endCat, destCategory, next)
   }
 
-  let locations = seeds->Array.flatMap(((lower, _)) => {
-    loop(endCat, startCat, [Interval.makeWithLength(lower, ~length=BigInt.fromInt(1))])
+  let newSeeds = seedTransform(seeds)
+
+  let locations = newSeeds->Array.flatMap(s => {
+    loop(endCat, startCat, [s])
   })
 
-  locations->(log2("locations =", _))
   locations->Array.map(((lower, _)) => lower)->Utils.minBigIntInArray
 }
 
+let makeSeedsInterval: array<BigInt.t> => array<Interval.t> = seeds => {
+  seeds->Array.map(s => Interval.makeWithLength(s, ~length=BigInt.fromInt(1)))
+}
+
+let makeSeedsPair: array<BigInt.t> => array<Interval.t> = seeds => {
+  let len = seeds->Array.length
+
+  let rec pairUp = (xs, acc, i, len) => {
+    i >= len
+      ? acc
+      : {
+          let a = xs->Array.get(i)->Option.getExn
+          let b = xs->Array.get(i + 1)->Option.getExn
+          let newAcc = Array.concat([Interval.makeWithLength(a, ~length=b)], acc)
+          pairUp(xs, newAcc, i + 2, len)
+        }
+  }
+  pairUp(seeds, [], 0, len)
+}
+
+let part1: Almanac.t => BigInt.t = findLocation(_, makeSeedsInterval)
+let part2: Almanac.t => BigInt.t = findLocation(_, makeSeedsPair)
+
 let solvePart1 = data => {
   let almanac = data->parse
-  almanac->Almanac.toString->log
-  let m = almanac->Almanac.getMap("seed")
-
-  //  log("runRules")
-  //  AlmanacMap.runRules(m, BigInt.fromInt(79))->BigInt.toString->log
-  //  AlmanacMap.runRules(m, BigInt.fromInt(14))->BigInt.toString->log
-  //  AlmanacMap.runRules(m, BigInt.fromInt(55))->BigInt.toString->log
-  //  AlmanacMap.runRules(m, BigInt.fromInt(13))->BigInt.toString->log
-
-  log("runRulesWithInterval")
-  AlmanacMap.runRulesWithMultiIntervals(
-    m,
-    [Interval.makeWithLength(BigInt.fromInt(79), ~length=BigInt.fromInt(1))],
-  )->(log2("--> 79", _))
-  AlmanacMap.runRulesWithMultiIntervals(
-    m,
-    [Interval.makeWithLength(BigInt.fromInt(14), ~length=BigInt.fromInt(1))],
-  )->(log2("--> 14", _))
-  AlmanacMap.runRulesWithMultiIntervals(
-    m,
-    [Interval.makeWithLength(BigInt.fromInt(55), ~length=BigInt.fromInt(1))],
-  )->(log2("--> 55", _))
-  AlmanacMap.runRulesWithMultiIntervals(
-    m,
-    [Interval.makeWithLength(BigInt.fromInt(13), ~length=BigInt.fromInt(1))],
-  )->(log2("--> 13", _))
-  //
-  let p1i = part1_Interval(almanac)
-  log("part1_Intervals")
-  p1i->log
-  //    part1(almanac)
-  BigInt.fromInt(1)
+  part1(almanac)
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let almanac = data->parse
+  part2(almanac)
 }
