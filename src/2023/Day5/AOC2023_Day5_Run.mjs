@@ -26,6 +26,8 @@ var part2 = AOC2023_Day5$AdventOfCode.solvePart2(AOC2023_Day5_Data$AdventOfCode.
 
 console.log("Part 2 Result");
 
+console.log(part2);
+
 console.timeEnd("Part 2");
 
 var data = AOC2023_Day5_Data$AdventOfCode.data;

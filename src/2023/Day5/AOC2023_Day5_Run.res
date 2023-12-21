@@ -24,5 +24,5 @@ Console.time("Part 2")
 let part2 = solvePart2(data)
 
 "Part 2 Result"->log
-//part2->log
+part2->log
 Console.timeEnd("Part 2")
