@@ -3,6 +3,7 @@
 //
 open RescriptCore
 open BigInt
+
 let log = Console.log
 let log2 = Console.log2
 
@@ -18,15 +19,21 @@ let make: (BigInt.t, BigInt.t) => t = (lower, upper) => {
 }
 
 let makeWithLength: (BigInt.t, ~length: BigInt.t) => t = (lower, ~length) => {
-  if length < fromInt(0) {
+  if length < BigInt.fromInt(0) {
     failwith("length must be non-negative")
   }
+  open! BigInt
   let upper = lower + length - fromInt(1)
   make(lower, upper)
 }
 
 let length = ((lower, upper)) => {
+  open! BigInt
   upper > lower ? upper - lower + fromInt(1) : lower - upper + fromInt(1)
+}
+
+let equals = ((aLower, aUpper), (bLower, bUpper)) => {
+  aLower === bLower && aUpper === bUpper
 }
 
 let contains: (t, BigInt.t) => bool = ((lower, upper), num) => {
@@ -34,7 +41,7 @@ let contains: (t, BigInt.t) => bool = ((lower, upper), num) => {
 }
 
 let isOverlap: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
-  contains(a, bLower) || contains(a, bUpper)
+  contains(a, bLower) || contains(a, bUpper) || contains(b, aLower) || contains(b, aUpper)
 }
 
 let intersect: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
@@ -48,19 +55,35 @@ let below: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
 // a is adjacent to b but not overlapping asssuming a is below b
 let adjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
   // make sure t1 is all below t2 and both are not connected
-  add(aUpper, fromInt(1)) == bLower || add(bUpper, fromInt(1)) == aLower
+  add(aUpper, fromInt(1)) === bLower || add(bUpper, fromInt(1)) === aLower
 }
 
 let belowAndAdjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
   below(a, b) && adjacent(a, b)
 }
 
+let add: (t, BigInt.t) => t = ((lower, upper), num) => {
+  make(lower + num, upper + num)
+}
+
+// remove interval b from a
+let remove: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+  switch (
+    isOverlap(a, b),
+    equals(a, b),
+    bUpper >= aUpper && contains(a, bLower),
+    bLower <= aLower && contains(a, bUpper),
+  ) {
+  | (false, _, _, _) => Some(a)
+  | (_, true, _, _) => None
+  | (_, _, true, _) => Some((aLower, bLower - BigInt.fromInt(1)))
+  | (_, _, _, true) => Some((bUpper + BigInt.fromInt(1), aUpper))
+  | _ => None
+  }
+}
+
 // requirement range a must be below range b and a is adjacent to b
 let merge: (t, t) => t = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
-  log2("a=", a)
-  log2("b=", b)
-  log2("adjacent=", adjacent(a, b))
-  log2("overlap=", isOverlap(a, b))
   adjacent(a, b) || isOverlap(a, b)
     ? {
         let lower = min(aLower, bLower)

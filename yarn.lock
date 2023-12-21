@@ -1474,7 +1474,6 @@ browserslist@^4.21.9:
   version "2.0.1"
   resolved "https://codeload.github.com/dsiu/rescript-bastet/tar.gz/5eab19c09820235eb36fbedc4865f5f9ade57641"
   dependencies:
-    "@rescript/core" "^0.5.0"
     bs-stdlib-shims "^0.1.0"
 
 bs-stdlib-shims@^0.1.0:
@@ -3380,10 +3379,10 @@ rescript@^10.1.4:
   resolved "https://registry.yarnpkg.com/rescript/-/rescript-10.1.4.tgz#0f37710d371f32a704f17b4e804f66ce3c79a305"
   integrity sha512-FFKlS9AG/XrLepWsyw7B+A9DtQBPWEPDPDKghV831Y2KGbie+eeFBOS0xtRHp0xbt7S0N2Dm6hhX+kTZQ/3Ybg==
 
-rescript@^11.0.0-rc.7:
-  version "11.0.0-rc.7"
-  resolved "https://registry.yarnpkg.com/rescript/-/rescript-11.0.0-rc.7.tgz#f811ba7739dc0b652e13214ad1146c8fd841910d"
-  integrity sha512-N2ImQVkzF4rzV5PBcQ8htKe4NPnqsS2DhtG9A4iic4eYsNim1Ixt8qyuD40WEYl4AZOuYUaEfJlvLTOV9wHogA==
+rescript@^11.0.0-rc.8:
+  version "11.0.0-rc.8"
+  resolved "https://registry.yarnpkg.com/rescript/-/rescript-11.0.0-rc.8.tgz#60c94034731cb894e09feacf10f1adb20efc7fb1"
+  integrity sha512-KFeCeJ2tYtmSLD24o0WtWr7YLO22DflCWL31/L9Q8HGdHTLEhDNa+R0tnoyZ8B6wwm6bpNG8xosu1H4O+o7LGA==
 
 resolve-cwd@^3.0.0:
   version "3.0.0"

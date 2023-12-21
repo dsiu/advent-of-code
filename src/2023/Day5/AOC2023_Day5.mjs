@@ -15,60 +15,94 @@ function log2(prim0, prim1) {
 }
 
 function toString(t) {
-  return "SrcDestInterval(Src:" + Interval$AdventOfCode.toString(t.srcInterval) + ", Dest:" + t.dest.toString() + ", Offset:" + t.offset.toString() + ")";
+  return "Rule(Src:" + Interval$AdventOfCode.toString(t.srcInterval) + ", Dest:" + t.dest.toString() + ", Offset:" + t.offset.toString() + ")";
 }
 
-function srcToDest(t, srcNum) {
+function run(t, srcNum) {
   if (Interval$AdventOfCode.contains(t.srcInterval, srcNum)) {
     return Caml_option.some(srcNum + t.offset);
   }
   
 }
 
-function srcToDestInterval(t, src) {
-  return Core__Array.reduce(src, [], (function (acc, s) {
-                var match = Interval$AdventOfCode.intersect(s, t.srcInterval);
-                if (match !== undefined) {
-                  return [[
-                              match[0] + t.offset,
-                              match[1] + t.offset
-                            ]].concat(acc);
-                } else {
-                  return acc;
-                }
-              }));
+function runWithInterval(t, src) {
+  var i = Interval$AdventOfCode.intersect(src, t.srcInterval);
+  if (i !== undefined) {
+    var prim1 = Interval$AdventOfCode.add(i, t.offset);
+    console.log("  intersect Some: ", prim1);
+    console.log("  src: ", src);
+    console.log("  i: ", i);
+    return [
+            Interval$AdventOfCode.remove(src, i),
+            Interval$AdventOfCode.add(i, t.offset)
+          ];
+  }
+  console.log("  intersect None: ");
+  return [
+          src,
+          undefined
+        ];
 }
 
-var IntervalMap = {
+var Rule = {
   toString: toString,
-  srcToDest: srcToDest,
-  srcToDestInterval: srcToDestInterval
+  run: run,
+  runWithInterval: runWithInterval
 };
 
 function toString$1(t) {
-  return "AlmanacMap(" + t.srcCategory + ", " + t.destCategory + ", " + t.intervals.map(toString).join(", ") + ")";
+  return "AlmanacMap(" + t.srcCategory + ", " + t.destCategory + ", [" + t.rules.map(toString).join(", ") + "])";
 }
 
-function srcToDest$1(t, srcNum) {
-  return Core__Option.getOr(Core__Array.findMap(t.intervals, (function (r) {
-                    return srcToDest(r, srcNum);
+function runRules(t, srcNum) {
+  return Core__Option.getOr(Core__Array.findMap(t.rules, (function (r) {
+                    return run(r, srcNum);
                   })), srcNum);
 }
 
-function srcToDestInterval$1(t, src) {
-  return Core__Array.reduce(t.intervals, [], (function (acc, s) {
-                return srcToDestInterval(s, src).concat(acc);
+function runRulesWithInterval(t, src) {
+  var prim = toString$1(t);
+  console.log(prim);
+  return Core__Array.reduce(t.rules, [
+              src,
+              []
+            ], (function (param, r) {
+                var d = param[1];
+                var s = param[0];
+                if (s === undefined) {
+                  return [
+                          undefined,
+                          d
+                        ];
+                }
+                var match = runWithInterval(r, s);
+                var dests = match[1];
+                var newDests = dests !== undefined ? [dests].concat(d) : d;
+                return [
+                        match[0],
+                        newDests
+                      ];
               }));
+}
+
+function runRulesWithMultiIntervals(t, xs) {
+  return xs.flatMap(function (x) {
+              var match = runRulesWithInterval(t, x);
+              var src = match[0];
+              var newSrc = src !== undefined ? [src] : [];
+              return newSrc.concat(match[1]);
+            });
 }
 
 var AlmanacMap = {
   toString: toString$1,
-  srcToDest: srcToDest$1,
-  srcToDestInterval: srcToDestInterval$1
+  runRules: runRules,
+  runRulesWithInterval: runRulesWithInterval,
+  runRulesWithMultiIntervals: runRulesWithMultiIntervals
 };
 
 function toString$2(t) {
-  return "Almanac (Seeds: " + t.seeds.map(Interval$AdventOfCode.toString).join(", ") + "\n" + t.maps.map(toString$1).join("\n") + ")";
+  return "Almanac (Seeds: [" + t.seeds.map(Interval$AdventOfCode.toString).join(", ") + "],\n[" + t.maps.map(toString$1).join("\n") + ")]";
 }
 
 function getMap(t, src) {
@@ -112,7 +146,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day5.res",
-              102,
+              136,
               8
             ],
             Error: new Error()
@@ -129,7 +163,7 @@ function parse(data) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "AOC2023_Day5.res",
-                110,
+                144,
                 10
               ],
               Error: new Error()
@@ -145,11 +179,11 @@ function parse(data) {
               offset: destStart - srcStart
             };
     };
-    var intervals = srcDestLines.map(parseIntervalLine);
+    var rules = srcDestLines.map(parseIntervalLine);
     return {
             srcCategory: srcCategory,
             destCategory: destCategory,
-            intervals: intervals
+            rules: rules
           };
   };
   var makeSeedsInterval = function (seeds) {
@@ -175,7 +209,7 @@ function part1(almanac) {
           var curCat = _curCat;
           var map = getMap(almanac, curCat);
           var destCategory = map.destCategory;
-          var nextNum = srcToDest$1(map, curNum);
+          var nextNum = runRules(map, curNum);
           if (destCategory === endCat) {
             return nextNum;
           }
@@ -188,20 +222,55 @@ function part1(almanac) {
   return Utils$AdventOfCode.minBigIntInArray(locations);
 }
 
+function part1_Interval(almanac) {
+  var locations = almanac.seeds.flatMap(function (param) {
+        var endCat = "location";
+        var _curCat = "seed";
+        var _cur = [Interval$AdventOfCode.makeWithLength(param[0], BigInt(1))];
+        while(true) {
+          var cur = _cur;
+          var curCat = _curCat;
+          var map = getMap(almanac, curCat);
+          var destCategory = map.destCategory;
+          var next = runRulesWithMultiIntervals(map, cur);
+          if (destCategory === endCat) {
+            return next;
+          }
+          _cur = next;
+          _curCat = destCategory;
+          continue ;
+        };
+      });
+  ((function (__x) {
+          console.log("locations =", __x);
+        })(locations));
+  return Utils$AdventOfCode.minBigIntInArray(locations.map(function (param) {
+                  return param[0];
+                }));
+}
+
 function solvePart1(data) {
   var almanac = parse(data);
   var prim = toString$2(almanac);
   console.log(prim);
   var m = getMap(almanac, "seed");
-  var prim$1 = srcToDest$1(m, BigInt(79)).toString();
-  console.log(prim$1);
-  var prim$2 = srcToDest$1(m, BigInt(14)).toString();
-  console.log(prim$2);
-  var prim$3 = srcToDest$1(m, BigInt(55)).toString();
-  console.log(prim$3);
-  var prim$4 = srcToDest$1(m, BigInt(13)).toString();
-  console.log(prim$4);
-  return part1(almanac);
+  console.log("runRulesWithInterval");
+  ((function (__x) {
+          console.log("--> 79", __x);
+        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(79), BigInt(1))])));
+  ((function (__x) {
+          console.log("--> 14", __x);
+        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(14), BigInt(1))])));
+  ((function (__x) {
+          console.log("--> 55", __x);
+        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(55), BigInt(1))])));
+  ((function (__x) {
+          console.log("--> 13", __x);
+        })(runRulesWithMultiIntervals(m, [Interval$AdventOfCode.makeWithLength(BigInt(13), BigInt(1))])));
+  var p1i = part1_Interval(almanac);
+  console.log("part1_Intervals");
+  console.log(p1i);
+  return BigInt(1);
 }
 
 function solvePart2(data) {
@@ -211,11 +280,12 @@ function solvePart2(data) {
 export {
   log ,
   log2 ,
-  IntervalMap ,
+  Rule ,
   AlmanacMap ,
   Almanac ,
   parse ,
   part1 ,
+  part1_Interval ,
   solvePart1 ,
   solvePart2 ,
 }

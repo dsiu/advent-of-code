@@ -47,6 +47,14 @@ function length(param) {
   }
 }
 
+function equals(param, param$1) {
+  if (param[0] === param$1[0]) {
+    return param[1] === param$1[1];
+  } else {
+    return false;
+  }
+}
+
 function contains(param, num) {
   if (Caml_obj.greaterequal(num, param[0])) {
     return Caml_obj.lessequal(num, param[1]);
@@ -56,10 +64,10 @@ function contains(param, num) {
 }
 
 function isOverlap(a, b) {
-  if (contains(a, b[0])) {
+  if (contains(a, b[0]) || contains(a, b[1]) || contains(b, a[0])) {
     return true;
   } else {
-    return contains(a, b[1]);
+    return contains(b, a[1]);
   }
 }
 
@@ -75,10 +83,10 @@ function below(a, b) {
 }
 
 function adjacent(a, b) {
-  if (Caml_obj.equal(a[1] + BigInt(1), b[0])) {
+  if (a[1] + BigInt(1) === b[0]) {
     return true;
   } else {
-    return Caml_obj.equal(b[1] + BigInt(1), a[0]);
+    return b[1] + BigInt(1) === a[0];
   }
 }
 
@@ -90,13 +98,41 @@ function belowAndAdjacent(a, b) {
   }
 }
 
+function add(param, num) {
+  return make(param[0] + num, param[1] + num);
+}
+
+function remove(a, b) {
+  var bUpper = b[1];
+  var bLower = b[0];
+  var aUpper = a[1];
+  var aLower = a[0];
+  var match = isOverlap(a, b);
+  var match$1 = equals(a, b);
+  var match$2 = Caml_obj.greaterequal(bUpper, aUpper) && contains(a, bLower);
+  var match$3 = Caml_obj.lessequal(bLower, aLower) && contains(a, bUpper);
+  if (match) {
+    if (match$1) {
+      return ;
+    } else if (match$2) {
+      return [
+              aLower,
+              bLower - BigInt(1)
+            ];
+    } else if (match$3) {
+      return [
+              bUpper + BigInt(1),
+              aUpper
+            ];
+    } else {
+      return ;
+    }
+  } else {
+    return a;
+  }
+}
+
 function merge(a, b) {
-  console.log("a=", a);
-  console.log("b=", b);
-  var prim1 = adjacent(a, b);
-  console.log("adjacent=", prim1);
-  var prim1$1 = isOverlap(a, b);
-  console.log("overlap=", prim1$1);
   if (!(adjacent(a, b) || isOverlap(a, b))) {
     return Pervasives.failwith("intervals must be adjacent or overlapping");
   }
@@ -157,12 +193,15 @@ export {
   make ,
   makeWithLength ,
   length ,
+  equals ,
   contains ,
   isOverlap ,
   intersect ,
   below ,
   adjacent ,
   belowAndAdjacent ,
+  add ,
+  remove ,
   merge ,
   sort ,
   sortAndMergeOverlaps ,

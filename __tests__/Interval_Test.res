@@ -79,6 +79,24 @@ describe("Interval", () => {
         expect(contains(interval, num))->toBe(false)
       },
     )
+
+    test(
+      "contains - returns false when the number is not in interval with length 1",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(5))
+        let num = BigInt.fromInt(4)
+        expect(contains(interval, num))->toBe(false)
+      },
+    )
+
+    test(
+      "contains - returns true when the number is in interval with length 1",
+      () => {
+        let interval = (BigInt.fromInt(5), BigInt.fromInt(5))
+        let num = BigInt.fromInt(5)
+        expect(contains(interval, num))->toBe(true)
+      },
+    )
   })
 
   describe("isOverlap", () => {
@@ -101,10 +119,46 @@ describe("Interval", () => {
     )
 
     test(
-      "isOverlap - returns true when intervals touch at one point",
+      "isOverlap - returns true when intervals touch at one point on right",
       () => {
         let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
         let interval2 = make(BigInt.fromInt(10), BigInt.fromInt(15))
+        expect(isOverlap(interval1, interval2))->toBe(true)
+      },
+    )
+
+    test(
+      "isOverlap - returns true when intervals touch at one point on left",
+      () => {
+        let interval1 = make(BigInt.fromInt(6), BigInt.fromInt(11))
+        let interval2 = make(BigInt.fromInt(3), BigInt.fromInt(6))
+        expect(isOverlap(interval1, interval2))->toBe(true)
+      },
+    )
+
+    test(
+      "isOverlap - returns true when a contains b",
+      () => {
+        let interval1 = make(BigInt.fromInt(1), BigInt.fromInt(10))
+        let interval2 = make(BigInt.fromInt(3), BigInt.fromInt(6))
+        expect(isOverlap(interval1, interval2))->toBe(true)
+      },
+    )
+
+    test(
+      "isOverlap - returns true when b contains a",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(9))
+        let interval2 = make(BigInt.fromInt(1), BigInt.fromInt(12))
+        expect(isOverlap(interval1, interval2))->toBe(true)
+      },
+    )
+
+    test(
+      "isOverlap - returns true when both a and b are some",
+      () => {
+        let interval1 = make(BigInt.fromInt(13), BigInt.fromInt(13))
+        let interval2 = make(BigInt.fromInt(13), BigInt.fromInt(13))
         expect(isOverlap(interval1, interval2))->toBe(true)
       },
     )
@@ -138,6 +192,28 @@ describe("Interval", () => {
         let interval2 = make(BigInt.fromInt(10), BigInt.fromInt(15))
         expect(intersect(interval1, interval2))->toEqual(
           Some(make(BigInt.fromInt(10), BigInt.fromInt(10))),
+        )
+      },
+    )
+
+    test(
+      "intersect - returns intersection both intervals are length 1",
+      () => {
+        let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(5))
+        let interval2 = make(BigInt.fromInt(5), BigInt.fromInt(5))
+        expect(intersect(interval1, interval2))->toEqual(
+          Some(make(BigInt.fromInt(5), BigInt.fromInt(5))),
+        )
+      },
+    )
+
+    test(
+      "intersect - returns intersection a interval is length 1 and the other is inside",
+      () => {
+        let interval1 = make(BigInt.fromInt(7), BigInt.fromInt(7))
+        let interval2 = make(BigInt.fromInt(1), BigInt.fromInt(10))
+        expect(intersect(interval1, interval2))->toEqual(
+          Some(make(BigInt.fromInt(7), BigInt.fromInt(7))),
         )
       },
     )
@@ -197,6 +273,72 @@ describe("Interval", () => {
         let interval1 = make(BigInt.fromInt(5), BigInt.fromInt(10))
         let interval2 = make(BigInt.fromInt(15), BigInt.fromInt(20))
         expect(adjacent(interval1, interval2))->toBe(false)
+      },
+    )
+  })
+
+  describe("remove", () => {
+    test(
+      "remove - returns a when intervals do not overlap",
+      () => {
+        let a = Interval.make(BigInt.fromInt(1), BigInt.fromInt(5))
+        let b = Interval.make(BigInt.fromInt(6), BigInt.fromInt(10))
+        let result = Interval.remove(a, b)
+        let expected = Some((BigInt.fromInt(1), BigInt.fromInt(5)))
+        expect(result)->toEqual(expected)
+      },
+    )
+
+    test(
+      "remove - returns None when b is all contained within a",
+      () => {
+        let a = Interval.make(BigInt.fromInt(1), BigInt.fromInt(10))
+        let b = Interval.make(BigInt.fromInt(3), BigInt.fromInt(7))
+        let result = Interval.remove(a, b)
+        let expected = None
+        expect(result)->toEqual(expected)
+      },
+    )
+
+    test(
+      "remove - returns None when a is contained within b",
+      () => {
+        let a = Interval.make(BigInt.fromInt(3), BigInt.fromInt(7))
+        let b = Interval.make(BigInt.fromInt(1), BigInt.fromInt(10))
+        let result = Interval.remove(a, b)
+        let expected = None
+        expect(result)->toEqual(expected)
+      },
+    )
+
+    test(
+      "remove - returns None when a and b are the same",
+      () => {
+        let a = Interval.make(BigInt.fromInt(3), BigInt.fromInt(7))
+        let b = Interval.make(BigInt.fromInt(3), BigInt.fromInt(7))
+        let result = Interval.remove(a, b)
+        expect(result)->toEqual(None)
+      },
+    )
+
+    test(
+      "remove - returns None when a and b are single point intervals and are the same",
+      () => {
+        let a = Interval.make(BigInt.fromInt(3), BigInt.fromInt(3))
+        let b = Interval.make(BigInt.fromInt(3), BigInt.fromInt(3))
+        let result = Interval.remove(a, b)
+        expect(result)->toEqual(None)
+      },
+    )
+
+    test(
+      "remove - returns Some(a) when a and b are single point intervals and are different",
+      () => {
+        let a = Interval.make(BigInt.fromInt(3), BigInt.fromInt(3))
+        let b = Interval.make(BigInt.fromInt(4), BigInt.fromInt(4))
+        let result = Interval.remove(a, b)
+        let expected = Some((BigInt.fromInt(3), BigInt.fromInt(3)))
+        expect(result)->toEqual(expected)
       },
     )
   })
