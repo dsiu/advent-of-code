@@ -26,18 +26,17 @@ function run(t, srcNum) {
 }
 
 function runWithInterval(t, src) {
-  var i = Interval$AdventOfCode.intersect(src, t.srcInterval);
-  if (i !== undefined) {
-    return [
-            Interval$AdventOfCode.remove(src, i),
-            Interval$AdventOfCode.add(i, t.offset)
-          ];
-  } else {
-    return [
-            src,
-            undefined
-          ];
-  }
+  var intersection = Interval$AdventOfCode.intersect(src, t.srcInterval);
+  var newSrc = Core__Option.getOr(Core__Option.map(intersection, (function (i) {
+              return Interval$AdventOfCode.remove(src, i);
+            })), src);
+  var newDest = Core__Option.map(intersection, (function (i) {
+          return Interval$AdventOfCode.add(i, t.offset);
+        }));
+  return [
+          newSrc,
+          newDest
+        ];
 }
 
 var Rule = {
@@ -51,8 +50,8 @@ function toString$1(t) {
 }
 
 function runRules(t, srcNum) {
-  return Core__Option.getOr(Core__Array.findMap(t.rules, (function (r) {
-                    return run(r, srcNum);
+  return Core__Option.getOr(Core__Array.findMap(t.rules, (function (__x) {
+                    return run(__x, srcNum);
                   })), srcNum);
 }
 
@@ -70,11 +69,11 @@ function runRulesWithInterval(t, src) {
                         ];
                 }
                 var match = runWithInterval(r, s);
-                var dests = match[1];
-                var newDests = dests !== undefined ? [dests].concat(d) : d;
+                var dest = match[1];
+                var newDest = dest !== undefined ? [dest].concat(d) : d;
                 return [
                         match[0],
-                        newDests
+                        newDest
                       ];
               }));
 }
@@ -82,8 +81,9 @@ function runRulesWithInterval(t, src) {
 function runRulesWithMultiIntervals(t, xs) {
   return xs.flatMap(function (x) {
               var match = runRulesWithInterval(t, x);
-              var src = match[0];
-              var newSrc = src !== undefined ? [src] : [];
+              var newSrc = Core__Option.getOr(Core__Option.flatMap(match[0], (function (s) {
+                          return [s];
+                        })), []);
               return newSrc.concat(match[1]);
             });
 }
@@ -142,7 +142,7 @@ function parse(data) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day5.res",
-              115,
+              184,
               8
             ],
             Error: new Error()
@@ -159,7 +159,7 @@ function parse(data) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "AOC2023_Day5.res",
-                123,
+                192,
                 10
               ],
               Error: new Error()
@@ -239,28 +239,19 @@ function findLocation(almanac, seedTransform) {
 }
 
 function makeSeedsInterval(seeds) {
-  return seeds.map(function (s) {
-              return Interval$AdventOfCode.makeWithLength(s, BigInt(1));
+  return seeds.map(function (__x) {
+              return Interval$AdventOfCode.makeWithLength(__x, BigInt(1));
             });
 }
 
 function makeSeedsPair(seeds) {
-  var len = seeds.length;
-  var _acc = [];
-  var _i = 0;
-  while(true) {
-    var i = _i;
-    var acc = _acc;
-    if (i >= len) {
-      return acc;
-    }
-    var a = Core__Option.getExn(seeds[i]);
-    var b = Core__Option.getExn(seeds[i + 1 | 0]);
-    var newAcc = [Interval$AdventOfCode.makeWithLength(a, b)].concat(acc);
-    _i = i + 2 | 0;
-    _acc = newAcc;
-    continue ;
-  };
+  return seeds.map(function (a, i) {
+                  if (i % 2 !== 0) {
+                    return ;
+                  }
+                  var b = Core__Option.getExn(seeds[i + 1 | 0]);
+                  return Interval$AdventOfCode.makeWithLength(a, b);
+                }).filter(Core__Option.isSome).map(Core__Option.getExn);
 }
 
 function part1(__x) {
