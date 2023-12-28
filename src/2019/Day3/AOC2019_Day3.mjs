@@ -152,18 +152,15 @@ function closest(points) {
 }
 
 function crossovers(travelledPaths) {
-  var arg = function (_k, a, b) {
-    if (a !== undefined && b !== undefined) {
-      return a + b | 0;
-    }
-    
-  };
   return Stdlib_Array.foldLeft(Belt_Array.map(travelledPaths, (function (param) {
                     return param.visited;
-                  })), (function (param) {
-                return function (param$1) {
-                  return TableclothMap.merge(param, param$1, arg);
-                };
+                  })), (function (m1, m2) {
+                return TableclothMap.merge(m1, m2, (function (_k, a, b) {
+                              if (a !== undefined && b !== undefined) {
+                                return a + b | 0;
+                              }
+                              
+                            }));
               }));
 }
 

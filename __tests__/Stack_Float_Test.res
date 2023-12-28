@@ -1,6 +1,9 @@
+@@uncurried
+
 open Jest
 open Expect
 
+open RescriptCore
 //module Stack = Stack_List_Float
 module S = Stack.StackFloat
 
@@ -25,10 +28,10 @@ describe("Stack Float", () => {
 
   let core_tests = list{
     (
-      S.start->S.one->S.five->S.two->S.binary((x, y) => x -. y +. 944.0, _),
+      S.start->S.one->S.five->S.two->(S.binary((x, y) => x -. y +. 944.0, _)),
       S.Contents(list{947.0, 1.0}),
     ),
-    (S.start->S.three->S.four->S.unary(x => x *. 522.0, _), S.Contents(list{2088.0, 3.0})),
+    (S.start->S.three->S.four->(S.unary(x => x *. 522.0, _)), S.Contents(list{2088.0, 3.0})),
     (S.start->S.five->S.four->S.dup, S.Contents(list{4.0, 4.0, 5.0})),
     (S.start->S.five->S.three->S.dup->S.mul, S.Contents(list{9.0, 5.0})),
     (S.start->S.two->S.dup->S.mul, S.Contents(list{4.0})),

@@ -53,13 +53,13 @@ function powersetArrayMap_(set) {
   if (match === 0) {
     return [[]];
   }
-  var x = Stdlib_Array.getExn(set, 0);
-  var xs = Stdlib_Array.sliceToEnd(set, 1);
+  var x = set[0];
+  var xs = set.slice(1);
   var tail_powersets = powersetArrayMap_(xs);
-  var with_x = Stdlib_Array.map(tail_powersets, (function (it) {
-          return Stdlib_Array.concat([x], it);
-        }));
-  return Stdlib_Array.concat(tail_powersets, with_x);
+  var with_x = tail_powersets.map(function (it) {
+        return [x].concat(it);
+      });
+  return tail_powersets.concat(with_x);
 }
 
 function powersetArrayFlatMap_(set) {
@@ -67,13 +67,13 @@ function powersetArrayFlatMap_(set) {
   if (match === 0) {
     return [[]];
   }
-  var x = Stdlib_Array.getExn(set, 0);
-  var xs = Stdlib_Array.sliceToEnd(set, 1);
+  var x = set[0];
+  var xs = set.slice(1);
   var tail_powersets = powersetArrayFlatMap_(xs);
   return Stdlib_Array.flatMap(tail_powersets, (function (it) {
                 return [
                         it,
-                        Stdlib_Array.concat([x], it)
+                        [x].concat(it)
                       ];
               }));
 }

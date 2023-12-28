@@ -69,7 +69,7 @@ let solvePart1 = data => {
   data
   ->parse
   ->A.map(CmdParser.run)
-  ->A.keepMap(result => {
+  ->A.filterMap(result => {
     switch result {
     | Ok((parsedObject, _state)) => Some(parsedObject->parsedObjectToString)
     | Error(_) => None

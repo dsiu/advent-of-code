@@ -90,7 +90,7 @@ function knotStep(param, kt) {
   var kt$p = touching(kt, h) ? kt : Coord_V2$AdventOfCode.add(kt, towards(kt, h));
   return [
           kt$p,
-          Stdlib_Array.concat([kt$p], param[1])
+          [kt$p].concat(param[1])
         ];
 }
 
@@ -103,7 +103,7 @@ function ropeStep(rope, step) {
   return {
           TAG: "Rope",
           headK: h,
-          knots: Stdlib_Array.reverse(match[1]),
+          knots: match[1].toReversed(),
           trace: TableclothSet.add(rope.trace, match[0])
         };
 }
@@ -123,51 +123,51 @@ function part2(steps) {
 }
 
 function parse(data) {
-  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                var match = x.trim().split(" ");
-                if (match.length !== 2) {
+  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
+              var match = x.trim().split(" ");
+              if (match.length !== 2) {
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2022_Day9.res",
+                        99,
+                        8
+                      ],
+                      Error: new Error()
+                    };
+              }
+              var dStr = match[0];
+              var steps = match[1];
+              var match$1 = Caml_format.int_of_string(steps);
+              switch (dStr) {
+                case "D" :
+                    return {
+                            TAG: "D",
+                            _0: match$1
+                          };
+                case "L" :
+                    return {
+                            TAG: "L",
+                            _0: match$1
+                          };
+                case "R" :
+                    return {
+                            TAG: "R",
+                            _0: match$1
+                          };
+                case "U" :
+                    return {
+                            TAG: "U",
+                            _0: match$1
+                          };
+                default:
                   throw {
-                        RE_EXN_ID: "Match_failure",
-                        _1: [
-                          "AOC2022_Day9.res",
-                          99,
-                          8
-                        ],
+                        RE_EXN_ID: ParseError,
+                        _1: dStr + steps,
                         Error: new Error()
                       };
-                }
-                var dStr = match[0];
-                var steps = match[1];
-                var match$1 = Caml_format.int_of_string(steps);
-                switch (dStr) {
-                  case "D" :
-                      return {
-                              TAG: "D",
-                              _0: match$1
-                            };
-                  case "L" :
-                      return {
-                              TAG: "L",
-                              _0: match$1
-                            };
-                  case "R" :
-                      return {
-                              TAG: "R",
-                              _0: match$1
-                            };
-                  case "U" :
-                      return {
-                              TAG: "U",
-                              _0: match$1
-                            };
-                  default:
-                    throw {
-                          RE_EXN_ID: ParseError,
-                          _1: dStr + steps,
-                          Error: new Error()
-                        };
-                }
-              }));
+              }
+            });
 }
 
 function solvePart1(data) {

@@ -99,24 +99,17 @@ function MakeStack(Item) {
                   return Curry._1(Item.neg, x);
                 }), __x);
   };
-  var square = Stdlib_Function.composeN([
-        dup,
-        mul
-      ]);
-  var cube = Stdlib_Function.composeN([
-        dup,
-        dup,
-        mul,
-        mul
-      ]);
-  var sum_numbers_upto = Stdlib_Function.composeN([
-        dup,
-        one,
-        add,
-        mul,
-        two,
-        div
-      ]);
+  var square = function (param) {
+    return Stdlib_Function.compose(dup, mul, param);
+  };
+  var cube = function (param) {
+    return Stdlib_Function.compose4(dup, dup, mul, mul, param);
+  };
+  var sum_numbers_upto = Curry._2(Stdlib_Function.compose, (function (param) {
+          return Stdlib_Function.compose4(dup, one, add, mul, param);
+        }), (function (param) {
+          return Stdlib_Function.compose(two, div, param);
+        }));
   return {
           push: push,
           pop: pop,
@@ -139,7 +132,8 @@ function MakeStack(Item) {
           sub: sub,
           div: div,
           neg: neg,
-          composeN: Stdlib_Function.composeN,
+          compose: Stdlib_Function.compose,
+          compose4: Stdlib_Function.compose4,
           square: square,
           cube: cube,
           sum_numbers_upto: sum_numbers_upto
@@ -291,26 +285,19 @@ function neg$1(__x) {
               }), __x);
 }
 
-var square = Stdlib_Function.composeN([
-      dup,
-      mul$1
-    ]);
+function square(param) {
+  return Stdlib_Function.compose(dup, mul$1, param);
+}
 
-var cube = Stdlib_Function.composeN([
-      dup,
-      dup,
-      mul$1,
-      mul$1
-    ]);
+function cube(param) {
+  return Stdlib_Function.compose4(dup, dup, mul$1, mul$1, param);
+}
 
-var sum_numbers_upto = Stdlib_Function.composeN([
-      dup,
-      one,
-      add$1,
-      mul$1,
-      two,
-      div$1
-    ]);
+var sum_numbers_upto = Curry._2(Stdlib_Function.compose, (function (param) {
+        return Stdlib_Function.compose4(dup, one, add$1, mul$1, param);
+      }), (function (param) {
+        return Stdlib_Function.compose(two, div$1, param);
+      }));
 
 var StackInt = {
   push: push,
@@ -334,7 +321,8 @@ var StackInt = {
   sub: sub$1,
   div: div$1,
   neg: neg$1,
-  composeN: Stdlib_Function.composeN,
+  compose: Stdlib_Function.compose,
+  compose4: Stdlib_Function.compose4,
   square: square,
   cube: cube,
   sum_numbers_upto: sum_numbers_upto
@@ -487,26 +475,19 @@ function neg$3(__x) {
               }), __x);
 }
 
-var square$1 = Stdlib_Function.composeN([
-      dup$1,
-      mul$3
-    ]);
+function square$1(param) {
+  return Stdlib_Function.compose(dup$1, mul$3, param);
+}
 
-var cube$1 = Stdlib_Function.composeN([
-      dup$1,
-      dup$1,
-      mul$3,
-      mul$3
-    ]);
+function cube$1(param) {
+  return Stdlib_Function.compose4(dup$1, dup$1, mul$3, mul$3, param);
+}
 
-var sum_numbers_upto$1 = Stdlib_Function.composeN([
-      dup$1,
-      one$1,
-      add$3,
-      mul$3,
-      two$1,
-      div$3
-    ]);
+var sum_numbers_upto$1 = Curry._2(Stdlib_Function.compose, (function (param) {
+        return Stdlib_Function.compose4(dup$1, one$1, add$3, mul$3, param);
+      }), (function (param) {
+        return Stdlib_Function.compose(two$1, div$3, param);
+      }));
 
 var StackFloat = {
   push: push$1,
@@ -530,7 +511,8 @@ var StackFloat = {
   sub: sub$3,
   div: div$3,
   neg: neg$3,
-  composeN: Stdlib_Function.composeN,
+  compose: Stdlib_Function.compose,
+  compose4: Stdlib_Function.compose4,
   square: square$1,
   cube: cube$1,
   sum_numbers_upto: sum_numbers_upto$1

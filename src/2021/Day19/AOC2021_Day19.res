@@ -3,7 +3,7 @@ open Utils
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
-let {compose, composeN} = module(Stdlib_Function)
+let {compose, compose3} = module(Stdlib_Function)
 
 module Scanner = {
   // Coord Type [should refactor out]
@@ -33,13 +33,13 @@ module Scanner = {
       nullTrans,
       rotY,
       compose(rotY, rotY),
-      composeN([rotY, rotY, rotY]),
+      compose3(rotY, rotY, rotY),
       rotZ,
-      composeN([rotZ, rotZ, rotZ]),
+      compose3(rotZ, rotZ, rotZ),
     ]
-    let rbs = [nullTrans, rotX, compose(rotX, rotX), composeN([rotX, rotX, rotX])]
+    let rbs = [nullTrans, rotX, compose(rotX, rotX), compose3(rotX, rotX, rotX)]
 
-    Stdlib.Array.combination2(ras, rbs, (. a, b) => compose(a, b))
+    Stdlib.Array.combination2(ras, rbs, (a, b) => compose(a, b))
   }
 
   //  rotations->Array.length->log
@@ -101,7 +101,7 @@ module Scanner = {
       x *. x +. y *. y +. z *. z
     }
 
-    Stdlib.Array.combinationIf2(bcns, bcns, (. Coord(a), Coord(b)) => {
+    Stdlib.Array.combinationIf2(bcns, bcns, (Coord(a), Coord(b)) => {
       V3.cmp(b, a) > 0 ? Some(pythag(minus(Coord(a), Coord(b)))) : None
     })->bagFromArray
   }
@@ -135,7 +135,7 @@ module Scanner = {
     let beacons1 = scanner1.beacons
     let beacons2 = scanner2.beacons
 
-    Stdlib.Array.combinationIf3(beacons1, beacons2, rotations, (. b1, b2, rot) => {
+    Stdlib.Array.combinationIf3(beacons1, beacons2, rotations, (b1, b2, rot) => {
       let t = minus(b1, rot(b2)) // apply rot to b2
       let translation = translate(t)
 
@@ -268,7 +268,7 @@ let part2 = scanners => {
     abs_float(x1) +. abs_float(y1) +. abs_float(z1)
   }
 
-  Stdlib.List.combination2(origins, origins, (. a, b) => {
+  Stdlib.List.combination2(origins, origins, (a, b) => {
     minus(a, b)->manhatton
   })
   ->List.sort((a, b) => Float.toInt(b -. a))

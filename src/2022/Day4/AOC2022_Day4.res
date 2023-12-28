@@ -34,16 +34,16 @@ let parse = data => {
     ->S.split(",")
     ->A.map(p => {
       let r = p->S.split("-")->A.map(intFromStringExn)
-      Interval(r->A.getExn(0), r->A.getExn(1))
+      Interval(r->A.getUnsafe(0), r->A.getUnsafe(1))
     })
   })
   ->A.map(l => {
-    (l->A.getExn(0), l->A.getExn(1))
+    (l->A.getUnsafe(0), l->A.getUnsafe(1))
   })
 }
 
 let count = (xs, fn) => {
-  xs->A.keep(fn)->A.length
+  xs->A.filter(fn)->A.length
 }
 
 let part1 = xs => {

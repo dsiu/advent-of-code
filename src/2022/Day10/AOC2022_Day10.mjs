@@ -4,7 +4,6 @@ import * as JsArray2Ex from "js-array2-ex/src/JsArray2Ex.mjs";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
 import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
@@ -32,13 +31,13 @@ function apply(ops) {
 }
 
 function extractSignals(signals) {
-  return Stdlib_Array.keep(signals, (function (param) {
-                return (param[0] + 20 | 0) % 40 === 0;
-              }));
+  return signals.filter(function (param) {
+              return (param[0] + 20 | 0) % 40 === 0;
+            });
 }
 
 function calculateSixSignals(signals) {
-  return Utils$AdventOfCode.sumIntArray(Stdlib_Array.keepMap(signals, (function (param) {
+  return Utils$AdventOfCode.sumIntArray(Stdlib_Array.filterMap(signals, (function (param) {
                     var t = param[0];
                     if (t <= 220) {
                       return Math.imul(t, param[1]);
@@ -69,38 +68,38 @@ function isLit(param) {
 }
 
 function part2(regVals) {
-  var pixels = Stdlib_Array.map(regVals, (function (param) {
-          return Utils$AdventOfCode.compose(isLit, showPixel, param);
-        }));
-  return Stdlib_Array.map(JsArray2Ex.chunkBySize(pixels, 40), (function (x) {
-                return Stdlib_Array.joinWith(x, "", Stdlib_Function.identity);
-              }));
+  var pixels = regVals.map(function (param) {
+        return Utils$AdventOfCode.compose(isLit, showPixel, param);
+      });
+  return JsArray2Ex.chunkBySize(pixels, 40).map(function (x) {
+              return x.join("");
+            });
 }
 
 function parse(data) {
-  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                var l = x.trim();
-                if (l.startsWith("noop")) {
-                  return "Noop";
-                }
-                var match = l.split(" ");
-                if (match.length !== 2) {
-                  throw {
-                        RE_EXN_ID: "Match_failure",
-                        _1: [
-                          "AOC2022_Day10.res",
-                          63,
-                          14
-                        ],
-                        Error: new Error()
-                      };
-                }
-                var v = match[1];
-                return {
-                        TAG: "Addx",
-                        _0: Caml_format.int_of_string(v)
-                      };
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
+              var l = x.trim();
+              if (l.startsWith("noop")) {
+                return "Noop";
+              }
+              var match = l.split(" ");
+              if (match.length !== 2) {
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2022_Day10.res",
+                        63,
+                        14
+                      ],
+                      Error: new Error()
+                    };
+              }
+              var v = match[1];
+              return {
+                      TAG: "Addx",
+                      _0: Caml_format.int_of_string(v)
+                    };
+            });
 }
 
 function solvePart1(data) {

@@ -93,17 +93,13 @@ var ras = [
   (function (param) {
       return Stdlib_Function.compose(rotY, rotY, param);
     }),
-  Stdlib_Function.composeN([
-        rotY,
-        rotY,
-        rotY
-      ]),
+  (function (param) {
+      return Stdlib_Function.compose3(rotY, rotY, rotY, param);
+    }),
   rotZ,
-  Stdlib_Function.composeN([
-        rotZ,
-        rotZ,
-        rotZ
-      ])
+  (function (param) {
+      return Stdlib_Function.compose3(rotZ, rotZ, rotZ, param);
+    })
 ];
 
 var rbs = [
@@ -112,11 +108,9 @@ var rbs = [
   (function (param) {
       return Stdlib_Function.compose(rotX, rotX, param);
     }),
-  Stdlib_Function.composeN([
-        rotX,
-        rotX,
-        rotX
-      ])
+  (function (param) {
+      return Stdlib_Function.compose3(rotX, rotX, rotX, param);
+    })
 ];
 
 var rotations = Stdlib_Array.combination2(ras, rbs, (function (a, b) {
@@ -457,13 +451,13 @@ function solvePart2(data) {
 
 var compose = Stdlib_Function.compose;
 
-var composeN = Stdlib_Function.composeN;
+var compose3 = Stdlib_Function.compose3;
 
 export {
   log ,
   log2 ,
   compose ,
-  composeN ,
+  compose3 ,
   Scanner ,
   parse ,
   reconstructScanners ,
@@ -472,4 +466,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* ras Not a pure module */
+/* rotations Not a pure module */

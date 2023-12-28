@@ -18,7 +18,7 @@ type direction = U(int) | R(int) | D(int) | L(int)
 
 let newRope: int => rope = n => Rope({
   headK: (0, 0),
-  knots: Array.make(n, (0, 0)),
+  knots: Array.make(~length=n, (0, 0)),
   trace: emptyPositionSet->TC.Set.add((0, 0)),
 })
 
@@ -27,10 +27,10 @@ exception ParseError(string)
 let expandPath: array<direction> => path = directions => {
   let expandStep = step =>
     switch step {
-    | U(n) => Array.make(n, (0, 1))
-    | L(n) => Array.make(n, (-1, 0))
-    | D(n) => Array.make(n, (0, -1))
-    | R(n) => Array.make(n, (1, 0))
+    | U(n) => Array.make(~length=n, (0, 1))
+    | L(n) => Array.make(~length=n, (-1, 0))
+    | D(n) => Array.make(~length=n, (0, -1))
+    | R(n) => Array.make(~length=n, (1, 0))
     }
 
   directions->A.flatMap(expandStep)
@@ -71,7 +71,7 @@ let ropeStep: (rope, position) => rope = (rope, step) => {
 
   Rope({
     headK: h,
-    knots: A.reverse(kts),
+    knots: A.toReversed(kts),
     trace: trace->TC.Set.add(kt),
   })
 }

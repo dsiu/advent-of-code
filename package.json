@@ -2,6 +2,7 @@
   "name": "advent-of-code",
   "version": "0.1.0",
   "type": "module",
+  "packageManager": "yarn@4.0.2",
   "scripts": {
     "build": "rescript",
     "clean": "rescript clean -with-deps",
@@ -30,7 +31,7 @@
       "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@rescript/core|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|@dsiu/rescript-stdlib-fp|relude|bs-bastet|relude-parse|)/)"
+      "<rootDir>/node_modules/(?!(rescript|@rescript/core|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rationale|rescript-bag|rescript-ocamlgraph|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|@dsiu/rescript-stdlib-fp|@greenlabs/garter|relude|bs-bastet|relude-parse|)/)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -39,7 +40,8 @@
     ]
   },
   "dependencies": {
-    "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp",
+    "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp#main",
+    "@greenlabs/garter": "github:dsiu/garter#rescript-v11-curried-mode",
     "@jmagaram/rescript-extras": "^3.0.0",
     "@jmagaram/rescript-seq": "^3.0.1",
     "@rescript/core": "^0.6.0",

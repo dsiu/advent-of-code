@@ -37,7 +37,8 @@
     "tablecloth-rescript",
     "@dsiu/rescript-stdlib-fp",
     "@jmagaram/rescript-extras",
-    "@jmagaram/rescript-seq"
+    "@jmagaram/rescript-seq",
+    "@greenlabs/garter"
   ],
   "bs-dev-dependencies": [
     "@glennsl/rescript-jest"

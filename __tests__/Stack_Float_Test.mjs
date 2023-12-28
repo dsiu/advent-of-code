@@ -4,7 +4,7 @@ import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Stack$AdventOfCode from "../src/Stack.mjs";
 
-Jest.describe("Stack Float", (function (param) {
+Jest.describe("Stack Float", (function () {
         var push_tests_0 = [
           Stack$AdventOfCode.StackFloat.push(Stack$AdventOfCode.StackFloat.start, 79.0),
           {
@@ -77,12 +77,12 @@ Jest.describe("Stack Float", (function (param) {
         Jest.testAll("pop", pop_tests, (function (param) {
                 return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
-        var __x = Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start)));
-        var __x$1 = Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start));
         var core_tests_0 = [
-          Stack$AdventOfCode.StackFloat.binary((function (x, y) {
-                  return x - y + 944.0;
-                }), __x),
+          (function (__x) {
+                return Stack$AdventOfCode.StackFloat.binary((function (x, y) {
+                              return x - y + 944.0;
+                            }), __x);
+              })(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start)))),
           {
             TAG: "Contents",
             _0: {
@@ -96,9 +96,11 @@ Jest.describe("Stack Float", (function (param) {
         ];
         var core_tests_1 = {
           hd: [
-            Stack$AdventOfCode.StackFloat.unary((function (x) {
-                    return x * 522.0;
-                  }), __x$1),
+            (function (__x) {
+                  return Stack$AdventOfCode.StackFloat.unary((function (x) {
+                                return x * 522.0;
+                              }), __x);
+                })(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
             {
               TAG: "Contents",
               _0: {

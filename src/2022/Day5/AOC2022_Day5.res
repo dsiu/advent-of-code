@@ -21,7 +21,7 @@ let getCratesForWharf = (crates, wharf) => {
   })
 }
 
-let catMaybes = Array.keepMap(_, Function.identity)
+let catMaybes = Array.filterMap(_, Function.identity)
 
 let makeWharf = (wharfLines, colNames) => {
   colNames->A.reduce(M.empty, (acc, colName) => {
@@ -46,11 +46,11 @@ let makeMoves = xs => {
 
 let parse = data => {
   let text = data->splitDoubleNewline->A.map(splitNewline)
-  let firstSection = text->A.getExn(0)->A.tail // drop first empty line
-  let secondSection = text->A.getExn(1)->A.init // drop last empty line
+  let firstSection = text->A.getUnsafe(0)->A.tail // drop first empty line
+  let secondSection = text->A.getUnsafe(1)->A.init // drop last empty line
 
   let wharfLines = firstSection->A.init->O.getExn->A.map(splitChars)
-  let colNames = firstSection->A.last->S.split(" ")->A.keepMap(Belt.Int.fromString)
+  let colNames = firstSection->A.last->S.split(" ")->A.filterMap(Belt.Int.fromString)
   let moves = secondSection->O.getExn->makeMoves
 
   let wharf = makeWharf(wharfLines, colNames)

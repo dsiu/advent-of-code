@@ -127,12 +127,14 @@ module MakeStack = (Item: StackItem) => {
   // Words based on composition
   // ==============================================
 
-  let {composeN} = module(Stdlib.Function)
-  let square = [dup, mul]->composeN
+  let {compose, compose4} = module(Stdlib.Function)
+  let square = compose(dup, mul)
 
-  let cube = [dup, dup, mul, mul]->composeN
+  let cube = compose4(dup, dup, mul, mul)
 
-  let sum_numbers_upto = [dup, one, add, mul, two, div]->composeN
+  //  let sum_numbers_upto = [dup, one, add, mul, two, div]->composeN
+
+  let sum_numbers_upto = compose(compose4(dup, one, add, mul), compose(two, div))
 }
 
 module IntOps = {

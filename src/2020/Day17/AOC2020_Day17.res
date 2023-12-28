@@ -38,7 +38,7 @@ module Coord = {
 type grid = TC.Set.t<Coord.t, Coord.identity>
 
 let makeGrid = (lines: array<array<string>>) => {
-  let createActive = (. x, y) => {
+  let createActive = (x, y) => {
     lines->Array.getExn(y)->Array.getExn(x) === "#" ? Some(Coord.Coord_V3(x, y, 0)) : None
   }
   let maxX = lines->Array.getExn(0)->Array.length - 1
@@ -59,11 +59,11 @@ let neighbourSpaces = (here: Coord.t) => {
   open Stdlib.Array
   switch here {
   | Coord_V3(_) as here =>
-    combinationIf3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z) => {
+    combinationIf3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (x, y, z) => {
       x == 0 && y == 0 && z == 0 ? None : Some(Coord.add(Coord.Coord_V3(x, y, z), here))
     })->TC.Set.fromArray(module(Coord))
   | Coord_V4(_) as here =>
-    combinationIf4([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (. x, y, z, w) => {
+    combinationIf4([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (x, y, z, w) => {
       x == 0 && y == 0 && z == 0 && w == 0
         ? None
         : Some(Coord.add(Coord.Coord_V4(x, y, z, w), here))

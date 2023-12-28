@@ -22,11 +22,11 @@ let apply: array<operation> => array<signal> = ops => {
 }
 
 let extractSignals: array<signal> => array<signal> = signals => {
-  signals->A.keep(((t, _n)) => mod(t + 20, 40) == 0)
+  signals->A.filter(((t, _n)) => mod(t + 20, 40) == 0)
 }
 
 let calculateSixSignals: array<signal> => int = signals => {
-  signals->A.keepMap(((t, n)) => {t <= 220 ? Some(t * n) : None})->sumIntArray
+  signals->A.filterMap(((t, n)) => {t <= 220 ? Some(t * n) : None})->sumIntArray
 }
 
 let part1: array<signal> => int = compose(extractSignals, calculateSixSignals)
@@ -48,7 +48,7 @@ let isLit: signal => bool = ((n, x)) => {
 
 let part2 = regVals => {
   let pixels = regVals->A.map(compose(isLit, showPixel))
-  pixels->JsArray2Ex.chunkBySize(40)->A.map(x => x->A.joinWith("", Function.identity))
+  pixels->JsArray2Ex.chunkBySize(40)->A.map(x => x->A.joinWith(""))
 }
 
 @@warning("-8")

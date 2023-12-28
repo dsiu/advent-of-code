@@ -21,49 +21,49 @@ function extractName(c) {
 
 function getCratesForWharf(crates, wharf) {
   var idx = ((wharf - 1 | 0) << 2) + 1 | 0;
-  return Stdlib_Array.map(crates, (function (x) {
-                return Stdlib_Option.flatMap(Stdlib_Array.get(x, idx), (function (x) {
-                              if (x === " ") {
-                                return ;
-                              } else {
-                                return {
-                                        TAG: "Crate",
-                                        _0: x
-                                      };
-                              }
-                            }));
-              }));
+  return crates.map(function (x) {
+              return Stdlib_Option.flatMap(x[idx], (function (x) {
+                            if (x === " ") {
+                              return ;
+                            } else {
+                              return {
+                                      TAG: "Crate",
+                                      _0: x
+                                    };
+                            }
+                          }));
+            });
 }
 
 function catMaybes(__x) {
-  return Stdlib_Array.keepMap(__x, Stdlib_Function.identity);
+  return Stdlib_Array.filterMap(__x, Stdlib_Function.identity);
 }
 
 function makeWharf(wharfLines, colNames) {
   return Stdlib_Array.reduce(colNames, undefined, (function (acc, colName) {
                 var __x = getCratesForWharf(wharfLines, colName);
-                return Belt_MapInt.set(acc, colName, Stdlib_Array.keepMap(__x, Stdlib_Function.identity));
+                return Belt_MapInt.set(acc, colName, Stdlib_Array.filterMap(__x, Stdlib_Function.identity));
               }));
 }
 
 function makeMoves(xs) {
-  return Stdlib_Array.map(xs, (function (x) {
-                var parts = x.split(" ");
-                return {
-                        TAG: "Move",
-                        _0: Stdlib_Option.getExn(Stdlib_Option.flatMap(Stdlib_Array.get(parts, 1), Belt_Int.fromString)),
-                        _1: Stdlib_Option.getExn(Stdlib_Option.flatMap(Stdlib_Array.get(parts, 3), Belt_Int.fromString)),
-                        _2: Stdlib_Option.getExn(Stdlib_Option.flatMap(Stdlib_Array.get(parts, 5), Belt_Int.fromString))
-                      };
-              }));
+  return xs.map(function (x) {
+              var parts = x.split(" ");
+              return {
+                      TAG: "Move",
+                      _0: Stdlib_Option.getExn(Stdlib_Option.flatMap(parts[1], Belt_Int.fromString)),
+                      _1: Stdlib_Option.getExn(Stdlib_Option.flatMap(parts[3], Belt_Int.fromString)),
+                      _2: Stdlib_Option.getExn(Stdlib_Option.flatMap(parts[5], Belt_Int.fromString))
+                    };
+            });
 }
 
 function parse(data) {
-  var text = Stdlib_Array.map(Utils$AdventOfCode.splitDoubleNewline(data), Utils$AdventOfCode.splitNewline);
-  var firstSection = Stdlib_Array.tail(Stdlib_Array.getExn(text, 0));
-  var secondSection = Stdlib_Array.init(Stdlib_Array.getExn(text, 1));
-  var wharfLines = Stdlib_Array.map(Stdlib_Option.getExn(Stdlib_Array.init(firstSection)), Utils$AdventOfCode.splitChars);
-  var colNames = Stdlib_Array.keepMap(Stdlib_Array.last(firstSection).split(" "), Belt_Int.fromString);
+  var text = Utils$AdventOfCode.splitDoubleNewline(data).map(Utils$AdventOfCode.splitNewline);
+  var firstSection = Stdlib_Array.tail(text[0]);
+  var secondSection = Stdlib_Array.init(text[1]);
+  var wharfLines = Stdlib_Option.getExn(Stdlib_Array.init(firstSection)).map(Utils$AdventOfCode.splitChars);
+  var colNames = Stdlib_Array.filterMap(Stdlib_Array.last(firstSection).split(" "), Belt_Int.fromString);
   var moves = makeMoves(Stdlib_Option.getExn(secondSection));
   var wharf = makeWharf(wharfLines, colNames);
   return [
@@ -108,9 +108,9 @@ function applyMoves2(wharf, moves) {
 }
 
 function showTops(wharf) {
-  return Stdlib_Array.foldLeft(Stdlib_Array.map(Belt_MapInt.valuesToArray(wharf), (function (param) {
-                    return Utils$AdventOfCode.compose(Stdlib_Array.head, extractName, param);
-                  })), (function (prim0, prim1) {
+  return Stdlib_Array.foldLeft(Belt_MapInt.valuesToArray(wharf).map(function (param) {
+                  return Utils$AdventOfCode.compose(Stdlib_Array.head, extractName, param);
+                }), (function (prim0, prim1) {
                 return prim0.concat(prim1);
               }));
 }

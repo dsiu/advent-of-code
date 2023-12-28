@@ -18,28 +18,28 @@ let setVisibility: array<tree> => array<tree> = row => {
       : (highest, A.concat([Tree(height, visible)], tagged))
   }
 
-  row->A.reduce((-1, []), vis)->snd->A.reverse
+  row->A.reduce((-1, []), vis)->snd->A.toReversed
 }
 
 let setVisibilityOrient: forest => forest = A.map(_, setVisibility)
 
 let setVisibilityForest: forest => forest = forest => {
-  let rotate = x => x->transpose->A.map(A.reverse)
+  let rotate = x => x->transpose->A.map(A.toReversed)
   let f = compose(setVisibilityOrient, rotate)
   forest->f->f->f->f
 }
 
 let countVisible: forest => int = forest => {
-  forest->A.concatMany->A.keep(isVisible)->A.length
+  forest->A.concatMany([], _)->A.filter(isVisible)->A.length
 }
 
 let part1: forest => int = compose(setVisibilityForest, countVisible)
 
 let tracks: (forest, int, int) => forest = (forest, row, col) => {
-  let (l, r) = forest->A.getExn(row)->A.splitAt(_, col)->O.getExn
-  let (u, d) = forest->transpose->A.getExn(col)->A.splitAt(_, row)->O.getExn
+  let (l, r) = forest->A.getUnsafe(row)->A.splitAt(_, col)->O.getExn
+  let (u, d) = forest->transpose->A.getUnsafe(col)->A.splitAt(_, row)->O.getUnsafe
 
-  [l->A.reverse, r->A.drop(1), u->A.reverse, d->A.drop(1)]
+  [l->A.toReversed, r->A.drop(1), u->A.toReversed, d->A.drop(1)]
 }
 
 // takeWhile1 stops once the predicate is false
@@ -62,7 +62,7 @@ let viewDistance: (array<tree>, int) => int = (trees, h) => {
 
 let scenicScore: (forest, int, int) => int = (forest, row, col) => {
   let directions = tracks(forest, row, col)
-  let h = forest->A.getExn(row)->A.getExn(col)->treeHeight
+  let h = forest->A.getUnsafe(row)->A.getUnsafe(col)->treeHeight
 
   directions->A.map(viewDistance(_, h))->A.reduce(1, (a, x) => a * x)
 }
@@ -71,7 +71,7 @@ let part2: forest => int = forest => {
   let id = Function.identity
   let nrows = forest->A.length
   let ncols = forest->A.head->A.length
-  let scores = A.combination2(A.makeBy(nrows - 1, id), A.makeBy(ncols - 1, id), (. r, c) =>
+  let scores = A.combination2(A.makeBy(nrows - 1, id), A.makeBy(ncols - 1, id), (r, c) =>
     scenicScore(forest, r, c)
   )
   scores->maxIntInArray

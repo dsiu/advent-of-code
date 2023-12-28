@@ -49,11 +49,11 @@ let powersetArrayWithList_ = xs => {
 module Array = Stdlib.Array
 
 let rec powersetArrayMap_ = set => {
-  switch set->Array.size {
+  switch set->Array.length {
   | 0 => [[]]
   | _ => {
-      let x = set->Array.getExn(0)
-      let xs = set->Array.sliceToEnd(1)
+      let x = set->Array.getUnsafe(0)
+      let xs = set->Array.sliceToEnd(~start=1)
       let tail_powersets = xs->powersetArrayMap_
       let with_x = tail_powersets->Array.map(it => Array.concat([x], it))
       Array.concat(tail_powersets, with_x)
@@ -67,11 +67,11 @@ let rec powersetArrayMap_ = set => {
 let {flatMap} = module(Array)
 
 let rec powersetArrayFlatMap_ = set => {
-  switch set->Array.size {
+  switch set->Array.length {
   | 0 => [[]]
   | _ => {
-      let x = set->Array.getExn(0)
-      let xs = set->Array.sliceToEnd(1)
+      let x = set->Array.getUnsafe(0)
+      let xs = set->Array.sliceToEnd(~start=1)
       let tail_powersets = xs->powersetArrayFlatMap_
       tail_powersets->flatMap(it => [it, Array.concat([x], it)])
     }

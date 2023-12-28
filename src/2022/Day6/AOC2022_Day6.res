@@ -7,7 +7,7 @@ module A = Array
 let parse = data => data->splitChars
 
 let allDifferent = cs => {
-  A.uniq(cs)->A.eq(cs, \"==")
+  A.uniq(cs)->A.equal(cs, \"==")
 }
 
 let hasSame = x => {!allDifferent(x)}

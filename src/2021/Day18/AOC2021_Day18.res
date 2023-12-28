@@ -189,9 +189,7 @@ module SnailFish = {
   }
 
   let part2 = numbers => {
-    Stdlib.Array.combination2(numbers, numbers, (. a, b) =>
-      snailAdd(a, b)->magnitude
-    )->maxIntInArray
+    Stdlib.Array.combination2(numbers, numbers, (a, b) => snailAdd(a, b)->magnitude)->maxIntInArray
   }
 
   // simple parser for elements
