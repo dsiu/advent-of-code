@@ -41,14 +41,14 @@ let merge: rucksack => contents = (Rucksack(a, b)) => {
 
 let badgeOf: array<rucksack> => string = rucksacks => {
   module S = Belt.Set.String
-  let foldLeft = Stdlib.Array.foldLeft
+  let foldLeft = Stdlib.Array.foldl1
   rucksacks->Array.map(merge)->foldLeft(S.intersect)->S.toArray->Array.getExn(0)
 }
 
 let part2: array<rucksack> => int = rucksacks => {
   let groups = rucksacks->TC.Array.chunksOf(~size=3)
 
-  let badges = groups->TC.Array.map(~f=badgeOf)
+  let badges = groups->TC.Array.map(badgeOf)
 
   badges->Array.map(charToPriority)->sumIntArray
 }

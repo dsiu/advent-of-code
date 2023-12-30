@@ -3,7 +3,7 @@
 import * as Core__Int from "@rescript/core/src/Core__Int.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Core__Array from "@rescript/core/src/Core__Array.mjs";
-import * as TableclothString from "tablecloth-rescript/src/TableclothString.mjs";
+import * as TableclothString from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothString.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {

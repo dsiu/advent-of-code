@@ -49,25 +49,25 @@ function powersetArrayWithList_(xs) {
 }
 
 function powersetArrayMap_(set) {
-  var match = set.length;
+  var match = Stdlib_Array.length(set);
   if (match === 0) {
     return [[]];
   }
-  var x = set[0];
+  var x = Stdlib_Array.getUnsafe(set, 0);
   var xs = set.slice(1);
   var tail_powersets = powersetArrayMap_(xs);
-  var with_x = tail_powersets.map(function (it) {
-        return [x].concat(it);
-      });
+  var with_x = Stdlib_Array.map(tail_powersets, (function (it) {
+          return [x].concat(it);
+        }));
   return tail_powersets.concat(with_x);
 }
 
 function powersetArrayFlatMap_(set) {
-  var match = set.length;
+  var match = Stdlib_Array.length(set);
   if (match === 0) {
     return [[]];
   }
-  var x = set[0];
+  var x = Stdlib_Array.getUnsafe(set, 0);
   var xs = set.slice(1);
   var tail_powersets = powersetArrayFlatMap_(xs);
   return Stdlib_Array.flatMap(tail_powersets, (function (it) {
@@ -100,4 +100,4 @@ export {
   powersetArrayFlatMap_ ,
   powersetArray ,
 }
-/* No side effect */
+/* Stdlib_Array Not a pure module */

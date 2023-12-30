@@ -2,7 +2,7 @@
 
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as TableclothSet from "tablecloth-rescript/src/TableclothSet.mjs";
+import * as TableclothSet from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothSet.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {

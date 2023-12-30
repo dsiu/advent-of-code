@@ -265,4 +265,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* No side effect */
+/* Powerset-AdventOfCode Not a pure module */

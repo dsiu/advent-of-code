@@ -155,4 +155,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* No side effect */
+/* Stdlib_Array Not a pure module */

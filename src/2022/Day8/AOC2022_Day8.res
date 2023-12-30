@@ -36,8 +36,8 @@ let countVisible: forest => int = forest => {
 let part1: forest => int = compose(setVisibilityForest, countVisible)
 
 let tracks: (forest, int, int) => forest = (forest, row, col) => {
-  let (l, r) = forest->A.getUnsafe(row)->A.splitAt(_, col)->O.getExn
-  let (u, d) = forest->transpose->A.getUnsafe(col)->A.splitAt(_, row)->O.getUnsafe
+  let (l, r) = forest->A.getUnsafe(row)->A.splitAt(_, ~index=col)
+  let (u, d) = forest->transpose->A.getUnsafe(col)->A.splitAt(_, ~index=row)
 
   [l->A.toReversed, r->A.drop(1), u->A.toReversed, d->A.drop(1)]
 }
@@ -47,7 +47,7 @@ let rec takeWhile1 = (xs, f) => {
   switch xs {
   | [] => []
   | _ => {
-      let (h, t) = (xs->A.head, xs->A.tail)
+      let (h, t) = (xs->A.headUnsafe, xs->A.tail)
       switch f(h) {
       | true => A.concat([h], takeWhile1(t, f))
       | _ => [h]
@@ -70,7 +70,7 @@ let scenicScore: (forest, int, int) => int = (forest, row, col) => {
 let part2: forest => int = forest => {
   let id = Function.identity
   let nrows = forest->A.length
-  let ncols = forest->A.head->A.length
+  let ncols = forest->A.headUnsafe->A.length
   let scores = A.combination2(A.makeBy(nrows - 1, id), A.makeBy(ncols - 1, id), (r, c) =>
     scenicScore(forest, r, c)
   )

@@ -3,7 +3,6 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
 import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as Stdlib_Option from "@dsiu/rescript-stdlib-fp/src/Stdlib_Option.mjs";
 import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 import * as Caml_splice_call from "rescript/lib/es6/caml_splice_call.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
@@ -52,20 +51,20 @@ function setVisibility(row) {
 }
 
 function setVisibilityOrient(__x) {
-  return __x.map(setVisibility);
+  return Stdlib_Array.map(__x, setVisibility);
 }
 
 function setVisibilityForest(forest) {
   var rotate = function (x) {
-    return Utils$AdventOfCode.transpose(x).map(function (prim) {
-                return prim.toReversed();
-              });
+    return Stdlib_Array.map(Utils$AdventOfCode.transpose(x), (function (prim) {
+                  return prim.toReversed();
+                }));
   };
   return Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, forest))));
 }
 
 function countVisible(forest) {
-  return Caml_splice_call.spliceObjApply([], "concat", [forest]).filter(isVisible).length;
+  return Stdlib_Array.length(Stdlib_Array.filter(Caml_splice_call.spliceObjApply([], "concat", [forest]), isVisible));
 }
 
 function part1(param) {
@@ -73,8 +72,8 @@ function part1(param) {
 }
 
 function tracks(forest, row, col) {
-  var match = Stdlib_Option.getExn(Stdlib_Array.splitAt(forest[row], col));
-  var match$1 = Stdlib_Array.splitAt(Utils$AdventOfCode.transpose(forest)[col], row);
+  var match = Stdlib_Array.splitAt(Stdlib_Array.getUnsafe(forest, row), col);
+  var match$1 = Stdlib_Array.splitAt(Stdlib_Array.getUnsafe(Utils$AdventOfCode.transpose(forest), col), row);
   return [
           match[0].toReversed(),
           Stdlib_Array.drop(match[1], 1),
@@ -87,7 +86,7 @@ function takeWhile1(xs, f) {
   if (xs.length === 0) {
     return [];
   }
-  var h = Stdlib_Array.head(xs);
+  var h = Stdlib_Array.headUnsafe(xs);
   var t = Stdlib_Array.tail(xs);
   var match = Curry._1(f, h);
   if (match) {
@@ -98,39 +97,39 @@ function takeWhile1(xs, f) {
 }
 
 function viewDistance(trees, h) {
-  return takeWhile1(trees.map(treeHeight), (function (x) {
-                return x < h;
-              })).length;
+  return Stdlib_Array.length(takeWhile1(Stdlib_Array.map(trees, treeHeight), (function (x) {
+                    return x < h;
+                  })));
 }
 
 function scenicScore(forest, row, col) {
   var directions = tracks(forest, row, col);
-  var h = treeHeight(forest[row][col]);
-  return Stdlib_Array.reduce(directions.map(function (__x) {
-                  return viewDistance(__x, h);
-                }), 1, (function (a, x) {
+  var h = treeHeight(Stdlib_Array.getUnsafe(Stdlib_Array.getUnsafe(forest, row), col));
+  return Stdlib_Array.reduce(Stdlib_Array.map(directions, (function (__x) {
+                    return viewDistance(__x, h);
+                  })), 1, (function (a, x) {
                 return Math.imul(a, x);
               }));
 }
 
 function part2(forest) {
-  var nrows = forest.length;
-  var ncols = Stdlib_Array.head(forest).length;
+  var nrows = Stdlib_Array.length(forest);
+  var ncols = Stdlib_Array.length(Stdlib_Array.headUnsafe(forest));
   return Utils$AdventOfCode.maxIntInArray(Stdlib_Array.combination2(Stdlib_Array.makeBy(nrows - 1 | 0, Stdlib_Function.identity), Stdlib_Array.makeBy(ncols - 1 | 0, Stdlib_Function.identity), (function (r, c) {
                     return scenicScore(forest, r, c);
                   })));
 }
 
 function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
-              return Utils$AdventOfCode.splitChars(x.trim()).map(function (x) {
-                          return {
-                                  TAG: "Tree",
-                                  _0: Caml_format.int_of_string(x),
-                                  _1: false
-                                };
-                        });
-            });
+  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+                return Stdlib_Array.map(Utils$AdventOfCode.splitChars(x.trim()), (function (x) {
+                              return {
+                                      TAG: "Tree",
+                                      _0: Caml_format.int_of_string(x),
+                                      _1: false
+                                    };
+                            }));
+              }));
 }
 
 function solvePart1(data) {
@@ -165,4 +164,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* No side effect */
+/* Stdlib_Array Not a pure module */

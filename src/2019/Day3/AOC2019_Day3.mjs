@@ -6,10 +6,10 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Stdlib_List from "@dsiu/rescript-stdlib-fp/src/Stdlib_List.mjs";
 import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as TableclothMap from "tablecloth-rescript/src/TableclothMap.mjs";
-import * as TableclothList from "tablecloth-rescript/src/TableclothList.mjs";
+import * as TableclothMap from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothMap.mjs";
+import * as TableclothList from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothList.mjs";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
-import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
+import * as TableclothArray from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Coord_V2$AdventOfCode from "../../Coord_V2.mjs";
 
@@ -152,7 +152,7 @@ function closest(points) {
 }
 
 function crossovers(travelledPaths) {
-  return Stdlib_Array.foldLeft(Belt_Array.map(travelledPaths, (function (param) {
+  return Stdlib_Array.foldl1(Belt_Array.map(travelledPaths, (function (param) {
                     return param.visited;
                   })), (function (m1, m2) {
                 return TableclothMap.merge(m1, m2, (function (_k, a, b) {

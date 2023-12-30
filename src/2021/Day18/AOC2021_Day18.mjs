@@ -235,7 +235,7 @@ function snailAdd(a, b) {
 }
 
 function total(xs) {
-  return Stdlib_Array.foldLeft(xs, snailAdd);
+  return Stdlib_Array.foldl1(xs, snailAdd);
 }
 
 function magnitude(t) {
@@ -247,7 +247,7 @@ function magnitude(t) {
 }
 
 function part1(numbers) {
-  return magnitude(Stdlib_Array.foldLeft(numbers, snailAdd));
+  return magnitude(Stdlib_Array.foldl1(numbers, snailAdd));
 }
 
 function part2(numbers) {
@@ -362,7 +362,7 @@ function parse$1(data) {
 
 function solvePart1(data) {
   var numbers = parse$1(data);
-  return magnitude(Stdlib_Array.foldLeft(numbers, snailAdd));
+  return magnitude(Stdlib_Array.foldl1(numbers, snailAdd));
 }
 
 function solvePart2(data) {

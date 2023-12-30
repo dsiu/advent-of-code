@@ -50,7 +50,7 @@ let parse = data => {
   let secondSection = text->A.getUnsafe(1)->A.init // drop last empty line
 
   let wharfLines = firstSection->A.init->O.getExn->A.map(splitChars)
-  let colNames = firstSection->A.last->S.split(" ")->A.filterMap(Belt.Int.fromString)
+  let colNames = firstSection->A.last->O.getExn->S.split(" ")->A.filterMap(Belt.Int.fromString)
   let moves = secondSection->O.getExn->makeMoves
 
   let wharf = makeWharf(wharfLines, colNames)
@@ -59,7 +59,7 @@ let parse = data => {
 
 let makeMove1 = (wharf, Move(_, from, to_)) => {
   let f = wharf->M.getExn(from)
-  let c = f->A.head
+  let c = f->A.headUnsafe
   let origin = f->A.tail
   let dest = A.append([c], wharf->M.getExn(to_))
 
@@ -88,7 +88,7 @@ let applyMoves2 = (wharf, moves) => {
 }
 
 let showTops = wharf => {
-  wharf->M.valuesToArray->A.map(compose(A.head, extractName))->A.foldLeft(String.concat)
+  wharf->M.valuesToArray->A.map(compose(A.headUnsafe, extractName))->A.foldl1(String.concat)
 }
 
 let solvePart1 = data => {

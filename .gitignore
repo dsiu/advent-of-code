@@ -8,3 +8,4 @@ npm-debug.log
 /.idea/sonarlint/
 /.idea/workspace.xml
 /.yarn
+/coverage/

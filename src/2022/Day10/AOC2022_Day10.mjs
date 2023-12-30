@@ -22,7 +22,7 @@ function applyOp(op) {
 }
 
 function apply(ops) {
-  var len = (ops.length << 1);
+  var len = (Stdlib_Array.length(ops) << 1);
   return Stdlib_Array.zip(Stdlib_Array.makeBy(len, (function (x) {
                     return x + 1 | 0;
                   })), Stdlib_Array.scanl(Stdlib_Array.flatMap(ops, applyOp), 1, (function (prim0, prim1) {
@@ -31,9 +31,9 @@ function apply(ops) {
 }
 
 function extractSignals(signals) {
-  return signals.filter(function (param) {
-              return (param[0] + 20 | 0) % 40 === 0;
-            });
+  return Stdlib_Array.filter(signals, (function (param) {
+                return (param[0] + 20 | 0) % 40 === 0;
+              }));
 }
 
 function calculateSixSignals(signals) {
@@ -68,38 +68,38 @@ function isLit(param) {
 }
 
 function part2(regVals) {
-  var pixels = regVals.map(function (param) {
-        return Utils$AdventOfCode.compose(isLit, showPixel, param);
-      });
-  return JsArray2Ex.chunkBySize(pixels, 40).map(function (x) {
-              return x.join("");
-            });
+  var pixels = Stdlib_Array.map(regVals, (function (param) {
+          return Utils$AdventOfCode.compose(isLit, showPixel, param);
+        }));
+  return Stdlib_Array.map(JsArray2Ex.chunkBySize(pixels, 40), (function (x) {
+                return x.join("");
+              }));
 }
 
 function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
-              var l = x.trim();
-              if (l.startsWith("noop")) {
-                return "Noop";
-              }
-              var match = l.split(" ");
-              if (match.length !== 2) {
-                throw {
-                      RE_EXN_ID: "Match_failure",
-                      _1: [
-                        "AOC2022_Day10.res",
-                        63,
-                        14
-                      ],
-                      Error: new Error()
-                    };
-              }
-              var v = match[1];
-              return {
-                      TAG: "Addx",
-                      _0: Caml_format.int_of_string(v)
-                    };
-            });
+  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+                var l = x.trim();
+                if (l.startsWith("noop")) {
+                  return "Noop";
+                }
+                var match = l.split(" ");
+                if (match.length !== 2) {
+                  throw {
+                        RE_EXN_ID: "Match_failure",
+                        _1: [
+                          "AOC2022_Day10.res",
+                          63,
+                          14
+                        ],
+                        Error: new Error()
+                      };
+                }
+                var v = match[1];
+                return {
+                        TAG: "Addx",
+                        _0: Caml_format.int_of_string(v)
+                      };
+              }));
 }
 
 function solvePart1(data) {
@@ -130,4 +130,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* No side effect */
+/* Stdlib_Array Not a pure module */

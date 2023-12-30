@@ -5,8 +5,8 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_string from "rescript/lib/es6/caml_string.js";
 import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
 import * as Belt_SetString from "rescript/lib/es6/belt_SetString.js";
-import * as TableclothChar from "tablecloth-rescript/src/TableclothChar.mjs";
-import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
+import * as TableclothChar from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothChar.mjs";
+import * as TableclothArray from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
@@ -47,7 +47,7 @@ function merge(param) {
 }
 
 function badgeOf(rucksacks) {
-  return Belt_Array.getExn(Belt_SetString.toArray(Stdlib_Array.foldLeft(Belt_Array.map(rucksacks, merge), Belt_SetString.intersect)), 0);
+  return Belt_Array.getExn(Belt_SetString.toArray(Stdlib_Array.foldl1(Belt_Array.map(rucksacks, merge), Belt_SetString.intersect)), 0);
 }
 
 function part2(rucksacks) {
@@ -90,4 +90,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* TableclothChar Not a pure module */
+/* Stdlib_Array Not a pure module */

@@ -4,10 +4,10 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as TableclothSet from "tablecloth-rescript/src/TableclothSet.mjs";
-import * as TableclothArray from "tablecloth-rescript/src/TableclothArray.mjs";
+import * as TableclothSet from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothSet.mjs";
+import * as TableclothArray from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
-import * as TableclothComparator from "tablecloth-rescript/src/TableclothComparator.mjs";
+import * as TableclothComparator from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothComparator.mjs";
 import * as Coord_V3$AdventOfCode from "../../Coord_V3.mjs";
 import * as Coord_V4$AdventOfCode from "../../Coord_V4.mjs";
 

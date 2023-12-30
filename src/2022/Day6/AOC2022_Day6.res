@@ -15,7 +15,7 @@ let hasSame = x => {!allDifferent(x)}
 let interestingPosition: (int, array<string>) => int = (n, text) => {
   let len = text->A.length
   let candidates = A.zip(A.makeBy(len, Function.identity), text->A.tails->A.map(A.take(_, n)))
-  let packetPos = candidates->A.dropWhile(compose(snd, hasSame))->A.head
+  let packetPos = candidates->A.dropWhile(compose(snd, hasSame))->A.headUnsafe
   n + fst(packetPos)
 }
 
