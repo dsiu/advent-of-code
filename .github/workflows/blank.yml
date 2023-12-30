@@ -37,19 +37,17 @@ jobs:
       - name: Use Corepack
         run:
           corepack enable
+          
       - name: Install
-        uses: borales/actions-yarn@v4
-        with: 
-          cmd: install # will run `yarn install` command
+        run: 
+          yarn install
 
       - name: Build
-        uses: borales/actions-yarn@v4
-        with: 
-          cmd: build will run `yarn build` command
+        run: 
+          yarn build
         env:
           NODE_ENV: production
 
       - name: Test
-        uses: borales/actions-yarn@v4
-        with: 
-          cmd: test # will run `yarn test` command
+        run: 
+          yarn test
