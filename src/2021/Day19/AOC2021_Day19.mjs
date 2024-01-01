@@ -8,9 +8,9 @@ import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-import * as Stdlib_List from "@dsiu/rescript-stdlib-fp/src/Stdlib_List.mjs";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Linear$AdventOfCode from "../../Linear.mjs";
 
@@ -91,14 +91,14 @@ var ras = [
   Utils$AdventOfCode.identity,
   rotY,
   (function (param) {
-      return Stdlib_Function.compose(rotY, rotY, param);
+      return Stdlib__Function.compose(rotY, rotY, param);
     }),
   (function (param) {
-      return Stdlib_Function.compose3(rotY, rotY, rotY, param);
+      return Stdlib__Function.compose3(rotY, rotY, rotY, param);
     }),
   rotZ,
   (function (param) {
-      return Stdlib_Function.compose3(rotZ, rotZ, rotZ, param);
+      return Stdlib__Function.compose3(rotZ, rotZ, rotZ, param);
     })
 ];
 
@@ -106,16 +106,16 @@ var rbs = [
   Utils$AdventOfCode.identity,
   rotX,
   (function (param) {
-      return Stdlib_Function.compose(rotX, rotX, param);
+      return Stdlib__Function.compose(rotX, rotX, param);
     }),
   (function (param) {
-      return Stdlib_Function.compose3(rotX, rotX, rotX, param);
+      return Stdlib__Function.compose3(rotX, rotX, rotX, param);
     })
 ];
 
-var rotations = Stdlib_Array.combination2(ras, rbs, (function (a, b) {
+var rotations = Stdlib__Array.combination2(ras, rbs, (function (a, b) {
         return function (param) {
-          return Stdlib_Function.compose(a, b, param);
+          return Stdlib__Function.compose(a, b, param);
         };
       }));
 
@@ -185,7 +185,7 @@ function sign(bcns) {
     var x = match[0];
     return x * x + y * y + z * z;
   };
-  return bagFromArray(Stdlib_Array.combinationIf2(bcns, bcns, (function (a, b) {
+  return bagFromArray(Stdlib__Array.combinationIf2(bcns, bcns, (function (a, b) {
                     var b$1 = b._0;
                     var a$1 = a._0;
                     if (Linear$AdventOfCode.V3.cmp(b$1, a$1) > 0) {
@@ -231,7 +231,7 @@ function interact(a, b) {
 function matchingTransformAll(scanner1, scanner2) {
   var beacons1 = scanner1.beacons;
   var beacons2 = scanner2.beacons;
-  return Stdlib_Array.combinationIf3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
+  return Stdlib__Array.combinationIf3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
                 var t = minus(b1, Curry._1(rot, b2));
                 var translation = function (param) {
                   return translate(t, param);
@@ -242,7 +242,7 @@ function matchingTransformAll(scanner1, scanner2) {
                 var len = Belt_Set.size(interact(beacons1, transB2));
                 if (len >= 12) {
                   return (function (param) {
-                            return Stdlib_Function.compose(rot, translation, param);
+                            return Stdlib__Function.compose(rot, translation, param);
                           });
                 }
                 
@@ -250,7 +250,7 @@ function matchingTransformAll(scanner1, scanner2) {
 }
 
 function matchingTransform(scanner1, scanner2) {
-  return Stdlib_Array.arrayToOption(matchingTransformAll(scanner1, scanner2));
+  return Stdlib__Array.arrayToOption(matchingTransformAll(scanner1, scanner2));
 }
 
 function mkReconstruction(scanners) {
@@ -294,7 +294,7 @@ function reconstructStep(param) {
             return vagueMatch(current, x);
           }));
     var matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.mapU(passMatches, (function (x) {
-                    return Stdlib_Array.arrayToOption(matchingTransformAll(current, x));
+                    return Stdlib__Array.arrayToOption(matchingTransformAll(current, x));
                   }))), (function (x) {
             return Belt_Option.isSome(x[1]);
           }));
@@ -430,7 +430,7 @@ function part2(scanners) {
               });
   };
   var origins = Belt_List.mapU(scanners, extractOrigin);
-  return Belt_Option.getExn(Stdlib_List.listToOption(Belt_List.sort(Stdlib_List.combination2(origins, origins, (function (a, b) {
+  return Belt_Option.getExn(Stdlib__List.listToOption(Belt_List.sort(Stdlib__List.combination2(origins, origins, (function (a, b) {
                             var a$1 = minus(a, b);
                             var a$2 = a$1._0;
                             return Math.abs(a$2[0]) + Math.abs(a$2[1]) + Math.abs(a$2[2]);
@@ -449,9 +449,9 @@ function solvePart2(data) {
   return part2(reconstructScanners(scanners));
 }
 
-var compose = Stdlib_Function.compose;
+var compose = Stdlib__Function.compose;
 
-var compose3 = Stdlib_Function.compose3;
+var compose3 = Stdlib__Function.compose3;
 
 export {
   log ,

@@ -3,7 +3,7 @@ open Utils
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
-let {compose, compose3} = module(Stdlib_Function)
+let {compose, compose3} = module(Stdlib__Function)
 
 module Scanner = {
   // Coord Type [should refactor out]

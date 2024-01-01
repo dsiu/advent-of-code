@@ -4,8 +4,8 @@ import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Belt_Map from "rescript/lib/es6/belt_Map.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-import * as Stdlib_List from "@dsiu/rescript-stdlib-fp/src/Stdlib_List.mjs";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as TableclothMap from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothMap.mjs";
 import * as TableclothList from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothList.mjs";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
@@ -107,7 +107,7 @@ function travelSegment(path, segment) {
   };
   var visited$p = TableclothList.fold(TableclothList.zip(TableclothList.initialize(distance, (function (x) {
                   return (x + len | 0) + 1 | 0;
-                })), Stdlib_List.unfold((function (param) {
+                })), Stdlib__List.unfold((function (param) {
                   return param[0] >= distance;
                 }), (function (param) {
                   var x = param[1];
@@ -152,7 +152,7 @@ function closest(points) {
 }
 
 function crossovers(travelledPaths) {
-  return Stdlib_Array.foldl1(Belt_Array.map(travelledPaths, (function (param) {
+  return Stdlib__Array.foldl1(Belt_Array.map(travelledPaths, (function (param) {
                     return param.visited;
                   })), (function (m1, m2) {
                 return TableclothMap.merge(m1, m2, (function (_k, a, b) {

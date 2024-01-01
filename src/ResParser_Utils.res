@@ -1,7 +1,7 @@
-open Stdlib
-module A = Array
-module L = List
-module S = String
+// open Stdlib
+module A = Stdlib.Array
+module L = Stdlib.List
+module S = Stdlib.String
 module P = Res_parser
 
 let charListToString = chars => chars->L.map(Char.escaped)->L.reduce("", S.concat)

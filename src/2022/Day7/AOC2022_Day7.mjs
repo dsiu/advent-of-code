@@ -2,7 +2,7 @@
 
 import * as Res_parser from "@resinfo/parser/src/res_parser.mjs";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as ResParser_Utils$AdventOfCode from "../../ResParser_Utils.mjs";
 
@@ -75,13 +75,13 @@ var CmdParser = {
 };
 
 function parse(data) {
-  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
+  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
                 return prim.trim();
               }));
 }
 
 function solvePart1(data) {
-  var prim = Stdlib_Array.filterMap(Stdlib_Array.map(parse(data), run), (function (result) {
+  var prim = Stdlib__Array.filterMap(Stdlib__Array.map(parse(data), run), (function (result) {
           if (result.TAG === "Ok") {
             return parsedObjectToString(result._0[0]);
           }

@@ -2,10 +2,10 @@
 
 import * as Char from "rescript/lib/es6/char.js";
 import * as Res_parser from "@resinfo/parser/src/res_parser.mjs";
-import * as Stdlib_List from "@dsiu/rescript-stdlib-fp/src/Stdlib_List.mjs";
+import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.mjs";
 
 function charListToString(chars) {
-  return Stdlib_List.reduce(Stdlib_List.map(chars, Char.escaped), "", (function (prim0, prim1) {
+  return Stdlib__List.reduce(Stdlib__List.map(chars, Char.escaped), "", (function (prim0, prim1) {
                 return prim0.concat(prim1);
               }));
 }

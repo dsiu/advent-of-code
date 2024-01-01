@@ -2,7 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
 function MakeStack(Item) {
   var push = function (contents, x) {
@@ -100,15 +100,15 @@ function MakeStack(Item) {
                 }), __x);
   };
   var square = function (param) {
-    return Stdlib_Function.compose(dup, mul, param);
+    return Stdlib__Function.compose(dup, mul, param);
   };
   var cube = function (param) {
-    return Stdlib_Function.compose4(dup, dup, mul, mul, param);
+    return Stdlib__Function.compose4(dup, dup, mul, mul, param);
   };
-  var sum_numbers_upto = Curry._2(Stdlib_Function.compose, (function (param) {
-          return Stdlib_Function.compose4(dup, one, add, mul, param);
+  var sum_numbers_upto = Curry._2(Stdlib__Function.compose, (function (param) {
+          return Stdlib__Function.compose4(dup, one, add, mul, param);
         }), (function (param) {
-          return Stdlib_Function.compose(two, div, param);
+          return Stdlib__Function.compose(two, div, param);
         }));
   return {
           push: push,
@@ -132,8 +132,8 @@ function MakeStack(Item) {
           sub: sub,
           div: div,
           neg: neg,
-          compose: Stdlib_Function.compose,
-          compose4: Stdlib_Function.compose4,
+          compose: Stdlib__Function.compose,
+          compose4: Stdlib__Function.compose4,
           square: square,
           cube: cube,
           sum_numbers_upto: sum_numbers_upto
@@ -286,17 +286,17 @@ function neg$1(__x) {
 }
 
 function square(param) {
-  return Stdlib_Function.compose(dup, mul$1, param);
+  return Stdlib__Function.compose(dup, mul$1, param);
 }
 
 function cube(param) {
-  return Stdlib_Function.compose4(dup, dup, mul$1, mul$1, param);
+  return Stdlib__Function.compose4(dup, dup, mul$1, mul$1, param);
 }
 
-var sum_numbers_upto = Curry._2(Stdlib_Function.compose, (function (param) {
-        return Stdlib_Function.compose4(dup, one, add$1, mul$1, param);
+var sum_numbers_upto = Curry._2(Stdlib__Function.compose, (function (param) {
+        return Stdlib__Function.compose4(dup, one, add$1, mul$1, param);
       }), (function (param) {
-        return Stdlib_Function.compose(two, div$1, param);
+        return Stdlib__Function.compose(two, div$1, param);
       }));
 
 var StackInt = {
@@ -321,8 +321,8 @@ var StackInt = {
   sub: sub$1,
   div: div$1,
   neg: neg$1,
-  compose: Stdlib_Function.compose,
-  compose4: Stdlib_Function.compose4,
+  compose: Stdlib__Function.compose,
+  compose4: Stdlib__Function.compose4,
   square: square,
   cube: cube,
   sum_numbers_upto: sum_numbers_upto
@@ -476,17 +476,17 @@ function neg$3(__x) {
 }
 
 function square$1(param) {
-  return Stdlib_Function.compose(dup$1, mul$3, param);
+  return Stdlib__Function.compose(dup$1, mul$3, param);
 }
 
 function cube$1(param) {
-  return Stdlib_Function.compose4(dup$1, dup$1, mul$3, mul$3, param);
+  return Stdlib__Function.compose4(dup$1, dup$1, mul$3, mul$3, param);
 }
 
-var sum_numbers_upto$1 = Curry._2(Stdlib_Function.compose, (function (param) {
-        return Stdlib_Function.compose4(dup$1, one$1, add$3, mul$3, param);
+var sum_numbers_upto$1 = Curry._2(Stdlib__Function.compose, (function (param) {
+        return Stdlib__Function.compose4(dup$1, one$1, add$3, mul$3, param);
       }), (function (param) {
-        return Stdlib_Function.compose(two$1, div$3, param);
+        return Stdlib__Function.compose(two$1, div$3, param);
       }));
 
 var StackFloat = {
@@ -511,8 +511,8 @@ var StackFloat = {
   sub: sub$3,
   div: div$3,
   neg: neg$3,
-  compose: Stdlib_Function.compose,
-  compose4: Stdlib_Function.compose4,
+  compose: Stdlib__Function.compose,
+  compose4: Stdlib__Function.compose4,
   square: square$1,
   cube: cube$1,
   sum_numbers_upto: sum_numbers_upto$1

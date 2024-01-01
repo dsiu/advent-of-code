@@ -2,7 +2,7 @@
 
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
@@ -126,7 +126,7 @@ function part1(xs) {
 }
 
 function part2(xs) {
-  return Belt_Array.getExn(Stdlib_Array.combinationIf2(Belt_Array.range(0, 99), Belt_Array.range(0, 99), (function (noun, verb) {
+  return Belt_Array.getExn(Stdlib__Array.combinationIf2(Belt_Array.range(0, 99), Belt_Array.range(0, 99), (function (noun, verb) {
                     if (executeWithNounVerb({
                             prog: xs.slice(0),
                             pc: 0
@@ -155,4 +155,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* Stdlib_Array Not a pure module */
+/* Stdlib__Array Not a pure module */

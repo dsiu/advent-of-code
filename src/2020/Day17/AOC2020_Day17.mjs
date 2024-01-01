@@ -3,7 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as TableclothSet from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothSet.mjs";
 import * as TableclothArray from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
@@ -79,7 +79,7 @@ function makeGrid(lines) {
   var maxY = lines.length - 1 | 0;
   var xs = Belt_Array.range(0, maxX);
   var ys = Belt_Array.range(0, maxY);
-  return TableclothSet.fromArray(Stdlib_Array.combinationIf2(xs, ys, createActive), {
+  return TableclothSet.fromArray(Stdlib__Array.combinationIf2(xs, ys, createActive), {
               comparator: comparator
             });
 }
@@ -116,7 +116,7 @@ function conv34(grid) {
 
 function neighbourSpaces(here) {
   if (here.TAG === "Coord_V3") {
-    return TableclothSet.fromArray(Stdlib_Array.combinationIf3([
+    return TableclothSet.fromArray(Stdlib__Array.combinationIf3([
                     -1,
                     0,
                     1
@@ -145,7 +145,7 @@ function neighbourSpaces(here) {
                 comparator: comparator
               });
   } else {
-    return TableclothSet.fromArray(Stdlib_Array.combinationIf4([
+    return TableclothSet.fromArray(Stdlib__Array.combinationIf4([
                     -1,
                     0,
                     1

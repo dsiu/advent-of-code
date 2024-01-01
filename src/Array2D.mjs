@@ -3,7 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "./Utils.mjs";
 
 function make(param, e) {
@@ -181,7 +181,7 @@ function toString(t, f) {
   return Curry._2(arrToStr, Belt_Array.map(t, (function (x) {
                     return Belt_Array.map(x, f);
                   })), (function (x) {
-                return Curry._2(arrToStr, x, Stdlib_Function.identity) + "\n";
+                return Curry._2(arrToStr, x, Stdlib__Function.identity) + "\n";
               }));
 }
 

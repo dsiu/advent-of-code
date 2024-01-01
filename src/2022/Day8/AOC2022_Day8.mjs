@@ -2,9 +2,9 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Caml_splice_call from "rescript/lib/es6/caml_splice_call.js";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
@@ -44,19 +44,19 @@ function setVisibility(row) {
             ];
     }
   };
-  return Stdlib_Array.reduce(row, [
+  return Stdlib__Array.reduce(row, [
                   -1,
                   []
                 ], vis)[1].toReversed();
 }
 
 function setVisibilityOrient(__x) {
-  return Stdlib_Array.map(__x, setVisibility);
+  return Stdlib__Array.map(__x, setVisibility);
 }
 
 function setVisibilityForest(forest) {
   var rotate = function (x) {
-    return Stdlib_Array.map(Utils$AdventOfCode.transpose(x), (function (prim) {
+    return Stdlib__Array.map(Utils$AdventOfCode.transpose(x), (function (prim) {
                   return prim.toReversed();
                 }));
   };
@@ -64,7 +64,7 @@ function setVisibilityForest(forest) {
 }
 
 function countVisible(forest) {
-  return Stdlib_Array.length(Stdlib_Array.filter(Caml_splice_call.spliceObjApply([], "concat", [forest]), isVisible));
+  return Stdlib__Array.length(Stdlib__Array.filter(Caml_splice_call.spliceObjApply([], "concat", [forest]), isVisible));
 }
 
 function part1(param) {
@@ -72,13 +72,13 @@ function part1(param) {
 }
 
 function tracks(forest, row, col) {
-  var match = Stdlib_Array.splitAt(Stdlib_Array.getUnsafe(forest, row), col);
-  var match$1 = Stdlib_Array.splitAt(Stdlib_Array.getUnsafe(Utils$AdventOfCode.transpose(forest), col), row);
+  var match = Stdlib__Array.splitAt(Stdlib__Array.getUnsafe(forest, row), col);
+  var match$1 = Stdlib__Array.splitAt(Stdlib__Array.getUnsafe(Utils$AdventOfCode.transpose(forest), col), row);
   return [
           match[0].toReversed(),
-          Stdlib_Array.drop(match[1], 1),
+          Stdlib__Array.drop(match[1], 1),
           match$1[0].toReversed(),
-          Stdlib_Array.drop(match$1[1], 1)
+          Stdlib__Array.drop(match$1[1], 1)
         ];
 }
 
@@ -86,8 +86,8 @@ function takeWhile1(xs, f) {
   if (xs.length === 0) {
     return [];
   }
-  var h = Stdlib_Array.headUnsafe(xs);
-  var t = Stdlib_Array.tail(xs);
+  var h = Stdlib__Array.headUnsafe(xs);
+  var t = Stdlib__Array.tail(xs);
   var match = Curry._1(f, h);
   if (match) {
     return [h].concat(takeWhile1(t, f));
@@ -97,15 +97,15 @@ function takeWhile1(xs, f) {
 }
 
 function viewDistance(trees, h) {
-  return Stdlib_Array.length(takeWhile1(Stdlib_Array.map(trees, treeHeight), (function (x) {
+  return Stdlib__Array.length(takeWhile1(Stdlib__Array.map(trees, treeHeight), (function (x) {
                     return x < h;
                   })));
 }
 
 function scenicScore(forest, row, col) {
   var directions = tracks(forest, row, col);
-  var h = treeHeight(Stdlib_Array.getUnsafe(Stdlib_Array.getUnsafe(forest, row), col));
-  return Stdlib_Array.reduce(Stdlib_Array.map(directions, (function (__x) {
+  var h = treeHeight(Stdlib__Array.getUnsafe(Stdlib__Array.getUnsafe(forest, row), col));
+  return Stdlib__Array.reduce(Stdlib__Array.map(directions, (function (__x) {
                     return viewDistance(__x, h);
                   })), 1, (function (a, x) {
                 return Math.imul(a, x);
@@ -113,16 +113,16 @@ function scenicScore(forest, row, col) {
 }
 
 function part2(forest) {
-  var nrows = Stdlib_Array.length(forest);
-  var ncols = Stdlib_Array.length(Stdlib_Array.headUnsafe(forest));
-  return Utils$AdventOfCode.maxIntInArray(Stdlib_Array.combination2(Stdlib_Array.makeBy(nrows - 1 | 0, Stdlib_Function.identity), Stdlib_Array.makeBy(ncols - 1 | 0, Stdlib_Function.identity), (function (r, c) {
+  var nrows = Stdlib__Array.length(forest);
+  var ncols = Stdlib__Array.length(Stdlib__Array.headUnsafe(forest));
+  return Utils$AdventOfCode.maxIntInArray(Stdlib__Array.combination2(Stdlib__Array.makeBy(nrows - 1 | 0, Stdlib__Function.identity), Stdlib__Array.makeBy(ncols - 1 | 0, Stdlib__Function.identity), (function (r, c) {
                     return scenicScore(forest, r, c);
                   })));
 }
 
 function parse(data) {
-  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                return Stdlib_Array.map(Utils$AdventOfCode.splitChars(x.trim()), (function (x) {
+  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+                return Stdlib__Array.map(Utils$AdventOfCode.splitChars(x.trim()), (function (x) {
                               return {
                                       TAG: "Tree",
                                       _0: Caml_format.int_of_string(x),
@@ -164,4 +164,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* Stdlib_Array Not a pure module */
+/* Stdlib__Array Not a pure module */

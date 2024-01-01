@@ -3,7 +3,7 @@
 import * as Caml from "rescript/lib/es6/caml.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as TableclothSet from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothSet.mjs";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
@@ -24,7 +24,7 @@ function newRope(n) {
             0,
             0
           ],
-          knots: Stdlib_Array.make(n, [
+          knots: Stdlib__Array.make(n, [
                 0,
                 0
               ]),
@@ -41,29 +41,29 @@ function expandPath(directions) {
   var expandStep = function (step) {
     switch (step.TAG) {
       case "U" :
-          return Stdlib_Array.make(step._0, [
+          return Stdlib__Array.make(step._0, [
                       0,
                       1
                     ]);
       case "R" :
-          return Stdlib_Array.make(step._0, [
+          return Stdlib__Array.make(step._0, [
                       1,
                       0
                     ]);
       case "D" :
-          return Stdlib_Array.make(step._0, [
+          return Stdlib__Array.make(step._0, [
                       0,
                       -1
                     ]);
       case "L" :
-          return Stdlib_Array.make(step._0, [
+          return Stdlib__Array.make(step._0, [
                       -1,
                       0
                     ]);
       
     }
   };
-  return Stdlib_Array.flatMap(directions, expandStep);
+  return Stdlib__Array.flatMap(directions, expandStep);
 }
 
 function manhattan(p1, p2) {
@@ -96,7 +96,7 @@ function knotStep(param, kt) {
 
 function ropeStep(rope, step) {
   var h = Coord_V2$AdventOfCode.add(rope.headK, step);
-  var match = Stdlib_Array.reduce(rope.knots, [
+  var match = Stdlib__Array.reduce(rope.knots, [
         h,
         []
       ], knotStep);
@@ -109,21 +109,21 @@ function ropeStep(rope, step) {
 }
 
 function ropeSteps(rope, steps) {
-  return Stdlib_Array.reduce(steps, rope, ropeStep);
+  return Stdlib__Array.reduce(steps, rope, ropeStep);
 }
 
 function part1(steps) {
-  var rope = Stdlib_Array.reduce(steps, newRope(1), ropeStep);
+  var rope = Stdlib__Array.reduce(steps, newRope(1), ropeStep);
   return TableclothSet.length(rope.trace);
 }
 
 function part2(steps) {
-  var rope = Stdlib_Array.reduce(steps, newRope(9), ropeStep);
+  var rope = Stdlib__Array.reduce(steps, newRope(9), ropeStep);
   return TableclothSet.length(rope.trace);
 }
 
 function parse(data) {
-  return Stdlib_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
                 var match = x.trim().split(" ");
                 if (match.length !== 2) {
                   throw {

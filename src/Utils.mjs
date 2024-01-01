@@ -16,7 +16,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Array from "@rescript/core/src/Core__Array.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/belt_MutableMapInt.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/belt_MutableMapString.js";
@@ -32,7 +32,7 @@ function toString(m, f) {
 }
 
 function toString$1(m) {
-  return toString(m, Stdlib_Function.identity);
+  return toString(m, Stdlib__Function.identity);
 }
 
 var $$String = {
@@ -62,7 +62,7 @@ function toString$3(m, f) {
 }
 
 function toString$4(m) {
-  return toString$3(m, Stdlib_Function.identity);
+  return toString$3(m, Stdlib__Function.identity);
 }
 
 var $$String$1 = {
@@ -203,13 +203,13 @@ function partial_arg$1(param) {
 }
 
 function partial_arg$2(param) {
-  return Stdlib_Function.compose(partial_arg$1, (function (prim) {
+  return Stdlib__Function.compose(partial_arg$1, (function (prim) {
                 return prim;
               }), param);
 }
 
 function intFromStringExn(param) {
-  return Stdlib_Function.compose((function (prim) {
+  return Stdlib__Function.compose((function (prim) {
                 return prim.trim();
               }), partial_arg$2, param);
 }
@@ -423,9 +423,9 @@ var MutableMap;
 
 var HashMap;
 
-var identity = Stdlib_Function.identity;
+var identity = Stdlib__Function.identity;
 
-var compose = Stdlib_Function.compose;
+var compose = Stdlib__Function.compose;
 
 var transpose = JsArray2Ex.transpose;
 
