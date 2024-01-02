@@ -1,12 +1,13 @@
+open Stdlib
+
 module TC = Tablecloth
 
-open TC
 type t = TableclothTuple4.t<int, int, int, int>
 
 let intCompare = (a, b) => Int.compare(a, b)->Stdlib.Ordering.toInt
 let compare = TableclothTuple4.compare(~f=intCompare, ~g=intCompare, ~h=intCompare, ~i=intCompare)
 
-include Comparator.Make({
+include TC.Comparator.Make({
   type t = t
   let compare = compare
 })
