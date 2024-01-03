@@ -31,7 +31,7 @@ function splittable(t) {
         return ;
       }
     } else {
-      return Stdlib__Option.optionOr(splittableC(Tree$AdventOfCode.left(loc)), splittableC(Tree$AdventOfCode.right(loc)));
+      return Stdlib__Option.or_(splittableC(Tree$AdventOfCode.left(loc)), splittableC(Tree$AdventOfCode.right(loc)));
     }
   };
   return splittableC(Tree$AdventOfCode.top(t));
@@ -78,7 +78,7 @@ function pairAtDepthC(n, l) {
   if (l._0.TAG === "Leaf") {
     return ;
   } else if (n !== 0) {
-    return Stdlib__Option.optionOr(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l)));
+    return Stdlib__Option.or_(pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.left(l)), pairAtDepthC(n - 1 | 0, Tree$AdventOfCode.right(l)));
   } else {
     return l;
   }
@@ -217,7 +217,7 @@ function explode(num) {
 function reduce(_num) {
   while(true) {
     var num = _num;
-    var num1 = Stdlib__Option.optionOr(explode(num), split(num));
+    var num1 = Stdlib__Option.or_(explode(num), split(num));
     if (num1 === undefined) {
       return num;
     }

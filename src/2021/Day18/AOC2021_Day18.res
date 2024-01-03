@@ -32,7 +32,7 @@ module SnailFish = {
       switch loc {
       | T.Loc(Leaf(n), _) => n >= 10 ? Some(loc) : None
       | T.Loc(Pair(_, _), _) =>
-        splittableC(T.left(loc))->Stdlib.Option.optionOr(splittableC(T.right(loc)))
+        splittableC(T.left(loc))->Stdlib.Option.or_(splittableC(T.right(loc)))
       }
     }
     splittableC(T.top(t))
@@ -74,7 +74,7 @@ module SnailFish = {
       Some(l)
     | (n, Loc(Pair(_, _), _)) =>
       // pairAtDepthC(n - 1, left(l))->Option.flatMap(_ => pairAtDepthC(n - 1, right(l)))
-      pairAtDepthC(n - 1, T.left(l))->Stdlib.Option.optionOr(pairAtDepthC(n - 1, T.right(l)))
+      pairAtDepthC(n - 1, T.left(l))->Stdlib.Option.or_(pairAtDepthC(n - 1, T.right(l)))
     }
   }
 
@@ -158,7 +158,7 @@ module SnailFish = {
 
   type reduce = tree => tree
   let rec reduce: reduce = num => {
-    switch explode(num)->Stdlib.Option.optionOr(split(num)) {
+    switch explode(num)->Stdlib.Option.or_(split(num)) {
     | None => num
     | Some(num1) => reduce(num1)
     }
