@@ -105,7 +105,7 @@ function travelSegment(path, segment) {
       return TableclothMap.add(visits, loc, param[0]);
     }
   };
-  var visited$p = TableclothList.fold(TableclothList.zip(TableclothList.initialize(distance, (function (x) {
+  var visited$p = TableclothList.fold(Stdlib__List.zip(TableclothList.initialize(distance, (function (x) {
                   return (x + len | 0) + 1 | 0;
                 })), Stdlib__List.unfold((function (param) {
                   return param[0] >= distance;

@@ -100,4 +100,4 @@ export {
   powersetArrayFlatMap_ ,
   powersetArray ,
 }
-/* Stdlib__Array Not a pure module */
+/* Stdlib__List Not a pure module */

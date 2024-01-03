@@ -70,7 +70,7 @@ let travelSegment: (path, segment) => path = (path, segment) => {
 
   let unfold = Stdlib.List.unfold
 
-  let visited' = TC.List.zip(
+  let visited' = Stdlib.List.zip(
     TC.List.initialize(distance, ~f=x => x + len + 1),
     // unfold is iterate
     unfold(
