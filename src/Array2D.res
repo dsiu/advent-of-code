@@ -12,7 +12,9 @@ let copy = t => {
 
 let lengthY = t => t->Array.length
 
-let lengthX = t => t->Array.getExn(0)->Array.length
+let lengthX = t => {
+  t->Array.get(0)->Stdlib.Option.mapOr(0, Array.length)
+}
 
 let isValidXY = (t, (x, y)) => {
   let len_x = t->lengthX
@@ -48,10 +50,14 @@ let getYEquals = (t, y) => {
 }
 
 let getXEquals = (t, x) => {
-  let ret = t->Array.reduce([], (a, xs) => {
-    Array.concat(a, [xs->Array.getExn(x)])
-  })
-  ret->Array.length === t->lengthY ? Some(ret) : None
+  x < t->lengthX
+    ? {
+        let ret = t->Array.reduce([], (a, xs) => {
+          Array.concat(a, [xs->Array.getExn(x)])
+        })
+        ret->Array.length === t->lengthY ? Some(ret) : None
+      }
+    : None
 }
 
 //let keep = (t, f) => {
@@ -107,15 +113,25 @@ let flatten = t => {
 }
 
 let crop = (t, (x, y), ~len_x, ~len_y) => {
-  let ret = ref([])
-  for i in y to y + len_y - 1 {
-    ret :=
-      Array.concat(
-        ret.contents,
-        [t->getYEquals(i)->Option.getWithDefault([])->Array.slice(~offset=x, ~len=len_x)],
-      )
-  }
-  ret.contents
+  let sizeX = t->lengthX
+  let sizeY = t->lengthY
+  t->isValidXY((x, y))
+    ? {
+        let ret = ref([])
+        let max_x_len = sizeX - x
+        let adj_len_x = min(len_x, max_x_len)
+        let max_y_len = sizeY - y
+        let adj_y = min(y + len_y, y + max_y_len) - 1
+        for i in y to adj_y {
+          ret :=
+            Array.concat(
+              ret.contents,
+              [t->getYEquals(i)->Option.getWithDefault([])->Array.slice(~offset=x, ~len=adj_len_x)],
+            )
+        }
+        ret.contents
+      }
+    : []
 }
 
 let eq = (t, u) => {
