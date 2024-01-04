@@ -1,4 +1,3 @@
-open Belt
 exception Not_Expected(string)
 
 // Type
@@ -11,7 +10,7 @@ type rec tree<'a> =
 //
 let rec treeToString = e => {
   switch e {
-  | Leaf(i) => i->Int.toString
+  | Leaf(i) => i->Stdlib.Int.toString
   | Pair((e1, e2)) => {
       let s1 = e1->treeToString
       let s2 = e2->treeToString

@@ -49,7 +49,7 @@ function powersetArrayWithList_(xs) {
 }
 
 function powersetArrayMap_(set) {
-  var match = Stdlib__Array.length(set);
+  var match = set.length;
   if (match === 0) {
     return [[]];
   }
@@ -63,7 +63,7 @@ function powersetArrayMap_(set) {
 }
 
 function powersetArrayFlatMap_(set) {
-  var match = Stdlib__Array.length(set);
+  var match = set.length;
   if (match === 0) {
     return [[]];
   }

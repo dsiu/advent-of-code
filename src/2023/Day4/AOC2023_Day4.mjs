@@ -60,7 +60,7 @@ function part2(cards) {
   while(true) {
     var q = _q;
     var n = _n;
-    var match = Stdlib__Array.length(q);
+    var match = q.length;
     if (match === 0) {
       return n;
     }

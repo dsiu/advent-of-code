@@ -22,7 +22,7 @@ function applyOp(op) {
 }
 
 function apply(ops) {
-  var len = (Stdlib__Array.length(ops) << 1);
+  var len = (ops.length << 1);
   return Stdlib__Array.zip(Stdlib__Array.makeBy(len, (function (x) {
                     return x + 1 | 0;
                   })), Stdlib__Array.scanl(Stdlib__Array.flatMap(ops, applyOp), 1, (function (prim0, prim1) {

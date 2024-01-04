@@ -100,7 +100,7 @@ function rowsFromRegion(region) {
   return Stdlib__Array.reduce(Stdlib__Array.map(region, (function (param) {
                       return param[1];
                     })).toSorted(Stdlib__Int.compare), [], (function (acc, e) {
-                var last = acc.at(Stdlib__Array.length(acc) - 1 | 0);
+                var last = acc.at(acc.length - 1 | 0);
                 if (last !== undefined && last === e) {
                   return acc;
                 } else {
@@ -133,7 +133,7 @@ function findNumbers(engine) {
                                   var x = param$1[0];
                                   var buf = param[1];
                                   var parsed = param[0];
-                                  var last = buf.at(Stdlib__Array.length(buf) - 1 | 0);
+                                  var last = buf.at(buf.length - 1 | 0);
                                   if (last !== undefined && last[0] !== (x - 1 | 0)) {
                                     parsed.push(buf);
                                     return [
@@ -215,14 +215,14 @@ function part2(engine) {
   var numbers = findNumbers(engine);
   var starTouched = Stdlib__Array.filterMap(stars, (function (s) {
           var t = touchedDigit(engine, [s]);
-          if (Stdlib__Array.length(t) >= 2) {
+          if (t.length >= 2) {
             return t;
           }
           
         }));
   return Utils$AdventOfCode.sumIntArray(Stdlib__Array.filterMap(starTouched, (function (x) {
                     var touchedNums = findNumbersTouched(engine, numbers, x);
-                    if (Stdlib__Array.length(touchedNums) === 2) {
+                    if (touchedNums.length === 2) {
                       return Utils$AdventOfCode.mulIntArray(touchedNums);
                     }
                     

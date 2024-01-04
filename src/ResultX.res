@@ -1,18 +1,6 @@
 // Result for handling async promise
 //
 
-let mapError = (result, fn) =>
-  switch result {
-  | Ok(_) as ok => ok
-  | Error(error) => Error(fn(error))
-  }
-
-let fromOption = (option, error) =>
-  switch option {
-  | Some(value) => Ok(value)
-  | None => Error(error)
-  }
-
 let asyncFlatMap = (result, fn) => {
   switch result {
   | Error(_) as error => error->Promise.resolve

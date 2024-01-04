@@ -301,7 +301,7 @@ function sumRange(xs, offset, len) {
 
 function maxIntInArray(xs) {
   var sorted = xs.toSorted(Stdlib__Int.compare);
-  return Stdlib__Array.getUnsafe(sorted, Stdlib__Array.length(sorted) - 1 | 0);
+  return Stdlib__Array.getUnsafe(sorted, sorted.length - 1 | 0);
 }
 
 function minIntInArray(xs) {
@@ -325,7 +325,7 @@ var BigIntExt = {
 
 function maxBigIntInArray(xs) {
   var sorted = xs.toSorted(compare);
-  return Stdlib__Array.getUnsafe(sorted, Stdlib__Array.length(sorted) - 1 | 0);
+  return Stdlib__Array.getUnsafe(sorted, sorted.length - 1 | 0);
 }
 
 function minBigIntInArray(xs) {

@@ -20,7 +20,7 @@ function hasSame(x) {
 }
 
 function interestingPosition(n, text) {
-  var len = Stdlib__Array.length(text);
+  var len = text.length;
   var candidates = Stdlib__Array.zip(Stdlib__Array.makeBy(len, (function (prim) {
               return prim;
             })), Stdlib__Array.map(Stdlib__Array.tails(text), (function (__x) {

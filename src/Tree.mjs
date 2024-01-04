@@ -7,7 +7,7 @@ var Not_Expected = /* @__PURE__ */Caml_exceptions.create("Tree-AdventOfCode.Not_
 
 function treeToString(e) {
   if (e.TAG === "Leaf") {
-    return String(e._0);
+    return e._0.toString();
   }
   var s1 = treeToString(e._0);
   var s2 = treeToString(e._1);

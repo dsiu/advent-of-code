@@ -63,7 +63,7 @@ function setVisibilityForest(forest) {
 }
 
 function countVisible(forest) {
-  return Stdlib__Array.length(Stdlib__Array.filter(Caml_splice_call.spliceObjApply([], "concat", [forest]), isVisible));
+  return Stdlib__Array.filter(Caml_splice_call.spliceObjApply([], "concat", [forest]), isVisible).length;
 }
 
 function part1(param) {
@@ -96,9 +96,9 @@ function takeWhile1(xs, f) {
 }
 
 function viewDistance(trees, h) {
-  return Stdlib__Array.length(takeWhile1(Stdlib__Array.map(trees, treeHeight), (function (x) {
-                    return x < h;
-                  })));
+  return takeWhile1(Stdlib__Array.map(trees, treeHeight), (function (x) {
+                return x < h;
+              })).length;
 }
 
 function scenicScore(forest, row, col) {
@@ -115,8 +115,8 @@ function part2(forest) {
   var id = function (prim) {
     return prim;
   };
-  var nrows = Stdlib__Array.length(forest);
-  var ncols = Stdlib__Array.length(Stdlib__Array.headUnsafe(forest));
+  var nrows = forest.length;
+  var ncols = Stdlib__Array.headUnsafe(forest).length;
   return Utils$AdventOfCode.maxIntInArray(Stdlib__Array.combination2(Stdlib__Array.makeBy(nrows - 1 | 0, id), Stdlib__Array.makeBy(ncols - 1 | 0, id), (function (r, c) {
                     return scenicScore(forest, r, c);
                   })));
