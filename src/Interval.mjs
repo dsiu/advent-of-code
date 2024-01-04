@@ -2,6 +2,7 @@
 
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -174,8 +175,8 @@ function sortAndMergeOverlaps(intervals) {
       if (len === 0) {
         return [];
       }
-      var a = sortedIntervals[0];
-      var b = sortedIntervals[1];
+      var a = Stdlib__Array.getUnsafe(sortedIntervals, 0);
+      var b = Stdlib__Array.getUnsafe(sortedIntervals, 1);
       if (below(a, b) && !adjacent(a, b)) {
         return [a].concat(loop(sortedIntervals.slice(1)));
       }
@@ -206,4 +207,4 @@ export {
   sort ,
   sortAndMergeOverlaps ,
 }
-/* No side effect */
+/* Stdlib__Array Not a pure module */
