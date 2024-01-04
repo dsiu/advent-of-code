@@ -211,4 +211,4 @@ export {
   eq ,
   toString ,
 }
-/* No side effect */
+/* Utils-AdventOfCode Not a pure module */

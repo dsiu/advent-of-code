@@ -124,4 +124,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* ChineseRemainder-AdventOfCode Not a pure module */
+/* Utils-AdventOfCode Not a pure module */

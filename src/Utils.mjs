@@ -3,19 +3,19 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Int64 from "rescript/lib/es6/int64.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
-import * as Core__Int from "@rescript/core/src/Core__Int.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
 import * as Caml_int64 from "rescript/lib/es6/caml_int64.js";
-import * as Core__List from "@rescript/core/src/Core__List.mjs";
 import * as JsArray2Ex from "js-array2-ex/src/JsArray2Ex.mjs";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Belt_MapInt from "rescript/lib/es6/belt_MapInt.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as Core__Array from "@rescript/core/src/Core__Array.mjs";
-import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
+import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.mjs";
+import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
+import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/belt_MutableMapInt.js";
@@ -170,7 +170,7 @@ var MutableMapString = {
 };
 
 function toString$14(a, f) {
-  return "[" + a.map(f).join(",") + "]";
+  return "[" + Stdlib__Array.map(a, f).join(",") + "]";
 }
 
 var $$Array = {
@@ -178,7 +178,7 @@ var $$Array = {
 };
 
 function toString$15(a, f) {
-  return Core__List.reduce(a, "{", (function (a, v) {
+  return Stdlib__List.reduce(a, "{", (function (a, v) {
                 return a + Curry._1(f, v) + ",";
               })) + "}";
 }
@@ -203,7 +203,7 @@ function base2(__x) {
 var partial_arg = 10;
 
 function partial_arg$1(param) {
-  return Core__Int.fromString(partial_arg, param);
+  return Stdlib__Int.fromString(partial_arg, param);
 }
 
 function partial_arg$2(param) {
@@ -237,7 +237,7 @@ function int32ToUint32(x) {
 }
 
 function increaseByInt64(v, n) {
-  return Core__Option.mapOr(v, n, (function (x) {
+  return Stdlib__Option.mapOr(v, n, (function (x) {
                 return Caml_int64.add(x, n);
               }));
 }
@@ -247,7 +247,7 @@ function increaseBy1L(__x) {
 }
 
 function increaseBy(v, n) {
-  return Core__Option.mapOr(v, n, (function (x) {
+  return Stdlib__Option.mapOr(v, n, (function (x) {
                 return x + n | 0;
               }));
 }
@@ -277,11 +277,11 @@ function splitDoubleNewline(__x) {
 }
 
 function sumIntArray(__x) {
-  return Core__Array.reduce(__x, 0, add);
+  return Stdlib__Array.reduce(__x, 0, add);
 }
 
 function mulIntArray(__x) {
-  return Core__Array.reduce(__x, 1, mul);
+  return Stdlib__Array.reduce(__x, 1, mul);
 }
 
 function join(__x) {
@@ -293,20 +293,20 @@ function sumRange(xs, offset, len) {
   var total = {
     contents: 0
   };
-  elems.forEach(function (x) {
-        total.contents = total.contents + x | 0;
-      });
+  Stdlib__Array.forEach(elems, (function (x) {
+          total.contents = total.contents + x | 0;
+        }));
   return total.contents;
 }
 
 function maxIntInArray(xs) {
-  var sorted = xs.toSorted(Core__Int.compare);
-  return sorted[sorted.length - 1 | 0];
+  var sorted = xs.toSorted(Stdlib__Int.compare);
+  return Stdlib__Array.getUnsafe(sorted, Stdlib__Array.length(sorted) - 1 | 0);
 }
 
 function minIntInArray(xs) {
-  var sorted = xs.toSorted(Core__Int.compare);
-  return sorted[0];
+  var sorted = xs.toSorted(Stdlib__Int.compare);
+  return Stdlib__Array.getUnsafe(sorted, 0);
 }
 
 function compare(a, b) {
@@ -325,22 +325,22 @@ var BigIntExt = {
 
 function maxBigIntInArray(xs) {
   var sorted = xs.toSorted(compare);
-  return sorted[sorted.length - 1 | 0];
+  return Stdlib__Array.getUnsafe(sorted, Stdlib__Array.length(sorted) - 1 | 0);
 }
 
 function minBigIntInArray(xs) {
   var sorted = xs.toSorted(compare);
-  return sorted[0];
+  return Stdlib__Array.getUnsafe(sorted, 0);
 }
 
 function flatten(xs) {
-  return Core__Array.reduce(xs, [], (function (a, x) {
+  return Stdlib__Array.reduce(xs, [], (function (a, x) {
                 return a.concat(x);
               }));
 }
 
 function maxKeyIntValuePair(__x) {
-  return Core__Array.reduce(__x, [
+  return Stdlib__Array.reduce(__x, [
               "",
               Pervasives.min_int
             ], (function (acc, param) {
@@ -357,7 +357,7 @@ function maxKeyIntValuePair(__x) {
 }
 
 function minKeyIntValuePair(__x) {
-  return Core__Array.reduce(__x, [
+  return Stdlib__Array.reduce(__x, [
               "",
               Pervasives.max_int
             ], (function (acc, param) {
@@ -374,7 +374,7 @@ function minKeyIntValuePair(__x) {
 }
 
 function maxKeyInt64ValuePair(__x) {
-  return Core__Array.reduce(__x, [
+  return Stdlib__Array.reduce(__x, [
               "",
               Int64.min_int
             ], (function (acc, param) {
@@ -391,7 +391,7 @@ function maxKeyInt64ValuePair(__x) {
 }
 
 function minKeyInt64ValuePair(__x) {
-  return Core__Array.reduce(__x, [
+  return Stdlib__Array.reduce(__x, [
               "",
               Int64.max_int
             ], (function (acc, param) {
@@ -408,14 +408,14 @@ function minKeyInt64ValuePair(__x) {
 }
 
 function hashMapStringUpdate(h, k, f) {
-  Belt_HashMapString.set(h, k, Core__Option.mapOr(Belt_HashMapString.get(h, k), Curry._1(f, undefined), (function (x) {
+  Belt_HashMapString.set(h, k, Stdlib__Option.mapOr(Belt_HashMapString.get(h, k), Curry._1(f, undefined), (function (x) {
               return Curry._1(f, Caml_option.some(x));
             })));
   return h;
 }
 
 function mutableMapStringUpdate(h, k, f) {
-  Belt_MutableMapString.set(h, k, Core__Option.mapOr(Belt_MutableMapString.get(h, k), Curry._1(f, undefined), (function (x) {
+  Belt_MutableMapString.set(h, k, Stdlib__Option.mapOr(Belt_MutableMapString.get(h, k), Curry._1(f, undefined), (function (x) {
               return Curry._1(f, Caml_option.some(x));
             })));
   return h;
@@ -473,4 +473,4 @@ export {
   hashMapStringUpdate ,
   mutableMapStringUpdate ,
 }
-/* No side effect */
+/* Stdlib__Int Not a pure module */

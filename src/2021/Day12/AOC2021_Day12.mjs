@@ -194,4 +194,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* AdjacencyList-AdventOfCode Not a pure module */
+/* Utils-AdventOfCode Not a pure module */

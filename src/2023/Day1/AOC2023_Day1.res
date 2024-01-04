@@ -1,8 +1,7 @@
 @@uncurried
 
-open RescriptCore
+open Stdlib
 open Utils
-module TC = Tablecloth
 
 let log = Console.log
 
@@ -39,7 +38,7 @@ type matchDirection = Left2Right | Right2Left
 let spelledOutToDigits: (string, matchDirection) => string = (str, matchDir: matchDirection) => {
   switch matchDir {
   | Left2Right => str
-  | Right2Left => str->TC.String.reverse
+  | Right2Left => str->String.reverse
   }
   ->Utils.splitChars
   ->Belt.Array.reduce("", (acc, c) => {

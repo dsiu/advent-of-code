@@ -162,4 +162,4 @@ export {
   solvePart1 ,
   solvePart2 ,
 }
-/* No side effect */
+/* Array2D-AdventOfCode Not a pure module */

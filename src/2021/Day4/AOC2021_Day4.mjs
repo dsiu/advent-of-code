@@ -202,4 +202,4 @@ export {
   solvePart1$1 as solvePart1,
   solvePart2$1 as solvePart2,
 }
-/* No side effect */
+/* Utils-AdventOfCode Not a pure module */

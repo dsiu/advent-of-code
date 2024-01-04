@@ -1,4 +1,4 @@
-open RescriptCore
+open Stdlib
 module Map = Belt.Map
 module MutableMap = Belt.MutableMap
 module HashMap = Belt.HashMap
@@ -75,7 +75,7 @@ module Printable = {
     }
 
     module IntBase2 = {
-      let toString = m => toString(m, x => x->RescriptCore.Int.toStringWithRadix(~radix=2))
+      let toString = m => toString(m, x => x->Stdlib.Int.toStringWithRadix(~radix=2))
     }
   }
 

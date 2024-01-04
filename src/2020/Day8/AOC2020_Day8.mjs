@@ -261,4 +261,4 @@ export {
   genPatched ,
   solvePart2 ,
 }
-/* No side effect */
+/* Utils-AdventOfCode Not a pure module */

@@ -40,7 +40,7 @@
     ]
   },
   "dependencies": {
-    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=f16ffedae14c24acf6bb9252bb1a34b0deb903ef",
+    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=0f8c12f7a65f40198cb41db3750b5f77c5f45954",
     "@greenlabs/garter": "https://github.com/dsiu/garter#rescript-v11-curried-mode",
     "@jmagaram/rescript-extras": "^3.0.0",
     "@jmagaram/rescript-seq": "^3.0.1",

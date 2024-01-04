@@ -1,6 +1,6 @@
 @@uncurried
 
-open RescriptCore
+open Stdlib
 
 let log = Console.log
 let data = AOC2023_Day1_Data.data

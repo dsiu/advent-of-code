@@ -1,4 +1,4 @@
-open RescriptCore
+open Stdlib
 
 type t = (int, int)
 

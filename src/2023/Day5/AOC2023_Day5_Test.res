@@ -3,7 +3,7 @@
 open Jest
 open Expect
 
-open RescriptCore
+open Stdlib
 
 //open Belt
 let data = AOC2023_Day5_Data.data

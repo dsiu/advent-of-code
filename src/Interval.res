@@ -1,7 +1,7 @@
 //
 // Todo: - make Interval generic that works with float / Int / BigInt
 //
-open RescriptCore
+open Stdlib
 open BigInt
 
 let log = Console.log

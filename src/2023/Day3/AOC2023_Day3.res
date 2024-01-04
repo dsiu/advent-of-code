@@ -1,6 +1,6 @@
 @@uncurried
 
-open RescriptCore
+open Stdlib
 open Utils
 open Coordinate.Direction
 
