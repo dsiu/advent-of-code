@@ -4,7 +4,6 @@ import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Belt_MapInt from "rescript/lib/es6/belt_MapInt.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
-import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log2(prim0, prim1) {
@@ -36,13 +35,17 @@ function getCratesForWharf(crates, wharf) {
 }
 
 function catMaybes(__x) {
-  return Stdlib__Array.filterMap(__x, Stdlib__Function.identity);
+  return Stdlib__Array.filterMap(__x, (function (prim) {
+                return prim;
+              }));
 }
 
 function makeWharf(wharfLines, colNames) {
   return Stdlib__Array.reduce(colNames, undefined, (function (acc, colName) {
                 var __x = getCratesForWharf(wharfLines, colName);
-                return Belt_MapInt.set(acc, colName, Stdlib__Array.filterMap(__x, Stdlib__Function.identity));
+                return Belt_MapInt.set(acc, colName, Stdlib__Array.filterMap(__x, (function (prim) {
+                                  return prim;
+                                })));
               }));
 }
 

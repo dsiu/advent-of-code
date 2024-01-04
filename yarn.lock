@@ -408,16 +408,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp#commit=c0dbd0519042b23fae182c44a6e0afadede89a8a":
+"@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp#commit=f16ffedae14c24acf6bb9252bb1a34b0deb903ef":
   version: 0.0.1
-  resolution: "@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp.git#commit=c0dbd0519042b23fae182c44a6e0afadede89a8a"
+  resolution: "@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp.git#commit=f16ffedae14c24acf6bb9252bb1a34b0deb903ef"
   dependencies:
     "@greenlabs/garter": "git+https://github.com/dsiu/garter#rescript-v11-curried-mode"
     "@rescript/core": "git+https://github.com/rescript-association/rescript-core#main"
   peerDependencies:
     "@rescript/core": ^0.6.0
     rescript: ^11.0.0-rc.8
-  checksum: 2db33158718b352c504524f08665317018cde3dc1e174d8a7762065350ee3e64344e52f79cef59e9771c1a1617cc533e1f05e9a44820f2679178f8b7073ea01a
+  checksum: ca5de8cf97e2e7ff691a4c02f6e93a679f363662cc537f32952ac3dcf3e3249d1f020e26b770a88c56dcce2e2ed6134e9879f5a2fa43a416e8782db70aaac07d
   languageName: node
   linkType: hard
 
@@ -1415,7 +1415,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "advent-of-code@workspace:."
   dependencies:
-    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=c0dbd0519042b23fae182c44a6e0afadede89a8a"
+    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=f16ffedae14c24acf6bb9252bb1a34b0deb903ef"
     "@glennsl/rescript-jest": "https://github.com/dsiu/rescript-jest#rescript-v11-curried-mode"
     "@greenlabs/garter": "https://github.com/dsiu/garter#rescript-v11-curried-mode"
     "@jmagaram/rescript-extras": "npm:^3.0.0"

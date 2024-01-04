@@ -2,8 +2,8 @@
 
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.mjs";
 import * as Stdlib__Ordering from "@dsiu/rescript-stdlib-fp/src/Stdlib__Ordering.mjs";
+import * as TableclothTuple4 from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothTuple4.mjs";
 import * as TableclothComparator from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothComparator.mjs";
-import * as TableclothTuple4$AdventOfCode from "./TableclothTuple4.mjs";
 
 function intCompare(a, b) {
   return Stdlib__Ordering.toInt(Stdlib__Int.compare(a, b));
@@ -11,7 +11,7 @@ function intCompare(a, b) {
 
 function compare(param) {
   return function (param$1) {
-    return TableclothTuple4$AdventOfCode.compare(param, param$1, intCompare, intCompare, intCompare, intCompare);
+    return TableclothTuple4.compare(param, param$1, intCompare, intCompare, intCompare, intCompare);
   };
 }
 

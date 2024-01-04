@@ -21,6 +21,10 @@ import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/belt_MutableMapInt.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/belt_MutableMapString.js";
 
+function identity(prim) {
+  return prim;
+}
+
 function log(prim) {
   console.log(prim);
 }
@@ -32,7 +36,7 @@ function toString(m, f) {
 }
 
 function toString$1(m) {
-  return toString(m, Stdlib__Function.identity);
+  return toString(m, identity);
 }
 
 var $$String = {
@@ -62,7 +66,7 @@ function toString$3(m, f) {
 }
 
 function toString$4(m) {
-  return toString$3(m, Stdlib__Function.identity);
+  return toString$3(m, identity);
 }
 
 var $$String$1 = {
@@ -422,8 +426,6 @@ var $$Map;
 var MutableMap;
 
 var HashMap;
-
-var identity = Stdlib__Function.identity;
 
 var compose = Stdlib__Function.compose;
 

@@ -4,7 +4,6 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Caml_splice_call from "rescript/lib/es6/caml_splice_call.js";
-import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function log(prim) {
@@ -113,9 +112,12 @@ function scenicScore(forest, row, col) {
 }
 
 function part2(forest) {
+  var id = function (prim) {
+    return prim;
+  };
   var nrows = Stdlib__Array.length(forest);
   var ncols = Stdlib__Array.length(Stdlib__Array.headUnsafe(forest));
-  return Utils$AdventOfCode.maxIntInArray(Stdlib__Array.combination2(Stdlib__Array.makeBy(nrows - 1 | 0, Stdlib__Function.identity), Stdlib__Array.makeBy(ncols - 1 | 0, Stdlib__Function.identity), (function (r, c) {
+  return Utils$AdventOfCode.maxIntInArray(Stdlib__Array.combination2(Stdlib__Array.makeBy(nrows - 1 | 0, id), Stdlib__Array.makeBy(ncols - 1 | 0, id), (function (r, c) {
                     return scenicScore(forest, r, c);
                   })));
 }
