@@ -47,6 +47,19 @@ module BigArray = {
     }
 }
 
+/**
+ * Function to calculate the number of ways to win a race.
+ *
+ * @param {Object} race - An object representing a race.
+ * @param {BigInt} race.time - The time taken for the race.
+ * @param {BigInt} race.distance - The distance of the race.
+ *
+ * @returns {int} The number of ways to win the race.
+ *
+ * The function works by creating an array `h` of BigInts from 1 to `time - 1`.
+ * Then it filters `h` to only include those elements `h` for which `(time - h) * h` is greater than `distance`.
+ * The length of the resulting array is the number of ways to win the race.
+ */
 let waysToWin: race => int = ({time, distance}) => {
   open BigInt
   let h = BigArray.fromInitializer(~length=time - 1->fromInt, i => i + 1->fromInt)
@@ -61,10 +74,32 @@ let waysToWin: race => int = ({time, distance}) => {
   ->Array.length
 }
 
+/**
+ * Function to calculate the total number of ways to win for an array of races.
+ *
+ * @param {array<race>} races - An array of races.
+ *
+ * @returns {int} The total number of ways to win all the races.
+ *
+ * The function works by mapping over the array of races and applying the `waysToWin` function to each race.
+ * Then it folds over the resulting array of ways to win each race, multiplying all the results together.
+ * The result is the total number of ways to win all the races.
+ */
 let part1: array<race> => int = races => {
   races->Array.map(waysToWin)->Array.fold(~initial=1, ~f=Int.multiply)
 }
 
+/**
+ * Function to calculate the total number of ways to win for a single race derived from an array of races.
+ *
+ * @param {array<race>} races - An array of races.
+ *
+ * @returns {int} The total number of ways to win the derived race.
+ *
+ * The function works by folding over the array of races and concatenating the time and distance of each race into two separate strings.
+ * Then it calls the `waysToWin` function with these concatenated strings converted back to BigInts.
+ * The result is the total number of ways to win the derived race.
+ */
 let part2: array<race> => int = races => {
   // convert list of times and distances into string then concat them
   let r' = races->Array.fold(~initial=("", ""), ~f=((aTime, aDistance), {time, distance}) => {
@@ -77,32 +112,45 @@ let part2: array<race> => int = races => {
   waysToWin({time: t'->BigInt.fromString, distance: d'->BigInt.fromString})
 }
 
-// using Monadic Parser Combinators
+// This module provides functionality to parse a string representing a race into an array of `race` objects.
+// It uses the `ReludeParse.Parser` library for parsing.
 module SheetParser = {
   module P = ReludeParse.Parser
   open P.Infix
 
+  // A parser that matches any number of spaces in the input string and discards the result.
   let justSpaceP: P.t<unit> = P.void(P.many(P.str(" ")))
+
+  // A utility function for logging the current state of the parser. Useful for debugging.
   let debug = P.tapLog
 
+  // A parser that matches a sequence of integers separated by spaces in the input string.
   let numbersP = P.sepBy(justSpaceP, P.anyInt)
 
+  // A parser that matches the string "Time:" followed by a sequence of integers (representing times) separated by spaces.
   let timesP = P.str("Time:")->\"*>"(justSpaceP)->\"*>"(numbersP)
 
+  // A parser that matches the string "Distance:" followed by a sequence of integers (representing distances) separated by spaces.
   let distancesP = justSpaceP->\"*>"(P.str("Distance:"))->\"*>"(justSpaceP)->\"*>"(numbersP)
 
+  // A function that takes two lists of integers (representing times and distances) and returns a list of `race` objects.
+  // Each `race` object is created by calling the `mkRaceFromInt` function with a pair of corresponding time and distance.
   let mkRace = (a, b) => {
     List.map2(a, b, ~f=(time, distance) => mkRaceFromInt(time, distance))
   }
 
+  // A parser that matches a sequence of races in the input string.
+  // Each race is represented by a "Time:" line followed by a "Distance:" line.
   let racesP = mkRace->\"<$>"(timesP->\"<*"(P.eol))->\"<*>"(distancesP)
 
+  // A function that takes a string, runs the `racesP` parser on it, and returns an array of `race` objects.
+  // If the parser fails, an exception is thrown.
   let run: string => array<race> = str => {
     P.runParser(str, racesP)->Result.getExn->List.toArray
   }
 }
 
-// manually written parser
+// manually written parser (not using it)
 let parse = data => {
   let lines =
     data
