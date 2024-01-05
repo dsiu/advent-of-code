@@ -31,7 +31,7 @@ describe("2023 Day6", () => {
   })
 
   // skipping because it takes too long (but the result is correct
-  Skip.test("Part 2 - Solve", () => {
+  test("Part 2 - Solve", () => {
     let result = solvePart2(data)
     let expected = 45647654
 

@@ -60,7 +60,7 @@ module BigArray = {
  * Then it filters `h` to only include those elements `h` for which `(time - h) * h` is greater than `distance`.
  * The length of the resulting array is the number of ways to win the race.
  */
-let waysToWin: race => int = ({time, distance}) => {
+let waysToWinBurteForce: race => int = ({time, distance}) => {
   open BigInt
   let h = BigArray.fromInitializer(~length=time - 1->fromInt, i => i + 1->fromInt)
 
@@ -72,6 +72,34 @@ let waysToWin: race => int = ({time, distance}) => {
     }
   })
   ->Array.length
+}
+
+//@val external isInteger: float => bool = "Number.isInteger"
+
+let waysToWin: race => int = ({time, distance}) => {
+  // winning case: x(T-x) > D where T = time, D = distance, x = button's press time
+  //
+  // x^2 -Tx + D > 0
+  //
+  // quadractic formula solution
+  // a = (T-sqar(T^2 -4D))/2
+  // b = (T+sqar(T^2 -4D))/2
+  let t = time->BigInt.toFloat
+  let d = distance->BigInt.toFloat
+
+  open Float
+  let a = (t -. Math.sqrt(t->Math.pow(~exp=2.) -. 4. *. d)) /. 2.
+  let b = (t +. Math.sqrt(t->Math.pow(~exp=2.) -. 4. *. d)) /. 2.
+
+  let a = a->isInteger ? a +. 1. : Math.ceil(a)
+  let b = b->isInteger ? b -. 1. : Math.floor(b)
+
+  //  let a = Math.ceil(a)
+  //  let b = Math.floor(b)
+
+  // number of winning cases is b-a+1
+
+  (b -. a +. 1.)->Int.fromFloat
 }
 
 /**

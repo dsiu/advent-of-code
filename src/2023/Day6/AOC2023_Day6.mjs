@@ -6,6 +6,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.mjs";
 import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
+import * as Stdlib__Float from "@dsiu/rescript-stdlib-fp/src/Stdlib__Float.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
 import * as Stdlib__Result from "@dsiu/rescript-stdlib-fp/src/Stdlib__Result.mjs";
 import * as Stdlib__String from "@dsiu/rescript-stdlib-fp/src/Stdlib__String.mjs";
@@ -59,7 +60,7 @@ var BigArray = {
   fromInitializer: fromInitializer
 };
 
-function waysToWin(param) {
+function waysToWinBurteForce(param) {
   var distance = param.distance;
   var time = param.time;
   var h = fromInitializer(time - BigInt(1), (function (i) {
@@ -72,6 +73,16 @@ function waysToWin(param) {
                 }
                 
               })).length;
+}
+
+function waysToWin(param) {
+  var t = Number(param.time);
+  var d = Number(param.distance);
+  var a = (t - Math.sqrt(Math.pow(t, 2) - 4 * d)) / 2;
+  var b = (t + Math.sqrt(Math.pow(t, 2) - 4 * d)) / 2;
+  var a$1 = Stdlib__Float.isInteger(a) ? a + 1 : Math.ceil(a);
+  var b$1 = Stdlib__Float.isInteger(b) ? b - 1 : Math.floor(b);
+  return b$1 - a$1 + 1 | 0;
 }
 
 function part1(races) {
@@ -168,6 +179,7 @@ export {
   raceListToString ,
   raceArrayToString ,
   BigArray ,
+  waysToWinBurteForce ,
   waysToWin ,
   part1 ,
   part2 ,
