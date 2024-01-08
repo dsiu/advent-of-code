@@ -112,6 +112,40 @@ var Card = {
   compare: compare$1
 };
 
+function value$1(t) {
+  switch (t) {
+    case "HighCard" :
+        return 1;
+    case "OnePair" :
+        return 2;
+    case "TwoPair" :
+        return 3;
+    case "ThreeOfAKind" :
+        return 4;
+    case "FullHouse" :
+        return 5;
+    case "FourOfAKind" :
+        return 6;
+    case "FiveOfAKind" :
+        return 7;
+    
+  }
+}
+
+function compare_Ord$1(a, b) {
+  return Stdlib__Int.compare(value$1(a), value$1(b));
+}
+
+function compare$2(a, b) {
+  return Stdlib__Ordering.toInt(compare_Ord$1(a, b));
+}
+
+var HandClass = {
+  value: value$1,
+  compare_Ord: compare_Ord$1,
+  compare: compare$2
+};
+
 function sign(cards) {
   var sortedCards = cards.toSorted(compare_Ord);
   var groupedCards = Stdlib__Array.groupBy(sortedCards, Card, (function (a) {
@@ -120,17 +154,108 @@ function sign(cards) {
   var mappedCards = Belt_Map.valuesToArray(Belt_Map.map(groupedCards, (function (group) {
               return [
                       Stdlib__List.length(group),
-                      group
+                      Stdlib__List.toArray(group)
                     ];
             })));
   return mappedCards.toSorted(function (param, param$1) {
                 var c = Stdlib__Int.compare(param[0], param$1[0]);
                 if (Stdlib__Ordering.isEqual(c)) {
-                  return compare_Ord(Stdlib__List.getExn(param[1], 0), Stdlib__List.getExn(param$1[1], 0));
+                  return compare_Ord(Stdlib__Array.getUnsafe(param[1], 0), Stdlib__Array.getUnsafe(param$1[1], 0));
                 } else {
                   return c;
                 }
               }).toReversed();
+}
+
+function classifySignature(signature) {
+  var len = signature.length;
+  if (len >= 5) {
+    return "HighCard";
+  }
+  switch (len) {
+    case 0 :
+        return "HighCard";
+    case 1 :
+        var match = signature[0];
+        if (match[0] !== 5) {
+          return "HighCard";
+        } else {
+          return "FiveOfAKind";
+        }
+    case 2 :
+        var match$1 = signature[0];
+        var match$2 = match$1[0];
+        if (match$2 !== 3) {
+          if (match$2 !== 4) {
+            return "HighCard";
+          } else {
+            return "FourOfAKind";
+          }
+        }
+        var match$3 = signature[1];
+        if (match$3[0] !== 2) {
+          return "ThreeOfAKind";
+        } else {
+          return "FullHouse";
+        }
+    case 3 :
+        var match$4 = signature[0];
+        var match$5 = match$4[0];
+        if (match$5 !== 2) {
+          if (match$5 !== 3) {
+            return "HighCard";
+          } else {
+            return "ThreeOfAKind";
+          }
+        }
+        var match$6 = signature[1];
+        if (match$6[0] !== 2) {
+          return "HighCard";
+        } else {
+          return "TwoPair";
+        }
+    case 4 :
+        var match$7 = signature[0];
+        if (match$7[0] !== 2) {
+          return "HighCard";
+        } else {
+          return "OnePair";
+        }
+    
+  }
+}
+
+function classify(param) {
+  var cards = param._0;
+  return {
+          TAG: "CHand",
+          _0: classifySignature(sign(cards)),
+          _1: cards,
+          _2: param._1
+        };
+}
+
+function part1(hands) {
+  var sortedHands = Stdlib__Array.map(hands, classify).toSorted(function (param, param$1) {
+        var h = compare_Ord$1(param._0, param$1._0);
+        if (Stdlib__Ordering.isEqual(h)) {
+          return Stdlib__Ordering.invert(Stdlib__Array.compare(param._1, param$1._1, (function (d, e) {
+                            return Stdlib__Ordering.invert(compare_Ord(d, e));
+                          })));
+        } else {
+          return h;
+        }
+      });
+  console.log("sortedHands", sortedHands);
+  var rankedHands = Stdlib__Array.zip(Stdlib__Array.range(1, sortedHands.length + 1 | 0), sortedHands);
+  console.log("rankedHands", rankedHands);
+  var score = function (param) {
+    return Math.imul(param[0], param[1]._2);
+  };
+  return Stdlib__Array.sum(Stdlib__Array.map(rankedHands, score), {
+              zero: Stdlib__Int.zero,
+              add: Stdlib__Int.add
+            });
 }
 
 var justSpace = Curry._1(ReludeParse_Parser.$$void, ReludeParse_Parser.many(ReludeParse_Parser.str(" ")));
@@ -165,44 +290,7 @@ var HandsParser = {
 };
 
 function solvePart1(data) {
-  var hands = run(data);
-  var signed = Stdlib__Array.map(hands, (function (param) {
-          return sign(param._0);
-        }));
-  Stdlib__Array.forEach(signed, log);
-  var cardsAsList = Stdlib__Array.map(signed, Stdlib__List.fromArray);
-  var c = Stdlib__Array.getUnsafe(cardsAsList, 0);
-  console.log("c", c);
-  var prim;
-  if (c) {
-    switch (c.hd[0]) {
-      case 2 :
-          var match = c.tl;
-          if (match && match.hd[0] === 2) {
-            var match$1 = match.tl;
-            prim = match$1 && !match$1.tl ? "TwoPair" : "OnePair";
-          } else {
-            prim = "OnePair";
-          }
-          break;
-      case 3 :
-          var match$2 = c.tl;
-          prim = match$2 && !(match$2.hd[0] !== 2 || match$2.tl) ? "FullHouse" : "ThreeOfAKind";
-          break;
-      case 4 :
-          prim = "FourOfAKind";
-          break;
-      case 5 :
-          prim = "FiveOfAKind";
-          break;
-      default:
-        prim = "HighCard";
-    }
-  } else {
-    prim = "HighCard";
-  }
-  console.log(prim);
-  return 1;
+  return part1(run(data));
 }
 
 function solvePart2(data) {
@@ -213,7 +301,11 @@ export {
   log ,
   log2 ,
   Card ,
+  HandClass ,
   sign ,
+  classifySignature ,
+  classify ,
+  part1 ,
   HandsParser ,
   solvePart1 ,
   solvePart2 ,
