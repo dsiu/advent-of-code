@@ -26,14 +26,14 @@ describe("2023 Day8", () => {
 
   test("Part 2 - Sample Data", () => {
     let result = solvePart2(sampleData2)
-    let expected = 2
+    let expected = 6->Stdlib.BigInt.fromInt
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = 2
+    let expected = "12324145107121"->Stdlib.BigInt.fromString
 
     expect(result)->toEqual(expected)
   })

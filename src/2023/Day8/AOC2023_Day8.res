@@ -20,12 +20,30 @@ module State = {
   }
 }
 
+// todo: refactor to String
+let lastChar: string => string = s => {
+  s->String.get(String.length(s) - 1)->Option.getUnsafe
+}
+
+// todo: refactor to Math
+let rec gcd = (a, b) => {a > 0 ? gcd(Int.mod(b, a), a) : b}
+let lcm = (a, b) => a * b / gcd(a, b)
+
+let rec gcdBigInt: (BigInt.t, BigInt.t) => BigInt.t = (a, b) => {
+  open BigInt
+  a > 0->fromInt ? gcdBigInt(mod(b, a), a) : b
+}
+let lcmBigInt: (BigInt.t, BigInt.t) => BigInt.t = (a, b) => {
+  open BigInt
+  a * b / gcdBigInt(a, b)
+}
+
 let getDirection: (array<direction>, int) => direction = (directions, steps) => {
   directions->Array.getUnsafe(Int.mod(steps, directions->Array.length))
 }
 
 let isGoal: State.t => bool = ({here, steps: _}) => {
-  here == "ZZZ"
+  here->lastChar == "Z"
 }
 
 let step: (desert, State.t, direction) => State.t = (desert, {here, steps}, direction) => {
@@ -47,6 +65,16 @@ let part1: ((array<direction>, desert)) => int = ((directions, desert)) => {
   let start = {here: "AAA", steps: 0}
   let goal = walk(desert, directions, start)
   goal.steps
+}
+let part2: ((array<direction>, desert)) => BigInt.t = ((directions, desert)) => {
+  open State
+  desert
+  ->Stdlib.Map.keys
+  ->Iterator.toArray
+  ->Array.filter(Fn.compose3(lastChar, String.compare("A"), Ordering.isEqual))
+  ->Array.map(s => walk(desert, directions, {here: s, steps: 0}).steps)
+  ->Array.map(BigInt.fromInt)
+  ->Array.foldl1(lcmBigInt)
 }
 
 module ProblemParser = {
@@ -102,6 +130,5 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  data->ProblemParser.run->part2
 }
