@@ -13,29 +13,9 @@ module State = {
   type t = {here: string, steps: int}
 
   let compare = ({here: h1, steps: s1}, {here: h2, steps: s2}) => {
-    switch String.compare(h1, h2) {
-    | h if h->Ordering.isEqual => Int.compare(s1, s2)
-    | h => h
-    }
+    let h = String.compare(h1, h2)
+    h->Ordering.isEqual ? Int.compare(s1, s2) : h
   }
-}
-
-// todo: refactor to String
-let lastChar: string => string = s => {
-  s->String.get(String.length(s) - 1)->Option.getUnsafe
-}
-
-// todo: refactor to Math
-let rec gcd = (a, b) => {a > 0 ? gcd(Int.mod(b, a), a) : b}
-let lcm = (a, b) => a * b / gcd(a, b)
-
-let rec gcdBigInt: (BigInt.t, BigInt.t) => BigInt.t = (a, b) => {
-  open BigInt
-  a > 0->fromInt ? gcdBigInt(mod(b, a), a) : b
-}
-let lcmBigInt: (BigInt.t, BigInt.t) => BigInt.t = (a, b) => {
-  open BigInt
-  a * b / gcdBigInt(a, b)
 }
 
 let getDirection: (array<direction>, int) => direction = (directions, steps) => {
@@ -43,7 +23,7 @@ let getDirection: (array<direction>, int) => direction = (directions, steps) => 
 }
 
 let isGoal: State.t => bool = ({here, steps: _}) => {
-  here->lastChar == "Z"
+  here->String.last == "Z"
 }
 
 let step: (desert, State.t, direction) => State.t = (desert, {here, steps}, direction) => {
@@ -71,10 +51,10 @@ let part2: ((array<direction>, desert)) => BigInt.t = ((directions, desert)) => 
   desert
   ->Stdlib.Map.keys
   ->Iterator.toArray
-  ->Array.filter(Fn.compose3(lastChar, String.compare("A"), Ordering.isEqual))
+  ->Array.filter(Fn.compose3(String.last, String.compare("A"), Ordering.isEqual))
   ->Array.map(s => walk(desert, directions, {here: s, steps: 0}).steps)
   ->Array.map(BigInt.fromInt)
-  ->Array.foldl1(lcmBigInt)
+  ->Array.foldl1(Math.lcmBigInt)
 }
 
 module ProblemParser = {
