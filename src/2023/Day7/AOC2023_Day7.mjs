@@ -63,6 +63,8 @@ function make(str) {
 
 function value(t) {
   switch (t) {
+    case "Joker" :
+        return 1;
     case "Two" :
         return 2;
     case "Three" :
@@ -258,6 +260,25 @@ function part1(hands) {
             });
 }
 
+function enJoker(param) {
+  var replaceJackWithJoker = function (card) {
+    if (card === "Jack") {
+      return "Joker";
+    } else {
+      return card;
+    }
+  };
+  return {
+          TAG: "Hand",
+          _0: Stdlib__Array.map(param._0, replaceJackWithJoker),
+          _1: param._1
+        };
+}
+
+function part2(hands) {
+  return part1(Stdlib__Array.map(hands, enJoker));
+}
+
 var justSpace = Curry._1(ReludeParse_Parser.$$void, ReludeParse_Parser.many(ReludeParse_Parser.str(" ")));
 
 function handC(a, b) {
@@ -294,7 +315,8 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  return 2;
+  var hands = run(data);
+  return part1(Stdlib__Array.map(hands, enJoker));
 }
 
 export {
@@ -306,6 +328,8 @@ export {
   classifySignature ,
   classify ,
   part1 ,
+  enJoker ,
+  part2 ,
   HandsParser ,
   solvePart1 ,
   solvePart2 ,

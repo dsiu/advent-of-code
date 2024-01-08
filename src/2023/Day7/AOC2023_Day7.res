@@ -6,7 +6,8 @@ let log = Console.log
 let log2 = Console.log2
 
 module Card = {
-  type t = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
+  type t =
+    Joker | Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
 
   include TableclothComparator.Make({
     type t = t
@@ -37,6 +38,7 @@ module Card = {
 
   let value = t => {
     switch t {
+    | Joker => 1
     | Two => 2
     | Three => 3
     | Four => 4
@@ -135,6 +137,21 @@ let part1: array<hand> => int = hands => {
   rankedHands->Array.map(score)->Array.sum(module(Int))
 }
 
+let enJoker: hand => hand = (Hand(cards, bid)) => {
+  let replaceJackWithJoker = card => {
+    switch card {
+    | Card.Jack => Card.Joker
+    | _ => card
+    }
+  }
+
+  Hand(cards->Array.map(replaceJackWithJoker), bid)
+}
+
+let part2: array<hand> => int = hands => {
+  hands->Array.map(enJoker)->part1
+}
+
 module HandsParser = {
   module P = ReludeParse.Parser
   open P.Infix
@@ -177,6 +194,5 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  data->HandsParser.run->part2
 }
