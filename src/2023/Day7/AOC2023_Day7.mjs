@@ -149,24 +149,43 @@ var HandClass = {
 };
 
 function sign(cards) {
-  var sortedCards = cards.toSorted(compare_Ord);
-  var groupedCards = Stdlib__Array.groupBy(sortedCards, Card, (function (a) {
-          return a;
+  var innerSign = function (cards) {
+    var sortedCards = cards.toSorted(compare_Ord);
+    var groupedCards = Stdlib__Array.groupBy(sortedCards, Card, (function (a) {
+            return a;
+          }));
+    var mappedCards = Belt_Map.valuesToArray(Belt_Map.map(groupedCards, (function (group) {
+                return [
+                        Stdlib__List.length(group),
+                        Stdlib__List.toArray(group)
+                      ];
+              })));
+    return mappedCards.toSorted(function (param, param$1) {
+                  var c = Stdlib__Int.compare(param[0], param$1[0]);
+                  if (Stdlib__Ordering.isEqual(c)) {
+                    return compare_Ord(Stdlib__Array.getUnsafe(param[1], 0), Stdlib__Array.getUnsafe(param$1[1], 0));
+                  } else {
+                    return c;
+                  }
+                }).toReversed();
+  };
+  var match = Stdlib__Array.partition(cards, (function (c) {
+          return c === "Joker";
         }));
-  var mappedCards = Belt_Map.valuesToArray(Belt_Map.map(groupedCards, (function (group) {
-              return [
-                      Stdlib__List.length(group),
-                      Stdlib__List.toArray(group)
-                    ];
-            })));
-  return mappedCards.toSorted(function (param, param$1) {
-                var c = Stdlib__Int.compare(param[0], param$1[0]);
-                if (Stdlib__Ordering.isEqual(c)) {
-                  return compare_Ord(Stdlib__Array.getUnsafe(param[1], 0), Stdlib__Array.getUnsafe(param$1[1], 0));
-                } else {
-                  return c;
-                }
-              }).toReversed();
+  var jokers = match[0];
+  var nonJokerSigned = innerSign(match[1]);
+  var js = [
+    jokers.length,
+    jokers
+  ];
+  if (nonJokerSigned.length === 0) {
+    return [js];
+  }
+  var match$1 = Stdlib__Array.getUnsafe(nonJokerSigned, 0);
+  return [[
+              match$1[0] + js[0] | 0,
+              match$1[1].concat(js[1])
+            ]].concat(Stdlib__Array.tail(nonJokerSigned));
 }
 
 function classifySignature(signature) {
@@ -248,9 +267,7 @@ function part1(hands) {
           return h;
         }
       });
-  console.log("sortedHands", sortedHands);
   var rankedHands = Stdlib__Array.zip(Stdlib__Array.range(1, sortedHands.length + 1 | 0), sortedHands);
-  console.log("rankedHands", rankedHands);
   var score = function (param) {
     return Math.imul(param[0], param[1]._2);
   };

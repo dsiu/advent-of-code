@@ -79,7 +79,7 @@ type hand = Hand(array<Card.t>, int) // (cards, bid)
 
 type classifiedHand = CHand(HandClass.t, array<Card.t>, int)
 
-type signatureElement = (int, array<Card.t>)
+type signatureElement = (int, array<Card.t>) // (count, cards)
 
 type signature = array<signatureElement>
 
@@ -88,16 +88,33 @@ type signature = array<signatureElement>
 //let sign: array<card> => signature = cards => {}
 //let sign = (cards: array<Card.t>): array<(int, array<Card.t>)> => {
 let sign = (cards: array<Card.t>): signature => {
-  let sortedCards = cards->Array.toSorted(Card.compare_Ord)
-  let groupedCards = sortedCards->Array.groupBy(module(Card), ~f=a => a)
-  let mappedCards =
-    groupedCards->Map.map(group => (List.length(group), group->List.toArray))->Map.valuesToArray
-  let sortedMappedCards = mappedCards->Array.toSorted(((a1, a2), (b1, b2)) => {
-    let c = Int.compare(a1, b1)
-    c->Ordering.isEqual ? Card.compare_Ord(a2->Array.getUnsafe(0), b2->Array.getUnsafe(0)) : c
-  })
+  let innerSign = cards => {
+    let sortedCards = cards->Array.toSorted(Card.compare_Ord)
+    let groupedCards = sortedCards->Array.groupBy(module(Card), ~f=a => a)
+    let mappedCards =
+      groupedCards->Map.map(group => (List.length(group), group->List.toArray))->Map.valuesToArray
+    let sortedMappedCards = mappedCards->Array.toSorted(((a1, a2), (b1, b2)) => {
+      let c = Int.compare(a1, b1)
+      c->Ordering.isEqual ? Card.compare_Ord(a2->Array.getUnsafe(0), b2->Array.getUnsafe(0)) : c
+    })
 
-  Array.toReversed(sortedMappedCards)
+    Array.toReversed(sortedMappedCards)
+  }
+
+  let (jokers, nonJokers) = cards->Array.partition(c => c == Card.Joker)
+
+  let nonJokerSigned = nonJokers->innerSign
+
+  let addJokers: (signature, signatureElement) => signature = (s, js) => {
+    switch (s, js) {
+    | ([], js) => [js]
+    | (xs, (jn, js)) =>
+      let (n, cs) = xs->Array.getUnsafe(0)
+      Array.concat([(n + jn, cs->Array.concat(js))], Array.tail(xs))
+    }
+  }
+
+  nonJokerSigned->addJokers((jokers->Array.length, jokers))
 }
 
 let classifySignature: signature => HandClass.t = signature => {
@@ -128,9 +145,7 @@ let part1: array<hand> => int = hands => {
         ? Array.compare(c1, c2, (d, e) => Card.compare_Ord(d, e)->Ordering.invert)->Ordering.invert
         : h
     })
-  log2("sortedHands", sortedHands)
   let rankedHands = Array.zip(Array.range(~from=1, Array.length(sortedHands) + 1), sortedHands)
-  log2("rankedHands", rankedHands)
 
   let score = ((rank, CHand(_, _, bid))) => rank * bid
 
