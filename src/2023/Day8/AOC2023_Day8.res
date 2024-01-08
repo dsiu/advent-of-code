@@ -9,6 +9,46 @@ type direction = L | R
 type node = Node(string, string)
 type desert = Stdlib.Map.t<string, node>
 
+module State = {
+  type t = {here: string, steps: int}
+
+  let compare = ({here: h1, steps: s1}, {here: h2, steps: s2}) => {
+    switch String.compare(h1, h2) {
+    | h if h->Ordering.isEqual => Int.compare(s1, s2)
+    | h => h
+    }
+  }
+}
+
+let getDirection: (array<direction>, int) => direction = (directions, steps) => {
+  directions->Array.getUnsafe(Int.mod(steps, directions->Array.length))
+}
+
+let isGoal: State.t => bool = ({here, steps: _}) => {
+  here == "ZZZ"
+}
+
+let step: (desert, State.t, direction) => State.t = (desert, {here, steps}, direction) => {
+  let Node(thereL, thereR) = desert->Stdlib.Map.get(here)->Option.getExn
+  switch direction {
+  | L => {here: thereL, steps: steps + 1}
+  | R => {here: thereR, steps: steps + 1}
+  }
+}
+
+let rec walk: (desert, array<direction>, State.t) => State.t = (desert, directions, state) => {
+  state->isGoal
+    ? state
+    : walk(desert, directions, step(desert, state, getDirection(directions, state.steps)))
+}
+
+let part1: ((array<direction>, desert)) => int = ((directions, desert)) => {
+  open State
+  let start = {here: "AAA", steps: 0}
+  let goal = walk(desert, directions, start)
+  goal.steps
+}
+
 module ProblemParser = {
   module P = ReludeParse.Parser
   open P.Infix
@@ -58,11 +98,7 @@ module ProblemParser = {
 }
 
 let solvePart1 = data => {
-  //  data->parse->log
-  let (a, b) = data->ProblemParser.run
-  a->log
-  b->log
-  1
+  data->ProblemParser.run->part1
 }
 
 let solvePart2 = data => {
