@@ -148,26 +148,25 @@ var HandClass = {
   compare: compare$2
 };
 
+function signatureElementCompare(param, param$1) {
+  var n = Stdlib__Int.compare(param[0], param$1[0]);
+  if (Stdlib__Ordering.isEqual(n)) {
+    return compare_Ord(Stdlib__Array.getUnsafe(param[1], 0), Stdlib__Array.getUnsafe(param$1[1], 0));
+  } else {
+    return n;
+  }
+}
+
 function sign(cards) {
   var innerSign = function (cards) {
-    var sortedCards = cards.toSorted(compare_Ord);
-    var groupedCards = Stdlib__Array.groupBy(sortedCards, Card, (function (a) {
-            return a;
-          }));
-    var mappedCards = Belt_Map.valuesToArray(Belt_Map.map(groupedCards, (function (group) {
-                return [
-                        Stdlib__List.length(group),
-                        Stdlib__List.toArray(group)
-                      ];
-              })));
-    return mappedCards.toSorted(function (param, param$1) {
-                  var c = Stdlib__Int.compare(param[0], param$1[0]);
-                  if (Stdlib__Ordering.isEqual(c)) {
-                    return compare_Ord(Stdlib__Array.getUnsafe(param[1], 0), Stdlib__Array.getUnsafe(param$1[1], 0));
-                  } else {
-                    return c;
-                  }
-                }).toReversed();
+    return Stdlib__Array.map(Belt_Map.valuesToArray(Stdlib__Array.groupBy(cards.toSorted(compare_Ord), Card, (function (a) {
+                              return a;
+                            }))), (function (group) {
+                      return [
+                              Stdlib__List.length(group),
+                              Stdlib__List.toArray(group)
+                            ];
+                    })).toSorted(signatureElementCompare).toReversed();
   };
   var match = Stdlib__Array.partition(cards, (function (c) {
           return c === "Joker";
@@ -341,6 +340,7 @@ export {
   log2 ,
   Card ,
   HandClass ,
+  signatureElementCompare ,
   sign ,
   classifySignature ,
   classify ,
