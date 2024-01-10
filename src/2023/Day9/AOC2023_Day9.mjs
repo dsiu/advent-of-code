@@ -21,18 +21,18 @@ function differences(xs) {
 function expand(seq) {
   return {
           TAG: "Sequence",
-          _0: Stdlib__Array.unfoldr(seq, (function (xs) {
-                  if (Stdlib__Array.all(xs, (function (param) {
-                            return Stdlib__Function.eq(0, param);
-                          }))) {
-                    return ;
-                  } else {
-                    return [
-                            xs,
-                            differences(xs)
-                          ];
-                  }
-                }))
+          _0: Stdlib__Array.tail(Stdlib__Array.unfoldr(seq, (function (xs) {
+                      if (Stdlib__Array.all(xs, (function (param) {
+                                return Stdlib__Function.eq(0, param);
+                              }))) {
+                        return ;
+                      } else {
+                        return [
+                                xs,
+                                differences(xs)
+                              ];
+                      }
+                    })))
         };
 }
 
@@ -86,6 +86,15 @@ function parse(data) {
 }
 
 function solvePart1(data) {
+  var prim = expand([
+        10,
+        13,
+        16,
+        21,
+        30,
+        45
+      ]);
+  console.log(prim);
   return part1(parse(data));
 }
 
