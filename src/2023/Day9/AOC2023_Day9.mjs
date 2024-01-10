@@ -22,8 +22,8 @@ function expand(seq) {
   return {
           TAG: "Sequence",
           _0: Stdlib__Array.unfoldr(seq, (function (xs) {
-                  if (Stdlib__Array.all(xs, (function (x) {
-                            return x === 0;
+                  if (Stdlib__Array.all(xs, (function (param) {
+                            return Stdlib__Function.eq(0, param);
                           }))) {
                     return ;
                   } else {

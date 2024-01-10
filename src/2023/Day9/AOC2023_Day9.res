@@ -17,8 +17,8 @@ let differences: array<int> => array<int> = xs => {
 let expand: array<int> => sequence = seq => {
   open Array
   seq
-  ->Array.unfoldr(xs => {
-    xs->Array.all(x => x == 0) ? None : Some(xs, differences(xs))
+  ->unfoldr(xs => {
+    xs->all(Fn.eq(0)) ? None : Some(xs, differences(xs))
   })
   ->Sequence
 }
