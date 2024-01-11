@@ -25,8 +25,8 @@ describe("2023 Day10", () => {
     test(
       "data and data1 should have same path",
       () => {
-        let pathA = map->followPath(map.start, map.start)
-        let pathB = map1->followPath(map1.start, map1.start)
+        let pathA = map->followPath(map.start)
+        let pathB = map1->followPath(map1.start)
 
         expect(pathA)->toEqual(pathB)
       },
@@ -35,8 +35,8 @@ describe("2023 Day10", () => {
     test(
       "data2 and data3 should have same path",
       () => {
-        let pathA = map2->followPath(map2.start, map2.start)
-        let pathB = map3->followPath(map3.start, map3.start)
+        let pathA = map2->followPath(map2.start)
+        let pathB = map3->followPath(map3.start)
 
         expect(pathA)->toEqual(pathB)
       },

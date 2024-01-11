@@ -96,12 +96,8 @@ let connectorsToStart: Map.t => array<position> = ({grid, start} as map) => {
   connectorsToPosition(map, start)
 }
 
-// find path from start to end
-let followPath: (Map.t, position, position) => array<position> = (
-  {grid, start} as map,
-  start,
-  end,
-) => {
+// find path from start. path must be a loop
+let followPath: (Map.t, position) => array<position> = ({grid, start} as map, start) => {
   let rec loop: (array<position>, position, position) => array<position> = (
     acc,
     thisPos,
@@ -121,7 +117,7 @@ let followPath: (Map.t, position, position) => array<position> = (
 }
 
 let part1: Map.t => int = map => {
-  let path = map->followPath(map.start, map.start)
+  let path = map->followPath(map.start)
   path->Array.length / 2
 }
 
@@ -154,7 +150,7 @@ let shoelaceFormula: array<position> => int = v => {
 }
 
 let part2: Map.t => int = ({grid, start} as map) => {
-  let path = map->followPath(start, start)
+  let path = map->followPath(start)
   let boundaryPointsCount = path->Array.length
   let vertices = path->Array.filter(pos => map.grid->Array2D.getExn(pos)->isVertex)
   let loopArea = vertices->shoelaceFormula

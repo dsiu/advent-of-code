@@ -12,13 +12,13 @@ Jest.describe("2023 Day10", (function () {
         var map3 = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data3));
         Jest.describe("findPath", (function () {
                 Jest.test("data and data1 should have same path", (function () {
-                        var pathA = AOC2023_Day10$AdventOfCode.followPath(map, map.start, map.start);
-                        var pathB = AOC2023_Day10$AdventOfCode.followPath(map1, map1.start, map1.start);
+                        var pathA = AOC2023_Day10$AdventOfCode.followPath(map, map.start);
+                        var pathB = AOC2023_Day10$AdventOfCode.followPath(map1, map1.start);
                         return Jest.Expect.toEqual(Jest.Expect.expect(pathA), pathB);
                       }));
                 Jest.test("data2 and data3 should have same path", (function () {
-                        var pathA = AOC2023_Day10$AdventOfCode.followPath(map2, map2.start, map2.start);
-                        var pathB = AOC2023_Day10$AdventOfCode.followPath(map3, map3.start, map3.start);
+                        var pathA = AOC2023_Day10$AdventOfCode.followPath(map2, map2.start);
+                        var pathB = AOC2023_Day10$AdventOfCode.followPath(map3, map3.start);
                         return Jest.Expect.toEqual(Jest.Expect.expect(pathA), pathB);
                       }));
               }));

@@ -160,7 +160,7 @@ function connectorsToStart(map) {
   return connectorsToPosition(map, map.start);
 }
 
-function followPath(map, start, end) {
+function followPath(map, start) {
   var _acc = [];
   var _thisPos = start;
   var _lastPos = start;
@@ -186,7 +186,7 @@ function followPath(map, start, end) {
 }
 
 function part1(map) {
-  var path = followPath(map, map.start, map.start);
+  var path = followPath(map, map.start);
   return path.length / 2 | 0;
 }
 
@@ -201,8 +201,7 @@ function shoelaceFormula(v) {
 }
 
 function part2(map) {
-  var start = map.start;
-  var path = followPath(map, start, start);
+  var path = followPath(map, map.start);
   var boundaryPointsCount = path.length;
   var vertices = Stdlib__Array.filter(path, (function (pos) {
           return isVertex(Array2D$AdventOfCode.getExn(map.grid, pos));
