@@ -21,18 +21,18 @@ function differences(xs) {
 function expand(seq) {
   return {
           TAG: "Sequence",
-          _0: Stdlib__Array.tail(Stdlib__Array.unfoldr(seq, (function (xs) {
-                      if (Stdlib__Array.all(xs, (function (param) {
-                                return Stdlib__Function.eq(0, param);
-                              }))) {
-                        return ;
-                      } else {
-                        return [
-                                xs,
-                                differences(xs)
-                              ];
-                      }
-                    })))
+          _0: Stdlib__Array.unfoldr(seq, (function (xs) {
+                  if (Stdlib__Array.all(xs, (function (param) {
+                            return Stdlib__Function.eq(0, param);
+                          }))) {
+                    return ;
+                  } else {
+                    return [
+                            xs,
+                            differences(xs)
+                          ];
+                  }
+                }))
         };
 }
 

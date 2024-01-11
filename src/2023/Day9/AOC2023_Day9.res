@@ -44,7 +44,6 @@ let expand: array<int> => sequence = seq => {
   ->unfoldr(xs => {
     xs->all(Fn.eq(0)) ? None : Some(xs, differences(xs))
   })
-  ->tail
   ->Sequence
 }
 
