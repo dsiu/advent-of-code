@@ -7,6 +7,10 @@ function log(prim) {
   console.log(prim);
 }
 
+function log2(prim0, prim1) {
+  console.log(prim0, prim1);
+}
+
 function parse(data) {
   return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
                 return prim.trim();
@@ -23,6 +27,7 @@ function solvePart2(data) {
 
 export {
   log ,
+  log2 ,
   parse ,
   solvePart1 ,
   solvePart2 ,
