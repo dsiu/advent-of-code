@@ -293,9 +293,9 @@ function sumRange(xs, offset, len) {
   var total = {
     contents: 0
   };
-  Stdlib__Array.forEach(elems, (function (x) {
-          total.contents = total.contents + x | 0;
-        }));
+  elems.forEach(function (x) {
+        total.contents = total.contents + x | 0;
+      });
   return total.contents;
 }
 
