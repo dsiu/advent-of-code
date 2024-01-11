@@ -1433,7 +1433,7 @@ __metadata:
     rationale: "npm:^0.2.0"
     relude: "https://github.com/dsiu/rescript-relude#rescript-v11-curried-mode"
     relude-parse: "https://github.com/dsiu/rescript-relude-parse#rescript-v11-curried-mode"
-    rescript: "npm:^11.0.0-rc.8"
+    rescript: "npm:^11.0.0-rc.9"
     rescript-bag: "https://github.com/dsiu/rescript-bag#main"
     rescript-js: "npm:latest"
     rescript-ocamlgraph: "https://github.com/dsiu/rescript-ocamlgraph#rescript-v10"
@@ -4598,14 +4598,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rescript@npm:^11.0.0-rc.8":
-  version: 11.0.0-rc.8
-  resolution: "rescript@npm:11.0.0-rc.8"
+"rescript@npm:^11.0.0-rc.9":
+  version: 11.0.0
+  resolution: "rescript@npm:11.0.0"
   bin:
     bsc: bsc
     bstracing: lib/bstracing
     rescript: rescript
-  checksum: d7860879a3ca8345c1d4f121b7d960c0d8c7628cd0787b267a817f182df11ff090fca50e014036ba903bf70cd646e50b6f53d15f9cf6fbf6c7bcef669d819f60
+  checksum: 22736872fa74a3f2efb03d6684e7d17ca310e3783c29d34bceca250cb9383ea6637526e03d328704214c91c4701408e565d34afc8a39e83011983c8872731731
   languageName: node
   linkType: hard
 
