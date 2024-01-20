@@ -40,13 +40,17 @@ let dumpGalaxies = (Galaxies(galaxies)) => {
 // todo: refactor to stdlib
 let setToArray = set => set->Set.values->Iterator.toArray
 
+// todo: should refactor to stdlib
+let maxBigInt = (m, n) => m > n ? m : n
+let maxBigInt = (m, n) => m < n ? m : n
+
 let maxCoord = (Galaxies(galaxies)) => {
   let origin = (Constants.zero, Constants.zero)
 
   galaxies
   ->setToArray
   ->Array.reduce(origin, ((xAcc, yAcc), Position((x, y))) => {
-    (x > xAcc ? x : xAcc, y > yAcc ? y : yAcc)
+    (max(xAcc, x), max(y, yAcc))
   })
 }
 
@@ -70,32 +74,30 @@ let emptyRowCol = (Galaxies(galaxies) as g) => {
 
 let expand = (Galaxies(galaxies), (expX, expY), scale) => {
   let nElemLessThan = (arr, n) => {
-    arr->Array.filter(x => fromInt(x) < n)->Array.length
+    arr->Array.count(x => fromInt(x) < n)
   }
 
-  let expandX = arr =>
+  let expandXY = arr =>
     arr->Array.map((Position((x, y))) => {
-      (x + nElemLessThan(expX, x)->fromInt * (scale - Constants.one), y)->Position
+      (
+        x + nElemLessThan(expX, x)->fromInt * (scale - Constants.one),
+        y + nElemLessThan(expY, y)->fromInt * (scale - Constants.one),
+      )->Position
     })
 
-  let expandY = arr =>
-    arr->Array.map((Position((x, y))) => {
-      (x, y + nElemLessThan(expY, y)->fromInt * (scale - Constants.one))->Position
-    })
-
-  galaxies->setToArray->expandX->expandY->Set.fromArray->Galaxies
+  galaxies->setToArray->expandXY->Set.fromArray->Galaxies
 }
 
 let absBigInt = (x: BigInt.t) => x < Constants.zero ? Constants.zero - x : x
 
-let manhanten: (position, position) => BigInt.t = (Position((x, y)), Position((x', y'))) => {
+let manhattan: (position, position) => BigInt.t = (Position((x, y)), Position((x', y'))) => {
   (x - x')->absBigInt + (y - y')->absBigInt
 }
 
 let distances = (Galaxies(galaxies)) => {
   let galaxies = galaxies->setToArray
   galaxies->Array.reduce([], (acc, p) => {
-    galaxies->Array.filter(p' => p != p')->Array.map(p' => manhanten(p, p'))->Array.concat(acc)
+    galaxies->Array.filter(p' => p != p')->Array.map(p' => manhattan(p, p'))->Array.concat(acc)
   })
 }
 
@@ -103,6 +105,7 @@ let part1: (galaxies, BigInt.t) => BigInt.t = (g, scale) => {
   g
   ->expand(emptyRowCol(g), scale)
   ->distances
+  // sum of all distances / 2 since we are counting each distance twice
   ->Array.reduce(Constants.zero, (acc, d) => acc + d) / fromInt(2)
 }
 

@@ -83,6 +83,14 @@ function setToArray(set) {
   return Array.from(set.values());
 }
 
+function maxBigInt(m, n) {
+  if (Caml_obj.lessthan(m, n)) {
+    return m;
+  } else {
+    return n;
+  }
+}
+
 function maxCoord(galaxies) {
   var origin_0 = Stdlib__BigInt_Ext.Constants.zero;
   var origin_1 = Stdlib__BigInt_Ext.Constants.zero;
@@ -92,13 +100,9 @@ function maxCoord(galaxies) {
   ];
   return Stdlib__Array.reduce(Array.from(galaxies._0.values()), origin, (function (param, param$1) {
                 var match = param$1._0;
-                var y = match[1];
-                var x = match[0];
-                var yAcc = param[1];
-                var xAcc = param[0];
                 return [
-                        Caml_obj.greaterthan(x, xAcc) ? x : xAcc,
-                        Caml_obj.greaterthan(y, yAcc) ? y : yAcc
+                        Caml_obj.max(param[0], match[0]),
+                        Caml_obj.max(match[1], param[1])
                       ];
               }));
 }
@@ -128,31 +132,19 @@ function expand(galaxies, param, scale) {
   var expY = param[1];
   var expX = param[0];
   var nElemLessThan = function (arr, n) {
-    return Stdlib__Array.filter(arr, (function (x) {
+    return Stdlib__Array.count(arr, (function (x) {
                   return Caml_obj.lessthan(BigInt(x), n);
-                })).length;
+                }));
   };
-  var expandX = function (arr) {
+  var expandXY = function (arr) {
     return Stdlib__Array.map(arr, (function (param) {
                   var match = param._0;
+                  var y = match[1];
                   var x = match[0];
                   return {
                           TAG: "Position",
                           _0: [
                             x + BigInt(nElemLessThan(expX, x)) * (scale - Stdlib__BigInt_Ext.Constants.one),
-                            match[1]
-                          ]
-                        };
-                }));
-  };
-  var expandY = function (arr) {
-    return Stdlib__Array.map(arr, (function (param) {
-                  var match = param._0;
-                  var y = match[1];
-                  return {
-                          TAG: "Position",
-                          _0: [
-                            match[0],
                             y + BigInt(nElemLessThan(expY, y)) * (scale - Stdlib__BigInt_Ext.Constants.one)
                           ]
                         };
@@ -160,7 +152,7 @@ function expand(galaxies, param, scale) {
   };
   return {
           TAG: "Galaxies",
-          _0: new Set(expandY(expandX(Array.from(galaxies._0.values()))))
+          _0: new Set(expandXY(Array.from(galaxies._0.values())))
         };
 }
 
@@ -172,7 +164,7 @@ function absBigInt(x) {
   }
 }
 
-function manhanten(param, param$1) {
+function manhattan(param, param$1) {
   var match = param$1._0;
   var match$1 = param._0;
   return absBigInt(match$1[0] - match[0]) + absBigInt(match$1[1] - match[1]);
@@ -184,7 +176,7 @@ function distances(galaxies) {
                 return Stdlib__Array.map(Stdlib__Array.filter(galaxies$1, (function (p$p) {
                                     return Caml_obj.notequal(p, p$p);
                                   })), (function (p$p) {
-                                return manhanten(p, p$p);
+                                return manhattan(p, p$p);
                               })).concat(acc);
               }));
 }
@@ -234,11 +226,12 @@ export {
   Coord_V2_Big ,
   dumpGalaxies ,
   setToArray ,
+  maxBigInt ,
   maxCoord ,
   emptyRowCol ,
   expand ,
   absBigInt ,
-  manhanten ,
+  manhattan ,
   distances ,
   part1 ,
   parse ,
