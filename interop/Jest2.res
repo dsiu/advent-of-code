@@ -26,6 +26,7 @@ type m<'a> // matcher of type 'a
 @get external expectNot: m<'a> => m<'a> = "not"
 
 // from https://github.com/snatvb/re-fp
+module Promise = Stdlib.Promise
 @val external describe: (string, @uncurry (unit => unit)) => unit = "describe"
 @val external test: (string, @uncurry (unit => unit)) => unit = "test"
 type done = @uncurry (unit => unit)

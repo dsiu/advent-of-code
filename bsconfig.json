@@ -26,7 +26,6 @@
   "bs-dependencies": [
     "@rescript/core",
     "rationale",
-    "@ryyppy/rescript-promise",
     "rescript-ocamlgraph",
     "rescript-bag",
     "@resinfo/parser",

@@ -17,11 +17,11 @@
   "license": "MIT",
   "devDependencies": {
     "@glennsl/rescript-jest": "https://github.com/dsiu/rescript-jest#rescript-v11-curried-mode",
-    "@swc/core": "^1.3.102",
-    "@swc/jest": "^0.2.29",
+    "@swc/core": "^1.3.104",
+    "@swc/jest": "^0.2.30",
     "jest": "^29.7.0",
-    "nodemon": "^3.0.2",
-    "rescript": "^11.0.0-rc.9"
+    "nodemon": "^3.0.3",
+    "rescript": "^11.0.0"
   },
   "jest": {
     "testMatch": [
@@ -40,7 +40,7 @@
     ]
   },
   "dependencies": {
-    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=c15acab994913635e523396b36c2205787fd607a",
+    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=174ca291475d427c879c11553ceae2810dff77c5",
     "@greenlabs/garter": "https://github.com/dsiu/garter#rescript-v11-curried-mode",
     "@jmagaram/rescript-extras": "^3.0.0",
     "@jmagaram/rescript-seq": "^3.0.1",
@@ -54,7 +54,6 @@
     "relude": "https://github.com/dsiu/rescript-relude#rescript-v11-curried-mode",
     "relude-parse": "https://github.com/dsiu/rescript-relude-parse#rescript-v11-curried-mode",
     "rescript-bag": "https://github.com/dsiu/rescript-bag#main",
-    "rescript-js": "latest",
     "rescript-ocamlgraph": "https://github.com/dsiu/rescript-ocamlgraph#rescript-v10",
     "rescript-vector": "^0.4.0"
   }
