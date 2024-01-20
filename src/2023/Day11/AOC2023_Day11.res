@@ -61,23 +61,17 @@ let emptyRowCol = (Galaxies(galaxies) as g) => {
   })
 
   let ys = Array.fromInitializer(~length=toInt(maxY), Function.id)
-  let rows = xs->Array.filter(y => {
+  let rows = ys->Array.filter(y => {
     galaxies->Array.filter((Position((_, y'))) => y' == fromInt(y))->Array.length == 0
   })
 
   (cols, rows)
 }
 
-let expand = (Galaxies(galaxies) as g, (expX, expY), scale) => {
-  log("orig")
-  g->dumpGalaxies
-
+let expand = (Galaxies(galaxies), (expX, expY), scale) => {
   let nElemLessThan = (arr, n) => {
     arr->Array.filter(x => fromInt(x) < n)->Array.length
   }
-
-  let nExpX = expX->Array.length
-  let nExpY = expY->Array.length
 
   let expandX = arr =>
     arr->Array.map((Position((x, y))) => {
@@ -92,14 +86,24 @@ let expand = (Galaxies(galaxies) as g, (expX, expY), scale) => {
   galaxies->setToArray->expandX->expandY->Set.fromArray->Galaxies
 }
 
-let part1: (galaxies, BigInt.t) => (BigInt.t, BigInt.t) = (Galaxies(galaxies) as g, scale) => {
-  let g' = g->expand(emptyRowCol(g), scale)
-  log("expanded")
-  g'->dumpGalaxies
+let absBigInt = (x: BigInt.t) => x < Constants.zero ? Constants.zero - x : x
 
-  (Constants.zero, Constants.zero)
+let manhanten: (position, position) => BigInt.t = (Position((x, y)), Position((x', y'))) => {
+  (x - x')->absBigInt + (y - y')->absBigInt
+}
 
-  //  galaxies->expand(scale)->Set.size
+let distances = (Galaxies(galaxies)) => {
+  let galaxies = galaxies->setToArray
+  galaxies->Array.reduce([], (acc, p) => {
+    galaxies->Array.filter(p' => p != p')->Array.map(p' => manhanten(p, p'))->Array.concat(acc)
+  })
+}
+
+let part1: (galaxies, BigInt.t) => BigInt.t = (g, scale) => {
+  g
+  ->expand(emptyRowCol(g), scale)
+  ->distances
+  ->Array.reduce(Constants.zero, (acc, d) => acc + d) / fromInt(2)
 }
 
 let parse = data => {
@@ -128,15 +132,9 @@ let parse = data => {
 }
 
 let solvePart1 = data => {
-  let result = data->parse->part1(fromInt(2))
-  result->(log2("result", _))
-  //  switch galaxy {
-  //  | Galaxies(galaxy) => galaxy->Set.forEach((Position(p)) => log(p))
-  //  }
-  1
+  data->parse->part1(fromInt(2))
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  data->parse->part1(fromInt(1000000))
 }

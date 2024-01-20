@@ -112,8 +112,8 @@ function emptyRowCol(g) {
                         return Caml_obj.equal(param._0[0], BigInt(x));
                       })).length === 0;
         }));
-  Stdlib__Array.fromInitializer(Stdlib__BigInt.toInt(match[1]), Stdlib__Function.id);
-  var rows = Stdlib__Array.filter(xs, (function (y) {
+  var ys = Stdlib__Array.fromInitializer(Stdlib__BigInt.toInt(match[1]), Stdlib__Function.id);
+  var rows = Stdlib__Array.filter(ys, (function (y) {
           return Stdlib__Array.filter(galaxies, (function (param) {
                         return Caml_obj.equal(param._0[1], BigInt(y));
                       })).length === 0;
@@ -124,11 +124,9 @@ function emptyRowCol(g) {
         ];
 }
 
-function expand(g, param, scale) {
+function expand(galaxies, param, scale) {
   var expY = param[1];
   var expX = param[0];
-  console.log("orig");
-  dumpGalaxies(g);
   var nElemLessThan = function (arr, n) {
     return Stdlib__Array.filter(arr, (function (x) {
                   return Caml_obj.lessthan(BigInt(x), n);
@@ -162,18 +160,39 @@ function expand(g, param, scale) {
   };
   return {
           TAG: "Galaxies",
-          _0: new Set(expandY(expandX(Array.from(g._0.values()))))
+          _0: new Set(expandY(expandX(Array.from(galaxies._0.values()))))
         };
 }
 
+function absBigInt(x) {
+  if (Caml_obj.lessthan(x, Stdlib__BigInt_Ext.Constants.zero)) {
+    return Stdlib__BigInt_Ext.Constants.zero - x;
+  } else {
+    return x;
+  }
+}
+
+function manhanten(param, param$1) {
+  var match = param$1._0;
+  var match$1 = param._0;
+  return absBigInt(match$1[0] - match[0]) + absBigInt(match$1[1] - match[1]);
+}
+
+function distances(galaxies) {
+  var galaxies$1 = Array.from(galaxies._0.values());
+  return Stdlib__Array.reduce(galaxies$1, [], (function (acc, p) {
+                return Stdlib__Array.map(Stdlib__Array.filter(galaxies$1, (function (p$p) {
+                                    return Caml_obj.notequal(p, p$p);
+                                  })), (function (p$p) {
+                                return manhanten(p, p$p);
+                              })).concat(acc);
+              }));
+}
+
 function part1(g, scale) {
-  var g$p = expand(g, emptyRowCol(g), scale);
-  console.log("expanded");
-  dumpGalaxies(g$p);
-  return [
-          Stdlib__BigInt_Ext.Constants.zero,
-          Stdlib__BigInt_Ext.Constants.zero
-        ];
+  return Stdlib__Array.reduce(distances(expand(g, emptyRowCol(g), scale)), Stdlib__BigInt_Ext.Constants.zero, (function (acc, d) {
+                return acc + d;
+              })) / BigInt(2);
 }
 
 function parse(data) {
@@ -202,15 +221,11 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  var result = part1(parse(data), BigInt(2));
-  ((function (__x) {
-          console.log("result", __x);
-        })(result));
-  return 1;
+  return part1(parse(data), BigInt(2));
 }
 
 function solvePart2(data) {
-  return 2;
+  return part1(parse(data), BigInt(1000000));
 }
 
 export {
@@ -222,6 +237,9 @@ export {
   maxCoord ,
   emptyRowCol ,
   expand ,
+  absBigInt ,
+  manhanten ,
+  distances ,
   part1 ,
   parse ,
   solvePart1 ,
