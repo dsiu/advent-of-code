@@ -408,16 +408,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp#commit=174ca291475d427c879c11553ceae2810dff77c5":
+"@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp#commit=17e6de6c835dd12218c4858c580320805471cf91":
   version: 0.0.1
-  resolution: "@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp.git#commit=174ca291475d427c879c11553ceae2810dff77c5"
+  resolution: "@dsiu/rescript-stdlib-fp@https://github.com/dsiu/rescript-stdlib-fp.git#commit=17e6de6c835dd12218c4858c580320805471cf91"
   dependencies:
     "@greenlabs/garter": "git+https://github.com/dsiu/garter#rescript-v11-curried-mode"
     "@rescript/core": "git+https://github.com/rescript-association/rescript-core#main"
   peerDependencies:
     "@rescript/core": ^0.6.0
     rescript: ^11.0.0
-  checksum: 8b314bb945cd41578849f1352dee9a1d4618bfd5cc238eb3daabf6fe2fb0ddfdda9f6b8f15c13a0e944e3fc4d06db0de411acb00891b0bc7c5d7eaed018dade0
+  checksum: f30c24849a6e1f4a4fed908da7e5b156b138d25d3a711634a7d041d3b0df8a770c2adce1ad46a560ffebd4a5f88af92e8f13d523d4f2e906da5b63f216a6bec2
   languageName: node
   linkType: hard
 
@@ -1076,90 +1076,90 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-darwin-arm64@npm:1.3.104"
+"@swc/core-darwin-arm64@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-darwin-arm64@npm:1.3.105"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-darwin-x64@npm:1.3.104"
+"@swc/core-darwin-x64@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-darwin-x64@npm:1.3.105"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.104"
+"@swc/core-linux-arm-gnueabihf@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.105"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.104"
+"@swc/core-linux-arm64-gnu@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.105"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-linux-arm64-musl@npm:1.3.104"
+"@swc/core-linux-arm64-musl@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-linux-arm64-musl@npm:1.3.105"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-linux-x64-gnu@npm:1.3.104"
+"@swc/core-linux-x64-gnu@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-linux-x64-gnu@npm:1.3.105"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-linux-x64-musl@npm:1.3.104"
+"@swc/core-linux-x64-musl@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-linux-x64-musl@npm:1.3.105"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.104"
+"@swc/core-win32-arm64-msvc@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.105"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.104"
+"@swc/core-win32-ia32-msvc@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.105"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core-win32-x64-msvc@npm:1.3.104"
+"@swc/core-win32-x64-msvc@npm:1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core-win32-x64-msvc@npm:1.3.105"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.3.104":
-  version: 1.3.104
-  resolution: "@swc/core@npm:1.3.104"
+"@swc/core@npm:^1.3.105":
+  version: 1.3.105
+  resolution: "@swc/core@npm:1.3.105"
   dependencies:
-    "@swc/core-darwin-arm64": "npm:1.3.104"
-    "@swc/core-darwin-x64": "npm:1.3.104"
-    "@swc/core-linux-arm-gnueabihf": "npm:1.3.104"
-    "@swc/core-linux-arm64-gnu": "npm:1.3.104"
-    "@swc/core-linux-arm64-musl": "npm:1.3.104"
-    "@swc/core-linux-x64-gnu": "npm:1.3.104"
-    "@swc/core-linux-x64-musl": "npm:1.3.104"
-    "@swc/core-win32-arm64-msvc": "npm:1.3.104"
-    "@swc/core-win32-ia32-msvc": "npm:1.3.104"
-    "@swc/core-win32-x64-msvc": "npm:1.3.104"
+    "@swc/core-darwin-arm64": "npm:1.3.105"
+    "@swc/core-darwin-x64": "npm:1.3.105"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.3.105"
+    "@swc/core-linux-arm64-gnu": "npm:1.3.105"
+    "@swc/core-linux-arm64-musl": "npm:1.3.105"
+    "@swc/core-linux-x64-gnu": "npm:1.3.105"
+    "@swc/core-linux-x64-musl": "npm:1.3.105"
+    "@swc/core-win32-arm64-msvc": "npm:1.3.105"
+    "@swc/core-win32-ia32-msvc": "npm:1.3.105"
+    "@swc/core-win32-x64-msvc": "npm:1.3.105"
     "@swc/counter": "npm:^0.1.1"
     "@swc/types": "npm:^0.1.5"
   peerDependencies:
@@ -1188,7 +1188,7 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: 20cde96707b61c2fdae0c7c0fbff7d6c1a1888ca4b0c3937972222644c62e29710ce8fa68ecec20654236e038dee32ea4227ca880a679ee38f80fef751de35fa
+  checksum: 719283fa1bb7e25a9e3bfb4bb2fca8dec98a1cbbcd53cdd6a8cc9d9e2ac701d0fe409b2f3f9b6ddd466b2c1592cdae9c2302a114036bb5adc08e8f95549543e0
   languageName: node
   linkType: hard
 
@@ -1199,15 +1199,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/jest@npm:^0.2.30":
-  version: 0.2.30
-  resolution: "@swc/jest@npm:0.2.30"
+"@swc/jest@npm:^0.2.31":
+  version: 0.2.31
+  resolution: "@swc/jest@npm:0.2.31"
   dependencies:
     "@jest/create-cache-key-function": "npm:^29.7.0"
     jsonc-parser: "npm:^3.2.0"
   peerDependencies:
     "@swc/core": "*"
-  checksum: bb33994affb5649484c2d90b1147f9847fc7838d67a4ed547b7666cb48d4e7f5ce2b9d56b37e6364faa9cf7ea20763af1fb3a8875fbfdcd21dd075e373bd9a69
+  checksum: 58f634d4b7b0cab7230f6b36a81ef88ecca5e9ec26b5b7ea5872c05b2b8c53fe982da9e3f8ec2a8f36c19d3eb92bad271c652575831d100ebae1449ec3506664
   languageName: node
   linkType: hard
 
@@ -1408,15 +1408,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "advent-of-code@workspace:."
   dependencies:
-    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=174ca291475d427c879c11553ceae2810dff77c5"
+    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=17e6de6c835dd12218c4858c580320805471cf91"
     "@glennsl/rescript-jest": "https://github.com/dsiu/rescript-jest#rescript-v11-curried-mode"
     "@greenlabs/garter": "https://github.com/dsiu/garter#rescript-v11-curried-mode"
     "@jmagaram/rescript-extras": "npm:^3.0.0"
     "@jmagaram/rescript-seq": "npm:^3.0.1"
     "@rescript/core": "https://github.com/rescript-association/rescript-core#main"
     "@resinfo/parser": "npm:^2.0.0-alpha"
-    "@swc/core": "npm:^1.3.104"
-    "@swc/jest": "npm:^0.2.30"
+    "@swc/core": "npm:^1.3.105"
+    "@swc/jest": "npm:^0.2.31"
     bs-bastet: "https://github.com/dsiu/rescript-bastet#rescript-v11-curried-mode"
     debug: "npm:^4.3.4"
     jest: "npm:^29.7.0"
@@ -1426,7 +1426,7 @@ __metadata:
     rationale: "npm:^0.2.0"
     relude: "https://github.com/dsiu/rescript-relude#rescript-v11-curried-mode"
     relude-parse: "https://github.com/dsiu/rescript-relude-parse#rescript-v11-curried-mode"
-    rescript: "npm:^11.0.0"
+    rescript: "npm:^11.0.1"
     rescript-bag: "https://github.com/dsiu/rescript-bag#main"
     rescript-ocamlgraph: "https://github.com/dsiu/rescript-ocamlgraph#rescript-v10"
     rescript-vector: "npm:^0.4.0"
@@ -4581,14 +4581,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rescript@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "rescript@npm:11.0.0"
+"rescript@npm:^11.0.1":
+  version: 11.0.1
+  resolution: "rescript@npm:11.0.1"
   bin:
     bsc: bsc
     bstracing: lib/bstracing
     rescript: rescript
-  checksum: 22736872fa74a3f2efb03d6684e7d17ca310e3783c29d34bceca250cb9383ea6637526e03d328704214c91c4701408e565d34afc8a39e83011983c8872731731
+  checksum: a37dc757a14c57a15fe75a12df52f3d564cc6ef5cacc8356fe70a7d4ab9692736c0fbb56456dff090d8b5b18935a09aed066c623e6764f4c76bed61187e611b7
   languageName: node
   linkType: hard
 
