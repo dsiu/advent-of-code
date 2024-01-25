@@ -114,9 +114,9 @@ function findNumbers(engine) {
   var numberRegions = engineFilter(engine, isDigit).toSorted(Coordinate$AdventOfCode.Compare.yx);
   var rowsWithNumber = rowsFromRegion(numberRegions);
   var groupedByRow = Stdlib__Array.map(rowsWithNumber, (function (y) {
-          return Stdlib__Array.filter(numberRegions, (function (param) {
-                        return param[1] === y;
-                      }));
+          return numberRegions.filter(function (param) {
+                      return param[1] === y;
+                    });
         }));
   return Stdlib__Array.map(Stdlib__Array.map(groupedByRow, (function (__x) {
                       return __x.toSorted(Coordinate$AdventOfCode.Compare.xy);

@@ -146,9 +146,9 @@ function parse(data) {
                       var partial_arg = function (eta) {
                         return Stdlib__Int.fromString(undefined, eta);
                       };
-                      return Stdlib__Array.map(Stdlib__Array.filter(Utils$AdventOfCode.splitSpace(s.replace(prefix, "")), (function (param) {
-                                        return Stdlib__Function.complement(Stdlib__String.isEmpty, param);
-                                      })), (function (param) {
+                      return Stdlib__Array.map(Utils$AdventOfCode.splitSpace(s.replace(prefix, "")).filter(function (param) {
+                                      return Stdlib__Function.complement(Stdlib__String.isEmpty, param);
+                                    }), (function (param) {
                                     return Stdlib__Function.compose(partial_arg, (function (prim) {
                                                   return prim;
                                                 }), param);

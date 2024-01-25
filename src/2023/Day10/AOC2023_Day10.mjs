@@ -146,11 +146,11 @@ function connectorsToPosition(map, pos) {
                   neighbours(map, nbr)
                 ];
         }));
-  var connectors = Stdlib__Array.filter(nbrsNbrs, (function (param) {
-          return Stdlib__Option.isSome(Stdlib__Array.find(param[1], (function (n) {
-                            return Coord_V2$AdventOfCode.compare(n)(pos) === 0;
-                          })));
-        }));
+  var connectors = nbrsNbrs.filter(function (param) {
+        return Stdlib__Option.isSome(Stdlib__Array.find(param[1], (function (n) {
+                          return Coord_V2$AdventOfCode.compare(n)(pos) === 0;
+                        })));
+      });
   return Stdlib__Array.map(connectors, (function (prim) {
                 return prim[0];
               }));
@@ -169,7 +169,7 @@ function followPath(map, start) {
     var thisPos = _thisPos;
     var acc = _acc;
     var nbrs = connectorsToPosition(map, thisPos);
-    var next = Stdlib__Array.getUnsafe(Stdlib__Array.filter(nbrs, (function(lastPos){
+    var next = Stdlib__Array.getUnsafe(nbrs.filter((function(lastPos){
             return function (n) {
               return Coord_V2$AdventOfCode.compare(n)(lastPos) !== 0;
             }
@@ -203,9 +203,9 @@ function shoelaceFormula(v) {
 function part2(map) {
   var path = followPath(map, map.start);
   var boundaryPointsCount = path.length;
-  var vertices = Stdlib__Array.filter(path, (function (pos) {
-          return isVertex(Array2D$AdventOfCode.getExn(map.grid, pos));
-        }));
+  var vertices = path.filter(function (pos) {
+        return isVertex(Array2D$AdventOfCode.getExn(map.grid, pos));
+      });
   var loopArea = shoelaceFormula(vertices);
   return (loopArea - (boundaryPointsCount / 2 | 0) | 0) + 1 | 0;
 }

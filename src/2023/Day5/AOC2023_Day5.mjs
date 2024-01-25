@@ -245,13 +245,13 @@ function makeSeedsInterval(seeds) {
 }
 
 function makeSeedsPair(seeds) {
-  return Stdlib__Array.map(Stdlib__Array.filter(Stdlib__Array.mapWithIndex(seeds, (function (a, i) {
-                        if (i % 2 !== 0) {
-                          return ;
-                        }
-                        var b = Stdlib__Option.getExn(seeds[i + 1 | 0]);
-                        return Interval$AdventOfCode.makeWithLength(a, b);
-                      })), Stdlib__Option.isSome), Stdlib__Option.getExn);
+  return Stdlib__Array.map(Stdlib__Array.mapWithIndex(seeds, (function (a, i) {
+                      if (i % 2 !== 0) {
+                        return ;
+                      }
+                      var b = Stdlib__Option.getExn(seeds[i + 1 | 0]);
+                      return Interval$AdventOfCode.makeWithLength(a, b);
+                    })).filter(Stdlib__Option.isSome), Stdlib__Option.getExn);
 }
 
 function part1(__x) {

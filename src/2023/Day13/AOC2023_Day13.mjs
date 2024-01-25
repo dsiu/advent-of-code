@@ -18,15 +18,15 @@ function log2(prim0, prim1) {
 var zipWith = Stdlib__Array.map2;
 
 function diffArray(a, b) {
-  return Stdlib__Array.filter(Stdlib__Array.map2(a, b, Stdlib__String.equal), (function (x) {
-                return Stdlib__Function.id(!x);
-              })).length;
+  return Stdlib__Array.map2(a, b, Stdlib__String.equal).filter(function (x) {
+              return Stdlib__Function.id(!x);
+            }).length;
 }
 
 function diffStrings(a, b) {
-  return Stdlib__Array.filter(Stdlib__Array.map2(a.split(""), b.split(""), Stdlib__String.equal), (function (x) {
-                return Stdlib__Function.id(!x);
-              })).length;
+  return Stdlib__Array.map2(a.split(""), b.split(""), Stdlib__String.equal).filter(function (x) {
+              return Stdlib__Function.id(!x);
+            }).length;
 }
 
 function reflectAt(xs, n, nDiff) {
@@ -39,9 +39,9 @@ function reflectAt(xs, n, nDiff) {
 
 function reflectionLines(xs, nDiff) {
   var k = xs.length;
-  return Stdlib__Array.filter(Stdlib__Array.range(1, k), (function (x) {
-                  return reflectAt(xs, x, nDiff);
-                }))[0];
+  return Stdlib__Array.range(1, k).filter(function (x) {
+                return reflectAt(xs, x, nDiff);
+              })[0];
 }
 
 function transposeArrayOfString(xs) {

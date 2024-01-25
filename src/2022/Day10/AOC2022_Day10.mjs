@@ -31,9 +31,9 @@ function apply(ops) {
 }
 
 function extractSignals(signals) {
-  return Stdlib__Array.filter(signals, (function (param) {
-                return (param[0] + 20 | 0) % 40 === 0;
-              }));
+  return signals.filter(function (param) {
+              return (param[0] + 20 | 0) % 40 === 0;
+            });
 }
 
 function calculateSixSignals(signals) {

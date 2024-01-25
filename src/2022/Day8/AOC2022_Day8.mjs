@@ -63,7 +63,7 @@ function setVisibilityForest(forest) {
 }
 
 function countVisible(forest) {
-  return Stdlib__Array.filter(Caml_splice_call.spliceObjApply([], "concat", [forest]), isVisible).length;
+  return Caml_splice_call.spliceObjApply([], "concat", [forest]).filter(isVisible).length;
 }
 
 function part1(param) {

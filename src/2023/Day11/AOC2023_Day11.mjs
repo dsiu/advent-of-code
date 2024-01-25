@@ -111,17 +111,17 @@ function emptyRowCol(g) {
   var match = maxCoord(g);
   var galaxies = Array.from(g._0.values());
   var xs = Stdlib__Array.fromInitializer(Stdlib__BigInt.toInt(match[0]), Stdlib__Function.id);
-  var cols = Stdlib__Array.filter(xs, (function (x) {
-          return Stdlib__Array.filter(galaxies, (function (param) {
-                        return Caml_obj.equal(param._0[0], BigInt(x));
-                      })).length === 0;
-        }));
+  var cols = xs.filter(function (x) {
+        return galaxies.filter(function (param) {
+                    return Caml_obj.equal(param._0[0], BigInt(x));
+                  }).length === 0;
+      });
   var ys = Stdlib__Array.fromInitializer(Stdlib__BigInt.toInt(match[1]), Stdlib__Function.id);
-  var rows = Stdlib__Array.filter(ys, (function (y) {
-          return Stdlib__Array.filter(galaxies, (function (param) {
-                        return Caml_obj.equal(param._0[1], BigInt(y));
-                      })).length === 0;
-        }));
+  var rows = ys.filter(function (y) {
+        return galaxies.filter(function (param) {
+                    return Caml_obj.equal(param._0[1], BigInt(y));
+                  }).length === 0;
+      });
   return [
           cols,
           rows
@@ -173,9 +173,9 @@ function manhattan(param, param$1) {
 function distances(galaxies) {
   var galaxies$1 = Array.from(galaxies._0.values());
   return Stdlib__Array.reduce(galaxies$1, [], (function (acc, p) {
-                return Stdlib__Array.map(Stdlib__Array.filter(galaxies$1, (function (p$p) {
-                                    return Caml_obj.notequal(p, p$p);
-                                  })), (function (p$p) {
+                return Stdlib__Array.map(galaxies$1.filter(function (p$p) {
+                                  return Caml_obj.notequal(p, p$p);
+                                }), (function (p$p) {
                                 return manhattan(p, p$p);
                               })).concat(acc);
               }));

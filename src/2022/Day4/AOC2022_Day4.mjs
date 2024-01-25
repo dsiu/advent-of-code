@@ -58,19 +58,19 @@ function parse(data) {
 }
 
 function count(xs, fn) {
-  return Stdlib__Array.filter(xs, fn).length;
+  return xs.filter(fn).length;
 }
 
 function part1(xs) {
-  return Stdlib__Array.filter(xs, (function (param) {
-                return hasContainment(param[0], param[1]);
-              })).length;
+  return xs.filter(function (param) {
+              return hasContainment(param[0], param[1]);
+            }).length;
 }
 
 function part2(xs) {
-  return Stdlib__Array.filter(xs, (function (param) {
-                return !disjoint(param[0], param[1]);
-              })).length;
+  return xs.filter(function (param) {
+              return !disjoint(param[0], param[1]);
+            }).length;
 }
 
 function solvePart1(data) {
