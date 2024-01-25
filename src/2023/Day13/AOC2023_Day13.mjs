@@ -17,18 +17,30 @@ function log2(prim0, prim1) {
 
 var zipWith = Stdlib__Array.map2;
 
-function reflectAt(xs, n) {
-  var match = Stdlib__Array.splitAt(xs, n);
-  var t = match[1];
-  var h = match[0];
-  Stdlib__Array.map2(h.toReversed(), t, Stdlib__String.equal);
-  return Stdlib__Array.all(Stdlib__Array.map2(h.toReversed(), t, Stdlib__String.equal), Stdlib__Function.id);
+function diffArray(a, b) {
+  return Stdlib__Array.filter(Stdlib__Array.map2(a, b, Stdlib__String.equal), (function (x) {
+                return Stdlib__Function.id(!x);
+              })).length;
 }
 
-function reflectionLines(xs) {
+function diffStrings(a, b) {
+  return Stdlib__Array.filter(Stdlib__Array.map2(a.split(""), b.split(""), Stdlib__String.equal), (function (x) {
+                return Stdlib__Function.id(!x);
+              })).length;
+}
+
+function reflectAt(xs, n, nDiff) {
+  var match = Stdlib__Array.splitAt(xs, n);
+  return Stdlib__Array.sum(Stdlib__Array.map2(match[0].toReversed(), match[1], diffStrings), {
+              zero: Stdlib__Int.zero,
+              add: Stdlib__Int.add
+            }) === nDiff;
+}
+
+function reflectionLines(xs, nDiff) {
   var k = xs.length;
   return Stdlib__Array.filter(Stdlib__Array.range(1, k), (function (x) {
-                  return reflectAt(xs, x);
+                  return reflectAt(xs, x, nDiff);
                 }))[0];
 }
 
@@ -43,14 +55,14 @@ function transposeArrayOfString(xs) {
               }));
 }
 
-function reflections(patt) {
-  var hline = Stdlib__Option.map(reflectionLines(patt), (function (x) {
+function reflections(patt, nDiff) {
+  var hline = Stdlib__Option.map(reflectionLines(patt, nDiff), (function (x) {
           return {
                   TAG: "Horiz",
                   _0: x
                 };
         }));
-  var vline = Stdlib__Option.map(reflectionLines(transposeArrayOfString(patt)), (function (x) {
+  var vline = Stdlib__Option.map(reflectionLines(transposeArrayOfString(patt), nDiff), (function (x) {
           return {
                   TAG: "Vert",
                   _0: x
@@ -67,13 +79,21 @@ function score(l) {
   }
 }
 
-function part1(xs) {
+function solve(xs, nDiff) {
   return Stdlib__Array.sum(Stdlib__Array.map(Stdlib__Array.mapWithIndex(xs, (function (x, i) {
-                        return reflections(x);
+                        return reflections(x, nDiff);
                       })), score), {
               zero: Stdlib__Int.zero,
               add: Stdlib__Int.add
             });
+}
+
+function part1(xs) {
+  return solve(xs, 0);
+}
+
+function part2(xs) {
+  return solve(xs, 1);
 }
 
 function parse(data) {
@@ -85,25 +105,27 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  var prim = part1(parse(data));
-  console.log(prim);
-  return 1;
+  return solve(parse(data), 0);
 }
 
 function solvePart2(data) {
-  return 2;
+  return solve(parse(data), 1);
 }
 
 export {
   log ,
   log2 ,
   zipWith ,
+  diffArray ,
+  diffStrings ,
   reflectAt ,
   reflectionLines ,
   transposeArrayOfString ,
   reflections ,
   score ,
+  solve ,
   part1 ,
+  part2 ,
   parse ,
   solvePart1 ,
   solvePart2 ,
