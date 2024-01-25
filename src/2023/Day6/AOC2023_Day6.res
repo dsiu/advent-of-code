@@ -164,7 +164,7 @@ module SheetParser = {
   // A function that takes two lists of integers (representing times and distances) and returns a list of `race` objects.
   // Each `race` object is created by calling the `mkRaceFromInt` function with a pair of corresponding time and distance.
   let mkRace = (a, b) => {
-    List.map2(a, b, ~f=(time, distance) => mkRaceFromInt(time, distance))
+    List.map2(a, b, (time, distance) => mkRaceFromInt(time, distance))
   }
 
   // A parser that matches a sequence of races in the input string.

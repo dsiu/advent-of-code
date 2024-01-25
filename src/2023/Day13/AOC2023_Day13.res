@@ -8,9 +8,6 @@ let log2 = Console.log2
 type pattern = array<string>
 type line = Horiz(int) | Vert(int)
 
-// todo: add to stdlib
-let zipWith = Array.map2
-
 let diffArray = (a, b) => {
   open Array
   zipWith(a, b, String.equal)->filter(x => !x->Fn.id)->length

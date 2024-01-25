@@ -16,20 +16,20 @@ function log2(prim0, prim1) {
 }
 
 function diffArray(a, b) {
-  return Stdlib__Array.map2(a, b, Stdlib__String.equal).filter(function (x) {
+  return Stdlib__Array.zipWith(a, b, Stdlib__String.equal).filter(function (x) {
               return Stdlib__Function.id(!x);
             }).length;
 }
 
 function diffStrings(a, b) {
-  return Stdlib__Array.map2(a.split(""), b.split(""), Stdlib__String.equal).filter(function (x) {
+  return Stdlib__Array.zipWith(a.split(""), b.split(""), Stdlib__String.equal).filter(function (x) {
               return Stdlib__Function.id(!x);
             }).length;
 }
 
 function reflectAt(xs, n, nDiff) {
   var match = Stdlib__Array.splitAt(xs, n);
-  return Stdlib__Array.sum(Stdlib__Array.map2(match[0].toReversed(), match[1], diffStrings), {
+  return Stdlib__Array.sum(Stdlib__Array.zipWith(match[0].toReversed(), match[1], diffStrings), {
               zero: Stdlib__Int.zero,
               add: Stdlib__Int.add
             }) === nDiff;
@@ -110,12 +110,9 @@ function solvePart2(data) {
   return solve(parse(data), 1);
 }
 
-var zipWith = Stdlib__Array.map2;
-
 export {
   log ,
   log2 ,
-  zipWith ,
   diffArray ,
   diffStrings ,
   reflectAt ,
