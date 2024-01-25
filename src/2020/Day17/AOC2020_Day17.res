@@ -5,6 +5,7 @@ open Utils
 
 let log = Js.Console.log
 
+// todo: migrate to Stdlib
 module TC = Tablecloth
 
 module Coord = {
@@ -52,7 +53,7 @@ let makeGrid = (lines: array<array<string>>) => {
 let conv34Cell = (Coord.Coord_V3(x, y, z)): Coord.t => Coord.Coord_V4(x, y, z, 0)
 
 let conv34 = grid => {
-  grid->TC.Set.toArray->TC.Array.map(conv34Cell)->TC.Set.fromArray(module(Coord))
+  grid->TC.Set.toArray->Stdlib.Array.map(conv34Cell)->TC.Set.fromArray(module(Coord))
 }
 
 let neighbourSpaces = (here: Coord.t) => {

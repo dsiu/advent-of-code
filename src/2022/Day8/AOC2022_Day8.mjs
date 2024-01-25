@@ -50,14 +50,14 @@ function setVisibility(row) {
 }
 
 function setVisibilityOrient(__x) {
-  return Stdlib__Array.map(__x, setVisibility);
+  return __x.map(setVisibility);
 }
 
 function setVisibilityForest(forest) {
   var rotate = function (x) {
-    return Stdlib__Array.map(Utils$AdventOfCode.transpose(x), (function (prim) {
-                  return prim.toReversed();
-                }));
+    return Utils$AdventOfCode.transpose(x).map(function (prim) {
+                return prim.toReversed();
+              });
   };
   return Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, Utils$AdventOfCode.compose(setVisibilityOrient, rotate, forest))));
 }
@@ -96,7 +96,7 @@ function takeWhile1(xs, f) {
 }
 
 function viewDistance(trees, h) {
-  return takeWhile1(Stdlib__Array.map(trees, treeHeight), (function (x) {
+  return takeWhile1(trees.map(treeHeight), (function (x) {
                 return x < h;
               })).length;
 }
@@ -104,9 +104,9 @@ function viewDistance(trees, h) {
 function scenicScore(forest, row, col) {
   var directions = tracks(forest, row, col);
   var h = treeHeight(Stdlib__Array.getUnsafe(Stdlib__Array.getUnsafe(forest, row), col));
-  return Stdlib__Array.reduce(Stdlib__Array.map(directions, (function (__x) {
-                    return viewDistance(__x, h);
-                  })), 1, (function (a, x) {
+  return Stdlib__Array.reduce(directions.map(function (__x) {
+                  return viewDistance(__x, h);
+                }), 1, (function (a, x) {
                 return Math.imul(a, x);
               }));
 }
@@ -123,15 +123,15 @@ function part2(forest) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                return Stdlib__Array.map(Utils$AdventOfCode.splitChars(x.trim()), (function (x) {
-                              return {
-                                      TAG: "Tree",
-                                      _0: Caml_format.int_of_string(x),
-                                      _1: false
-                                    };
-                            }));
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
+              return Utils$AdventOfCode.splitChars(x.trim()).map(function (x) {
+                          return {
+                                  TAG: "Tree",
+                                  _0: Caml_format.int_of_string(x),
+                                  _1: false
+                                };
+                        });
+            });
 }
 
 function solvePart1(data) {

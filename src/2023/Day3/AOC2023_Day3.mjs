@@ -97,9 +97,9 @@ function engineFilter(engine, fn) {
 }
 
 function rowsFromRegion(region) {
-  return Stdlib__Array.reduce(Stdlib__Array.map(region, (function (param) {
-                      return param[1];
-                    })).toSorted(Stdlib__Int.compare), [], (function (acc, e) {
+  return Stdlib__Array.reduce(region.map(function (param) {
+                    return param[1];
+                  }).toSorted(Stdlib__Int.compare), [], (function (acc, e) {
                 var last = acc.at(acc.length - 1 | 0);
                 if (last !== undefined && last === e) {
                   return acc;
@@ -113,48 +113,48 @@ function rowsFromRegion(region) {
 function findNumbers(engine) {
   var numberRegions = engineFilter(engine, isDigit).toSorted(Coordinate$AdventOfCode.Compare.yx);
   var rowsWithNumber = rowsFromRegion(numberRegions);
-  var groupedByRow = Stdlib__Array.map(rowsWithNumber, (function (y) {
-          return numberRegions.filter(function (param) {
-                      return param[1] === y;
-                    });
-        }));
-  return Stdlib__Array.map(Stdlib__Array.map(groupedByRow, (function (__x) {
-                      return __x.toSorted(Coordinate$AdventOfCode.Compare.xy);
-                    })), (function (l) {
-                  l.push([
-                        0,
-                        0
-                      ]);
-                  return Stdlib__Array.reduce(l, [
-                                [],
-                                []
-                              ], (function (param, param$1) {
-                                  var y = param$1[1];
-                                  var x = param$1[0];
-                                  var buf = param[1];
-                                  var parsed = param[0];
-                                  var last = buf.at(buf.length - 1 | 0);
-                                  if (last !== undefined && last[0] !== (x - 1 | 0)) {
-                                    parsed.push(buf);
-                                    return [
-                                            parsed,
-                                            [[
-                                                x,
-                                                y
-                                              ]]
-                                          ];
-                                  } else {
-                                    buf.push([
-                                          x,
-                                          y
-                                        ]);
-                                    return [
-                                            parsed,
-                                            buf
-                                          ];
-                                  }
-                                }))[0];
-                })).flat();
+  var groupedByRow = rowsWithNumber.map(function (y) {
+        return numberRegions.filter(function (param) {
+                    return param[1] === y;
+                  });
+      });
+  return groupedByRow.map(function (__x) {
+                  return __x.toSorted(Coordinate$AdventOfCode.Compare.xy);
+                }).map(function (l) {
+                l.push([
+                      0,
+                      0
+                    ]);
+                return Stdlib__Array.reduce(l, [
+                              [],
+                              []
+                            ], (function (param, param$1) {
+                                var y = param$1[1];
+                                var x = param$1[0];
+                                var buf = param[1];
+                                var parsed = param[0];
+                                var last = buf.at(buf.length - 1 | 0);
+                                if (last !== undefined && last[0] !== (x - 1 | 0)) {
+                                  parsed.push(buf);
+                                  return [
+                                          parsed,
+                                          [[
+                                              x,
+                                              y
+                                            ]]
+                                        ];
+                                } else {
+                                  buf.push([
+                                        x,
+                                        y
+                                      ]);
+                                  return [
+                                          parsed,
+                                          buf
+                                        ];
+                                }
+                              }))[0];
+              }).flat();
 }
 
 function findSymbols(__x) {
@@ -166,11 +166,11 @@ function findStars(__x) {
 }
 
 function touchedDigit(engine, symbols) {
-  return Stdlib__Array.flatMap(symbols, (function (__x) {
-                return getNeighborsIf(__x, (function (__x) {
-                              return isElemDigit(engine, __x);
-                            }));
-              }));
+  return symbols.flatMap(function (__x) {
+              return getNeighborsIf(__x, (function (__x) {
+                            return isElemDigit(engine, __x);
+                          }));
+            });
 }
 
 function isNumberTouched(number, symTouched) {
@@ -182,14 +182,14 @@ function isNumberTouched(number, symTouched) {
 }
 
 function getNumber(engine, number) {
-  return Stdlib__Array.reduce(Stdlib__Array.map(number, (function (n) {
-                    var match = Array2D$AdventOfCode.get(engine, n);
-                    if (match !== undefined && !(typeof match !== "object" || match.TAG === "Symbol")) {
-                      return match._0;
-                    } else {
-                      return PervasivesU.failwith("expected digit");
-                    }
-                  })), 0, (function (acc, d) {
+  return Stdlib__Array.reduce(number.map(function (n) {
+                  var match = Array2D$AdventOfCode.get(engine, n);
+                  if (match !== undefined && !(typeof match !== "object" || match.TAG === "Symbol")) {
+                    return match._0;
+                  } else {
+                    return PervasivesU.failwith("expected digit");
+                  }
+                }), 0, (function (acc, d) {
                 return Math.imul(acc, 10) + d | 0;
               }));
 }
@@ -230,11 +230,11 @@ function part2(engine) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
-                return Utils$AdventOfCode.compose((function (prim) {
-                              return prim.trim();
-                            }), Utils$AdventOfCode.splitChars, param);
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (param) {
+              return Utils$AdventOfCode.compose((function (prim) {
+                            return prim.trim();
+                          }), Utils$AdventOfCode.splitChars, param);
+            });
 }
 
 function solvePart1(data) {

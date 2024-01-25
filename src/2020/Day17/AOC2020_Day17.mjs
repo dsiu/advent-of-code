@@ -5,7 +5,6 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as TableclothSet from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothSet.mjs";
-import * as TableclothArray from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothArray.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as TableclothComparator from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothComparator.mjs";
 import * as Coord_V3$AdventOfCode from "../../Coord_V3.mjs";
@@ -101,7 +100,7 @@ function conv34Cell(param) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2020_Day17.res",
-          52,
+          53,
           17
         ],
         Error: new Error()
@@ -109,7 +108,7 @@ function conv34Cell(param) {
 }
 
 function conv34(grid) {
-  return TableclothSet.fromArray(TableclothArray.map(TableclothSet.toArray(grid), conv34Cell), {
+  return TableclothSet.fromArray(TableclothSet.toArray(grid).map(conv34Cell), {
               comparator: comparator
             });
 }

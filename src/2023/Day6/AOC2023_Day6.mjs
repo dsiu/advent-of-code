@@ -86,7 +86,7 @@ function waysToWin(param) {
 }
 
 function part1(races) {
-  return Stdlib__Array.fold(Stdlib__Array.map(races, waysToWin), 1, Stdlib__Int.multiply);
+  return Stdlib__Array.fold(races.map(waysToWin), 1, Stdlib__Int.multiply);
 }
 
 function part2(races) {
@@ -138,21 +138,21 @@ var SheetParser = {
 };
 
 function parse(data) {
-  var lines = Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
-          return prim.trim();
-        }));
+  var lines = Utils$AdventOfCode.splitNewline(data).map(function (prim) {
+        return prim.trim();
+      });
   var parseLine = function (line, prefix) {
     return Stdlib__Option.getExn(Stdlib__Option.map(line, (function (s) {
                       var partial_arg = function (eta) {
                         return Stdlib__Int.fromString(undefined, eta);
                       };
-                      return Stdlib__Array.map(Utils$AdventOfCode.splitSpace(s.replace(prefix, "")).filter(function (param) {
-                                      return Stdlib__Function.complement(Stdlib__String.isEmpty, param);
-                                    }), (function (param) {
-                                    return Stdlib__Function.compose(partial_arg, (function (prim) {
-                                                  return prim;
-                                                }), param);
-                                  }));
+                      return Utils$AdventOfCode.splitSpace(s.replace(prefix, "")).filter(function (param) {
+                                    return Stdlib__Function.complement(Stdlib__String.isEmpty, param);
+                                  }).map(function (param) {
+                                  return Stdlib__Function.compose(partial_arg, (function (prim) {
+                                                return prim;
+                                              }), param);
+                                });
                     })));
   };
   var times = parseLine(lines[0], "Time:");

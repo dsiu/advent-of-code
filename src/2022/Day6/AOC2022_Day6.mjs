@@ -23,9 +23,9 @@ function interestingPosition(n, text) {
   var len = text.length;
   var candidates = Stdlib__Array.zip(Stdlib__Array.makeBy(len, (function (prim) {
               return prim;
-            })), Stdlib__Array.map(Stdlib__Array.tails(text), (function (__x) {
-              return Stdlib__Array.take(__x, n);
-            })));
+            })), Stdlib__Array.tails(text).map(function (__x) {
+            return Stdlib__Array.take(__x, n);
+          }));
   var packetPos = Stdlib__Array.headUnsafe(Stdlib__Array.dropWhile(candidates, (function (param) {
               return Utils$AdventOfCode.compose((function (prim) {
                             return prim[1];

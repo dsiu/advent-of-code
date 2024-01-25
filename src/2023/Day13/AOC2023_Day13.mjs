@@ -43,14 +43,14 @@ function reflectionLines(xs, nDiff) {
 }
 
 function transposeArrayOfString(xs) {
-  var y = Stdlib__Array.transpose(Stdlib__Array.map(xs, (function (__x) {
-              return __x.split("");
-            })));
-  return Stdlib__Array.map(y, (function (x) {
-                return Stdlib__Array.foldl1(x, (function (prim0, prim1) {
-                              return prim0.concat(prim1);
-                            }));
-              }));
+  var y = Stdlib__Array.transpose(xs.map(function (__x) {
+            return __x.split("");
+          }));
+  return y.map(function (x) {
+              return Stdlib__Array.foldl1(x, (function (prim0, prim1) {
+                            return prim0.concat(prim1);
+                          }));
+            });
 }
 
 function reflections(patt, nDiff) {
@@ -78,9 +78,9 @@ function score(l) {
 }
 
 function solve(xs, nDiff) {
-  return Stdlib__Array.sum(Stdlib__Array.map(Stdlib__Array.mapWithIndex(xs, (function (x, i) {
-                        return reflections(x, nDiff);
-                      })), score), {
+  return Stdlib__Array.sum(xs.map(function (x, i) {
+                    return reflections(x, nDiff);
+                  }).map(score), {
               zero: Stdlib__Int.zero,
               add: Stdlib__Int.add
             });
@@ -95,11 +95,11 @@ function part2(xs) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitDoubleNewline(data), (function (lines) {
-                return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(lines), (function (prim) {
-                              return prim.trim();
-                            }));
-              }));
+  return Utils$AdventOfCode.splitDoubleNewline(data).map(function (lines) {
+              return Utils$AdventOfCode.splitNewline(lines).map(function (prim) {
+                          return prim.trim();
+                        });
+            });
 }
 
 function solvePart1(data) {

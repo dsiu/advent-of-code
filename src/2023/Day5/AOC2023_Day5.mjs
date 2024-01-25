@@ -46,7 +46,7 @@ var Rule = {
 };
 
 function toString$1(t) {
-  return "AlmanacMap(" + t.srcCategory + ", " + t.destCategory + ", [" + Stdlib__Array.map(t.rules, toString).join(", ") + "])";
+  return "AlmanacMap(" + t.srcCategory + ", " + t.destCategory + ", [" + t.rules.map(toString).join(", ") + "])";
 }
 
 function runRules(t, srcNum) {
@@ -79,13 +79,13 @@ function runRulesWithInterval(t, src) {
 }
 
 function runRulesWithMultiIntervals(t, xs) {
-  return Stdlib__Array.flatMap(xs, (function (x) {
-                var match = runRulesWithInterval(t, x);
-                var newSrc = Stdlib__Option.getOr(Stdlib__Option.flatMap(match[0], (function (s) {
-                            return [s];
-                          })), []);
-                return newSrc.concat(match[1]);
-              }));
+  return xs.flatMap(function (x) {
+              var match = runRulesWithInterval(t, x);
+              var newSrc = Stdlib__Option.getOr(Stdlib__Option.flatMap(match[0], (function (s) {
+                          return [s];
+                        })), []);
+              return newSrc.concat(match[1]);
+            });
 }
 
 var AlmanacMap = {
@@ -96,9 +96,9 @@ var AlmanacMap = {
 };
 
 function toString$2(t) {
-  return "Almanac (Seeds: [" + Stdlib__Array.map(t.seeds, (function (prim) {
-                  return prim.toString();
-                })).join(", ") + "],\n[" + Stdlib__Array.map(t.maps, toString$1).join("\n") + ")]";
+  return "Almanac (Seeds: [" + t.seeds.map(function (prim) {
+                return prim.toString();
+              }).join(", ") + "],\n[" + t.maps.map(toString$1).join("\n") + ")]";
 }
 
 function getMap(t, src) {
@@ -113,11 +113,11 @@ var Almanac = {
 };
 
 function parse(data) {
-  var lines = Stdlib__Array.map(Utils$AdventOfCode.splitDoubleNewline(data), (function (l) {
-          return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(l), (function (prim) {
-                        return prim.trim();
-                      }));
-        }));
+  var lines = Utils$AdventOfCode.splitDoubleNewline(data).map(function (l) {
+        return Utils$AdventOfCode.splitNewline(l).map(function (prim) {
+                    return prim.trim();
+                  });
+      });
   var seedLine = Stdlib__Option.getExn(Stdlib__Option.flatMap(lines[0], (function (__x) {
               return __x[0];
             })));
@@ -125,9 +125,9 @@ function parse(data) {
         return __x.slice(1);
       })(lines);
   var parseSeed = function (line) {
-    return Stdlib__Array.map(Utils$AdventOfCode.splitSpace(Stdlib__Option.getExn(line.split(": ")[1])), (function (prim) {
-                  return BigInt(prim);
-                }));
+    return Utils$AdventOfCode.splitSpace(Stdlib__Option.getExn(line.split(": ")[1])).map(function (prim) {
+                return BigInt(prim);
+              });
   };
   var parseMap = function (lines) {
     var categoryLine = Stdlib__Option.getExn(lines[0]);
@@ -151,9 +151,9 @@ function parse(data) {
     var srcCategory = match[0];
     var destCategory = match[1];
     var parseIntervalLine = function (l) {
-      var match = Stdlib__Array.map(Utils$AdventOfCode.splitSpace(l), (function (prim) {
-              return BigInt(prim);
-            }));
+      var match = Utils$AdventOfCode.splitSpace(l).map(function (prim) {
+            return BigInt(prim);
+          });
       if (match.length !== 3) {
         throw {
               RE_EXN_ID: "Match_failure",
@@ -175,7 +175,7 @@ function parse(data) {
               offset: destStart - srcStart
             };
     };
-    var rules = Stdlib__Array.map(srcDestLines, parseIntervalLine);
+    var rules = srcDestLines.map(parseIntervalLine);
     return {
             srcCategory: srcCategory,
             destCategory: destCategory,
@@ -183,7 +183,7 @@ function parse(data) {
           };
   };
   var seeds = parseSeed(seedLine);
-  var maps = Stdlib__Array.map(mapLines, parseMap);
+  var maps = mapLines.map(parseMap);
   return {
           seeds: seeds,
           maps: maps
@@ -191,67 +191,67 @@ function parse(data) {
 }
 
 function part1_simple(almanac) {
-  var locations = Stdlib__Array.map(almanac.seeds, (function (s) {
-          var endCat = "location";
-          var _curCat = "seed";
-          var _curNum = s;
-          while(true) {
-            var curNum = _curNum;
-            var curCat = _curCat;
-            var map = getMap(almanac, curCat);
-            var destCategory = map.destCategory;
-            var nextNum = runRules(map, curNum);
-            if (destCategory === endCat) {
-              return nextNum;
-            }
-            _curNum = nextNum;
-            _curCat = destCategory;
-            continue ;
-          };
-        }));
+  var locations = almanac.seeds.map(function (s) {
+        var endCat = "location";
+        var _curCat = "seed";
+        var _curNum = s;
+        while(true) {
+          var curNum = _curNum;
+          var curCat = _curCat;
+          var map = getMap(almanac, curCat);
+          var destCategory = map.destCategory;
+          var nextNum = runRules(map, curNum);
+          if (destCategory === endCat) {
+            return nextNum;
+          }
+          _curNum = nextNum;
+          _curCat = destCategory;
+          continue ;
+        };
+      });
   console.log(locations);
   return Utils$AdventOfCode.minBigIntInArray(locations);
 }
 
 function findLocation(almanac, seedTransform) {
   var newSeeds = seedTransform(almanac.seeds);
-  var locations = Stdlib__Array.flatMap(newSeeds, (function (s) {
-          var endCat = "location";
-          var _curCat = "seed";
-          var _cur = [s];
-          while(true) {
-            var cur = _cur;
-            var curCat = _curCat;
-            var map = getMap(almanac, curCat);
-            var destCategory = map.destCategory;
-            var next = runRulesWithMultiIntervals(map, cur);
-            if (destCategory === endCat) {
-              return next;
-            }
-            _cur = next;
-            _curCat = destCategory;
-            continue ;
-          };
-        }));
-  return Utils$AdventOfCode.minBigIntInArray(Stdlib__Array.map(locations, (function (param) {
-                    return param[0];
-                  })));
+  var locations = newSeeds.flatMap(function (s) {
+        var endCat = "location";
+        var _curCat = "seed";
+        var _cur = [s];
+        while(true) {
+          var cur = _cur;
+          var curCat = _curCat;
+          var map = getMap(almanac, curCat);
+          var destCategory = map.destCategory;
+          var next = runRulesWithMultiIntervals(map, cur);
+          if (destCategory === endCat) {
+            return next;
+          }
+          _cur = next;
+          _curCat = destCategory;
+          continue ;
+        };
+      });
+  return Utils$AdventOfCode.minBigIntInArray(locations.map(function (param) {
+                  return param[0];
+                }));
 }
 
 function makeSeedsInterval(seeds) {
-  return Stdlib__Array.map(seeds, (function (__x) {
-                return Interval$AdventOfCode.makeWithLength(__x, BigInt(1));
-              }));
+  return seeds.map(function (__x) {
+              return Interval$AdventOfCode.makeWithLength(__x, BigInt(1));
+            });
 }
 
 function makeSeedsPair(seeds) {
-  return Stdlib__Array.map(Stdlib__Array.mapWithIndex(seeds, (function (a, i) {
-                      if (i % 2 !== 0) {
-                        return ;
-                      }
-                      var b = Stdlib__Option.getExn(seeds[i + 1 | 0]);
-                      return Interval$AdventOfCode.makeWithLength(a, b);
-                    })).filter(Stdlib__Option.isSome), Stdlib__Option.getExn);
+  return seeds.map(function (a, i) {
+                  if (i % 2 !== 0) {
+                    return ;
+                  }
+                  var b = Stdlib__Option.getExn(seeds[i + 1 | 0]);
+                  return Interval$AdventOfCode.makeWithLength(a, b);
+                }).filter(Stdlib__Option.isSome).map(Stdlib__Option.getExn);
 }
 
 function part1(__x) {

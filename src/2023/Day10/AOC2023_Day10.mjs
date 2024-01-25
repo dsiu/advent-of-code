@@ -140,20 +140,20 @@ function neighbours(param, p) {
 
 function connectorsToPosition(map, pos) {
   var startNbrs = neighbours(map, pos);
-  var nbrsNbrs = Stdlib__Array.map(startNbrs, (function (nbr) {
-          return [
-                  nbr,
-                  neighbours(map, nbr)
-                ];
-        }));
+  var nbrsNbrs = startNbrs.map(function (nbr) {
+        return [
+                nbr,
+                neighbours(map, nbr)
+              ];
+      });
   var connectors = nbrsNbrs.filter(function (param) {
         return Stdlib__Option.isSome(Stdlib__Array.find(param[1], (function (n) {
                           return Coord_V2$AdventOfCode.compare(n)(pos) === 0;
                         })));
       });
-  return Stdlib__Array.map(connectors, (function (prim) {
-                return prim[0];
-              }));
+  return connectors.map(function (prim) {
+              return prim[0];
+            });
 }
 
 function connectorsToStart(map) {
@@ -211,9 +211,9 @@ function part2(map) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                return Stdlib__Array.map(x.trim().split(""), mkPipe);
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
+              return x.trim().split("").map(mkPipe);
+            });
 }
 
 function solvePart1(data) {

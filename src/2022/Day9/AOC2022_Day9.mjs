@@ -63,7 +63,7 @@ function expandPath(directions) {
       
     }
   };
-  return Stdlib__Array.flatMap(directions, expandStep);
+  return directions.flatMap(expandStep);
 }
 
 function manhattan(p1, p2) {
@@ -123,51 +123,51 @@ function part2(steps) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
-                var match = x.trim().split(" ");
-                if (match.length !== 2) {
+  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
+              var match = x.trim().split(" ");
+              if (match.length !== 2) {
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2022_Day9.res",
+                        99,
+                        8
+                      ],
+                      Error: new Error()
+                    };
+              }
+              var dStr = match[0];
+              var steps = match[1];
+              var match$1 = Caml_format.int_of_string(steps);
+              switch (dStr) {
+                case "D" :
+                    return {
+                            TAG: "D",
+                            _0: match$1
+                          };
+                case "L" :
+                    return {
+                            TAG: "L",
+                            _0: match$1
+                          };
+                case "R" :
+                    return {
+                            TAG: "R",
+                            _0: match$1
+                          };
+                case "U" :
+                    return {
+                            TAG: "U",
+                            _0: match$1
+                          };
+                default:
                   throw {
-                        RE_EXN_ID: "Match_failure",
-                        _1: [
-                          "AOC2022_Day9.res",
-                          99,
-                          8
-                        ],
+                        RE_EXN_ID: ParseError,
+                        _1: dStr + steps,
                         Error: new Error()
                       };
-                }
-                var dStr = match[0];
-                var steps = match[1];
-                var match$1 = Caml_format.int_of_string(steps);
-                switch (dStr) {
-                  case "D" :
-                      return {
-                              TAG: "D",
-                              _0: match$1
-                            };
-                  case "L" :
-                      return {
-                              TAG: "L",
-                              _0: match$1
-                            };
-                  case "R" :
-                      return {
-                              TAG: "R",
-                              _0: match$1
-                            };
-                  case "U" :
-                      return {
-                              TAG: "U",
-                              _0: match$1
-                            };
-                  default:
-                    throw {
-                          RE_EXN_ID: ParseError,
-                          _1: dStr + steps,
-                          Error: new Error()
-                        };
-                }
-              }));
+              }
+            });
 }
 
 function solvePart1(data) {

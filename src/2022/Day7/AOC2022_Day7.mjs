@@ -75,13 +75,13 @@ var CmdParser = {
 };
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
-                return prim.trim();
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (prim) {
+              return prim.trim();
+            });
 }
 
 function solvePart1(data) {
-  var prim = Stdlib__Array.filterMap(Stdlib__Array.map(parse(data), run), (function (result) {
+  var prim = Stdlib__Array.filterMap(parse(data).map(run), (function (result) {
           if (result.TAG === "Ok") {
             return parsedObjectToString(result._0[0]);
           }

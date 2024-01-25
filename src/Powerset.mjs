@@ -56,10 +56,14 @@ function powersetArrayMap_(set) {
   var x = Stdlib__Array.getUnsafe(set, 0);
   var xs = set.slice(1);
   var tail_powersets = powersetArrayMap_(xs);
-  var with_x = Stdlib__Array.map(tail_powersets, (function (it) {
-          return [x].concat(it);
-        }));
+  var with_x = tail_powersets.map(function (it) {
+        return [x].concat(it);
+      });
   return tail_powersets.concat(with_x);
+}
+
+function flatMap(prim0, prim1) {
+  return prim0.flatMap(prim1);
 }
 
 function powersetArrayFlatMap_(set) {
@@ -70,12 +74,12 @@ function powersetArrayFlatMap_(set) {
   var x = Stdlib__Array.getUnsafe(set, 0);
   var xs = set.slice(1);
   var tail_powersets = powersetArrayFlatMap_(xs);
-  return Stdlib__Array.flatMap(tail_powersets, (function (it) {
-                return [
-                        it,
-                        [x].concat(it)
-                      ];
-              }));
+  return tail_powersets.flatMap(function (it) {
+              return [
+                      it,
+                      [x].concat(it)
+                    ];
+            });
 }
 
 var List;
@@ -83,8 +87,6 @@ var List;
 var powersetList = powersetListFlatMap_;
 
 var $$Array;
-
-var flatMap = Stdlib__Array.flatMap;
 
 var powersetArray = powersetArrayFlatMap_;
 

@@ -52,7 +52,7 @@ function badgeOf(rucksacks) {
 
 function part2(rucksacks) {
   var groups = TableclothArray.chunksOf(rucksacks, 3);
-  var badges = TableclothArray.map(groups, badgeOf);
+  var badges = groups.map(badgeOf);
   return Utils$AdventOfCode.sumIntArray(Belt_Array.map(badges, charToPriority));
 }
 

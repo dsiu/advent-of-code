@@ -34,31 +34,31 @@ function makeDraw(str, n) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (l) {
-                var ll = l.trim().split(": ");
-                var id = Stdlib__Option.flatMap(ll.at(0), (function (param) {
-                        return Utils$AdventOfCode.compose((function (__x) {
-                                      return __x.replace("Game ", "");
-                                    }), (function (__x) {
-                                      return Stdlib__Int.fromString(10, __x);
-                                    }), param);
-                      }));
-                var draws = Stdlib__Array.map(ll.at(1).split("; "), (function (eachDraw) {
-                          return Stdlib__Array.map(eachDraw.split(", "), (function (singleDraw) {
-                                        var d = singleDraw.split(" ");
-                                        var partial_arg = 10;
-                                        var nColor = Stdlib__Option.flatMap(d.at(0), (function (param) {
-                                                return Stdlib__Int.fromString(partial_arg, param);
-                                              }));
-                                        var color = d.at(1);
-                                        return makeDraw(color, nColor);
-                                      }));
-                        })).flat();
-                return {
-                        id: id,
-                        draws: draws
-                      };
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (l) {
+              var ll = l.trim().split(": ");
+              var id = Stdlib__Option.flatMap(ll.at(0), (function (param) {
+                      return Utils$AdventOfCode.compose((function (__x) {
+                                    return __x.replace("Game ", "");
+                                  }), (function (__x) {
+                                    return Stdlib__Int.fromString(10, __x);
+                                  }), param);
+                    }));
+              var draws = ll.at(1).split("; ").map(function (eachDraw) {
+                      return eachDraw.split(", ").map(function (singleDraw) {
+                                  var d = singleDraw.split(" ");
+                                  var partial_arg = 10;
+                                  var nColor = Stdlib__Option.flatMap(d.at(0), (function (param) {
+                                          return Stdlib__Int.fromString(partial_arg, param);
+                                        }));
+                                  var color = d.at(1);
+                                  return makeDraw(color, nColor);
+                                });
+                    }).flat();
+              return {
+                      id: id,
+                      draws: draws
+                    };
+            });
 }
 
 function maxNumColorsEachGame(draws) {
@@ -257,22 +257,22 @@ function maxColorWithLimits(games, colorLimits) {
 }
 
 function part1(games) {
-  return Utils$AdventOfCode.sumIntArray(Stdlib__Array.map(maxColorWithLimits(games, [
-                      {
-                        TAG: "Red",
-                        _0: 12
-                      },
-                      {
-                        TAG: "Green",
-                        _0: 13
-                      },
-                      {
-                        TAG: "Blue",
-                        _0: 14
-                      }
-                    ]), (function (param) {
-                    return param[0];
-                  })));
+  return Utils$AdventOfCode.sumIntArray(maxColorWithLimits(games, [
+                    {
+                      TAG: "Red",
+                      _0: 12
+                    },
+                    {
+                      TAG: "Green",
+                      _0: 13
+                    },
+                    {
+                      TAG: "Blue",
+                      _0: 14
+                    }
+                  ]).map(function (param) {
+                  return param[0];
+                }));
 }
 
 function part2(games) {
@@ -294,45 +294,45 @@ function part2(games) {
     colorLimits_1,
     colorLimits_2
   ];
-  return Utils$AdventOfCode.sumIntArray(Stdlib__Array.map(maxColorWithLimits(games, colorLimits), (function (param) {
-                    var match = param[1];
-                    var r = match[0];
-                    switch (r.TAG) {
-                      case "Red" :
-                          var g = match[1];
-                          switch (g.TAG) {
-                            case "Red" :
-                            case "Blue" :
-                                break;
-                            case "Green" :
-                                var b = match[2];
-                                switch (b.TAG) {
-                                  case "Blue" :
-                                      return Math.imul(Math.imul(r._0, g._0), b._0);
-                                  case "Red" :
-                                  case "Green" :
-                                      break;
-                                  
-                                }
-                                break;
-                            
-                          }
-                          break;
-                      case "Blue" :
-                      case "Green" :
-                          break;
-                      
-                    }
-                    throw {
-                          RE_EXN_ID: "Match_failure",
-                          _1: [
-                            "AOC2023_Day2.res",
-                            122,
-                            15
-                          ],
-                          Error: new Error()
-                        };
-                  })));
+  return Utils$AdventOfCode.sumIntArray(maxColorWithLimits(games, colorLimits).map(function (param) {
+                  var match = param[1];
+                  var r = match[0];
+                  switch (r.TAG) {
+                    case "Red" :
+                        var g = match[1];
+                        switch (g.TAG) {
+                          case "Red" :
+                          case "Blue" :
+                              break;
+                          case "Green" :
+                              var b = match[2];
+                              switch (b.TAG) {
+                                case "Blue" :
+                                    return Math.imul(Math.imul(r._0, g._0), b._0);
+                                case "Red" :
+                                case "Green" :
+                                    break;
+                                
+                              }
+                              break;
+                          
+                        }
+                        break;
+                    case "Blue" :
+                    case "Green" :
+                        break;
+                    
+                  }
+                  throw {
+                        RE_EXN_ID: "Match_failure",
+                        _1: [
+                          "AOC2023_Day2.res",
+                          122,
+                          15
+                        ],
+                        Error: new Error()
+                      };
+                }));
 }
 
 function solvePart1(data) {

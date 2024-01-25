@@ -20,18 +20,18 @@ function extractName(c) {
 
 function getCratesForWharf(crates, wharf) {
   var idx = ((wharf - 1 | 0) << 2) + 1 | 0;
-  return Stdlib__Array.map(crates, (function (x) {
-                return Stdlib__Option.flatMap(x[idx], (function (x) {
-                              if (x === " ") {
-                                return ;
-                              } else {
-                                return {
-                                        TAG: "Crate",
-                                        _0: x
-                                      };
-                              }
-                            }));
-              }));
+  return crates.map(function (x) {
+              return Stdlib__Option.flatMap(x[idx], (function (x) {
+                            if (x === " ") {
+                              return ;
+                            } else {
+                              return {
+                                      TAG: "Crate",
+                                      _0: x
+                                    };
+                            }
+                          }));
+            });
 }
 
 function catMaybes(__x) {
@@ -50,22 +50,22 @@ function makeWharf(wharfLines, colNames) {
 }
 
 function makeMoves(xs) {
-  return Stdlib__Array.map(xs, (function (x) {
-                var parts = x.split(" ");
-                return {
-                        TAG: "Move",
-                        _0: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[1], Belt_Int.fromString)),
-                        _1: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[3], Belt_Int.fromString)),
-                        _2: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[5], Belt_Int.fromString))
-                      };
-              }));
+  return xs.map(function (x) {
+              var parts = x.split(" ");
+              return {
+                      TAG: "Move",
+                      _0: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[1], Belt_Int.fromString)),
+                      _1: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[3], Belt_Int.fromString)),
+                      _2: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[5], Belt_Int.fromString))
+                    };
+            });
 }
 
 function parse(data) {
-  var text = Stdlib__Array.map(Utils$AdventOfCode.splitDoubleNewline(data), Utils$AdventOfCode.splitNewline);
+  var text = Utils$AdventOfCode.splitDoubleNewline(data).map(Utils$AdventOfCode.splitNewline);
   var firstSection = Stdlib__Array.tail(Stdlib__Array.getUnsafe(text, 0));
   var secondSection = Stdlib__Array.init(Stdlib__Array.getUnsafe(text, 1));
-  var wharfLines = Stdlib__Array.map(Stdlib__Option.getExn(Stdlib__Array.init(firstSection)), Utils$AdventOfCode.splitChars);
+  var wharfLines = Stdlib__Option.getExn(Stdlib__Array.init(firstSection)).map(Utils$AdventOfCode.splitChars);
   var colNames = Stdlib__Array.filterMap(Stdlib__Option.getExn(Stdlib__Array.last(firstSection)).split(" "), Belt_Int.fromString);
   var moves = makeMoves(Stdlib__Option.getExn(secondSection));
   var wharf = makeWharf(wharfLines, colNames);
@@ -111,9 +111,9 @@ function applyMoves2(wharf, moves) {
 }
 
 function showTops(wharf) {
-  return Stdlib__Array.foldl1(Stdlib__Array.map(Belt_MapInt.valuesToArray(wharf), (function (param) {
-                    return Utils$AdventOfCode.compose(Stdlib__Array.headUnsafe, extractName, param);
-                  })), (function (prim0, prim1) {
+  return Stdlib__Array.foldl1(Belt_MapInt.valuesToArray(wharf).map(function (param) {
+                  return Utils$AdventOfCode.compose(Stdlib__Array.headUnsafe, extractName, param);
+                }), (function (prim0, prim1) {
                 return prim0.concat(prim1);
               }));
 }

@@ -19,23 +19,23 @@ function matchPerCard(param) {
 }
 
 function mkQueue(cards) {
-  return Stdlib__Array.map(cards, (function (c) {
-                return {
-                        numMatches: matchPerCard(c),
-                        queuedQuantity: 1
-                      };
-              }));
+  return cards.map(function (c) {
+              return {
+                      numMatches: matchPerCard(c),
+                      queuedQuantity: 1
+                    };
+            });
 }
 
 function duplicateCards(n, scale, queue) {
   var qPre = queue.slice(0, n);
   var qPost = queue.slice(n);
-  var dup = Stdlib__Array.map(qPre, (function (param) {
-          return {
-                  numMatches: param.numMatches,
-                  queuedQuantity: param.queuedQuantity + scale | 0
-                };
-        }));
+  var dup = qPre.map(function (param) {
+        return {
+                numMatches: param.numMatches,
+                queuedQuantity: param.queuedQuantity + scale | 0
+              };
+      });
   return dup.concat(qPost);
 }
 
@@ -48,9 +48,9 @@ function calculatePoint(n) {
 }
 
 function part1(cards) {
-  return Utils$AdventOfCode.sumIntArray(Stdlib__Array.map(cards, (function (param) {
-                    return Utils$AdventOfCode.compose(matchPerCard, calculatePoint, param);
-                  })));
+  return Utils$AdventOfCode.sumIntArray(cards.map(function (param) {
+                  return Utils$AdventOfCode.compose(matchPerCard, calculatePoint, param);
+                }));
 }
 
 function part2(cards) {
@@ -75,50 +75,50 @@ function part2(cards) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (l) {
-                var match = l.trim().split(": ");
-                if (match.length !== 2) {
-                  throw {
-                        RE_EXN_ID: "Match_failure",
-                        _1: [
-                          "AOC2023_Day4.res",
-                          163,
-                          8
-                        ],
-                        Error: new Error()
-                      };
-                }
-                var cardIdStr = match[0];
-                var numberStrs = match[1];
-                var cardId = Stdlib__Option.getExn(Stdlib__Int.fromString(undefined, cardIdStr.replace("Card ", "")));
-                var match$1 = numberStrs.split(" | ");
-                if (match$1.length !== 2) {
-                  throw {
-                        RE_EXN_ID: "Match_failure",
-                        _1: [
-                          "AOC2023_Day4.res",
-                          165,
-                          8
-                        ],
-                        Error: new Error()
-                      };
-                }
-                var winnersStr = match$1[0];
-                var actualsStr = match$1[1];
-                var partial_arg = 10;
-                var winners = Stdlib__Array.filterMap(winnersStr.split(" "), (function (param) {
-                        return Stdlib__Int.fromString(partial_arg, param);
-                      }));
-                var partial_arg$1 = 10;
-                var actuals = Stdlib__Array.filterMap(actualsStr.split(" "), (function (param) {
-                        return Stdlib__Int.fromString(partial_arg$1, param);
-                      }));
-                return {
-                        id: cardId,
-                        winners: winners,
-                        actuals: actuals
-                      };
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (l) {
+              var match = l.trim().split(": ");
+              if (match.length !== 2) {
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2023_Day4.res",
+                        163,
+                        8
+                      ],
+                      Error: new Error()
+                    };
+              }
+              var cardIdStr = match[0];
+              var numberStrs = match[1];
+              var cardId = Stdlib__Option.getExn(Stdlib__Int.fromString(undefined, cardIdStr.replace("Card ", "")));
+              var match$1 = numberStrs.split(" | ");
+              if (match$1.length !== 2) {
+                throw {
+                      RE_EXN_ID: "Match_failure",
+                      _1: [
+                        "AOC2023_Day4.res",
+                        165,
+                        8
+                      ],
+                      Error: new Error()
+                    };
+              }
+              var winnersStr = match$1[0];
+              var actualsStr = match$1[1];
+              var partial_arg = 10;
+              var winners = Stdlib__Array.filterMap(winnersStr.split(" "), (function (param) {
+                      return Stdlib__Int.fromString(partial_arg, param);
+                    }));
+              var partial_arg$1 = 10;
+              var actuals = Stdlib__Array.filterMap(actualsStr.split(" "), (function (param) {
+                      return Stdlib__Int.fromString(partial_arg$1, param);
+                    }));
+              return {
+                      id: cardId,
+                      winners: winners,
+                      actuals: actuals
+                    };
+            });
 }
 
 function solvePart1(data) {

@@ -40,21 +40,21 @@ function overlaps(x, y) {
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (l) {
-                    return Stdlib__Array.map(l.trim().split(","), (function (p) {
-                                  var r = Stdlib__Array.map(p.split("-"), Utils$AdventOfCode.intFromStringExn);
-                                  return {
-                                          TAG: "Interval",
-                                          _0: Stdlib__Array.getUnsafe(r, 0),
-                                          _1: Stdlib__Array.getUnsafe(r, 1)
-                                        };
-                                }));
-                  })), (function (l) {
-                return [
-                        Stdlib__Array.getUnsafe(l, 0),
-                        Stdlib__Array.getUnsafe(l, 1)
-                      ];
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (l) {
+                return l.trim().split(",").map(function (p) {
+                            var r = p.split("-").map(Utils$AdventOfCode.intFromStringExn);
+                            return {
+                                    TAG: "Interval",
+                                    _0: Stdlib__Array.getUnsafe(r, 0),
+                                    _1: Stdlib__Array.getUnsafe(r, 1)
+                                  };
+                          });
+              }).map(function (l) {
+              return [
+                      Stdlib__Array.getUnsafe(l, 0),
+                      Stdlib__Array.getUnsafe(l, 1)
+                    ];
+            });
 }
 
 function count(xs, fn) {

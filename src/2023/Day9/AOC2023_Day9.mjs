@@ -60,29 +60,29 @@ function evaluate(seq) {
 }
 
 function part1(histories) {
-  return Stdlib__Array.sum(Stdlib__Array.map(histories, (function (x) {
-                    return evaluate(extend(expand(x)));
-                  })), {
+  return Stdlib__Array.sum(histories.map(function (x) {
+                  return evaluate(extend(expand(x)));
+                }), {
               zero: Stdlib__Int.zero,
               add: Stdlib__Int.add
             });
 }
 
 function part2(histories) {
-  return part1(Stdlib__Array.map(histories, (function (prim) {
-                    return prim.toReversed();
-                  })));
+  return part1(histories.map(function (prim) {
+                  return prim.toReversed();
+                }));
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (l) {
-                var partial_arg = function (eta) {
-                  return Stdlib__Int.fromString(undefined, eta);
-                };
-                return Stdlib__Array.map(l.trim().split(" "), (function (param) {
-                              return Stdlib__Function.compose(partial_arg, Stdlib__Option.getExn, param);
-                            }));
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (l) {
+              var partial_arg = function (eta) {
+                return Stdlib__Int.fromString(undefined, eta);
+              };
+              return l.trim().split(" ").map(function (param) {
+                          return Stdlib__Function.compose(partial_arg, Stdlib__Option.getExn, param);
+                        });
+            });
 }
 
 function solvePart1(data) {

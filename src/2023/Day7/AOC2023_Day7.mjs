@@ -159,14 +159,14 @@ function signatureElementCompare(param, param$1) {
 
 function sign(cards) {
   var innerSign = function (cards) {
-    return Stdlib__Array.map(Belt_Map.valuesToArray(Stdlib__Array.groupBy(cards.toSorted(compare_Ord), Card, (function (a) {
-                              return a;
-                            }))), (function (group) {
-                      return [
-                              Stdlib__List.length(group),
-                              Stdlib__List.toArray(group)
-                            ];
-                    })).toSorted(signatureElementCompare).toReversed();
+    return Belt_Map.valuesToArray(Stdlib__Array.groupBy(cards.toSorted(compare_Ord), Card, (function (a) {
+                            return a;
+                          }))).map(function (group) {
+                    return [
+                            Stdlib__List.length(group),
+                            Stdlib__List.toArray(group)
+                          ];
+                  }).toSorted(signatureElementCompare).toReversed();
   };
   var match = Stdlib__Array.partition(cards, (function (c) {
           return c === "Joker";
@@ -256,7 +256,7 @@ function classify(param) {
 }
 
 function part1(hands) {
-  var sortedHands = Stdlib__Array.map(hands, classify).toSorted(function (param, param$1) {
+  var sortedHands = hands.map(classify).toSorted(function (param, param$1) {
         var h = compare_Ord$1(param._0, param$1._0);
         if (Stdlib__Ordering.isEqual(h)) {
           return Stdlib__Ordering.invert(Stdlib__Array.compare(param._1, param$1._1, (function (d, e) {
@@ -270,7 +270,7 @@ function part1(hands) {
   var score = function (param) {
     return Math.imul(param[0], param[1]._2);
   };
-  return Stdlib__Array.sum(Stdlib__Array.map(rankedHands, score), {
+  return Stdlib__Array.sum(rankedHands.map(score), {
               zero: Stdlib__Int.zero,
               add: Stdlib__Int.add
             });
@@ -286,13 +286,13 @@ function enJoker(param) {
   };
   return {
           TAG: "Hand",
-          _0: Stdlib__Array.map(param._0, replaceJackWithJoker),
+          _0: param._0.map(replaceJackWithJoker),
           _1: param._1
         };
 }
 
 function part2(hands) {
-  return part1(Stdlib__Array.map(hands, enJoker));
+  return part1(hands.map(enJoker));
 }
 
 var justSpace = Curry._1(ReludeParse_Parser.$$void, ReludeParse_Parser.many(ReludeParse_Parser.str(" ")));
@@ -332,7 +332,7 @@ function solvePart1(data) {
 
 function solvePart2(data) {
   var hands = run(data);
-  return part1(Stdlib__Array.map(hands, enJoker));
+  return part1(hands.map(enJoker));
 }
 
 export {

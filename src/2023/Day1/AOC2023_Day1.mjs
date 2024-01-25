@@ -83,26 +83,26 @@ function combineFirstAndLast(param) {
 }
 
 function part2(xs) {
-  return Utils$AdventOfCode.sumIntArray(Stdlib__Array.map(xs, (function (x) {
-                    var match = get2Digits(spelledOutToDigits(x, "Left2Right"));
-                    var match$1 = get2Digits(spelledOutToDigits(x, "Right2Left"));
-                    return combineFirstAndLast([
-                                match[0],
-                                match$1[1]
-                              ]);
-                  })));
+  return Utils$AdventOfCode.sumIntArray(xs.map(function (x) {
+                  var match = get2Digits(spelledOutToDigits(x, "Left2Right"));
+                  var match$1 = get2Digits(spelledOutToDigits(x, "Right2Left"));
+                  return combineFirstAndLast([
+                              match[0],
+                              match$1[1]
+                            ]);
+                }));
 }
 
 function part1(xs) {
-  return Utils$AdventOfCode.sumIntArray(Stdlib__Array.map(xs, (function (param) {
-                    return Utils$AdventOfCode.compose(get2Digits, combineFirstAndLast, param);
-                  })));
+  return Utils$AdventOfCode.sumIntArray(xs.map(function (param) {
+                  return Utils$AdventOfCode.compose(get2Digits, combineFirstAndLast, param);
+                }));
 }
 
 function parse(data) {
-  return Stdlib__Array.map(Utils$AdventOfCode.splitNewline(data), (function (prim) {
-                return prim.trim();
-              }));
+  return Utils$AdventOfCode.splitNewline(data).map(function (prim) {
+              return prim.trim();
+            });
 }
 
 function solvePart1(data) {

@@ -48,7 +48,7 @@ let badgeOf: array<rucksack> => string = rucksacks => {
 let part2: array<rucksack> => int = rucksacks => {
   let groups = rucksacks->TC.Array.chunksOf(~size=3)
 
-  let badges = groups->TC.Array.map(badgeOf)
+  let badges = groups->Stdlib.Array.map(badgeOf)
 
   badges->Array.map(charToPriority)->sumIntArray
 }

@@ -170,7 +170,7 @@ var MutableMapString = {
 };
 
 function toString$14(a, f) {
-  return "[" + Stdlib__Array.map(a, f).join(",") + "]";
+  return "[" + a.map(f).join(",") + "]";
 }
 
 var $$Array = {

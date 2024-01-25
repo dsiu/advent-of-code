@@ -79,18 +79,18 @@ function part1(param) {
 function part2(param) {
   var desert = param[1];
   var directions = param[0];
-  return Stdlib__Array.foldl1(Stdlib__Array.map(Stdlib__Array.map(Array.from(desert.keys()).filter(function (param) {
-                          return Stdlib__Function.compose3(Stdlib__String.last, (function (param) {
-                                        return Stdlib__String.compare("A", param);
-                                      }), Stdlib__Ordering.isEqual, param);
-                        }), (function (s) {
-                        return walk(desert, directions, {
-                                    here: s,
-                                    steps: 0
-                                  }).steps;
-                      })), (function (prim) {
-                    return BigInt(prim);
-                  })), Stdlib__Math.lcmBigInt);
+  return Stdlib__Array.foldl1(Array.from(desert.keys()).filter(function (param) {
+                      return Stdlib__Function.compose3(Stdlib__String.last, (function (param) {
+                                    return Stdlib__String.compare("A", param);
+                                  }), Stdlib__Ordering.isEqual, param);
+                    }).map(function (s) {
+                    return walk(desert, directions, {
+                                here: s,
+                                steps: 0
+                              }).steps;
+                  }).map(function (prim) {
+                  return BigInt(prim);
+                }), Stdlib__Math.lcmBigInt);
 }
 
 var justSpace = Curry._1(ReludeParse_Parser.$$void, ReludeParse_Parser.many(ReludeParse_Parser.str(" ")));
