@@ -9,7 +9,7 @@ type pattern = array<string>
 type line = Horiz(int) | Vert(int)
 
 // todo: add to stdlib
-let zipWith = (a, b, f) => Array.map2(a, b, ~f)
+let zipWith = Array.map2
 
 let diffArray = (a, b) => {
   open Array

@@ -15,8 +15,6 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-var zipWith = Stdlib__Array.map2;
-
 function diffArray(a, b) {
   return Stdlib__Array.map2(a, b, Stdlib__String.equal).filter(function (x) {
               return Stdlib__Function.id(!x);
@@ -111,6 +109,8 @@ function solvePart1(data) {
 function solvePart2(data) {
   return solve(parse(data), 1);
 }
+
+var zipWith = Stdlib__Array.map2;
 
 export {
   log ,

@@ -142,7 +142,7 @@ let shoelaceFormula: array<position> => int = v => {
   open Array
   let v' = concat(v->drop(1), v->take(1))
 
-  map2(v, v', ~f=((x1, y1), (x2, y2)) => {
+  map2(v, v', ((x1, y1), (x2, y2)) => {
     x1 * y2 - y1 * x2
   })
   ->sum(module(Int))

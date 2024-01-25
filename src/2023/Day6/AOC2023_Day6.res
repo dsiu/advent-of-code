@@ -201,7 +201,7 @@ let parse = data => {
 
   let distances = parseLine(lines[1], "Distance:")
 
-  Array.map2(times, distances, ~f=(time, distance) => mkRaceFromInt(time, distance))
+  Array.map2(times, distances, (time, distance) => mkRaceFromInt(time, distance))
 }
 
 let solvePart1 = data => {

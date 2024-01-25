@@ -21,7 +21,7 @@ type sequence = Sequence(array<array<int>>)
  */
 let differences: array<int> => array<int> = xs => {
   open Array
-  map2(tail(xs), xs, ~f=Int.subtract)
+  map2(tail(xs), xs, Int.subtract)
 }
 
 /**
