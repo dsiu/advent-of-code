@@ -21,7 +21,7 @@
     "@swc/jest": "^0.2.31",
     "jest": "^29.7.0",
     "nodemon": "^3.0.3",
-    "rescript": "^11.0.1"
+    "rescript": "^11.1.0-rc.2"
   },
   "jest": {
     "testMatch": [
@@ -54,7 +54,6 @@
     "relude": "https://github.com/dsiu/rescript-relude#rescript-v11-curried-mode",
     "relude-parse": "https://github.com/dsiu/rescript-relude-parse#rescript-v11-curried-mode",
     "rescript-bag": "https://github.com/dsiu/rescript-bag#main",
-    "rescript-ocamlgraph": "https://github.com/dsiu/rescript-ocamlgraph#rescript-v10",
     "rescript-vector": "^0.4.0"
   }
 }
