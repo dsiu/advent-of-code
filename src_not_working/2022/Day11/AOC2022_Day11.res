@@ -1,6 +1,6 @@
 // let's try to use Relude
-let log = Js.Console.log
-let log2 = Js.Console.log2
+let log = Stdlib.Console.log
+let log2 = Stdlib.Console.log2
 
 open Relude
 //open Utils
@@ -29,7 +29,7 @@ let showExpression = (Expression(op, operand)) => {
   | Old => "old"
   }
 }
-let logExp = compose(log, showExpression)
+let logExp = compose(log, showExpression, ...)
 
 let makeExpression = (op, operand) => Expression(op, operand)
 
@@ -95,7 +95,7 @@ module MonkeyParser = {
   // let _ = mIdP->P.runParser("Monkey 123:\n", _)->R.tap(log, _)
 
   let startingP =
-    P.str("  Starting items: ")->\"*>"(P.anyInt->P.sepBy(P.str(", "), _))->\"<*"(P.eol)
+    P.str("  Starting items: ")->\"*>"(P.anyInt->(P.sepBy(P.str(", "), _)))->\"<*"(P.eol)
   // let _ = startingP->P.runParser("  Starting items: 79, 98, 100\n", _)->R.tap(log, _)
 
   let operatorP = {
@@ -145,11 +145,11 @@ module MonkeyParser = {
     let makeMonkeyMaps = monkeys => {
       (IntMap.fromList(L.map(fst, monkeys)), IntMap.fromList(L.map(snd, monkeys)))
     }
-    makeMonkeyMaps->\"<$>"(monkeyP->P.sepBy(P.eol->\"<*"(P.eol), _))
+    makeMonkeyMaps->\"<$>"(monkeyP->(P.sepBy(P.eol->\"<*"(P.eol), _)))
     //    monkeyP->P.sepBy(P.eol->\"<*"(P.eol), _)
   }
 
-  let parse = s => monkeysP->P.runParser(s, _)
+  let parse = s => monkeysP->(P.runParser(s, _))
 }
 
 //let parse = data =>
@@ -157,7 +157,7 @@ module MonkeyParser = {
 
 let solvePart1 = data => {
   let result = data->MonkeyParser.parse
-  let _ = result->R.tap(log, _)
+  let _ = result->(R.tap(log, _))
   1
 }
 

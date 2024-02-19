@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Belt
 open Utils
 let log = Js.Console.log
@@ -16,13 +19,13 @@ module Coord = {
   }
 
   // Coords utils
-  let findXY = (f, init, xs) => {
+  let findXY = (. f, init, xs) => {
     xs->Array.reduce(make(~x=init, ~y=init), (a, c) => {
       make(~x=f(a.x, c.x), ~y=f(a.y, c.y))
     })
   }
-  let maxXY = findXY(Js.Math.max_int, Js.Int.min)
-  let minXY = findXY(Js.Math.min_int, Js.Int.max)
+  let maxXY = findXY(Stdlib.Math.Int.max, Js.Int.min)
+  let minXY = findXY(Stdlib.Math.Int.min, Js.Int.max)
 
   let dist = (a: t, b: t) => {
     (b.x - a.x)->Js.Math.abs_int + (b.y - a.y)->Js.Math.abs_int
@@ -87,7 +90,7 @@ module LandingMap = {
     //    onlyMins->dump_mapInt_of_int
 
     open Map.Int
-    assert (onlyMins->size > 0)
+    assert(onlyMins->size > 0)
 
     let ret = onlyMins->size > 1 ? -1 : onlyMins->reduce(Js.Int.min, (_a, k, _v) => k)
 

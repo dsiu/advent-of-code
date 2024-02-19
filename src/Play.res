@@ -1,15 +1,21 @@
 open Belt
 open Array2D
 let log = Js.Console.log
-let a = Array2D.make((0, 0), 0)
-let b = Array2D.make((0, 0), 0)
 
-let eq1 = (t, u) => {
-  t->lengthX === u->lengthX &&
-  t->lengthY === u->lengthY &&
-  Array.reduceReverse2(t, u, true, (c, a, b) => {
-    Js.Console.log("================== diu")
-    c && Array.eq(a, b, (a, b) => {a === b})
-  })
+type nonEmpty<'a> = {head: 'a, more: list<'a>}
+let x = {head: 1, more: list{2, 3, 4, 5}}
+
+let head = x => x.head
+
+let tail = l => {
+  switch l {
+  | {more: list{head, ...more}, _} => Some({head, more})
+  | {more: list{}, _} => None
+  }
 }
-eq1(a, b)->log
+
+x->tail->log
+
+let c = x => x
+
+//type nonEmpty_1<'a> = First('a) | c('a)

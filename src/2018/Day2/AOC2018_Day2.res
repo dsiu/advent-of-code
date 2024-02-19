@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 let data = AOC2018_Day2_Data.data
 
 let string_to_charStr = Js.String.split("")
@@ -24,11 +27,11 @@ let countMatchFreq = (freq: int, m: charStrFreqMap): int => {
 }
 
 let n_char_matched_freq = (freq: int, s: string): int => {
-  s |> string_to_charStr |> char_freq |> countMatchFreq(freq)
+  countMatchFreq(freq, char_freq(string_to_charStr(s)))
 }
 
-let twoTimesCounter = n_char_matched_freq(2)
-let threeTimesCounter = n_char_matched_freq(3)
+let twoTimesCounter = n_char_matched_freq(2, ...)
+let threeTimesCounter = n_char_matched_freq(3, ...)
 
 let nonZero = x => {
   switch x {
@@ -47,8 +50,8 @@ type resultRec = {
 
 let runDay2Part1 = lines => {
   let result = Belt.Array.reduce(lines, {twoTimes: 0, threeTimes: 0}, (acc, l) => {
-    twoTimes: acc.twoTimes + (l |> twoTimesCounter |> nonZero),
-    threeTimes: acc.threeTimes + (l |> threeTimesCounter |> nonZero),
+    twoTimes: acc.twoTimes + nonZero(twoTimesCounter(l)),
+    threeTimes: acc.threeTimes + nonZero(threeTimesCounter(l)),
   })
   // result
   result.twoTimes * result.threeTimes
@@ -69,8 +72,8 @@ type diffType =
 type diffs = array<diffType>
 
 let diffOfTwoCharStr = (s1, s2): diffs => {
-  let s1CharStr = s1 |> string_to_charStr
-  let s2CharStr = s2 |> string_to_charStr
+  let s1CharStr = string_to_charStr(s1)
+  let s2CharStr = string_to_charStr(s2)
 
   Belt.Array.mapWithIndex(s1CharStr, (i, x) => {
     let y = Belt.Array.get(s2CharStr, i)
@@ -82,29 +85,33 @@ let diffOfTwoCharStr = (s1, s2): diffs => {
 }
 
 let countTrue = (xs: diffs): int => {
-  Belt.Array.keep(xs, x =>
-    switch x {
-    | Match(_) => true
-    | _ => false
-    }
-  ) |> Belt.Array.length
+  Belt.Array.length(
+    Belt.Array.keep(xs, x =>
+      switch x {
+      | Match(_) => true
+      | _ => false
+      }
+    ),
+  )
 }
 
 let countFalse = (xs: diffs): int => {
-  Belt.Array.keep(xs, x =>
-    switch x {
-    | NotMatch(_, _) => true
-    | _ => false
-    }
-  ) |> Belt.Array.length
+  Belt.Array.length(
+    Belt.Array.keep(xs, x =>
+      switch x {
+      | NotMatch(_, _) => true
+      | _ => false
+      }
+    ),
+  )
 }
 
 let isDiffBy = (n, xs: diffs) => {
   countFalse(xs) == n
 }
 
-let isDiffBy1 = isDiffBy(1)
-let isDiffBy5 = isDiffBy(5)
+let isDiffBy1 = isDiffBy(1, ...)
+let isDiffBy5 = isDiffBy(5, ...)
 
 type matchRecord = {
   src: string,
@@ -114,7 +121,7 @@ type matchRecord = {
 let findMatch = (lines, predicate, x) => {
   Belt.Array.reduce(lines, ({src: x, matched: []}: matchRecord), (a: matchRecord, y) => {
     ...a,
-    matched: switch diffOfTwoCharStr(a.src, y) |> predicate {
+    matched: switch predicate(diffOfTwoCharStr(a.src, y)) {
     | true => Belt.Array.concat(a.matched, [y])
     | _ => a.matched
     },

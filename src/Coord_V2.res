@@ -5,7 +5,7 @@ module TC = Tablecloth
 type t = Tuple2.t<int, int>
 
 let intCompare = (a, b) => Int.compare(a, b)->Ordering.toInt
-let compare = Tuple2.compare(~f=intCompare, ~g=intCompare)
+let compare = (a, b) => Tuple2.compare(~f=intCompare, ~g=intCompare, a, b)
 
 include TC.Comparator.Make({
   type t = t

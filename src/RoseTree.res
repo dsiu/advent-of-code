@@ -4,7 +4,7 @@ type rec tree<'a> = Node(('a, list<tree<'a>>))
 
 let rec make = (~f, init) => {
   let (label, forest) = f(init)
-  Node(label, List.map(~f=make(~f), forest))
+  Node(label, List.map(~f=make(~f, ...), forest))
 }
 
 let shift = (start, other) => {
@@ -19,7 +19,7 @@ let shift = (start, other) => {
       }
       inner(list{String.concat(~sep="", list{markup, l}), ...acc}, lines)
     }
-  inner(list{})
+  inner(list{}, ...)
 }
 
 let rec draw = (~f, Node(label, forest)) => {
@@ -33,7 +33,7 @@ let rec draw = (~f, Node(label, forest)) => {
       }
 
       let lines = draw(~f, t)
-      Belt.List.concat(list{"|", ...shift(start, other, lines)}, inner(ts))
+      Belt.List.concat(list{"|", ...shift(start, other)(lines)}, inner(ts))
     }
   list{f(label), ...inner(forest)}
 }
@@ -46,4 +46,4 @@ let flatten = t => {
   inner(t, list{})
 }
 
-let rec map = (~f, Node(label, forest)) => Node(f(label), List.map(~f=map(~f), forest))
+let rec map = (~f, Node(label, forest)) => Node(f(label), List.map(~f=map(~f, ...), forest))

@@ -249,7 +249,7 @@ module HandsParser = {
   open P.Infix
   let justSpace: P.t<unit> = P.void(P.many(P.str(" ")))
 
-  let handC = (a, b) => {
+  let handC = a => b => {
     let cards = a->List.toArray
     Hand(cards, b)
   }

@@ -7,7 +7,7 @@ module Octopus = {
 
   let adjCoords = c => {
     open Coordinate.StepFunctions
-    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => f(. c))
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => f(c))
   }
 
   let getAdjacentCoords = (t, c) => {
@@ -21,7 +21,7 @@ module Octopus = {
   let getAdjacents = (t, (x, y)) => {
     (x, y)
     ->adjCoords
-    ->Array.keepMapU((. c) => {
+    ->Array.keepMapU(c => {
       t->Array2D.isValidXY(c) ? Some(t->Array2D.getExn(c)) : None
     })
   }
@@ -30,7 +30,7 @@ module Octopus = {
 
   let countZero = t => t->Array.keep(_, b => b == 0)->Array.size
 
-  let increaseEnergy = t => t->Array2D.mapU((. x) => add(1, x))
+  let increaseEnergy = t => t->Array2D.map(x => add(1, x))
 
   let getFlashingCoords = t => {
     t->Array2D.reduceWithIndex([], (a, e, coord) => {
@@ -45,12 +45,9 @@ module Octopus = {
   let performFlash = (t, coord) => {
     let neighbors = getAdjacentCoords(t, coord)
 
-    neighbors->Array.forEachU((. n_addr) => {
+    neighbors->Array.forEachU(n_addr => {
       let orig = Array2D.getExn(t, n_addr)
-      switch Array2D.set(t, n_addr, {orig > 0 ? orig + 1 : orig}) {
-      | true => ()
-      | false => raise(Not_found)
-      }
+      Array2D.set(t, n_addr, {orig > 0 ? orig + 1 : orig})
     })
 
     t
@@ -58,10 +55,7 @@ module Octopus = {
 
   // will modify t in place
   let dim = (t, coord) => {
-    switch t->Array2D.set(coord, 0) {
-    | true => t
-    | false => raise(Not_found)
-    }
+    t->Array2D.set(coord, 0)
   }
 
   let iterate = t => {
@@ -72,7 +66,7 @@ module Octopus = {
 
       switch flashings->Array.size > 0 {
       | true => {
-          flashings->Array.forEachU((. flash_coord) => {
+          flashings->Array.forEachU(flash_coord => {
             t->performFlash(flash_coord)->dim(flash_coord)->ignore
           })
           inner(t)
@@ -120,11 +114,11 @@ module Octopus = {
       ret :=
         Array.concat(
           ret.contents,
-          [row->Array.map(x => x->Js.Int.toString)->Js.Array2.joinWith(_, "")],
+          [row->Array.map(x => x->Js.Int.toString)->(Js.Array2.joinWith(_, ""))],
         )
     }
 
-    ret.contents->Js.Array2.joinWith(_, "\n")
+    ret.contents->(Js.Array2.joinWith(_, "\n"))
   }
 }
 
@@ -132,7 +126,11 @@ let parse = data =>
   data
   ->splitNewline
   ->Array.map(
-    Stdlib.Function.compose(Js.String2.trim, x => x->Utils.splitChars->Array.map(intFromStringExn)),
+    Stdlib.Function.compose(
+      Stdlib.String.trim,
+      x => x->Utils.splitChars->Array.map(intFromStringExn),
+      ...
+    ),
   )
 
 let solvePart1_try = data => {
@@ -144,14 +142,14 @@ let solvePart1_try = data => {
   let i = 1
   Js.log(`iterate ${i->Int.toString} ----`)
 
-  let e = d->Octopus.iterateN(_, i)
+  let e = d->(Octopus.iterateN(_, i))
   e->Octopus.toString->Js.log
   Js.log(`iterate ${i->Int.toString} ----`)
 
   let i = 100
   Js.log(`iterate ${i->Int.toString} ----`)
 
-  let e = d->Octopus.iterateN(_, i)
+  let e = d->(Octopus.iterateN(_, i))
   e->Octopus.toString->Js.log
   Js.log(`iterate ${i->Int.toString} ----`)
 }
@@ -160,7 +158,7 @@ let solvePart1 = data => {
   let d = data->parse
   let i = 100
 
-  d->Octopus.countFlashN(_, i)
+  d->(Octopus.countFlashN(_, i))
 }
 
 let solvePart2 = data => {
@@ -174,7 +172,7 @@ let solvePart2 = data => {
 
   while c.contents < 100 {
     //    Js.log(`iterate ${i.contents->Int.toString} ----`)
-    c := d->Octopus.flashesAtN(_, i.contents)
+    c := d->(Octopus.flashesAtN(_, i.contents))
     i := i.contents + 1
   }
 

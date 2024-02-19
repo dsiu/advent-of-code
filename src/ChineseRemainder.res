@@ -52,15 +52,15 @@ let crt = (rem, num) => {
 //
 // BigInt version of crt
 //
-let big_zero = RescriptCore.BigInt.fromInt(0)
-let big_one = RescriptCore.BigInt.fromInt(1)
-let add = RescriptCore.BigInt.add
-let sub = RescriptCore.BigInt.sub
-let mul = RescriptCore.BigInt.mul
-let div = RescriptCore.BigInt.div
-let mod = RescriptCore.BigInt.mod
+let big_zero = Stdlib.BigInt.fromInt(0)
+let big_one = Stdlib.BigInt.fromInt(1)
+let add = Stdlib.BigInt.add
+let sub = Stdlib.BigInt.sub
+let mul = Stdlib.BigInt.mul
+let div = Stdlib.BigInt.div
+let mod = Stdlib.BigInt.mod
 
-let mulInvBigInt = (a: RescriptCore.BigInt.t, b: RescriptCore.BigInt.t) => {
+let mulInvBigInt = (a: Stdlib.BigInt.t, b: Stdlib.BigInt.t) => {
   let b0 = b
   let (x0, x1) = (ref(big_zero), ref(big_one))
 

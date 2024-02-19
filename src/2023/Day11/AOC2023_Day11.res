@@ -18,7 +18,7 @@ module Coord_V2_Big = {
   // int compare
   let bigIntCompare = (a, b) => bigIntCompareOrd(a, b)->Ordering.toInt
   let intCompare = (a, b) => Int.compare(a, b)->Ordering.toInt
-  let compare = Tuple2.compare(~f=bigIntCompare, ~g=bigIntCompare)
+  let compare = Tuple2.compare(~f=bigIntCompare, ~g=bigIntCompare, ...)
 
   include Tablecloth.Comparator.Make({
     type t = t

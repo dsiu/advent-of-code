@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 let data = AOC2018_Day5_Data.data
 let sampleData = AOC2018_Day5_Data_Sample.data
 open Belt
@@ -107,7 +110,7 @@ let isLetterAndUpper = (which, c) => {
   c == u || c == l
 }
 
-let notIsLetterAndUpper = (which, c) => {!(c->isLetterAndUpper(which))}
+let notIsLetterAndUpper = (. which, c) => {!(c->isLetterAndUpper(which))}
 
 let aToz = [
   "a",
@@ -141,7 +144,7 @@ let aTod = ["a", "b", "c", "d"]
 
 let makeATozData = (letters, data) => {
   letters->Array.reduce(Map.String.empty, (a, c) => {
-    let v = data->Array.keep(notIsLetterAndUpper(c))
+    let v = data->Array.keep(notIsLetterAndUpper(c, ...))
     // log(`c=${c}`)
     // v->log
     a->Map.String.set(c, v)

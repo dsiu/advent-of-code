@@ -206,7 +206,9 @@ let process = xs => {
 }
 
 let parse = data =>
-  data->splitNewline->Array.map(Stdlib.Function.compose(Js.String2.trim, Utils.splitChars))
+  data
+  ->splitNewline
+  ->Array.map(Stdlib.Function.compose(Stdlib.String.trim, Utils.splitChars, ...))
 
 let examples = () => {
   let parent = ParseTree.makeNodeFromStr("(", 1, ")", 2)
@@ -289,12 +291,16 @@ let solvePart2 = data => {
     ),
   )
   ->Belt.SortArray.stableSortBy(Int64.compare)
-  ->(xs => {
-    let len = xs->Array.length
-    xs[len / 2]
-  })
-  ->Option.getExn
-  ->Int64.to_string
+  ->(
+    xs =>
+      {
+        let len = xs->Array.length
+        xs[len / 2]
+      }
+      ->Option.getExn
+      ->Int64.to_string
+  )
+
   //  ->Array.map(BigInt.toString)
   //  ->SortArray.Int.stableSort
   //  ->Js.log2("diu")

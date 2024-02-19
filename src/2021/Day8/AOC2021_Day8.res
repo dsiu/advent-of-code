@@ -1,6 +1,8 @@
+@@uncurried
+@@uncurried.swap
+
 open Belt
 open Utils
-let log = Js.Console.log
 
 module Digit = {
   type t = array<string> // char
@@ -16,7 +18,7 @@ module Digit = {
   let has = (t, x) => t->makeSet->Set.String.has(x)
   let intersect = (a, b) => Set.String.intersect(a->makeSet, b->makeSet)->Set.String.toArray
 
-  let mustHave = (t, ~must_have) => t->intersect(must_have)->eq(must_have)
+  let mustHave = (. t, ~must_have) => t->intersect(must_have)->eq(must_have)
 
   let diff = (a, b) => Set.String.diff(a->makeSet, b->makeSet)->Set.String.toArray
   let union = (a, b) => Set.String.union(a->makeSet, b->makeSet)->Set.String.toArray
@@ -133,7 +135,7 @@ module Entry = {
     let inputs = inputStr->Js.String2.split(" ")->Array.map(Digit.make)
     let outputs = outputStr->Js.String2.split(" ")->Array.map(Digit.make)
 
-    {inputs: inputs, outputs: outputs, segment_map: inputs->makeSegments}
+    {inputs, outputs, segment_map: inputs->makeSegments}
   }
 
   let countMatchLen = (digits, matches) => {

@@ -66,7 +66,7 @@ let spelledOutToDigits: (string, matchDirection) => string = (str, matchDir: mat
  * get2Digits(str) // Returns (1, 5)
  */
 let get2Digits: string => (int, int) = str => {
-  let digits = str->splitChars->Array.filterMap(Int.fromString(~radix=10))
+  let digits = str->splitChars->Array.filterMap(Int.fromString(~radix=10, ...))
   let first = digits->Array.at(0)->Option.getUnsafe
   let last = digits->Array.at(-1)->Option.getUnsafe
   (first, last)

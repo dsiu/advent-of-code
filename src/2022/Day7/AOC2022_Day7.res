@@ -63,7 +63,7 @@ type dTree = Tree(directory)
 type zdTree = TreePos
 type sTree = Tree(containedSize)
 
-let parse = data => data->splitNewline->Array.map(Js.String2.trim)
+let parse = data => data->splitNewline->Array.map(String.trim)
 
 let solvePart1 = data => {
   data

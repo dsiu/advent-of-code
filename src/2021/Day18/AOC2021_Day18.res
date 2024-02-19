@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Belt
 open Utils
 
@@ -113,7 +116,7 @@ module SnailFish = {
     }
   }
 
-  type leftmostOnRight = loc => option<loc>
+  type leftmostOnRight = (. loc) => option<loc>
   let rec leftmostOnRight: leftmostOnRight = loc => {
     switch loc {
     | Loc(_, Top) => None

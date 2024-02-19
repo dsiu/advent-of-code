@@ -1,5 +1,8 @@
-open Belt
-let log = Js.Console.log
+@@uncurried
+@@uncurried.swap
+
+open Stdlib
+let log = Stdlib.Console.log
 //open Utils
 
 module SeatMap = {
@@ -29,11 +32,11 @@ module SeatMap = {
 
   let adjCoords = (. c) => {
     open Coordinate.StepFunctions
-    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.mapU((. f) => f(. c))
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => f(. c))
   }
 
   let getAdjacents = (t, (x, y)) => {
-    adjCoords(. (x, y))->Array.keepMap(c => {
+    adjCoords(. (x, y))->Array.filterMap(c => {
       t->Array2D.isValidXY(c) ? Some(t->Array2D.getExn(c)) : None
     })
   }
@@ -43,7 +46,7 @@ module SeatMap = {
   }
 
   let countSeat = (xs, seatStatus: SeatStatus.t) => {
-    xs->Array.keep(isSeatEq(_, seatStatus))->Array.length
+    xs->Array.filter(isSeatEq(_, seatStatus))->Array.length
   }
 
   let countEmptySeat = countSeat(_, #L)
@@ -61,7 +64,7 @@ module SeatMap = {
   }
 
   let iteratePart1 = t => {
-    t->Array2D.mapWithIndexU((. (x, y), s) => s->transformPart1(t->getAdjacents((x, y))))
+    t->Array2D.mapWithIndex(((x, y), s) => s->transformPart1(t->getAdjacents((x, y))))
   }
 
   // part 2
@@ -79,7 +82,7 @@ module SeatMap = {
 
   let getDirectionals = (t, c) => {
     open Coordinate.StepFunctions
-    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.mapU((. f) =>
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f =>
       nextSeatIn(. t, c, f)
     )
   }
@@ -94,7 +97,7 @@ module SeatMap = {
   }
 
   let iteratePart2 = t => {
-    t->Array2D.mapWithIndexU((. (x, y), s) => s->transformPart2(t->getDirectionals((x, y))))
+    t->Array2D.mapWithIndex(((x, y), s) => s->transformPart2(t->getDirectionals((x, y))))
   }
 
   let isStabilized = Array2D.eq
@@ -108,15 +111,15 @@ module SeatMap = {
   let solvePart2 = stabilize(_, iteratePart2)
 
   let make = (xs: array<string>) => {
-    let x = xs->Array.getExn(0)->Js.String2.length
+    let x = xs->Array.getUnsafe(0)->Js.String2.length
     let y = xs->Array.length
     let ret = Array2D.make((x, y), #".")
 
     open Utils
-    xs->Array.forEachWithIndex((y, ys) => {
+    xs->Array.forEachWithIndex((ys, y) => {
       ys
       ->splitChars
-      ->Array.forEachWithIndex((x, c) => {
+      ->Array.forEachWithIndex((c, x) => {
         ret->Array2D.set((x, y), c->SeatStatus.make)->ignore
       })
     })
@@ -134,7 +137,7 @@ module SeatMap = {
 }
 
 let parse = data => {
-  let parsed = data->Js.String2.split("\n")->Array.map(Js.String2.trim)
+  let parsed = data->Js.String2.split("\n")->Array.map(String.trim)
   SeatMap.make(parsed)
 }
 

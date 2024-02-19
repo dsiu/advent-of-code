@@ -46,7 +46,8 @@ let parse: string => array<game> = data =>
         ->Array.map(
           singleDraw => {
             let d = singleDraw->String.split(" ")
-            let nColor = d->Array.at(0)->Option.flatMap(Int.fromString(~radix=10))->Option.getUnsafe
+            let nColor =
+              d->Array.at(0)->Option.flatMap(Int.fromString(~radix=10, ...))->Option.getUnsafe
             let color = d->Array.at(1)->Option.getUnsafe
             makeDraw(color, nColor)
           },

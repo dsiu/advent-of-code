@@ -10,9 +10,9 @@ let lengthY: t<'a> => int
 
 let isValidXY: (t<'a>, (int, int)) => bool
 
-let set: (t<'a>, (int, int), 'a) => bool
+let set: (t<'a>, (int, int), 'a) => unit
 
-let setYEquals: (t<'a>, int, array<'a>) => bool
+let setYEquals: (t<'a>, int, array<'a>) => unit
 
 let get: (t<'a>, (int, int)) => option<'a>
 
@@ -25,16 +25,12 @@ let getYEquals: (t<'a>, int) => option<array<'a>>
 //let keep: (t<'a>, 'a => bool) => t<'a>
 
 let map: (t<'a>, 'a => 'b) => t<'b>
-let mapU: (t<'a>, (. 'a) => 'b) => t<'b>
 
 let mapWithIndex: (t<'a>, ((int, int), 'a) => 'b) => t<'b>
-let mapWithIndexU: (t<'a>, (. (int, int), 'a) => 'b) => t<'b>
 
 let reduce: (t<'b>, 'a, ('a, 'b) => 'a) => 'a
-let reduceU: (t<'b>, 'a, (. 'a, 'b) => 'a) => 'a
 
 let reduceWithIndex: (t<'a>, 'b, ('b, 'a, (int, int)) => 'b) => 'b
-let reduceWithIndexU: (t<'a>, 'b, (. 'b, 'a, (int, int)) => 'b) => 'b
 
 let flatten: t<'a> => array<'a>
 

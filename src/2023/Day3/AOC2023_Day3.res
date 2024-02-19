@@ -86,7 +86,7 @@ let isElemDigit: (engine, position) => option<position> = (engine, p) => {
   })
 }
 
-let makeEngine: Array2D.t<string> => engine = Array2D.mapU(_, makeElem)
+let makeEngine: Array2D.t<string> => engine = Array2D.map(_, makeElem)
 
 /**
  * This function filters the elements of the engine based on a provided function.

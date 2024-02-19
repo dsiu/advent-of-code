@@ -1,9 +1,9 @@
-open Belt
+open Stdlib
 
 type t<'a> = array<array<'a>>
 
 let make = ((x, y), e: 'a) => {
-  Array.makeBy(y, _ => Array.make(x, e))
+  Array.makeBy(y, _ => Array.make(~length=x, e))
 }
 
 let copy = t => {
@@ -13,7 +13,7 @@ let copy = t => {
 let lengthY = t => t->Array.length
 
 let lengthX = t => {
-  t->Array.get(0)->Stdlib.Option.mapOr(0, Array.length)
+  t->Array.get(0)->Stdlib.Option.mapOr(0, a => Array.length(a))
 }
 
 let isValidXY = (t, (x, y)) => {
@@ -26,7 +26,7 @@ let isValidXY = (t, (x, y)) => {
 let set = (t, (x, y), e: 'a) => {
   switch t->Array.get(y) {
   | Some(y) => y->Array.set(x, e)
-  | None => false
+  | None => ()
   }
 }
 
@@ -42,7 +42,7 @@ let get = (t, (x, y)) => {
 }
 
 let getExn = (t, (x, y)) => {
-  t->Array.getExn(y)->Array.getExn(x)
+  t->Array.getUnsafe(y)->Array.getUnsafe(x)
 }
 
 let getYEquals = (t, y) => {
@@ -53,7 +53,7 @@ let getXEquals = (t, x) => {
   x < t->lengthX
     ? {
         let ret = t->Array.reduce([], (a, xs) => {
-          Array.concat(a, [xs->Array.getExn(x)])
+          Array.concat(a, [xs->Array.getUnsafe(x)])
         })
         ret->Array.length === t->lengthY ? Some(ret) : None
       }
@@ -68,39 +68,19 @@ let map = (t, f) => {
   t->Array.map(x => x->Array.map(f))
 }
 
-let mapU = (t, f) => {
-  t->Array.mapU((. x) => x->Array.mapU(f))
-}
-
 let mapWithIndex = (t, f) => {
-  t->Array.mapWithIndexU((. j, xs) => {
-    xs->Array.mapWithIndexU((. i, e) => f((i, j), e))
-  })
-}
-
-let mapWithIndexU = (t, f) => {
-  t->Array.mapWithIndexU((. j, xs) => {
-    xs->Array.mapWithIndexU((. i, e) => f(. (i, j), e))
+  t->Array.mapWithIndex((xs, j) => {
+    xs->Array.mapWithIndex((e, i) => f((i, j), e))
   })
 }
 
 let reduce = (t, a, f) => {
-  t->Array.reduceU(a, (. acc, x) => x->Array.reduce(acc, f))
-}
-
-let reduceU = (t, a, f) => {
-  t->Array.reduceU(a, (. acc, x) => x->Array.reduceU(acc, f))
+  t->Array.reduce(a, (acc, x) => x->Array.reduce(acc, f))
 }
 
 let reduceWithIndex = (t, a, f) => {
-  t->Array.reduceWithIndexU(a, (. acc, xs, yi) =>
-    xs->Array.reduceWithIndexU(acc, (. acc, x, xi) => f(acc, x, (xi, yi)))
-  )
-}
-
-let reduceWithIndexU = (t, a, f) => {
-  t->Array.reduceWithIndexU(a, (. acc, xs, yi) =>
-    xs->Array.reduceWithIndexU(acc, (. acc, x, xi) => f(. acc, x, (xi, yi)))
+  t->Array.reduceWithIndex(a, (acc, xs, yi) =>
+    xs->Array.reduceWithIndex(acc, (acc, x, xi) => f(acc, x, (xi, yi)))
   )
 }
 
@@ -126,7 +106,13 @@ let crop = (t, (x, y), ~len_x, ~len_y) => {
           ret :=
             Array.concat(
               ret.contents,
-              [t->getYEquals(i)->Option.getWithDefault([])->Array.slice(~offset=x, ~len=adj_len_x)],
+              //              [t->getYEquals(i)->Option.getWithDefault([])->Array.slice(~offset=x, ~len=adj_len_x)],
+              [
+                t
+                ->getYEquals(i)
+                ->Option.getWithDefault([])
+                ->Array.slice(~start=x, ~end=x + adj_len_x),
+              ],
             )
         }
         ret.contents
@@ -137,8 +123,8 @@ let crop = (t, (x, y), ~len_x, ~len_y) => {
 let eq = (t, u) => {
   t->lengthX === u->lengthX &&
   t->lengthY === u->lengthY &&
-  Array.reduceReverse2(t, u, true, (c, a, b) => {
-    c && Array.eq(a, b, (a, b) => {a === b})
+  Belt.Array.reduceReverse2(t, u, true, (c, a, b) => {
+    c && Array.equal(a, b, (a, b) => {a === b})
   })
 }
 

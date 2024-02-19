@@ -1,7 +1,7 @@
-open Belt
+open Stdlib
 open Utils
-let log = Js.Console.log
-let log2 = Js.Console.log2
+let log = Console.log
+let log2 = Console.log2
 
 module TC = Tablecloth
 
@@ -22,18 +22,18 @@ type segment = {
   steps: int,
 }
 
-exception InvalidDirection(string)
+exception InvalidDirection
 
 let makeSegment: string => segment = str => {
-  let direction = str->Js.String2.get(0)
-  let steps = str->Js.String2.sliceToEnd(~from=1)->Int.fromString->Option.getExn
+  let direction = str->String.get(0)
+  let steps = str->String.sliceToEnd(~start=1)->Int.fromString->Option.getExn
 
   switch direction {
-  | "R" => {direction: East, steps}
-  | "D" => {direction: South, steps}
-  | "L" => {direction: West, steps}
-  | "U" => {direction: North, steps}
-  | _ => raise(InvalidDirection(direction))
+  | Some("R") => {direction: East, steps}
+  | Some("D") => {direction: South, steps}
+  | Some("L") => {direction: West, steps}
+  | Some("U") => {direction: North, steps}
+  | _ => raise(InvalidDirection)
   }
 }
 

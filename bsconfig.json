@@ -34,8 +34,6 @@
     "js-array2-ex",
     "@dsiu/rescript-stdlib-fp",
     "@dsiu/rescript-graphology",
-    "@jmagaram/rescript-extras",
-    "@jmagaram/rescript-seq",
     "@greenlabs/garter"
   ],
   "bs-dev-dependencies": [
@@ -45,6 +43,5 @@
     "error": "+101"
   },
   "namespace": true,
-  "refmt": 3,
-  "uncurried": false
+  "refmt": 3
 }

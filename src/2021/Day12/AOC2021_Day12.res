@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Belt
 open Utils
 let log = Js.Console.log
@@ -13,7 +16,7 @@ module Maze = {
 
   let make = edges => {
     let maze = AdjList.make()
-    edges->Array.forEachU((. edge) => {
+    edges->Array.forEachU(edge => {
       switch edge {
       | [a, b] => {
           maze->AdjList.addEdge(a, b)
@@ -35,7 +38,7 @@ module Maze = {
 //let is_visited = (visited, node) => count_node_in_array(visited, node) > 0
 
 let is_visited = (visited, node) => {
-  visited->HashMap.String.get(node)->Option.mapWithDefaultU(false, (. v) => v > 0)
+  visited->HashMap.String.get(node)->Option.mapWithDefaultU(false, v => v > 0)
 }
 
 // should refactor this. 2021 Day 14 uses this too
@@ -54,7 +57,7 @@ let is_big_cave = is_upper_case
 let is_small_cave = is_small_case
 
 let has_any_small_cave_been_visited_twice = visited => {
-  let smalls = visited->HashMap.String.reduceU([], (. acc, key, value) => {
+  let smalls = visited->HashMap.String.reduceU([], (acc, key, value) => {
     is_small_cave(key) && value > 1 ? Array.concat(acc, [(key, value)]) : acc
   })
   smalls->Array.length > 0
@@ -80,14 +83,14 @@ let can_visit_part2 = (. visited, node) => {
 
 let get_visited_nodes = HashMap.String.keysToArray
 
-let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
+let dfs = (. visit_func, t: Maze.t, start_node, end_node) => {
   let rec explore = (. node, visited, acc, end_node) => {
     let visited' = inc_visited(visited, node)
 
     switch node == end_node {
     | false => {
         let edges = t->get_edges(node)
-        edges->MutableSet.String.reduceU([], (. a, e) => {
+        edges->MutableSet.String.reduceU([], (a, e) => {
           visit_func(. visited', e)
             ? {
                 Array.concat(

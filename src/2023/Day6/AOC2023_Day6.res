@@ -1,4 +1,5 @@
 @@uncurried
+@@uncurried.swap
 
 open Stdlib
 open Utils
@@ -163,7 +164,7 @@ module SheetParser = {
 
   // A function that takes two lists of integers (representing times and distances) and returns a list of `race` objects.
   // Each `race` object is created by calling the `mkRaceFromInt` function with a pair of corresponding time and distance.
-  let mkRace = (a, b) => {
+  let mkRace = a => b => {
     List.map2(a, b, (time, distance) => mkRaceFromInt(time, distance))
   }
 
@@ -191,8 +192,8 @@ let parse = data => {
       s
       ->String.replace(prefix, "")
       ->splitSpace
-      ->Array.filter(Fn.complement(String.isEmpty))
-      ->Array.map(Fn.compose(Int.fromString, Option.getUnsafe))
+      ->Array.filter(Fn.complement(String.isEmpty, ...))
+      ->Array.map(intFromStringExn)
     )
     ->Option.getExn
   }

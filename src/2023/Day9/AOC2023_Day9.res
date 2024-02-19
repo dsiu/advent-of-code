@@ -42,7 +42,7 @@ let expand: array<int> => sequence = seq => {
   open Array
   seq
   ->unfoldr(xs => {
-    xs->all(Fn.eq(0)) ? None : Some(xs, differences(xs))
+    xs->all(Fn.eq(0, _)) ? None : Some(xs, differences(xs))
   })
   ->Sequence
 }
@@ -126,7 +126,7 @@ let parse = data => {
     l
     ->String.trim
     ->String.split(" ")
-    ->map(Fn.compose(Int.fromString, Option.getExn))
+    ->map(intFromStringExn)
   })
 }
 

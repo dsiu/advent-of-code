@@ -32,13 +32,13 @@ let parse = data => {
 }
 
 let solvePart2BruteForce = xs => {
-  open RescriptCore
+  open Stdlib
 
   let big_zero = BigInt.fromInt(0)
   let big_one = BigInt.fromInt(1)
 
   let rec helper = (time, xs) => {
-    xs->Belt.Array.reduceU(true, (. acc, (bus, delta)) => {
+    xs->Belt.Array.reduceU(true, (acc, (bus, delta)) => {
       acc && BigInt.mod(BigInt.add(time, delta), bus) === big_zero ? true : false
     })
       ? time
@@ -66,7 +66,7 @@ let part2 = xs => {
   let rem = ref([])
   let num = ref([])
   xs->Array.forEach(((bus, delta)) => {
-    rem := rem.contents->Array.concat([RescriptCore.BigInt.sub(bus, delta)])
+    rem := rem.contents->Array.concat([Stdlib.BigInt.sub(bus, delta)])
     num := num.contents->Array.concat([bus])
   })
 
@@ -88,9 +88,7 @@ let parse2 = data => {
     ->Option.getExn
     ->Js.String2.split(",")
     ->Array.reduceWithIndex([], (acc, x, i) => {
-      x !== "x"
-        ? acc->Array.concat([(x->RescriptCore.BigInt.fromString, i->RescriptCore.BigInt.fromInt)])
-        : acc
+      x !== "x" ? acc->Array.concat([(x->Stdlib.BigInt.fromString, i->Stdlib.BigInt.fromInt)]) : acc
     })
   bus_list
 }

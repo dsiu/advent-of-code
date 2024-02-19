@@ -36,7 +36,7 @@ module Cave = {
 
   /* * create all the vertex and keep them in a Array2D */
   let makeNodes = (g, lines) => {
-    lines->Array2D.mapWithIndexU((c, _) => {
+    lines->Array2D.mapWithIndex((c, _) => {
       //      let v = G.V.create(c)
       g->G.addNode(c, ())
       c
@@ -50,7 +50,7 @@ module Cave = {
     let g = G.makeDirectedGraph()
     let nodes = makeNodes(g, lines)
 
-    let g = lines->Array2D.reduceWithIndexU(g, (g, _e, (x, y) as c) => {
+    let g = lines->Array2D.reduceWithIndex(g, (g, _e, (x, y) as c) => {
       //      let h = V.hash((x, y))->Int.toString
       //      log(`${x->Int.toString},${y->Int.toString} (${h}) = ${e}`)->ignore
       let v = node(nodes, x, y)
@@ -89,6 +89,7 @@ module Cave = {
         node(nodes, 0, 0),
         node(nodes, dest_x, dest_y),
         ~weight=#Attr("weight"),
+        (),
       )
 
     let edges = g->G.ShortestPath.Utils.edgePathFromNodePath(path)

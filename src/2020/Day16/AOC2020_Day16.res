@@ -2,6 +2,9 @@
 // https://work.njae.me.uk/2020/12/25/advent-of-code-2020-day-16/
 //
 
+@@uncurried
+@@uncurried.swap
+
 open Belt
 open Utils
 
@@ -33,7 +36,7 @@ let part1 = ticketErrorRate
 /**
   A ticket is valid if every value is valid for some rule.
   */
-let isValidTicket = (RuleSet(rules), ticket) => {
+let isValidTicket = (. RuleSet(rules), ticket) => {
   open Array
   every(ticket->map(validForAnyField(RuleSet(rules), _)), identity)
 }
@@ -98,12 +101,11 @@ let parse = data => {
   let trim = Js.String2.trim
   let split = Js.String2.split
   let map = Array.map
-  let intFromStrEx = Int.fromString->compose(Option.getExn)
 
   let [rules, my, nearby] = data->splitDoubleNewline->map(x => x->splitNewline->map(trim))
 
   let parseRange = s => {
-    let [a, b] = s->split("-")->Array.map(intFromStrEx)
+    let [a, b] = s->split("-")->Array.map(intFromStringExn)
     Range(a, b)
   }
 
@@ -116,7 +118,7 @@ let parse = data => {
   let ruleSet = rules->Array.map(parseRule)->Map.String.fromArray->RuleSet
 
   let parseTicket = s => {
-    s->split(",")->map(intFromStrEx)
+    s->split(",")->map(intFromStringExn)
   }
 
   let myTicket = my->Array.getExn(1)->parseTicket

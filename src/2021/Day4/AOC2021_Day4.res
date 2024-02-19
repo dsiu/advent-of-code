@@ -10,7 +10,7 @@ module Draws = {
 
 module Board = {
   type t = Array2D.t<int>
-  let toString = t => t->Array2D.toString(Int.toString)
+  let toString = t => t->Array2D.toString(Stdlib.Int.toString)
 
   let make = (lines): t => {
     lines->Array.map(x =>

@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Belt
 open Utils
 let log = Js.Console.log
@@ -32,14 +35,14 @@ module Scanner = {
     let ras = [
       nullTrans,
       rotY,
-      compose(rotY, rotY),
-      compose3(rotY, rotY, rotY),
+      compose(rotY, rotY, ...),
+      compose3(rotY, rotY, rotY, ...),
       rotZ,
-      compose3(rotZ, rotZ, rotZ),
+      compose3(rotZ, rotZ, rotZ, ...),
     ]
-    let rbs = [nullTrans, rotX, compose(rotX, rotX), compose3(rotX, rotX, rotX)]
+    let rbs = [nullTrans, rotX, compose(rotX, rotX, ...), compose3(rotX, rotX, rotX, ...)]
 
-    Stdlib.Array.combination2(ras, rbs, (a, b) => compose(a, b))
+    Stdlib.Array.combination2(ras, rbs, (a, b) => compose(a, b, ...))
   }
 
   //  rotations->Array.length->log
@@ -51,18 +54,18 @@ module Scanner = {
   }
   module F = {
     type t = float
-    let compare = (a, b) => Float.toInt(a -. b)
+    let compare = (. a, b) => Float.toInt(a -. b)
   }
   module Bag = Bag.Bag // namespaced in Bag package
   module B = Bag.Make(F) // MultiSet Bag of int
 
-  let bagFromArray = Array.reduce(_, B.empty, (acc, x) => acc->B.add(x, _))
+  let bagFromArray = Array.reduce(_, B.empty, (acc, x) => acc->(B.add(x, _)))
 
   let bagToString = b => {
     let str = ref("")
-    b->B.iter((x, m) => {
-      str := str.contents ++ `@ ${x->Float.toString}:${m->Int.toString},`
-    }, _)
+    b->(B.iter((x, m) => {
+        str := str.contents ++ `@ ${x->Float.toString}:${m->Int.toString},`
+      }, _))
     "{" ++ str.contents ++ "}"
   }
 
@@ -115,7 +118,7 @@ module Scanner = {
 
   module V3Comparator = Belt.Id.MakeComparable({
     type t = coord
-    let cmp = (Coord(a), Coord(b)) => V3.cmp(a, b)
+    let cmp = (. Coord(a), Coord(b)) => V3.cmp(a, b)
   })
   // let v3_set = Belt.Set.make(~id=module(V3Comparator))
   let v3SetFromArray = a => {
@@ -137,12 +140,12 @@ module Scanner = {
 
     Stdlib.Array.combinationIf3(beacons1, beacons2, rotations, (b1, b2, rot) => {
       let t = minus(b1, rot(b2)) // apply rot to b2
-      let translation = translate(t)
+      let translation = translate(t, ...)
 
-      let transB2 = beacons2->Array.mapU((. b) => {b->rot->translation})
+      let transB2 = beacons2->Array.mapU(b => {b->rot->translation})
 
       let len = interact(beacons1, transB2)->Belt.Set.size
-      len >= 12 ? Some(compose(rot, translation)) : None
+      len >= 12 ? Some(compose(rot, translation, ...)) : None
     })
   }
 
@@ -164,9 +167,9 @@ module Scanner = {
     }
   }
 
-  let transformScanner = (. (s, trans)) => {
+  let transformScanner = ((s, trans)) => {
     ...s,
-    beacons: s.beacons->Array.mapU((. b) => {
+    beacons: s.beacons->Array.mapU(b => {
       Option.getExn(trans)(b)
     }),
     transformation: trans->Option.getExn,
@@ -179,7 +182,7 @@ module Scanner = {
         let matches =
           List.zip(
             passMatches,
-            List.mapU(passMatches, (. x) => matchingTransform(current, x)),
+            List.mapU(passMatches, x => matchingTransform(current, x)),
           )->List.keep(x => x->snd->Option.isSome)
 
         let waiting' = waiting->List.keep(s => {
@@ -247,11 +250,11 @@ let reconstructScanners = scanners => {
 }
 
 let part1 = scanners => {
-  let bSets = scanners->List.mapU((. s) => {
+  let bSets = scanners->List.mapU(s => {
     v3SetFromArray(s.beacons)
   })
 
-  let result = bSets->List.reduceU(v3SetMake, (. a, b) => {
+  let result = bSets->List.reduceU(v3SetMake, (a, b) => {
     Belt.Set.union(a, b)
   })
 
@@ -260,7 +263,7 @@ let part1 = scanners => {
 }
 
 let part2 = scanners => {
-  let extractOrigin = (. sc) => sc.transformation(Coord(0.0, 0.0, 0.0))
+  let extractOrigin = sc => sc.transformation(Coord(0.0, 0.0, 0.0))
   let origins = scanners->List.mapU(extractOrigin)
 
   let manhatton = (Coord(a)) => {

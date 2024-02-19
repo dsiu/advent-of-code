@@ -42,7 +42,7 @@ let merge: rucksack => contents = (Rucksack(a, b)) => {
 let badgeOf: array<rucksack> => string = rucksacks => {
   module S = Belt.Set.String
   let foldLeft = Stdlib.Array.foldl1
-  rucksacks->Array.map(merge)->foldLeft(S.intersect)->S.toArray->Array.getExn(0)
+  rucksacks->Array.map(merge)->foldLeft((a, b) => S.intersect(a, b))->S.toArray->Array.getExn(0)
 }
 
 let part2: array<rucksack> => int = rucksacks => {

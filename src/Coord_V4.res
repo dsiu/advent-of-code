@@ -5,7 +5,8 @@ module TC = Tablecloth
 type t = TableclothTuple4.t<int, int, int, int>
 
 let intCompare = (a, b) => Int.compare(a, b)->Stdlib.Ordering.toInt
-let compare = TableclothTuple4.compare(~f=intCompare, ~g=intCompare, ~h=intCompare, ~i=intCompare)
+let compare = (a, b) =>
+  TableclothTuple4.compare(~f=intCompare, ~g=intCompare, ~h=intCompare, ~i=intCompare, a, b)
 
 include TC.Comparator.Make({
   type t = t

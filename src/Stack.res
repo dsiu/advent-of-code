@@ -128,13 +128,13 @@ module MakeStack = (Item: StackItem) => {
   // ==============================================
 
   let {compose, compose4} = module(Stdlib.Function)
-  let square = compose(dup, mul)
+  let square = compose(dup, mul, ...)
 
-  let cube = compose4(dup, dup, mul, mul)
+  let cube = compose4(dup, dup, mul, mul, ...)
 
   //  let sum_numbers_upto = [dup, one, add, mul, two, div]->composeN
 
-  let sum_numbers_upto = compose(compose4(dup, one, add, mul), compose(two, div))
+  let sum_numbers_upto = compose(compose4(dup, one, add, mul, ...), compose(two, div, ...), ...)
 }
 
 module IntOps = {

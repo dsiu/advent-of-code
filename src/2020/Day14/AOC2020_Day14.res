@@ -1,6 +1,5 @@
 open Belt
 open Utils
-let log = Js.Console.log
 
 let toInt64 = Utils.int64FromBitString
 

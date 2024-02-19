@@ -59,17 +59,17 @@ module TreeMap = {
 
 let solvePart1 = data => {
   let parsed = data->Js.String2.split("\n")->Array.map(Js.String2.trim)
-  TreeMap.make(parsed)->TreeMap.walk(_, (3, 1))
+  TreeMap.make(parsed)->(TreeMap.walk(_, (3, 1)))
 }
 
 let solvePart2 = data => {
   let parsed = data->Js.String2.split("\n")->Array.map(Js.String2.trim)
   let tm = TreeMap.make(parsed)
   let slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
-  let trees = slopes->Array.map(s => tm->TreeMap.walk(_, s))
+  let trees = slopes->Array.map(s => tm->(TreeMap.walk(_, s)))
   //  trees->log
 
-  open RescriptCore
+  open Stdlib
   let acc = BigInt.fromInt(1)
   trees
   ->Belt.Array.reduce(acc, (a, s) => {

@@ -14,7 +14,7 @@ module LanternFish = {
 
   let makeRespawned = () => Decr(8)
 
-  let getNextState = (. t) => {
+  let getNextState = t => {
     switch t {
     | Decr(0) => Respawn(6)
     | Decr(s)
@@ -53,7 +53,7 @@ let rec runDumb = (fs, days) => {
       Log.debug("get next state done")
 
       Log.debug("get spawned")
-      let spawn = next->Array.keepMapU((. f) => {
+      let spawn = next->Array.keepMapU(f => {
         f->LanternFish.isRespawned ? LanternFish.makeRespawned()->Some : None
       })
 
@@ -65,7 +65,7 @@ let rec runDumb = (fs, days) => {
     }
   }
 }
-module BigInt = RescriptCore.BigInt
+module BigInt = Stdlib.BigInt
 let big_zero = BigInt.fromInt(0)
 let big_one = BigInt.fromInt(1)
 let add = BigInt.add

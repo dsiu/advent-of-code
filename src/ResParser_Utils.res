@@ -4,7 +4,7 @@ module L = Stdlib.List
 module S = Stdlib.String
 module P = Res_parser
 
-let charListToString = chars => chars->L.map(Char.escaped)->L.reduce("", S.concat)
+let charListToString = chars => chars->L.map(c => Char.escaped(c))->L.reduce("", S.concat)
 let anyChar = P.satisfy(char => char != '"')
 let string = P.many(anyChar)->P.map(charListToString)
 let zero = P.char('0')

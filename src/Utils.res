@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Stdlib
 module Map = Belt.Map
 module MutableMap = Belt.MutableMap
@@ -54,8 +57,8 @@ module Printable = {
       let toString = m => toString(m, Int.toString)
     }
 
-    module Int64 = {
-      let toString = m => toString(m, Int64.to_string)
+    module BigInt = {
+      let toString = m => toString(m, BigInt.toString)
     }
   }
 
@@ -70,8 +73,8 @@ module Printable = {
       let toString = m => toString(m, Int.toString)
     }
 
-    module Int64 = {
-      let toString = m => toString(m, Int64.to_string)
+    module BigInt = {
+      let toString = m => toString(m, BigInt.toString)
     }
 
     module IntBase2 = {
@@ -88,8 +91,12 @@ module Printable = {
     module Int = {
       let toString = m => toString(m, Int.toString)
     }
+    module BigInt = {
+      let toString = m => toString(m, BigInt.toString)
+    }
+
     module Int64 = {
-      let toString = m => toString(m, Int64.to_string)
+      let toString = m => toString(m, i => Int64.to_string(i))
     }
   }
 
@@ -114,8 +121,10 @@ module Printable = {
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Int.toStringWithRadix(_, ~radix=2)
 
-let compose = Stdlib.Function.compose
-let intFromStringExn = compose(String.trim, compose(Int.fromString(~radix=10), Option.getUnsafe))
+let compose = (. f, g) => Stdlib.Function.compose(f, g, ...)
+
+let intFromStringExn =
+  compose(String.trim, compose(Int.fromString(~radix=10, ...), Option.getUnsafe, ...), ...)
 
 let add = (x, y) => x + y
 let sub = (x, y) => x - y

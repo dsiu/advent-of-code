@@ -1,5 +1,8 @@
 // ref: https://work.njae.me.uk/2020/12/26/advent-of-code-2020-day-17/
 
+@@uncurried
+@@uncurried.swap
+
 open Belt
 open Utils
 
@@ -99,8 +102,8 @@ let update = grid => {
     )
 
   TC.Set.union(
-    grid->TC.Set.filter(~f=cubeSurvives(grid)),
-    empties->TC.Set.filter(~f=cubeBorn(grid)),
+    grid->TC.Set.filter(~f=cubeSurvives(grid, _)),
+    empties->TC.Set.filter(~f=cubeBorn(grid, _)),
   )
 }
 
@@ -108,11 +111,12 @@ let rec iterate = (grid, f, times) => {
   times == 0 ? grid : iterate(f(grid), f, times - 1)
 }
 
-let parse = data => data->splitNewline->Array.map(compose(Js.String2.trim, splitChars))
+let parse = data => data->splitNewline->Array.map(compose(Stdlib.String.trim, splitChars))
 
 let solvePart1 = data => {
-  //  data->parse->log
+  data->parse->log
   let grid0 = data->parse->makeGrid
+  grid0->log
   let finalGrid = iterate(grid0, update, 6)
   TC.Set.length(finalGrid)
 }

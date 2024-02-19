@@ -1,6 +1,7 @@
 open Belt
 open Utils
 let log = Js.Console.log
+let log2 = Js.Console.log2
 
 module Paper = {
   type mark = [#"#" | #"."]
@@ -54,7 +55,8 @@ module Paper = {
     let sizes = findSize(coords)
     let p = Array2D.make(sizes, #".")
     Array.forEach(coords, c => {
-      p->Array2D.set(c, #"#") ? () : raise(Not_found)
+      //      p->Array2D.set(c, #"#") ? () : raise(Not_found)
+      p->Array2D.set(c, #"#")
     })
     p
   }
@@ -71,11 +73,12 @@ module Paper = {
 
   let transformCoord = ((x, y): coord, (dir, n): fold) => {
     switch dir {
-    | #X => x > n ? (2 * n - x, y) : (x, y)
-    | #Y => y > n ? (x, 2 * n - y) : (x, y)
+    | #X => x >= n ? (2 * n - x, y) : (x, y)
+    | #Y => y >= n ? (x, 2 * n - y) : (x, y)
     }
   }
 
+  // the transformed size might be some out of range array index since the fold might be larger or small than 1/2 of the paper size
   let getTransformedSize = (t, (dir, n): fold) => {
     let (sizeX, sizeY) = (t->Array2D.lengthX, t->Array2D.lengthY)
     switch dir {
@@ -90,8 +93,14 @@ module Paper = {
 
     t->Array2D.reduceWithIndex(t', (a, mark, coord) => {
       let coord' = transformCoord(coord, f)
-      let new_mark = t->Array2D.get(coord')->Option.getExn
-      a->Array2D.set(coord', addMark(mark, new_mark))->ignore
+      let (xx, yy) = coord'
+
+      let new_mark = t->Array2D.get(coord')
+      // must check if the new_mark is within the folded paper, if not, discard it.
+      switch new_mark {
+      | Some(new_mark) => a->Array2D.set(coord', addMark(mark, new_mark))->ignore
+      | None => ()
+      }
       a
     })
   }

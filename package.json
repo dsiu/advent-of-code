@@ -2,7 +2,7 @@
   "name": "advent-of-code",
   "version": "0.1.0",
   "type": "module",
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.1.0",
   "scripts": {
     "build": "rescript",
     "clean": "rescript clean -with-deps",
@@ -40,20 +40,20 @@
     ]
   },
   "dependencies": {
-    "@dsiu/rescript-graphology": "https://github.com/dsiu/rescript-graphology#commit=0162a8b2fabceb88928abe448ce689de6b7e72b7",
-    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=4527100ec2bf92a3986a0c48e0abb898f7ddf706",
+    "@dsiu/rescript-graphology": "https://github.com/dsiu/rescript-graphology#commit=469b2d7b1c16370892fcfd735cdf6cbf5d24dd86",
+    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=97d7e16584853ff5abe5f4171f9a406d5f003207",
     "@greenlabs/garter": "https://github.com/dsiu/garter#rescript-v11-curried-mode",
     "@jmagaram/rescript-extras": "^3.0.0",
     "@jmagaram/rescript-seq": "^3.0.1",
-    "@rescript/core": "https://github.com/rescript-association/rescript-core#main",
-    "@resinfo/parser": "^2.0.0-alpha",
-    "bs-bastet": "https://github.com/dsiu/rescript-bastet#rescript-v11-curried-mode",
+    "@rescript/core": "^1.0.0",
+    "@resinfo/parser": "https://github.com/dsiu/rescript-parser#commit=02b0e3d1c1ea00a7c0a9f2091c89c674952bef87",
+    "bs-bastet": "https://github.com/dsiu/rescript-bastet#rescript-v11-uncurried-wip",
     "debug": "^4.3.4",
     "js-array2-ex": "^0.0.4",
     "ms": "^2.1.3",
     "rationale": "^0.2.0",
-    "relude": "https://github.com/dsiu/rescript-relude#rescript-v11-curried-mode",
-    "relude-parse": "https://github.com/dsiu/rescript-relude-parse#rescript-v11-curried-mode",
+    "relude": "https://github.com/dsiu/rescript-relude#rescript-v11-uncurried-wip",
+    "relude-parse": "https://github.com/dsiu/rescript-relude-parse#rescript-v11-uncurried-wip",
     "rescript-bag": "https://github.com/dsiu/rescript-bag#main",
     "rescript-vector": "^0.4.0"
   }

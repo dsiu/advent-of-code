@@ -144,10 +144,11 @@ describe("set", () => {
     expect(array2D->Array2D.get((0, 0)))->toEqual(Some(0))
   })
 
-  test("should return false for invalid coordinates", () => {
-    let array2D = Array2D.make((3, 2), 0)
-    expect(Array2D.set(array2D, (3, 2), 1))->toBe(false)
-  })
+  //  test("should return false for invalid coordinates", () => {
+  //    let array2D = Array2D.make((3, 2), 0)
+  // todo: how to test set returning Unit?
+  //    expect(Array2D.set(array2D, (3, 2), 1))->toBe(1)
+  //  })
 })
 
 describe("setYEquals", () => {
@@ -236,19 +237,19 @@ describe("map", () => {
 describe("mapU", () => {
   test("should apply the function to each element in the 2D array", () => {
     let array2D = Array2D.make((3, 2), 1)
-    let result = array2D->Array2D.mapU((. x) => x * 2)
+    let result = array2D->Array2D.map(x => x * 2)
     expect(result)->toEqual([[2, 2, 2], [2, 2, 2]])
   })
 
   test("should return an empty 2D array when given an empty 2D array", () => {
     let array2D = Array2D.make((0, 0), 1)
-    let result = array2D->Array2D.mapU((. x) => x * 2)
+    let result = array2D->Array2D.map(x => x * 2)
     expect(result)->toEqual([])
   })
 
   test("should not modify the original 2D array", () => {
     let array2D = Array2D.make((3, 2), 1)
-    let _ = array2D->Array2D.mapU((. x) => x * 2)
+    let _ = array2D->Array2D.map(x => x * 2)
     expect(array2D)->toEqual([[1, 1, 1], [1, 1, 1]])
   })
 })
@@ -276,19 +277,19 @@ describe("mapWithIndex", () => {
 describe("mapWithIndexU", () => {
   test("should apply the function to each element with its coordinates", () => {
     let array2D = Array2D.make((3, 2), 0)
-    let result = array2D->Array2D.mapWithIndexU((. coords, _) => coords)
+    let result = array2D->Array2D.mapWithIndex((coords, _) => coords)
     expect(result)->toEqual([[(0, 0), (1, 0), (2, 0)], [(0, 1), (1, 1), (2, 1)]])
   })
 
   test("should return an empty 2D array when given an empty 2D array", () => {
     let array2D = Array2D.make((0, 0), 0)
-    let result = array2D->Array2D.mapWithIndexU((. coords, _) => coords)
+    let result = array2D->Array2D.mapWithIndex((coords, _) => coords)
     expect(result)->toEqual([])
   })
 
   test("should not modify the original 2D array", () => {
     let array2D = Array2D.make((3, 2), 0)
-    let _ = array2D->Array2D.mapWithIndexU((. coords, _) => coords)
+    let _ = array2D->Array2D.mapWithIndex((coords, _) => coords)
     expect(array2D)->toEqual([[0, 0, 0], [0, 0, 0]])
   })
 })
@@ -310,13 +311,13 @@ describe("reduce", () => {
 describe("reduceU", () => {
   test("should correctly reduce a 2D array to a single value", () => {
     let array2D = Array2D.make((3, 2), 1)
-    let result = array2D->Array2D.reduceU(0, (. acc, x) => acc + x)
+    let result = array2D->Array2D.reduce(0, (acc, x) => acc + x)
     expect(result)->toEqual(6)
   })
 
   test("should return the initial value for an empty 2D array", () => {
     let array2D = Array2D.make((0, 0), 0)
-    let result = array2D->Array2D.reduceU(10, (. acc, x) => acc + x)
+    let result = array2D->Array2D.reduce(10, (acc, x) => acc + x)
     expect(result)->toEqual(10)
   })
 })
@@ -344,19 +345,19 @@ describe("reduceWithIndex", () => {
 describe("reduceWithIndexU", () => {
   test("should correctly reduce a 2D array to a single value with index", () => {
     let array2D = Array2D.make((3, 2), 1)
-    let result = array2D->Array2D.reduceWithIndexU(0, (. acc, x, _) => acc + x)
+    let result = array2D->Array2D.reduceWithIndex(0, (acc, x, _) => acc + x)
     expect(result)->toEqual(6)
   })
 
   test("should return the initial value for an empty 2D array", () => {
     let array2D = Array2D.make((0, 0), 0)
-    let result = array2D->Array2D.reduceWithIndexU(10, (. acc, x, _) => acc + x)
+    let result = array2D->Array2D.reduceWithIndex(10, (acc, x, _) => acc + x)
     expect(result)->toEqual(10)
   })
 
   test("should correctly use the index in the reduction function", () => {
     let array2D = Array2D.make((3, 2), 1)
-    let result = array2D->Array2D.reduceWithIndexU(0, (. acc, x, (xi, yi)) => acc + xi + yi)
+    let result = array2D->Array2D.reduceWithIndex(0, (acc, x, (xi, yi)) => acc + xi + yi)
     expect(result)->toEqual(9)
   })
 })

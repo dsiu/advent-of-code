@@ -163,8 +163,8 @@ let parse = data =>
     let [cardIdStr, numberStrs] = l->String.trim->String.split(": ")
     let cardId = cardIdStr->String.replace("Card ", "")->Int.fromString->Option.getExn
     let [winnersStr, actualsStr] = numberStrs->String.split(" | ")
-    let winners = winnersStr->String.split(" ")->Array.filterMap(Int.fromString(~radix=10))
-    let actuals = actualsStr->String.split(" ")->Array.filterMap(Int.fromString(~radix=10))
+    let winners = winnersStr->String.split(" ")->Array.filterMap(Int.fromString(~radix=10, ...))
+    let actuals = actualsStr->String.split(" ")->Array.filterMap(Int.fromString(~radix=10, ...))
 
     {id: cardId, winners, actuals}
   })

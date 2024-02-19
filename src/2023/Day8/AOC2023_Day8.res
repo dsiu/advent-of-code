@@ -117,7 +117,7 @@ let part2: ((array<direction>, desert)) => BigInt.t = ((directions, desert)) => 
   desert
   ->Stdlib.Map.keys
   ->Iterator.toArray
-  ->Array.filter(Fn.compose3(String.last, String.compare("A"), Ordering.isEqual))
+  ->Array.filter(Fn.compose3(String.last, String.compare("A", ...), Ordering.isEqual, ...))
   ->Array.map(s => walk(desert, directions, {here: s, steps: 0}).steps)
   ->Array.map(BigInt.fromInt)
   ->Array.foldl1(Math.lcmBigInt)
@@ -129,15 +129,15 @@ module ProblemParser = {
   let justSpace: P.t<unit> = P.void(P.many(P.str(" ")))
   let debug = P.tapLog
 
-  let mkNode = (a, b) => {
+  let mkNode = a => b => {
     Node(a, b)
   }
 
-  let mkDesertLine = (a, b) => {
+  let mkDesertLine = a => b => {
     (a, b)
   }
 
-  let nameP = P.\"<#>"(P.many(P.anyAlphaOrDigit), l => l->List.toArray->Array.joinWith(""))
+  let nameP = P.\"<$$>"(P.many(P.anyAlphaOrDigit), l => l->List.toArray->Array.joinWith(""))
 
   let nodeP =
     mkNode->\"<$>"(P.str("(")->\"*>"(nameP)->\"<*"(P.str(", ")))->\"<*>"(nameP->\"<*"(P.str(")")))
@@ -153,8 +153,7 @@ module ProblemParser = {
 
   let directionP = L->\"<$"(P.str("L"))->\"<|>"(R->\"<$"(P.str("R")))
 
-  let mkProblem: (list<direction>, desert) => (array<direction>, desert) = (
-    a: list<direction>,
+  let mkProblem: list<direction> => desert => (array<direction>, desert) = (a: list<direction>) => (
     b: desert,
   ) => {
     (a->List.toArray, b)

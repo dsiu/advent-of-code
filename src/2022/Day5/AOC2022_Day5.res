@@ -32,7 +32,7 @@ let makeWharf = (wharfLines, colNames) => {
 let makeMoves = xs => {
   let get = Array.get
   let map = Array.map
-  let intFromString = Belt.Int.fromString
+  let intFromString = i => Belt.Int.fromString(i)
 
   xs->map(x => {
     let parts = x->String.split(" ")
@@ -50,7 +50,8 @@ let parse = data => {
   let secondSection = text->A.getUnsafe(1)->A.init // drop last empty line
 
   let wharfLines = firstSection->A.init->O.getExn->A.map(splitChars)
-  let colNames = firstSection->A.last->O.getExn->S.split(" ")->A.filterMap(Belt.Int.fromString)
+  let colNames =
+    firstSection->A.last->O.getExn->S.split(" ")->A.filterMap(i => Belt.Int.fromString(i))
   let moves = secondSection->O.getExn->makeMoves
 
   let wharf = makeWharf(wharfLines, colNames)

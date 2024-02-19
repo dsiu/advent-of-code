@@ -12,7 +12,7 @@ external hexToInt: (string, @as(16) _) => int = "parseInt"
 @val
 external binToInt: (string, @as(2) _) => int = "parseInt"
 
-module BigInt = RescriptCore.BigInt
+module BigInt = Stdlib.BigInt
 let binStrToInt64 = s => ("0b" ++ s)->BigInt.fromString->BigInt.toFloat->Int64.of_float
 
 let hexTable = Js.Dict.fromList(list{

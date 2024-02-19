@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 let data = AOC2018_Day3_Data.data
 open Belt
 
@@ -51,13 +54,13 @@ module Claim: Claim = {
 
   // parse a string and produce array of params for claim
   let parseLine = s => {
-    switch s->Js.String.trim |> Js.Re.exec_(claimRe) {
+    switch s->Js.String.trim->(Js.Re.exec_(claimRe, _)) {
     | Some(x) => Js.Re.captures(x)->Array.map(x => Js.Nullable.toOption(x)->Option.getExn)
     | None => []
     }
   }
 
-  let make = (~id: int, ~x, ~y, ~w, ~h) => {id: id, x: x, y: y, w: w, h: h}
+  let make = (~id: int, ~x, ~y, ~w, ~h) => {id, x, y, w, h}
 
   // given a raw data line, produce a Claim.t
   let makeClaim = l => {
@@ -89,7 +92,7 @@ module Claims = {
   let findMaxY = t => t->findMax(Claim.maxY)
 
   let make = (lines): t => {
-    lines |> Js.Array.map(Claim.makeClaim)
+    lines->(Js.Array.map(Claim.makeClaim, _))
   }
 }
 
@@ -110,8 +113,8 @@ module Fabric = {
   let matrix = t => t.matrix
 
   let make = (~w, ~h) => {
-    w: w,
-    h: h,
+    w,
+    h,
     matrix: Array.range(0, w)->Array.reduce(Map.Int.empty, (acc, i) =>
       Map.Int.set(acc, i, MutableMap.Int.make())
     ),
@@ -184,7 +187,8 @@ module Fabric = {
     let cids =
       Array.range(c->Claim.x, c->Claim.x + c->Claim.w - 1)
       ->Array.reduce([], (accX, x) =>
-        Array.range(c->Claim.y, c->Claim.y + c->Claim.h - 1)->Array.reduce([], (accY, y) =>
+        Array.range(c->Claim.y, c->Claim.y + c->Claim.h - 1)
+        ->Array.reduce([], (accY, y) =>
           switch t->getPoint(~x, ~y) {
           | Some(p) =>
             //              Js.Console.log(`x: ${x->string_of_int} y: ${y->string_of_int}`)
@@ -193,7 +197,8 @@ module Fabric = {
             accY->Array.concat([p])
           | None => accY
           }
-        ) |> Array.concat(accX)
+        )
+        ->(Array.concat(accX, _))
       )
       //      ->Utils.flattenArray
       ->Belt.Array.concatMany
@@ -212,7 +217,7 @@ module Fabric = {
       | None => acc
       }
     }
-    let reducer = r(t)
+    let reducer = r(t, ...)
     xs->Array.reduce([], reducer)
   }
 
