@@ -4,7 +4,9 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
 function solvePart1(data) {
-  var entries = Belt_Array.map(data.split("\n"), Utils$AdventOfCode.intFromStringExn);
+  var entries = Belt_Array.map(data.split("\n"), (function (s) {
+          return Utils$AdventOfCode.intFromStringExn(s);
+        }));
   return Belt_Array.reduce(entries, [], (function (a, x) {
                 var candidates = Belt_Array.keep(entries, (function (y) {
                         return (y + x | 0) === 2020;
@@ -19,7 +21,9 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  var entries = Belt_Array.map(data.split("\n"), Utils$AdventOfCode.intFromStringExn);
+  var entries = Belt_Array.map(data.split("\n"), (function (s) {
+          return Utils$AdventOfCode.intFromStringExn(s);
+        }));
   return Belt_Array.reduce(entries, [], (function (ax, x) {
                 var yy = Belt_Array.reduce(entries, [], (function (ay, y) {
                         var candidates = Belt_Array.keep(entries, (function (z) {

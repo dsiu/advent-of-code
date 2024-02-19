@@ -148,7 +148,7 @@ function connectorsToPosition(map, pos) {
       });
   var connectors = nbrsNbrs.filter(function (param) {
         return Stdlib__Option.isSome(Stdlib__Array.find(param[1], (function (n) {
-                          return Coord_V2$AdventOfCode.compare(n)(pos) === 0;
+                          return Coord_V2$AdventOfCode.compare(n, pos) === 0;
                         })));
       });
   return connectors.map(function (prim) {
@@ -171,11 +171,11 @@ function followPath(map, start) {
     var nbrs = connectorsToPosition(map, thisPos);
     var next = Stdlib__Array.getUnsafe(nbrs.filter((function(lastPos){
             return function (n) {
-              return Coord_V2$AdventOfCode.compare(n)(lastPos) !== 0;
+              return Coord_V2$AdventOfCode.compare(n, lastPos) !== 0;
             }
             }(lastPos))), 0);
     var acc$p = acc.concat([thisPos]);
-    if (Coord_V2$AdventOfCode.compare(next)(start) === 0) {
+    if (Coord_V2$AdventOfCode.compare(next, start) === 0) {
       return acc$p;
     }
     _lastPos = thisPos;

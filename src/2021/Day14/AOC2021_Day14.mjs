@@ -120,7 +120,7 @@ function iterateN_tail_opt(param, n) {
 function solve_with_result(t, n) {
   var ret = iterateN_tail_opt(t, n);
   var r = Belt_MutableMapString.toArray(Belt_List.reduce(ret, Belt_MutableMapString.make(), (function (acc, k) {
-              return Utils$AdventOfCode.mutableMapStringUpdate(acc, k, Utils$AdventOfCode.increaseBy1L);
+              return update_value_inc_by_1(acc, k);
             })));
   var match = Utils$AdventOfCode.maxKeyInt64ValuePair(r);
   var match$1 = Utils$AdventOfCode.minKeyInt64ValuePair(r);
@@ -138,10 +138,10 @@ function genPairsMap(template) {
     var match = l.tl;
     var last = l.hd;
     if (!match) {
-      return Utils$AdventOfCode.mutableMapStringUpdate(acc, last, Utils$AdventOfCode.increaseBy1L);
+      return update_value_inc_by_1(acc, last);
     }
     var h2 = match.hd;
-    Utils$AdventOfCode.mutableMapStringUpdate(acc, last + h2, Utils$AdventOfCode.increaseBy1L);
+    update_value_inc_by_1(acc, last + h2);
     _l = {
       hd: h2,
       tl: match.tl
@@ -269,12 +269,14 @@ function parse(data) {
 
 function solvePart1(data) {
   var match = parse(data);
-  return solve_with_result(make(match[0], match[1]), 10);
+  var p = make(match[0], match[1]);
+  return solve_with_result(p, 10);
 }
 
 function solvePart2(data) {
   var match = parse(data);
-  return solve(make(match[0], match[1]), 40);
+  var p = make(match[0], match[1]);
+  return solve(p, 40);
 }
 
 export {

@@ -35,7 +35,9 @@ function costAll(xs, p) {
 }
 
 function parse(data) {
-  return Belt_Array.map(data.trim().split(","), Utils$AdventOfCode.intFromStringExn);
+  return Belt_Array.map(data.trim().split(","), (function (x) {
+                return Utils$AdventOfCode.intFromStringExn(x);
+              }));
 }
 
 function solvePart1(data) {

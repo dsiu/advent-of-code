@@ -4,7 +4,7 @@ import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Core__List from "@rescript/core/src/Core__List.mjs";
 import * as Tree$AdventOfCode from "../src/Tree.mjs";
 
-Jest.describe("Tree", (function (param) {
+Jest.describe("Tree", (function () {
         var tl_1 = {
           TAG: "Pair",
           _0: {

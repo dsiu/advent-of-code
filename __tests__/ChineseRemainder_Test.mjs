@@ -3,7 +3,7 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as ChineseRemainder$AdventOfCode from "../src/ChineseRemainder.mjs";
 
-Jest.describe("ChineseRemainder", (function (param) {
+Jest.describe("ChineseRemainder", (function () {
         var int_tests_0 = [
           ChineseRemainder$AdventOfCode.crt([
                 3,

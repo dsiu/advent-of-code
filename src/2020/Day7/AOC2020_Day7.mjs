@@ -59,8 +59,10 @@ function parseBag(s, r, numIndex, bagIndex) {
   if (s.includes("no other bags")) {
     return empty;
   }
-  var y = r.exec(s);
-  var c = y !== null ? Belt_Array.map(y, (function (z) {
+  var y = (function (__x) {
+        return Caml_option.null_to_opt(r.exec(__x));
+      })(s);
+  var c = y !== undefined ? Belt_Array.map(Caml_option.valFromOption(y), (function (z) {
             return Belt_Option.getExn((z == null) ? undefined : Caml_option.some(z));
           })) : [];
   return {
@@ -80,9 +82,11 @@ function parseJustBag(__x) {
 var nodeRe = /(.*)\s+bags/i;
 
 function parseNode(s) {
-  var x = nodeRe.exec(s);
-  if (x !== null) {
-    return Belt_Array.getExn(x, 0);
+  var x = (function (__x) {
+        return Caml_option.null_to_opt(nodeRe.exec(__x));
+      })(s);
+  if (x !== undefined) {
+    return Belt_Array.getExn(Caml_option.valFromOption(x), 0);
   }
   throw {
         RE_EXN_ID: "Not_found",
@@ -93,9 +97,11 @@ function parseNode(s) {
 var leafRe = /(.*)\s+bags/i;
 
 function parseLeaf(s) {
-  var x = leafRe.exec(s);
-  if (x !== null) {
-    return Belt_Array.getExn(x, 0);
+  var x = (function (__x) {
+        return Caml_option.null_to_opt(leafRe.exec(__x));
+      })(s);
+  if (x !== undefined) {
+    return Belt_Array.getExn(Caml_option.valFromOption(x), 0);
   }
   throw {
         RE_EXN_ID: "Not_found",
@@ -109,7 +115,9 @@ function addNode(t, node, leaf) {
 
 function addRule(t, l) {
   var node = parseJustBag(Belt_Array.getExn(l, 0));
-  var leaf = Belt_Array.map(Belt_Array.getExn(l, 1).split(","), parseNumBag);
+  var leaf = Belt_Array.map((function (__x) {
+            return __x.split(",");
+          })(Belt_Array.getExn(l, 1)), parseNumBag);
   return addNode(t, node, leaf);
 }
 
@@ -142,7 +150,7 @@ function whichBagContains(t, match) {
 }
 
 function countBagsInside(t, bag) {
-  var leaf = Belt_MapString.getExn(t, bag.color);
+  var leaf = getBag(t, bag);
   return Belt_Array.reduce(leaf, 1, (function (a, x) {
                 if (isEmpty(x)) {
                   return a;
@@ -184,7 +192,9 @@ var Rules = {
 };
 
 function parseLine(l) {
-  return Belt_Array.map(l.trim().split("contain", 2), (function (prim) {
+  return Belt_Array.map((function (__x) {
+                  return __x.split("contain", 2);
+                })(l.trim()), (function (prim) {
                 return prim.trim();
               }));
 }
@@ -194,8 +204,10 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  var parsed = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
-  var newRules = Belt_Array.reduce(parsed, undefined, addRule);
+  var parsed = parse(data);
+  var newRules = Belt_Array.reduce(parsed, undefined, (function (a, x) {
+          return addRule(a, x);
+        }));
   return whichBagContains(newRules, {
               count: 0,
               color: "shiny gold"
@@ -203,8 +215,10 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  var parsed = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
-  var newRules = Belt_Array.reduce(parsed, undefined, addRule);
+  var parsed = parse(data);
+  var newRules = Belt_Array.reduce(parsed, undefined, (function (a, x) {
+          return addRule(a, x);
+        }));
   return howManyBagsIn(newRules, {
               count: 0,
               color: "shiny gold"

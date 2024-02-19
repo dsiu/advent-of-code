@@ -206,12 +206,12 @@ var HeightMap = {
 };
 
 function parse(data) {
-  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (param) {
+  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (extra) {
                 return Stdlib__Function.compose((function (prim) {
                               return prim.trim();
                             }), (function (x) {
                               return Belt_Array.map(Utils$AdventOfCode.splitChars(x), Utils$AdventOfCode.intFromStringExn);
-                            }), param);
+                            }), extra);
               }));
 }
 
@@ -219,7 +219,9 @@ function solvePart1(data) {
   var hmap = make(parse(data));
   return Belt_Array.reduce(Belt_Array.map(getLowPoints(hmap), (function (param) {
                     return Utils$AdventOfCode.add(param._1, 1);
-                  })), 0, Utils$AdventOfCode.add);
+                  })), 0, (function (a, x) {
+                return Utils$AdventOfCode.add(a, x);
+              }));
 }
 
 function solvePart2(data) {

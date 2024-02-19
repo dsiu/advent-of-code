@@ -110,13 +110,13 @@ function can_visit_part2(visited, node) {
 
 function dfs(visit_func, t, start_node, end_node) {
   var explore = function (node, visited, acc, end_node) {
-    var visited$p = Utils$AdventOfCode.hashMapStringUpdate(visited, node, Utils$AdventOfCode.increaseBy1);
+    var visited$p = inc_visited(visited, node);
     if (node === end_node) {
       return [acc];
     }
-    var edges = AdjacencyList$AdventOfCode.$$String.neighbors(t, node);
+    var edges = get_edges(t, node);
     return Belt_MutableSetString.reduceU(edges, [], (function (a, e) {
-                  if (visit_func(visited$p, e)) {
+                  if (Curry._2(visit_func, visited$p, e)) {
                     return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));
                   } else {
                     return a;

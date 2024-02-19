@@ -69,25 +69,25 @@ var anyChar = Res_parser.satisfy(function (param) {
       return true;
     });
 
-Jest.describe("2021 Day16", (function (param) {
-        Jest.describe("Parser Utils", (function (param) {
-                Jest.test("hex string to binary", (function (param) {
+Jest.describe("2021 Day16", (function () {
+        Jest.describe("Parser Utils", (function () {
+                Jest.test("hex string to binary", (function () {
                         var result = AOC2021_Day16$AdventOfCode.hexStrToBinStr("D2FE28");
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), "110100101111111000101000");
                       }));
-                Jest.test("sequenceN", (function (param) {
+                Jest.test("sequenceN", (function () {
                         var p = Res_parser.map(AOC2021_Day16$AdventOfCode.Packet.sequenceN(anyChar, 6), AOC2021_Day16$AdventOfCode.binCharListToStr);
                         var result = Belt_Result.getExn(Res_parser.run(p, "123456"))[0];
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), "123456");
                       }));
-                Jest.test("sequenceN_", (function (param) {
+                Jest.test("sequenceN_", (function () {
                         var p = Res_parser.map(AOC2021_Day16$AdventOfCode.Packet.sequenceN_(anyChar, 6), AOC2021_Day16$AdventOfCode.binCharListToStr);
                         var result = Belt_Result.getExn(Res_parser.run(p, "123456"))[0];
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), "123456");
                       }));
               }));
-        Jest.describe("Packet Parser", (function (param) {
-                Jest.test("literal 2021", (function (param) {
+        Jest.describe("Packet Parser", (function () {
+                Jest.test("literal 2021", (function () {
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("110100101111111000101000"))[0];
                         var expected_0 = {
                           TAG: "Version",
@@ -112,7 +112,7 @@ Jest.describe("2021 Day16", (function (param) {
                         };
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
                       }));
-                Jest.test("literal 10", (function (param) {
+                Jest.test("literal 10", (function () {
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("11010001010"))[0];
                         var expected_0 = {
                           TAG: "Version",
@@ -137,7 +137,7 @@ Jest.describe("2021 Day16", (function (param) {
                         };
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
                       }));
-                Jest.test("literal 20", (function (param) {
+                Jest.test("literal 20", (function () {
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("0101001000100100"))[0];
                         var expected_0 = {
                           TAG: "Version",
@@ -162,7 +162,7 @@ Jest.describe("2021 Day16", (function (param) {
                         };
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
                       }));
-                Jest.test("op type 0 simple", (function (param) {
+                Jest.test("op type 0 simple", (function () {
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("00111000000000000110111101000101001010010001001000000000"))[0];
                         var expected = op_type_0(1, 6, [
                               27,
@@ -210,7 +210,7 @@ Jest.describe("2021 Day16", (function (param) {
                             ]);
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
                       }));
-                Jest.test("op type 1 simple", (function (param) {
+                Jest.test("op type 1 simple", (function () {
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse("11101110000000001101010000001100100000100011000001100000"))[0];
                         var expected = op_type_1(7, 3, [
                               3,
@@ -275,7 +275,7 @@ Jest.describe("2021 Day16", (function (param) {
                             ]);
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
                       }));
-                Jest.test("example 1", (function (param) {
+                Jest.test("example 1", (function () {
                         var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("8A004A801A8002F478");
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
                         var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
@@ -323,7 +323,7 @@ Jest.describe("2021 Day16", (function (param) {
                                     16
                                   ]);
                       }));
-                Jest.test("example 2", (function (param) {
+                Jest.test("example 2", (function () {
                         var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("620080001611562C8802118E34");
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
                         var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
@@ -431,7 +431,7 @@ Jest.describe("2021 Day16", (function (param) {
                                     12
                                   ]);
                       }));
-                Jest.test("example 3", (function (param) {
+                Jest.test("example 3", (function () {
                         var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("C0015000016115A2E0802F182340");
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
                         var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
@@ -539,7 +539,7 @@ Jest.describe("2021 Day16", (function (param) {
                                     23
                                   ]);
                       }));
-                Jest.test("example 4", (function (param) {
+                Jest.test("example 4", (function () {
                         var input = AOC2021_Day16$AdventOfCode.hexStrToBinStr("A0016C880162017C3686B18A3D4780");
                         var result = Belt_Result.getExn(AOC2021_Day16$AdventOfCode.Packet.parse(input))[0];
                         var versionSum = AOC2021_Day16$AdventOfCode.Packet.version_sum(result);
@@ -668,7 +668,7 @@ Jest.describe("2021 Day16", (function (param) {
                                   ]);
                       }));
               }));
-        Jest.describe("Expression", (function (param) {
+        Jest.describe("Expression", (function () {
                 var withBigIntResult = function (__x) {
                   return Belt_List.map(__x, (function (param) {
                                 return [
@@ -1274,7 +1274,7 @@ Jest.describe("2021 Day16", (function (param) {
                 Jest.testAll("equal", equal_tests, (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
                       }));
-                Jest.describe("Packet with Expression", (function (param) {
+                Jest.describe("Packet with Expression", (function () {
                         var expr_tests = withBigIntResult({
                               hd: [
                                 "C200B40A82",
@@ -1335,19 +1335,19 @@ Jest.describe("2021 Day16", (function (param) {
                               }));
                       }));
               }));
-        Jest.test("Part 1 - Sample Data", (function (param) {
+        Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2021_Day16$AdventOfCode.solvePart1(AOC2021_Day16_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 31);
               }));
-        Jest.test("Part 1 - Solve", (function (param) {
+        Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2021_Day16$AdventOfCode.solvePart1(AOC2021_Day16_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 1012);
               }));
-        Jest.test("Part 2 - Sample Data", (function (param) {
+        Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2021_Day16$AdventOfCode.solvePart2(AOC2021_Day16_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), "54");
               }));
-        Jest.test("Part 2 - Solve", (function (param) {
+        Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day16$AdventOfCode.solvePart2(AOC2021_Day16_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), "2223947372407");
               }));

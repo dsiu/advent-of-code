@@ -10,7 +10,7 @@ function log(prim) {
 
 console.time("Part 1");
 
-var part1 = AOC2020_Day17$AdventOfCode.solvePart1(AOC2020_Day17_Data$AdventOfCode.data);
+var part1 = AOC2020_Day17$AdventOfCode.solvePart1(AOC2020_Day17_Data_Sample$AdventOfCode.data);
 
 console.log("Part 1 Result");
 
@@ -19,16 +19,6 @@ console.log(part1);
 console.timeEnd("Part 1");
 
 console.log("----------");
-
-console.time("Part 2");
-
-var part2 = AOC2020_Day17$AdventOfCode.solvePart2(AOC2020_Day17_Data$AdventOfCode.data);
-
-console.log("Part 2 Result");
-
-console.log(part2);
-
-console.timeEnd("Part 2");
 
 var data = AOC2020_Day17_Data$AdventOfCode.data;
 
@@ -45,6 +35,5 @@ export {
   solvePart1 ,
   solvePart2 ,
   part1 ,
-  part2 ,
 }
 /*  Not a pure module */

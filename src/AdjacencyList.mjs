@@ -60,7 +60,9 @@ function Make(BASE) {
       contents: ""
     };
     Belt_MutableMapString.forEachU(t, (function (k, v) {
-            str.contents = str.contents + k + ": [ " + Curry._1(containerToArray, v).join(",") + " ]\n";
+            str.contents = str.contents + k + ": [ " + (function (__x) {
+                  return __x.join(",");
+                })(Curry._1(containerToArray, v)) + " ]\n";
           }));
     return str.contents;
   };
@@ -129,7 +131,9 @@ function toString(t) {
     contents: ""
   };
   Belt_MutableMapString.forEachU(t, (function (k, v) {
-          str.contents = str.contents + k + ": [ " + Belt_MutableSetString.toArray(v).join(",") + " ]\n";
+          str.contents = str.contents + k + ": [ " + (function (__x) {
+                return __x.join(",");
+              })(Belt_MutableSetString.toArray(v)) + " ]\n";
         }));
   return str.contents;
 }
@@ -225,7 +229,9 @@ function toString$1(t) {
     contents: ""
   };
   Belt_MutableMapString.forEachU(t, (function (k, v) {
-          str.contents = str.contents + k + ": [ " + Belt_MutableSet.toArray(v).join(",") + " ]\n";
+          str.contents = str.contents + k + ": [ " + (function (__x) {
+                return __x.join(",");
+              })(Belt_MutableSet.toArray(v)) + " ]\n";
         }));
   return str.contents;
 }

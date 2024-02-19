@@ -84,7 +84,7 @@ function isElemDigit(engine, p) {
 }
 
 function makeEngine(__x) {
-  return Array2D$AdventOfCode.mapU(__x, makeElem);
+  return Array2D$AdventOfCode.map(__x, makeElem);
 }
 
 function engineFilter(engine, fn) {
@@ -207,7 +207,8 @@ function part1(engine) {
   var symbols = engineFilter(engine, isSymbol);
   var numbers = findNumbers(engine);
   var symTouched = touchedDigit(engine, symbols);
-  return Utils$AdventOfCode.sumIntArray(findNumbersTouched(engine, numbers, symTouched));
+  var nums = findNumbersTouched(engine, numbers, symTouched);
+  return Utils$AdventOfCode.sumIntArray(nums);
 }
 
 function part2(engine) {
@@ -220,29 +221,30 @@ function part2(engine) {
           }
           
         }));
-  return Utils$AdventOfCode.sumIntArray(Stdlib__Array.filterMap(starTouched, (function (x) {
-                    var touchedNums = findNumbersTouched(engine, numbers, x);
-                    if (touchedNums.length === 2) {
-                      return Utils$AdventOfCode.mulIntArray(touchedNums);
-                    }
-                    
-                  })));
+  var gearParts = Stdlib__Array.filterMap(starTouched, (function (x) {
+          var touchedNums = findNumbersTouched(engine, numbers, x);
+          if (touchedNums.length === 2) {
+            return Utils$AdventOfCode.mulIntArray(touchedNums);
+          }
+          
+        }));
+  return Utils$AdventOfCode.sumIntArray(gearParts);
 }
 
 function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(function (param) {
-              return Utils$AdventOfCode.compose((function (prim) {
-                            return prim.trim();
-                          }), Utils$AdventOfCode.splitChars, param);
-            });
+  return Utils$AdventOfCode.splitNewline(data).map(Utils$AdventOfCode.compose((function (prim) {
+                    return prim.trim();
+                  }), Utils$AdventOfCode.splitChars));
 }
 
 function solvePart1(data) {
-  return part1(Array2D$AdventOfCode.mapU(parse(data), makeElem));
+  var __x = parse(data);
+  return part1(Array2D$AdventOfCode.map(__x, makeElem));
 }
 
 function solvePart2(data) {
-  return part2(Array2D$AdventOfCode.mapU(parse(data), makeElem));
+  var __x = parse(data);
+  return part2(Array2D$AdventOfCode.map(__x, makeElem));
 }
 
 export {

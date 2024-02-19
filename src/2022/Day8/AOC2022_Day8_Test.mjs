@@ -5,20 +5,20 @@ import * as AOC2022_Day8$AdventOfCode from "./AOC2022_Day8.mjs";
 import * as AOC2022_Day8_Data$AdventOfCode from "./AOC2022_Day8_Data.mjs";
 import * as AOC2022_Day8_Data_Sample$AdventOfCode from "./AOC2022_Day8_Data_Sample.mjs";
 
-Jest.describe("2022 Day8", (function (param) {
-        Jest.test("Part 1 - Sample Data", (function (param) {
+Jest.describe("2022 Day8", (function () {
+        Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2022_Day8$AdventOfCode.solvePart1(AOC2022_Day8_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 21);
               }));
-        Jest.test("Part 1 - Solve", (function (param) {
+        Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2022_Day8$AdventOfCode.solvePart1(AOC2022_Day8_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 1779);
               }));
-        Jest.test("Part 2 - Sample Data", (function (param) {
+        Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2022_Day8$AdventOfCode.solvePart2(AOC2022_Day8_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 8);
               }));
-        Jest.test("Part 2 - Solve", (function (param) {
+        Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2022_Day8$AdventOfCode.solvePart2(AOC2022_Day8_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 172224);
               }));

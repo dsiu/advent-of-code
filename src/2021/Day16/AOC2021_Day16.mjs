@@ -342,9 +342,7 @@ var packet = Res_parser.makeRecursive(function (p) {
                     }
                     var match = result._0;
                     var p1Result = match[0];
-                    var reminderPackets = Res_parser.sequence(Belt_List.makeBy(p1Result[1], (function (param) {
-                                return p;
-                              })));
+                    var reminderPackets = sequenceN(p, p1Result[1]);
                     var reminderPacketsResult = Res_parser.runOnInput(reminderPackets, match[1]);
                     if (reminderPacketsResult.TAG !== "Ok") {
                       return {

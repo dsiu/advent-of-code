@@ -36,19 +36,16 @@ function makeDraw(str, n) {
 function parse(data) {
   return Utils$AdventOfCode.splitNewline(data).map(function (l) {
               var ll = l.trim().split(": ");
-              var id = Stdlib__Option.flatMap(ll.at(0), (function (param) {
-                      return Utils$AdventOfCode.compose((function (__x) {
-                                    return __x.replace("Game ", "");
-                                  }), (function (__x) {
-                                    return Stdlib__Int.fromString(10, __x);
-                                  }), param);
-                    }));
+              var id = Stdlib__Option.flatMap(ll.at(0), Utils$AdventOfCode.compose((function (__x) {
+                          return __x.replace("Game ", "");
+                        }), (function (__x) {
+                          return Stdlib__Int.fromString(10, __x);
+                        })));
               var draws = ll.at(1).split("; ").map(function (eachDraw) {
                       return eachDraw.split(", ").map(function (singleDraw) {
                                   var d = singleDraw.split(" ");
-                                  var partial_arg = 10;
-                                  var nColor = Stdlib__Option.flatMap(d.at(0), (function (param) {
-                                          return Stdlib__Int.fromString(partial_arg, param);
+                                  var nColor = Stdlib__Option.flatMap(d.at(0), (function (extra) {
+                                          return Stdlib__Int.fromString(10, extra);
                                         }));
                                   var color = d.at(1);
                                   return makeDraw(color, nColor);
@@ -157,7 +154,7 @@ function maxNumColorsEachGame(draws) {
                       RE_EXN_ID: "Match_failure",
                       _1: [
                         "AOC2023_Day2.res",
-                        74,
+                        75,
                         8
                       ],
                       Error: new Error()
@@ -223,7 +220,7 @@ function maxColorWithLimits(games, colorLimits) {
                                           RE_EXN_ID: "Match_failure",
                                           _1: [
                                             "AOC2023_Day2.res",
-                                            106,
+                                            107,
                                             8
                                           ],
                                           Error: new Error()
@@ -248,7 +245,7 @@ function maxColorWithLimits(games, colorLimits) {
                       RE_EXN_ID: "Match_failure",
                       _1: [
                         "AOC2023_Day2.res",
-                        105,
+                        106,
                         8
                       ],
                       Error: new Error()
@@ -327,7 +324,7 @@ function part2(games) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2023_Day2.res",
-                          122,
+                          123,
                           15
                         ],
                         Error: new Error()

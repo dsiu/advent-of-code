@@ -67,7 +67,7 @@ function split(num) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day18.res",
-          53,
+          56,
           12
         ],
         Error: new Error()
@@ -141,7 +141,7 @@ function leftmostOnRight(_loc) {
 }
 
 function explode(num) {
-  var mp0 = pairAtDepthC(4, Tree$AdventOfCode.top(num));
+  var mp0 = pairAtDepth(4, num);
   if (mp0 === undefined) {
     return ;
   }
@@ -165,8 +165,8 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          140,
-                          45
+                          143,
+                          46
                         ],
                         Error: new Error()
                       };
@@ -183,8 +183,8 @@ function explode(num) {
                         RE_EXN_ID: "Match_failure",
                         _1: [
                           "AOC2021_Day18.res",
-                          145,
-                          47
+                          148,
+                          48
                         ],
                         Error: new Error()
                       };
@@ -207,7 +207,7 @@ function explode(num) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2021_Day18.res",
-          136,
+          139,
           12
         ],
         Error: new Error()
@@ -247,16 +247,13 @@ function magnitude(t) {
 }
 
 function part1(numbers) {
-  return magnitude(Stdlib__Array.foldl1(numbers, snailAdd));
+  var total = Stdlib__Array.foldl1(numbers, snailAdd);
+  return magnitude(total);
 }
 
 function part2(numbers) {
   return Utils$AdventOfCode.maxIntInArray(Stdlib__Array.combination2(numbers, numbers, (function (a, b) {
-                    return magnitude(reduce({
-                                    TAG: "Pair",
-                                    _0: a,
-                                    _1: b
-                                  }));
+                    return magnitude(snailAdd(a, b));
                   })));
 }
 
@@ -332,7 +329,9 @@ var Parser = {
   parseAndGetResult: parseAndGetResult
 };
 
-var makeParseTree = parseAndGetResult;
+function makeParseTree(x) {
+  return parseAndGetResult(x);
+}
 
 var SnailFish = {
   splittable: splittable,
@@ -361,12 +360,13 @@ function parse$1(data) {
 }
 
 function solvePart1(data) {
-  var numbers = parse$1(data);
-  return magnitude(Stdlib__Array.foldl1(numbers, snailAdd));
+  var lines = parse$1(data);
+  return part1(lines);
 }
 
 function solvePart2(data) {
-  return part2(parse$1(data));
+  var lines = parse$1(data);
+  return part2(lines);
 }
 
 var P;

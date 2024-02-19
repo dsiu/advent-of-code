@@ -7,11 +7,9 @@ import * as Belt_SetInt from "rescript/lib/es6/belt_SetInt.js";
 import * as Belt_SetString from "rescript/lib/es6/belt_SetString.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
-function log(prim) {
-  console.log(prim);
+function make(x) {
+  return Utils$AdventOfCode.splitChars(x);
 }
-
-var make = Utils$AdventOfCode.splitChars;
 
 function size(prim) {
   return prim.length;
@@ -120,7 +118,7 @@ function getSegmentSize(t, n) {
 }
 
 function getDefaultSegmentSize(__x) {
-  return Belt_Option.getExn(Belt_MapInt.get(default_0to9, __x)).length;
+  return getSegmentSize(default_0to9, __x);
 }
 
 function translate(t, d) {
@@ -269,7 +267,7 @@ function translate$1(t, d) {
 
 function translateOutputs(t) {
   return Belt_Array.map(t.outputs, (function (__x) {
-                return translate(t.segment_map, __x);
+                return translate$1(t, __x);
               }));
 }
 
@@ -284,7 +282,9 @@ function make$1(inputStr, outputStr) {
 }
 
 function countMatchLen(digits, matches) {
-  var match_len_set = Belt_SetInt.fromArray(Belt_Array.map(matches, getDefaultSegmentSize));
+  var match_len_set = Belt_SetInt.fromArray(Belt_Array.map(matches, (function (x) {
+              return getSegmentSize(default_0to9, x);
+            })));
   return Belt_Array.reduce(digits, 0, (function (a, x) {
                 if (Belt_SetInt.has(match_len_set, x.length)) {
                   return a + 1 | 0;
@@ -323,7 +323,7 @@ function parse(data) {
 function solvePart1(data) {
   var parsed = parse(data);
   return Belt_Array.reduce(parsed, 0, (function (a, x) {
-                return a + countMatchLen(x.outputs, [
+                return a + countOutputMatchLen(x, [
                             1,
                             4,
                             7,
@@ -341,7 +341,6 @@ function solvePart2(data) {
 }
 
 export {
-  log ,
   Digit ,
   Segments ,
   Entry ,

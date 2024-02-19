@@ -5,9 +5,9 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as AOC2018_Day3$AdventOfCode from "./AOC2018_Day3.mjs";
 
-Jest.describe("2018 Day3", (function (param) {
-        Jest.describe("Part1", (function (param) {
-                Jest.test("parse line", (function (param) {
+Jest.describe("2018 Day3", (function () {
+        Jest.describe("Part1", (function () {
+                Jest.test("parse line", (function () {
                         var test_line = "#1 @ 669,271: 17x11";
                         var result = AOC2018_Day3$AdventOfCode.Claim.parseLine(test_line);
                         var expected = [
@@ -20,26 +20,26 @@ Jest.describe("2018 Day3", (function (param) {
                         ];
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
                       }));
-                Jest.test("make claim", (function (param) {
+                Jest.test("make claim", (function () {
                         var result = AOC2018_Day3$AdventOfCode.Claim.makeClaim("#1 @ 669,271: 17x11");
                         var expected = AOC2018_Day3$AdventOfCode.Claim.make(1, 669, 271, 17, 11);
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
                       }));
-                Jest.test("find max x", (function (param) {
+                Jest.test("find max x", (function () {
                         var result = AOC2018_Day3$AdventOfCode.Claims.findMaxX(AOC2018_Day3$AdventOfCode.Claims.make([
                                   "#1 @ 100,200: 34x56",
                                   "#2 @ 200,300: 78x90"
                                 ]));
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), 278);
                       }));
-                Jest.test("find max y", (function (param) {
+                Jest.test("find max y", (function () {
                         var result = AOC2018_Day3$AdventOfCode.Claims.findMaxY(AOC2018_Day3$AdventOfCode.Claims.make([
                                   "#1 @ 100,200: 34x56",
                                   "#2 @ 200,300: 78x90"
                                 ]));
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), 390);
                       }));
-                Jest.test("fabric matrix - single value per point +", (function (param) {
+                Jest.test("fabric matrix - single value per point +", (function () {
                         var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(10, 10), Utils$AdventOfCode.add);
                         var result1 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 1, 1);
                         var result2 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 3, 5);
@@ -51,7 +51,7 @@ Jest.describe("2018 Day3", (function (param) {
                                     [8]
                                   ]);
                       }));
-                Jest.test("fabric matrix - single value per point *", (function (param) {
+                Jest.test("fabric matrix - single value per point *", (function () {
                         var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(10, 10), Utils$AdventOfCode.mul);
                         var result1 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 2, 2);
                         var result2 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 4, 6);
@@ -63,7 +63,7 @@ Jest.describe("2018 Day3", (function (param) {
                                     [24]
                                   ]);
                       }));
-                Jest.test("fabric matrix - multiple value per point +/*", (function (param) {
+                Jest.test("fabric matrix - multiple value per point +/*", (function () {
                         var test_fab = AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.fill(AOC2018_Day3$AdventOfCode.Fabric.make(15, 15), Utils$AdventOfCode.add), Utils$AdventOfCode.mul);
                         var result1 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 9, 8);
                         var result2 = AOC2018_Day3$AdventOfCode.Fabric.getPoint(test_fab, 2, 5);
@@ -81,7 +81,7 @@ Jest.describe("2018 Day3", (function (param) {
                                     ]
                                   ]);
                       }));
-                Jest.test("fabric add claim (demo case)", (function (param) {
+                Jest.test("fabric add claim (demo case)", (function () {
                         var allClaims = AOC2018_Day3$AdventOfCode.Claims.make([
                               "#1 @ 1,3: 4x4",
                               "#2 @ 3,1: 4x4",
@@ -93,14 +93,16 @@ Jest.describe("2018 Day3", (function (param) {
                         var test_fab$1 = Belt_Array.reduce(allClaims, test_fab, (function (acc, i) {
                                 return AOC2018_Day3$AdventOfCode.Fabric.addClaim(acc, i);
                               }));
-                        var countOverlapTwoMore = AOC2018_Day3$AdventOfCode.Fabric.countOverlap(test_fab$1, AOC2018_Day3$AdventOfCode.Fabric.twoOrMore);
+                        var countOverlapTwoMore = (function (__x) {
+                              return AOC2018_Day3$AdventOfCode.Fabric.countOverlap(__x, AOC2018_Day3$AdventOfCode.Fabric.twoOrMore);
+                            })(test_fab$1);
                         return Jest.Expect.toEqual(Jest.Expect.expect(countOverlapTwoMore), 4);
                       }));
-                Jest.test("solve Part1", (function (param) {
+                Jest.test("solve Part1", (function () {
                         var result = AOC2018_Day3$AdventOfCode.solvePart1();
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), 118223);
                       }));
-                Jest.test("part 2 (demo case)", (function (param) {
+                Jest.test("part 2 (demo case)", (function () {
                         var allClaims = AOC2018_Day3$AdventOfCode.Claims.make([
                               "#3 @ 1,3: 4x4",
                               "#7 @ 3,1: 4x4",
@@ -115,7 +117,7 @@ Jest.describe("2018 Day3", (function (param) {
                         var result = AOC2018_Day3$AdventOfCode.Fabric.countNonOverlapClaim(test_fab$1, allClaims);
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), [11]);
                       }));
-                Jest.test("solve part2", (function (param) {
+                Jest.test("solve part2", (function () {
                         var result = AOC2018_Day3$AdventOfCode.solvePart2();
                         return Jest.Expect.toEqual(Jest.Expect.expect(result), [412]);
                       }));

@@ -45,7 +45,9 @@ function parse(data) {
   var isNotX = function (c) {
     return c !== "x";
   };
-  var bus_numbers = Belt_Array.map(Belt_Array.keep(Belt_Option.getExn(Belt_Array.get(lines, 1)).split(","), isNotX), Utils$AdventOfCode.intFromStringExn);
+  var bus_numbers = Belt_Array.map(Belt_Array.keep(Belt_Option.getExn(Belt_Array.get(lines, 1)).split(","), isNotX), (function (x) {
+          return Utils$AdventOfCode.intFromStringExn(x);
+        }));
   return [
           timeStamp,
           bus_numbers

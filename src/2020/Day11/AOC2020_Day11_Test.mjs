@@ -6,9 +6,9 @@ import * as AOC2020_Day11$AdventOfCode from "./AOC2020_Day11.mjs";
 import * as AOC2020_Day11_Data$AdventOfCode from "./AOC2020_Day11_Data.mjs";
 import * as AOC2020_Day11_Data_Sample$AdventOfCode from "./AOC2020_Day11_Data_Sample.mjs";
 
-Jest.describe("2020 Day11", (function (param) {
+Jest.describe("2020 Day11", (function () {
         var seats = AOC2020_Day11$AdventOfCode.parse(AOC2020_Day11_Data_Sample$AdventOfCode.data);
-        Jest.describe("SeatMap", (function (param) {
+        Jest.describe("SeatMap", (function () {
                 var getAdj_tests_0 = [
                   AOC2020_Day11$AdventOfCode.SeatMap.getAdjacents(seats, [
                         0,
@@ -131,7 +131,7 @@ Jest.describe("2020 Day11", (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
                       }));
               }));
-        Jest.describe("next seat given a direction", (function (param) {
+        Jest.describe("next seat given a direction", (function () {
                 var map = AOC2020_Day11$AdventOfCode.parse(".......#.\n                 ...#.....\n                 .#.......\n                 .........\n                 ..#L....#\n                 ....#....\n                 .........\n                 #........\n                 ...#.....");
                 var init_1 = [
                   3,
@@ -400,15 +400,15 @@ Jest.describe("2020 Day11", (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
                       }));
               }));
-        Jest.test("Part 1 - Sample Data", (function (param) {
+        Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart1(AOC2020_Day11_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 37);
               }));
-        Jest.test("Part 1 - Solve", (function (param) {
+        Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart1(AOC2020_Day11_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 2270);
               }));
-        Jest.test("Part 2 - Solve", (function (param) {
+        Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2020_Day11$AdventOfCode.solvePart2(AOC2020_Day11_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 2042);
               }));

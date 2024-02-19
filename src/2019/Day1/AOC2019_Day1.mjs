@@ -48,11 +48,11 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  return part1(Belt_Array.map(Utils$AdventOfCode.splitNewline(data), Utils$AdventOfCode.intFromStringExn));
+  return part1(parse(data));
 }
 
 function solvePart2(data) {
-  return part2(Belt_Array.map(Utils$AdventOfCode.splitNewline(data), Utils$AdventOfCode.intFromStringExn));
+  return part2(parse(data));
 }
 
 var TC;

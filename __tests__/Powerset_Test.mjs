@@ -27,7 +27,7 @@ function sortResultString(xs) {
               }));
 }
 
-Jest.describe("Powerset", (function (param) {
+Jest.describe("Powerset", (function () {
         var int_array_1 = [
           1,
           2,
@@ -84,7 +84,7 @@ Jest.describe("Powerset", (function (param) {
                 "c"
               ]
             ]);
-        Jest.describe("powerset_array_with_list()", (function (param) {
+        Jest.describe("powerset_array_with_list()", (function () {
                 var int_tests_0 = [
                   Powerset$AdventOfCode.powersetArrayWithList_(int_array_1),
                   int_array_1_result
@@ -108,7 +108,7 @@ Jest.describe("Powerset", (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(sortResultString(param[0])), param[1]);
                       }));
               }));
-        Jest.describe("powerset_array()", (function (param) {
+        Jest.describe("powerset_array()", (function () {
                 var int_tests_0 = [
                   Powerset$AdventOfCode.powersetArray(int_array_1),
                   int_array_1_result

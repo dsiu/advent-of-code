@@ -15,7 +15,9 @@ function log2(prim0, prim1) {
 }
 
 function parse(data) {
-  return Belt_Array.map(data.split(","), Utils$AdventOfCode.intFromStringExn);
+  return Belt_Array.map((function (__x) {
+                  return __x.split(",");
+                })(data), Utils$AdventOfCode.intFromStringExn);
 }
 
 function getVal(t, pos) {
@@ -138,11 +140,13 @@ function part2(xs) {
 }
 
 function solvePart1(data) {
-  return part1(parse(data));
+  var prog = parse(data);
+  return part1(prog);
 }
 
 function solvePart2(data) {
-  return part2(parse(data));
+  var prog = parse(data);
+  return part2(prog);
 }
 
 export {

@@ -80,7 +80,9 @@ function convertToMultiplier(xs) {
 }
 
 function parse(data) {
-  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), Utils$AdventOfCode.intFromStringExn);
+  return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (x) {
+                return Utils$AdventOfCode.intFromStringExn(x);
+              }));
 }
 
 function solvePart1(data) {

@@ -49,7 +49,7 @@ function runDay1Part2(__x) {
   return solve_part2(__x, init, reducer);
 }
 
-var part2_result = solve_part2(AOC2018_Day1_Data$AdventOfCode.data, init, reducer);
+var part2_result = runDay1Part2(AOC2018_Day1_Data$AdventOfCode.data);
 
 var $$Map;
 

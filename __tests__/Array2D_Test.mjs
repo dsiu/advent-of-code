@@ -4,8 +4,8 @@ import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Array2D$AdventOfCode from "../src/Array2D.mjs";
 
-Jest.describe("make", (function (param) {
-        Jest.test("make - int", (function (param) {
+Jest.describe("make", (function () {
+        Jest.test("make - int", (function () {
                 var a = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -50,7 +50,7 @@ Jest.describe("make", (function (param) {
                 ];
                 return Jest.Expect.toEqual(Jest.Expect.expect(a), expected);
               }));
-        Jest.test("make - string", (function (param) {
+        Jest.test("make - string", (function () {
                 var a = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -97,8 +97,8 @@ Jest.describe("make", (function (param) {
               }));
       }));
 
-Jest.describe("Array2D.make", (function (param) {
-        Jest.test("should create a 2D array with given dimensions and initial value", (function (param) {
+Jest.describe("Array2D.make", (function () {
+        Jest.test("should create a 2D array with given dimensions and initial value", (function () {
                 var result = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -116,14 +116,14 @@ Jest.describe("Array2D.make", (function (param) {
                             ]
                           ]);
               }));
-        Jest.test("should create an empty 2D array when dimensions are zero", (function (param) {
+        Jest.test("should create an empty 2D array when dimensions are zero", (function () {
                 var result = Array2D$AdventOfCode.make([
                       0,
                       0
                     ], 0);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), []);
               }));
-        Jest.test("should create a 2D array with single row when y dimension is 1", (function (param) {
+        Jest.test("should create a 2D array with single row when y dimension is 1", (function () {
                 var result = Array2D$AdventOfCode.make([
                       3,
                       1
@@ -134,7 +134,7 @@ Jest.describe("Array2D.make", (function (param) {
                               "test"
                             ]]);
               }));
-        Jest.test("should create a 2D array with single column when x dimension is 1", (function (param) {
+        Jest.test("should create a 2D array with single column when x dimension is 1", (function () {
                 var result = Array2D$AdventOfCode.make([
                       1,
                       3
@@ -147,8 +147,8 @@ Jest.describe("Array2D.make", (function (param) {
               }));
       }));
 
-Jest.describe("copy", (function (param) {
-        Jest.test("should create a copy of a 2D array", (function (param) {
+Jest.describe("copy", (function () {
+        Jest.test("should create a copy of a 2D array", (function () {
                 var original = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -156,7 +156,7 @@ Jest.describe("copy", (function (param) {
                 var copy = Array2D$AdventOfCode.copy(original);
                 return Jest.Expect.toEqual(Jest.Expect.expect(copy), original);
               }));
-        Jest.test("should not affect the original array when modifying the copy", (function (param) {
+        Jest.test("should not affect the original array when modifying the copy", (function () {
                 var original = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -171,7 +171,7 @@ Jest.describe("copy", (function (param) {
                                 2
                               ], 0));
               }));
-        Jest.test("should create a copy of an empty 2D array", (function (param) {
+        Jest.test("should create a copy of an empty 2D array", (function () {
                 var original = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -181,15 +181,15 @@ Jest.describe("copy", (function (param) {
               }));
       }));
 
-Jest.describe("lengthY", (function (param) {
-        Jest.test("should return the number of rows in the 2D array", (function (param) {
+Jest.describe("lengthY", (function () {
+        Jest.test("should return the number of rows in the 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 0);
                 return Jest.Expect.toEqual(Jest.Expect.expect(Array2D$AdventOfCode.lengthY(array2D)), 2);
               }));
-        Jest.test("should return 0 for an empty 2D array", (function (param) {
+        Jest.test("should return 0 for an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -198,15 +198,15 @@ Jest.describe("lengthY", (function (param) {
               }));
       }));
 
-Jest.describe("lengthX", (function (param) {
-        Jest.test("should return the number of columns in the 2D array", (function (param) {
+Jest.describe("lengthX", (function () {
+        Jest.test("should return the number of columns in the 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 0);
                 return Jest.Expect.toEqual(Jest.Expect.expect(Array2D$AdventOfCode.lengthX(array2D)), 3);
               }));
-        Jest.test("should return 0 for an empty 2D array", (function (param) {
+        Jest.test("should return 0 for an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -215,8 +215,8 @@ Jest.describe("lengthX", (function (param) {
               }));
       }));
 
-Jest.describe("isValidXY", (function (param) {
-        Jest.test("should return true for valid coordinates", (function (param) {
+Jest.describe("isValidXY", (function () {
+        Jest.test("should return true for valid coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -226,7 +226,7 @@ Jest.describe("isValidXY", (function (param) {
                                     1
                                   ])), true);
               }));
-        Jest.test("should return false for coordinates outside the array", (function (param) {
+        Jest.test("should return false for coordinates outside the array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -236,7 +236,7 @@ Jest.describe("isValidXY", (function (param) {
                                     2
                                   ])), false);
               }));
-        Jest.test("should return false for negative coordinates", (function (param) {
+        Jest.test("should return false for negative coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -246,7 +246,7 @@ Jest.describe("isValidXY", (function (param) {
                                     -1
                                   ])), false);
               }));
-        Jest.test("should return true for edge coordinates", (function (param) {
+        Jest.test("should return true for edge coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -258,8 +258,8 @@ Jest.describe("isValidXY", (function (param) {
               }));
       }));
 
-Jest.describe("set", (function (param) {
-        Jest.test("should set the value at the given coordinates", (function (param) {
+Jest.describe("set", (function () {
+        Jest.test("should set the value at the given coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -273,7 +273,7 @@ Jest.describe("set", (function (param) {
                                     1
                                   ])), 1);
               }));
-        Jest.test("should not change other values", (function (param) {
+        Jest.test("should not change other values", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -287,20 +287,10 @@ Jest.describe("set", (function (param) {
                                     0
                                   ])), 0);
               }));
-        Jest.test("should return false for invalid coordinates", (function (param) {
-                var array2D = Array2D$AdventOfCode.make([
-                      3,
-                      2
-                    ], 0);
-                return Jest.Expect.toBe(Jest.Expect.expect(Array2D$AdventOfCode.set(array2D, [
-                                    3,
-                                    2
-                                  ], 1)), false);
-              }));
       }));
 
-Jest.describe("setYEquals", (function (param) {
-        Jest.test("should set the entire row to the given array", (function (param) {
+Jest.describe("setYEquals", (function () {
+        Jest.test("should set the entire row to the given array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -316,7 +306,7 @@ Jest.describe("setYEquals", (function (param) {
                             1
                           ]);
               }));
-        Jest.test("should not change other rows", (function (param) {
+        Jest.test("should not change other rows", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -334,8 +324,8 @@ Jest.describe("setYEquals", (function (param) {
               }));
       }));
 
-Jest.describe("get", (function (param) {
-        Jest.test("should return the value at the given coordinates", (function (param) {
+Jest.describe("get", (function () {
+        Jest.test("should return the value at the given coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -345,7 +335,7 @@ Jest.describe("get", (function (param) {
                                     1
                                   ])), 0);
               }));
-        Jest.test("should return None for invalid coordinates", (function (param) {
+        Jest.test("should return None for invalid coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -357,8 +347,8 @@ Jest.describe("get", (function (param) {
               }));
       }));
 
-Jest.describe("getExn", (function (param) {
-        Jest.test("should return the value at the given coordinates", (function (param) {
+Jest.describe("getExn", (function () {
+        Jest.test("should return the value at the given coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -368,12 +358,12 @@ Jest.describe("getExn", (function (param) {
                                     1
                                   ])), 0);
               }));
-        Jest.test("should throw an exception for invalid coordinates", (function (param) {
+        Jest.test("should throw an exception for invalid coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 0);
-                var fn = function (param) {
+                var fn = function () {
                   return Array2D$AdventOfCode.getExn(array2D, [
                               3,
                               2
@@ -383,8 +373,8 @@ Jest.describe("getExn", (function (param) {
               }));
       }));
 
-Jest.describe("getYEquals", (function (param) {
-        Jest.test("should return the row at the given index", (function (param) {
+Jest.describe("getYEquals", (function () {
+        Jest.test("should return the row at the given index", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -395,7 +385,7 @@ Jest.describe("getYEquals", (function (param) {
                             0
                           ]);
               }));
-        Jest.test("should return None for invalid index", (function (param) {
+        Jest.test("should return None for invalid index", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -404,8 +394,8 @@ Jest.describe("getYEquals", (function (param) {
               }));
       }));
 
-Jest.describe("getXEquals", (function (param) {
-        Jest.test("should return the column at the given index", (function (param) {
+Jest.describe("getXEquals", (function () {
+        Jest.test("should return the column at the given index", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -415,7 +405,7 @@ Jest.describe("getXEquals", (function (param) {
                             0
                           ]);
               }));
-        Jest.test("should return None for invalid index", (function (param) {
+        Jest.test("should return None for invalid index", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -424,8 +414,8 @@ Jest.describe("getXEquals", (function (param) {
               }));
       }));
 
-Jest.describe("map", (function (param) {
-        Jest.test("should apply the function to each element in the 2D array", (function (param) {
+Jest.describe("map", (function () {
+        Jest.test("should apply the function to each element in the 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -446,7 +436,7 @@ Jest.describe("map", (function (param) {
                             ]
                           ]);
               }));
-        Jest.test("should return an empty 2D array when given an empty 2D array", (function (param) {
+        Jest.test("should return an empty 2D array when given an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -456,7 +446,7 @@ Jest.describe("map", (function (param) {
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), []);
               }));
-        Jest.test("should not modify the original 2D array", (function (param) {
+        Jest.test("should not modify the original 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -479,13 +469,13 @@ Jest.describe("map", (function (param) {
               }));
       }));
 
-Jest.describe("mapU", (function (param) {
-        Jest.test("should apply the function to each element in the 2D array", (function (param) {
+Jest.describe("mapU", (function () {
+        Jest.test("should apply the function to each element in the 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 1);
-                var result = Array2D$AdventOfCode.mapU(array2D, (function (x) {
+                var result = Array2D$AdventOfCode.map(array2D, (function (x) {
                         return (x << 1);
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), [
@@ -501,22 +491,22 @@ Jest.describe("mapU", (function (param) {
                             ]
                           ]);
               }));
-        Jest.test("should return an empty 2D array when given an empty 2D array", (function (param) {
+        Jest.test("should return an empty 2D array when given an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
                     ], 1);
-                var result = Array2D$AdventOfCode.mapU(array2D, (function (x) {
+                var result = Array2D$AdventOfCode.map(array2D, (function (x) {
                         return (x << 1);
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), []);
               }));
-        Jest.test("should not modify the original 2D array", (function (param) {
+        Jest.test("should not modify the original 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 1);
-                Array2D$AdventOfCode.mapU(array2D, (function (x) {
+                Array2D$AdventOfCode.map(array2D, (function (x) {
                         return (x << 1);
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(array2D), [
@@ -534,8 +524,8 @@ Jest.describe("mapU", (function (param) {
               }));
       }));
 
-Jest.describe("mapWithIndex", (function (param) {
-        Jest.test("should apply the function to each element with its coordinates", (function (param) {
+Jest.describe("mapWithIndex", (function () {
+        Jest.test("should apply the function to each element with its coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -574,7 +564,7 @@ Jest.describe("mapWithIndex", (function (param) {
                             ]
                           ]);
               }));
-        Jest.test("should return an empty 2D array when given an empty 2D array", (function (param) {
+        Jest.test("should return an empty 2D array when given an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -584,7 +574,7 @@ Jest.describe("mapWithIndex", (function (param) {
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), []);
               }));
-        Jest.test("should not modify the original 2D array", (function (param) {
+        Jest.test("should not modify the original 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -607,13 +597,13 @@ Jest.describe("mapWithIndex", (function (param) {
               }));
       }));
 
-Jest.describe("mapWithIndexU", (function (param) {
-        Jest.test("should apply the function to each element with its coordinates", (function (param) {
+Jest.describe("mapWithIndexU", (function () {
+        Jest.test("should apply the function to each element with its coordinates", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 0);
-                var result = Array2D$AdventOfCode.mapWithIndexU(array2D, (function (coords, param) {
+                var result = Array2D$AdventOfCode.mapWithIndex(array2D, (function (coords, param) {
                         return coords;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), [
@@ -647,22 +637,22 @@ Jest.describe("mapWithIndexU", (function (param) {
                             ]
                           ]);
               }));
-        Jest.test("should return an empty 2D array when given an empty 2D array", (function (param) {
+        Jest.test("should return an empty 2D array when given an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
                     ], 0);
-                var result = Array2D$AdventOfCode.mapWithIndexU(array2D, (function (coords, param) {
+                var result = Array2D$AdventOfCode.mapWithIndex(array2D, (function (coords, param) {
                         return coords;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), []);
               }));
-        Jest.test("should not modify the original 2D array", (function (param) {
+        Jest.test("should not modify the original 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 0);
-                Array2D$AdventOfCode.mapWithIndexU(array2D, (function (coords, param) {
+                Array2D$AdventOfCode.mapWithIndex(array2D, (function (coords, param) {
                         return coords;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(array2D), [
@@ -680,8 +670,8 @@ Jest.describe("mapWithIndexU", (function (param) {
               }));
       }));
 
-Jest.describe("reduce", (function (param) {
-        Jest.test("should correctly reduce a 2D array to a single value", (function (param) {
+Jest.describe("reduce", (function () {
+        Jest.test("should correctly reduce a 2D array to a single value", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -691,7 +681,7 @@ Jest.describe("reduce", (function (param) {
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 6);
               }));
-        Jest.test("should return the initial value for an empty 2D array", (function (param) {
+        Jest.test("should return the initial value for an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -703,31 +693,31 @@ Jest.describe("reduce", (function (param) {
               }));
       }));
 
-Jest.describe("reduceU", (function (param) {
-        Jest.test("should correctly reduce a 2D array to a single value", (function (param) {
+Jest.describe("reduceU", (function () {
+        Jest.test("should correctly reduce a 2D array to a single value", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 1);
-                var result = Array2D$AdventOfCode.reduceU(array2D, 0, (function (acc, x) {
+                var result = Array2D$AdventOfCode.reduce(array2D, 0, (function (acc, x) {
                         return acc + x | 0;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 6);
               }));
-        Jest.test("should return the initial value for an empty 2D array", (function (param) {
+        Jest.test("should return the initial value for an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
                     ], 0);
-                var result = Array2D$AdventOfCode.reduceU(array2D, 10, (function (acc, x) {
+                var result = Array2D$AdventOfCode.reduce(array2D, 10, (function (acc, x) {
                         return acc + x | 0;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 10);
               }));
       }));
 
-Jest.describe("reduceWithIndex", (function (param) {
-        Jest.test("should correctly reduce a 2D array to a single value with index", (function (param) {
+Jest.describe("reduceWithIndex", (function () {
+        Jest.test("should correctly reduce a 2D array to a single value with index", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -737,7 +727,7 @@ Jest.describe("reduceWithIndex", (function (param) {
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 6);
               }));
-        Jest.test("should return the initial value for an empty 2D array", (function (param) {
+        Jest.test("should return the initial value for an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -747,7 +737,7 @@ Jest.describe("reduceWithIndex", (function (param) {
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 10);
               }));
-        Jest.test("should correctly use the index in the reduction function", (function (param) {
+        Jest.test("should correctly use the index in the reduction function", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -759,41 +749,41 @@ Jest.describe("reduceWithIndex", (function (param) {
               }));
       }));
 
-Jest.describe("reduceWithIndexU", (function (param) {
-        Jest.test("should correctly reduce a 2D array to a single value with index", (function (param) {
+Jest.describe("reduceWithIndexU", (function () {
+        Jest.test("should correctly reduce a 2D array to a single value with index", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 1);
-                var result = Array2D$AdventOfCode.reduceWithIndexU(array2D, 0, (function (acc, x, param) {
+                var result = Array2D$AdventOfCode.reduceWithIndex(array2D, 0, (function (acc, x, param) {
                         return acc + x | 0;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 6);
               }));
-        Jest.test("should return the initial value for an empty 2D array", (function (param) {
+        Jest.test("should return the initial value for an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
                     ], 0);
-                var result = Array2D$AdventOfCode.reduceWithIndexU(array2D, 10, (function (acc, x, param) {
+                var result = Array2D$AdventOfCode.reduceWithIndex(array2D, 10, (function (acc, x, param) {
                         return acc + x | 0;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 10);
               }));
-        Jest.test("should correctly use the index in the reduction function", (function (param) {
+        Jest.test("should correctly use the index in the reduction function", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
                     ], 1);
-                var result = Array2D$AdventOfCode.reduceWithIndexU(array2D, 0, (function (acc, x, param) {
+                var result = Array2D$AdventOfCode.reduceWithIndex(array2D, 0, (function (acc, x, param) {
                         return (acc + param[0] | 0) + param[1] | 0;
                       }));
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 9);
               }));
       }));
 
-Jest.describe("flatten", (function (param) {
-        Jest.test("should flatten a 2D array into a 1D array", (function (param) {
+Jest.describe("flatten", (function () {
+        Jest.test("should flatten a 2D array into a 1D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -808,7 +798,7 @@ Jest.describe("flatten", (function (param) {
                             1
                           ]);
               }));
-        Jest.test("should return an empty array when given an empty 2D array", (function (param) {
+        Jest.test("should return an empty array when given an empty 2D array", (function () {
                 var array2D = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -816,7 +806,7 @@ Jest.describe("flatten", (function (param) {
                 var result = Array2D$AdventOfCode.flatten(array2D);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), []);
               }));
-        Jest.test("should flatten a 2D array with different values", (function (param) {
+        Jest.test("should flatten a 2D array with different values", (function () {
                 var array2D = [
                   [
                     1,
@@ -841,7 +831,7 @@ Jest.describe("flatten", (function (param) {
               }));
       }));
 
-Jest.describe("crop", (function (param) {
+Jest.describe("crop", (function () {
         var array2D = [
           [
             355,
@@ -864,7 +854,7 @@ Jest.describe("crop", (function (param) {
             876
           ]
         ];
-        Jest.test("should correctly crop a 2D array (1)", (function (param) {
+        Jest.test("should correctly crop a 2D array (1)", (function () {
                 var result = Array2D$AdventOfCode.crop(array2D, [
                       1,
                       1
@@ -880,7 +870,7 @@ Jest.describe("crop", (function (param) {
                             ]
                           ]);
               }));
-        Jest.test("should correctly crop a 2D array (2)", (function (param) {
+        Jest.test("should correctly crop a 2D array (2)", (function () {
                 var result = Array2D$AdventOfCode.crop(array2D, [
                       2,
                       1
@@ -891,7 +881,7 @@ Jest.describe("crop", (function (param) {
                             [876]
                           ]);
               }));
-        Jest.test("should correctly crop a 2D array (3)", (function (param) {
+        Jest.test("should correctly crop a 2D array (3)", (function () {
                 var result = Array2D$AdventOfCode.crop(array2D, [
                       0,
                       2
@@ -901,21 +891,21 @@ Jest.describe("crop", (function (param) {
                             [744]
                           ]);
               }));
-        Jest.test("should return an empty array when cropping outside the array", (function (param) {
+        Jest.test("should return an empty array when cropping outside the array", (function () {
                 var result = Array2D$AdventOfCode.crop(array2D, [
                       5,
                       5
                     ], 3, 3);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), []);
               }));
-        Jest.test("should return a smaller array when cropping at the edge of the array (1)", (function (param) {
+        Jest.test("should return a smaller array when cropping at the edge of the array (1)", (function () {
                 var result = Array2D$AdventOfCode.crop(array2D, [
                       2,
                       3
                     ], 3, 3);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), [[876]]);
               }));
-        Jest.test("should return a smaller array when cropping at the edge of the array (2)", (function (param) {
+        Jest.test("should return a smaller array when cropping at the edge of the array (2)", (function () {
                 var result = Array2D$AdventOfCode.crop(array2D, [
                       1,
                       2
@@ -931,7 +921,7 @@ Jest.describe("crop", (function (param) {
                             ]
                           ]);
               }));
-        Jest.test("should return the correct array when cropping with zero length", (function (param) {
+        Jest.test("should return the correct array when cropping with zero length", (function () {
                 var result = Array2D$AdventOfCode.crop(array2D, [
                       1,
                       1
@@ -940,8 +930,8 @@ Jest.describe("crop", (function (param) {
               }));
       }));
 
-Jest.describe("eq", (function (param) {
-        Jest.test("should return true for identical 2D arrays", (function (param) {
+Jest.describe("eq", (function () {
+        Jest.test("should return true for identical 2D arrays", (function () {
                 var array2D1 = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -952,7 +942,7 @@ Jest.describe("eq", (function (param) {
                     ], 1);
                 return Jest.Expect.toBe(Jest.Expect.expect(Array2D$AdventOfCode.eq(array2D1, array2D2)), true);
               }));
-        Jest.test("should return false for 2D arrays with different dimensions", (function (param) {
+        Jest.test("should return false for 2D arrays with different dimensions", (function () {
                 var array2D1 = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -963,7 +953,7 @@ Jest.describe("eq", (function (param) {
                     ], 1);
                 return Jest.Expect.toBe(Jest.Expect.expect(Array2D$AdventOfCode.eq(array2D1, array2D2)), false);
               }));
-        Jest.test("should return false for 2D arrays with different values", (function (param) {
+        Jest.test("should return false for 2D arrays with different values", (function () {
                 var array2D1 = Array2D$AdventOfCode.make([
                       3,
                       2
@@ -974,7 +964,7 @@ Jest.describe("eq", (function (param) {
                     ], 2);
                 return Jest.Expect.toBe(Jest.Expect.expect(Array2D$AdventOfCode.eq(array2D1, array2D2)), false);
               }));
-        Jest.test("should return true for empty 2D arrays", (function (param) {
+        Jest.test("should return true for empty 2D arrays", (function () {
                 var array2D1 = Array2D$AdventOfCode.make([
                       0,
                       0
@@ -987,7 +977,7 @@ Jest.describe("eq", (function (param) {
               }));
       }));
 
-Jest.describe("get / set", (function (param) {
+Jest.describe("get / set", (function () {
         var s = Array2D$AdventOfCode.make([
               2,
               2
@@ -1217,7 +1207,7 @@ Jest.describe("get / set", (function (param) {
               }));
       }));
 
-Jest.describe("setYEquals / getYEquals", (function (param) {
+Jest.describe("setYEquals / getYEquals", (function () {
         var a = Array2D$AdventOfCode.make([
               2,
               2
@@ -1242,7 +1232,7 @@ Jest.describe("setYEquals / getYEquals", (function (param) {
         ];
       }));
 
-Jest.describe("keep / map / getXYEquals / crop", (function (param) {
+Jest.describe("keep / map / getXYEquals / crop", (function () {
         var a = [
           [
             355,
@@ -1265,7 +1255,7 @@ Jest.describe("keep / map / getXYEquals / crop", (function (param) {
             876
           ]
         ];
-        Jest.test("map - int", (function (param) {
+        Jest.test("map - int", (function () {
                 var result = Array2D$AdventOfCode.map(a, (function (x) {
                         return (x << 1);
                       }));

@@ -28,7 +28,7 @@ function coordToString(param) {
 }
 
 function transformToString(trans) {
-  return coordToString(Curry._1(trans, {
+  return coordToString(trans({
                   TAG: "Coord",
                   _0: [
                     0,
@@ -90,32 +90,32 @@ function translate(param, param$1) {
 var ras = [
   Utils$AdventOfCode.identity,
   rotY,
-  (function (param) {
-      return Stdlib__Function.compose(rotY, rotY, param);
+  (function (extra) {
+      return Stdlib__Function.compose(rotY, rotY, extra);
     }),
-  (function (param) {
-      return Stdlib__Function.compose3(rotY, rotY, rotY, param);
+  (function (extra) {
+      return Stdlib__Function.compose3(rotY, rotY, rotY, extra);
     }),
   rotZ,
-  (function (param) {
-      return Stdlib__Function.compose3(rotZ, rotZ, rotZ, param);
+  (function (extra) {
+      return Stdlib__Function.compose3(rotZ, rotZ, rotZ, extra);
     })
 ];
 
 var rbs = [
   Utils$AdventOfCode.identity,
   rotX,
-  (function (param) {
-      return Stdlib__Function.compose(rotX, rotX, param);
+  (function (extra) {
+      return Stdlib__Function.compose(rotX, rotX, extra);
     }),
-  (function (param) {
-      return Stdlib__Function.compose3(rotX, rotX, rotX, param);
+  (function (extra) {
+      return Stdlib__Function.compose3(rotX, rotX, rotX, extra);
     })
 ];
 
 var rotations = Stdlib__Array.combination2(ras, rbs, (function (a, b) {
-        return function (param) {
-          return Stdlib__Function.compose(a, b, param);
+        return function (extra) {
+          return Stdlib__Function.compose(a, b, extra);
         };
       }));
 
@@ -145,9 +145,11 @@ function bagToString(b) {
   var str = {
     contents: ""
   };
-  Curry._2(B.iter, (function (x, m) {
-          str.contents = str.contents + ("@ " + String(x) + ":" + String(m) + ",");
-        }), b);
+  ((function (__x) {
+          Curry._2(B.iter, (function (x, m) {
+                  str.contents = str.contents + ("@ " + String(x) + ":" + String(m) + ",");
+                }), __x);
+        })(b));
   return "{" + str.contents + "}";
 }
 
@@ -156,8 +158,8 @@ function eq(a, b) {
 }
 
 function toString(t) {
-  return Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, t, (function (param) {
-                return "scannerName: " + String(param.scannerName) + ", beacons: " + Curry._2(Utils$AdventOfCode.Printable.$$Array.toString, param.beacons, (function (param) {
+  return Utils$AdventOfCode.Printable.$$Array.toString(t, (function (param) {
+                return "scannerName: " + String(param.scannerName) + ", beacons: " + Utils$AdventOfCode.Printable.$$Array.toString(param.beacons, (function (param) {
                               var match = param._0;
                               return "(" + String(match[0]) + ", " + String(match[1]) + ", " + String(match[2]) + ")";
                             })) + ", signature: " + bagToString(param.signature) + "\n";
@@ -232,17 +234,17 @@ function matchingTransformAll(scanner1, scanner2) {
   var beacons1 = scanner1.beacons;
   var beacons2 = scanner2.beacons;
   return Stdlib__Array.combinationIf3(beacons1, beacons2, rotations, (function (b1, b2, rot) {
-                var t = minus(b1, Curry._1(rot, b2));
-                var translation = function (param) {
-                  return translate(t, param);
+                var t = minus(b1, rot(b2));
+                var translation = function (extra) {
+                  return translate(t, extra);
                 };
                 var transB2 = Belt_Array.mapU(beacons2, (function (b) {
-                        return translate(t, Curry._1(rot, b));
+                        return translate(t, rot(b));
                       }));
                 var len = Belt_Set.size(interact(beacons1, transB2));
                 if (len >= 12) {
-                  return (function (param) {
-                            return Stdlib__Function.compose(rot, translation, param);
+                  return (function (extra) {
+                            return Stdlib__Function.compose(rot, translation, extra);
                           });
                 }
                 
@@ -278,7 +280,7 @@ function transformScanner(param) {
   return {
           scannerName: s.scannerName,
           beacons: Belt_Array.mapU(s.beacons, (function (b) {
-                  return Curry._1(Belt_Option.getExn(trans), b);
+                  return Belt_Option.getExn(trans)(b);
                 })),
           transformation: Belt_Option.getExn(trans),
           signature: s.signature
@@ -294,7 +296,7 @@ function reconstructStep(param) {
             return vagueMatch(current, x);
           }));
     var matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.mapU(passMatches, (function (x) {
-                    return Stdlib__Array.arrayToOption(matchingTransformAll(current, x));
+                    return matchingTransform(current, x);
                   }))), (function (x) {
             return Belt_Option.isSome(x[1]);
           }));
@@ -420,7 +422,7 @@ function part1(scanners) {
 
 function part2(scanners) {
   var extractOrigin = function (sc) {
-    return Curry._1(sc.transformation, {
+    return sc.transformation({
                 TAG: "Coord",
                 _0: [
                   0.0,
@@ -441,12 +443,14 @@ function part2(scanners) {
 
 function solvePart1(data) {
   var scanners = Belt_Array.map(parse(data), make);
-  return part1(reconstructScanners(scanners));
+  var newScanners = reconstructScanners(scanners);
+  return part1(newScanners);
 }
 
 function solvePart2(data) {
   var scanners = Belt_Array.map(parse(data), make);
-  return part2(reconstructScanners(scanners));
+  var newScanners = reconstructScanners(scanners);
+  return part2(newScanners);
 }
 
 var compose = Stdlib__Function.compose;

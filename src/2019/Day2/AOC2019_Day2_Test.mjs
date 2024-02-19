@@ -5,12 +5,12 @@ import * as AOC2019_Day2$AdventOfCode from "./AOC2019_Day2.mjs";
 import * as AOC2019_Day2_Data$AdventOfCode from "./AOC2019_Day2_Data.mjs";
 import * as AOC2019_Day2_Data_Sample$AdventOfCode from "./AOC2019_Day2_Data_Sample.mjs";
 
-Jest.describe("2019 Day2a", (function (param) {
-        Jest.test("Part 1 - Solve", (function (param) {
+Jest.describe("2019 Day2a", (function () {
+        Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2019_Day2$AdventOfCode.solvePart1(AOC2019_Day2_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 4945026);
               }));
-        Jest.test("Part 2 - Solve", (function (param) {
+        Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2019_Day2$AdventOfCode.solvePart2(AOC2019_Day2_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 5296);
               }));

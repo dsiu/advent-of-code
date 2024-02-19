@@ -24,8 +24,7 @@ function part2(data) {
 }
 
 function solvePart1(data) {
-  var data$1 = parse(data);
-  return Utils$AdventOfCode.maxIntInArray(Belt_Array.map(data$1, Utils$AdventOfCode.sumIntArray));
+  return part1(parse(data));
 }
 
 function solvePart2(data) {

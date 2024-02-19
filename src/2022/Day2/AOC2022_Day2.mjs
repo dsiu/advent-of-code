@@ -149,7 +149,9 @@ function roundFromResult(param) {
 }
 
 function makeRound(s) {
-  var match = s.trim().split(" ");
+  var match = (function (__x) {
+        return __x.split(" ");
+      })(s.trim());
   if (match.length !== 2) {
     throw {
           RE_EXN_ID: "Match_failure",
@@ -171,7 +173,9 @@ function makeRound(s) {
 }
 
 function makeShapeResult(s) {
-  var match = s.trim().split(" ");
+  var match = (function (__x) {
+        return __x.split(" ");
+      })(s.trim());
   if (match.length !== 2) {
     throw {
           RE_EXN_ID: "Match_failure",
@@ -201,18 +205,15 @@ function part1(rounds) {
 }
 
 function part2(rounds) {
-  return Utils$AdventOfCode.sumIntArray(Belt_Array.map(rounds, (function (param) {
-                    return Utils$AdventOfCode.compose(roundFromResult, scoreRound, param);
-                  })));
+  return Utils$AdventOfCode.sumIntArray(Belt_Array.map(rounds, Utils$AdventOfCode.compose(roundFromResult, scoreRound)));
 }
 
 function solvePart1(data) {
-  var rounds = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), makeRound);
-  return Utils$AdventOfCode.sumIntArray(Belt_Array.map(rounds, scoreRound));
+  return part1(parse(data, makeRound));
 }
 
 function solvePart2(data) {
-  return part2(Belt_Array.map(Utils$AdventOfCode.splitNewline(data), makeShapeResult));
+  return part2(parse(data, makeShapeResult));
 }
 
 export {

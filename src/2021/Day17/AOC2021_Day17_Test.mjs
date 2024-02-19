@@ -6,8 +6,8 @@ import * as AOC2021_Day17$AdventOfCode from "./AOC2021_Day17.mjs";
 import * as AOC2021_Day17_Data$AdventOfCode from "./AOC2021_Day17_Data.mjs";
 import * as AOC2021_Day17_Data_Sample$AdventOfCode from "./AOC2021_Day17_Data_Sample.mjs";
 
-Jest.describe("2021 Day17", (function (param) {
-        Jest.describe("launch", (function (param) {
+Jest.describe("2021 Day17", (function () {
+        Jest.describe("launch", (function () {
                 var t = AOC2021_Day17$AdventOfCode.parse(AOC2021_Day17_Data_Sample$AdventOfCode.data);
                 var makeLaunchTests = function (param) {
                   return List.map((function (param) {
@@ -275,19 +275,19 @@ Jest.describe("2021 Day17", (function (param) {
                         return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
                       }));
               }));
-        Jest.test("Part 1 - Sample Data", (function (param) {
+        Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 45);
               }));
-        Jest.test("Part 1 - Solve", (function (param) {
+        Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart1(AOC2021_Day17_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 5050);
               }));
-        Jest.test("Part 2 - Sample Data", (function (param) {
+        Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart2(AOC2021_Day17_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 112);
               }));
-        Jest.test("Part 2 - Solve", (function (param) {
+        Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2021_Day17$AdventOfCode.solvePart2(AOC2021_Day17_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 2223);
               }));

@@ -50,13 +50,14 @@ function makeWharf(wharfLines, colNames) {
 }
 
 function makeMoves(xs) {
+  var intFromString = Belt_Int.fromString;
   return xs.map(function (x) {
               var parts = x.split(" ");
               return {
                       TAG: "Move",
-                      _0: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[1], Belt_Int.fromString)),
-                      _1: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[3], Belt_Int.fromString)),
-                      _2: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[5], Belt_Int.fromString))
+                      _0: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[1], intFromString)),
+                      _1: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[3], intFromString)),
+                      _2: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[5], intFromString))
                     };
             });
 }
@@ -111,21 +112,19 @@ function applyMoves2(wharf, moves) {
 }
 
 function showTops(wharf) {
-  return Stdlib__Array.foldl1(Belt_MapInt.valuesToArray(wharf).map(function (param) {
-                  return Utils$AdventOfCode.compose(Stdlib__Array.headUnsafe, extractName, param);
-                }), (function (prim0, prim1) {
+  return Stdlib__Array.foldl1(Belt_MapInt.valuesToArray(wharf).map(Utils$AdventOfCode.compose(Stdlib__Array.headUnsafe, extractName)), (function (prim0, prim1) {
                 return prim0.concat(prim1);
               }));
 }
 
 function solvePart1(data) {
   var match = parse(data);
-  return showTops(Stdlib__Array.reduce(match[1], match[0], applyMove1));
+  return showTops(applyMoves1(match[0], match[1]));
 }
 
 function solvePart2(data) {
   var match = parse(data);
-  return showTops(Stdlib__Array.reduce(match[1], match[0], applyMove2));
+  return showTops(applyMoves2(match[0], match[1]));
 }
 
 var A;

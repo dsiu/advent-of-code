@@ -26,10 +26,16 @@ function replace(src, from, to_) {
 }
 
 function get(t) {
-  return parseInt(Belt_Array.map(t.raw.split(""), (function (c) {
-                      var __x = replace(c, t.zero, "0");
-                      return replace(__x, t.one, "1");
-                    })).join(""), 2);
+  var __x = (function (__x) {
+        return __x.join("");
+      })(Belt_Array.map(t.raw.split(""), (function (c) {
+              return (function (__x) {
+                          return replace(__x, t.one, "1");
+                        })((function (__x) {
+                              return replace(__x, t.zero, "0");
+                            })(c));
+            })));
+  return parseInt(__x, 2);
 }
 
 var BitString = {
@@ -41,7 +47,9 @@ var BitString = {
 function make$1(code) {
   return {
           row: make("F", "B", code.slice(0, 7)),
-          column: make("L", "R", code.slice(7, 10))
+          column: make("L", "R", (function (__x) {
+                    return __x.slice(7, 10);
+                  })(code))
         };
 }
 
@@ -88,7 +96,8 @@ function findGap(a, x) {
 
 function solvePart1(data) {
   var passes = Belt_Array.map(parse(data), make$1);
-  return Belt_Array.reduce(Belt_Array.map(passes, getSeatId), 0, maxReducer);
+  var seatIds = Belt_Array.map(passes, getSeatId);
+  return Belt_Array.reduce(seatIds, 0, maxReducer);
 }
 
 function solvePart2(data) {
@@ -96,7 +105,9 @@ function solvePart2(data) {
   var seatIds = Belt_Array.map(passes, getSeatId);
   var sortedSeatIds = Belt_SortArrayInt.stableSort(seatIds);
   var init = Belt_Array.getExn(sortedSeatIds, 0) - 1 | 0;
-  return Belt_Array.reduce(sortedSeatIds, init, findGap) + 1 | 0;
+  return (function (__x) {
+              return Belt_Array.reduce(__x, init, findGap);
+            })(sortedSeatIds) + 1 | 0;
 }
 
 export {

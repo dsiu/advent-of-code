@@ -3,7 +3,7 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Coordinate$AdventOfCode from "../src/Coordinate.mjs";
 
-Jest.describe("Step Functions", (function (param) {
+Jest.describe("Step Functions", (function () {
         var init = [
           4,
           4
@@ -86,13 +86,12 @@ Jest.describe("Step Functions", (function (param) {
         Jest.testAll("Single Step", singleStep_tests, (function (param) {
                 return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
               }));
-        var __x = Coordinate$AdventOfCode.StepFunctions.stepN(init);
-        var __x$1 = Coordinate$AdventOfCode.StepFunctions.stepE(init);
-        var __x$2 = Coordinate$AdventOfCode.StepFunctions.stepS(init);
-        var __x$3 = Coordinate$AdventOfCode.StepFunctions.stepNE(init);
-        var __x$4 = Coordinate$AdventOfCode.StepFunctions.stepNW(init);
         var multipleStep_test_0 = [
-          Coordinate$AdventOfCode.StepFunctions.stepN(__x),
+          (function (__x) {
+                return Coordinate$AdventOfCode.StepFunctions.stepN(__x);
+              })((function (__x) {
+                    return Coordinate$AdventOfCode.StepFunctions.stepN(__x);
+                  })(init)),
           [
             4,
             2
@@ -100,7 +99,11 @@ Jest.describe("Step Functions", (function (param) {
         ];
         var multipleStep_test_1 = {
           hd: [
-            Coordinate$AdventOfCode.StepFunctions.stepE(__x$1),
+            (function (__x) {
+                  return Coordinate$AdventOfCode.StepFunctions.stepE(__x);
+                })((function (__x) {
+                      return Coordinate$AdventOfCode.StepFunctions.stepE(__x);
+                    })(init)),
             [
               6,
               4
@@ -108,7 +111,11 @@ Jest.describe("Step Functions", (function (param) {
           ],
           tl: {
             hd: [
-              Coordinate$AdventOfCode.StepFunctions.stepW(__x$2),
+              (function (__x) {
+                    return Coordinate$AdventOfCode.StepFunctions.stepW(__x);
+                  })((function (__x) {
+                        return Coordinate$AdventOfCode.StepFunctions.stepS(__x);
+                      })(init)),
               [
                 3,
                 5
@@ -116,7 +123,11 @@ Jest.describe("Step Functions", (function (param) {
             ],
             tl: {
               hd: [
-                Coordinate$AdventOfCode.StepFunctions.stepSW(__x$3),
+                (function (__x) {
+                      return Coordinate$AdventOfCode.StepFunctions.stepSW(__x);
+                    })((function (__x) {
+                          return Coordinate$AdventOfCode.StepFunctions.stepNE(__x);
+                        })(init)),
                 [
                   4,
                   4
@@ -124,7 +135,11 @@ Jest.describe("Step Functions", (function (param) {
               ],
               tl: {
                 hd: [
-                  Coordinate$AdventOfCode.StepFunctions.stepSE(__x$4),
+                  (function (__x) {
+                        return Coordinate$AdventOfCode.StepFunctions.stepSE(__x);
+                      })((function (__x) {
+                            return Coordinate$AdventOfCode.StepFunctions.stepNW(__x);
+                          })(init)),
                   [
                     4,
                     4

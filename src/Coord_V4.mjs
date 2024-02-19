@@ -9,10 +9,8 @@ function intCompare(a, b) {
   return Stdlib__Ordering.toInt(Stdlib__Int.compare(a, b));
 }
 
-function compare(param) {
-  return function (param$1) {
-    return TableclothTuple4.compare(param, param$1, intCompare, intCompare, intCompare, intCompare);
-  };
+function compare(a, b) {
+  return TableclothTuple4.compare(a, b, intCompare, intCompare, intCompare, intCompare);
 }
 
 var include = TableclothComparator.Make({

@@ -3,7 +3,7 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Stack_Array$AdventOfCode from "../src/Stack_Array.mjs";
 
-Jest.describe("Stack", (function (param) {
+Jest.describe("Stack", (function () {
         var push_tests_0 = [
           Stack_Array$AdventOfCode.push([], 79),
           [79]

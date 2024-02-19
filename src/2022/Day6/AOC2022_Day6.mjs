@@ -7,7 +7,9 @@ function log(prim) {
   console.log(prim);
 }
 
-var parse = Utils$AdventOfCode.splitChars;
+function parse(data) {
+  return Utils$AdventOfCode.splitChars(data);
+}
 
 function allDifferent(cs) {
   return Stdlib__Array.equal(Stdlib__Array.uniq(cs), cs, (function (prim0, prim1) {
@@ -26,11 +28,9 @@ function interestingPosition(n, text) {
             })), Stdlib__Array.tails(text).map(function (__x) {
             return Stdlib__Array.take(__x, n);
           }));
-  var packetPos = Stdlib__Array.headUnsafe(Stdlib__Array.dropWhile(candidates, (function (param) {
-              return Utils$AdventOfCode.compose((function (prim) {
-                            return prim[1];
-                          }), hasSame, param);
-            })));
+  var packetPos = Stdlib__Array.headUnsafe(Stdlib__Array.dropWhile(candidates, Utils$AdventOfCode.compose((function (prim) {
+                  return prim[1];
+                }), hasSame)));
   return n + packetPos[0] | 0;
 }
 

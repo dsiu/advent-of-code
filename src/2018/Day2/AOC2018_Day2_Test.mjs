@@ -6,21 +6,21 @@ import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
 import * as AOC2018_Day2$AdventOfCode from "./AOC2018_Day2.mjs";
 import * as AOC2018_Day2_Data$AdventOfCode from "./AOC2018_Day2_Data.mjs";
 
-Jest.describe("2018 Day2", (function (param) {
+Jest.describe("2018 Day2", (function () {
         var lines = AOC2018_Day2_Data$AdventOfCode.data.split("\n");
         var len = lines.length;
-        Jest.describe("Part1", (function (param) {
-                Jest.test("number of lines", (function (param) {
+        Jest.describe("Part1", (function () {
+                Jest.test("number of lines", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(len), 250);
                       }));
-                Jest.test("first line", (function (param) {
+                Jest.test("first line", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(Caml_array.get(lines, 0)), "crruafyzloguvxwctqmphenbkd");
                       }));
-                Jest.test("last line", (function (param) {
+                Jest.test("last line", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(Caml_array.get(lines, len - 1 | 0)), "hrijafyzloguvxectqmpheybkd");
                       }));
                 var test_string = "abbbcc";
-                Jest.test("string to char[]", (function (param) {
+                Jest.test("string to char[]", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.string_to_charStr(test_string)), [
                                     "a",
                                     "b",
@@ -30,19 +30,19 @@ Jest.describe("2018 Day2", (function (param) {
                                     "c"
                                   ]);
                       }));
-                Jest.test("char freq", (function (param) {
+                Jest.test("char freq", (function () {
                         var expected = Belt_MapString.set(Belt_MapString.set(Belt_MapString.set(undefined, "a", 1), "b", 3), "c", 2);
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.char_freq(AOC2018_Day2$AdventOfCode.string_to_charStr(test_string))), expected);
                       }));
-                Jest.test("char freq match", (function (param) {
+                Jest.test("char freq match", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.n_char_matched_freq(3, test_string)), 1);
                       }));
-                Jest.test("threeTimesCounter", (function (param) {
+                Jest.test("threeTimesCounter", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.threeTimesCounter("aabbbccccccddddd")), 1);
                       }));
               }));
-        Jest.describe("Part2", (function (param) {
-                Jest.test("diffOfTwoCharStr", (function (param) {
+        Jest.describe("Part2", (function () {
+                Jest.test("diffOfTwoCharStr", (function () {
                         var expected = [
                           {
                             TAG: "Match",
@@ -72,19 +72,19 @@ Jest.describe("2018 Day2", (function (param) {
                         ];
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg")), expected);
                       }));
-                Jest.test("count true", (function (param) {
+                Jest.test("count true", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.countTrue(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))), 5);
                       }));
-                Jest.test("count false", (function (param) {
+                Jest.test("count false", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.countTrue(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))), 5);
                       }));
-                Jest.test("diff by 1 char strs", (function (param) {
+                Jest.test("diff by 1 char strs", (function () {
                         return Jest.Expect.toBe(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.isDiffBy1(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))), true);
                       }));
-                Jest.test("diff by 5 char strs", (function (param) {
+                Jest.test("diff by 5 char strs", (function () {
                         return Jest.Expect.toBe(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.isDiffBy5(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("zzzzzz", "zabcde"))), true);
                       }));
-                Jest.test("run part2 test", (function (param) {
+                Jest.test("run part2 test", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.runDay2Part2([
                                             "abcdef",
                                             "abcdee"
@@ -93,7 +93,7 @@ Jest.describe("2018 Day2", (function (param) {
                                     "abcde"
                                   ]);
                       }));
-                Jest.test("run part2", (function (param) {
+                Jest.test("run part2", (function () {
                         return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.runDay2Part2(AOC2018_Day2_Data$AdventOfCode.data.split("\n"))), [
                                     "srijafjzloguvlntqmphenbkd",
                                     "srijafjzloguvlntqmphenbkd"

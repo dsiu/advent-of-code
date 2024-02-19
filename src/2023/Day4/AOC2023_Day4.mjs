@@ -48,9 +48,7 @@ function calculatePoint(n) {
 }
 
 function part1(cards) {
-  return Utils$AdventOfCode.sumIntArray(cards.map(function (param) {
-                  return Utils$AdventOfCode.compose(matchPerCard, calculatePoint, param);
-                }));
+  return Utils$AdventOfCode.sumIntArray(cards.map(Utils$AdventOfCode.compose(matchPerCard, calculatePoint)));
 }
 
 function part2(cards) {
@@ -105,13 +103,11 @@ function parse(data) {
               }
               var winnersStr = match$1[0];
               var actualsStr = match$1[1];
-              var partial_arg = 10;
-              var winners = Stdlib__Array.filterMap(winnersStr.split(" "), (function (param) {
-                      return Stdlib__Int.fromString(partial_arg, param);
+              var winners = Stdlib__Array.filterMap(winnersStr.split(" "), (function (extra) {
+                      return Stdlib__Int.fromString(10, extra);
                     }));
-              var partial_arg$1 = 10;
-              var actuals = Stdlib__Array.filterMap(actualsStr.split(" "), (function (param) {
-                      return Stdlib__Int.fromString(partial_arg$1, param);
+              var actuals = Stdlib__Array.filterMap(actualsStr.split(" "), (function (extra) {
+                      return Stdlib__Int.fromString(10, extra);
                     }));
               return {
                       id: cardId,

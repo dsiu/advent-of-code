@@ -6,8 +6,8 @@ import * as AOC2020_Day7$AdventOfCode from "./AOC2020_Day7.mjs";
 import * as AOC2020_Day7_Data$AdventOfCode from "./AOC2020_Day7_Data.mjs";
 import * as AOC2020_Day7_Data_Sample$AdventOfCode from "./AOC2020_Day7_Data_Sample.mjs";
 
-Jest.describe("2020 Day7", (function (param) {
-        Jest.test("parseBag", (function (param) {
+Jest.describe("2020 Day7", (function () {
+        Jest.test("parseBag", (function () {
                 var inputs = [
                   "  2 muted yellow bags",
                   "no other bags.  ",
@@ -21,15 +21,15 @@ Jest.describe("2020 Day7", (function (param) {
                 ];
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
               }));
-        Jest.test("Part 1 - Test Data", (function (param) {
+        Jest.test("Part 1 - Test Data", (function () {
                 var result = AOC2020_Day7$AdventOfCode.solvePart1(AOC2020_Day7_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
               }));
-        Jest.test("Part 1 - Solve", (function (param) {
+        Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2020_Day7$AdventOfCode.solvePart1(AOC2020_Day7_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 115);
               }));
-        Jest.test("Part 2 - Solve", (function (param) {
+        Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2020_Day7$AdventOfCode.solvePart2(AOC2020_Day7_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 1250);
               }));

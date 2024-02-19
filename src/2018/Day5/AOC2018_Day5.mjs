@@ -214,7 +214,7 @@ var aTod = [
 function makeATozData(letters, data) {
   return Belt_Array.reduce(letters, undefined, (function (a, c) {
                 var v = Belt_Array.keep(data, (function (param) {
-                        return !isLetterAndUpper(param, c);
+                        return notIsLetterAndUpper(c, param);
                       }));
                 return Belt_MapString.set(a, c, v);
               }));

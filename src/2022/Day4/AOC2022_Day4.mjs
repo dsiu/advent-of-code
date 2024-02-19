@@ -69,7 +69,7 @@ function part1(xs) {
 
 function part2(xs) {
   return xs.filter(function (param) {
-              return !disjoint(param[0], param[1]);
+              return overlaps(param[0], param[1]);
             }).length;
 }
 

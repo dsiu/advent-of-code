@@ -52,7 +52,7 @@ function getAdjacents(t, param) {
 var G = Graph.MakeGraph({});
 
 function makeNodes(g, lines) {
-  return Array2D$AdventOfCode.mapWithIndexU(lines, (function (c, param) {
+  return Array2D$AdventOfCode.mapWithIndex(lines, (function (c, param) {
                 G.addNode(g, c, undefined, undefined);
                 return c;
               }));
@@ -68,7 +68,7 @@ function node(nodes, x, y) {
 function make(lines) {
   var g = G.makeDirectedGraph();
   var nodes = makeNodes(g, lines);
-  var g$1 = Array2D$AdventOfCode.reduceWithIndexU(lines, g, (function (g, _e, c) {
+  var g$1 = Array2D$AdventOfCode.reduceWithIndex(lines, g, (function (g, _e, c) {
           var v = node(nodes, c[0], c[1]);
           Belt_List.forEach(getAdjacents(lines, c), (function (param) {
                   var match = param._0;
@@ -93,7 +93,7 @@ function solve(param) {
   var path = G.ShortestPath.Dijkstra.bidirectional(g, node(nodes, 0, 0), node(nodes, dest_x, dest_y), {
         NAME: "Attr",
         VAL: "weight"
-      });
+      }, undefined);
   var edges = G.ShortestPath.Utils.edgePathFromNodePath(g, path);
   return Belt_Array.reduce(edges, 0, (function (acc, e) {
                 return acc + G.getEdgeAttribute(g, e, "weight") | 0;
@@ -144,7 +144,9 @@ var Cave = {
 
 function parse(data) {
   return Belt_Array.map(Utils$AdventOfCode.splitNewline(data), (function (l) {
-                return Belt_Array.map(Utils$AdventOfCode.splitChars(l.trim()), Utils$AdventOfCode.intFromStringExn);
+                return Belt_Array.map(Utils$AdventOfCode.splitChars(l.trim()), (function (c) {
+                              return Utils$AdventOfCode.intFromStringExn(c);
+                            }));
               }));
 }
 

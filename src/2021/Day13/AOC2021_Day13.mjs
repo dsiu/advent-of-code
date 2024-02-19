@@ -10,6 +10,10 @@ function log(prim) {
   console.log(prim);
 }
 
+function log2(prim0, prim1) {
+  console.log(prim0, prim1);
+}
+
 function addMark(m1, m2) {
   if (m1 === "#" || m2 === "#") {
     return "#";
@@ -74,13 +78,7 @@ function makePaper(coords) {
   var sizes = findSize(coords);
   var p = Array2D$AdventOfCode.make(sizes, ".");
   Belt_Array.forEach(coords, (function (c) {
-          if (Array2D$AdventOfCode.set(p, c, "#")) {
-            return ;
-          }
-          throw {
-                RE_EXN_ID: "Not_found",
-                Error: new Error()
-              };
+          Array2D$AdventOfCode.set(p, c, "#");
         }));
   return p;
 }
@@ -106,7 +104,7 @@ function transformCoord(param, param$1) {
   var y = param[1];
   var x = param[0];
   if (param$1[0] === "Y") {
-    if (y > n) {
+    if (y >= n) {
       return [
               x,
               (n << 1) - y | 0
@@ -117,7 +115,7 @@ function transformCoord(param, param$1) {
               y
             ];
     }
-  } else if (x > n) {
+  } else if (x >= n) {
     return [
             (n << 1) - x | 0,
             y
@@ -152,8 +150,10 @@ function transform(t, f) {
   var t$p = Array2D$AdventOfCode.make(new_size, ".");
   return Array2D$AdventOfCode.reduceWithIndex(t, t$p, (function (a, mark, coord) {
                 var coord$p = transformCoord(coord, f);
-                var new_mark = Belt_Option.getExn(Array2D$AdventOfCode.get(t, coord$p));
-                Array2D$AdventOfCode.set(a, coord$p, addMark(mark, new_mark));
+                var new_mark = Array2D$AdventOfCode.get(t, coord$p);
+                if (new_mark !== undefined) {
+                  Array2D$AdventOfCode.set(a, coord$p, addMark(mark, new_mark));
+                }
                 return a;
               }));
 }
@@ -164,7 +164,9 @@ function transformFirst(t) {
 
 function transformAll(t) {
   var folds = t.folds;
-  return Belt_Array.reduce(folds, t.paper, transform);
+  return Belt_Array.reduce(folds, t.paper, (function (a, f) {
+                return transform(a, f);
+              }));
 }
 
 function toString(t) {
@@ -218,17 +220,20 @@ function parse(data) {
 function solvePart1(data) {
   var match = parse(data);
   var p = make(match[0], match[1]);
-  return countMark(transformFirst(p));
+  var p1 = transformFirst(p);
+  return countMark(p1);
 }
 
 function solvePart2(data) {
   var match = parse(data);
   var p = make(match[0], match[1]);
-  return countMark(transformAll(p));
+  var p1 = transformAll(p);
+  return countMark(p1);
 }
 
 export {
   log ,
+  log2 ,
   Paper ,
   parse ,
   solvePart1 ,

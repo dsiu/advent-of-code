@@ -2,7 +2,6 @@
 
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
-import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
@@ -22,8 +21,8 @@ function expand(seq) {
   return {
           TAG: "Sequence",
           _0: Stdlib__Array.unfoldr(seq, (function (xs) {
-                  if (Stdlib__Array.all(xs, (function (param) {
-                            return Stdlib__Function.eq(0, param);
+                  if (Stdlib__Array.all(xs, (function (__x) {
+                            return Stdlib__Function.eq(0, __x);
                           }))) {
                     return ;
                   } else {
@@ -76,12 +75,7 @@ function part2(histories) {
 
 function parse(data) {
   return Utils$AdventOfCode.splitNewline(data).map(function (l) {
-              var partial_arg = function (eta) {
-                return Stdlib__Int.fromString(undefined, eta);
-              };
-              return l.trim().split(" ").map(function (param) {
-                          return Stdlib__Function.compose(partial_arg, Stdlib__Option.getExn, param);
-                        });
+              return l.trim().split(" ").map(Utils$AdventOfCode.intFromStringExn);
             });
 }
 

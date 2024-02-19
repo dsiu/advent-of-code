@@ -206,7 +206,9 @@ var Machine = {
 };
 
 function parseLine(l) {
-  var x = l.trim().split(" ");
+  var x = (function (__x) {
+        return __x.split(" ");
+      })(l.trim());
   var op = Belt_Array.getExn(x, 0);
   var arg = Belt_Array.getExn(x, 1);
   return make(op, arg);
@@ -217,7 +219,7 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  var m = make$1(Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine));
+  var m = make$1(parse(data));
   return execute(m).accumulator;
 }
 
@@ -239,10 +241,12 @@ function genPatched(p) {
 }
 
 function solvePart2(data) {
-  var p = Belt_Array.map(Utils$AdventOfCode.splitNewline(data), parseLine);
+  var p = parse(data);
   var patched = genPatched(p);
   var rans = Belt_Array.map(patched, (function (x) {
-          return execute(make$1(x));
+          return execute((function (__x) {
+                          return make$1(__x);
+                        })(x));
         }));
   var res = Belt_Array.keep(rans, (function (x) {
           var match = x.state;

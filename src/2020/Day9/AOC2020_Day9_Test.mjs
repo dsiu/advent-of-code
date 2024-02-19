@@ -5,20 +5,20 @@ import * as AOC2020_Day9$AdventOfCode from "./AOC2020_Day9.mjs";
 import * as AOC2020_Day9_Data$AdventOfCode from "./AOC2020_Day9_Data.mjs";
 import * as AOC2020_Day9_Data_Sample$AdventOfCode from "./AOC2020_Day9_Data_Sample.mjs";
 
-Jest.describe("2020 Day9", (function (param) {
-        Jest.test("Part 1 - Sample Data", (function (param) {
+Jest.describe("2020 Day9", (function () {
+        Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2020_Day9$AdventOfCode.solvePart1(AOC2020_Day9_Data_Sample$AdventOfCode.data, 5);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 127);
               }));
-        Jest.test("Part 1 - Solve", (function (param) {
+        Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2020_Day9$AdventOfCode.solvePart1(AOC2020_Day9_Data$AdventOfCode.data, 25);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 31161678);
               }));
-        Jest.test("Part 2 - Sample Data", (function (param) {
+        Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2020_Day9$AdventOfCode.solvePart2(AOC2020_Day9_Data_Sample$AdventOfCode.data, 5);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 62);
               }));
-        Jest.test("Part 2 - Solve", (function (param) {
+        Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2020_Day9$AdventOfCode.solvePart2(AOC2020_Day9_Data$AdventOfCode.data, 25);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 5453868);
               }));

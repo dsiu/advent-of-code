@@ -12,8 +12,10 @@ function log(prim) {
 var formatRe = /(\d+)-(\d+)\s+([A-Za-z]+):\s+(.*)/i;
 
 function make(s) {
-  var x = formatRe.exec(s);
-  var args = x !== null ? Belt_Array.map(x, (function (x) {
+  var x = (function (__x) {
+        return Caml_option.null_to_opt(formatRe.exec(__x));
+      })(s);
+  var args = x !== undefined ? Belt_Array.map(Caml_option.valFromOption(x), (function (x) {
             return Belt_Option.getExn((x == null) ? undefined : Caml_option.some(x));
           })) : [];
   return {
