@@ -2,9 +2,6 @@
 @@uncurried.swap
 
 open Stdlib
-module Map = Belt.Map
-module MutableMap = Belt.MutableMap
-module HashMap = Belt.HashMap
 
 let identity = Stdlib.Function.identity
 
@@ -22,7 +19,7 @@ module Printable = {
   */
   module MapString = {
     let toString = (m, f) =>
-      Map.String.reduce(m, "", (a, k, v) => {
+      Belt.Map.String.reduce(m, "", (a, k, v) => {
         a ++ `key:${k}, val:${v->f}\n`
       })
 
@@ -40,7 +37,7 @@ module Printable = {
   */
   module MapInt = {
     let toString = (m, f) => {
-      Map.Int.reduce(m, "", (a, k, v) => {
+      Belt.Map.Int.reduce(m, "", (a, k, v) => {
         a ++ `key:${k->Int.toString}, val:${f(v)}\n`
       })
     }
@@ -65,7 +62,7 @@ module Printable = {
   // mutable map int
   module MutableMapInt = {
     let toString = (m, f) =>
-      MutableMap.Int.reduce(m, "", (a, k, v) => {
+      Belt.MutableMap.Int.reduce(m, "", (a, k, v) => {
         a ++ `key:${k->Int.toString}, val:${v->f}\n`
       })
 
@@ -85,7 +82,7 @@ module Printable = {
   // mutable map string
   module MutableMapString = {
     let toString = (m, f) =>
-      MutableMap.String.reduce(m, "", (a, k, v) => {
+      Belt.MutableMap.String.reduce(m, "", (a, k, v) => {
         a ++ `key:${k}, val:${v->f}\n`
       })
     module Int = {
@@ -237,11 +234,17 @@ let minKeyInt64ValuePair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) =>
 //
 
 let hashMapStringUpdate = (h, k, f) => {
-  h->HashMap.String.set(k, h->HashMap.String.get(k)->Option.mapOr(f(None), x => f(Some(x))))
+  h->Belt.HashMap.String.set(
+    k,
+    h->Belt.HashMap.String.get(k)->Option.mapOr(f(None), x => f(Some(x))),
+  )
   h
 }
 
 let mutableMapStringUpdate = (h, k, f) => {
-  h->MutableMap.String.set(k, h->MutableMap.String.get(k)->Option.mapOr(f(None), x => f(Some(x))))
+  h->Belt.MutableMap.String.set(
+    k,
+    h->Belt.MutableMap.String.get(k)->Option.mapOr(f(None), x => f(Some(x))),
+  )
   h
 }

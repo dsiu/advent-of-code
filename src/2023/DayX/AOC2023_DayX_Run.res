@@ -1,5 +1,3 @@
-@@uncurried
-
 open Stdlib
 
 let log = Console.log

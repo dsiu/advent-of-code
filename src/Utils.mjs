@@ -443,18 +443,9 @@ function mutableMapStringUpdate(h, k, f) {
   return h;
 }
 
-var $$Map;
-
-var MutableMap;
-
-var HashMap;
-
 var transpose = JsArray2Ex.transpose;
 
 export {
-  $$Map ,
-  MutableMap ,
-  HashMap ,
   identity ,
   log ,
   Printable ,

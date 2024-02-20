@@ -116,7 +116,7 @@ let sign = (cards: array<Card.t>): signature => {
     cards
     ->Array.toSorted(Card.compare_Ord)
     ->Array.groupBy(module(Card), ~f=a => a)
-    ->Map.valuesToArray
+    ->Belt.Map.valuesToArray
     ->Array.map(group => (List.length(group), group->List.toArray))
     ->Array.toSorted(signatureElementCompare)
     ->Array.toReversed
