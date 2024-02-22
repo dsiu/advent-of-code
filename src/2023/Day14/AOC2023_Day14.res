@@ -33,13 +33,7 @@ let showGrid: grid => string = grid => {
   ->Array.transpose
   ->Array.map(row =>
     row
-    ->Array.map(el =>
-      switch el {
-      | Empty => "."
-      | Cube => "#"
-      | Round => "O"
-      }
-    )
+    ->Array.map(showElement)
     ->Array.joinWith("")
   )
   ->Array.joinWith("\n")

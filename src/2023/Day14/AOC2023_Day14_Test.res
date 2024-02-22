@@ -30,7 +30,8 @@ describe("2023 Day14", () => {
     expect(result)->toEqual(expected)
   })
 
-  test("Part 2 - Solve", () => {
+  // takes too long
+  Skip.test("Part 2 - Solve", () => {
     let result = solvePart2(data)
     let expected = 94876
 

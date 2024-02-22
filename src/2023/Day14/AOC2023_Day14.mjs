@@ -48,17 +48,7 @@ function showElement(el) {
 
 function showGrid(grid) {
   return Stdlib__Array.transpose(grid).map(function (row) {
-                return row.map(function (el) {
-                              switch (el) {
-                                case "Empty" :
-                                    return ".";
-                                case "Cube" :
-                                    return "#";
-                                case "Round" :
-                                    return "O";
-                                
-                              }
-                            }).join("");
+                return row.map(showElement).join("");
               }).join("\n");
 }
 
@@ -230,7 +220,7 @@ function part2(grid) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day14.res",
-              151,
+              145,
               10
             ],
             Error: new Error()
