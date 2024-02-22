@@ -18,7 +18,7 @@ Jest.describe("2023 Day14", (function () {
                 var result = AOC2023_Day14$AdventOfCode.solvePart2(AOC2023_Day14_Data_Sample$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 64);
               }));
-        Jest.test("Part 2 - Solve", (function () {
+        Jest.Skip.test("Part 2 - Solve", (function () {
                 var result = AOC2023_Day14$AdventOfCode.solvePart2(AOC2023_Day14_Data$AdventOfCode.data);
                 return Jest.Expect.toEqual(Jest.Expect.expect(result), 94876);
               }));

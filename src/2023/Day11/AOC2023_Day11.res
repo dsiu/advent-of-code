@@ -42,7 +42,7 @@ let setToArray = set => set->Set.values->Iterator.toArray
 
 // todo: should refactor to stdlib
 let maxBigInt = (m, n) => m > n ? m : n
-let maxBigInt = (m, n) => m < n ? m : n
+let minBigInt = (m, n) => m < n ? m : n
 
 let maxCoord = (Galaxies(galaxies)) => {
   let origin = (Constants.zero, Constants.zero)
