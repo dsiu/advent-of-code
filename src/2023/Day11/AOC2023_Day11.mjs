@@ -84,6 +84,14 @@ function setToArray(set) {
 }
 
 function maxBigInt(m, n) {
+  if (Caml_obj.greaterthan(m, n)) {
+    return m;
+  } else {
+    return n;
+  }
+}
+
+function minBigInt(m, n) {
   if (Caml_obj.lessthan(m, n)) {
     return m;
   } else {
@@ -227,6 +235,7 @@ export {
   dumpGalaxies ,
   setToArray ,
   maxBigInt ,
+  minBigInt ,
   maxCoord ,
   emptyRowCol ,
   expand ,
