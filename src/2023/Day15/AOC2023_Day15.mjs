@@ -26,6 +26,63 @@ function hash(str) {
               }));
 }
 
+function $$process(facility, instruction) {
+  if (instruction.TAG === "Remove") {
+    var s = instruction._0;
+    var label = hash(s);
+    facility.set(label, Stdlib__Option.mapOr(facility.get(label), [], (function (lenses) {
+                return lenses.filter(function (lens) {
+                            return lens.lensLabel !== s;
+                          });
+              })));
+    return facility;
+  }
+  var s$1 = instruction._0;
+  var label$1 = hash(s$1);
+  var newLens_lensPower = instruction._1;
+  var newLens = {
+    lensLabel: s$1,
+    lensPower: newLens_lensPower
+  };
+  facility.set(label$1, Stdlib__Option.mapOr(facility.get(label$1), [newLens], (function (lenses) {
+              return Stdlib__Option.mapOr(Stdlib__Array.findIndexOpt(lenses, (function (lens) {
+                                return lens.lensLabel === s$1;
+                              })), lenses.concat([newLens]), (function (i) {
+                            lenses[i] = newLens;
+                            return lenses;
+                          }));
+            })));
+  return facility;
+}
+
+function processAll(xs) {
+  var facility = new Map();
+  return Stdlib__Array.reduce(xs, facility, $$process);
+}
+
+function powerCell(param) {
+  var lenses = param[1];
+  var i = param[0];
+  var len = lenses.length;
+  return Stdlib__Array.sum(Stdlib__Array.zipWith(Stdlib__Array.fromInitializer(len, (function (i) {
+                        return i + 1 | 0;
+                      })), lenses.map(function (lens) {
+                      return lens.lensPower;
+                    }), (function (a, b) {
+                    return Math.imul(Math.imul(a, b), i + 1 | 0);
+                  })), {
+              zero: Stdlib__Int.zero,
+              add: Stdlib__Int.add
+            });
+}
+
+function power(facility) {
+  return Stdlib__Array.sum(Array.from(facility.entries()).map(powerCell), {
+              zero: Stdlib__Int.zero,
+              add: Stdlib__Int.add
+            });
+}
+
 function nonEmptyListToString(x) {
   return Stdlib__List.join(Relude_NonEmpty.List.toList(x), "");
 }
@@ -74,6 +131,12 @@ var InstructionParser = {
   run: run
 };
 
+function part2(data) {
+  var insts = data.split(",").map(run);
+  var processed = processAll(insts);
+  return power(processed);
+}
+
 function part1(xs) {
   return Stdlib__Array.sum(xs.map(hash), {
               zero: Stdlib__Int.zero,
@@ -86,15 +149,11 @@ function parsePart1(data) {
 }
 
 function solvePart1(data) {
-  var d = data.trim().split(",");
-  console.log(d);
-  return part1(d);
+  return part1(data.trim().split(","));
 }
 
 function solvePart2(data) {
-  var prim = data.split(",").map(run);
-  console.log(prim);
-  return 2;
+  return part2(data);
 }
 
 export {
@@ -102,7 +161,12 @@ export {
   log2 ,
   charToASCII ,
   hash ,
+  $$process ,
+  processAll ,
+  powerCell ,
+  power ,
   InstructionParser ,
+  part2 ,
   part1 ,
   parsePart1 ,
   solvePart1 ,

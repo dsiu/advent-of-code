@@ -16,11 +16,11 @@ Jest.describe("2023 Day15", (function () {
               }));
         Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2023_Day15$AdventOfCode.solvePart2(AOC2023_Day15_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 145);
               }));
         Jest.test("Part 2 - Solve", (function () {
                 var result = AOC2023_Day15$AdventOfCode.solvePart2(AOC2023_Day15_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 229349);
               }));
       }));
 

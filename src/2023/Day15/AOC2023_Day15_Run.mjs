@@ -12,7 +12,7 @@ console.time("Part 1");
 
 console.time("Part 2");
 
-var part2 = AOC2023_Day15$AdventOfCode.solvePart2(AOC2023_Day15_Data_Sample$AdventOfCode.data);
+var part2 = AOC2023_Day15$AdventOfCode.solvePart2(AOC2023_Day15_Data$AdventOfCode.data);
 
 console.log("Part 2 Result");
 

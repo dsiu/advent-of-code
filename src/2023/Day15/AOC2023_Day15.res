@@ -5,7 +5,7 @@ let log2 = Console.log2
 
 type instruction = Remove(string) | Insert(string, int)
 type lens = {lensLabel: string, lensPower: int}
-type facility = Map.t<int, lens>
+type facility = Map.t<int, array<lens>>
 
 let charToASCII = s => {
   s->String.codePointAt(0)->Option.getExn
@@ -20,6 +20,63 @@ let hash = str => {
     //    (acc + charToASCII(c))->(log2("acc + ascii = ", _))
     ((acc + charToASCII(c)) * 17)->Int.mod(256)
   })
+}
+
+let process: (facility, instruction) => facility = (facility, instruction) => {
+  switch instruction {
+  | Remove(s) => {
+      let label = hash(s)
+      facility->Map.set(
+        label,
+        facility
+        ->Map.get(label)
+        ->Option.mapOr([], lenses => {
+          lenses->Array.filter(lens => lens.lensLabel != s)
+        }),
+      )
+      facility
+    }
+  | Insert(s, p) => {
+      let label = hash(s)
+      let newLens = {lensLabel: s, lensPower: p}
+
+      facility->Map.set(
+        label,
+        facility
+        ->Map.get(label)
+        ->Option.mapOr([newLens], lenses => {
+          lenses
+          ->Array.findIndexOpt(lens => lens.lensLabel == s)
+          ->Option.mapOr(Array.concat(lenses, [newLens]), i => {
+            lenses->Array.set(i, newLens)
+            lenses
+          })
+        }),
+      )
+      facility
+    }
+  }
+}
+
+let processAll: array<instruction> => facility = xs => {
+  let facility = Map.make()
+  xs->Array.reduce(facility, process)
+}
+
+let powerCell: ((int, array<lens>)) => int = ((i, lenses)) => {
+  let len = lenses->Array.length
+
+  Array.fromInitializer(~length=len, i => i + 1)
+  ->Array.zipWith(lenses->Array.map(lens => lens.lensPower), (a, b) => a * b * (i + 1))
+  ->Array.sum(module(Int))
+}
+
+let power: facility => int = facility => {
+  facility
+  ->Map.entries
+  ->Array.fromIterator
+  ->Array.map(powerCell)
+  ->Array.sum(module(Int))
 }
 
 module InstructionParser = {
@@ -53,6 +110,11 @@ module InstructionParser = {
   }
 }
 
+let part2 = data => {
+  let insts = data->String.split(",")->Array.map(InstructionParser.run)
+  let processed = insts->processAll
+  processed->power
+}
 let part1 = xs => {
   xs->Array.map(hash)->Array.sum(module(Int))
 }
@@ -60,12 +122,9 @@ let part1 = xs => {
 let parsePart1 = data => data->String.trim->String.split(",")
 
 let solvePart1 = data => {
-  let d = data->parsePart1
-  d->log
-  d->part1
+  data->parsePart1->part1
 }
 
 let solvePart2 = data => {
-  data->String.split(",")->Array.map(InstructionParser.run)->log
-  2
+  data->part2
 }
