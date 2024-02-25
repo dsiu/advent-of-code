@@ -37,9 +37,6 @@ let dumpGalaxies = (Galaxies(galaxies)) => {
   galaxies->Set.forEach((Position(p)) => log(p))
 }
 
-// todo: refactor to stdlib
-let setToArray = set => set->Set.values->Iterator.toArray
-
 // todo: should refactor to stdlib
 let maxBigInt = (m, n) => m > n ? m : n
 let minBigInt = (m, n) => m < n ? m : n
@@ -48,7 +45,7 @@ let maxCoord = (Galaxies(galaxies)) => {
   let origin = (Constants.zero, Constants.zero)
 
   galaxies
-  ->setToArray
+  ->Set.toArray
   ->Array.reduce(origin, ((xAcc, yAcc), Position((x, y))) => {
     (max(xAcc, x), max(y, yAcc))
   })
@@ -57,7 +54,7 @@ let maxCoord = (Galaxies(galaxies)) => {
 let emptyRowCol = (Galaxies(galaxies) as g) => {
   let (maxX, maxY) = g->maxCoord
   let origin = (Constants.zero, Constants.zero)
-  let galaxies = galaxies->setToArray
+  let galaxies = galaxies->Set.toArray
 
   let xs = Array.fromInitializer(~length=toInt(maxX), Function.id)
   let cols = xs->Array.filter(x => {
@@ -85,7 +82,7 @@ let expand = (Galaxies(galaxies), (expX, expY), scale) => {
       )->Position
     })
 
-  galaxies->setToArray->expandXY->Set.fromArray->Galaxies
+  galaxies->Set.toArray->expandXY->Set.fromArray->Galaxies
 }
 
 let absBigInt = (x: BigInt.t) => x < Constants.zero ? Constants.zero - x : x
@@ -95,7 +92,7 @@ let manhattan: (position, position) => BigInt.t = (Position((x, y)), Position((x
 }
 
 let distances = (Galaxies(galaxies)) => {
-  let galaxies = galaxies->setToArray
+  let galaxies = galaxies->Set.toArray
   galaxies->Array.reduce([], (acc, p) => {
     galaxies->Array.filter(p' => p != p')->Array.map(p' => manhattan(p, p'))->Array.concat(acc)
   })

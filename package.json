@@ -41,11 +41,11 @@
   },
   "dependencies": {
     "@dsiu/rescript-graphology": "https://github.com/dsiu/rescript-graphology#commit=469b2d7b1c16370892fcfd735cdf6cbf5d24dd86",
-    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=51773a4f452b43d3542faa441c441757adff8ba4",
+    "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#commit=b16365f967d24a53fd6bb73cab07a28ed7e55d63",
     "@greenlabs/garter": "https://github.com/dsiu/garter#rescript-v11-curried-mode",
     "@jmagaram/rescript-extras": "^3.0.0",
     "@jmagaram/rescript-seq": "^3.0.1",
-    "@rescript/core": "^1.0.0",
+    "@rescript/core": "^1.1.0",
     "@resinfo/parser": "https://github.com/dsiu/rescript-parser#commit=02b0e3d1c1ea00a7c0a9f2091c89c674952bef87",
     "bs-bastet": "https://github.com/dsiu/rescript-bastet#rescript-v11-uncurried-wip",
     "debug": "^4.3.4",
