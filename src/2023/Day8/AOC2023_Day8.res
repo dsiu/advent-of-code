@@ -120,7 +120,7 @@ let part2: ((array<direction>, desert)) => BigInt.t = ((directions, desert)) => 
   ->Array.filter(Fn.compose3(String.last, String.compare("A", ...), Ordering.isEqual, ...))
   ->Array.map(s => walk(desert, directions, {here: s, steps: 0}).steps)
   ->Array.map(BigInt.fromInt)
-  ->Array.foldl1(Math.lcmBigInt)
+  ->Array.foldl1(Math.BigInt.lcm)
 }
 
 module ProblemParser = {

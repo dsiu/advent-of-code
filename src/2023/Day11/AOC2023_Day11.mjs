@@ -2,6 +2,7 @@
 
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.mjs";
+import * as Stdlib__Set from "@dsiu/rescript-stdlib-fp/src/Stdlib__Set.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Stdlib__BigInt from "@dsiu/rescript-stdlib-fp/src/Stdlib__BigInt.mjs";
 import * as Stdlib__Tuple2 from "@dsiu/rescript-stdlib-fp/src/Stdlib__Tuple2.mjs";
@@ -79,26 +80,6 @@ function dumpGalaxies(galaxies) {
       });
 }
 
-function setToArray(set) {
-  return Array.from(set.values());
-}
-
-function maxBigInt(m, n) {
-  if (Caml_obj.greaterthan(m, n)) {
-    return m;
-  } else {
-    return n;
-  }
-}
-
-function minBigInt(m, n) {
-  if (Caml_obj.lessthan(m, n)) {
-    return m;
-  } else {
-    return n;
-  }
-}
-
 function maxCoord(galaxies) {
   var origin_0 = Stdlib__BigInt_Ext.Constants.zero;
   var origin_1 = Stdlib__BigInt_Ext.Constants.zero;
@@ -106,7 +87,7 @@ function maxCoord(galaxies) {
     origin_0,
     origin_1
   ];
-  return Stdlib__Array.reduce(Array.from(galaxies._0.values()), origin, (function (param, param$1) {
+  return Stdlib__Array.reduce(Stdlib__Set.toArray(galaxies._0), origin, (function (param, param$1) {
                 var match = param$1._0;
                 return [
                         Caml_obj.max(param[0], match[0]),
@@ -117,7 +98,7 @@ function maxCoord(galaxies) {
 
 function emptyRowCol(g) {
   var match = maxCoord(g);
-  var galaxies = Array.from(g._0.values());
+  var galaxies = Stdlib__Set.toArray(g._0);
   var xs = Stdlib__Array.fromInitializer(Stdlib__BigInt.toInt(match[0]), Stdlib__Function.id);
   var cols = xs.filter(function (x) {
         return galaxies.filter(function (param) {
@@ -160,7 +141,7 @@ function expand(galaxies, param, scale) {
   };
   return {
           TAG: "Galaxies",
-          _0: new Set(expandXY(Array.from(galaxies._0.values())))
+          _0: new Set(expandXY(Stdlib__Set.toArray(galaxies._0)))
         };
 }
 
@@ -179,7 +160,7 @@ function manhattan(param, param$1) {
 }
 
 function distances(galaxies) {
-  var galaxies$1 = Array.from(galaxies._0.values());
+  var galaxies$1 = Stdlib__Set.toArray(galaxies._0);
   return Stdlib__Array.reduce(galaxies$1, [], (function (acc, p) {
                 return galaxies$1.filter(function (p$p) {
                                 return Caml_obj.notequal(p, p$p);
@@ -233,9 +214,6 @@ export {
   log2 ,
   Coord_V2_Big ,
   dumpGalaxies ,
-  setToArray ,
-  maxBigInt ,
-  minBigInt ,
   maxCoord ,
   emptyRowCol ,
   expand ,
