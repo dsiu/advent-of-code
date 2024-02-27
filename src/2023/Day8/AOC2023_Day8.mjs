@@ -89,7 +89,7 @@ function part2(param) {
                               }).steps;
                   }).map(function (prim) {
                   return BigInt(prim);
-                }), Stdlib__Math.lcmBigInt);
+                }), Stdlib__Math.$$BigInt.lcm);
 }
 
 var justSpace = ReludeParse_Parser.$$void(ReludeParse_Parser.many(ReludeParse_Parser.str(" ")));
