@@ -31,6 +31,10 @@ function mul(param, x) {
         ];
 }
 
+function show(param) {
+  return "(" + param[0].toString() + ", " + param[1].toString() + ")";
+}
+
 var TC;
 
 var comparator = include.comparator;
@@ -42,5 +46,6 @@ export {
   comparator ,
   add ,
   mul ,
+  show ,
 }
 /* include Not a pure module */

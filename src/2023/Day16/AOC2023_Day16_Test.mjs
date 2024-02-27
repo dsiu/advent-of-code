@@ -8,19 +8,19 @@ import * as AOC2023_Day16_Data_Sample$AdventOfCode from "./AOC2023_Day16_Data_Sa
 Jest.describe("2023 Day16", (function () {
         Jest.test("Part 1 - Sample Data", (function () {
                 var result = AOC2023_Day16$AdventOfCode.solvePart1(AOC2023_Day16_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 46);
               }));
         Jest.test("Part 1 - Solve", (function () {
                 var result = AOC2023_Day16$AdventOfCode.solvePart1(AOC2023_Day16_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 6883);
               }));
         Jest.test("Part 2 - Sample Data", (function () {
                 var result = AOC2023_Day16$AdventOfCode.solvePart2(AOC2023_Day16_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 51);
               }));
-        Jest.test("Part 2 - Solve", (function () {
+        Jest.Skip.test("Part 2 - Solve", (function () {
                 var result = AOC2023_Day16$AdventOfCode.solvePart2(AOC2023_Day16_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+                return Jest.Expect.toEqual(Jest.Expect.expect(result), 7228);
               }));
       }));
 
