@@ -30,11 +30,12 @@ function $$process(facility, instruction) {
   if (instruction.TAG === "Remove") {
     var s = instruction._0;
     var label = hash(s);
-    facility.set(label, Stdlib__Option.mapOr(facility.get(label), [], (function (lenses) {
-                return lenses.filter(function (lens) {
-                            return lens.lensLabel !== s;
-                          });
-              })));
+    var updatedLenses = Stdlib__Option.mapOr(facility.get(label), [], (function (lenses) {
+            return lenses.filter(function (lens) {
+                        return lens.lensLabel !== s;
+                      });
+          }));
+    facility.set(label, updatedLenses);
     return facility;
   }
   var s$1 = instruction._0;
@@ -44,14 +45,15 @@ function $$process(facility, instruction) {
     lensLabel: s$1,
     lensPower: newLens_lensPower
   };
-  facility.set(label$1, Stdlib__Option.mapOr(facility.get(label$1), [newLens], (function (lenses) {
-              return Stdlib__Option.mapOr(Stdlib__Array.findIndexOpt(lenses, (function (lens) {
-                                return lens.lensLabel === s$1;
-                              })), lenses.concat([newLens]), (function (i) {
-                            lenses[i] = newLens;
-                            return lenses;
-                          }));
-            })));
+  var updatedLenses$1 = Stdlib__Option.mapOr(facility.get(label$1), [newLens], (function (lenses) {
+          return Stdlib__Option.mapOr(Stdlib__Array.findIndexOpt(lenses, (function (lens) {
+                            return lens.lensLabel === s$1;
+                          })), lenses.concat([newLens]), (function (i) {
+                        lenses[i] = newLens;
+                        return lenses;
+                      }));
+        }));
+  facility.set(label$1, updatedLenses$1);
   return facility;
 }
 
@@ -61,16 +63,10 @@ function processAll(xs) {
 }
 
 function powerCell(param) {
-  var lenses = param[1];
   var i = param[0];
-  var len = lenses.length;
-  return Stdlib__Array.sum(Stdlib__Array.zipWith(Stdlib__Array.fromInitializer(len, (function (i) {
-                        return i + 1 | 0;
-                      })), lenses.map(function (lens) {
-                      return lens.lensPower;
-                    }), (function (a, b) {
-                    return Math.imul(Math.imul(a, b), i + 1 | 0);
-                  })), {
+  return Stdlib__Array.sum(param[1].map(function (lens, index) {
+                  return Math.imul(Math.imul(index + 1 | 0, lens.lensPower), i + 1 | 0);
+                }), {
               zero: Stdlib__Int.zero,
               add: Stdlib__Int.add
             });
@@ -132,9 +128,7 @@ var InstructionParser = {
 };
 
 function part2(data) {
-  var insts = data.split(",").map(run);
-  var processed = processAll(insts);
-  return power(processed);
+  return power(processAll(data.split(",").map(run)));
 }
 
 function part1(xs) {
