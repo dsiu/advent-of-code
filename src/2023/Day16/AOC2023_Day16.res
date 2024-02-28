@@ -52,8 +52,9 @@ let showBeamHead = (BeamHead((pos, dir))) => {
 }
 
 let bounds: grid => (int, int) = grid => {
-  let rows = grid->Map.keysToArray->Array.map(((r, _)) => r)
-  let cols = grid->Map.keysToArray->Array.map(((_, c)) => c)
+  let keys = grid->Map.keysToArray
+  let rows = keys->Array.map(((r, _)) => r)
+  let cols = keys->Array.map(((_, c)) => c)
   (
     rows->Array.reduce(Int.Constants.minValue, Math.Int.max),
     cols->Array.reduce(Int.Constants.minValue, Math.Int.max),
@@ -66,7 +67,6 @@ let inRange = ((r1, c1), ~bounds as b) => {
 }
 
 let move = (pos, dir) => {
-  module Dir = Coordinate.Direction
   switch dir {
   | U => Coord_V2.add(pos, (-1, 0))
   | D => Coord_V2.add(pos, (1, 0))
@@ -108,20 +108,17 @@ let rec propagate: (grid, (int, int), energized, array<beamHead>) => energized =
       let bhs = beamHeads->Array.tail
       let BeamHead(beamPos, _) = bh
 
-      switch energized->Set.has(bh) {
-      | true => propagate(grid, bounds, energized, bhs)
-      | false =>
-        //          beamPos->(log2("beamPos", _))
-        switch grid->Map.get(beamPos) {
-        | Some(this) => {
-            let nexts = propagateElem(this, bh)
-            let nexts' = nexts->Array.filter((BeamHead(p, _)) => p->inRange(~bounds))
-            let energized' = energized->Set.add(bh)
-            propagate(grid, bounds, energized', Array.concat(bhs, nexts'))
+      energized->Set.has(bh)
+        ? propagate(grid, bounds, energized, bhs)
+        : switch grid->Map.get(beamPos) {
+          | Some(this) => {
+              let nexts = propagateElem(this, bh)
+              let nexts' = nexts->Array.filter((BeamHead(p, _)) => p->inRange(~bounds))
+              let energized' = energized->Set.add(bh)
+              propagate(grid, bounds, energized', Array.concat(bhs, nexts'))
+            }
+          | None => failwith("Beam head out of bounds")
           }
-        | None => failwith("Beam head out of bounds")
-        }
-      }
     }
   }
 }
@@ -137,11 +134,20 @@ let makeElement = s => {
   }
 }
 
+/**
+ * This function creates a grid from a 2D array of strings.
+ * Each string represents an element in the grid.
+ * The function maps each string to its corresponding element and position in the grid.
+ * The position is determined by the indices of the string in the 2D array.
+ * The grid is represented as a Map where the keys are the positions and the values are the elements.
+ *
+ * @param {array<array<string>>} xss - The 2D array of strings.
+ * @returns {grid} The created grid.
+ */
 let makeGrid: array<array<string>> => grid = xss => {
-  let r = xss->Array.length
-  let c = xss->Array.getUnsafe(0)->Array.length
-  Array.zipWith(Array.fromInitializer(~length=r, Fn.id), xss, (rowNum, row) => {
-    Array.zipWith(Array.fromInitializer(~length=c, Fn.id), row, (colNum, col) => {
+  xss
+  ->Array.mapWithIndex((row, rowNum) => {
+    row->Array.mapWithIndex((col, colNum) => {
       ((rowNum, colNum), makeElement(col))
     })
   })
@@ -149,6 +155,17 @@ let makeGrid: array<array<string>> => grid = xss => {
   ->Belt.Map.fromArray(~id=module(PositionCmp))
 }
 
+/**
+ * This function counts the number of unique positions that a beam of light can reach in a grid.
+ * The beam of light is represented by a beam head, which has a position and a direction.
+ * The beam of light propagates through the grid according to the rules defined in the `propagate` function.
+ * The function returns the number of unique positions that the beam of light can reach.
+ *
+ * @param {grid} grid - The grid through which the beam of light propagates.
+ * @param {(int, int)} bounds - The bounds of the grid.
+ * @param {beamHead} beamHead - The initial beam head from which the beam of light starts propagating.
+ * @returns {int} The number of unique positions that the beam of light can reach.
+ */
 let countEnergized: (grid, (int, int), beamHead) => int = (grid, bounds, beamHead) => {
   propagate(grid, bounds, Set.make(~id=module(BeamHeadCmp)), [beamHead])
   ->Set.toArray
@@ -157,6 +174,17 @@ let countEnergized: (grid, (int, int), beamHead) => int = (grid, bounds, beamHea
   ->Array.length
 }
 
+/**
+ * This function generates the edges of a grid.
+ * The edges are represented as an array of beam heads.
+ * Each beam head has a position and a direction.
+ * The positions of the beam heads are the positions on the edges of the grid.
+ * The directions of the beam heads are towards the inside of the grid.
+ * The function returns the array of beam heads.
+ *
+ * @param {grid} grid - The grid for which the edges are generated.
+ * @returns {array<beamHead>} The array of beam heads representing the edges of the grid.
+ */
 let getEdges: grid => array<beamHead> = grid => {
   let bounds = grid->bounds
   let (maxR, maxC) = bounds

@@ -8,7 +8,6 @@ import * as PervasivesU from "rescript/lib/es6/pervasivesU.js";
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
-import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as Coord_V2$AdventOfCode from "../../Coord_V2.mjs";
 
@@ -73,10 +72,11 @@ function showBeamHead(param) {
 }
 
 function bounds(grid) {
-  var rows = Belt_Map.keysToArray(grid).map(function (param) {
+  var keys = Belt_Map.keysToArray(grid);
+  var rows = keys.map(function (param) {
         return param[0];
       });
-  var cols = Belt_Map.keysToArray(grid).map(function (param) {
+  var cols = keys.map(function (param) {
         return param[1];
       });
   return [
@@ -345,19 +345,17 @@ function makeElement(s) {
 }
 
 function makeGrid(xss) {
-  var r = xss.length;
-  var c = Stdlib__Array.getUnsafe(xss, 0).length;
-  return Belt_Map.fromArray(Stdlib__Array.flatten(Stdlib__Array.zipWith(Stdlib__Array.fromInitializer(r, Stdlib__Function.id), xss, (function (rowNum, row) {
-                        return Stdlib__Array.zipWith(Stdlib__Array.fromInitializer(c, Stdlib__Function.id), row, (function (colNum, col) {
-                                      return [
-                                              [
-                                                rowNum,
-                                                colNum
-                                              ],
-                                              makeElement(col)
-                                            ];
-                                    }));
-                      }))), PositionCmp);
+  return Belt_Map.fromArray(Stdlib__Array.flatten(xss.map(function (row, rowNum) {
+                      return row.map(function (col, colNum) {
+                                  return [
+                                          [
+                                            rowNum,
+                                            colNum
+                                          ],
+                                          makeElement(col)
+                                        ];
+                                });
+                    })), PositionCmp);
 }
 
 function countEnergized(grid, bounds, beamHead) {
