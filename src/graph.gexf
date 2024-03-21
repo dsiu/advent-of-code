@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf version="1.3" xmlns="http://gexf.net/1.3" xmlns:viz="http://gexf.net/1.3/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://gexf.net/1.3 http://gexf.net/1.3/gexf.xsd">
+  <meta/>
+  <graph defaultedgetype="directed">
+    <attributes class="node">
+      <attribute id="name" title="name" type="string"/>
+    </attributes>
+    <attributes class="edge">
+      <attribute id="name" title="name" type="string"/>
+    </attributes>
+    <nodes>
+      <node id="1" label="1">
+        <attvalues>
+          <attvalue for="name" value="1"/>
+        </attvalues>
+      </node>
+      <node id="2" label="2">
+        <attvalues>
+          <attvalue for="name" value="2"/>
+        </attvalues>
+      </node>
+      <node id="3" label="3">
+        <attvalues>
+          <attvalue for="name" value="3"/>
+        </attvalues>
+      </node>
+      <node id="4" label="4">
+        <attvalues>
+          <attvalue for="name" value="4"/>
+        </attvalues>
+      </node>
+      <node id="5" label="5">
+        <attvalues>
+          <attvalue for="name" value="5"/>
+        </attvalues>
+      </node>
+      <node id="6" label="6">
+        <attvalues>
+          <attvalue for="name" value="6"/>
+        </attvalues>
+      </node>
+      <node id="7" label="7">
+        <attvalues>
+          <attvalue for="name" value="7"/>
+        </attvalues>
+      </node>
+      <node id="8" label="8">
+        <attvalues>
+          <attvalue for="name" value="8"/>
+        </attvalues>
+      </node>
+      <node id="9" label="9">
+        <attvalues>
+          <attvalue for="name" value="9"/>
+        </attvalues>
+      </node>
+      <node id="10" label="10">
+        <attvalues>
+          <attvalue for="name" value="10"/>
+        </attvalues>
+      </node>
+      <node id="11" label="11">
+        <attvalues>
+          <attvalue for="name" value="11"/>
+        </attvalues>
+      </node>
+      <node id="12" label="12">
+        <attvalues>
+          <attvalue for="name" value="12"/>
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="geid_223_0" source="1" target="2" label="geid_223_0">
+        <attvalues>
+          <attvalue for="name" value="geid_223_0"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_1" source="1" target="3" label="geid_223_1">
+        <attvalues>
+          <attvalue for="name" value="geid_223_1"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_2" source="1" target="4" label="geid_223_2">
+        <attvalues>
+          <attvalue for="name" value="geid_223_2"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_3" source="2" target="5" label="geid_223_3">
+        <attvalues>
+          <attvalue for="name" value="geid_223_3"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_4" source="2" target="6" label="geid_223_4">
+        <attvalues>
+          <attvalue for="name" value="geid_223_4"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_5" source="4" target="7" label="geid_223_5">
+        <attvalues>
+          <attvalue for="name" value="geid_223_5"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_6" source="4" target="8" label="geid_223_6">
+        <attvalues>
+          <attvalue for="name" value="geid_223_6"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_7" source="5" target="9" label="geid_223_7">
+        <attvalues>
+          <attvalue for="name" value="geid_223_7"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_8" source="5" target="10" label="geid_223_8">
+        <attvalues>
+          <attvalue for="name" value="geid_223_8"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_9" source="7" target="11" label="geid_223_9">
+        <attvalues>
+          <attvalue for="name" value="geid_223_9"/>
+        </attvalues>
+      </edge>
+      <edge id="geid_223_10" source="7" target="12" label="geid_223_10">
+        <attvalues>
+          <attvalue for="name" value="geid_223_10"/>
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

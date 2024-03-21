@@ -1,3 +1,4 @@
+// Functions for manipulating a 2D array in a functional programming style
 open Stdlib
 
 type t<'a> = array<array<'a>>
@@ -16,6 +17,7 @@ let lengthX = t => {
   t->Array.get(0)->Stdlib.Option.mapOr(0, a => Array.length(a))
 }
 
+// A function to validate if given coordinates (x, y) are within the bounds of a 2D array t.
 let isValidXY = (t, (x, y)) => {
   let len_x = t->lengthX
   let len_y = t->lengthY

@@ -25,6 +25,7 @@
   "suffix": ".mjs",
   "bs-dependencies": [
     "@rescript/core",
+    "rescript-nodejs",
     "rationale",
     "rescript-bag",
     "@resinfo/parser",

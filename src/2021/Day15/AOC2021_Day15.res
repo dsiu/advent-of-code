@@ -5,7 +5,7 @@ open Utils
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
-open Graph
+open Graphology
 
 module Cave = {
   let adjCoords = c => {
@@ -38,7 +38,7 @@ module Cave = {
   let makeNodes = (g, lines) => {
     lines->Array2D.mapWithIndex((c, _) => {
       //      let v = G.V.create(c)
-      g->G.addNode(c, ())
+      g->G.addNode(c)
       c
     })
   }
@@ -60,7 +60,7 @@ module Cave = {
         let v' = node(nodes, x', y')
         //        G.add_edge_e(g, G.E.create(v, cost, v'))
 
-        g->G.addEdge(v, v', ~attr={"weight": cost}, ())
+        g->G.addEdge(v, v', ~attr={"weight": cost})
         //        log(
         //          `(${x->Int.toString}, ${y->Int.toString})[${V.hash((
         //              x,
@@ -89,7 +89,6 @@ module Cave = {
         node(nodes, 0, 0),
         node(nodes, dest_x, dest_y),
         ~weight=#Attr("weight"),
-        (),
       )
 
     let edges = g->G.ShortestPath.Utils.edgePathFromNodePath(path)
