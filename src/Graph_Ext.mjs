@@ -15,23 +15,25 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-var G = Graphology__Graph.MakeGraph({});
-
 function stringToFile(str, fileName) {
   Nodefs.writeFileSync(fileName, Buffer.from(str));
 }
 
-function writeToFile(g, filename) {
+function writeToFile(g, filename, G) {
   var gexfStrWithOptions = G.GEXF.write(g, {
         formatNode: (function (key, _attributes) {
+            var attr$p = {};
+            var attr$p$1 = Object.assign(attr$p, _attributes);
+            attr$p$1["name"] = key;
             return {
                     label: key,
-                    attributes: {
-                      name: key
-                    }
+                    attributes: attr$p$1
                   };
           }),
         formatEdge: (function (key, _attributes) {
+            var attr$p = {};
+            var attr$p$1 = Object.assign(attr$p, _attributes);
+            attr$p$1["name"] = key;
             return {
                     label: key,
                     attributes: {
@@ -47,6 +49,8 @@ function writeToFile(g, filename) {
 var GEXF = {
   writeToFile: writeToFile
 };
+
+var G = Graphology__Graph.MakeGraph({});
 
 function bfs(graph, rootNode, cb) {
   var queue = Belt_MutableQueue.make();
@@ -173,6 +177,7 @@ console.log("BFS");
 
 var bfsRes = bfs(g, "1", (function (node, depth) {
         console.log(node, depth);
+        G.setNodeAttribute(g, node, "depth", depth);
         return false;
       }));
 
@@ -187,6 +192,8 @@ var dfsRes = dfs(g, "1", (function (node, depth) {
 
 console.log(dfsRes, "dfsRes");
 
+writeToFile(g, "graph.gexf", G);
+
 var Queue;
 
 var Stack;
@@ -199,9 +206,9 @@ export {
   Queue ,
   Stack ,
   $$Set ,
-  G ,
   stringToFile ,
   GEXF ,
+  G ,
   Traversal ,
 }
 /* G Not a pure module */

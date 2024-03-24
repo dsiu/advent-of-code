@@ -11,11 +11,6 @@ module Queue = Belt.MutableQueue
 module Stack = Belt.MutableStack
 module Set = Belt.MutableSet.String
 
-module G = Graph.MakeGraph({
-  type node = node
-  type edge = edge
-})
-
 // todo: refactor
 let stringToFile = (str, ~fileName) => {
   open NodeJs
@@ -23,19 +18,28 @@ let stringToFile = (str, ~fileName) => {
 }
 
 module GEXF = {
-  let writeToFile = (g, filename) => {
+  type na<'a> = {..} as 'a
+  external attrToDict: na<'a> => Dict.t<'b> = "%identity"
+
+  // need locally abstract type for passing in a module
+  // https://forum.rescript-lang.org/t/how-to-unpack-a-dynamic-module/4323/2
+  let writeToFile = (type g, g: g, filename, module(G: Graph.GRAPH with type t = g)) => {
     let gexfStrWithOptions = g->G.GEXF.write(
       ~options={
         version: "1.3",
         formatNode: (key, _attributes) => {
+          let attr' = Dict.make()
+          let attr' = Dict.assign(attr', _attributes->attrToDict)
+          attr'->Dict.set("name", key)
           {
             "label": key,
-            "attributes": {
-              "name": key,
-            },
+            "attributes": attr',
           }
         },
         formatEdge: (key, _attributes) => {
+          let attr' = Dict.make()
+          let attr' = Dict.assign(attr', _attributes->attrToDict)
+          attr'->Dict.set("name", key)
           {
             "label": key,
             "attributes": {
@@ -49,6 +53,11 @@ module GEXF = {
     gexfStrWithOptions->stringToFile(~fileName=filename)
   }
 }
+
+module G = Graph.MakeGraph({
+  type node = node
+  type edge = edge
+})
 
 module Traversal = {
   type traversalRecord<'a> = TraversalRecord({node: G.node, depth: int})
@@ -143,6 +152,7 @@ let _ = {
   "BFS"->log
   let bfsRes = g->Traversal.bfs("1", (node, depth) => {
     log2(node, depth)
+    g->G.setNodeAttribute(node, "depth", depth)
     false
   })
   bfsRes->log2("bfsRes")
@@ -154,5 +164,5 @@ let _ = {
   })
   dfsRes->log2("dfsRes")
 
-  //  g->GEXF.writeToFile("graph.gexf")
+  g->GEXF.writeToFile("graph.gexf", module(G))
 }
