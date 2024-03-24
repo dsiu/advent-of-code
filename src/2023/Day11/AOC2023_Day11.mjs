@@ -38,10 +38,8 @@ function intCompare(a, b) {
   return Stdlib__Ordering.toInt(Stdlib__Int.compare(a, b));
 }
 
-function compare(param) {
-  return function (param$1) {
-    return Stdlib__Tuple2.compare(param, param$1, bigIntCompare, bigIntCompare);
-  };
+function compare(none, none$1) {
+  return Stdlib__Tuple2.compare(none, none$1, bigIntCompare, bigIntCompare);
 }
 
 var include = TableclothComparator.Make({

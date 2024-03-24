@@ -627,12 +627,6 @@ function makeFromPacket(p) {
                 TAG: "Max",
                 _0: Belt_List.map(rest, makeFromPacket)
               };
-    case 4 :
-        throw {
-              RE_EXN_ID: ParseError,
-              _1: "Unknown typeId",
-              Error: new Error()
-            };
     case 5 :
         return {
                 TAG: "Greater",

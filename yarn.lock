@@ -1459,7 +1459,7 @@ __metadata:
     rationale: "npm:^0.2.0"
     relude: "https://github.com/dsiu/rescript-relude#rescript-v11-uncurried-wip"
     relude-parse: "https://github.com/dsiu/rescript-relude-parse#rescript-v11-uncurried-wip"
-    rescript: "npm:^11.1.0-rc.3"
+    rescript: "npm:^11.1.0-rc.5"
     rescript-bag: "https://github.com/dsiu/rescript-bag#main"
     rescript-nodejs: "npm:^16.1.0"
     rescript-vector: "npm:^0.4.0"
@@ -4779,6 +4779,17 @@ __metadata:
     bstracing: lib/bstracing
     rescript: rescript
   checksum: 10c0/01b7236ad358aeab46625b3e1dbab6991d8d5f0b15346f7b6672f5bf1a948912b82795c087ff712011dad6a677f4dd406ea216e1f3d90dc6792c50ba9aaf3304
+  languageName: node
+  linkType: hard
+
+"rescript@npm:^11.1.0-rc.5":
+  version: 11.1.0-rc.5
+  resolution: "rescript@npm:11.1.0-rc.5"
+  bin:
+    bsc: bsc
+    bstracing: lib/bstracing
+    rescript: rescript
+  checksum: 10c0/44a3c70b49b7aa4cf9a4ace0cfe006e684e10791c68d4d13a5301fd4c026ab7e6380e414a612460ad33776d0c164e061d8768315d3dc41a325ecbc255e010a84
   languageName: node
   linkType: hard
 

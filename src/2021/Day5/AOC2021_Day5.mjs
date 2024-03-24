@@ -167,8 +167,6 @@ function makeRange(start, end) {
   switch (match) {
     case -1 :
         return Belt_Array.reverse(Belt_Array.range(end, start));
-    case 0 :
-        return [];
     case 1 :
         return Belt_Array.range(start, end);
     default:
