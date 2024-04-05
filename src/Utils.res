@@ -99,7 +99,7 @@ module Printable = {
 
   module Array = {
     let toString = (a, f) => {
-      "[" ++ a->Array.map(f)->Array.joinWith(",") ++ "]"
+      "[" ++ a->Array.map(f)->Array.join(",") ++ "]"
     }
   }
 
@@ -163,7 +163,7 @@ let splitDoubleNewline = String.split(_, "\n\n")
 //
 let sumIntArray = Array.reduce(_, 0, add)
 let mulIntArray = Array.reduce(_, 1, mul)
-let join = Array.joinWith(_, "")
+let join = Array.join(_, "")
 
 // sum up elements of array from ~offset with ~len (same as Array.slice)
 let sumRange = (xs, ~offset, ~len) => {
