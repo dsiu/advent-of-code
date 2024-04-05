@@ -137,7 +137,7 @@ module ProblemParser = {
     (a, b)
   }
 
-  let nameP = P.\"<$$>"(P.many(P.anyAlphaOrDigit), l => l->List.toArray->Array.joinWith(""))
+  let nameP = P.\"<$$>"(P.many(P.anyAlphaOrDigit), l => l->List.toArray->Array.join(""))
 
   let nodeP =
     mkNode->\"<$>"(P.str("(")->\"*>"(nameP)->\"<*"(P.str(", ")))->\"<*>"(nameP->\"<*"(P.str(")")))

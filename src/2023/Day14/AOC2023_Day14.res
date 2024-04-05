@@ -34,9 +34,9 @@ let showGrid: grid => string = grid => {
   ->Array.map(row =>
     row
     ->Array.map(showElement)
-    ->Array.joinWith("")
+    ->Array.join("")
   )
-  ->Array.joinWith("\n")
+  ->Array.join("\n")
 }
 
 let gridEq = (g1, g2) => {

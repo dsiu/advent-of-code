@@ -48,7 +48,7 @@ let isLit: signal => bool = ((n, x)) => {
 
 let part2 = regVals => {
   let pixels = regVals->A.map(compose(isLit, showPixel))
-  pixels->JsArray2Ex.chunkBySize(40)->A.map(x => x->A.joinWith(""))
+  pixels->JsArray2Ex.chunkBySize(40)->A.map(x => x->A.join(""))
 }
 
 @@warning("-8")

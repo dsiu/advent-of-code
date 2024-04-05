@@ -62,7 +62,7 @@ module AlmanacMap = {
   let toString: t => string = t => {
     `AlmanacMap(${t.srcCategory}, ${t.destCategory}, [${t.rules
       ->Array.map(Rule.toString)
-      ->Array.joinWith(", ")}])`
+      ->Array.join(", ")}])`
   }
 
   /**
@@ -141,9 +141,9 @@ module Almanac = {
   }
 
   let toString: t => string = t => {
-    `Almanac (Seeds: [${t.seeds->Array.map(BigInt.toString)->Array.joinWith(", ")}],\n[${t.maps
+    `Almanac (Seeds: [${t.seeds->Array.map(BigInt.toString)->Array.join(", ")}],\n[${t.maps
       ->Array.map(AlmanacMap.toString)
-      ->Array.joinWith("\n")})]`
+      ->Array.join("\n")})]`
   }
 
   let getMap: (t, string) => AlmanacMap.t = (t, src) => {
