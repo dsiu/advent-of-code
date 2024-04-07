@@ -2,13 +2,13 @@
 // Todo: - make Interval generic that works with float / Int / BigInt
 //
 open Stdlib
-open BigInt
+module BigInt = Stdlib.BigInt
 
 let log = Console.log
 let log2 = Console.log2
 
 // lower and upper bound are inclusive
-type t = (BigInt.t, BigInt.t)
+type t = (bigint, bigint)
 
 let toString: t => string = ((lower, upper)) => {
   `Interval(${lower->BigInt.toString}, ${upper->BigInt.toString})`
@@ -20,8 +20,8 @@ let toString: t => string = ((lower, upper)) => {
  * The first BigInt in the tuple is the smaller of the two input BigInts, and the second BigInt is the larger of the two input BigInts.
  * If the two input BigInts are equal, it returns a tuple of two equal BigInts.
  *
- * @param {BigInt.t} lower - The first BigInt to create the interval from.
- * @param {BigInt.t} upper - The second BigInt to create the interval from.
+ * @param {bigint} lower - The first BigInt to create the interval from.
+ * @param {bigint} upper - The second BigInt to create the interval from.
  * @returns {t} - The created interval. It is a tuple of two BigInts. The first BigInt is the smaller of the two input BigInts, and the second BigInt is the larger of the two input BigInts.
  *
  * @example
@@ -30,7 +30,7 @@ let toString: t => string = ((lower, upper)) => {
  * let interval = make(lower, upper)
  * // interval is now a tuple (1, 2)
  */
-let make: (BigInt.t, BigInt.t) => t = (lower, upper) => {
+let make: (bigint, bigint) => t = (lower, upper) => {
   lower > upper ? (upper, lower) : (lower, upper)
 }
 
@@ -38,11 +38,11 @@ let make: (BigInt.t, BigInt.t) => t = (lower, upper) => {
  * Creates an interval from a lower bound and a length.
  * The function fails if the length is negative.
  *
- * @param {BigInt.t} lower - The lower bound of the interval.
- * @param {BigInt.t} length - The length of the interval.
+ * @param {bigint} lower - The lower bound of the interval.
+ * @param {bigint} length - The length of the interval.
  * @returns {t} - The created interval.
  */
-let makeWithLength: (BigInt.t, ~length: BigInt.t) => t = (lower, ~length) => {
+let makeWithLength: (bigint, ~length: bigint) => t = (lower, ~length) => {
   if length < BigInt.fromInt(0) {
     failwith("length must be non-negative")
   }
@@ -59,7 +59,7 @@ let makeWithLength: (BigInt.t, ~length: BigInt.t) => t = (lower, ~length) => {
  * If the upper bound is not greater than the lower bound, it subtracts the upper bound from the lower bound and adds 1.
  *
  * @param {t} interval - The interval to calculate the length of. It is a tuple of two BigInts.
- * @returns {BigInt.t} - The length of the interval. It is a BigInt.
+ * @returns {bigint} - The length of the interval. It is a BigInt.
  *
  * @example
  * let interval = Interval.make(BigInt.fromInt(1), BigInt.fromInt(2))
@@ -82,7 +82,7 @@ let equals = ((aLower, aUpper), (bLower, bUpper)) => {
  * Otherwise, it returns false.
  *
  * @param {t} interval - The interval to check. It is a tuple of two BigInts.
- * @param {BigInt.t} num - The number to check if it is contained within the interval.
+ * @param {bigint} num - The number to check if it is contained within the interval.
  * @returns {bool} - A boolean indicating whether the number is contained within the interval.
  *
  * @example
@@ -91,7 +91,7 @@ let equals = ((aLower, aUpper), (bLower, bUpper)) => {
  * let isContained = Interval.contains(interval, num)
  * // isContained is now true
  */
-let contains: (t, BigInt.t) => bool = ((lower, upper), num) => {
+let contains: (t, bigint) => bool = ((lower, upper), num) => {
   num >= lower && num <= upper
 }
 
@@ -132,6 +132,7 @@ let isOverlap: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) =
  * // intersection is now `Some(Interval(2, 3))`
  */
 let intersect: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+  open! Math.BigInt
   isOverlap(a, b) ? make(max(aLower, bLower), min(aUpper, bUpper))->Some : None
 }
 
@@ -174,7 +175,8 @@ let below: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
  */
 let adjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
   // make sure t1 is all below t2 and both are not connected
-  add(aUpper, fromInt(1)) === bLower || add(bUpper, fromInt(1)) === aLower
+  open! BigInt
+  aUpper + 1n === bLower || bUpper + 1n === aLower
 }
 
 /**
@@ -203,7 +205,7 @@ let belowAndAdjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) 
  * The lower and upper bounds of the new interval are the lower and upper bounds of the input interval plus the input number.
  *
  * @param {t} interval - The interval to add the number to. It is a tuple of two BigInts.
- * @param {BigInt.t} num - The number to add to the interval.
+ * @param {bigint} num - The number to add to the interval.
  * @returns {t} - The new interval. It is a tuple of two BigInts. The lower and upper bounds of the new interval are the lower and upper bounds of the input interval plus the input number.
  *
  * @example
@@ -212,7 +214,8 @@ let belowAndAdjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) 
  * let newInterval = Interval.add(interval, num)
  * // newInterval is now a tuple (2, 3)
  */
-let add: (t, BigInt.t) => t = ((lower, upper), num) => {
+let add: (t, bigint) => t = ((lower, upper), num) => {
+  open! BigInt
   make(lower + num, upper + num)
 }
 
@@ -236,6 +239,7 @@ let add: (t, BigInt.t) => t = ((lower, upper), num) => {
  * // removed is now `Some(Interval(1, 1))`
  */
 let remove: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+  open! BigInt
   switch (
     isOverlap(a, b),
     equals(a, b),
@@ -244,8 +248,8 @@ let remove: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b)
   ) {
   | (false, _, _, _) => Some(a)
   | (_, true, _, _) => None
-  | (_, _, true, _) => Some((aLower, bLower - BigInt.fromInt(1)))
-  | (_, _, _, true) => Some((bUpper + BigInt.fromInt(1), aUpper))
+  | (_, _, true, _) => Some((aLower, bLower - 1n))
+  | (_, _, _, true) => Some((bUpper + 1n, aUpper))
   | _ => None
   }
 }
@@ -268,6 +272,8 @@ let remove: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b)
  * // merged is now a tuple (1, 3)
  */
 let merge: (t, t) => t = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+  open! Math.BigInt
+
   adjacent(a, b) || isOverlap(a, b)
     ? {
         let lower = min(aLower, bLower)
@@ -291,7 +297,12 @@ let merge: (t, t) => t = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
  * // sortedIntervals is now an array of intervals [Interval(1, 2), Interval(2, 3)]
  */
 let sort: array<t> => array<t> = intervals => {
-  let lowerBoundAscendingCmp = ((aLower, aUpper), (bLower, bUpper)) => {
+  let lowerBoundAscendingCmp = (
+    (aLower, aUpper): (bigint, bigint),
+    (bLower, bUpper): (bigint, bigint),
+  ) => {
+    open! BigInt
+
     switch (aLower, bLower, aUpper, bUpper) {
     | (lower1, lower2, _, _) if lower1 < lower2 => Core__Ordering.less
     | (lower1, lower2, _, _) if lower1 > lower2 => Core__Ordering.greater

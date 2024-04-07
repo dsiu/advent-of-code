@@ -110,9 +110,9 @@ let part1: ((array<direction>, desert)) => int = ((directions, desert)) => {
  * The function returns this LCM as the solution to the second part of the problem.
  *
  * @param {array<direction>, desert} directions, desert - An array of directions (L or R) and the desert map.
- * @return {BigInt.t} - The least common multiple of the number of steps taken to reach the goal from all starting locations ending with "A".
+ * @return {bigint} - The least common multiple of the number of steps taken to reach the goal from all starting locations ending with "A".
  */
-let part2: ((array<direction>, desert)) => BigInt.t = ((directions, desert)) => {
+let part2: ((array<direction>, desert)) => bigint = ((directions, desert)) => {
   open State
   desert
   ->Stdlib.Map.keys

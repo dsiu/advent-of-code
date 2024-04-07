@@ -7,8 +7,8 @@ let log = Console.log
 let log2 = Console.log2
 
 type race = {
-  time: BigInt.t,
-  distance: BigInt.t,
+  time: bigint,
+  distance: bigint,
 }
 
 let mkRaceFromInt = (time, distance) => {
@@ -28,10 +28,10 @@ let raceArrayToString = Utils.Printable.Array.toString(_, raceToString)
 //
 module BigArray = {
   open BigInt
-  @new external makeUninitializedUnsafe: BigInt.t => array<'a> = "Array"
-  external setUnsafe: (array<'a>, BigInt.t, 'a) => unit = "%array_unsafe_set"
+  @new external makeUninitializedUnsafe: bigint => array<'a> = "Array"
+  external setUnsafe: (array<'a>, bigint, 'a) => unit = "%array_unsafe_set"
 
-  let fromInitializer = (~length: BigInt.t, f) =>
+  let fromInitializer = (~length: bigint, f) =>
     if length <= 0->fromInt {
       []
     } else {

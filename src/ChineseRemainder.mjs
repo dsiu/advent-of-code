@@ -4,6 +4,7 @@ import * as Js_math from "rescript/lib/es6/js_math.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
+import * as Caml_bigint from "rescript/lib/es6/caml_bigint.js";
 
 function mulInv(a, b) {
   var x0 = 0;
@@ -42,10 +43,6 @@ function crt(rem, num) {
   return Caml_int32.mod_(sum, prod);
 }
 
-var big_zero = BigInt(0);
-
-var big_one = BigInt(1);
-
 function add(prim0, prim1) {
   return prim0 + prim1;
 }
@@ -62,21 +59,19 @@ function div(prim0, prim1) {
   return prim0 / prim1;
 }
 
-function mod(prim0, prim1) {
-  return prim0 % prim1;
-}
+var mod = Caml_bigint.mod_;
 
 function mulInvBigInt(a, b) {
-  var x0 = big_zero;
-  var x1 = big_one;
-  if (b === big_one) {
-    return big_one;
+  var x0 = 0n;
+  var x1 = 1n;
+  if (b === 1n) {
+    return 1n;
   }
   var aa = a;
   var bb = b;
   while((aa > big_one)) {
     var q = aa / bb;
-    var c = aa % bb;
+    var c = Caml_bigint.mod_(aa, bb);
     aa = bb;
     bb = c;
     var tmp = x0;
@@ -90,8 +85,8 @@ function mulInvBigInt(a, b) {
 }
 
 function crtBigInt(rem, num) {
-  var sum = big_zero;
-  var prod = Belt_Array.reduce(num, big_one, (function (a, c) {
+  var sum = 0n;
+  var prod = Belt_Array.reduce(num, 1n, (function (a, c) {
           return a * c;
         }));
   for(var i = 0 ,i_finish = num.length; i < i_finish; ++i){
@@ -100,8 +95,12 @@ function crtBigInt(rem, num) {
     var p = prod / ni;
     sum = sum + ri * p * mulInvBigInt(p, ni);
   }
-  return sum % prod;
+  return Caml_bigint.mod_(sum, prod);
 }
+
+var big_zero = 0n;
+
+var big_one = 1n;
 
 export {
   mulInv ,
@@ -116,4 +115,4 @@ export {
   mulInvBigInt ,
   crtBigInt ,
 }
-/* big_zero Not a pure module */
+/* No side effect */

@@ -3,6 +3,7 @@
   <meta/>
   <graph defaultedgetype="directed">
     <attributes class="node">
+      <attribute id="depth" title="depth" type="integer"/>
       <attribute id="name" title="name" type="string"/>
     </attributes>
     <attributes class="edge">
@@ -11,119 +12,131 @@
     <nodes>
       <node id="1" label="1">
         <attvalues>
+          <attvalue for="depth" value="0"/>
           <attvalue for="name" value="1"/>
         </attvalues>
       </node>
       <node id="2" label="2">
         <attvalues>
+          <attvalue for="depth" value="1"/>
           <attvalue for="name" value="2"/>
         </attvalues>
       </node>
       <node id="3" label="3">
         <attvalues>
+          <attvalue for="depth" value="1"/>
           <attvalue for="name" value="3"/>
         </attvalues>
       </node>
       <node id="4" label="4">
         <attvalues>
+          <attvalue for="depth" value="1"/>
           <attvalue for="name" value="4"/>
         </attvalues>
       </node>
       <node id="5" label="5">
         <attvalues>
+          <attvalue for="depth" value="2"/>
           <attvalue for="name" value="5"/>
         </attvalues>
       </node>
       <node id="6" label="6">
         <attvalues>
+          <attvalue for="depth" value="2"/>
           <attvalue for="name" value="6"/>
         </attvalues>
       </node>
       <node id="7" label="7">
         <attvalues>
+          <attvalue for="depth" value="2"/>
           <attvalue for="name" value="7"/>
         </attvalues>
       </node>
       <node id="8" label="8">
         <attvalues>
+          <attvalue for="depth" value="2"/>
           <attvalue for="name" value="8"/>
         </attvalues>
       </node>
       <node id="9" label="9">
         <attvalues>
+          <attvalue for="depth" value="3"/>
           <attvalue for="name" value="9"/>
         </attvalues>
       </node>
       <node id="10" label="10">
         <attvalues>
+          <attvalue for="depth" value="3"/>
           <attvalue for="name" value="10"/>
         </attvalues>
       </node>
       <node id="11" label="11">
         <attvalues>
+          <attvalue for="depth" value="3"/>
           <attvalue for="name" value="11"/>
         </attvalues>
       </node>
       <node id="12" label="12">
         <attvalues>
+          <attvalue for="depth" value="3"/>
           <attvalue for="name" value="12"/>
         </attvalues>
       </node>
     </nodes>
     <edges>
-      <edge id="geid_223_0" source="1" target="2" label="geid_223_0">
+      <edge id="geid_222_0" source="1" target="2" label="geid_222_0">
         <attvalues>
-          <attvalue for="name" value="geid_223_0"/>
+          <attvalue for="name" value="geid_222_0"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_1" source="1" target="3" label="geid_223_1">
+      <edge id="geid_222_1" source="1" target="3" label="geid_222_1">
         <attvalues>
-          <attvalue for="name" value="geid_223_1"/>
+          <attvalue for="name" value="geid_222_1"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_2" source="1" target="4" label="geid_223_2">
+      <edge id="geid_222_2" source="1" target="4" label="geid_222_2">
         <attvalues>
-          <attvalue for="name" value="geid_223_2"/>
+          <attvalue for="name" value="geid_222_2"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_3" source="2" target="5" label="geid_223_3">
+      <edge id="geid_222_3" source="2" target="5" label="geid_222_3">
         <attvalues>
-          <attvalue for="name" value="geid_223_3"/>
+          <attvalue for="name" value="geid_222_3"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_4" source="2" target="6" label="geid_223_4">
+      <edge id="geid_222_4" source="2" target="6" label="geid_222_4">
         <attvalues>
-          <attvalue for="name" value="geid_223_4"/>
+          <attvalue for="name" value="geid_222_4"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_5" source="4" target="7" label="geid_223_5">
+      <edge id="geid_222_5" source="4" target="7" label="geid_222_5">
         <attvalues>
-          <attvalue for="name" value="geid_223_5"/>
+          <attvalue for="name" value="geid_222_5"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_6" source="4" target="8" label="geid_223_6">
+      <edge id="geid_222_6" source="4" target="8" label="geid_222_6">
         <attvalues>
-          <attvalue for="name" value="geid_223_6"/>
+          <attvalue for="name" value="geid_222_6"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_7" source="5" target="9" label="geid_223_7">
+      <edge id="geid_222_7" source="5" target="9" label="geid_222_7">
         <attvalues>
-          <attvalue for="name" value="geid_223_7"/>
+          <attvalue for="name" value="geid_222_7"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_8" source="5" target="10" label="geid_223_8">
+      <edge id="geid_222_8" source="5" target="10" label="geid_222_8">
         <attvalues>
-          <attvalue for="name" value="geid_223_8"/>
+          <attvalue for="name" value="geid_222_8"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_9" source="7" target="11" label="geid_223_9">
+      <edge id="geid_222_9" source="7" target="11" label="geid_222_9">
         <attvalues>
-          <attvalue for="name" value="geid_223_9"/>
+          <attvalue for="name" value="geid_222_9"/>
         </attvalues>
       </edge>
-      <edge id="geid_223_10" source="7" target="12" label="geid_223_10">
+      <edge id="geid_222_10" source="7" target="12" label="geid_222_10">
         <attvalues>
-          <attvalue for="name" value="geid_223_10"/>
+          <attvalue for="name" value="geid_222_10"/>
         </attvalues>
       </edge>
     </edges>

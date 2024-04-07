@@ -5,14 +5,14 @@ open Utils
 let log = Console.log
 let log2 = Console.log2
 
-open BigInt
+open! BigInt
 
 // todo: refactor
 module Coord_V2_Big = {
-  type t = Tuple2.t<BigInt.t, BigInt.t>
+  type t = Tuple2.t<bigint, bigint>
 
   // int compare
-  let bigIntCompareOrd = (a: BigInt.t, b: BigInt.t) =>
+  let bigIntCompareOrd = (a: bigint, b: bigint) =>
     a < b ? Core__Ordering.less : a > b ? Core__Ordering.greater : Core__Ordering.equal
 
   // int compare
@@ -38,6 +38,7 @@ let dumpGalaxies = (Galaxies(galaxies)) => {
 }
 
 let maxCoord = (Galaxies(galaxies)) => {
+  open! Math.BigInt
   let origin = (Constants.zero, Constants.zero)
 
   galaxies
@@ -81,9 +82,9 @@ let expand = (Galaxies(galaxies), (expX, expY), scale) => {
   galaxies->Set.toArray->expandXY->Set.fromArray->Galaxies
 }
 
-let absBigInt = (x: BigInt.t) => x < Constants.zero ? Constants.zero - x : x
+let absBigInt = (x: bigint) => x < Constants.zero ? Constants.zero - x : x
 
-let manhattan: (position, position) => BigInt.t = (Position((x, y)), Position((x', y'))) => {
+let manhattan: (position, position) => bigint = (Position((x, y)), Position((x', y'))) => {
   (x - x')->absBigInt + (y - y')->absBigInt
 }
 
@@ -94,7 +95,7 @@ let distances = (Galaxies(galaxies)) => {
   })
 }
 
-let part1: (galaxies, BigInt.t) => BigInt.t = (g, scale) => {
+let part1: (galaxies, bigint) => bigint = (g, scale) => {
   g
   ->expand(emptyRowCol(g), scale)
   ->distances

@@ -3,6 +3,7 @@
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
+import * as Caml_bigint from "rescript/lib/es6/caml_bigint.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as ChineseRemainder$AdventOfCode from "../../ChineseRemainder.mjs";
 
@@ -63,7 +64,7 @@ function solvePart2BruteForce(xs) {
     if (Belt_Array.reduceU(xs, true, (function(time){
           return function (acc, param) {
             if (acc) {
-              return (time + param[1]) % param[0] === big_zero;
+              return Caml_bigint.mod_(time + param[1], param[0]) === big_zero;
             } else {
               return false;
             }

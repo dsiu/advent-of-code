@@ -8,8 +8,8 @@ let log2 = Console.log2
 module Rule = {
   type t = {
     srcInterval: Interval.t,
-    dest: BigInt.t,
-    offset: BigInt.t,
+    dest: bigint,
+    offset: bigint,
   }
 
   let toString: t => string = t => {
@@ -23,10 +23,10 @@ module Rule = {
    * If the input number is not contained within the source interval, it returns `None`.
    *
    * @param {t} t - The rule to run. It is an object containing a source interval, a destination, and an offset.
-   * @param {BigInt.t} srcNum - The input number to run the rule with.
-   * @returns {option<BigInt.t>} - The result of running the rule with the input number. It is `Some` of the result if the input number is contained within the source interval of the rule, otherwise it is `None`.
+   * @param {bigint} srcNum - The input number to run the rule with.
+   * @returns {option<bigint>} - The result of running the rule with the input number. It is `Some` of the result if the input number is contained within the source interval of the rule, otherwise it is `None`.
   */
-  let run: (t, BigInt.t) => option<BigInt.t> = (t, srcNum) => {
+  let run: (t, bigint) => option<bigint> = (t, srcNum) => {
     t.srcInterval->Interval.contains(srcNum) ? Some(BigInt.add(srcNum, t.offset)) : None
   }
 
@@ -72,10 +72,10 @@ module AlmanacMap = {
    * If no rule returns a `Some` value, it returns the original input number.
    *
    * @param {t} t - The AlmanacMap to run the rules from. It is an object containing a source category, a destination category, and an array of rules.
-   * @param {BigInt.t} srcNum - The input number to run the rules with.
-   * @returns {BigInt.t} - The result of running the rules with the input number. It is the first `Some` value returned by a rule, or the original input number if no rule returns a `Some` value.
+   * @param {bigint} srcNum - The input number to run the rules with.
+   * @returns {bigint} - The result of running the rules with the input number. It is the first `Some` value returned by a rule, or the original input number if no rule returns a `Some` value.
    */
-  let runRules: (t, BigInt.t) => BigInt.t = (t, srcNum) => {
+  let runRules: (t, bigint) => bigint = (t, srcNum) => {
     t.rules
     ->Array.findMap(Rule.run(_, srcNum))
     ->Option.getOr(srcNum)
@@ -136,7 +136,7 @@ module AlmanacMap = {
 
 module Almanac = {
   type t = {
-    seeds: array<BigInt.t>,
+    seeds: array<bigint>,
     maps: array<AlmanacMap.t>,
   }
 
@@ -173,7 +173,7 @@ let parse: string => Almanac.t = data => {
   let seedLine = lines[0]->Option.flatMap(Array.get(_, 0))->Option.getExn
   let mapLines = lines->(Array.sliceToEnd(_, ~start=1))
 
-  let parseSeed: string => array<BigInt.t> = line => {
+  let parseSeed: string => array<bigint> = line => {
     line->String.split(": ")->Array.get(1)->Option.getExn->splitSpace->Array.map(BigInt.fromString)
   }
 
@@ -235,8 +235,8 @@ let part1_simple = ({seeds, _} as almanac: Almanac.t) => {
  * Finally, it returns the minimum lower bound of all the locations found.
  *
  * @param {Almanac.t} almanac - The almanac to find the location from. It is an object containing an array of seeds and an array of maps.
- * @param {array<BigInt.t> => array<Interval.t>} seedTransform - The function to transform the seeds. It takes an array of seeds and returns an array of intervals.
- * @returns {BigInt.t} - The minimum lower bound of all the locations found.
+ * @param {array<bigint> => array<Interval.t>} seedTransform - The function to transform the seeds. It takes an array of seeds and returns an array of intervals.
+ * @returns {bigint} - The minimum lower bound of all the locations found.
  *
  * @example
  * let almanac = parse("seed: 1 2 3\n\nseed-to-location\n1 1 1\n2 2 2\n\nlocation-to-destination\n3 3 3\n4 4 4")
@@ -263,7 +263,7 @@ let findLocation = ({seeds, _} as almanac: Almanac.t, seedTransform) => {
  * This function transforms an array of seeds into an array of intervals.
  * Each seed is transformed into an interval of length 1 starting at the seed.
  *
- * @param {array<BigInt.t>} seeds - The array of seeds to transform. Each seed is a BigInt.
+ * @param {array<bigint>} seeds - The array of seeds to transform. Each seed is a BigInt.
  * @returns {array<Interval.t>} - The array of intervals. Each interval is of length 1 and starts at the corresponding seed.
  *
  * @example
@@ -271,7 +271,7 @@ let findLocation = ({seeds, _} as almanac: Almanac.t, seedTransform) => {
  * let intervals = makeSeedsInterval(seeds)
  * // intervals is now an array of intervals [Interval(1, 1), Interval(2, 2), Interval(3, 3)]
  */
-let makeSeedsInterval: array<BigInt.t> => array<Interval.t> = seeds => {
+let makeSeedsInterval: array<bigint> => array<Interval.t> = seeds => {
   seeds->Array.map(Interval.makeWithLength(_, ~length=BigInt.fromInt(1)))
 }
 
@@ -282,7 +282,7 @@ let makeSeedsInterval: array<BigInt.t> => array<Interval.t> = seeds => {
  * If the index of the seed is odd, it skips the seed.
  * If there is no next seed for the last seed, it also skips the last seed.
  *
- * @param {array<BigInt.t>} seeds - The array of seeds to transform. Each seed is a BigInt.
+ * @param {array<bigint>} seeds - The array of seeds to transform. Each seed is a BigInt.
  * @returns {array<Interval.t>} - The array of intervals. Each interval starts at the first seed of a pair and its length is the second seed of the pair.
  *
  * @example
@@ -290,7 +290,7 @@ let makeSeedsInterval: array<BigInt.t> => array<Interval.t> = seeds => {
  * let intervals = makeSeedsPair(seeds)
  * // intervals is now an array of intervals [Interval(1, 2), Interval(3, 4)]
  */
-let makeSeedsPair: array<BigInt.t> => array<Interval.t> = seeds => {
+let makeSeedsPair: array<bigint> => array<Interval.t> = seeds => {
   seeds
   ->Array.mapWithIndex((a, i) => {
     mod(i, 2) == 0
@@ -304,8 +304,8 @@ let makeSeedsPair: array<BigInt.t> => array<Interval.t> = seeds => {
   ->Array.map(Option.getExn)
 }
 
-let part1: Almanac.t => BigInt.t = findLocation(_, makeSeedsInterval)
-let part2: Almanac.t => BigInt.t = findLocation(_, makeSeedsPair)
+let part1: Almanac.t => bigint = findLocation(_, makeSeedsInterval)
+let part2: Almanac.t => bigint = findLocation(_, makeSeedsPair)
 
 let solvePart1 = data => {
   let almanac = data->parse
