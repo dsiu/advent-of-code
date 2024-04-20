@@ -62,7 +62,7 @@ function part2(cards) {
     if (match === 0) {
       return n;
     }
-    var match$1 = Stdlib__Option.getExn(q[0]);
+    var match$1 = Stdlib__Option.getExn(q[0], undefined);
     var queuedQuantity = match$1.queuedQuantity;
     var n$p = n + queuedQuantity | 0;
     var queue$p = duplicateCards(match$1.numMatches, queuedQuantity, q.slice(1));
@@ -88,7 +88,7 @@ function parse(data) {
               }
               var cardIdStr = match[0];
               var numberStrs = match[1];
-              var cardId = Stdlib__Option.getExn(Stdlib__Int.fromString(undefined, cardIdStr.replace("Card ", "")));
+              var cardId = Stdlib__Option.getExn(Stdlib__Int.fromString(cardIdStr.replace("Card ", ""), undefined), undefined);
               var match$1 = numberStrs.split(" | ");
               if (match$1.length !== 2) {
                 throw {
@@ -103,11 +103,11 @@ function parse(data) {
               }
               var winnersStr = match$1[0];
               var actualsStr = match$1[1];
-              var winners = Stdlib__Array.filterMap(winnersStr.split(" "), (function (extra) {
-                      return Stdlib__Int.fromString(10, extra);
+              var winners = Stdlib__Array.filterMap(winnersStr.split(" "), (function (none) {
+                      return Stdlib__Int.fromString(none, 10);
                     }));
-              var actuals = Stdlib__Array.filterMap(actualsStr.split(" "), (function (extra) {
-                      return Stdlib__Int.fromString(10, extra);
+              var actuals = Stdlib__Array.filterMap(actualsStr.split(" "), (function (none) {
+                      return Stdlib__Int.fromString(none, 10);
                     }));
               return {
                       id: cardId,

@@ -32,7 +32,7 @@ var InvalidDirection = /* @__PURE__ */Caml_exceptions.create("AOC2019_Day3-Adven
 
 function makeSegment(str) {
   var direction = str[0];
-  var steps = Stdlib__Option.getExn(Stdlib__Int.fromString(undefined, str.slice(1)));
+  var steps = Stdlib__Option.getExn(Stdlib__Int.fromString(str.slice(1), undefined), undefined);
   if (direction !== undefined) {
     switch (direction) {
       case "D" :

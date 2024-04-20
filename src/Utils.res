@@ -18,17 +18,18 @@ module Printable = {
     @param: m
   */
   module MapString = {
-    let toString = (m, f) =>
+    let toString = (m, f) => {
       Belt.Map.String.reduce(m, "", (a, k, v) => {
         a ++ `key:${k}, val:${v->f}\n`
       })
-
+    }
     module String = {
       let toString = m => toString(m, identity)
     }
 
     module Int = {
-      let toString = m => toString(m, Int.toString)
+      let _ = Stdlib.Int.toString(1)
+      let toString = (m, ~radix=10) => toString(m, Stdlib.Int.toString(_, ~radix))
     }
   }
 
@@ -51,11 +52,11 @@ module Printable = {
        @param {Map} m the `map`
        @param b the other
       */
-      let toString = m => toString(m, Int.toString)
+      let toString = (m, ~radix=10) => toString(m, Stdlib.Int.toString(_, ~radix))
     }
 
     module BigInt = {
-      let toString = m => toString(m, BigInt.toString)
+      let toString = (m, ~radix=10) => toString(m, BigInt.toString(_, ~radix))
     }
   }
 
@@ -67,15 +68,11 @@ module Printable = {
       })
 
     module Int = {
-      let toString = m => toString(m, Int.toString)
+      let toString = (m, ~radix=10) => toString(m, Int.toString(_, ~radix))
     }
 
     module BigInt = {
-      let toString = m => toString(m, BigInt.toString)
-    }
-
-    module IntBase2 = {
-      let toString = m => toString(m, x => x->Stdlib.Int.toStringWithRadix(~radix=2))
+      let toString = (m, ~radix=10) => toString(m, BigInt.toString(_, ~radix))
     }
   }
 
@@ -86,10 +83,10 @@ module Printable = {
         a ++ `key:${k}, val:${v->f}\n`
       })
     module Int = {
-      let toString = m => toString(m, Int.toString)
+      let toString = (m, ~radix=10) => toString(m, Int.toString(_, ~radix))
     }
     module BigInt = {
-      let toString = m => toString(m, BigInt.toString)
+      let toString = (m, ~radix=10) => toString(m, BigInt.toString(_, ~radix))
     }
 
     module Int64 = {
@@ -118,7 +115,7 @@ module Printable = {
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Int.toStringWithRadix(_, ~radix=2)
 
-let compose = (. f, g) => Stdlib.Function.compose(f, g, ...)
+let compose = (f, g) => Stdlib.Function.compose(f, g, ...)
 
 let intFromStringExn =
   compose(String.trim, compose(Int.fromString(~radix=10, ...), Option.getUnsafe, ...), ...)

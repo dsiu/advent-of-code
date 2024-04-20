@@ -447,7 +447,7 @@ function part2(xss) {
   var edges = getEdges(grid);
   return Stdlib__Option.getExn(Stdlib__Array.maximum(edges.map(function (__x) {
                       return countEnergized(grid, bounds$1, __x);
-                    }), Stdlib__Int.compare));
+                    }), Stdlib__Int.compare), undefined);
 }
 
 function parse(data) {

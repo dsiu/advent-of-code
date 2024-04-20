@@ -265,7 +265,7 @@ function solvePart1(data) {
   var areas = findLandingAreasOfPins(map);
   var prim = " ========= landing areas (size = " + String(Belt_MapInt.size(areas)) + ")";
   console.log(prim);
-  var prim$1 = Utils$AdventOfCode.Printable.MapInt.Int.toString(areas);
+  var prim$1 = Utils$AdventOfCode.Printable.MapInt.Int.toString(areas, undefined);
   console.log(prim$1);
   var targetPins = getNonInfPin(map);
   var prim$2 = " ======== target pins (size = " + String(Belt_MapInt.size(targetPins)) + ")";

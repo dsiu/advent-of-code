@@ -43,7 +43,7 @@ function isGoal(param) {
 
 function step(desert, param, direction) {
   var steps = param.steps;
-  var match = Stdlib__Option.getExn(desert.get(param.here));
+  var match = Stdlib__Option.getExn(desert.get(param.here), undefined);
   if (direction === "L") {
     return {
             here: match._0,

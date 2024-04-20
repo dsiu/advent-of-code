@@ -131,7 +131,7 @@ function nextSeatIn(t, _param, step) {
     if (!Array2D$AdventOfCode.isValidXY(t, c)) {
       return ".";
     }
-    var seat = Stdlib__Option.getExn(Array2D$AdventOfCode.get(t, c));
+    var seat = Stdlib__Option.getExn(Array2D$AdventOfCode.get(t, c), undefined);
     if (seat !== ".") {
       return seat;
     }
@@ -222,7 +222,7 @@ function make$1(xs) {
 function toString(t) {
   var s = "";
   for(var y = 0 ,y_finish = Array2D$AdventOfCode.lengthY(t); y < y_finish; ++y){
-    s = s + Utils$AdventOfCode.join(Stdlib__Option.getExn(Array2D$AdventOfCode.getYEquals(t, y)));
+    s = s + Utils$AdventOfCode.join(Stdlib__Option.getExn(Array2D$AdventOfCode.getYEquals(t, y), undefined));
   }
   return s;
 }

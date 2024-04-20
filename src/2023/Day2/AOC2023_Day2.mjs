@@ -39,13 +39,13 @@ function parse(data) {
               var id = Stdlib__Option.flatMap(ll.at(0), Utils$AdventOfCode.compose((function (__x) {
                           return __x.replace("Game ", "");
                         }), (function (__x) {
-                          return Stdlib__Int.fromString(10, __x);
+                          return Stdlib__Int.fromString(__x, 10);
                         })));
               var draws = ll.at(1).split("; ").map(function (eachDraw) {
                       return eachDraw.split(", ").map(function (singleDraw) {
                                   var d = singleDraw.split(" ");
-                                  var nColor = Stdlib__Option.flatMap(d.at(0), (function (extra) {
-                                          return Stdlib__Int.fromString(10, extra);
+                                  var nColor = Stdlib__Option.flatMap(d.at(0), (function (none) {
+                                          return Stdlib__Int.fromString(none, 10);
                                         }));
                                   var color = d.at(1);
                                   return makeDraw(color, nColor);

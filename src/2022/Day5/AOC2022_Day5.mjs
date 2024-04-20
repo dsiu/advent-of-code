@@ -55,9 +55,9 @@ function makeMoves(xs) {
               var parts = x.split(" ");
               return {
                       TAG: "Move",
-                      _0: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[1], intFromString)),
-                      _1: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[3], intFromString)),
-                      _2: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[5], intFromString))
+                      _0: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[1], intFromString), undefined),
+                      _1: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[3], intFromString), undefined),
+                      _2: Stdlib__Option.getExn(Stdlib__Option.flatMap(parts[5], intFromString), undefined)
                     };
             });
 }
@@ -66,9 +66,9 @@ function parse(data) {
   var text = Utils$AdventOfCode.splitDoubleNewline(data).map(Utils$AdventOfCode.splitNewline);
   var firstSection = Stdlib__Array.tail(Stdlib__Array.getUnsafe(text, 0));
   var secondSection = Stdlib__Array.init(Stdlib__Array.getUnsafe(text, 1));
-  var wharfLines = Stdlib__Option.getExn(Stdlib__Array.init(firstSection)).map(Utils$AdventOfCode.splitChars);
-  var colNames = Stdlib__Array.filterMap(Stdlib__Option.getExn(Stdlib__Array.last(firstSection)).split(" "), Belt_Int.fromString);
-  var moves = makeMoves(Stdlib__Option.getExn(secondSection));
+  var wharfLines = Stdlib__Option.getExn(Stdlib__Array.init(firstSection), undefined).map(Utils$AdventOfCode.splitChars);
+  var colNames = Stdlib__Array.filterMap(Stdlib__Option.getExn(Stdlib__Array.last(firstSection), undefined).split(" "), Belt_Int.fromString);
+  var moves = makeMoves(Stdlib__Option.getExn(secondSection, undefined));
   var wharf = makeWharf(wharfLines, colNames);
   return [
           wharf,

@@ -95,15 +95,15 @@ var AlmanacMap = {
 };
 
 function toString$2(t) {
-  return "Almanac (Seeds: [" + t.seeds.map(function (prim) {
-                return prim.toString();
+  return "Almanac (Seeds: [" + t.seeds.map(function (__x) {
+                return __x.toString();
               }).join(", ") + "],\n[" + t.maps.map(toString$1).join("\n") + ")]";
 }
 
 function getMap(t, src) {
   return Stdlib__Option.getExn(Stdlib__Array.find(t.maps, (function (m) {
                     return m.srcCategory === src;
-                  })));
+                  })), undefined);
 }
 
 var Almanac = {
@@ -119,29 +119,29 @@ function parse(data) {
       });
   var seedLine = Stdlib__Option.getExn(Stdlib__Option.flatMap(lines[0], (function (__x) {
               return __x[0];
-            })));
+            })), undefined);
   var mapLines = (function (__x) {
         return __x.slice(1);
       })(lines);
   var parseSeed = function (line) {
-    return Utils$AdventOfCode.splitSpace(Stdlib__Option.getExn(line.split(": ")[1])).map(function (prim) {
+    return Utils$AdventOfCode.splitSpace(Stdlib__Option.getExn(line.split(": ")[1], undefined)).map(function (prim) {
                 return BigInt(prim);
               });
   };
   var parseMap = function (lines) {
-    var categoryLine = Stdlib__Option.getExn(lines[0]);
+    var categoryLine = Stdlib__Option.getExn(lines[0], undefined);
     var srcDestLines = lines.slice(1);
     var match = Stdlib__Option.getExn(Stdlib__Option.flatMap(Utils$AdventOfCode.splitSpace(categoryLine)[0], (function (s) {
                 return (function (__x) {
                             return __x.split("-to-");
                           })(s);
-              })));
+              })), undefined);
     if (match.length !== 2) {
       throw {
             RE_EXN_ID: "Match_failure",
             _1: [
               "AOC2023_Day5.res",
-              184,
+              185,
               8
             ],
             Error: new Error()
@@ -158,7 +158,7 @@ function parse(data) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "AOC2023_Day5.res",
-                192,
+                193,
                 10
               ],
               Error: new Error()
@@ -248,9 +248,11 @@ function makeSeedsPair(seeds) {
                   if (i % 2 !== 0) {
                     return ;
                   }
-                  var b = Stdlib__Option.getExn(seeds[i + 1 | 0]);
+                  var b = Stdlib__Option.getExn(seeds[i + 1 | 0], undefined);
                   return Interval$AdventOfCode.makeWithLength(a, b);
-                }).filter(Stdlib__Option.isSome).map(Stdlib__Option.getExn);
+                }).filter(Stdlib__Option.isSome).map(function (__x) {
+              return Stdlib__Option.getExn(__x, undefined);
+            });
 }
 
 function part1(__x) {

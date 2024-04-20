@@ -18,7 +18,7 @@ function log2(prim0, prim1) {
 }
 
 function makeElem($$char) {
-  var d = Stdlib__Int.fromString(10, $$char);
+  var d = Stdlib__Int.fromString($$char, 10);
   if (d !== undefined) {
     return {
             TAG: "Digit",

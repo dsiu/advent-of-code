@@ -1,4 +1,5 @@
 @@uncurried
+@@uncurried.swap
 
 open Stdlib
 open Utils
@@ -141,7 +142,7 @@ module Almanac = {
   }
 
   let toString: t => string = t => {
-    `Almanac (Seeds: [${t.seeds->Array.map(BigInt.toString)->Array.join(", ")}],\n[${t.maps
+    `Almanac (Seeds: [${t.seeds->Array.map(BigInt.toString(_))->Array.join(", ")}],\n[${t.maps
       ->Array.map(AlmanacMap.toString)
       ->Array.join("\n")})]`
   }
@@ -301,7 +302,7 @@ let makeSeedsPair: array<bigint> => array<Interval.t> = seeds => {
       : None
   })
   ->Array.filter(Option.isSome)
-  ->Array.map(Option.getExn)
+  ->Array.map(Option.getExn(_))
 }
 
 let part1: Almanac.t => bigint = findLocation(_, makeSeedsInterval)

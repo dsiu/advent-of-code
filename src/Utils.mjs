@@ -41,9 +41,12 @@ var $$String = {
   toString: toString$1
 };
 
-function toString$2(m) {
-  return toString(m, (function (prim) {
-                return prim.toString();
+(1).toString();
+
+function toString$2(m, radixOpt) {
+  var radix = radixOpt !== undefined ? radixOpt : 10;
+  return toString(m, (function (__x) {
+                return __x.toString(radix);
               }));
 }
 
@@ -71,9 +74,10 @@ var $$String$1 = {
   toString: toString$4
 };
 
-function toString$5(m) {
-  return toString$3(m, (function (prim) {
-                return prim.toString();
+function toString$5(m, radixOpt) {
+  var radix = radixOpt !== undefined ? radixOpt : 10;
+  return toString$3(m, (function (__x) {
+                return __x.toString(radix);
               }));
 }
 
@@ -81,9 +85,10 @@ var Int$1 = {
   toString: toString$5
 };
 
-function toString$6(m) {
-  return toString$3(m, (function (prim) {
-                return prim.toString();
+function toString$6(m, radixOpt) {
+  var radix = radixOpt !== undefined ? radixOpt : 10;
+  return toString$3(m, (function (__x) {
+                return __x.toString(radix);
               }));
 }
 
@@ -104,9 +109,10 @@ function toString$7(m, f) {
               }));
 }
 
-function toString$8(m) {
-  return toString$7(m, (function (prim) {
-                return prim.toString();
+function toString$8(m, radixOpt) {
+  var radix = radixOpt !== undefined ? radixOpt : 10;
+  return toString$7(m, (function (__x) {
+                return __x.toString(radix);
               }));
 }
 
@@ -114,9 +120,10 @@ var Int$2 = {
   toString: toString$8
 };
 
-function toString$9(m) {
-  return toString$7(m, (function (prim) {
-                return prim.toString();
+function toString$9(m, radixOpt) {
+  var radix = radixOpt !== undefined ? radixOpt : 10;
+  return toString$7(m, (function (__x) {
+                return __x.toString(radix);
               }));
 }
 
@@ -124,80 +131,71 @@ var $$BigInt$1 = {
   toString: toString$9
 };
 
-function toString$10(m) {
-  return toString$7(m, (function (x) {
-                return x.toString(2);
-              }));
-}
-
-var IntBase2 = {
-  toString: toString$10
-};
-
 var MutableMapInt = {
   toString: toString$7,
   Int: Int$2,
-  $$BigInt: $$BigInt$1,
-  IntBase2: IntBase2
+  $$BigInt: $$BigInt$1
 };
 
-function toString$11(m, f) {
+function toString$10(m, f) {
   return Belt_MutableMapString.reduce(m, "", (function (a, k, v) {
                 return a + ("key:" + k + ", val:" + f(v) + "\n");
               }));
 }
 
-function toString$12(m) {
-  return toString$11(m, (function (prim) {
-                return prim.toString();
+function toString$11(m, radixOpt) {
+  var radix = radixOpt !== undefined ? radixOpt : 10;
+  return toString$10(m, (function (__x) {
+                return __x.toString(radix);
               }));
 }
 
 var Int$3 = {
-  toString: toString$12
+  toString: toString$11
 };
 
-function toString$13(m) {
-  return toString$11(m, (function (prim) {
-                return prim.toString();
+function toString$12(m, radixOpt) {
+  var radix = radixOpt !== undefined ? radixOpt : 10;
+  return toString$10(m, (function (__x) {
+                return __x.toString(radix);
               }));
 }
 
 var $$BigInt$2 = {
-  toString: toString$13
+  toString: toString$12
 };
 
-function toString$14(m) {
-  return toString$11(m, Int64.to_string);
+function toString$13(m) {
+  return toString$10(m, Int64.to_string);
 }
 
 var Int64$1 = {
-  toString: toString$14
+  toString: toString$13
 };
 
 var MutableMapString = {
-  toString: toString$11,
+  toString: toString$10,
   Int: Int$3,
   $$BigInt: $$BigInt$2,
   Int64: Int64$1
 };
 
-function toString$15(a, f) {
+function toString$14(a, f) {
   return "[" + a.map(f).join(",") + "]";
 }
 
 var $$Array = {
-  toString: toString$15
+  toString: toString$14
 };
 
-function toString$16(a, f) {
+function toString$15(a, f) {
   return Stdlib__List.reduce(a, "{", (function (a, v) {
                 return a + f(v) + ",";
               })) + "}";
 }
 
 var List = {
-  toString: toString$16
+  toString: toString$15
 };
 
 var Printable = {
@@ -223,8 +221,8 @@ function g(prim) {
   return prim;
 }
 
-function f(extra) {
-  return Stdlib__Int.fromString(10, extra);
+function f(none) {
+  return Stdlib__Int.fromString(none, 10);
 }
 
 function g$1(extra) {
@@ -483,4 +481,4 @@ export {
   hashMapStringUpdate ,
   mutableMapStringUpdate ,
 }
-/* Stdlib__Int Not a pure module */
+/*  Not a pure module */

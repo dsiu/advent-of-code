@@ -17,7 +17,7 @@ function log2(prim0, prim1) {
 }
 
 function charToASCII(s) {
-  return Stdlib__Option.getExn(s.codePointAt(0));
+  return Stdlib__Option.getExn(s.codePointAt(0), undefined);
 }
 
 function hash(str) {

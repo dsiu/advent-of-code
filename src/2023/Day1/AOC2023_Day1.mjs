@@ -66,8 +66,8 @@ function spelledOutToDigits(str, matchDir) {
 }
 
 function get2Digits(str) {
-  var digits = Stdlib__Array.filterMap(Utils$AdventOfCode.splitChars(str), (function (extra) {
-          return Stdlib__Int.fromString(10, extra);
+  var digits = Stdlib__Array.filterMap(Utils$AdventOfCode.splitChars(str), (function (none) {
+          return Stdlib__Int.fromString(none, 10);
         }));
   var first = digits.at(0);
   var last = digits.at(-1);

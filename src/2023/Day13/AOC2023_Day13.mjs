@@ -66,7 +66,7 @@ function reflections(patt, nDiff) {
                   _0: x
                 };
         }));
-  return Stdlib__Option.getExn(Stdlib__Option.orElse(hline, vline));
+  return Stdlib__Option.getExn(Stdlib__Option.orElse(hline, vline), undefined);
 }
 
 function score(l) {

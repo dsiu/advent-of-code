@@ -22,8 +22,8 @@ var Draws = {
 };
 
 function toString(t) {
-  return Array2D$AdventOfCode.toString(t, (function (prim) {
-                return prim.toString();
+  return Array2D$AdventOfCode.toString(t, (function (__x) {
+                return __x.toString();
               }));
 }
 

@@ -109,7 +109,7 @@ function dfs(graph, rootNode, cb) {
     if (Belt_MutableStack.isEmpty(stack)) {
       return acc;
     }
-    var match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack));
+    var match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
     var depth = match.depth;
     var node = match.node;
     if (Belt_MutableSetString.has(visited, node)) {

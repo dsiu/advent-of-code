@@ -93,7 +93,7 @@ function toPositions(here, param) {
 function endingDirPos(here, move) {
   return [
           move._0,
-          Stdlib__Option.getExn(Stdlib__Array.last(toPositions(here, move)))
+          Stdlib__Option.getExn(Stdlib__Array.last(toPositions(here, move)), undefined)
         ];
 }
 

@@ -145,7 +145,7 @@ function parse(data) {
                       return Utils$AdventOfCode.splitSpace(s.replace(prefix, "")).filter(function (extra) {
                                     return Stdlib__Function.complement(Stdlib__String.isEmpty, extra);
                                   }).map(Utils$AdventOfCode.intFromStringExn);
-                    })));
+                    })), undefined);
   };
   var times = parseLine(lines[0], "Time:");
   var distances = parseLine(lines[1], "Distance:");
