@@ -440,12 +440,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@glennsl/rescript-jest@https://github.com/dsiu/rescript-jest#rescript-v11-curried-mode":
-  version: 0.10.0
-  resolution: "@glennsl/rescript-jest@https://github.com/dsiu/rescript-jest.git#commit=d5572ca8f5b92f66c0ec98fe6978465af3ad8039"
+"@glennsl/rescript-jest@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@glennsl/rescript-jest@npm:0.11.0"
   dependencies:
     jest: "npm:^27.3.1"
-  checksum: 10c0/fe39cdc7420b8342e50a05b6cf93c6adb3302405880fb64c8743cd9cfb17b1ff6b2eb9dd5cc83537b4ed2b12feb9c7134cc46f9723a72326557355f6402ffa55
+  checksum: 10c0/8302cbc8a3bc60d122b8e1c3c951f358e3edaca0ed337b000df790e646e710cdde82d82b9419fb44b99970490d9b0314c775d0a578cdbfcddce25ecb0c722b8b
   languageName: node
   linkType: hard
 
@@ -1462,7 +1462,7 @@ __metadata:
   dependencies:
     "@dsiu/rescript-graphology": "https://github.com/dsiu/rescript-graphology"
     "@dsiu/rescript-stdlib-fp": "https://github.com/dsiu/rescript-stdlib-fp#tablecloth-rescriptcore"
-    "@glennsl/rescript-jest": "https://github.com/dsiu/rescript-jest#rescript-v11-curried-mode"
+    "@glennsl/rescript-jest": "npm:^0.11.0"
     "@greenlabs/garter": "https://github.com/dsiu/garter#rescript-v11-curried-mode"
     "@jmagaram/rescript-extras": "npm:^3.0.0"
     "@jmagaram/rescript-seq": "npm:^3.0.1"
@@ -1479,7 +1479,7 @@ __metadata:
     rationale: "npm:^0.2.0"
     relude: "https://github.com/dsiu/rescript-relude#rescript-v11-uncurried-wip"
     relude-parse: "https://github.com/dsiu/rescript-relude-parse#rescript-v11-uncurried-wip"
-    rescript: "npm:^11.1.0-rc.8"
+    rescript: "npm:^11.1.0"
     rescript-bag: "https://github.com/dsiu/rescript-bag#main"
     rescript-nodejs: "npm:^16.1.0"
     rescript-vector: "npm:^0.4.0"
@@ -4824,17 +4824,6 @@ __metadata:
     bstracing: lib/bstracing
     rescript: rescript
   checksum: 10c0/3716a1bf23cd6b47e0a2dea4099a596f8b9a16eee7b57b0bf444c201d2a9b944fa083fbe22078f47798c4d5074167859ce064371fcd5ddf347e7577c146df8e1
-  languageName: node
-  linkType: hard
-
-"rescript@npm:^11.1.0-rc.8":
-  version: 11.1.0-rc.8
-  resolution: "rescript@npm:11.1.0-rc.8"
-  bin:
-    bsc: bsc
-    bstracing: lib/bstracing
-    rescript: rescript
-  checksum: 10c0/b744d8475d1b94ed176f70ae5b6146dd13aa0af789a12a147be9019f0cfe82be27d96fc329599ce932af061f3adaf4d887acb30c89bb68ebcbb52167e337909c
   languageName: node
   linkType: hard
 
