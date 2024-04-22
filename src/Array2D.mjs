@@ -75,7 +75,10 @@ function getXEquals(t, x) {
     return ;
   }
   var ret = Stdlib__Array.reduce(t, [], (function (a, xs) {
-          return a.concat([Stdlib__Array.getUnsafe(xs, x)]);
+          return Belt_Array.concatMany([
+                      a,
+                      [Stdlib__Array.getUnsafe(xs, x)]
+                    ]);
         }));
   if (ret.length === t.length) {
     return ret;
@@ -120,7 +123,10 @@ function reduceWithIndex(t, a, f) {
 function flatten(t) {
   var ret = [];
   for(var i = 0 ,i_finish = t.length; i < i_finish; ++i){
-    ret = ret.concat(Stdlib__Option.getWithDefault(t[i], []));
+    ret = Belt_Array.concatMany([
+          ret,
+          Stdlib__Option.getWithDefault(t[i], [])
+        ]);
   }
   return ret;
 }
@@ -142,7 +148,10 @@ function crop(t, param, len_x, len_y) {
   var max_y_len = sizeY - y | 0;
   var adj_y = Caml.int_min(y + len_y | 0, y + max_y_len | 0) - 1 | 0;
   for(var i = y; i <= adj_y; ++i){
-    ret = ret.concat([Stdlib__Option.getWithDefault(t[i], []).slice(x, x + adj_len_x | 0)]);
+    ret = Belt_Array.concatMany([
+          ret,
+          [Stdlib__Option.getWithDefault(t[i], []).slice(x, x + adj_len_x | 0)]
+        ]);
   }
   return ret;
 }

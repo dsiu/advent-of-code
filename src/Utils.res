@@ -198,7 +198,7 @@ let minBigIntInArray = xs => {
 }
 
 let flatten = (xs: array<array<'a>>) => {
-  xs->Array.reduce([], (a, x) => Array.concat(a, x))
+  xs->Array.reduce([], (a, x) => [...a, ...x])
 }
 
 // ref: https://blog.shaynefletcher.org/2017/08/transpose.html

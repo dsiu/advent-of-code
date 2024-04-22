@@ -55,7 +55,7 @@ let getXEquals = (t, x) => {
   x < t->lengthX
     ? {
         let ret = t->Array.reduce([], (a, xs) => {
-          Array.concat(a, [xs->Array.getUnsafe(x)])
+          [...a, xs->Array.getUnsafe(x)]
         })
         ret->Array.length === t->lengthY ? Some(ret) : None
       }
@@ -89,7 +89,7 @@ let reduceWithIndex = (t, a, f) => {
 let flatten = t => {
   let ret = ref([])
   for i in 0 to t->lengthY - 1 {
-    ret := Array.concat(ret.contents, t->getYEquals(i)->Option.getWithDefault([]))
+    ret := [...ret.contents, ...t->getYEquals(i)->Option.getWithDefault([])]
   }
   ret.contents
 }
@@ -106,16 +106,13 @@ let crop = (t, (x, y), ~len_x, ~len_y) => {
         let adj_y = min(y + len_y, y + max_y_len) - 1
         for i in y to adj_y {
           ret :=
-            Array.concat(
-              ret.contents,
-              //              [t->getYEquals(i)->Option.getWithDefault([])->Array.slice(~offset=x, ~len=adj_len_x)],
-              [
-                t
-                ->getYEquals(i)
-                ->Option.getWithDefault([])
-                ->Array.slice(~start=x, ~end=x + adj_len_x),
-              ],
-            )
+            [
+              ...ret.contents,
+              t
+              ->getYEquals(i)
+              ->Option.getWithDefault([])
+              ->Array.slice(~start=x, ~end=x + adj_len_x),
+            ] //              [t->getYEquals(i)->Option.getWithDefault([])->Array.slice(~offset=x, ~len=adj_len_x)],
         }
         ret.contents
       }

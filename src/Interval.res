@@ -341,8 +341,8 @@ let sortAndMergeOverlaps: array<t> => array<t> = intervals => {
         let a = xs->Array.getUnsafe(0)
         let b = xs->Array.getUnsafe(1)
         below(a, b) && !adjacent(a, b)
-          ? Array.concat([a], loop(xs->Array.sliceToEnd(~start=1)))
-          : loop(Array.concat([merge(a, b)], xs->Array.sliceToEnd(~start=2)))
+          ? [a, ...loop(xs->Array.sliceToEnd(~start=1))]
+          : loop([merge(a, b), ...xs->Array.sliceToEnd(~start=2)])
       }
     }
   loop(sortedIntervals)

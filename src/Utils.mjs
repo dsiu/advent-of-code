@@ -354,7 +354,10 @@ function minBigIntInArray(xs) {
 
 function flatten(xs) {
   return Stdlib__Array.reduce(xs, [], (function (a, x) {
-                return a.concat(x);
+                return Belt_Array.concatMany([
+                            a,
+                            x
+                          ]);
               }));
 }
 

@@ -2,16 +2,13 @@
 let log = Stdlib.Console.log
 let log2 = Stdlib.Console.log2
 
-open Relude
-//open Utils
-
 // common functions
-module S = String
-module A = Array
-module L = List
-module O = Option
-module R = Result
-module F = Function
+module S = Relude.String
+module A = Relude.Array
+module L = Relude.List
+module O = Relude.Option
+module R = Relude.Result
+module F = Relude.Function
 let compose = F.compose
 
 type operator = Plus | Times
@@ -31,7 +28,7 @@ let showExpression = (Expression(op, operand)) => {
 }
 let logExp = compose(log, showExpression, ...)
 
-let makeExpression = (op, operand) => Expression(op, operand)
+let makeExpression = op => operand => Expression(op, operand)
 
 type monkeyCode = MonkeyCode({operation: expression, test: int, trueTarget: int, falseTarget: int})
 
@@ -120,7 +117,7 @@ module MonkeyParser = {
   //  let _ = falseTargetP->P.runParser("    If false: throw to monkey 33", _)->R.tap(log, _)
 
   let monkeyP = {
-    let mkMonkeyPair = (mId, holding, operation, test, trueTarget, falseTarget) => {
+    let mkMonkeyPair = mId => holding => operation => test => trueTarget => falseTarget => {
       // (mId, holding->L.toArray, operation->showExpression, test, trueTarget, falseTarget)
       ((mId, MonkeyCode({operation, test, trueTarget, falseTarget})), (mId, holding))
     }
