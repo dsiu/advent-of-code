@@ -17,6 +17,22 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
+function uncurryFn6(fn) {
+  return function (a) {
+    return function (b) {
+      return function (c) {
+        return function (d) {
+          return function (e) {
+            return function (f) {
+              return fn(a, b, c, d, e, f);
+            };
+          };
+        };
+      };
+    };
+  };
+}
+
 function makeLiteral(i) {
   return {
           TAG: "Literal",
@@ -234,36 +250,26 @@ var trueTargetP = ReludeParse_Parser.Infix.$less$star(ReludeParse_Parser.Infix.$
 
 var falseTargetP = ReludeParse_Parser.Infix.$star$great(ReludeParse_Parser.str("    If false: throw to monkey "), ReludeParse_Parser.anyInt);
 
-function mkMonkeyPair(mId) {
-  return function (holding) {
-    return function (operation) {
-      return function (test) {
-        return function (trueTarget) {
-          return function (falseTarget) {
-            return [
-                    [
-                      mId,
-                      {
-                        TAG: "MonkeyCode",
-                        operation: operation,
-                        test: test,
-                        trueTarget: trueTarget,
-                        falseTarget: falseTarget
-                      }
-                    ],
-                    [
-                      mId,
-                      holding
-                    ]
-                  ];
-          };
-        };
-      };
-    };
-  };
+function mkMonkeyPair(mId, holding, operation, test, trueTarget, falseTarget) {
+  return [
+          [
+            mId,
+            {
+              TAG: "MonkeyCode",
+              operation: operation,
+              test: test,
+              trueTarget: trueTarget,
+              falseTarget: falseTarget
+            }
+          ],
+          [
+            mId,
+            holding
+          ]
+        ];
 }
 
-var monkeyP = ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$$great(mkMonkeyPair, mIdP), startingP), operatorP), testP), trueTargetP), falseTargetP);
+var monkeyP = ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$$great(uncurryFn6(mkMonkeyPair), mIdP), startingP), operatorP), testP), trueTargetP), falseTargetP);
 
 function makeMonkeyMaps(monkeys) {
   return [
@@ -333,6 +339,7 @@ export {
   R ,
   F ,
   compose ,
+  uncurryFn6 ,
   makeLiteral ,
   showExpression ,
   logExp ,

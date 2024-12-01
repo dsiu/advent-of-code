@@ -169,30 +169,55 @@ G.mergeEdge(g, "7", "11", undefined);
 
 G.mergeEdge(g, "7", "12", undefined);
 
-var prim = G.inspect(g);
-
-console.log(prim);
-
 console.log("BFS");
 
 var bfsRes = bfs(g, "1", (function (node, depth) {
-        console.log(node, depth);
         G.setNodeAttribute(g, node, "depth", depth);
         return false;
       }));
 
-console.log(bfsRes, "bfsRes");
+((function (__x) {
+        console.log("bfsRes", __x);
+      })(bfsRes));
+
+writeToFile(g, "graph-bfs.gexf", G);
+
+var g$1 = G.makeGraph(undefined);
+
+G.mergeEdge(g$1, "1", "2", undefined);
+
+G.mergeEdge(g$1, "1", "3", undefined);
+
+G.mergeEdge(g$1, "1", "4", undefined);
+
+G.mergeEdge(g$1, "2", "5", undefined);
+
+G.mergeEdge(g$1, "2", "6", undefined);
+
+G.mergeEdge(g$1, "4", "7", undefined);
+
+G.mergeEdge(g$1, "4", "8", undefined);
+
+G.mergeEdge(g$1, "5", "9", undefined);
+
+G.mergeEdge(g$1, "5", "10", undefined);
+
+G.mergeEdge(g$1, "7", "11", undefined);
+
+G.mergeEdge(g$1, "7", "12", undefined);
 
 console.log("DFS");
 
-var dfsRes = dfs(g, "1", (function (node, depth) {
-        console.log(node, depth);
+var dfsRes = dfs(g$1, "1", (function (node, depth) {
+        G.setNodeAttribute(g$1, node, "depth", depth);
         return false;
       }));
 
-console.log(dfsRes, "dfsRes");
+((function (__x) {
+        console.log("dfsRes", __x);
+      })(dfsRes));
 
-writeToFile(g, "graph.gexf", G);
+writeToFile(g$1, "graph-dfs.gexf", G);
 
 var Queue;
 

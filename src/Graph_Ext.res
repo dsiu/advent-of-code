@@ -135,34 +135,61 @@ module Traversal = {
 }
 
 let _ = {
-  let g = G.makeGraph()
-  let _ = g->G.mergeEdge("1", "2")
-  let _ = g->G.mergeEdge("1", "3")
-  let _ = g->G.mergeEdge("1", "4")
-  let _ = g->G.mergeEdge("2", "5")
-  let _ = g->G.mergeEdge("2", "6")
-  let _ = g->G.mergeEdge("4", "7")
-  let _ = g->G.mergeEdge("4", "8")
-  let _ = g->G.mergeEdge("5", "9")
-  let _ = g->G.mergeEdge("5", "10")
-  let _ = g->G.mergeEdge("7", "11")
-  let _ = g->G.mergeEdge("7", "12")
-  g->G.inspect->log
+  let _ = {
+    let g = G.makeGraph()
+    let _ = g->G.mergeEdge("1", "2")
+    let _ = g->G.mergeEdge("1", "3")
+    let _ = g->G.mergeEdge("1", "4")
+    let _ = g->G.mergeEdge("2", "5")
+    let _ = g->G.mergeEdge("2", "6")
+    let _ = g->G.mergeEdge("4", "7")
+    let _ = g->G.mergeEdge("4", "8")
+    let _ = g->G.mergeEdge("5", "9")
+    let _ = g->G.mergeEdge("5", "10")
+    let _ = g->G.mergeEdge("7", "11")
+    let _ = g->G.mergeEdge("7", "12")
+    //  g->G.inspect->log
 
-  "BFS"->log
-  let bfsRes = g->Traversal.bfs("1", (node, depth) => {
-    log2(node, depth)
-    g->G.setNodeAttribute(node, "depth", depth)
-    false
-  })
-  bfsRes->log2("bfsRes")
+    "BFS"->log
+    let bfsRes = g->Traversal.bfs("1", (node, depth) => {
+      //    log2(node, depth)
+      g->G.setNodeAttribute(node, "depth", depth)
+      false
+    })
+    bfsRes->(log2("bfsRes", _))
 
-  "DFS"->log
-  let dfsRes = g->Traversal.dfs("1", (node, depth) => {
-    log2(node, depth)
-    false
-  })
-  dfsRes->log2("dfsRes")
+    g->GEXF.writeToFile("graph-bfs.gexf", module(G))
+  }
 
-  g->GEXF.writeToFile("graph.gexf", module(G))
+  let _ = {
+    let g = G.makeGraph()
+    let _ = g->G.mergeEdge("1", "2")
+    let _ = g->G.mergeEdge("1", "3")
+    let _ = g->G.mergeEdge("1", "4")
+    let _ = g->G.mergeEdge("2", "5")
+    let _ = g->G.mergeEdge("2", "6")
+    let _ = g->G.mergeEdge("4", "7")
+    let _ = g->G.mergeEdge("4", "8")
+    let _ = g->G.mergeEdge("5", "9")
+    let _ = g->G.mergeEdge("5", "10")
+    let _ = g->G.mergeEdge("7", "11")
+    let _ = g->G.mergeEdge("7", "12")
+    //  g->G.inspect->log
+
+    "DFS"->log
+    let dfsRes = g->Traversal.dfs("1", (node, depth) => {
+      //    log2(node, depth)
+      g->G.setNodeAttribute(node, "depth", depth)
+      false
+    })
+    dfsRes->(log2("dfsRes", _))
+
+    g->GEXF.writeToFile("graph-dfs.gexf", module(G))
+  }
 }
+
+//module ShortestPath = {
+//  module Dijkstra = {
+//    let singleSource = (g, sourceNode) =>
+//  }
+//}

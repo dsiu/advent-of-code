@@ -11,6 +11,12 @@ module R = Relude.Result
 module F = Relude.Function
 let compose = F.compose
 
+let uncurryFn6: 'a 'b 'c 'd 'e 'f 'r. (
+  ('a, 'b, 'c, 'd, 'e, 'f) => 'r
+) => 'a => 'b => 'c => 'd => 'e => 'f => 'r = fn => {
+  a => b => c => d => e => f => fn(a, b, c, d, e, f)
+}
+
 type operator = Plus | Times
 type operand = Literal(int) | Old
 let makeLiteral = i => Literal(i)
@@ -117,12 +123,13 @@ module MonkeyParser = {
   //  let _ = falseTargetP->P.runParser("    If false: throw to monkey 33", _)->R.tap(log, _)
 
   let monkeyP = {
-    let mkMonkeyPair = mId => holding => operation => test => trueTarget => falseTarget => {
+    let mkMonkeyPair = (mId, holding, operation, test, trueTarget, falseTarget) => {
       // (mId, holding->L.toArray, operation->showExpression, test, trueTarget, falseTarget)
       ((mId, MonkeyCode({operation, test, trueTarget, falseTarget})), (mId, holding))
     }
 
     mkMonkeyPair
+    ->uncurryFn6 // convert to a function that takes 6 curried arguments
     ->\"<$>"(mIdP)
     ->\"<*>"(startingP)
     ->\"<*>"(operatorP)

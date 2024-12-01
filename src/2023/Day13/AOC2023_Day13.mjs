@@ -3,7 +3,6 @@
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
-import * as Stdlib__String from "@dsiu/rescript-stdlib-fp/src/Stdlib__String.mjs";
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
@@ -16,13 +15,17 @@ function log2(prim0, prim1) {
 }
 
 function diffArray(a, b) {
-  return Stdlib__Array.zipWith(a, b, Stdlib__String.equal).filter(function (x) {
+  return Stdlib__Array.zipWith(a, b, (function (prim0, prim1) {
+                  return prim0 === prim1;
+                })).filter(function (x) {
               return Stdlib__Function.id(!x);
             }).length;
 }
 
 function diffStrings(a, b) {
-  return Stdlib__Array.zipWith(a.split(""), b.split(""), Stdlib__String.equal).filter(function (x) {
+  return Stdlib__Array.zipWith(a.split(""), b.split(""), (function (prim0, prim1) {
+                  return prim0 === prim1;
+                })).filter(function (x) {
               return Stdlib__Function.id(!x);
             }).length;
 }
