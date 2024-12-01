@@ -24,20 +24,20 @@ let setVisibility: array<tree> => array<tree> = row => {
 let setVisibilityOrient: forest => forest = A.map(_, setVisibility)
 
 let setVisibilityForest: forest => forest = forest => {
-  let rotate = x => x->transpose->A.map(A.toReversed)
+  let rotate = x => x->A.transpose->A.map(A.toReversed)
   let f = compose(setVisibilityOrient, rotate)
   forest->f->f->f->f
 }
 
 let countVisible: forest => int = forest => {
-  forest->A.concatMany([], _)->A.filter(isVisible)->A.length
+  forest->(A.concatMany([], _))->A.filter(isVisible)->A.length
 }
 
 let part1: forest => int = compose(setVisibilityForest, countVisible)
 
 let tracks: (forest, int, int) => forest = (forest, row, col) => {
-  let (l, r) = forest->A.getUnsafe(row)->A.splitAt(_, ~index=col)
-  let (u, d) = forest->transpose->A.getUnsafe(col)->A.splitAt(_, ~index=row)
+  let (l, r) = forest->A.getUnsafe(row)->(A.splitAt(_, ~index=col))
+  let (u, d) = forest->A.transpose->A.getUnsafe(col)->(A.splitAt(_, ~index=row))
 
   [l->A.toReversed, r->A.drop(1), u->A.toReversed, d->A.drop(1)]
 }
@@ -81,7 +81,10 @@ let parse = data => {
   data
   ->splitNewline
   ->Array.map(x => {
-    x->Js.String2.trim->splitChars->A.map(x => Tree(x->int_of_string, false))
+    x
+    ->Js.String2.trim
+    ->splitChars
+    ->A.map(x => Tree(x->Int.fromString(~radix=10)->Option.getUnsafe, false))
   })
 }
 
