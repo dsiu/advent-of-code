@@ -5,7 +5,7 @@ function log(prim) {
   console.log(prim);
 }
 
-var x = {
+let x = {
   head: 1,
   more: {
     hd: 2,
@@ -27,17 +27,17 @@ function head(x) {
 }
 
 function tail(l) {
-  var match = l.more;
+  let match = l.more;
   if (match) {
     return {
-            head: match.hd,
-            more: match.tl
-          };
+      head: match.hd,
+      more: match.tl
+    };
   }
   
 }
 
-var prim = tail(x);
+let prim = tail(x);
 
 console.log(prim);
 
@@ -46,10 +46,10 @@ function c(x) {
 }
 
 export {
-  log ,
-  x ,
-  head ,
-  tail ,
-  c ,
+  log,
+  x,
+  head,
+  tail,
+  c,
 }
 /* prim Not a pure module */

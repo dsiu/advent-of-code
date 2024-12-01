@@ -5,97 +5,97 @@ import * as AOC2023_Day10$AdventOfCode from "./AOC2023_Day10.mjs";
 import * as AOC2023_Day10_Data$AdventOfCode from "./AOC2023_Day10_Data.mjs";
 import * as AOC2023_Day10_Data_Sample$AdventOfCode from "./AOC2023_Day10_Data_Sample.mjs";
 
-Jest.describe("2023 Day10", (function () {
-        var map = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data));
-        var map1 = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data1));
-        var map2 = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data2));
-        var map3 = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data3));
-        Jest.describe("findPath", (function () {
-                Jest.test("data and data1 should have same path", (function () {
-                        var pathA = AOC2023_Day10$AdventOfCode.followPath(map, map.start);
-                        var pathB = AOC2023_Day10$AdventOfCode.followPath(map1, map1.start);
-                        return Jest.Expect.toEqual(Jest.Expect.expect(pathA), pathB);
-                      }));
-                Jest.test("data2 and data3 should have same path", (function () {
-                        var pathA = AOC2023_Day10$AdventOfCode.followPath(map2, map2.start);
-                        var pathB = AOC2023_Day10$AdventOfCode.followPath(map3, map3.start);
-                        return Jest.Expect.toEqual(Jest.Expect.expect(pathA), pathB);
-                      }));
-              }));
-        Jest.test("Part 1 - Sample Data", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
-              }));
-        Jest.test("Part 1 - Sample Data 1", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data1);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
-              }));
-        Jest.test("Part 1 - Sample Data 2", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data1);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
-              }));
-        Jest.test("Part 1 - Sample Data 3", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data1);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
-              }));
-        Jest.test("Part 1 - Solve", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 7005);
-              }));
-        Jest.test("Part 2 - Sample Data", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
-              }));
-        Jest.test("Part 2 - Sample Data 4", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data_Sample$AdventOfCode.data4);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
-              }));
-        Jest.test("Part 2 - Sample Data 5", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data_Sample$AdventOfCode.data5);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 10);
-              }));
-        Jest.test("Part 2 - Solve", (function () {
-                var result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 417);
-              }));
-      }));
+Jest.describe("2023 Day10", () => {
+  let map = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data));
+  let map1 = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data1));
+  let map2 = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data2));
+  let map3 = AOC2023_Day10$AdventOfCode.$$Map.make(AOC2023_Day10$AdventOfCode.parse(AOC2023_Day10_Data_Sample$AdventOfCode.data3));
+  Jest.describe("findPath", () => {
+    Jest.test("data and data1 should have same path", () => {
+      let pathA = AOC2023_Day10$AdventOfCode.followPath(map, map.start);
+      let pathB = AOC2023_Day10$AdventOfCode.followPath(map1, map1.start);
+      return Jest.Expect.toEqual(Jest.Expect.expect(pathA), pathB);
+    });
+    Jest.test("data2 and data3 should have same path", () => {
+      let pathA = AOC2023_Day10$AdventOfCode.followPath(map2, map2.start);
+      let pathB = AOC2023_Day10$AdventOfCode.followPath(map3, map3.start);
+      return Jest.Expect.toEqual(Jest.Expect.expect(pathA), pathB);
+    });
+  });
+  Jest.test("Part 1 - Sample Data", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
+  });
+  Jest.test("Part 1 - Sample Data 1", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
+  });
+  Jest.test("Part 1 - Sample Data 2", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
+  });
+  Jest.test("Part 1 - Sample Data 3", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data_Sample$AdventOfCode.data1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
+  });
+  Jest.test("Part 1 - Solve", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart1(AOC2023_Day10_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 7005);
+  });
+  Jest.test("Part 2 - Sample Data", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data_Sample$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+  });
+  Jest.test("Part 2 - Sample Data 4", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data_Sample$AdventOfCode.data4);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
+  });
+  Jest.test("Part 2 - Sample Data 5", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data_Sample$AdventOfCode.data5);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 10);
+  });
+  Jest.test("Part 2 - Solve", () => {
+    let result = AOC2023_Day10$AdventOfCode.solvePart2(AOC2023_Day10_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 417);
+  });
+});
 
-var data = AOC2023_Day10_Data$AdventOfCode.data;
+let data = AOC2023_Day10_Data$AdventOfCode.data;
 
-var sampleData = AOC2023_Day10_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2023_Day10_Data_Sample$AdventOfCode.data;
 
-var sampleData1 = AOC2023_Day10_Data_Sample$AdventOfCode.data1;
+let sampleData1 = AOC2023_Day10_Data_Sample$AdventOfCode.data1;
 
-var sampleData2 = AOC2023_Day10_Data_Sample$AdventOfCode.data2;
+let sampleData2 = AOC2023_Day10_Data_Sample$AdventOfCode.data2;
 
-var sampleData3 = AOC2023_Day10_Data_Sample$AdventOfCode.data3;
+let sampleData3 = AOC2023_Day10_Data_Sample$AdventOfCode.data3;
 
-var sampleData4 = AOC2023_Day10_Data_Sample$AdventOfCode.data4;
+let sampleData4 = AOC2023_Day10_Data_Sample$AdventOfCode.data4;
 
-var sampleData5 = AOC2023_Day10_Data_Sample$AdventOfCode.data5;
+let sampleData5 = AOC2023_Day10_Data_Sample$AdventOfCode.data5;
 
-var solvePart1 = AOC2023_Day10$AdventOfCode.solvePart1;
+let solvePart1 = AOC2023_Day10$AdventOfCode.solvePart1;
 
-var solvePart2 = AOC2023_Day10$AdventOfCode.solvePart2;
+let solvePart2 = AOC2023_Day10$AdventOfCode.solvePart2;
 
-var parse = AOC2023_Day10$AdventOfCode.parse;
+let parse = AOC2023_Day10$AdventOfCode.parse;
 
-var followPath = AOC2023_Day10$AdventOfCode.followPath;
+let followPath = AOC2023_Day10$AdventOfCode.followPath;
 
-var $$Map;
+let $$Map;
 
 export {
-  data ,
-  sampleData ,
-  sampleData1 ,
-  sampleData2 ,
-  sampleData3 ,
-  sampleData4 ,
-  sampleData5 ,
-  solvePart1 ,
-  solvePart2 ,
-  parse ,
-  followPath ,
-  $$Map ,
+  data,
+  sampleData,
+  sampleData1,
+  sampleData2,
+  sampleData3,
+  sampleData4,
+  sampleData5,
+  solvePart1,
+  solvePart2,
+  parse,
+  followPath,
+  $$Map,
 }
 /*  Not a pure module */

@@ -40,21 +40,17 @@ function overlaps(x, y) {
 }
 
 function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(function (l) {
-                return l.trim().split(",").map(function (p) {
-                            var r = p.split("-").map(Utils$AdventOfCode.intFromStringExn);
-                            return {
-                                    TAG: "Interval",
-                                    _0: Stdlib__Array.getUnsafe(r, 0),
-                                    _1: Stdlib__Array.getUnsafe(r, 1)
-                                  };
-                          });
-              }).map(function (l) {
-              return [
-                      Stdlib__Array.getUnsafe(l, 0),
-                      Stdlib__Array.getUnsafe(l, 1)
-                    ];
-            });
+  return Utils$AdventOfCode.splitNewline(data).map(l => l.trim().split(",").map(p => {
+    let r = p.split("-").map(Utils$AdventOfCode.intFromStringExn);
+    return {
+      TAG: "Interval",
+      _0: Stdlib__Array.getUnsafe(r, 0),
+      _1: Stdlib__Array.getUnsafe(r, 1)
+    };
+  })).map(l => [
+    Stdlib__Array.getUnsafe(l, 0),
+    Stdlib__Array.getUnsafe(l, 1)
+  ]);
 }
 
 function count(xs, fn) {
@@ -62,15 +58,11 @@ function count(xs, fn) {
 }
 
 function part1(xs) {
-  return xs.filter(function (param) {
-              return hasContainment(param[0], param[1]);
-            }).length;
+  return xs.filter(param => hasContainment(param[0], param[1])).length;
 }
 
 function part2(xs) {
-  return xs.filter(function (param) {
-              return overlaps(param[0], param[1]);
-            }).length;
+  return xs.filter(param => !disjoint(param[0], param[1])).length;
 }
 
 function solvePart1(data) {
@@ -81,24 +73,24 @@ function solvePart2(data) {
   return part2(parse(data));
 }
 
-var A;
+let A;
 
-var S;
+let S;
 
 export {
-  A ,
-  S ,
-  log ,
-  contains ,
-  before ,
-  hasContainment ,
-  disjoint ,
-  overlaps ,
-  parse ,
-  count ,
-  part1 ,
-  part2 ,
-  solvePart1 ,
-  solvePart2 ,
+  A,
+  S,
+  log,
+  contains,
+  before,
+  hasContainment,
+  disjoint,
+  overlaps,
+  parse,
+  count,
+  part1,
+  part2,
+  solvePart1,
+  solvePart2,
 }
 /* Stdlib__Array Not a pure module */

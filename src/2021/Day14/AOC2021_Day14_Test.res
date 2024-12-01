@@ -9,27 +9,27 @@ let {solvePart1, solvePart2} = module(AOC2021_Day14)
 describe("2021 Day14", () => {
   test("Part 1 - Sample Data", () => {
     let result = solvePart1(sampleData)
-    let expected = 1588L
+    let expected = 1588n
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = solvePart1(data)
-    let expected = 3306L
+    let expected = 3306n
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Sample Data", () => {
     let result = solvePart2(sampleData)
-    let expected = 2188189693529L
+    let expected = 2188189693529n
     expect(result)->toEqual(expected)
   })
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = 3760312702877L
+    let expected = 3760312702877n
 
     expect(result)->toEqual(expected)
   })

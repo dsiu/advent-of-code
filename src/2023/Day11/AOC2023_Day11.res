@@ -38,8 +38,7 @@ let dumpGalaxies = (Galaxies(galaxies)) => {
 }
 
 let maxCoord = (Galaxies(galaxies)) => {
-  open! Math.BigInt
-  let origin = (Constants.zero, Constants.zero)
+  let origin = (0n, 0n)
 
   galaxies
   ->Set.toArray
@@ -50,7 +49,7 @@ let maxCoord = (Galaxies(galaxies)) => {
 
 let emptyRowCol = (Galaxies(galaxies) as g) => {
   let (maxX, maxY) = g->maxCoord
-  let origin = (Constants.zero, Constants.zero)
+  let origin = (0n, 0n)
   let galaxies = galaxies->Set.toArray
 
   let xs = Array.fromInitializer(~length=toInt(maxX), Function.id)
@@ -74,15 +73,15 @@ let expand = (Galaxies(galaxies), (expX, expY), scale) => {
   let expandXY = arr =>
     arr->Array.map((Position((x, y))) => {
       (
-        x + nElemLessThan(expX, x)->fromInt * (scale - Constants.one),
-        y + nElemLessThan(expY, y)->fromInt * (scale - Constants.one),
+        x + nElemLessThan(expX, x)->fromInt * (scale - 1n),
+        y + nElemLessThan(expY, y)->fromInt * (scale - 1n),
       )->Position
     })
 
   galaxies->Set.toArray->expandXY->Set.fromArray->Galaxies
 }
 
-let absBigInt = (x: bigint) => x < Constants.zero ? Constants.zero - x : x
+let absBigInt = (x: bigint) => x < 0n ? 0n - x : x
 
 let manhattan: (position, position) => bigint = (Position((x, y)), Position((x', y'))) => {
   (x - x')->absBigInt + (y - y')->absBigInt
@@ -100,7 +99,7 @@ let part1: (galaxies, bigint) => bigint = (g, scale) => {
   ->expand(emptyRowCol(g), scale)
   ->distances
   // sum of all distances / 2 since we are counting each distance twice
-  ->Array.reduce(Constants.zero, (acc, d) => acc + d) / fromInt(2)
+  ->Array.reduce(0n, (acc, d) => acc + d) / 2n
 }
 
 let parse = data => {

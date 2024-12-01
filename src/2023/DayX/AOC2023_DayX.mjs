@@ -11,9 +11,7 @@ function log2(prim0, prim1) {
 }
 
 function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(function (prim) {
-              return prim.trim();
-            });
+  return Utils$AdventOfCode.splitNewline(data).map(prim => prim.trim());
 }
 
 function solvePart1(data) {
@@ -25,10 +23,10 @@ function solvePart2(data) {
 }
 
 export {
-  log ,
-  log2 ,
-  parse ,
-  solvePart1 ,
-  solvePart2 ,
+  log,
+  log2,
+  parse,
+  solvePart1,
+  solvePart2,
 }
 /* Utils-AdventOfCode Not a pure module */

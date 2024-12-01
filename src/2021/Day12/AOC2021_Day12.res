@@ -65,10 +65,9 @@ let has_any_small_cave_been_visited_twice = visited => {
 
 let get_edges = (t, node) => Maze.AdjList.neighbors(t, node)
 
-let can_visit_part1 = (. visited, node) =>
-  is_big_cave(node) || get_visited_count(visited, node) <= 0
+let can_visit_part1 = (visited, node) => is_big_cave(node) || get_visited_count(visited, node) <= 0
 
-let can_visit_part2 = (. visited, node) => {
+let can_visit_part2 = (visited, node) => {
   let c = get_visited_count(visited, node)
   is_big_cave(node) ||
   {
@@ -83,19 +82,19 @@ let can_visit_part2 = (. visited, node) => {
 
 let get_visited_nodes = HashMap.String.keysToArray
 
-let dfs = (. visit_func, t: Maze.t, start_node, end_node) => {
-  let rec explore = (. node, visited, acc, end_node) => {
+let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
+  let rec explore = (node, visited, acc, end_node) => {
     let visited' = inc_visited(visited, node)
 
     switch node == end_node {
     | false => {
         let edges = t->get_edges(node)
         edges->MutableSet.String.reduceU([], (a, e) => {
-          visit_func(. visited', e)
+          visit_func(visited', e)
             ? {
                 Array.concat(
                   a,
-                  explore(. e, visited'->HashMap.String.copy, Array.concat(acc, [e]), end_node),
+                  explore(e, visited'->HashMap.String.copy, Array.concat(acc, [e]), end_node),
                 )
               }
             : {
@@ -110,11 +109,11 @@ let dfs = (. visit_func, t: Maze.t, start_node, end_node) => {
 
   let visited = Belt.HashMap.String.make(~hintSize=40)
   let acc = [start_node]
-  explore(. start_node, visited, acc, end_node)
+  explore(start_node, visited, acc, end_node)
 }
 
-let dfs_part1 = dfs(can_visit_part1)
-let dfs_part2 = dfs(can_visit_part2)
+let dfs_part1 = (m, start, end) => dfs(can_visit_part1, m, start, end)
+let dfs_part2 = (m, start, end) => dfs(can_visit_part2, m, start, end)
 
 let array_to_string = xs => {
   xs->Array.reduce("", (acc, x) => {

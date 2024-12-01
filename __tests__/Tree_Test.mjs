@@ -4,575 +4,548 @@ import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Core__List from "@rescript/core/src/Core__List.mjs";
 import * as Tree$AdventOfCode from "../src/Tree.mjs";
 
-Jest.describe("Tree", (function () {
-        var tl_1 = {
-          TAG: "Pair",
+Jest.describe("Tree", () => {
+  let tl_1 = {
+    TAG: "Pair",
+    _0: {
+      TAG: "Leaf",
+      _0: 1
+    },
+    _1: {
+      TAG: "Leaf",
+      _0: 2
+    }
+  };
+  let tr_1 = {
+    TAG: "Pair",
+    _0: {
+      TAG: "Leaf",
+      _0: 3
+    },
+    _1: {
+      TAG: "Leaf",
+      _0: 4
+    }
+  };
+  let tree_1 = {
+    TAG: "Pair",
+    _0: tl_1,
+    _1: tr_1
+  };
+  let tll_2 = {
+    TAG: "Pair",
+    _0: {
+      TAG: "Leaf",
+      _0: 1
+    },
+    _1: {
+      TAG: "Leaf",
+      _0: 2
+    }
+  };
+  let tl_2_1 = {
+    TAG: "Leaf",
+    _0: 3
+  };
+  let tl_2 = {
+    TAG: "Pair",
+    _0: tll_2,
+    _1: tl_2_1
+  };
+  let trr_2 = {
+    TAG: "Pair",
+    _0: {
+      TAG: "Leaf",
+      _0: 5
+    },
+    _1: {
+      TAG: "Leaf",
+      _0: 6
+    }
+  };
+  let tr_2_0 = {
+    TAG: "Leaf",
+    _0: 4
+  };
+  let tr_2 = {
+    TAG: "Pair",
+    _0: tr_2_0,
+    _1: trr_2
+  };
+  let tree_2 = {
+    TAG: "Pair",
+    _0: tl_2,
+    _1: tr_2
+  };
+  let toString = __x => Core__List.map(__x, param => [
+    Tree$AdventOfCode.locToString(param[0]),
+    Tree$AdventOfCode.locToString(param[1])
+  ]);
+  let left_tests = toString({
+    hd: [
+      Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)),
+      {
+        TAG: "Loc",
+        _0: tl_1,
+        _1: {
+          TAG: "L",
+          _0: "Top",
+          _1: tr_1
+        }
+      }
+    ],
+    tl: {
+      hd: [
+        Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
+        {
+          TAG: "Loc",
+          _0: tll_2,
+          _1: {
+            TAG: "L",
+            _0: {
+              TAG: "L",
+              _0: "Top",
+              _1: tr_2
+            },
+            _1: {
+              TAG: "Leaf",
+              _0: 3
+            }
+          }
+        }
+      ],
+      tl: /* [] */0
+    }
+  });
+  Jest.testAll("left", left_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let right_tests = toString({
+    hd: [
+      Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)),
+      {
+        TAG: "Loc",
+        _0: tr_1,
+        _1: {
+          TAG: "R",
+          _0: tl_1,
+          _1: "Top"
+        }
+      }
+    ],
+    tl: {
+      hd: [
+        Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
+        {
+          TAG: "Loc",
+          _0: trr_2,
+          _1: {
+            TAG: "R",
+            _0: {
+              TAG: "Leaf",
+              _0: 4
+            },
+            _1: {
+              TAG: "R",
+              _0: tl_2,
+              _1: "Top"
+            }
+          }
+        }
+      ],
+      tl: /* [] */0
+    }
+  });
+  Jest.testAll("right", right_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let left_right_tests = toString({
+    hd: [
+      Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1))),
+      {
+        TAG: "Loc",
+        _0: {
+          TAG: "Leaf",
+          _0: 2
+        },
+        _1: {
+          TAG: "R",
           _0: {
             TAG: "Leaf",
             _0: 1
           },
           _1: {
-            TAG: "Leaf",
-            _0: 2
+            TAG: "L",
+            _0: "Top",
+            _1: tr_1
           }
-        };
-        var tr_1 = {
-          TAG: "Pair",
+        }
+      }
+    ],
+    tl: {
+      hd: [
+        Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1))),
+        {
+          TAG: "Loc",
           _0: {
             TAG: "Leaf",
             _0: 3
           },
           _1: {
-            TAG: "Leaf",
-            _0: 4
+            TAG: "L",
+            _0: {
+              TAG: "R",
+              _0: tl_1,
+              _1: "Top"
+            },
+            _1: {
+              TAG: "Leaf",
+              _0: 4
+            }
           }
-        };
-        var tree_1 = {
-          TAG: "Pair",
-          _0: tl_1,
-          _1: tr_1
-        };
-        var tll_2 = {
-          TAG: "Pair",
-          _0: {
-            TAG: "Leaf",
-            _0: 1
-          },
-          _1: {
-            TAG: "Leaf",
-            _0: 2
+        }
+      ],
+      tl: {
+        hd: [
+          Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
+          {
+            TAG: "Loc",
+            _0: {
+              TAG: "Leaf",
+              _0: 3
+            },
+            _1: {
+              TAG: "R",
+              _0: tll_2,
+              _1: {
+                TAG: "L",
+                _0: "Top",
+                _1: tr_2
+              }
+            }
           }
-        };
-        var tl_2_1 = {
-          TAG: "Leaf",
-          _0: 3
-        };
-        var tl_2 = {
-          TAG: "Pair",
-          _0: tll_2,
-          _1: tl_2_1
-        };
-        var trr_2 = {
-          TAG: "Pair",
-          _0: {
-            TAG: "Leaf",
-            _0: 5
-          },
-          _1: {
-            TAG: "Leaf",
-            _0: 6
+        ],
+        tl: {
+          hd: [
+            Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
+            {
+              TAG: "Loc",
+              _0: {
+                TAG: "Leaf",
+                _0: 4
+              },
+              _1: {
+                TAG: "L",
+                _0: {
+                  TAG: "R",
+                  _0: tl_2,
+                  _1: "Top"
+                },
+                _1: trr_2
+              }
+            }
+          ],
+          tl: /* [] */0
+        }
+      }
+    }
+  });
+  Jest.testAll("left right", left_right_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let upmost_tests = toString({
+    hd: [
+      Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
+      {
+        TAG: "Loc",
+        _0: tree_1,
+        _1: "Top"
+      }
+    ],
+    tl: {
+      hd: [
+        Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+        {
+          TAG: "Loc",
+          _0: tree_1,
+          _1: "Top"
+        }
+      ],
+      tl: {
+        hd: [
+          Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
+          {
+            TAG: "Loc",
+            _0: tree_1,
+            _1: "Top"
           }
-        };
-        var tr_2_0 = {
-          TAG: "Leaf",
-          _0: 4
-        };
-        var tr_2 = {
-          TAG: "Pair",
-          _0: tr_2_0,
-          _1: trr_2
-        };
-        var tree_2 = {
-          TAG: "Pair",
-          _0: tl_2,
-          _1: tr_2
-        };
-        var toString = function (__x) {
-          return Core__List.map(__x, (function (param) {
-                        return [
-                                Tree$AdventOfCode.locToString(param[0]),
-                                Tree$AdventOfCode.locToString(param[1])
-                              ];
-                      }));
-        };
-        var left_tests = toString({
-              hd: [
-                Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)),
-                {
-                  TAG: "Loc",
-                  _0: tl_1,
-                  _1: {
-                    TAG: "L",
-                    _0: "Top",
-                    _1: tr_1
-                  }
-                }
-              ],
-              tl: {
-                hd: [
-                  Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
-                  {
-                    TAG: "Loc",
-                    _0: tll_2,
-                    _1: {
-                      TAG: "L",
-                      _0: {
-                        TAG: "L",
-                        _0: "Top",
-                        _1: tr_2
-                      },
-                      _1: {
-                        TAG: "Leaf",
-                        _0: 3
-                      }
-                    }
-                  }
-                ],
-                tl: /* [] */0
+        ],
+        tl: {
+          hd: [
+            Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+            {
+              TAG: "Loc",
+              _0: tree_1,
+              _1: "Top"
+            }
+          ],
+          tl: {
+            hd: [
+              Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
+              {
+                TAG: "Loc",
+                _0: tree_2,
+                _1: "Top"
               }
-            });
-        Jest.testAll("left", left_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var right_tests = toString({
+            ],
+            tl: {
               hd: [
-                Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)),
+                Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
                 {
                   TAG: "Loc",
-                  _0: tr_1,
-                  _1: {
-                    TAG: "R",
-                    _0: tl_1,
-                    _1: "Top"
-                  }
-                }
-              ],
-              tl: {
-                hd: [
-                  Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
-                  {
-                    TAG: "Loc",
-                    _0: trr_2,
-                    _1: {
-                      TAG: "R",
-                      _0: {
-                        TAG: "Leaf",
-                        _0: 4
-                      },
-                      _1: {
-                        TAG: "R",
-                        _0: tl_2,
-                        _1: "Top"
-                      }
-                    }
-                  }
-                ],
-                tl: /* [] */0
-              }
-            });
-        Jest.testAll("right", right_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var left_right_tests = toString({
-              hd: [
-                Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1))),
-                {
-                  TAG: "Loc",
-                  _0: {
-                    TAG: "Leaf",
-                    _0: 2
-                  },
-                  _1: {
-                    TAG: "R",
-                    _0: {
-                      TAG: "Leaf",
-                      _0: 1
-                    },
-                    _1: {
-                      TAG: "L",
-                      _0: "Top",
-                      _1: tr_1
-                    }
-                  }
-                }
-              ],
-              tl: {
-                hd: [
-                  Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1))),
-                  {
-                    TAG: "Loc",
-                    _0: {
-                      TAG: "Leaf",
-                      _0: 3
-                    },
-                    _1: {
-                      TAG: "L",
-                      _0: {
-                        TAG: "R",
-                        _0: tl_1,
-                        _1: "Top"
-                      },
-                      _1: {
-                        TAG: "Leaf",
-                        _0: 4
-                      }
-                    }
-                  }
-                ],
-                tl: {
-                  hd: [
-                    Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
-                    {
-                      TAG: "Loc",
-                      _0: {
-                        TAG: "Leaf",
-                        _0: 3
-                      },
-                      _1: {
-                        TAG: "R",
-                        _0: tll_2,
-                        _1: {
-                          TAG: "L",
-                          _0: "Top",
-                          _1: tr_2
-                        }
-                      }
-                    }
-                  ],
-                  tl: {
-                    hd: [
-                      Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
-                      {
-                        TAG: "Loc",
-                        _0: {
-                          TAG: "Leaf",
-                          _0: 4
-                        },
-                        _1: {
-                          TAG: "L",
-                          _0: {
-                            TAG: "R",
-                            _0: tl_2,
-                            _1: "Top"
-                          },
-                          _1: trr_2
-                        }
-                      }
-                    ],
-                    tl: /* [] */0
-                  }
-                }
-              }
-            });
-        Jest.testAll("left right", left_right_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var upmost_tests = toString({
-              hd: [
-                Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
-                {
-                  TAG: "Loc",
-                  _0: tree_1,
+                  _0: tree_2,
                   _1: "Top"
                 }
               ],
               tl: {
                 hd: [
-                  Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+                  Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2)))),
                   {
                     TAG: "Loc",
-                    _0: tree_1,
+                    _0: tree_2,
                     _1: "Top"
                   }
                 ],
                 tl: {
                   hd: [
-                    Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
+                    Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2)))),
                     {
                       TAG: "Loc",
-                      _0: tree_1,
+                      _0: tree_2,
                       _1: "Top"
                     }
                   ],
                   tl: {
                     hd: [
-                      Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+                      Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
                       {
                         TAG: "Loc",
-                        _0: tree_1,
+                        _0: tree_2,
                         _1: "Top"
                       }
                     ],
                     tl: {
                       hd: [
-                        Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
+                        Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
                         {
                           TAG: "Loc",
                           _0: tree_2,
                           _1: "Top"
                         }
                       ],
-                      tl: {
-                        hd: [
-                          Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
-                          {
-                            TAG: "Loc",
-                            _0: tree_2,
-                            _1: "Top"
-                          }
-                        ],
-                        tl: {
-                          hd: [
-                            Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2)))),
-                            {
-                              TAG: "Loc",
-                              _0: tree_2,
-                              _1: "Top"
-                            }
-                          ],
-                          tl: {
-                            hd: [
-                              Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2)))),
-                              {
-                                TAG: "Loc",
-                                _0: tree_2,
-                                _1: "Top"
-                              }
-                            ],
-                            tl: {
-                              hd: [
-                                Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
-                                {
-                                  TAG: "Loc",
-                                  _0: tree_2,
-                                  _1: "Top"
-                                }
-                              ],
-                              tl: {
-                                hd: [
-                                  Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
-                                  {
-                                    TAG: "Loc",
-                                    _0: tree_2,
-                                    _1: "Top"
-                                  }
-                                ],
-                                tl: /* [] */0
-                              }
-                            }
-                          }
-                        }
-                      }
+                      tl: /* [] */0
                     }
                   }
                 }
               }
-            });
-        Jest.testAll("upmost", upmost_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var up_tests = toString({
-              hd: [
-                Tree$AdventOfCode.up(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
-                {
-                  TAG: "Loc",
-                  _0: tl_1,
-                  _1: {
-                    TAG: "L",
-                    _0: "Top",
-                    _1: tr_1
-                  }
-                }
-              ],
-              tl: {
-                hd: [
-                  Tree$AdventOfCode.up(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
-                  {
-                    TAG: "Loc",
-                    _0: tr_1,
-                    _1: {
-                      TAG: "R",
-                      _0: tl_1,
-                      _1: "Top"
-                    }
-                  }
-                ],
-                tl: {
-                  hd: [
-                    Tree$AdventOfCode.up(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))))),
-                    {
-                      TAG: "Loc",
-                      _0: tll_2,
-                      _1: {
-                        TAG: "L",
-                        _0: {
-                          TAG: "L",
-                          _0: "Top",
-                          _1: tr_2
-                        },
-                        _1: {
-                          TAG: "Leaf",
-                          _0: 3
-                        }
-                      }
-                    }
-                  ],
-                  tl: {
-                    hd: [
-                      Tree$AdventOfCode.up(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
-                      {
-                        TAG: "Loc",
-                        _0: tr_2,
-                        _1: {
-                          TAG: "R",
-                          _0: tl_2,
-                          _1: "Top"
-                        }
-                      }
-                    ],
-                    tl: /* [] */0
-                  }
-                }
+            }
+          }
+        }
+      }
+    }
+  });
+  Jest.testAll("upmost", upmost_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let up_tests = toString({
+    hd: [
+      Tree$AdventOfCode.up(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
+      {
+        TAG: "Loc",
+        _0: tl_1,
+        _1: {
+          TAG: "L",
+          _0: "Top",
+          _1: tr_1
+        }
+      }
+    ],
+    tl: {
+      hd: [
+        Tree$AdventOfCode.up(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+        {
+          TAG: "Loc",
+          _0: tr_1,
+          _1: {
+            TAG: "R",
+            _0: tl_1,
+            _1: "Top"
+          }
+        }
+      ],
+      tl: {
+        hd: [
+          Tree$AdventOfCode.up(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))))),
+          {
+            TAG: "Loc",
+            _0: tll_2,
+            _1: {
+              TAG: "L",
+              _0: {
+                TAG: "L",
+                _0: "Top",
+                _1: tr_2
+              },
+              _1: {
+                TAG: "Leaf",
+                _0: 3
               }
-            });
-        Jest.testAll("up", up_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var modify_tests = toString({
-              hd: [
-                Tree$AdventOfCode.modify(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1))), (function (param) {
-                        return {
-                                TAG: "Leaf",
-                                _0: 5
-                              };
-                      })),
-                {
-                  TAG: "Loc",
-                  _0: {
-                    TAG: "Leaf",
-                    _0: 5
-                  },
-                  _1: {
-                    TAG: "R",
-                    _0: {
-                      TAG: "Leaf",
-                      _0: 1
-                    },
-                    _1: {
-                      TAG: "L",
-                      _0: "Top",
-                      _1: tr_1
-                    }
-                  }
-                }
-              ],
-              tl: {
-                hd: [
-                  Tree$AdventOfCode.modify(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1))), (function (param) {
-                          return {
-                                  TAG: "Pair",
-                                  _0: {
-                                    TAG: "Leaf",
-                                    _0: 6
-                                  },
-                                  _1: {
-                                    TAG: "Leaf",
-                                    _0: 7
-                                  }
-                                };
-                        })),
-                  {
-                    TAG: "Loc",
-                    _0: {
-                      TAG: "Pair",
-                      _0: {
-                        TAG: "Leaf",
-                        _0: 6
-                      },
-                      _1: {
-                        TAG: "Leaf",
-                        _0: 7
-                      }
-                    },
-                    _1: {
-                      TAG: "L",
-                      _0: {
-                        TAG: "R",
-                        _0: tl_1,
-                        _1: "Top"
-                      },
-                      _1: {
-                        TAG: "Leaf",
-                        _0: 4
-                      }
-                    }
-                  }
-                ],
-                tl: {
-                  hd: [
-                    Tree$AdventOfCode.modify(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))), (function (param) {
-                            return {
-                                    TAG: "Leaf",
-                                    _0: 9
-                                  };
-                          })),
-                    {
-                      TAG: "Loc",
-                      _0: {
-                        TAG: "Leaf",
-                        _0: 9
-                      },
-                      _1: {
-                        TAG: "R",
-                        _0: tll_2,
-                        _1: {
-                          TAG: "L",
-                          _0: "Top",
-                          _1: tr_2
-                        }
-                      }
-                    }
-                  ],
-                  tl: {
-                    hd: [
-                      Tree$AdventOfCode.modify(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))), (function (param) {
-                              return {
-                                      TAG: "Pair",
-                                      _0: {
-                                        TAG: "Leaf",
-                                        _0: 10
-                                      },
-                                      _1: {
-                                        TAG: "Leaf",
-                                        _0: 11
-                                      }
-                                    };
-                            })),
-                      {
-                        TAG: "Loc",
-                        _0: {
-                          TAG: "Pair",
-                          _0: {
-                            TAG: "Leaf",
-                            _0: 10
-                          },
-                          _1: {
-                            TAG: "Leaf",
-                            _0: 11
-                          }
-                        },
-                        _1: {
-                          TAG: "L",
-                          _0: {
-                            TAG: "R",
-                            _0: tl_2,
-                            _1: "Top"
-                          },
-                          _1: trr_2
-                        }
-                      }
-                    ],
-                    tl: /* [] */0
-                  }
-                }
+            }
+          }
+        ],
+        tl: {
+          hd: [
+            Tree$AdventOfCode.up(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
+            {
+              TAG: "Loc",
+              _0: tr_2,
+              _1: {
+                TAG: "R",
+                _0: tl_2,
+                _1: "Top"
               }
-            });
-        Jest.testAll("modify", modify_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-      }));
+            }
+          ],
+          tl: /* [] */0
+        }
+      }
+    }
+  });
+  Jest.testAll("up", up_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let modify_tests = toString({
+    hd: [
+      Tree$AdventOfCode.modify(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1))), param => ({
+        TAG: "Leaf",
+        _0: 5
+      })),
+      {
+        TAG: "Loc",
+        _0: {
+          TAG: "Leaf",
+          _0: 5
+        },
+        _1: {
+          TAG: "R",
+          _0: {
+            TAG: "Leaf",
+            _0: 1
+          },
+          _1: {
+            TAG: "L",
+            _0: "Top",
+            _1: tr_1
+          }
+        }
+      }
+    ],
+    tl: {
+      hd: [
+        Tree$AdventOfCode.modify(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1))), param => ({
+          TAG: "Pair",
+          _0: {
+            TAG: "Leaf",
+            _0: 6
+          },
+          _1: {
+            TAG: "Leaf",
+            _0: 7
+          }
+        })),
+        {
+          TAG: "Loc",
+          _0: {
+            TAG: "Pair",
+            _0: {
+              TAG: "Leaf",
+              _0: 6
+            },
+            _1: {
+              TAG: "Leaf",
+              _0: 7
+            }
+          },
+          _1: {
+            TAG: "L",
+            _0: {
+              TAG: "R",
+              _0: tl_1,
+              _1: "Top"
+            },
+            _1: {
+              TAG: "Leaf",
+              _0: 4
+            }
+          }
+        }
+      ],
+      tl: {
+        hd: [
+          Tree$AdventOfCode.modify(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))), param => ({
+            TAG: "Leaf",
+            _0: 9
+          })),
+          {
+            TAG: "Loc",
+            _0: {
+              TAG: "Leaf",
+              _0: 9
+            },
+            _1: {
+              TAG: "R",
+              _0: tll_2,
+              _1: {
+                TAG: "L",
+                _0: "Top",
+                _1: tr_2
+              }
+            }
+          }
+        ],
+        tl: {
+          hd: [
+            Tree$AdventOfCode.modify(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))), param => ({
+              TAG: "Pair",
+              _0: {
+                TAG: "Leaf",
+                _0: 10
+              },
+              _1: {
+                TAG: "Leaf",
+                _0: 11
+              }
+            })),
+            {
+              TAG: "Loc",
+              _0: {
+                TAG: "Pair",
+                _0: {
+                  TAG: "Leaf",
+                  _0: 10
+                },
+                _1: {
+                  TAG: "Leaf",
+                  _0: 11
+                }
+              },
+              _1: {
+                TAG: "L",
+                _0: {
+                  TAG: "R",
+                  _0: tl_2,
+                  _1: "Top"
+                },
+                _1: trr_2
+              }
+            }
+          ],
+          tl: /* [] */0
+        }
+      }
+    }
+  });
+  Jest.testAll("modify", modify_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+});
 
-export {
-  
-}
 /*  Not a pure module */

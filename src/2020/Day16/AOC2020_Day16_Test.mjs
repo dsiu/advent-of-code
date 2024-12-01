@@ -5,33 +5,31 @@ import * as AOC2020_Day16$AdventOfCode from "./AOC2020_Day16.mjs";
 import * as AOC2020_Day16_Data$AdventOfCode from "./AOC2020_Day16_Data.mjs";
 import * as AOC2020_Day16_Data_Sample$AdventOfCode from "./AOC2020_Day16_Data_Sample.mjs";
 
-Jest.describe("2020 Day16", (function () {
-        Jest.test("Part 1 - Sample Data", (function () {
-                var result = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data_Sample$AdventOfCode.data1);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 71);
-              }));
-        Jest.test("Part 1 - Solve", (function () {
-                var result = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 28882);
-              }));
-        Jest.test("Part 2 - Sample Data", (function () {
-                return Jest.Expect.toEqual(Jest.Expect.expect(2), 2);
-              }));
-        Jest.test("Part 2 - Solve", (function () {
-                var result = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 1429779530273);
-              }));
-      }));
+Jest.describe("2020 Day16", () => {
+  Jest.test("Part 1 - Sample Data", () => {
+    let result = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data_Sample$AdventOfCode.data1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 71);
+  });
+  Jest.test("Part 1 - Solve", () => {
+    let result = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 28882);
+  });
+  Jest.test("Part 2 - Sample Data", () => Jest.Expect.toEqual(Jest.Expect.expect(2), 2));
+  Jest.test("Part 2 - Solve", () => {
+    let result = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1429779530273);
+  });
+});
 
-var data = AOC2020_Day16_Data$AdventOfCode.data;
+let data = AOC2020_Day16_Data$AdventOfCode.data;
 
-var sampleData1 = AOC2020_Day16_Data_Sample$AdventOfCode.data1;
+let sampleData1 = AOC2020_Day16_Data_Sample$AdventOfCode.data1;
 
-var sampleData2 = AOC2020_Day16_Data_Sample$AdventOfCode.data2;
+let sampleData2 = AOC2020_Day16_Data_Sample$AdventOfCode.data2;
 
 export {
-  data ,
-  sampleData1 ,
-  sampleData2 ,
+  data,
+  sampleData1,
+  sampleData2,
 }
 /*  Not a pure module */

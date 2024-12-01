@@ -5,40 +5,40 @@ import * as AOC2022_Day9$AdventOfCode from "./AOC2022_Day9.mjs";
 import * as AOC2022_Day9_Data$AdventOfCode from "./AOC2022_Day9_Data.mjs";
 import * as AOC2022_Day9_Data_Sample$AdventOfCode from "./AOC2022_Day9_Data_Sample.mjs";
 
-Jest.describe("2022 Day9", (function () {
-        Jest.test("Part 1 - Sample Data", (function () {
-                var result = AOC2022_Day9$AdventOfCode.solvePart1(AOC2022_Day9_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 13);
-              }));
-        Jest.test("Part 1 - Solve", (function () {
-                var result = AOC2022_Day9$AdventOfCode.solvePart1(AOC2022_Day9_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 5874);
-              }));
-        Jest.test("Part 2 - Sample Data 1", (function () {
-                var result = AOC2022_Day9$AdventOfCode.solvePart2(AOC2022_Day9_Data_Sample$AdventOfCode.data1);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 36);
-              }));
-        Jest.test("Part 2 - Solve", (function () {
-                var result = AOC2022_Day9$AdventOfCode.solvePart2(AOC2022_Day9_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2467);
-              }));
-      }));
+Jest.describe("2022 Day9", () => {
+  Jest.test("Part 1 - Sample Data", () => {
+    let result = AOC2022_Day9$AdventOfCode.solvePart1(AOC2022_Day9_Data_Sample$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 13);
+  });
+  Jest.test("Part 1 - Solve", () => {
+    let result = AOC2022_Day9$AdventOfCode.solvePart1(AOC2022_Day9_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 5874);
+  });
+  Jest.test("Part 2 - Sample Data 1", () => {
+    let result = AOC2022_Day9$AdventOfCode.solvePart2(AOC2022_Day9_Data_Sample$AdventOfCode.data1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 36);
+  });
+  Jest.test("Part 2 - Solve", () => {
+    let result = AOC2022_Day9$AdventOfCode.solvePart2(AOC2022_Day9_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 2467);
+  });
+});
 
-var data = AOC2022_Day9_Data$AdventOfCode.data;
+let data = AOC2022_Day9_Data$AdventOfCode.data;
 
-var sampleData = AOC2022_Day9_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2022_Day9_Data_Sample$AdventOfCode.data;
 
-var sampleData1 = AOC2022_Day9_Data_Sample$AdventOfCode.data1;
+let sampleData1 = AOC2022_Day9_Data_Sample$AdventOfCode.data1;
 
-var solvePart1 = AOC2022_Day9$AdventOfCode.solvePart1;
+let solvePart1 = AOC2022_Day9$AdventOfCode.solvePart1;
 
-var solvePart2 = AOC2022_Day9$AdventOfCode.solvePart2;
+let solvePart2 = AOC2022_Day9$AdventOfCode.solvePart2;
 
 export {
-  data ,
-  sampleData ,
-  sampleData1 ,
-  solvePart1 ,
-  solvePart2 ,
+  data,
+  sampleData,
+  sampleData1,
+  solvePart1,
+  solvePart2,
 }
 /*  Not a pure module */

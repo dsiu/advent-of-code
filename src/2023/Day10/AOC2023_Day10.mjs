@@ -15,80 +15,79 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-function mkPipe($$char) {
-  switch ($$char) {
+function mkPipe(char) {
+  switch (char) {
     case "-" :
-        return "WE";
+      return "WE";
     case "7" :
-        return "WS";
+      return "WS";
     case "F" :
-        return "SE";
+      return "SE";
     case "J" :
-        return "NW";
+      return "NW";
     case "L" :
-        return "NE";
+      return "NE";
     case "S" :
-        return "Start";
+      return "Start";
     case "|" :
-        return "NS";
+      return "NS";
     default:
       return "Empty";
   }
 }
 
 function deltas(pipe) {
-  var north = [
+  let north = [
     0,
     -1
   ];
-  var south = [
+  let south = [
     0,
     1
   ];
-  var east = [
+  let east = [
     1,
     0
   ];
-  var west = [
+  let west = [
     -1,
     0
   ];
   switch (pipe) {
     case "Empty" :
-        return [];
+      return [];
     case "NW" :
-        return [
-                north,
-                west
-              ];
+      return [
+        north,
+        west
+      ];
     case "NS" :
-        return [
-                north,
-                south
-              ];
+      return [
+        north,
+        south
+      ];
     case "NE" :
-        return [
-                north,
-                east
-              ];
+      return [
+        north,
+        east
+      ];
     case "WE" :
-        return [
-                west,
-                east
-              ];
+      return [
+        west,
+        east
+      ];
     case "WS" :
-        return [
-                west,
-                south
-              ];
+      return [
+        west,
+        south
+      ];
     case "SE" :
-        return [
-                south,
-                east
-              ];
+      return [
+        south,
+        east
+      ];
     case "Start" :
-        return deltas("NS").concat(deltas("WE"));
-    
+      return deltas("NS").concat(deltas("WE"));
   }
 }
 
@@ -97,7 +96,7 @@ function isVertex(pipe) {
     case "Empty" :
     case "NS" :
     case "WE" :
-        return false;
+      return false;
     default:
       return true;
   }
@@ -105,55 +104,47 @@ function isVertex(pipe) {
 
 function findStart(grid) {
   return Array2D$AdventOfCode.reduceWithIndex(grid, [
-              0,
-              0
-            ], (function (acc, elem, pos) {
-                if (elem === "Start") {
-                  return pos;
-                } else {
-                  return acc;
-                }
-              }));
+    0,
+    0
+  ], (acc, elem, pos) => {
+    if (elem === "Start") {
+      return pos;
+    } else {
+      return acc;
+    }
+  });
 }
 
 function make(grid) {
   return {
-          grid: grid,
-          start: findStart(grid)
-        };
+    grid: grid,
+    start: findStart(grid)
+  };
 }
 
-var $$Map = {
+let $$Map = {
   make: make
 };
 
 function neighbours(param, p) {
-  var grid = param.grid;
-  return Stdlib__Array.filterMap(deltas(Array2D$AdventOfCode.getExn(grid, p)), (function (delta) {
-                var nbr = Coord_V2$AdventOfCode.add(p, delta);
-                if (Array2D$AdventOfCode.isValidXY(grid, nbr)) {
-                  return nbr;
-                }
-                
-              }));
+  let grid = param.grid;
+  return Stdlib__Array.filterMap(deltas(Array2D$AdventOfCode.getExn(grid, p)), delta => {
+    let nbr = Coord_V2$AdventOfCode.add(p, delta);
+    if (Array2D$AdventOfCode.isValidXY(grid, nbr)) {
+      return nbr;
+    }
+    
+  });
 }
 
 function connectorsToPosition(map, pos) {
-  var startNbrs = neighbours(map, pos);
-  var nbrsNbrs = startNbrs.map(function (nbr) {
-        return [
-                nbr,
-                neighbours(map, nbr)
-              ];
-      });
-  var connectors = nbrsNbrs.filter(function (param) {
-        return Stdlib__Option.isSome(Stdlib__Array.find(param[1], (function (n) {
-                          return Coord_V2$AdventOfCode.compare(n, pos) === 0;
-                        })));
-      });
-  return connectors.map(function (prim) {
-              return prim[0];
-            });
+  let startNbrs = neighbours(map, pos);
+  let nbrsNbrs = startNbrs.map(nbr => [
+    nbr,
+    neighbours(map, nbr)
+  ]);
+  let connectors = nbrsNbrs.filter(param => Stdlib__Option.isSome(Stdlib__Array.find(param[1], n => Coord_V2$AdventOfCode.compare(n, pos) === 0)));
+  return connectors.map(prim => prim[0]);
 }
 
 function connectorsToStart(map) {
@@ -161,88 +152,84 @@ function connectorsToStart(map) {
 }
 
 function followPath(map, start) {
-  var _acc = [];
-  var _thisPos = start;
-  var _lastPos = start;
-  while(true) {
-    var lastPos = _lastPos;
-    var thisPos = _thisPos;
-    var acc = _acc;
-    var nbrs = connectorsToPosition(map, thisPos);
-    var next = Stdlib__Array.getUnsafe(nbrs.filter((function(lastPos){
-            return function (n) {
-              return Coord_V2$AdventOfCode.compare(n, lastPos) !== 0;
-            }
-            }(lastPos))), 0);
-    var acc$p = acc.concat([thisPos]);
+  let _acc = [];
+  let _thisPos = start;
+  let _lastPos = start;
+  while (true) {
+    let lastPos = _lastPos;
+    let thisPos = _thisPos;
+    let acc = _acc;
+    let nbrs = connectorsToPosition(map, thisPos);
+    let next = Stdlib__Array.getUnsafe(nbrs.filter(n => Coord_V2$AdventOfCode.compare(n, lastPos) !== 0), 0);
+    let acc$p = acc.concat([thisPos]);
     if (Coord_V2$AdventOfCode.compare(next, start) === 0) {
       return acc$p;
     }
     _lastPos = thisPos;
     _thisPos = next;
     _acc = acc$p;
-    continue ;
+    continue;
   };
 }
 
 function part1(map) {
-  var path = followPath(map, map.start);
+  let path = followPath(map, map.start);
   return path.length / 2 | 0;
 }
 
 function shoelaceFormula(v) {
-  var v$p = Stdlib__Array.drop(v, 1).concat(Stdlib__Array.take(v, 1));
-  return Math.abs(Stdlib__Array.sum(Stdlib__Array.map2(v, v$p, (function (param, param$1) {
-                        return Math.imul(param[0], param$1[1]) - Math.imul(param[1], param$1[0]) | 0;
-                      })), {
-                  zero: Stdlib__Int.zero,
-                  add: Stdlib__Int.add
-                })) / 2 | 0;
+  let v$p = Stdlib__Array.drop(v, 1).concat(Stdlib__Array.take(v, 1));
+  return Math.abs(Stdlib__Array.sum(Stdlib__Array.map2(v, v$p, (param, param$1) => Math.imul(param[0], param$1[1]) - Math.imul(param[1], param$1[0]) | 0), {
+    zero: Stdlib__Int.zero,
+    add: Stdlib__Int.add
+  })) / 2 | 0;
 }
 
 function part2(map) {
-  var path = followPath(map, map.start);
-  var boundaryPointsCount = path.length;
-  var vertices = path.filter(function (pos) {
-        return isVertex(Array2D$AdventOfCode.getExn(map.grid, pos));
-      });
-  var loopArea = shoelaceFormula(vertices);
+  let path = followPath(map, map.start);
+  let boundaryPointsCount = path.length;
+  let vertices = path.filter(pos => isVertex(Array2D$AdventOfCode.getExn(map.grid, pos)));
+  let loopArea = shoelaceFormula(vertices);
   return (loopArea - (boundaryPointsCount / 2 | 0) | 0) + 1 | 0;
 }
 
 function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(function (x) {
-              return x.trim().split("").map(mkPipe);
-            });
+  return Utils$AdventOfCode.splitNewline(data).map(x => x.trim().split("").map(mkPipe));
 }
 
 function solvePart1(data) {
-  var map = make(parse(data));
-  return part1(map);
+  let grid = parse(data);
+  return part1({
+    grid: grid,
+    start: findStart(grid)
+  });
 }
 
 function solvePart2(data) {
-  var map = make(parse(data));
-  return part2(map);
+  let grid = parse(data);
+  return part2({
+    grid: grid,
+    start: findStart(grid)
+  });
 }
 
 export {
-  log ,
-  log2 ,
-  mkPipe ,
-  deltas ,
-  isVertex ,
-  findStart ,
-  $$Map ,
-  neighbours ,
-  connectorsToPosition ,
-  connectorsToStart ,
-  followPath ,
-  part1 ,
-  shoelaceFormula ,
-  part2 ,
-  parse ,
-  solvePart1 ,
-  solvePart2 ,
+  log,
+  log2,
+  mkPipe,
+  deltas,
+  isVertex,
+  findStart,
+  $$Map,
+  neighbours,
+  connectorsToPosition,
+  connectorsToStart,
+  followPath,
+  part1,
+  shoelaceFormula,
+  part2,
+  parse,
+  solvePart1,
+  solvePart2,
 }
 /* Stdlib__Int Not a pure module */

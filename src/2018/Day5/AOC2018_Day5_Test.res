@@ -69,7 +69,7 @@ describe("2018 Day5", () => {
     Skip.test(
       "Solve Part 1 - Data array",
       () => {
-        let result = charArray->defuse_array->Js.Array2.joinWith(_, "")->Js.String.length
+        let result = charArray->defuse_array->(Js.Array2.joinWith(_, ""))->Js.String.length
 
         let expected = AOC2018_Day5_Data.result->Js.String.length
         expect(result)->toEqual(expected)
@@ -82,8 +82,8 @@ describe("2018 Day5", () => {
       "notIsLetterAndUpper",
       () => {
         let result = (
-          testCharArray->Array.keep(notIsLetterAndUpper("a")),
-          testCharArray->Array.keep(notIsLetterAndUpper("b")),
+          testCharArray->Array.keep(notIsLetterAndUpper(_, "a")),
+          testCharArray->Array.keep(notIsLetterAndUpper(_, "b")),
         )
         let expected = ("dbcCCBcCcD"->Js.String2.split(""), "daAcCaCAcCcaDA"->Js.String2.split(""))
         expect(result)->toEqual(expected)

@@ -3,163 +3,136 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Coordinate$AdventOfCode from "../src/Coordinate.mjs";
 
-Jest.describe("Step Functions", (function () {
-        var init = [
+Jest.describe("Step Functions", () => {
+  let init = [
+    4,
+    4
+  ];
+  let singleStep_tests_0 = [
+    Coordinate$AdventOfCode.StepFunctions.stepN(init),
+    [
+      4,
+      3
+    ]
+  ];
+  let singleStep_tests_1 = {
+    hd: [
+      Coordinate$AdventOfCode.StepFunctions.stepE(init),
+      [
+        5,
+        4
+      ]
+    ],
+    tl: {
+      hd: [
+        Coordinate$AdventOfCode.StepFunctions.stepS(init),
+        [
           4,
-          4
-        ];
-        var singleStep_tests_0 = [
-          Coordinate$AdventOfCode.StepFunctions.stepN(init),
+          5
+        ]
+      ],
+      tl: {
+        hd: [
+          Coordinate$AdventOfCode.StepFunctions.stepW(init),
           [
-            4,
-            3
+            3,
+            4
           ]
-        ];
-        var singleStep_tests_1 = {
+        ],
+        tl: {
           hd: [
-            Coordinate$AdventOfCode.StepFunctions.stepE(init),
+            Coordinate$AdventOfCode.StepFunctions.stepNE(init),
             [
               5,
-              4
+              3
             ]
           ],
           tl: {
             hd: [
-              Coordinate$AdventOfCode.StepFunctions.stepS(init),
-              [
-                4,
-                5
-              ]
-            ],
-            tl: {
-              hd: [
-                Coordinate$AdventOfCode.StepFunctions.stepW(init),
-                [
-                  3,
-                  4
-                ]
-              ],
-              tl: {
-                hd: [
-                  Coordinate$AdventOfCode.StepFunctions.stepNE(init),
-                  [
-                    5,
-                    3
-                  ]
-                ],
-                tl: {
-                  hd: [
-                    Coordinate$AdventOfCode.StepFunctions.stepNW(init),
-                    [
-                      3,
-                      3
-                    ]
-                  ],
-                  tl: {
-                    hd: [
-                      Coordinate$AdventOfCode.StepFunctions.stepSE(init),
-                      [
-                        5,
-                        5
-                      ]
-                    ],
-                    tl: {
-                      hd: [
-                        Coordinate$AdventOfCode.StepFunctions.stepSW(init),
-                        [
-                          3,
-                          5
-                        ]
-                      ],
-                      tl: /* [] */0
-                    }
-                  }
-                }
-              }
-            }
-          }
-        };
-        var singleStep_tests = {
-          hd: singleStep_tests_0,
-          tl: singleStep_tests_1
-        };
-        Jest.testAll("Single Step", singleStep_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var multipleStep_test_0 = [
-          (function (__x) {
-                return Coordinate$AdventOfCode.StepFunctions.stepN(__x);
-              })((function (__x) {
-                    return Coordinate$AdventOfCode.StepFunctions.stepN(__x);
-                  })(init)),
-          [
-            4,
-            2
-          ]
-        ];
-        var multipleStep_test_1 = {
-          hd: [
-            (function (__x) {
-                  return Coordinate$AdventOfCode.StepFunctions.stepE(__x);
-                })((function (__x) {
-                      return Coordinate$AdventOfCode.StepFunctions.stepE(__x);
-                    })(init)),
-            [
-              6,
-              4
-            ]
-          ],
-          tl: {
-            hd: [
-              (function (__x) {
-                    return Coordinate$AdventOfCode.StepFunctions.stepW(__x);
-                  })((function (__x) {
-                        return Coordinate$AdventOfCode.StepFunctions.stepS(__x);
-                      })(init)),
+              Coordinate$AdventOfCode.StepFunctions.stepNW(init),
               [
                 3,
-                5
+                3
               ]
             ],
             tl: {
               hd: [
-                (function (__x) {
-                      return Coordinate$AdventOfCode.StepFunctions.stepSW(__x);
-                    })((function (__x) {
-                          return Coordinate$AdventOfCode.StepFunctions.stepNE(__x);
-                        })(init)),
+                Coordinate$AdventOfCode.StepFunctions.stepSE(init),
                 [
-                  4,
-                  4
+                  5,
+                  5
                 ]
               ],
               tl: {
                 hd: [
-                  (function (__x) {
-                        return Coordinate$AdventOfCode.StepFunctions.stepSE(__x);
-                      })((function (__x) {
-                            return Coordinate$AdventOfCode.StepFunctions.stepNW(__x);
-                          })(init)),
+                  Coordinate$AdventOfCode.StepFunctions.stepSW(init),
                   [
-                    4,
-                    4
+                    3,
+                    5
                   ]
                 ],
                 tl: /* [] */0
               }
             }
           }
-        };
-        var multipleStep_test = {
-          hd: multipleStep_test_0,
-          tl: multipleStep_test_1
-        };
-        Jest.testAll("Multiple Steps", multipleStep_test, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-      }));
+        }
+      }
+    }
+  };
+  let singleStep_tests = {
+    hd: singleStep_tests_0,
+    tl: singleStep_tests_1
+  };
+  Jest.testAll("Single Step", singleStep_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let multipleStep_test_0 = [
+    Coordinate$AdventOfCode.StepFunctions.stepN(Coordinate$AdventOfCode.StepFunctions.stepN(init)),
+    [
+      4,
+      2
+    ]
+  ];
+  let multipleStep_test_1 = {
+    hd: [
+      Coordinate$AdventOfCode.StepFunctions.stepE(Coordinate$AdventOfCode.StepFunctions.stepE(init)),
+      [
+        6,
+        4
+      ]
+    ],
+    tl: {
+      hd: [
+        Coordinate$AdventOfCode.StepFunctions.stepW(Coordinate$AdventOfCode.StepFunctions.stepS(init)),
+        [
+          3,
+          5
+        ]
+      ],
+      tl: {
+        hd: [
+          Coordinate$AdventOfCode.StepFunctions.stepSW(Coordinate$AdventOfCode.StepFunctions.stepNE(init)),
+          [
+            4,
+            4
+          ]
+        ],
+        tl: {
+          hd: [
+            Coordinate$AdventOfCode.StepFunctions.stepSE(Coordinate$AdventOfCode.StepFunctions.stepNW(init)),
+            [
+              4,
+              4
+            ]
+          ],
+          tl: /* [] */0
+        }
+      }
+    }
+  };
+  let multipleStep_test = {
+    hd: multipleStep_test_0,
+    tl: multipleStep_test_1
+  };
+  Jest.testAll("Multiple Steps", multipleStep_test, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+});
 
-export {
-  
-}
 /*  Not a pure module */

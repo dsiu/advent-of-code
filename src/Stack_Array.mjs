@@ -7,9 +7,9 @@ function push(t, e) {
 
 function pop(t) {
   return [
-          t[0],
-          t.length >= 1 ? t.slice(1) : []
-        ];
+    t[0],
+    t.length >= 1 ? t.slice(1) : []
+  ];
 }
 
 function peek(t) {
@@ -17,8 +17,8 @@ function peek(t) {
 }
 
 export {
-  push ,
-  pop ,
-  peek ,
+  push,
+  pop,
+  peek,
 }
 /* No side effect */

@@ -16,7 +16,7 @@ let parse: 'a. (string, array<string> => 'a) => array<'a> = (data, fn) => {
   })
 }
 
-let stringToChar = String.get(_, 0)
+let stringToChar = s => TC.Char.fromString(s)->Option.getExn
 
 let charToPriority: string => int = item => {
   let c = item->stringToChar

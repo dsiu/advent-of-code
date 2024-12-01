@@ -3,11 +3,11 @@
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 import * as AOC2018_Day5$AdventOfCode from "./AOC2018_Day5.mjs";
 
-var result = AOC2018_Day5$AdventOfCode.solvePart2(AOC2018_Day5$AdventOfCode.aTod, AOC2018_Day5$AdventOfCode.testCharArray);
+let result = AOC2018_Day5$AdventOfCode.solvePart2(AOC2018_Day5$AdventOfCode.aTod, AOC2018_Day5$AdventOfCode.testCharArray);
 
 Utils$AdventOfCode.log(result);
 
 export {
-  result ,
+  result,
 }
 /* result Not a pure module */

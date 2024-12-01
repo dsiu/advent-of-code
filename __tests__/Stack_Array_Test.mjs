@@ -3,105 +3,99 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Stack_Array$AdventOfCode from "../src/Stack_Array.mjs";
 
-Jest.describe("Stack", (function () {
-        var push_tests_0 = [
-          Stack_Array$AdventOfCode.push([], 79),
-          [79]
-        ];
-        var push_tests_1 = {
-          hd: [
-            Stack_Array$AdventOfCode.push([
-                  614,
-                  154
-                ], 728),
-            [
-              728,
-              614,
-              154
-            ]
-          ],
-          tl: /* [] */0
-        };
-        var push_tests = {
-          hd: push_tests_0,
-          tl: push_tests_1
-        };
-        Jest.testAll("push", push_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var pop_tests_0 = [
-          Stack_Array$AdventOfCode.pop([]),
+Jest.describe("Stack", () => {
+  let push_tests_0 = [
+    Stack_Array$AdventOfCode.push([], 79),
+    [79]
+  ];
+  let push_tests_1 = {
+    hd: [
+      Stack_Array$AdventOfCode.push([
+        614,
+        154
+      ], 728),
+      [
+        728,
+        614,
+        154
+      ]
+    ],
+    tl: /* [] */0
+  };
+  let push_tests = {
+    hd: push_tests_0,
+    tl: push_tests_1
+  };
+  Jest.testAll("push", push_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let pop_tests_0 = [
+    Stack_Array$AdventOfCode.pop([]),
+    [
+      undefined,
+      []
+    ]
+  ];
+  let pop_tests_1 = {
+    hd: [
+      Stack_Array$AdventOfCode.pop([681]),
+      [
+        681,
+        []
+      ]
+    ],
+    tl: {
+      hd: [
+        Stack_Array$AdventOfCode.pop([
+          404,
+          240,
+          942
+        ]),
+        [
+          404,
           [
-            undefined,
-            []
+            240,
+            942
           ]
-        ];
-        var pop_tests_1 = {
-          hd: [
-            Stack_Array$AdventOfCode.pop([681]),
-            [
-              681,
-              []
-            ]
-          ],
-          tl: {
-            hd: [
-              Stack_Array$AdventOfCode.pop([
-                    404,
-                    240,
-                    942
-                  ]),
-              [
-                404,
-                [
-                  240,
-                  942
-                ]
-              ]
-            ],
-            tl: /* [] */0
-          }
-        };
-        var pop_tests = {
-          hd: pop_tests_0,
-          tl: pop_tests_1
-        };
-        Jest.testAll("pop", pop_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var peek_tests_0 = [
-          Stack_Array$AdventOfCode.peek([]),
-          undefined
-        ];
-        var peek_tests_1 = {
-          hd: [
-            Stack_Array$AdventOfCode.peek([269]),
-            269
-          ],
-          tl: {
-            hd: [
-              Stack_Array$AdventOfCode.peek([
-                    917,
-                    815,
-                    924
-                  ]),
-              917
-            ],
-            tl: /* [] */0
-          }
-        };
-        var peek_tests = {
-          hd: peek_tests_0,
-          tl: peek_tests_1
-        };
-        Jest.testAll("peek", peek_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-      }));
+        ]
+      ],
+      tl: /* [] */0
+    }
+  };
+  let pop_tests = {
+    hd: pop_tests_0,
+    tl: pop_tests_1
+  };
+  Jest.testAll("pop", pop_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let peek_tests_0 = [
+    Stack_Array$AdventOfCode.peek([]),
+    undefined
+  ];
+  let peek_tests_1 = {
+    hd: [
+      Stack_Array$AdventOfCode.peek([269]),
+      269
+    ],
+    tl: {
+      hd: [
+        Stack_Array$AdventOfCode.peek([
+          917,
+          815,
+          924
+        ]),
+        917
+      ],
+      tl: /* [] */0
+    }
+  };
+  let peek_tests = {
+    hd: peek_tests_0,
+    tl: peek_tests_1
+  };
+  Jest.testAll("peek", peek_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+});
 
-var Stack;
+let Stack;
 
 export {
-  Stack ,
+  Stack,
 }
 /*  Not a pure module */

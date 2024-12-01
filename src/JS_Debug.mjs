@@ -10,23 +10,21 @@ function debug2(t2, s, o) {
   return t2(s, o);
 }
 
-var JSD = {
+let JSD = {
   debug: debug,
   debug2: debug2
 };
 
 function make(moduleName) {
-  var jsd = Debug(moduleName);
-  var debug = function (message) {
-    jsd(message);
-  };
+  let jsd = Debug(moduleName);
+  let debug = message => jsd(message);
   return {
-          debug: debug
-        };
+    debug: debug
+  };
 }
 
 export {
-  JSD ,
-  make ,
+  JSD,
+  make,
 }
 /* debug Not a pure module */

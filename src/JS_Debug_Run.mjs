@@ -2,15 +2,15 @@
 
 import * as JS_Debug$AdventOfCode from "./JS_Debug.mjs";
 
-var Log = JS_Debug$AdventOfCode.make("JS_Debug_Run-AdventOfCode");
+let Log = JS_Debug$AdventOfCode.make("JS_Debug_Run-AdventOfCode");
 
-var LogR = JS_Debug$AdventOfCode.make("Logger Run");
+let LogR = JS_Debug$AdventOfCode.make("Logger Run");
 
 Log.debug("Starting");
 
 LogR.debug("Starting");
 
-var error = {
+let error = {
   a: 1,
   b: 2
 };
@@ -19,14 +19,14 @@ Log.debug("end");
 
 LogR.debug("end");
 
-var b = {
+let b = {
   propb: "valueb"
 };
 
 export {
-  Log ,
-  LogR ,
-  error ,
-  b ,
+  Log,
+  LogR,
+  error,
+  b,
 }
 /* Log Not a pure module */

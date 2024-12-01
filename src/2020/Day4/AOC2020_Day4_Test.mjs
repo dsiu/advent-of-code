@@ -5,141 +5,137 @@ import * as AOC2020_Day4$AdventOfCode from "./AOC2020_Day4.mjs";
 import * as AOC2020_Day4_Data$AdventOfCode from "./AOC2020_Day4_Data.mjs";
 import * as AOC2020_Day4_Data_Sample$AdventOfCode from "./AOC2020_Day4_Data_Sample.mjs";
 
-Jest.describe("2020 Day4", (function () {
-        Jest.test("Part 1 - Test Data", (function () {
-                var result = AOC2020_Day4$AdventOfCode.solvePart1(AOC2020_Day4_Data_Sample$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
-              }));
-        Jest.test("Part 1 - Solve", (function () {
-                var result = AOC2020_Day4$AdventOfCode.solvePart1(AOC2020_Day4_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 206);
-              }));
-        Jest.test("validators yr", (function () {
-                var yr = function (__x) {
-                  return AOC2020_Day4$AdventOfCode.Passport.validateStringAsInt(__x, (function (__x) {
-                                return AOC2020_Day4$AdventOfCode.Passport.between(__x, 1920, 2002);
-                              }));
-                };
-                var result = [
-                  yr("1970"),
-                  yr("2010"),
-                  yr("2002")
-                ];
-                var expected = [
-                  true,
-                  false,
-                  true
-                ];
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-              }));
-        Jest.test("validators hgt", (function () {
-                var hgt = AOC2020_Day4$AdventOfCode.Passport.hgtValidator;
-                var result = [
-                  hgt("149cm"),
-                  hgt("193cm"),
-                  hgt("160cm"),
-                  hgt("59in"),
-                  hgt("78in"),
-                  hgt("60in"),
-                  hgt("cm"),
-                  hgt("cm161"),
-                  hgt("in"),
-                  hgt("in64")
-                ];
-                var expected = [
-                  false,
-                  true,
-                  true,
-                  true,
-                  false,
-                  true,
-                  false,
-                  false,
-                  false,
-                  false
-                ];
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-              }));
-        Jest.test("validators hcl", (function () {
-                var hcl = AOC2020_Day4$AdventOfCode.Passport.hclValidator;
-                var result = [
-                  hcl("#123456"),
-                  hcl("6543218"),
-                  hcl("#abcdef"),
-                  hcl("#abcdefg"),
-                  hcl("#1234567"),
-                  hcl("#ab12cg"),
-                  hcl("#ab12ce")
-                ];
-                var expected = [
-                  true,
-                  false,
-                  true,
-                  false,
-                  false,
-                  false,
-                  true
-                ];
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-              }));
-        Jest.test("validators ecl", (function () {
-                var ecl = AOC2020_Day4$AdventOfCode.Passport.eclValidator;
-                var result = [
-                  ecl("amb"),
-                  ecl("blu"),
-                  ecl("brn"),
-                  ecl("gry"),
-                  ecl("grn"),
-                  ecl("hzl"),
-                  ecl("oth"),
-                  ecl("blue"),
-                  ecl(""),
-                  ecl("black")
-                ];
-                var expected = [
-                  true,
-                  true,
-                  true,
-                  true,
-                  true,
-                  true,
-                  true,
-                  false,
-                  false,
-                  false
-                ];
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-              }));
-        Jest.test("validators pid", (function () {
-                var pv = AOC2020_Day4$AdventOfCode.Passport.pidValidator;
-                var result = [
-                  pv("123456789"),
-                  pv("000011112"),
-                  pv("1234567890"),
-                  pv("aaaabbbbcc"),
-                  pv("x23456789")
-                ];
-                var expected = [
-                  true,
-                  true,
-                  false,
-                  false,
-                  false
-                ];
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
-              }));
-        Jest.test("Part 2 - Solve", (function () {
-                var result = AOC2020_Day4$AdventOfCode.solvePart2(AOC2020_Day4_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 123);
-              }));
-      }));
+Jest.describe("2020 Day4", () => {
+  Jest.test("Part 1 - Test Data", () => {
+    let result = AOC2020_Day4$AdventOfCode.solvePart1(AOC2020_Day4_Data_Sample$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+  });
+  Jest.test("Part 1 - Solve", () => {
+    let result = AOC2020_Day4$AdventOfCode.solvePart1(AOC2020_Day4_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 206);
+  });
+  Jest.test("validators yr", () => {
+    let yr = __x => AOC2020_Day4$AdventOfCode.Passport.validateStringAsInt(__x, __x => AOC2020_Day4$AdventOfCode.Passport.between(__x, 1920, 2002));
+    let result = [
+      yr("1970"),
+      yr("2010"),
+      yr("2002")
+    ];
+    let expected = [
+      true,
+      false,
+      true
+    ];
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+  });
+  Jest.test("validators hgt", () => {
+    let hgt = AOC2020_Day4$AdventOfCode.Passport.hgtValidator;
+    let result = [
+      hgt("149cm"),
+      hgt("193cm"),
+      hgt("160cm"),
+      hgt("59in"),
+      hgt("78in"),
+      hgt("60in"),
+      hgt("cm"),
+      hgt("cm161"),
+      hgt("in"),
+      hgt("in64")
+    ];
+    let expected = [
+      false,
+      true,
+      true,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false
+    ];
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+  });
+  Jest.test("validators hcl", () => {
+    let hcl = AOC2020_Day4$AdventOfCode.Passport.hclValidator;
+    let result = [
+      hcl("#123456"),
+      hcl("6543218"),
+      hcl("#abcdef"),
+      hcl("#abcdefg"),
+      hcl("#1234567"),
+      hcl("#ab12cg"),
+      hcl("#ab12ce")
+    ];
+    let expected = [
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true
+    ];
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+  });
+  Jest.test("validators ecl", () => {
+    let ecl = AOC2020_Day4$AdventOfCode.Passport.eclValidator;
+    let result = [
+      ecl("amb"),
+      ecl("blu"),
+      ecl("brn"),
+      ecl("gry"),
+      ecl("grn"),
+      ecl("hzl"),
+      ecl("oth"),
+      ecl("blue"),
+      ecl(""),
+      ecl("black")
+    ];
+    let expected = [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false
+    ];
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+  });
+  Jest.test("validators pid", () => {
+    let pv = AOC2020_Day4$AdventOfCode.Passport.pidValidator;
+    let result = [
+      pv("123456789"),
+      pv("000011112"),
+      pv("1234567890"),
+      pv("aaaabbbbcc"),
+      pv("x23456789")
+    ];
+    let expected = [
+      true,
+      true,
+      false,
+      false,
+      false
+    ];
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
+  });
+  Jest.test("Part 2 - Solve", () => {
+    let result = AOC2020_Day4$AdventOfCode.solvePart2(AOC2020_Day4_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 123);
+  });
+});
 
-var data = AOC2020_Day4_Data$AdventOfCode.data;
+let data = AOC2020_Day4_Data$AdventOfCode.data;
 
-var sampleData = AOC2020_Day4_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2020_Day4_Data_Sample$AdventOfCode.data;
 
 export {
-  data ,
-  sampleData ,
+  data,
+  sampleData,
 }
 /*  Not a pure module */

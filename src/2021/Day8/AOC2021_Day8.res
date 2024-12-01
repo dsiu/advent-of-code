@@ -18,7 +18,7 @@ module Digit = {
   let has = (t, x) => t->makeSet->Set.String.has(x)
   let intersect = (a, b) => Set.String.intersect(a->makeSet, b->makeSet)->Set.String.toArray
 
-  let mustHave = (. t, ~must_have) => t->intersect(must_have)->eq(must_have)
+  let mustHave = (t, ~must_have) => t->intersect(must_have)->eq(must_have)
 
   let diff = (a, b) => Set.String.diff(a->makeSet, b->makeSet)->Set.String.toArray
   let union = (a, b) => Set.String.union(a->makeSet, b->makeSet)->Set.String.toArray
@@ -72,12 +72,12 @@ module Entry = {
       let has_6_segs = xs->Digit.keepSize(6) // can be 0, 6, or 9
 
       let union_4_7 = Digit.union(four, seven)
-      let nine = has_6_segs->Array.keep(Digit.mustHave(~must_have=union_4_7))->Digit.getExn(0)
+      let nine = has_6_segs->Array.keep(Digit.mustHave(_, ~must_have=union_4_7))->Digit.getExn(0)
 
       let six_or_zero = has_6_segs->Array.keep(x => !Digit.mustHave(x, ~must_have=union_4_7))
 
       let diff_4_1 = Digit.diff(four, one)
-      let six = six_or_zero->Array.keep(Digit.mustHave(~must_have=diff_4_1))->Digit.getExn(0)
+      let six = six_or_zero->Array.keep(Digit.mustHave(_, ~must_have=diff_4_1))->Digit.getExn(0)
       let zero =
         six_or_zero->Array.keep(x => !Digit.mustHave(x, ~must_have=diff_4_1))->Digit.getExn(0)
 
@@ -88,12 +88,12 @@ module Entry = {
       let has_5_segs = xs->Digit.keepSize(5) // can be 2, 3, 5
 
       let diff_8_9 = Digit.diff(eight, nine)
-      let two = has_5_segs->Array.keep(Digit.mustHave(~must_have=diff_8_9))->Digit.getExn(0)
+      let two = has_5_segs->Array.keep(Digit.mustHave(_, ~must_have=diff_8_9))->Digit.getExn(0)
 
       let three_or_five = has_5_segs->Array.keep(x => !Digit.mustHave(x, ~must_have=diff_8_9))
 
       let diff_8_6 = Digit.diff(eight, six)
-      let three = three_or_five->Array.keep(Digit.mustHave(~must_have=diff_8_6))->Digit.getExn(0)
+      let three = three_or_five->Array.keep(Digit.mustHave(_, ~must_have=diff_8_6))->Digit.getExn(0)
       let five =
         three_or_five->Array.keep(x => !Digit.mustHave(x, ~must_have=diff_8_6))->Digit.getExn(0)
 

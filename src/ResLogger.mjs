@@ -2,65 +2,63 @@
 
 
 function prependDate(message) {
-  var now = new Date();
-  var hours = now.getHours().toString().padStart(2, "0");
-  var minutes = now.getMinutes().toString().padStart(2, "0");
-  var seconds = now.getSeconds().toString().padStart(2, "0");
+  let now = new Date();
+  let hours = now.getHours().toString().padStart(2, "0");
+  let minutes = now.getMinutes().toString().padStart(2, "0");
+  let seconds = now.getSeconds().toString().padStart(2, "0");
   return hours + ":" + minutes + ":" + seconds + " " + message;
 }
 
 function log(level, msg) {
-  var msg$1 = prependDate(msg);
+  let msg$1 = prependDate(msg);
   switch (level) {
     case "Debug" :
-        if (process.env.NODE_ENV === "development") {
-          console.log(msg$1);
-          return ;
-        } else {
-          return ;
-        }
+      if (process.env.NODE_ENV === "development") {
+        console.log(msg$1);
+        return;
+      } else {
+        return;
+      }
     case "Info" :
-        console.info(msg$1);
-        return ;
+      console.info(msg$1);
+      return;
     case "Warn" :
-        console.warn(msg$1);
-        return ;
+      console.warn(msg$1);
+      return;
     case "Error" :
-        console.error(msg$1);
-        return ;
-    
+      console.error(msg$1);
+      return;
   }
 }
 
 function log2(level, msg, obj) {
-  var msg$1 = prependDate(msg);
+  let msg$1 = prependDate(msg);
   switch (level) {
     case "Debug" :
-        if (process.env.NODE_ENV === "development") {
-          console.log(msg$1, obj);
-          return ;
-        } else {
-          return ;
-        }
+      if (process.env.NODE_ENV === "development") {
+        console.log(msg$1, obj);
+        return;
+      } else {
+        return;
+      }
     case "Info" :
-        console.info(msg$1, obj);
-        return ;
+      console.info(msg$1, obj);
+      return;
     case "Warn" :
-        console.warn(msg$1, obj);
-        return ;
+      console.warn(msg$1, obj);
+      return;
     case "Error" :
-        console.error(msg$1, obj);
-        return ;
-    
+      console.error(msg$1, obj);
+      return;
   }
 }
 
-var DefaultImpl = {
+let DefaultImpl = {
   log: log,
   log2: log2
 };
 
-var loggerImpl = {
+let loggerImpl = {
   contents: DefaultImpl
 };
 
@@ -69,55 +67,55 @@ function setLoggerImpl(impl) {
 }
 
 function make(moduleName) {
-  var prefix = "[" + moduleName + "] ";
-  var debug = function (message) {
-    var I = loggerImpl.contents;
+  let prefix = "[" + moduleName + "] ";
+  let debug = message => {
+    let I = loggerImpl.contents;
     I.log("Debug", prefix + message);
   };
-  var info = function (message) {
-    var I = loggerImpl.contents;
+  let info = message => {
+    let I = loggerImpl.contents;
     I.log("Info", prefix + message);
   };
-  var warn = function (message) {
-    var I = loggerImpl.contents;
+  let warn = message => {
+    let I = loggerImpl.contents;
     I.log("Warn", prefix + message);
   };
-  var error = function (message) {
-    var I = loggerImpl.contents;
+  let error = message => {
+    let I = loggerImpl.contents;
     I.log("Error", prefix + message);
   };
-  var debug2 = function (message, obj) {
-    var I = loggerImpl.contents;
+  let debug2 = (message, obj) => {
+    let I = loggerImpl.contents;
     I.log2("Debug", prefix + message, obj);
   };
-  var info2 = function (message, obj) {
-    var I = loggerImpl.contents;
+  let info2 = (message, obj) => {
+    let I = loggerImpl.contents;
     I.log2("Info", prefix + message, obj);
   };
-  var warn2 = function (message, obj) {
-    var I = loggerImpl.contents;
+  let warn2 = (message, obj) => {
+    let I = loggerImpl.contents;
     I.log2("Warn", prefix + message, obj);
   };
-  var error2 = function (message, obj) {
-    var I = loggerImpl.contents;
+  let error2 = (message, obj) => {
+    let I = loggerImpl.contents;
     I.log2("Error", prefix + message, obj);
   };
   return {
-          debug: debug,
-          info: info,
-          warn: warn,
-          error: error,
-          debug2: debug2,
-          info2: info2,
-          warn2: warn2,
-          error2: error2
-        };
+    debug: debug,
+    info: info,
+    warn: warn,
+    error: error,
+    debug2: debug2,
+    info2: info2,
+    warn2: warn2,
+    error2: error2
+  };
 }
 
 export {
-  DefaultImpl ,
-  loggerImpl ,
-  setLoggerImpl ,
-  make ,
+  DefaultImpl,
+  loggerImpl,
+  setLoggerImpl,
+  make,
 }
 /* No side effect */

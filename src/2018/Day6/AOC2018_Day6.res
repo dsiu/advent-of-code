@@ -19,13 +19,13 @@ module Coord = {
   }
 
   // Coords utils
-  let findXY = (. f, init, xs) => {
+  let findXY = (f, init, xs) => {
     xs->Array.reduce(make(~x=init, ~y=init), (a, c) => {
       make(~x=f(a.x, c.x), ~y=f(a.y, c.y))
     })
   }
-  let maxXY = findXY(Stdlib.Math.Int.max, Js.Int.min)
-  let minXY = findXY(Stdlib.Math.Int.min, Js.Int.max)
+  let maxXY = findXY(Stdlib.Math.Int.max, Js.Int.min, _)
+  let minXY = findXY(Stdlib.Math.Int.min, Js.Int.max, _)
 
   let dist = (a: t, b: t) => {
     (b.x - a.x)->Js.Math.abs_int + (b.y - a.y)->Js.Math.abs_int

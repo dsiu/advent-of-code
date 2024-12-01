@@ -5,35 +5,35 @@ import * as AOC2018_Day4$AdventOfCode from "./AOC2018_Day4.mjs";
 import * as AOC2018_Day4_Data$AdventOfCode from "./AOC2018_Day4_Data.mjs";
 import * as AOC2018_Day4_Data_Sample$AdventOfCode from "./AOC2018_Day4_Data_Sample.mjs";
 
-Jest.describe("2018 Day4", (function () {
-        Jest.describe("Part 1", (function () {
-                Jest.test("Solve Part 1 - sampleData", (function () {
-                        var result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data_Sample$AdventOfCode.data);
-                        return Jest.Expect.toEqual(Jest.Expect.expect(result), 240);
-                      }));
-                Jest.test("Solve Part 1 - Data", (function () {
-                        var result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data$AdventOfCode.data);
-                        return Jest.Expect.toEqual(Jest.Expect.expect(result), 48680);
-                      }));
-              }));
-        Jest.describe("Part 2", (function () {
-                Jest.test("Solve Part 2 - sampleData", (function () {
-                        var result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data_Sample$AdventOfCode.data);
-                        return Jest.Expect.toEqual(Jest.Expect.expect(result), 4455);
-                      }));
-                Jest.test("Solve Part 2 - Data", (function () {
-                        var result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data$AdventOfCode.data);
-                        return Jest.Expect.toEqual(Jest.Expect.expect(result), 94826);
-                      }));
-              }));
-      }));
+Jest.describe("2018 Day4", () => {
+  Jest.describe("Part 1", () => {
+    Jest.test("Solve Part 1 - sampleData", () => {
+      let result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data_Sample$AdventOfCode.data);
+      return Jest.Expect.toEqual(Jest.Expect.expect(result), 240);
+    });
+    Jest.test("Solve Part 1 - Data", () => {
+      let result = AOC2018_Day4$AdventOfCode.solvePart1(AOC2018_Day4_Data$AdventOfCode.data);
+      return Jest.Expect.toEqual(Jest.Expect.expect(result), 48680);
+    });
+  });
+  Jest.describe("Part 2", () => {
+    Jest.test("Solve Part 2 - sampleData", () => {
+      let result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data_Sample$AdventOfCode.data);
+      return Jest.Expect.toEqual(Jest.Expect.expect(result), 4455);
+    });
+    Jest.test("Solve Part 2 - Data", () => {
+      let result = AOC2018_Day4$AdventOfCode.solvePart2(AOC2018_Day4_Data$AdventOfCode.data);
+      return Jest.Expect.toEqual(Jest.Expect.expect(result), 94826);
+    });
+  });
+});
 
-var data = AOC2018_Day4_Data$AdventOfCode.data;
+let data = AOC2018_Day4_Data$AdventOfCode.data;
 
-var sampleData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
 
 export {
-  data ,
-  sampleData ,
+  data,
+  sampleData,
 }
 /*  Not a pure module */

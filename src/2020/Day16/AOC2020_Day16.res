@@ -2,14 +2,13 @@
 // https://work.njae.me.uk/2020/12/25/advent-of-code-2020-day-16/
 //
 
-@@uncurried
-@@uncurried.swap
-
-open Belt
+open Stdlib
 open Utils
 
-let log = Js.Console.log
-let log2 = Js.Console.log2
+module Map = Belt.Map
+
+let log = Console.log
+let log2 = Console.log2
 
 type range = Range(int, int) // a Range is two limits.
 type body = Body(range, range) // A Body is two Ranges
@@ -22,13 +21,13 @@ let inRange = (Range(lower, upper), value) => lower <= value && value <= upper
 let matchesRule = (Body(a, b), value) => inRange(a, value) || inRange(b, value)
 
 let validForAnyField = (RuleSet(rules), value) => {
-  open Array
-  rules->Map.String.valuesToArray->some(matchesRule(_, value))
+  rules->Map.String.valuesToArray->Array.some(matchesRule(_, value))
 }
 
 let ticketErrorRate = (rules, tickets: array<ticket>) => {
-  open Array
-  sumIntArray(tickets->map(t => t->keep(v => !validForAnyField(rules, v)))->flatten)
+  sumIntArray(
+    tickets->Array.map(t => t->Array.filter(v => !validForAnyField(rules, v)))->Array.flat,
+  )
 }
 
 let part1 = ticketErrorRate
@@ -36,9 +35,8 @@ let part1 = ticketErrorRate
 /**
   A ticket is valid if every value is valid for some rule.
   */
-let isValidTicket = (. RuleSet(rules), ticket) => {
-  open Array
-  every(ticket->map(validForAnyField(RuleSet(rules), _)), identity)
+let isValidTicket = (RuleSet(rules), ticket) => {
+  Array.every(ticket->Array.map(validForAnyField(RuleSet(rules), _)), identity)
 }
 
 /**
@@ -47,13 +45,12 @@ let isValidTicket = (. RuleSet(rules), ticket) => {
   the indexes).
 */
 let possibleColumns = (ticketCols, body) => {
-  open Array
   let columnMatches = ((_, col)) => {
-    every(col, matchesRule(body, _))
+    Array.every(col, matchesRule(body, _))
   }
 
-  let idx = makeBy(ticketCols->length, identity)
-  zip(idx, ticketCols)->keep(columnMatches)->map(fst)
+  let idx = Array.fromInitializer(~length=ticketCols->Array.length, identity)
+  Array.zip(idx, ticketCols)->Array.filter(columnMatches)->Array.map(fst)
 }
 
 /**
@@ -64,10 +61,8 @@ let possibleColumns = (ticketCols, body) => {
 type colCandidateSet = ColCandidateSet(Map.String.t<array<int>>)
 
 let possibleColumnsAll = (RuleSet(rules), tickets: array<ticket>) => {
-  open Array
-  let validTickets = tickets->keep(isValidTicket(RuleSet(rules)))
-  let ticketCols = Utils.transpose(validTickets)
-
+  let validTickets = tickets->Array.filter(isValidTicket(RuleSet(rules), _))
+  let ticketCols = Stdlib.Array.transpose(validTickets)
   rules->Map.String.map(possibleColumns(ticketCols, _))
 }
 
@@ -83,9 +78,9 @@ let reduceCandidate = (ColCandidateSet(candidates)) => {
   let rec inner = (ColCandidateSet(c), solved: array<(string, int)>) => {
     switch ColCandidateSet(c)->findNextCandidate {
     | Some((k, v)) => {
-        let v' = v->Array.getExn(0)
+        let v' = v->Array.getUnsafe(0)
         let solved' = Array.concat(solved, [(k, v')])
-        let removeFound = Array.keep(_, x => x != v')
+        let removeFound = Array.filter(_, x => x != v')
 
         inner(ColCandidateSet(c->Map.String.remove(k)->Map.String.map(removeFound)), solved')
       }
@@ -121,8 +116,8 @@ let parse = data => {
     s->split(",")->map(intFromStringExn)
   }
 
-  let myTicket = my->Array.getExn(1)->parseTicket
-  let nearbyTickets = nearby->Array.sliceToEnd(1)->map(parseTicket)
+  let myTicket = my->Array.getUnsafe(1)->parseTicket
+  let nearbyTickets = nearby->Array.sliceToEnd(~start=1)->map(parseTicket)
 
   //  ruleSet->Printable.MapString.toString(bodyToString)->log
   //  myTicket->log
@@ -145,10 +140,9 @@ let solvePart2 = data => {
   //  pc->Map.String.toArray->log
   let colMapping = ColCandidateSet(pc)->reduceCandidate
 
-  open Array
   colMapping
-  ->keepMap(((k, col)) => {
-    k->Js.String2.startsWith("departure") ? Some(myTicket->Array.getExn(col)) : None
+  ->Array.filterMap(((k, col)) => {
+    k->Js.String2.startsWith("departure") ? Some(myTicket->Array.getUnsafe(col)) : None
   })
-  ->reduce(1., (acc, x) => Float.fromInt(x) *. acc) // product of array
+  ->Array.reduce(1., (acc, x) => Float.fromInt(x) *. acc) // product of array
 }

@@ -19,39 +19,37 @@ function differences(xs) {
 
 function expand(seq) {
   return {
-          TAG: "Sequence",
-          _0: Stdlib__Array.unfoldr(seq, (function (xs) {
-                  if (Stdlib__Array.all(xs, (function (__x) {
-                            return Stdlib__Function.eq(0, __x);
-                          }))) {
-                    return ;
-                  } else {
-                    return [
-                            xs,
-                            differences(xs)
-                          ];
-                  }
-                }))
-        };
+    TAG: "Sequence",
+    _0: Stdlib__Array.unfoldr(seq, xs => {
+      if (Stdlib__Array.all(xs, __x => Stdlib__Function.eq(0, __x))) {
+        return;
+      } else {
+        return [
+          xs,
+          differences(xs)
+        ];
+      }
+    })
+  };
 }
 
 function extendRow(param, row) {
-  var n$p = Stdlib__Array.lastUnsafe(row) + param[1] | 0;
-  var row$p = row.concat([n$p]);
+  let n$p = Stdlib__Array.lastUnsafe(row) + param[1] | 0;
+  let row$p = row.concat([n$p]);
   return [
-          [row$p].concat(param[0]),
-          n$p
-        ];
+    [row$p].concat(param[0]),
+    n$p
+  ];
 }
 
 function extend(seq) {
   return {
-          TAG: "Sequence",
-          _0: Stdlib__Array.foldRight(seq._0, [
-                  [],
-                  0
-                ], extendRow)[0]
-        };
+    TAG: "Sequence",
+    _0: Stdlib__Array.foldRight(seq._0, [
+        [],
+        0
+      ], extendRow)[0]
+  };
 }
 
 function evaluate(seq) {
@@ -59,35 +57,29 @@ function evaluate(seq) {
 }
 
 function part1(histories) {
-  return Stdlib__Array.sum(histories.map(function (x) {
-                  return evaluate(extend(expand(x)));
-                }), {
-              zero: Stdlib__Int.zero,
-              add: Stdlib__Int.add
-            });
+  return Stdlib__Array.sum(histories.map(x => evaluate(extend(expand(x)))), {
+    zero: Stdlib__Int.zero,
+    add: Stdlib__Int.add
+  });
 }
 
 function part2(histories) {
-  return part1(histories.map(function (prim) {
-                  return prim.toReversed();
-                }));
+  return part1(histories.map(prim => prim.toReversed()));
 }
 
 function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(function (l) {
-              return l.trim().split(" ").map(Utils$AdventOfCode.intFromStringExn);
-            });
+  return Utils$AdventOfCode.splitNewline(data).map(l => l.trim().split(" ").map(Utils$AdventOfCode.intFromStringExn));
 }
 
 function solvePart1(data) {
-  var prim = expand([
-        10,
-        13,
-        16,
-        21,
-        30,
-        45
-      ]);
+  let prim = expand([
+    10,
+    13,
+    16,
+    21,
+    30,
+    45
+  ]);
   console.log(prim);
   return part1(parse(data));
 }
@@ -97,17 +89,17 @@ function solvePart2(data) {
 }
 
 export {
-  log ,
-  log2 ,
-  differences ,
-  expand ,
-  extendRow ,
-  extend ,
-  evaluate ,
-  part1 ,
-  part2 ,
-  parse ,
-  solvePart1 ,
-  solvePart2 ,
+  log,
+  log2,
+  differences,
+  expand,
+  extendRow,
+  extend,
+  evaluate,
+  part1,
+  part2,
+  parse,
+  solvePart1,
+  solvePart2,
 }
 /* Stdlib__Int Not a pure module */

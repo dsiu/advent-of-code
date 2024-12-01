@@ -9,7 +9,7 @@ function add(a, b) {
   return a + b | 0;
 }
 
-var IntElem = {
+let IntElem = {
   cmp: cmp,
   add: add
 };
@@ -22,82 +22,74 @@ function add$1(a, b) {
   return a + b;
 }
 
-var FloatElem = {
+let FloatElem = {
   cmp: cmp$1,
   add: add$1
 };
 
 function Make_V2(E) {
-  var make = function (a, b) {
-    return [
-            a,
-            b
-          ];
-  };
-  var cmp = function (param, param$1) {
-    var r = E.cmp(param[0], param$1[0]);
+  let make = (a, b) => [
+    a,
+    b
+  ];
+  let cmp = (param, param$1) => {
+    let r = E.cmp(param[0], param$1[0]);
     if (r !== 0) {
       return r;
     } else {
       return E.cmp(param[1], param$1[1]);
     }
   };
-  var add = function (param, param$1) {
-    return [
-            E.add(param[0], param$1[0]),
-            E.add(param[1], param$1[1])
-          ];
-  };
+  let add = (param, param$1) => [
+    E.add(param[0], param$1[0]),
+    E.add(param[1], param$1[1])
+  ];
   return {
-          cmp: cmp,
-          add: add,
-          make: make
-        };
+    cmp: cmp,
+    add: add,
+    make: make
+  };
 }
 
 function Make_V3(E) {
-  var make = function (a, b, c) {
-    return [
-            a,
-            b,
-            c
-          ];
-  };
-  var cmp = function (param, param$1) {
-    var r = E.cmp(param[0], param$1[0]);
+  let make = (a, b, c) => [
+    a,
+    b,
+    c
+  ];
+  let cmp = (param, param$1) => {
+    let r = E.cmp(param[0], param$1[0]);
     if (r !== 0) {
       return r;
     }
-    var r$1 = E.cmp(param[1], param$1[1]);
+    let r$1 = E.cmp(param[1], param$1[1]);
     if (r$1 !== 0) {
       return r$1;
     } else {
       return E.cmp(param[2], param$1[2]);
     }
   };
-  var add = function (param, param$1) {
-    return [
-            E.add(param[0], param$1[0]),
-            E.add(param[1], param$1[1]),
-            E.add(param[2], param$1[2])
-          ];
-  };
+  let add = (param, param$1) => [
+    E.add(param[0], param$1[0]),
+    E.add(param[1], param$1[1]),
+    E.add(param[2], param$1[2])
+  ];
   return {
-          cmp: cmp,
-          add: add,
-          make: make
-        };
+    cmp: cmp,
+    add: add,
+    make: make
+  };
 }
 
 function make(a, b) {
   return [
-          a,
-          b
-        ];
+    a,
+    b
+  ];
 }
 
 function cmp$2(param, param$1) {
-  var r = param[0] - param$1[0] | 0;
+  let r = param[0] - param$1[0] | 0;
   if (r !== 0) {
     return r;
   } else {
@@ -107,12 +99,12 @@ function cmp$2(param, param$1) {
 
 function add$2(param, param$1) {
   return [
-          param[0] + param$1[0] | 0,
-          param[1] + param$1[1] | 0
-        ];
+    param[0] + param$1[0] | 0,
+    param[1] + param$1[1] | 0
+  ];
 }
 
-var V2_Int = {
+let V2_Int = {
   cmp: cmp$2,
   add: add$2,
   make: make
@@ -120,13 +112,13 @@ var V2_Int = {
 
 function make$1(a, b) {
   return [
-          a,
-          b
-        ];
+    a,
+    b
+  ];
 }
 
 function cmp$3(param, param$1) {
-  var r = param[0] - param$1[0] | 0;
+  let r = param[0] - param$1[0] | 0;
   if (r !== 0) {
     return r;
   } else {
@@ -136,12 +128,12 @@ function cmp$3(param, param$1) {
 
 function add$3(param, param$1) {
   return [
-          param[0] + param$1[0],
-          param[1] + param$1[1]
-        ];
+    param[0] + param$1[0],
+    param[1] + param$1[1]
+  ];
 }
 
-var V2_Float = {
+let V2_Float = {
   cmp: cmp$3,
   add: add$3,
   make: make$1
@@ -149,18 +141,18 @@ var V2_Float = {
 
 function make$2(a, b, c) {
   return [
-          a,
-          b,
-          c
-        ];
+    a,
+    b,
+    c
+  ];
 }
 
 function cmp$4(param, param$1) {
-  var r = param[0] - param$1[0] | 0;
+  let r = param[0] - param$1[0] | 0;
   if (r !== 0) {
     return r;
   }
-  var r$1 = param[1] - param$1[1] | 0;
+  let r$1 = param[1] - param$1[1] | 0;
   if (r$1 !== 0) {
     return r$1;
   } else {
@@ -170,25 +162,25 @@ function cmp$4(param, param$1) {
 
 function add$4(param, param$1) {
   return [
-          param[0] + param$1[0] | 0,
-          param[1] + param$1[1] | 0,
-          param[2] + param$1[2] | 0
-        ];
+    param[0] + param$1[0] | 0,
+    param[1] + param$1[1] | 0,
+    param[2] + param$1[2] | 0
+  ];
 }
 
-var V3_Int = {
+let V3_Int = {
   cmp: cmp$4,
   add: add$4,
   make: make$2
 };
 
 export {
-  IntElem ,
-  FloatElem ,
-  Make_V2 ,
-  Make_V3 ,
-  V2_Int ,
-  V2_Float ,
-  V3_Int ,
+  IntElem,
+  FloatElem,
+  Make_V2,
+  Make_V3,
+  V2_Int,
+  V2_Float,
+  V3_Int,
 }
 /* No side effect */

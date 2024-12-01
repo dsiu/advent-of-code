@@ -13,7 +13,7 @@ describe("2021 Day17", () => {
   describe("launch", () => {
     let t = sampleData->parse
 
-    let makeLaunchTests = List.map(((v, r)) => {(launch(v, t), r)})
+    let makeLaunchTests = List.map(_, ((v, r)) => {(launch(v, t), r)})
 
     let example_tests =
       list{

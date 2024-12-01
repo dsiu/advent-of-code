@@ -28,14 +28,8 @@
     "rescript-nodejs",
     "rationale",
     "rescript-bag",
-    "@resinfo/parser",
-    "bs-bastet",
-    "relude",
-    "relude-parse",
-    "js-array2-ex",
     "@dsiu/rescript-stdlib-fp",
-    "@dsiu/rescript-graphology",
-    "@greenlabs/garter"
+    "@dsiu/rescript-graphology"
   ],
   "bs-dev-dependencies": [
     "@glennsl/rescript-jest"

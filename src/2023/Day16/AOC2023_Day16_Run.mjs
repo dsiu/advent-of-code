@@ -14,7 +14,7 @@ console.log("----------");
 
 console.time("Part 2");
 
-var part2 = AOC2023_Day16$AdventOfCode.solvePart2(AOC2023_Day16_Data$AdventOfCode.data);
+let part2 = AOC2023_Day16$AdventOfCode.solvePart2(AOC2023_Day16_Data$AdventOfCode.data);
 
 console.log("Part 2 Result");
 
@@ -22,20 +22,20 @@ console.log(part2);
 
 console.timeEnd("Part 2");
 
-var data = AOC2023_Day16_Data$AdventOfCode.data;
+let data = AOC2023_Day16_Data$AdventOfCode.data;
 
-var sampleData = AOC2023_Day16_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2023_Day16_Data_Sample$AdventOfCode.data;
 
-var solvePart1 = AOC2023_Day16$AdventOfCode.solvePart1;
+let solvePart1 = AOC2023_Day16$AdventOfCode.solvePart1;
 
-var solvePart2 = AOC2023_Day16$AdventOfCode.solvePart2;
+let solvePart2 = AOC2023_Day16$AdventOfCode.solvePart2;
 
 export {
-  log ,
-  data ,
-  sampleData ,
-  solvePart1 ,
-  solvePart2 ,
-  part2 ,
+  log,
+  data,
+  sampleData,
+  solvePart1,
+  solvePart2,
+  part2,
 }
 /*  Not a pure module */

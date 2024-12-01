@@ -7,14 +7,10 @@ function log(prim) {
   console.log(prim);
 }
 
-function parse(data) {
-  return Utils$AdventOfCode.splitChars(data);
-}
+let parse = Utils$AdventOfCode.splitChars;
 
 function allDifferent(cs) {
-  return Stdlib__Array.equal(Stdlib__Array.uniq(cs), cs, (function (prim0, prim1) {
-                return prim0 === prim1;
-              }));
+  return Stdlib__Array.equal(Stdlib__Array.uniq(cs), cs, (prim0, prim1) => prim0 === prim1);
 }
 
 function hasSame(x) {
@@ -22,15 +18,9 @@ function hasSame(x) {
 }
 
 function interestingPosition(n, text) {
-  var len = text.length;
-  var candidates = Stdlib__Array.zip(Stdlib__Array.makeBy(len, (function (prim) {
-              return prim;
-            })), Stdlib__Array.tails(text).map(function (__x) {
-            return Stdlib__Array.take(__x, n);
-          }));
-  var packetPos = Stdlib__Array.headUnsafe(Stdlib__Array.dropWhile(candidates, Utils$AdventOfCode.compose((function (prim) {
-                  return prim[1];
-                }), hasSame)));
+  let len = text.length;
+  let candidates = Stdlib__Array.zip(Stdlib__Array.makeBy(len, prim => prim), Stdlib__Array.tails(text).map(__x => Stdlib__Array.take(__x, n)));
+  let packetPos = Stdlib__Array.headUnsafe(Stdlib__Array.dropWhile(candidates, Utils$AdventOfCode.compose(prim => prim[1], hasSame)));
   return n + packetPos[0] | 0;
 }
 
@@ -42,16 +32,16 @@ function solvePart2(data) {
   return interestingPosition(14, Utils$AdventOfCode.splitChars(data));
 }
 
-var A;
+let A;
 
 export {
-  log ,
-  A ,
-  parse ,
-  allDifferent ,
-  hasSame ,
-  interestingPosition ,
-  solvePart1 ,
-  solvePart2 ,
+  log,
+  A,
+  parse,
+  allDifferent,
+  hasSame,
+  interestingPosition,
+  solvePart1,
+  solvePart2,
 }
 /* Stdlib__Array Not a pure module */

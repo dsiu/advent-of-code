@@ -5,70 +5,66 @@ import * as AOC2020_Day15$AdventOfCode from "./AOC2020_Day15.mjs";
 import * as AOC2020_Day15_Data$AdventOfCode from "./AOC2020_Day15_Data.mjs";
 import * as AOC2020_Day15_Data_Sample$AdventOfCode from "./AOC2020_Day15_Data_Sample.mjs";
 
-Jest.describe("2020 Day15", (function () {
-        var part1_sample_tests_0 = [
-          AOC2020_Day15$AdventOfCode.solvePart1("0,3,6"),
-          436
-        ];
-        var part1_sample_tests_1 = {
+Jest.describe("2020 Day15", () => {
+  let part1_sample_tests_0 = [
+    AOC2020_Day15$AdventOfCode.solvePart1("0,3,6"),
+    436
+  ];
+  let part1_sample_tests_1 = {
+    hd: [
+      AOC2020_Day15$AdventOfCode.solvePart1("1,3,2"),
+      1
+    ],
+    tl: {
+      hd: [
+        AOC2020_Day15$AdventOfCode.solvePart1("2,1,3"),
+        10
+      ],
+      tl: {
+        hd: [
+          AOC2020_Day15$AdventOfCode.solvePart1("1,2,3"),
+          27
+        ],
+        tl: {
           hd: [
-            AOC2020_Day15$AdventOfCode.solvePart1("1,3,2"),
-            1
+            AOC2020_Day15$AdventOfCode.solvePart1("2,3,1"),
+            78
           ],
           tl: {
             hd: [
-              AOC2020_Day15$AdventOfCode.solvePart1("2,1,3"),
-              10
+              AOC2020_Day15$AdventOfCode.solvePart1("3,2,1"),
+              438
             ],
             tl: {
               hd: [
-                AOC2020_Day15$AdventOfCode.solvePart1("1,2,3"),
-                27
+                AOC2020_Day15$AdventOfCode.solvePart1("3,1,2"),
+                1836
               ],
-              tl: {
-                hd: [
-                  AOC2020_Day15$AdventOfCode.solvePart1("2,3,1"),
-                  78
-                ],
-                tl: {
-                  hd: [
-                    AOC2020_Day15$AdventOfCode.solvePart1("3,2,1"),
-                    438
-                  ],
-                  tl: {
-                    hd: [
-                      AOC2020_Day15$AdventOfCode.solvePart1("3,1,2"),
-                      1836
-                    ],
-                    tl: /* [] */0
-                  }
-                }
-              }
+              tl: /* [] */0
             }
           }
-        };
-        var part1_sample_tests = {
-          hd: part1_sample_tests_0,
-          tl: part1_sample_tests_1
-        };
-        Jest.testAll("Part 1 - Sample Data", part1_sample_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        Jest.test("Part 1 - Solve", (function () {
-                var result = AOC2020_Day15$AdventOfCode.solvePart1(AOC2020_Day15_Data$AdventOfCode.data);
-                return Jest.Expect.toEqual(Jest.Expect.expect(result), 273);
-              }));
-        Jest.test("Part 2 - Solve", (function () {
-                return Jest.Expect.toEqual(Jest.Expect.expect(47205), 47205);
-              }));
-      }));
+        }
+      }
+    }
+  };
+  let part1_sample_tests = {
+    hd: part1_sample_tests_0,
+    tl: part1_sample_tests_1
+  };
+  Jest.testAll("Part 1 - Sample Data", part1_sample_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  Jest.test("Part 1 - Solve", () => {
+    let result = AOC2020_Day15$AdventOfCode.solvePart1(AOC2020_Day15_Data$AdventOfCode.data);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 273);
+  });
+  Jest.test("Part 2 - Solve", () => Jest.Expect.toEqual(Jest.Expect.expect(47205), 47205));
+});
 
-var data = AOC2020_Day15_Data$AdventOfCode.data;
+let data = AOC2020_Day15_Data$AdventOfCode.data;
 
-var sampleData = AOC2020_Day15_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2020_Day15_Data_Sample$AdventOfCode.data;
 
 export {
-  data ,
-  sampleData ,
+  data,
+  sampleData,
 }
 /*  Not a pure module */

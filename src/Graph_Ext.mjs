@@ -2,10 +2,10 @@
 
 import * as Nodefs from "node:fs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
-import * as Belt_MutableQueue from "rescript/lib/es6/belt_MutableQueue.js";
-import * as Belt_MutableStack from "rescript/lib/es6/belt_MutableStack.js";
+import * as Belt_MutableQueue from "rescript/lib/es6/Belt_MutableQueue.js";
+import * as Belt_MutableStack from "rescript/lib/es6/Belt_MutableStack.js";
 import * as Graphology__Graph from "@dsiu/rescript-graphology/src/Graphology__Graph.mjs";
-import * as Belt_MutableSetString from "rescript/lib/es6/belt_MutableSetString.js";
+import * as Belt_MutableSetString from "rescript/lib/es6/Belt_MutableSetString.js";
 
 function log(prim) {
   console.log(prim);
@@ -20,132 +20,124 @@ function stringToFile(str, fileName) {
 }
 
 function writeToFile(g, filename, G) {
-  var gexfStrWithOptions = G.GEXF.write(g, {
-        formatNode: (function (key, _attributes) {
-            var attr$p = {};
-            var attr$p$1 = Object.assign(attr$p, _attributes);
-            attr$p$1["name"] = key;
-            return {
-                    label: key,
-                    attributes: attr$p$1
-                  };
-          }),
-        formatEdge: (function (key, _attributes) {
-            var attr$p = {};
-            var attr$p$1 = Object.assign(attr$p, _attributes);
-            attr$p$1["name"] = key;
-            return {
-                    label: key,
-                    attributes: {
-                      name: key
-                    }
-                  };
-          }),
-        version: "1.3"
-      });
+  let gexfStrWithOptions = G.GEXF.write(g, {
+    formatNode: (key, _attributes) => {
+      let attr$p = {};
+      let attr$p$1 = Object.assign(attr$p, _attributes);
+      attr$p$1["name"] = key;
+      return {
+        label: key,
+        attributes: attr$p$1
+      };
+    },
+    formatEdge: (key, _attributes) => {
+      let attr$p = {};
+      let attr$p$1 = Object.assign(attr$p, _attributes);
+      attr$p$1["name"] = key;
+      return {
+        label: key,
+        attributes: {
+          name: key
+        }
+      };
+    },
+    version: "1.3"
+  });
   stringToFile(gexfStrWithOptions, filename);
 }
 
-var GEXF = {
+let GEXF = {
   writeToFile: writeToFile
 };
 
-var G = Graphology__Graph.MakeGraph({});
+let G = Graphology__Graph.MakeGraph({});
 
 function bfs(graph, rootNode, cb) {
-  var queue = Belt_MutableQueue.make();
+  let queue = Belt_MutableQueue.make();
   Belt_MutableQueue.add(queue, {
-        TAG: "TraversalRecord",
-        node: rootNode,
-        depth: 0
-      });
-  var acc = [];
-  var visited = Belt_MutableSetString.make();
-  while(true) {
+    TAG: "TraversalRecord",
+    node: rootNode,
+    depth: 0
+  });
+  let acc = [];
+  let visited = Belt_MutableSetString.make();
+  while (true) {
     if (Belt_MutableQueue.isEmpty(queue)) {
       return acc;
     }
-    var match = Belt_MutableQueue.popExn(queue);
-    var depth = match.depth;
-    var node = match.node;
+    let match = Belt_MutableQueue.popExn(queue);
+    let depth = match.depth;
+    let node = match.node;
     if (Belt_MutableSetString.has(visited, node)) {
-      continue ;
+      continue;
     }
     acc.push({
-          TAG: "TraversalRecord",
-          node: node,
-          depth: depth
-        });
+      TAG: "TraversalRecord",
+      node: node,
+      depth: depth
+    });
     Belt_MutableSetString.add(visited, node);
     if (!cb(node, depth)) {
       G.NeighborsIter.forEachOutboundNeighbor(graph, {
-            TAG: "Node",
-            _0: node,
-            _1: (function(depth){
-            return function (neighbor, _neighborAttr) {
-              Belt_MutableQueue.add(queue, {
-                    TAG: "TraversalRecord",
-                    node: neighbor,
-                    depth: depth + 1 | 0
-                  });
-            }
-            }(depth))
-          });
+        TAG: "Node",
+        _0: node,
+        _1: (neighbor, _neighborAttr) => Belt_MutableQueue.add(queue, {
+          TAG: "TraversalRecord",
+          node: neighbor,
+          depth: depth + 1 | 0
+        })
+      });
     }
-    continue ;
+    continue;
   };
 }
 
 function dfs(graph, rootNode, cb) {
-  var stack = Belt_MutableStack.make();
+  let stack = Belt_MutableStack.make();
   Belt_MutableStack.push(stack, {
-        TAG: "TraversalRecord",
-        node: rootNode,
-        depth: 0
-      });
-  var acc = [];
-  var visited = Belt_MutableSetString.make();
-  while(true) {
+    TAG: "TraversalRecord",
+    node: rootNode,
+    depth: 0
+  });
+  let acc = [];
+  let visited = Belt_MutableSetString.make();
+  while (true) {
     if (Belt_MutableStack.isEmpty(stack)) {
       return acc;
     }
-    var match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
-    var depth = match.depth;
-    var node = match.node;
+    let match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
+    let depth = match.depth;
+    let node = match.node;
     if (Belt_MutableSetString.has(visited, node)) {
-      continue ;
+      continue;
     }
     acc.push({
-          TAG: "TraversalRecord",
-          node: node,
-          depth: depth
-        });
+      TAG: "TraversalRecord",
+      node: node,
+      depth: depth
+    });
     Belt_MutableSetString.add(visited, node);
     if (!cb(node, depth)) {
       G.NeighborsIter.forEachOutboundNeighbor(graph, {
-            TAG: "Node",
-            _0: node,
-            _1: (function(depth){
-            return function (neighbor, _neighborAttr) {
-              Belt_MutableStack.push(stack, {
-                    TAG: "TraversalRecord",
-                    node: neighbor,
-                    depth: depth + 1 | 0
-                  });
-            }
-            }(depth))
-          });
+        TAG: "Node",
+        _0: node,
+        _1: (neighbor, _neighborAttr) => Belt_MutableStack.push(stack, {
+          TAG: "TraversalRecord",
+          node: neighbor,
+          depth: depth + 1 | 0
+        })
+      });
     }
-    continue ;
+    continue;
   };
 }
 
-var Traversal = {
+let Traversal = {
   bfs: bfs,
   dfs: dfs
 };
 
-var g = G.makeGraph(undefined);
+let g = G.makeGraph(undefined);
 
 G.mergeEdge(g, "1", "2", undefined);
 
@@ -171,18 +163,16 @@ G.mergeEdge(g, "7", "12", undefined);
 
 console.log("BFS");
 
-var bfsRes = bfs(g, "1", (function (node, depth) {
-        G.setNodeAttribute(g, node, "depth", depth);
-        return false;
-      }));
+let bfsRes = bfs(g, "1", (node, depth) => {
+  G.setNodeAttribute(g, node, "depth", depth);
+  return false;
+});
 
-((function (__x) {
-        console.log("bfsRes", __x);
-      })(bfsRes));
+console.log("bfsRes", bfsRes);
 
 writeToFile(g, "graph-bfs.gexf", G);
 
-var g$1 = G.makeGraph(undefined);
+let g$1 = G.makeGraph(undefined);
 
 G.mergeEdge(g$1, "1", "2", undefined);
 
@@ -208,32 +198,30 @@ G.mergeEdge(g$1, "7", "12", undefined);
 
 console.log("DFS");
 
-var dfsRes = dfs(g$1, "1", (function (node, depth) {
-        G.setNodeAttribute(g$1, node, "depth", depth);
-        return false;
-      }));
+let dfsRes = dfs(g$1, "1", (node, depth) => {
+  G.setNodeAttribute(g$1, node, "depth", depth);
+  return false;
+});
 
-((function (__x) {
-        console.log("dfsRes", __x);
-      })(dfsRes));
+console.log("dfsRes", dfsRes);
 
 writeToFile(g$1, "graph-dfs.gexf", G);
 
-var Queue;
+let Queue;
 
-var Stack;
+let Stack;
 
-var $$Set;
+let $$Set;
 
 export {
-  log ,
-  log2 ,
-  Queue ,
-  Stack ,
-  $$Set ,
-  stringToFile ,
-  GEXF ,
-  G ,
-  Traversal ,
+  log,
+  log2,
+  Queue,
+  Stack,
+  $$Set,
+  stringToFile,
+  GEXF,
+  G,
+  Traversal,
 }
 /* G Not a pure module */

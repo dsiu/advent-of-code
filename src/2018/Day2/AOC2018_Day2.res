@@ -3,7 +3,7 @@
 
 let data = AOC2018_Day2_Data.data
 
-let string_to_charStr = Js.String.split("")
+let string_to_charStr = Js.String.split("", _)
 
 type charStrArray = array<string>
 type charStrFreqMap = Belt.Map.String.t<int>
@@ -140,7 +140,7 @@ let findAllMatch = (predicate, lines) => {
 
 let runDay2Part2 = lines => {
   findAllMatch(isDiffBy1, lines)->Belt.Array.map(x => {
-    diffOfTwoCharStr(x.src, x.matched[0])
+    diffOfTwoCharStr(x.src, x.matched[0]->Option.getExn)
     ->Belt.Array.keepMap(x => {
       switch x {
       | Match(x) => Some(x)

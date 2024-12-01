@@ -10,25 +10,25 @@ function log(prim) {
 
 console.log("Part 1 Result");
 
-var part1 = AOC2021_Day3$AdventOfCode.solvePart1(AOC2021_Day3_Data$AdventOfCode.data);
+let part1 = AOC2021_Day3$AdventOfCode.solvePart1(AOC2021_Day3_Data$AdventOfCode.data);
 
 console.log(part1);
 
 console.log("Part 2 Result");
 
-var part2 = AOC2021_Day3$AdventOfCode.solvePart2(AOC2021_Day3_Data$AdventOfCode.data);
+let part2 = AOC2021_Day3$AdventOfCode.solvePart2(AOC2021_Day3_Data$AdventOfCode.data);
 
 console.log(part2);
 
-var data = AOC2021_Day3_Data$AdventOfCode.data;
+let data = AOC2021_Day3_Data$AdventOfCode.data;
 
-var sampleData = AOC2021_Day3_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2021_Day3_Data_Sample$AdventOfCode.data;
 
 export {
-  log ,
-  data ,
-  sampleData ,
-  part1 ,
-  part2 ,
+  log,
+  data,
+  sampleData,
+  part1,
+  part2,
 }
 /*  Not a pure module */

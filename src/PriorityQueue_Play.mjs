@@ -6,48 +6,48 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-var qIntString = PriorityQueue$AdventOfCode.MinPriorityQueue.empty;
+let qIntString = PriorityQueue$AdventOfCode.MinPriorityQueue.empty;
 
-var qIntString$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(qIntString, 3, "a"), 2, "b"), 1, "c");
+let qIntString$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(qIntString, 3, "a"), 2, "b"), 1, "c");
 
-var prim0 = PriorityQueue$AdventOfCode.MinPriorityQueue.pop(qIntString$1);
+let prim0 = PriorityQueue$AdventOfCode.MinPriorityQueue.pop(qIntString$1);
 
 console.log(prim0, "qIntString pop");
 
-var qFloatString = PriorityQueue$AdventOfCode.MinPriorityQueue.empty;
+let qFloatString = PriorityQueue$AdventOfCode.MinPriorityQueue.empty;
 
-var qFloatString$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(qFloatString, 1.1, "a"), 1.2, "b"), 1.3, "c");
+let qFloatString$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(qFloatString, 1.1, "a"), 1.2, "b"), 1.3, "c");
 
-var prim0$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.pop(qFloatString$1);
+let prim0$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.pop(qFloatString$1);
 
 console.log(prim0$1, "qFloatString pop");
 
-var qBignumString = PriorityQueue$AdventOfCode.MinPriorityQueue.empty;
+let qBignumString = PriorityQueue$AdventOfCode.MinPriorityQueue.empty;
 
-var qBignumString$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(qBignumString, 1n, ["a"]), 2n, ["b"]), 3n, ["c"]);
+let qBignumString$1 = PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(PriorityQueue$AdventOfCode.MinPriorityQueue.push(qBignumString, 1n, ["a"]), 2n, ["b"]), 3n, ["c"]);
 
-var prim0$2 = PriorityQueue$AdventOfCode.MinPriorityQueue.pop(qBignumString$1);
+let prim0$2 = PriorityQueue$AdventOfCode.MinPriorityQueue.pop(qBignumString$1);
 
 console.log(prim0$2, "qBignumString pop");
 
-var qIntString$2 = PriorityQueue$AdventOfCode.MaxPriorityQueue.empty;
+let qIntString$2 = PriorityQueue$AdventOfCode.MaxPriorityQueue.empty;
 
-var qIntString$3 = PriorityQueue$AdventOfCode.MaxPriorityQueue.push(PriorityQueue$AdventOfCode.MaxPriorityQueue.push(PriorityQueue$AdventOfCode.MaxPriorityQueue.push(qIntString$2, 3, "a"), 2, "b"), 1, "c");
+let qIntString$3 = PriorityQueue$AdventOfCode.MaxPriorityQueue.push(PriorityQueue$AdventOfCode.MaxPriorityQueue.push(PriorityQueue$AdventOfCode.MaxPriorityQueue.push(qIntString$2, 3, "a"), 2, "b"), 1, "c");
 
-var prim0$3 = PriorityQueue$AdventOfCode.MaxPriorityQueue.pop(qIntString$3);
+let prim0$3 = PriorityQueue$AdventOfCode.MaxPriorityQueue.pop(qIntString$3);
 
 console.log(prim0$3, "qIntString pop");
 
-var PQMin;
+let PQMin;
 
-var PQMax;
+let PQMax;
 
 export {
-  log2 ,
-  PQMin ,
+  log2,
+  PQMin,
   qFloatString$1 as qFloatString,
   qBignumString$1 as qBignumString,
-  PQMax ,
+  PQMax,
   qIntString$3 as qIntString,
 }
 /* qIntString Not a pure module */

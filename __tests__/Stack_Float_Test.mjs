@@ -3,335 +3,321 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Stack$AdventOfCode from "../src/Stack.mjs";
 
-Jest.describe("Stack Float", (function () {
-        var push_tests_0 = [
-          Stack$AdventOfCode.StackFloat.push(Stack$AdventOfCode.StackFloat.start, 79.0),
-          {
-            TAG: "Contents",
-            _0: {
-              hd: 79.0,
-              tl: /* [] */0
-            }
+Jest.describe("Stack Float", () => {
+  let push_tests_0 = [
+    Stack$AdventOfCode.StackFloat.push(Stack$AdventOfCode.StackFloat.start, 79.0),
+    {
+      TAG: "Contents",
+      _0: {
+        hd: 79.0,
+        tl: /* [] */0
+      }
+    }
+  ];
+  let push_tests_1 = {
+    hd: [
+      Stack$AdventOfCode.StackFloat.push(Stack$AdventOfCode.StackFloat.push(Stack$AdventOfCode.StackFloat.start, 724.09), 433.0),
+      {
+        TAG: "Contents",
+        _0: {
+          hd: 433.0,
+          tl: {
+            hd: 724.09,
+            tl: /* [] */0
           }
-        ];
-        var push_tests_1 = {
-          hd: [
-            Stack$AdventOfCode.StackFloat.push(Stack$AdventOfCode.StackFloat.push(Stack$AdventOfCode.StackFloat.start, 724.09), 433.0),
-            {
-              TAG: "Contents",
-              _0: {
-                hd: 433.0,
-                tl: {
-                  hd: 724.09,
-                  tl: /* [] */0
-                }
-              }
-            }
-          ],
+        }
+      }
+    ],
+    tl: /* [] */0
+  };
+  let push_tests = {
+    hd: push_tests_0,
+    tl: push_tests_1
+  };
+  Jest.testAll("push", push_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let pop_tests_0 = [
+    Stack$AdventOfCode.StackFloat.pop(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start)))),
+    [
+      4.0,
+      {
+        TAG: "Contents",
+        _0: {
+          hd: 3.0,
+          tl: {
+            hd: 1.0,
+            tl: /* [] */0
+          }
+        }
+      }
+    ]
+  ];
+  let pop_tests_1 = {
+    hd: [
+      Stack$AdventOfCode.StackFloat.pop(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start))),
+      [
+        2.0,
+        {
+          TAG: "Contents",
+          _0: {
+            hd: 5.0,
+            tl: /* [] */0
+          }
+        }
+      ]
+    ],
+    tl: /* [] */0
+  };
+  let pop_tests = {
+    hd: pop_tests_0,
+    tl: pop_tests_1
+  };
+  Jest.testAll("pop", pop_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let __x = Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start)));
+  let __x$1 = Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start));
+  let core_tests_0 = [
+    Stack$AdventOfCode.StackFloat.binary((x, y) => x - y + 944.0, __x),
+    {
+      TAG: "Contents",
+      _0: {
+        hd: 947.0,
+        tl: {
+          hd: 1.0,
           tl: /* [] */0
-        };
-        var push_tests = {
-          hd: push_tests_0,
-          tl: push_tests_1
-        };
-        Jest.testAll("push", push_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var pop_tests_0 = [
-          Stack$AdventOfCode.StackFloat.pop(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start)))),
-          [
-            4.0,
-            {
-              TAG: "Contents",
-              _0: {
-                hd: 3.0,
-                tl: {
-                  hd: 1.0,
-                  tl: /* [] */0
-                }
-              }
-            }
-          ]
-        ];
-        var pop_tests_1 = {
-          hd: [
-            Stack$AdventOfCode.StackFloat.pop(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start))),
-            [
-              2.0,
-              {
-                TAG: "Contents",
-                _0: {
-                  hd: 5.0,
-                  tl: /* [] */0
-                }
-              }
-            ]
-          ],
-          tl: /* [] */0
-        };
-        var pop_tests = {
-          hd: pop_tests_0,
-          tl: pop_tests_1
-        };
-        Jest.testAll("pop", pop_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var core_tests_0 = [
-          (function (__x) {
-                return Stack$AdventOfCode.StackFloat.binary((function (x, y) {
-                              return x - y + 944.0;
-                            }), __x);
-              })(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start)))),
-          {
-            TAG: "Contents",
-            _0: {
-              hd: 947.0,
+        }
+      }
+    }
+  ];
+  let core_tests_1 = {
+    hd: [
+      Stack$AdventOfCode.StackFloat.unary(x => x * 522.0, __x$1),
+      {
+        TAG: "Contents",
+        _0: {
+          hd: 2088.0,
+          tl: {
+            hd: 3.0,
+            tl: /* [] */0
+          }
+        }
+      }
+    ],
+    tl: {
+      hd: [
+        Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start))),
+        {
+          TAG: "Contents",
+          _0: {
+            hd: 4.0,
+            tl: {
+              hd: 4.0,
               tl: {
-                hd: 1.0,
+                hd: 5.0,
                 tl: /* [] */0
               }
             }
           }
-        ];
-        var core_tests_1 = {
+        }
+      ],
+      tl: {
+        hd: [
+          Stack$AdventOfCode.StackFloat.mul(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start)))),
+          {
+            TAG: "Contents",
+            _0: {
+              hd: 9.0,
+              tl: {
+                hd: 5.0,
+                tl: /* [] */0
+              }
+            }
+          }
+        ],
+        tl: {
           hd: [
-            (function (__x) {
-                  return Stack$AdventOfCode.StackFloat.unary((function (x) {
-                                return x * 522.0;
-                              }), __x);
-                })(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
+            Stack$AdventOfCode.StackFloat.mul(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start))),
             {
               TAG: "Contents",
               _0: {
-                hd: 2088.0,
-                tl: {
-                  hd: 3.0,
-                  tl: /* [] */0
-                }
+                hd: 4.0,
+                tl: /* [] */0
               }
             }
           ],
           tl: {
             hd: [
-              Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start))),
+              Stack$AdventOfCode.StackFloat.add(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.swap(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start))))),
               {
                 TAG: "Contents",
                 _0: {
-                  hd: 4.0,
+                  hd: 10.0,
                   tl: {
-                    hd: 4.0,
-                    tl: {
-                      hd: 5.0,
-                      tl: /* [] */0
-                    }
+                    hd: 3.0,
+                    tl: /* [] */0
                   }
                 }
               }
             ],
             tl: {
               hd: [
-                Stack$AdventOfCode.StackFloat.mul(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start)))),
+                Stack$AdventOfCode.StackFloat.add(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.drop(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.start))))),
+                {
+                  TAG: "Contents",
+                  _0: {
+                    hd: 8.0,
+                    tl: /* [] */0
+                  }
+                }
+              ],
+              tl: /* [] */0
+            }
+          }
+        }
+      }
+    }
+  };
+  let core_tests = {
+    hd: core_tests_0,
+    tl: core_tests_1
+  };
+  Jest.testAll("core", core_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let math_tests_0 = [
+    Stack$AdventOfCode.StackFloat.div(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
+    {
+      TAG: "Contents",
+      _0: {
+        hd: 1.5,
+        tl: /* [] */0
+      }
+    }
+  ];
+  let math_tests_1 = {
+    hd: [
+      Stack$AdventOfCode.StackFloat.sub(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start))),
+      {
+        TAG: "Contents",
+        _0: {
+          hd: -3.0,
+          tl: /* [] */0
+        }
+      }
+    ],
+    tl: {
+      hd: [
+        Stack$AdventOfCode.StackFloat.sub(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.add(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start))))),
+        {
+          TAG: "Contents",
+          _0: {
+            hd: 0.0,
+            tl: /* [] */0
+          }
+        }
+      ],
+      tl: {
+        hd: [
+          Stack$AdventOfCode.StackFloat.neg(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start)),
+          {
+            TAG: "Contents",
+            _0: {
+              hd: -3.0,
+              tl: /* [] */0
+            }
+          }
+        ],
+        tl: {
+          hd: [
+            Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start),
+            {
+              TAG: "Contents",
+              _0: {
+                hd: 2.0,
+                tl: /* [] */0
+              }
+            }
+          ],
+          tl: {
+            hd: [
+              Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start)),
+              {
+                TAG: "Contents",
+                _0: {
+                  hd: 2.0,
+                  tl: {
+                    hd: 2.0,
+                    tl: /* [] */0
+                  }
+                }
+              }
+            ],
+            tl: {
+              hd: [
+                Stack$AdventOfCode.StackFloat.mul(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
                 {
                   TAG: "Contents",
                   _0: {
                     hd: 9.0,
-                    tl: {
-                      hd: 5.0,
-                      tl: /* [] */0
-                    }
-                  }
-                }
-              ],
-              tl: {
-                hd: [
-                  Stack$AdventOfCode.StackFloat.mul(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start))),
-                  {
-                    TAG: "Contents",
-                    _0: {
-                      hd: 4.0,
-                      tl: /* [] */0
-                    }
-                  }
-                ],
-                tl: {
-                  hd: [
-                    Stack$AdventOfCode.StackFloat.add(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.swap(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.start))))),
-                    {
-                      TAG: "Contents",
-                      _0: {
-                        hd: 10.0,
-                        tl: {
-                          hd: 3.0,
-                          tl: /* [] */0
-                        }
-                      }
-                    }
-                  ],
-                  tl: {
-                    hd: [
-                      Stack$AdventOfCode.StackFloat.add(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.drop(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.start))))),
-                      {
-                        TAG: "Contents",
-                        _0: {
-                          hd: 8.0,
-                          tl: /* [] */0
-                        }
-                      }
-                    ],
-                    tl: /* [] */0
-                  }
-                }
-              }
-            }
-          }
-        };
-        var core_tests = {
-          hd: core_tests_0,
-          tl: core_tests_1
-        };
-        Jest.testAll("core", core_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var math_tests_0 = [
-          Stack$AdventOfCode.StackFloat.div(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
-          {
-            TAG: "Contents",
-            _0: {
-              hd: 1.5,
-              tl: /* [] */0
-            }
-          }
-        ];
-        var math_tests_1 = {
-          hd: [
-            Stack$AdventOfCode.StackFloat.sub(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start))),
-            {
-              TAG: "Contents",
-              _0: {
-                hd: -3.0,
-                tl: /* [] */0
-              }
-            }
-          ],
-          tl: {
-            hd: [
-              Stack$AdventOfCode.StackFloat.sub(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.add(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start))))),
-              {
-                TAG: "Contents",
-                _0: {
-                  hd: 0.0,
-                  tl: /* [] */0
-                }
-              }
-            ],
-            tl: {
-              hd: [
-                Stack$AdventOfCode.StackFloat.neg(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start)),
-                {
-                  TAG: "Contents",
-                  _0: {
-                    hd: -3.0,
                     tl: /* [] */0
                   }
                 }
               ],
               tl: {
                 hd: [
-                  Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start),
+                  Stack$AdventOfCode.StackFloat.square(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
                   {
                     TAG: "Contents",
                     _0: {
-                      hd: 2.0,
-                      tl: /* [] */0
-                    }
-                  }
-                ],
-                tl: {
-                  hd: [
-                    Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.two(Stack$AdventOfCode.StackFloat.start)),
-                    {
-                      TAG: "Contents",
-                      _0: {
-                        hd: 2.0,
-                        tl: {
-                          hd: 2.0,
-                          tl: /* [] */0
-                        }
-                      }
-                    }
-                  ],
-                  tl: {
-                    hd: [
-                      Stack$AdventOfCode.StackFloat.mul(Stack$AdventOfCode.StackFloat.dup(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
-                      {
-                        TAG: "Contents",
-                        _0: {
-                          hd: 9.0,
-                          tl: /* [] */0
-                        }
-                      }
-                    ],
-                    tl: {
-                      hd: [
-                        Stack$AdventOfCode.StackFloat.square(Stack$AdventOfCode.StackFloat.five(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
-                        {
-                          TAG: "Contents",
-                          _0: {
-                            hd: 25.0,
-                            tl: {
-                              hd: 3.0,
-                              tl: /* [] */0
-                            }
-                          }
-                        }
-                      ],
+                      hd: 25.0,
                       tl: {
-                        hd: [
-                          Stack$AdventOfCode.StackFloat.cube(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start))),
-                          {
-                            TAG: "Contents",
-                            _0: {
-                              hd: 64.0,
-                              tl: {
-                                hd: 1.0,
-                                tl: /* [] */0
-                              }
-                            }
-                          }
-                        ],
+                        hd: 3.0,
+                        tl: /* [] */0
+                      }
+                    }
+                  }
+                ],
+                tl: {
+                  hd: [
+                    Stack$AdventOfCode.StackFloat.cube(Stack$AdventOfCode.StackFloat.four(Stack$AdventOfCode.StackFloat.one(Stack$AdventOfCode.StackFloat.start))),
+                    {
+                      TAG: "Contents",
+                      _0: {
+                        hd: 64.0,
                         tl: {
-                          hd: [
-                            Stack$AdventOfCode.StackFloat.sum_numbers_upto(Stack$AdventOfCode.StackFloat.square(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
-                            {
-                              TAG: "Contents",
-                              _0: {
-                                hd: 45.0,
-                                tl: /* [] */0
-                              }
-                            }
-                          ],
+                          hd: 1.0,
                           tl: /* [] */0
                         }
                       }
                     }
+                  ],
+                  tl: {
+                    hd: [
+                      Stack$AdventOfCode.StackFloat.sum_numbers_upto(Stack$AdventOfCode.StackFloat.square(Stack$AdventOfCode.StackFloat.three(Stack$AdventOfCode.StackFloat.start))),
+                      {
+                        TAG: "Contents",
+                        _0: {
+                          hd: 45.0,
+                          tl: /* [] */0
+                        }
+                      }
+                    ],
+                    tl: /* [] */0
                   }
                 }
               }
             }
           }
-        };
-        var math_tests = {
-          hd: math_tests_0,
-          tl: math_tests_1
-        };
-        Jest.testAll("math", math_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-      }));
+        }
+      }
+    }
+  };
+  let math_tests = {
+    hd: math_tests_0,
+    tl: math_tests_1
+  };
+  Jest.testAll("math", math_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+});
 
-var S;
+let S;
 
 export {
-  S ,
+  S,
 }
 /*  Not a pure module */

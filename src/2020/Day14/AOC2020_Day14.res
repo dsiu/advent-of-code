@@ -1,16 +1,16 @@
 open Belt
 open Utils
 
-let toInt64 = Utils.int64FromBitString
+let toBigInt = str => BigInt.fromString("0b" ++ str)
 
 module Program = {
   module Mask = {
     type t = {
       mask: string,
-      mask_x: Int64.t,
+      mask_x: bigint,
       mask_x_str: string, // need to keep the string for easy parsing of bits
-      mask_one: Int64.t,
-      mask_zero: Int64.t,
+      mask_one: bigint,
+      mask_zero: bigint,
     }
 
     let onlyXto1 = c => {
@@ -40,10 +40,10 @@ module Program = {
 
     let toString = ({mask, mask_x, mask_x_str, mask_one, mask_zero}: t) => {
       `mask: ${mask}\n` ++
-      `mask_x: ${mask_x->Int64.to_string}\n` ++
+      `mask_x: ${mask_x->BigInt.toString}\n` ++
       `mask_x_str: ${mask_x_str}` ++
-      `mask_one: ${mask_one->Int64.to_string}\n` ++
-      `mask_zero: ${mask_zero->Int64.to_string}`
+      `mask_one: ${mask_one->BigInt.toString}\n` ++
+      `mask_zero: ${mask_zero->BigInt.toString}`
     }
 
     let makePassThurMask = makeMask(_, onlyXto1)
@@ -54,44 +54,44 @@ module Program = {
       // str = "mask = 11100XX0000X1101X1010100X1010001XX0X"
       {
         mask: str->Js.String2.sliceToEnd(~from="mask = "->String.length),
-        mask_x: str->makePassThurMask->toInt64,
+        mask_x: str->makePassThurMask->toBigInt,
         mask_x_str: str->makePassThurMask,
-        mask_one: str->makeOneMask->toInt64,
-        mask_zero: str->makeZeroMask->toInt64,
+        mask_one: str->makeOneMask->toBigInt,
+        mask_zero: str->makeZeroMask->toBigInt,
       }
     }
   }
 
   module Memory = {
     type t = {
-      address: Int64.t,
-      value: Int64.t,
+      address: bigint,
+      value: bigint,
     }
 
     let make = str => {
       // str = "mem[22535] = 42768"
-      let prog_line_re = %re("/mem\[(\d+)\]\s*=\s*(\d+)/i")
+      let prog_line_re = /mem\[(\d+)\]\s*=\s*(\d+)/i
       let parsed =
         prog_line_re
-        ->Js.Re.exec_(_, str)
+        ->(Js.Re.exec_(_, str))
         ->Option.getExn
         ->Js.Re.captures
         ->Array.map(l => l->Js.Nullable.toOption->Option.getExn)
 
       {
-        address: parsed[1]->Option.map(Int64.of_string)->Option.getExn,
-        value: parsed[2]->Option.map(Int64.of_string)->Option.getExn,
+        address: parsed[1]->Option.map(BigInt.fromString)->Option.getExn,
+        value: parsed[2]->Option.map(BigInt.fromString)->Option.getExn,
       }
     }
 
     let toString = t => {
-      `address: ${t.address->Int64.to_string}\n` ++ `value: ${t.value->Int64.to_string}`
+      `address: ${t.address->BigInt.toString}\n` ++ `value: ${t.value->BigInt.toString}`
     }
   }
 
   // map key is the address in Int64.  It should be MutableMap.Int64.t but it isn't implemented in ReScript.
   // So, let's use Int64 as string as map key here
-  type memory_space = MutableMap.String.t<Int64.t>
+  type memory_space = MutableMap.String.t<bigint>
 
   type instruction = MaskOp(Mask.t) | MemOp(Memory.t)
 
@@ -128,13 +128,13 @@ module Program = {
 
   // part 1: change memory value based on mask
   let decodeMemory = (mask: Mask.t, mem_value) => {
-    Int64.logand(mask.mask_x, mem_value)
-    ->Int64.logor(mask.mask_one)
-    ->Int64.logand(mask.mask_zero->Int64.lognot)
+    BigInt.land(mask.mask_x, mem_value)
+    ->BigInt.lor(mask.mask_one)
+    ->BigInt.land(mask.mask_zero->BigInt.lnot)
   }
 
   let part1Algo = (space: memory_space, mask: Mask.t, mem: Memory.t) => {
-    space->MutableMap.String.update(mem.address->Int64.to_string, v => {
+    space->MutableMap.String.update(mem.address->BigInt.toString, v => {
       v->ignore
       decodeMemory(mask, mem.value)->Some
     })
@@ -151,17 +151,17 @@ module Program = {
   }
 
   let decodeAddress = (mask: Mask.t, mem_address) => {
-    let pos_mask = mask.mask_x->Int64.lognot
-    let base = Int64.logand(Int64.logor(mem_address, mask.mask_one), pos_mask)
+    let pos_mask = mask.mask_x->BigInt.lnot
+    let base = BigInt.land(BigInt.lor(mem_address, mask.mask_one), pos_mask)
 
     let pos = mask.mask_x_str->bit1Index
     let all_pos = pos->Powerset.powersetArray
 
     let decoded_addresses = all_pos->Array.map(pos => {
-      let m = pos->Array.reduce(Int64.zero, (acc, x) => {
-        Int64.logor(acc, Int64.shift_left(Int64.one, x))
+      let m = pos->Array.reduce(0n, (acc, x) => {
+        BigInt.lor(acc, BigInt.lsl(1n, BigInt.fromInt(x)))
       })
-      Int64.logor(base, m)->Int64.to_string
+      BigInt.lor(base, m)->BigInt.toString
     })
     decoded_addresses
   }
@@ -195,7 +195,7 @@ module Program = {
     "=== Program dump ===\n" ++
     t.instructions->Printable.Array.toString(instructionToString) ++
     "\n" ++
-    t.memory->Printable.MutableMapString.Int64.toString
+    t.memory->Printable.MutableMapString.BigInt.toString
   }
 }
 
@@ -207,9 +207,9 @@ let parse = data => {
   })
 }
 
-let memoryToAnswer = MutableMap.String.reduce(_, Int64.of_int(0), (a, k, v) => {
+let memoryToAnswer = MutableMap.String.reduce(_, 0n, (a, k, v) => {
   k->ignore
-  Int64.add(v, a)
+  BigInt.add(v, a)
 })
 
 let solvePart1 = data => {

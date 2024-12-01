@@ -10,7 +10,7 @@ function log(prim) {
 
 console.time("Part 1");
 
-var part1 = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data$AdventOfCode.data);
+let part1 = AOC2020_Day16$AdventOfCode.solvePart1(AOC2020_Day16_Data$AdventOfCode.data);
 
 console.log("Part 1 Result");
 
@@ -22,7 +22,7 @@ console.log("----------");
 
 console.time("Part 2");
 
-var part2 = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data$AdventOfCode.data);
+let part2 = AOC2020_Day16$AdventOfCode.solvePart2(AOC2020_Day16_Data$AdventOfCode.data);
 
 console.log("Part 2 Result");
 
@@ -30,24 +30,24 @@ console.log(part2);
 
 console.timeEnd("Part 2");
 
-var data = AOC2020_Day16_Data$AdventOfCode.data;
+let data = AOC2020_Day16_Data$AdventOfCode.data;
 
-var sampleData1 = AOC2020_Day16_Data_Sample$AdventOfCode.data1;
+let sampleData1 = AOC2020_Day16_Data_Sample$AdventOfCode.data1;
 
-var sampleData2 = AOC2020_Day16_Data_Sample$AdventOfCode.data2;
+let sampleData2 = AOC2020_Day16_Data_Sample$AdventOfCode.data2;
 
-var solvePart1 = AOC2020_Day16$AdventOfCode.solvePart1;
+let solvePart1 = AOC2020_Day16$AdventOfCode.solvePart1;
 
-var solvePart2 = AOC2020_Day16$AdventOfCode.solvePart2;
+let solvePart2 = AOC2020_Day16$AdventOfCode.solvePart2;
 
 export {
-  log ,
-  data ,
-  sampleData1 ,
-  sampleData2 ,
-  solvePart1 ,
-  solvePart2 ,
-  part1 ,
-  part2 ,
+  log,
+  data,
+  sampleData1,
+  sampleData2,
+  solvePart1,
+  solvePart2,
+  part1,
+  part2,
 }
 /*  Not a pure module */

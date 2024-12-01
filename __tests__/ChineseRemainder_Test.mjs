@@ -3,110 +3,103 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as ChineseRemainder$AdventOfCode from "../src/ChineseRemainder.mjs";
 
-Jest.describe("ChineseRemainder", (function () {
-        var int_tests_0 = [
+Jest.describe("ChineseRemainder", () => {
+  let int_tests_0 = [
+    ChineseRemainder$AdventOfCode.crt([
+      3,
+      4
+    ], [
+      2,
+      5
+    ]),
+    9
+  ];
+  let int_tests_1 = {
+    hd: [
+      ChineseRemainder$AdventOfCode.crt([
+        2,
+        4
+      ], [
+        4,
+        5
+      ]),
+      14
+    ],
+    tl: {
+      hd: [
+        ChineseRemainder$AdventOfCode.crt([
+          2000,
+          300
+        ], [
+          2,
+          33
+        ]),
+        36
+      ],
+      tl: {
+        hd: [
           ChineseRemainder$AdventOfCode.crt([
-                3,
-                4
-              ], [
-                2,
-                5
-              ]),
-          9
-        ];
-        var int_tests_1 = {
+            2,
+            12,
+            22
+          ], [
+            13,
+            3,
+            2
+          ]),
+          54
+        ],
+        tl: {
           hd: [
             ChineseRemainder$AdventOfCode.crt([
-                  2,
-                  4
-                ], [
-                  4,
-                  5
-                ]),
-            14
-          ],
-          tl: {
-            hd: [
-              ChineseRemainder$AdventOfCode.crt([
-                    2000,
-                    300
-                  ], [
-                    2,
-                    33
-                  ]),
-              36
-            ],
-            tl: {
-              hd: [
-                ChineseRemainder$AdventOfCode.crt([
-                      2,
-                      12,
-                      22
-                    ], [
-                      13,
-                      3,
-                      2
-                    ]),
-                54
-              ],
-              tl: {
-                hd: [
-                  ChineseRemainder$AdventOfCode.crt([
-                        44,
-                        12,
-                        10
-                      ], [
-                        2,
-                        5,
-                        3
-                      ]),
-                  22
-                ],
-                tl: /* [] */0
-              }
-            }
-          }
-        };
-        var int_tests = {
-          hd: int_tests_0,
-          tl: int_tests_1
-        };
-        Jest.testAll("int", int_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]);
-              }));
-        var bigint_tests_0 = [
-          ChineseRemainder$AdventOfCode.crtBigInt([
-                BigInt(3),
-                BigInt(4)
-              ], [
-                BigInt(2),
-                BigInt(5)
-              ]),
-          BigInt(9)
-        ];
-        var bigint_tests_1 = {
-          hd: [
-            ChineseRemainder$AdventOfCode.crtBigInt([
-                  BigInt("507483274265132509471575639764027"),
-                  BigInt("27723967616827289286920296659419136")
-                ], [
-                  BigInt("269916455047188404153874847098609926219"),
-                  BigInt("170141183460469231731687303715884105728")
-                ]),
-            BigInt("26140225850797799686267310622940276042186008390341917470797088078891078123520")
+              44,
+              12,
+              10
+            ], [
+              2,
+              5,
+              3
+            ]),
+            22
           ],
           tl: /* [] */0
-        };
-        var bigint_tests = {
-          hd: bigint_tests_0,
-          tl: bigint_tests_1
-        };
-        Jest.testAll("big int", bigint_tests, (function (param) {
-                return Jest.Expect.toEqual(Jest.Expect.expect(param[0].toString()), param[1].toString());
-              }));
-      }));
+        }
+      }
+    }
+  };
+  let int_tests = {
+    hd: int_tests_0,
+    tl: int_tests_1
+  };
+  Jest.testAll("int", int_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  let bigint_tests_0 = [
+    ChineseRemainder$AdventOfCode.crtBigInt([
+      BigInt(3),
+      BigInt(4)
+    ], [
+      BigInt(2),
+      BigInt(5)
+    ]),
+    BigInt(9)
+  ];
+  let bigint_tests_1 = {
+    hd: [
+      ChineseRemainder$AdventOfCode.crtBigInt([
+        BigInt("507483274265132509471575639764027"),
+        BigInt("27723967616827289286920296659419136")
+      ], [
+        BigInt("269916455047188404153874847098609926219"),
+        BigInt("170141183460469231731687303715884105728")
+      ]),
+      BigInt("26140225850797799686267310622940276042186008390341917470797088078891078123520")
+    ],
+    tl: /* [] */0
+  };
+  let bigint_tests = {
+    hd: bigint_tests_0,
+    tl: bigint_tests_1
+  };
+  Jest.testAll("big int", bigint_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0].toString()), param[1].toString()));
+});
 
-export {
-  
-}
 /*  Not a pure module */

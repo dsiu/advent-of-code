@@ -3,7 +3,7 @@ open Utils
 let log = Js.Console.log
 
 let update_value_inc_by_1 = (h, k) => mutableMapStringUpdate(h, k, increaseBy1L)
-let update_value_inc_by_n = (h, k, n) => mutableMapStringUpdate(h, k, increaseByInt64(_, n))
+let update_value_inc_by_n = (h, k, n) => mutableMapStringUpdate(h, k, increaseByBigInt(_, n))
 
 module Polymer = {
   type template = list<string>
@@ -78,9 +78,9 @@ module Polymer = {
       })
     }->MutableMap.String.toArray
 
-    let (_, max_n) = r->maxKeyInt64ValuePair
-    let (_, min_n) = r->minKeyInt64ValuePair
-    max_n->Int64.sub(min_n)
+    let (_, max_n) = r->maxKeyBigIntValuePair->Option.getUnsafe
+    let (_, min_n) = r->minKeyBigIntValuePair->Option.getUnsafe
+    max_n->BigInt.sub(min_n)
   }
 
   let genPairsMap = template => {
@@ -156,7 +156,7 @@ module Polymer = {
 
     r->MutableMap.String.forEach((k, v) => {
       //      let v' = k === first_poly ? (v + 1) / 2 : v / 2
-      let v' = k === first_poly ? v->Int64.add(1L)->Int64.div(2L) : v->Int64.div(2L)
+      let v' = k === first_poly ? v->BigInt.add(1n)->BigInt.div(2n) : v->BigInt.div(2n)
       r->MutableMap.String.set(k, v')
     })
 
@@ -168,9 +168,9 @@ module Polymer = {
     //    r->MutableMap.String.toArray->Js.log
     let c = r->countPolymers(t.template)->MutableMap.String.toArray
 
-    let (_, max_n) = c->maxKeyInt64ValuePair
-    let (_, min_n) = c->minKeyInt64ValuePair
-    max_n->Int64.sub(min_n)
+    let (_, max_n) = c->maxKeyBigIntValuePair->Option.getUnsafe
+    let (_, min_n) = c->minKeyBigIntValuePair->Option.getUnsafe
+    max_n->BigInt.sub(min_n)
   }
 
   let part1 = solve_with_result(_, 10)

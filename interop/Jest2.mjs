@@ -19,20 +19,20 @@ function testEach4(title, data, f) {
 }
 
 function awaitThen(pa, done, f) {
-  Core__Promise.$$catch(pa.then(function (a) {
-            f(a);
-            done();
-          }), done);
+  Core__Promise.$$catch(pa.then(a => {
+    f(a);
+    done();
+  }), done);
 }
 
-var $$Promise;
+let $$Promise;
 
 export {
-  testEach ,
-  testEach2 ,
-  testEach3 ,
-  testEach4 ,
-  $$Promise ,
-  awaitThen ,
+  testEach,
+  testEach2,
+  testEach3,
+  testEach4,
+  $$Promise,
+  awaitThen,
 }
 /* No side effect */

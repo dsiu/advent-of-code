@@ -281,16 +281,20 @@ let solvePart2 = data => {
     }
   }
 
+  //  let bigIntCompare = (a, b) =>
+  //    Stdlib.Float.compare(BigInt.toFloat(a), BigInt.toFloat(b))->Stdlib.Ordering.toInt
+  let bigIntCompare = (a, b) => Stdlib.BigInt.compare(a, b)->Stdlib.Ordering.toInt
+
   data
   ->parse
   ->Array.map(process)
   ->Array.keepMap(incompleteOnly)
   ->Array.map(
-    Array.reduce(_, Int64.zero, (a, x) =>
-      Int64.add(Int64.mul(a, Int64.of_int(5)), Int64.of_int(x->getIncompleteScore))
+    Array.reduce(_, 0n, (a, x) =>
+      BigInt.add(BigInt.mul(a, 5n), BigInt.fromInt(x->getIncompleteScore))
     ),
   )
-  ->Belt.SortArray.stableSortBy(Int64.compare)
+  ->Belt.SortArray.stableSortBy(bigIntCompare)
   ->(
     xs =>
       {
@@ -298,7 +302,7 @@ let solvePart2 = data => {
         xs[len / 2]
       }
       ->Option.getExn
-      ->Int64.to_string
+      ->BigInt.toString
   )
 
   //  ->Array.map(BigInt.toString)

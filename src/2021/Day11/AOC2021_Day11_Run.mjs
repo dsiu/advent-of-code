@@ -8,30 +8,30 @@ function log(prim) {
   console.log(prim);
 }
 
-var part1 = AOC2021_Day11$AdventOfCode.solvePart1(AOC2021_Day11_Data$AdventOfCode.data);
+let part1 = AOC2021_Day11$AdventOfCode.solvePart1(AOC2021_Day11_Data$AdventOfCode.data);
 
 console.log("Part 1 Result");
 
 console.log(part1);
 
-var part2 = AOC2021_Day11$AdventOfCode.solvePart2(AOC2021_Day11_Data$AdventOfCode.data);
+let part2 = AOC2021_Day11$AdventOfCode.solvePart2(AOC2021_Day11_Data$AdventOfCode.data);
 
 console.log("Part 2 Result");
 
 console.log(part2);
 
-var data = AOC2021_Day11_Data$AdventOfCode.data;
+let data = AOC2021_Day11_Data$AdventOfCode.data;
 
-var sampleData = AOC2021_Day11_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2021_Day11_Data_Sample$AdventOfCode.data;
 
-var sampleData0 = AOC2021_Day11_Data_Sample$AdventOfCode.data0;
+let sampleData0 = AOC2021_Day11_Data_Sample$AdventOfCode.data0;
 
 export {
-  log ,
-  data ,
-  sampleData ,
-  sampleData0 ,
-  part1 ,
-  part2 ,
+  log,
+  data,
+  sampleData,
+  sampleData0,
+  part1,
+  part2,
 }
 /* part1 Not a pure module */

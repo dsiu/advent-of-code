@@ -10,6 +10,6 @@ function asyncFlatMap(result, fn) {
 }
 
 export {
-  asyncFlatMap ,
+  asyncFlatMap,
 }
 /* No side effect */
