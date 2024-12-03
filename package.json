@@ -48,7 +48,7 @@
     "debug": "^4.3.7",
     "ms": "^2.1.3",
     "rationale": "^0.2.0",
-    "rescript-bag": "https://github.com/dsiu/rescript-bag#main",
+    "rescript-bag": "git@github.com:dsiu/rescript-bag.git#420eeec4594f6bfb3ecae47f33e5d64005416353",
     "rescript-nodejs": "^16.1.0",
     "rescript-vector": "^0.4.0"
   }

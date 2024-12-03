@@ -50,11 +50,11 @@ module Scanner = {
 
   module I = {
     type t = int
-    let compare = Pervasives.compare
+    let cmp = Pervasives.compare
   }
   module F = {
     type t = float
-    let compare = (a, b) => Float.toInt(a -. b)
+    let cmp = (a, b) => Float.toInt(a -. b)
   }
   module Bag = Bag.Bag
   module B = Bag.Make(F) // MultiSet Bag of int

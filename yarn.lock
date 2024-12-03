@@ -1445,7 +1445,7 @@ __metadata:
     nodemon: "npm:^3.1.7"
     rationale: "npm:^0.2.0"
     rescript: "npm:^12.0.0-alpha.5"
-    rescript-bag: "https://github.com/dsiu/rescript-bag#main"
+    rescript-bag: "git@github.com:dsiu/rescript-bag.git#420eeec4594f6bfb3ecae47f33e5d64005416353"
     rescript-nodejs: "npm:^16.1.0"
     rescript-vector: "npm:^0.4.0"
   languageName: unknown
@@ -4706,10 +4706,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rescript-bag@https://github.com/dsiu/rescript-bag#main":
+"rescript-bag@git@github.com:dsiu/rescript-bag.git#420eeec4594f6bfb3ecae47f33e5d64005416353":
   version: 0.0.1
-  resolution: "rescript-bag@https://github.com/dsiu/rescript-bag.git#commit=f9f88e9464f578d9496f30abe691fb4b4c4c4294"
-  checksum: 10c0/7dc0e5be2b0564f5300a79496d1ada200bae039cff146122855a4d51ea5421a137e0d1edd2c8bb1cdb0c2c464a10abba851afbe31a097b5a7f7e25a6b2bf7e6e
+  resolution: "rescript-bag@git@github.com:dsiu/rescript-bag.git#commit=420eeec4594f6bfb3ecae47f33e5d64005416353"
+  dependencies:
+    "@rescript/core": "npm:^1.6.1"
+    rescript: "npm:^12.0.0-alpha.5"
+  checksum: 10c0/da4981a7d12ccf5da50a893eefea49bcb152c2c4202d9e1aa3ab80764f7029df3eb8c37a0b53a9e7940bada7b6cdd182de98b8ca3ec7e2be4beb1a0b80066514
   languageName: node
   linkType: hard
 
