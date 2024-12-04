@@ -55,7 +55,7 @@ function diff(x, y) {
 
 function isSafe(xs) {
   let a = xs.slice(0, xs.length - 1 | 0);
-  let b = xs.slice(1);
+  let b = Stdlib__Array.tail(xs);
   let diffs = Stdlib__Array.zipWith(a, b, diff);
   let safe = (isInc(diffs) || isDec(diffs)) && isDiffMinOne(diffs) && isDiffMaxThree(diffs);
   if (safe) {

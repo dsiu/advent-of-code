@@ -19,7 +19,7 @@ let diff = (x, y) => y - x
  */
 let isSafe = xs => {
   let a = xs->Array.slice(~start=0, ~end=xs->Array.length - 1)
-  let b = xs->Array.sliceToEnd(~start=1)
+  let b = xs->Array.tail
 
   // Calculate differences between consecutive elements
   let diffs = Array.zipWith(a, b, diff)
