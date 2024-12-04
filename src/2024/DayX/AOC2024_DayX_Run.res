@@ -3,7 +3,7 @@ open Stdlib
 let log = Console.log
 let data = AOC2024_DayX_Data.data
 let sampleData = AOC2024_DayX_Data_Sample.data
-let {solvePart1, solvePart2} = module(AOC2023_DayX)
+let {solvePart1, solvePart2} = module(AOC2024_DayX)
 
 Console.time("Part 1")
 

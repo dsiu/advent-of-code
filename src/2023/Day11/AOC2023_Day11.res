@@ -13,7 +13,7 @@ module Coord_V2_Big = {
 
   // int compare
   let bigIntCompareOrd = (a: bigint, b: bigint) =>
-    a < b ? Core__Ordering.less : a > b ? Core__Ordering.greater : Core__Ordering.equal
+    a < b ? Ordering.less : a > b ? Ordering.greater : Ordering.equal
 
   // int compare
   let bigIntCompare = (a, b) => bigIntCompareOrd(a, b)->Ordering.toInt

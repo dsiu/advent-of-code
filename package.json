@@ -40,15 +40,14 @@
     ]
   },
   "dependencies": {
-    "@dsiu/rescript-graphology": "https://github.com/dsiu/rescript-graphology",
-    "@dsiu/rescript-stdlib-fp": "git@github.com:dsiu/rescript-stdlib-fp.git#commit=8ecf5d866ed1f2512051b76657c7781162bdc61a",
+    "@dsiu/rescript-graphology": "git@github.com:dsiu/rescript-graphology.git#ffa1e000c26d72e7e5967568fbbc2104e6b71312",
+    "@dsiu/rescript-stdlib-fp": "git@github.com:dsiu/rescript-stdlib-fp.git#commit=da5b78f372543dc0282e6a13536951a70df7cd1f",
     "@jmagaram/rescript-extras": "^4.1.0",
     "@jmagaram/rescript-seq": "^4.4.1",
-    "@rescript/core": "^1.6.1",
     "debug": "^4.3.7",
     "ms": "^2.1.3",
     "rationale": "^0.2.0",
-    "rescript-bag": "git@github.com:dsiu/rescript-bag.git#420eeec4594f6bfb3ecae47f33e5d64005416353",
+    "rescript-bag": "git@github.com:dsiu/rescript-bag.git#27a1e8c8311ff35377a5e2192da24a9b22d49dba",
     "rescript-nodejs": "^16.1.0",
     "rescript-vector": "^0.4.0"
   }

@@ -16,7 +16,6 @@ describe("ChineseRemainder", () => {
     expect(result)->toEqual(expected)
   })
 
-  open RescriptCore
   let bigint_tests = list{
     (
       crtBigInt([3->BigInt.fromInt, 4->BigInt.fromInt], [2->BigInt.fromInt, 5->BigInt.fromInt]),

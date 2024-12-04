@@ -304,11 +304,11 @@ let sort: array<t> => array<t> = intervals => {
     open! BigInt
 
     switch (aLower, bLower, aUpper, bUpper) {
-    | (lower1, lower2, _, _) if lower1 < lower2 => Core__Ordering.less
-    | (lower1, lower2, _, _) if lower1 > lower2 => Core__Ordering.greater
-    | (_, _, upper1, upper2) if upper1 < upper2 => Core__Ordering.less
-    | (_, _, upper1, upper2) if upper1 > upper2 => Core__Ordering.greater
-    | _ => Core__Ordering.equal
+    | (lower1, lower2, _, _) if lower1 < lower2 => Ordering.less
+    | (lower1, lower2, _, _) if lower1 > lower2 => Ordering.greater
+    | (_, _, upper1, upper2) if upper1 < upper2 => Ordering.less
+    | (_, _, upper1, upper2) if upper1 > upper2 => Ordering.greater
+    | _ => Ordering.equal
     }
   }
 

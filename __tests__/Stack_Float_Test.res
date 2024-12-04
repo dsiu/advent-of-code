@@ -3,7 +3,6 @@
 open Jest
 open Expect
 
-open RescriptCore
 //module Stack = Stack_List_Float
 module S = Stack.StackFloat
 

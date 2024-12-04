@@ -2,7 +2,7 @@
 @@uncurried.swap
 
 open Stdlib
-let log = Stdlib.Console.log
+let log = Console.log
 //open Utils
 
 module SeatMap = {
@@ -30,13 +30,13 @@ module SeatMap = {
     x >= 0 && x <= len_x - 1 && y >= 0 && y <= len_y - 1
   }
 
-  let adjCoords = (. c) => {
+  let adjCoords = c => {
     open Coordinate.StepFunctions
-    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => f(. c))
+    [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f => f(c))
   }
 
   let getAdjacents = (t, (x, y)) => {
-    adjCoords(. (x, y))->Array.filterMap(c => {
+    adjCoords((x, y))->Array.filterMap(c => {
       t->Array2D.isValidXY(c) ? Some(t->Array2D.getExn(c)) : None
     })
   }
@@ -68,12 +68,12 @@ module SeatMap = {
   }
 
   // part 2
-  let rec nextSeatIn = (. t, (x, y), step) => {
-    let c = step(. (x, y))
+  let rec nextSeatIn = (t, (x, y), step) => {
+    let c = step((x, y))
     t->Array2D.isValidXY(c)
       ? {
           switch t->Array2D.get(c)->Option.getExn {
-          | #"." => nextSeatIn(. t, c, step)
+          | #"." => nextSeatIn(t, c, step)
           | seat => seat
           }
         }
@@ -83,7 +83,7 @@ module SeatMap = {
   let getDirectionals = (t, c) => {
     open Coordinate.StepFunctions
     [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]->Array.map(f =>
-      nextSeatIn(. t, c, f)
+      nextSeatIn(t, c, f)
     )
   }
 

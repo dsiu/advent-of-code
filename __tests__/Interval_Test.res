@@ -1,8 +1,6 @@
 open Jest
 open Expect
 
-open RescriptCore
-
 describe("Interval", () => {
   open Interval
   describe("length", () => {

@@ -176,7 +176,7 @@ module BigIntExt = {
   open BigInt
 
   let compare = (a: bigint, b: bigint) =>
-    a < b ? Core__Ordering.less : a > b ? Core__Ordering.greater : Core__Ordering.equal
+    a < b ? Ordering.less : a > b ? Ordering.greater : Ordering.equal
 }
 
 let maxBigIntInArray = xs => {
