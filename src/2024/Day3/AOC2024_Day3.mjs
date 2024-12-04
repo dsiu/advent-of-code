@@ -18,34 +18,27 @@ function parse(data) {
   return data.trim();
 }
 
-function exec(s) {
-  let mulExp = /mul\(\d+,\d+\)/g;
-  let mulArgsExp = /(\d+),(\d+)/;
-  let muls = s.match(mulExp);
+function calMultiplication(s) {
+  let mulPattern = /mul\(\d+,\d+\)/g;
+  let argsPattern = /(\d+),(\d+)/;
+  let muls = s.match(mulPattern);
   let result = (
     (muls == null) ? undefined : Primitive_option.some(muls)
-  ).map(x => {
-    let args = mulArgsExp.exec(Stdlib__Option.getExn(x, undefined));
-    if (args == null) {
-      return [0];
-    } else {
-      return args.slice(1).map(a => Stdlib__Option.getExn(Stdlib__Int.fromString(a, undefined), undefined));
-    }
-  });
+  ).map(args => Stdlib__Option.mapOr(Primitive_option.fromNullable(argsPattern.exec(Stdlib__Option.getExn(args, undefined))), [0], r => r.slice(1).map(a => Stdlib__Option.getExn(Stdlib__Int.fromString(a, undefined), undefined))));
   return result.map(Utils$AdventOfCode.mulIntArray);
 }
 
 function part1(s) {
-  return Utils$AdventOfCode.sumIntArray(exec(s));
+  return Utils$AdventOfCode.sumIntArray(calMultiplication(s));
 }
 
 function part2(s) {
-  return Utils$AdventOfCode.sumIntArray(s.split("do()").map(x => Stdlib__Array.getUnsafe(x.split("don't()"), 0)).map(exec).map(Utils$AdventOfCode.sumIntArray));
+  return Utils$AdventOfCode.sumIntArray(s.split("do()").map(x => Stdlib__Array.getUnsafe(x.split("don't()"), 0)).map(calMultiplication).map(Utils$AdventOfCode.sumIntArray));
 }
 
 function solvePart1(data) {
   let s = data.trim();
-  return Utils$AdventOfCode.sumIntArray(exec(s));
+  return Utils$AdventOfCode.sumIntArray(calMultiplication(s));
 }
 
 function solvePart2(data) {
@@ -56,7 +49,7 @@ export {
   log,
   log2,
   parse,
-  exec,
+  calMultiplication,
   part1,
   part2,
   solvePart1,

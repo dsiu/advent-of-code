@@ -13,94 +13,109 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-function parse(data) {
-  return Utils$AdventOfCode.splitNewline(data).map(prim => prim.trim()).map(x => Stdlib__Array.filterMap(x.split(" "), __x => Stdlib__Int.fromString(__x, undefined)));
+function isCondMet(condition) {
+  return __x => __x.every(condition);
 }
 
-function countInc(xs) {
-  return xs.filter(x => x > 0).length;
+function condition(x) {
+  return x > 0;
 }
 
-function isInc(xs) {
-  return countInc(xs) === xs.length;
+function isInc(__x) {
+  return __x.every(condition);
 }
 
-function countDec(xs) {
-  return xs.filter(x => x < 0).length;
+function condition$1(x) {
+  return x < 0;
 }
 
-function isDec(xs) {
-  return countDec(xs) === xs.length;
+function isDec(__x) {
+  return __x.every(condition$1);
 }
 
-function countDiffMinOne(xs) {
-  return xs.filter(x => Math.abs(x) >= 1).length;
+function condition$2(x) {
+  return Math.abs(x) >= 1;
 }
 
-function isDiffMinOne(xs) {
-  return countDiffMinOne(xs) === xs.length;
+function isDiffMinOne(__x) {
+  return __x.every(condition$2);
 }
 
-function countDiffMaxThree(xs) {
-  return xs.filter(x => Math.abs(x) <= 3).length;
+function condition$3(x) {
+  return Math.abs(x) <= 3;
 }
 
-function isDiffMaxThree(xs) {
-  return countDiffMaxThree(xs) === xs.length;
+function isDiffMaxThree(__x) {
+  return __x.every(condition$3);
+}
+
+function diff(x, y) {
+  return y - x | 0;
 }
 
 function isSafe(xs) {
   let a = xs.slice(0, xs.length - 1 | 0);
   let b = xs.slice(1);
-  let diff = Stdlib__Array.zipWith(a, b, (x, y) => y - x | 0);
-  let safe = (isInc(diff) || isDec(diff)) && isDiffMinOne(diff) && isDiffMaxThree(diff);
+  let diffs = Stdlib__Array.zipWith(a, b, diff);
+  let safe = (isInc(diffs) || isDec(diffs)) && isDiffMinOne(diffs) && isDiffMaxThree(diffs);
   if (safe) {
     return xs;
   }
   
 }
 
+function removeNthElem(xs, i) {
+  return xs.toSpliced(i, 1);
+}
+
+function isSafeWithTolerance(xs) {
+  let subReports = Stdlib__Array.reduceWithIndex(xs, [], (acc, param, i) => {
+    acc.push(removeNthElem(xs, i));
+    return acc;
+  });
+  return Stdlib__Option.orElse(isSafe(xs), Stdlib__Array.find(subReports, r => Stdlib__Option.isSome(isSafe(r))));
+}
+
+function countCondMet(xs, cond) {
+  return xs.filter(x => Stdlib__Option.isSome(cond(x))).length;
+}
+
 function part1(reports) {
-  return Stdlib__Array.filterMap(reports, isSafe).length;
+  return countCondMet(reports, isSafe);
 }
 
 function part2(reports) {
-  return Stdlib__Array.filterMap(reports, r => {
-    if (Stdlib__Option.isSome(isSafe(r))) {
-      return r;
-    }
-    let subReports = Stdlib__Array.reduceWithIndex(r, [], (acc, param, i) => {
-      acc.push(r.toSpliced(i, 1));
-      return acc;
-    });
-    return Stdlib__Array.find(subReports, r => Stdlib__Option.isSome(isSafe(r)));
-  }).length;
+  return countCondMet(reports, isSafeWithTolerance);
+}
+
+function parse(data) {
+  return Utils$AdventOfCode.splitNewline(data).map(x => Stdlib__Array.filterMap(x.trim().split(" "), __x => Stdlib__Int.fromString(__x, undefined)));
 }
 
 function solvePart1(data) {
-  let reports = parse(data);
-  return Stdlib__Array.filterMap(reports, isSafe).length;
+  return countCondMet(parse(data), isSafe);
 }
 
 function solvePart2(data) {
-  return part2(parse(data));
+  return countCondMet(parse(data), isSafeWithTolerance);
 }
 
 export {
   log,
   log2,
-  parse,
-  countInc,
+  isCondMet,
   isInc,
-  countDec,
   isDec,
-  countDiffMinOne,
   isDiffMinOne,
-  countDiffMaxThree,
   isDiffMaxThree,
+  diff,
   isSafe,
+  removeNthElem,
+  isSafeWithTolerance,
+  countCondMet,
   part1,
   part2,
+  parse,
   solvePart1,
   solvePart2,
 }

@@ -50,7 +50,7 @@ module Claim: Claim = {
   let maxY = t => t->y + t->h
 
   // #1 @ 669,271: 17x11
-  let claimRe = %re("/#(\d+)\s+@\s+(\d+),(\d+):\s(\d+)x(\d+)/i")
+  let claimRe = /#(\d+)\s+@\s+(\d+),(\d+):\s(\d+)x(\d+)/i
 
   // parse a string and produce array of params for claim
   let parseLine = s => {

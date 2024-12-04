@@ -36,7 +36,7 @@ function solvePart1(data) {
       RE_EXN_ID: "Match_failure",
       _1: [
         "AOC2024_Day1.res",
-        35,
+        45,
         6
       ],
       Error: new Error()
@@ -54,7 +54,7 @@ function solvePart2(data) {
       RE_EXN_ID: "Match_failure",
       _1: [
         "AOC2024_Day1.res",
-        41,
+        51,
         6
       ],
       Error: new Error()
