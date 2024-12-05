@@ -6,7 +6,7 @@ let log2 = Console.log2
 type grid = Array2D.t<string>
 type position = Coord_V2.t // (x,y) (col, row)
 
-let pointExtensions: (position, int) => array<array<position>> = (c, n) => {
+let pointExtensions: (position, int) => array<array<position>> = (startPos, steps) => {
   open Coordinate.StepFunctions
 
   let directions = [stepNW, stepN, stepNE, stepW, stepE, stepSW, stepS, stepSE]
@@ -14,18 +14,16 @@ let pointExtensions: (position, int) => array<array<position>> = (c, n) => {
   directions->Array.map(f => {
     let rec loop = (acc, cur, i) => {
       let next = f(cur)
-      i >= n - 1 ? acc : loop([...acc, next], next, i + 1)
+      i >= steps - 1 ? acc : loop([...acc, next], next, i + 1)
     }
-    loop([c], c, 0)
+    loop([startPos], startPos, 0)
   })
 }
-
 // assuming c is center.  the 4 directions are NE, NW, SE, SW
 let xExtensions: position => array<array<position>> = c => {
   open Coordinate.StepFunctions
 
-  let directions = [stepNW, stepNE, stepSW, stepSE]
-  [[c, ...directions->Array.map(f => {f(c)})]]
+  [[c, stepNW(c), stepNE(c), stepSW(c), stepSE(c)]]
 }
 
 let potentialWords: (position => array<array<position>>, grid) => array<array<position>> = (
@@ -38,15 +36,13 @@ let potentialWords: (position => array<array<position>>, grid) => array<array<po
 }
 
 let validWords: (array<array<position>>, grid) => array<array<position>> = (words, grid) => {
-  words->Array.filter(word => {
-    word->Array.map(c => grid->Array2D.isValidXY(c))->Array.every(x => x)
-  })
+  let validWord = word => word->Array.every(pos => grid->Array2D.isValidXY(pos))
+  words->Array.filter(validWord)
 }
 
 let foundWords: (array<array<position>>, grid) => array<string> = (words, grid) => {
-  words->Array.map(word => {
-    word->Array.map(c => grid->Array2D.getExn(c))->Array.join("")
-  })
+  let getWordFromGrid = word => word->Array.map(Array2D.getExn(grid, _))->Array.join("")
+  words->Array.map(getWordFromGrid)
 }
 
 // for the X-MAS cross case. A is the center. match with all combinations of Xs and Ms

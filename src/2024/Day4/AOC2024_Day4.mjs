@@ -13,7 +13,7 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-function pointExtensions(c, n) {
+function pointExtensions(startPos, steps) {
   let directions = [
     Coordinate$AdventOfCode.StepFunctions.stepNW,
     Coordinate$AdventOfCode.StepFunctions.stepN,
@@ -25,15 +25,15 @@ function pointExtensions(c, n) {
     Coordinate$AdventOfCode.StepFunctions.stepSE
   ];
   return directions.map(f => {
-    let _acc = [c];
-    let _cur = c;
+    let _acc = [startPos];
+    let _cur = startPos;
     let _i = 0;
     while (true) {
       let i = _i;
       let cur = _cur;
       let acc = _acc;
       let next = f(cur);
-      if (i >= (n - 1 | 0)) {
+      if (i >= (steps - 1 | 0)) {
         return acc;
       }
       _i = i + 1 | 0;
@@ -48,16 +48,13 @@ function pointExtensions(c, n) {
 }
 
 function xExtensions(c) {
-  let directions = [
-    Coordinate$AdventOfCode.StepFunctions.stepNW,
-    Coordinate$AdventOfCode.StepFunctions.stepNE,
-    Coordinate$AdventOfCode.StepFunctions.stepSW,
-    Coordinate$AdventOfCode.StepFunctions.stepSE
-  ];
-  return [Belt_Array.concatMany([
-      [c],
-      directions.map(f => f(c))
-    ])];
+  return [[
+      c,
+      Coordinate$AdventOfCode.StepFunctions.stepNW(c),
+      Coordinate$AdventOfCode.StepFunctions.stepNE(c),
+      Coordinate$AdventOfCode.StepFunctions.stepSW(c),
+      Coordinate$AdventOfCode.StepFunctions.stepSE(c)
+    ]];
 }
 
 function potentialWords(exts, grid) {
@@ -68,11 +65,13 @@ function potentialWords(exts, grid) {
 }
 
 function validWords(words, grid) {
-  return words.filter(word => word.map(c => Array2D$AdventOfCode.isValidXY(grid, c)).every(x => x));
+  let validWord = word => word.every(pos => Array2D$AdventOfCode.isValidXY(grid, pos));
+  return words.filter(validWord);
 }
 
 function foundWords(words, grid) {
-  return words.map(word => word.map(c => Array2D$AdventOfCode.getExn(grid, c)).join(""));
+  let getWordFromGrid = word => word.map(__x => Array2D$AdventOfCode.getExn(grid, __x)).join("");
+  return words.map(getWordFromGrid);
 }
 
 function isXmas(word) {
