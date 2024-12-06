@@ -12,15 +12,15 @@ Jest.describe("2024 Day5", () => {
   });
   Jest.test("Part 1 - Solve", () => {
     let result = AOC2024_Day5$AdventOfCode.solvePart1(AOC2024_Day5_Data$AdventOfCode.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 4959);
   });
   Jest.test("Part 2 - Sample Data", () => {
     let result = AOC2024_Day5$AdventOfCode.solvePart2(AOC2024_Day5_Data_Sample$AdventOfCode.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 123);
   });
   Jest.test("Part 2 - Solve", () => {
     let result = AOC2024_Day5$AdventOfCode.solvePart2(AOC2024_Day5_Data$AdventOfCode.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 4655);
   });
 });
 

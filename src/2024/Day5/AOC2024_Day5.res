@@ -7,6 +7,7 @@ type beforePages = Set.t<int>
 type afterPages = Set.t<int>
 type rules = Map.t<int, (beforePages, afterPages)>
 type update = array<int>
+type page = int
 
 let ruleMapUpdate = (m, key, f) => {
   let value = m->Map.get(key)
@@ -31,35 +32,59 @@ let makeRules: array<(int, int)> => rules = rulesData => {
 }
 
 let isOrderValid = (update: array<int>, rules) => {
-  //  log("============= isOrderValid")
-  //  update->(log2("update: ", _))
-  let (result, _, _, _) = update->Array.reduceWithIndex(([], [], [], update), (acc, x, i) => {
-    let (result, u, v, update) = acc
-    //    acc->(log2("acc:", _))
+  update->Array.reduceWithIndex(true, (isValid, cur, i) => {
+    !isValid
+      ? false
+      : {
+          let before = update->Array.slice(~start=0, ~end=i)
+          let after = update->Array.sliceToEnd(~start=i + 1)
 
-    let cur = update->Array.getUnsafe(i)
-    let v' = update->Array.sliceToEnd(~start=i + 1)
-
-    let result' =
-      rules
-      ->Map.get(cur)
-      ->Option.getUnsafe
-      ->(
-        ((before, after)) => {
-          let left = u->Set.fromArray->Set.isSubsetOf(before)
-          let right = v'->Set.fromArray->Set.isSubsetOf(after)
-          //          cur->(log2("cur: ", _))
-          //          u->(log2("checking u: ", _))
-          //          v'->(log2("checking v: ", _))
-          left && right
+          rules
+          ->Map.get(cur)
+          ->Option.getUnsafe
+          ->(
+            ((beforeSet, afterSet)) => {
+              before->Set.fromArray->Set.isSubsetOf(beforeSet) &&
+                after->Set.fromArray->Set.isSubsetOf(afterSet)
+            }
+          )
         }
-      )
-
-    u->Array.push(cur)
-    ([...result, result'], u, v', update)
   })
-  //  result->(log2("result: ", _))
-  result->Array.every(x => x)
+}
+
+let printable: (rules, Set.t<page>, page) => bool = (rules, unprinted, page) => {
+  let (beforeSet, afterSet) = rules->Map.get(page)->Option.getUnsafe
+  unprinted->Set.isSubsetOf(afterSet)
+}
+
+let printCandidate: (rules, Set.t<page>) => Set.t<page> = (rules, unprinted) => {
+  unprinted
+  ->Set.toArray
+  ->Array.filter(x => {
+    let unprinted' = unprinted->Set.toArray->Array.filter(i => !(i == x))->Set.fromArray
+    printable(rules, unprinted', x)
+  })
+  ->Set.fromArray
+}
+
+let rec reorder: (rules, array<page>, Set.t<page>) => array<page> = (rules, printed, unprinted) => {
+  switch unprinted->Set.size {
+  | 0 => printed
+  | _ => {
+      let candidate = printCandidate(rules, unprinted)
+      let next = candidate->Set.toArray->minIntInArray
+      unprinted->Set.delete(next)->ignore
+      let rest = unprinted
+      let printed' = printed->Array.concat([next])
+      reorder(rules, printed', rest)
+    }
+  }
+}
+
+let middlePage: array<page> => page = pages => {
+  let len = pages->Array.length
+  let middle = len / 2
+  pages->Array.getUnsafe(middle)
 }
 
 let parse = data => {
@@ -82,14 +107,20 @@ let parse = data => {
 let solvePart1 = data => {
   let (rulesData, updates) = data->parse
   let rules = rulesData->makeRules
-  //  rules->log
+
   updates
-  ->Array.filter(x => x->isOrderValid(rules))
-  ->Array.map(x => x->Array.getUnsafe(Array.length(x) / 2))
+  ->Array.filter(isOrderValid(_, rules))
+  ->Array.map(middlePage)
   ->sumIntArray
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let (rulesData, updates) = data->parse
+  let rules = rulesData->makeRules
+
+  updates
+  ->Array.filter(x => !isOrderValid(x, rules))
+  ->Array.map(p => reorder(rules, [], Set.fromArray(p)))
+  ->Array.map(middlePage)
+  ->sumIntArray
 }
