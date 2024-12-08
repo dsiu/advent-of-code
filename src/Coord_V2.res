@@ -15,5 +15,19 @@ include TC.Comparator.Make({
 let add = ((a, b), (a', b')) => (a + a', b + b')
 let mul = ((a, b), x) => (a * x, b * x)
 
-let toString = ((a, b)) => `(${a->Int.toString}, ${b->Int.toString})`
+// serialization
+let toString: t => string = t =>
+  t->Tuple2.toArray->Array.map(JSON.Encode.int)->JSON.Encode.array->JSON.stringify
+
+let fromString: string => option<t> = str =>
+  str
+  ->JSON.parseExn
+  ->JSON.Decode.array
+  ->Option.map(arr =>
+    arr->Array.map(num =>
+      num->JSON.Decode.float->Option.flatMap(x => x->Float.toInt->Some)->Option.getUnsafe
+    )
+  )
+  ->Option.flatMap(Tuple2.fromArray)
+
 let show = toString
