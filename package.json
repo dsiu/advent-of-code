@@ -7,9 +7,9 @@
   },
   "packageManager": "yarn@4.5.3",
   "scripts": {
-    "build": "rescript",
-    "clean": "rescript clean -with-deps",
-    "start": "rescript build -w",
+    "build": "rewatch build .",
+    "watch": "rewatch watch .",
+    "clean": "rewatch clean .",
     "test": "jest",
     "reformat": "./scripts/reformat.sh"
   },
