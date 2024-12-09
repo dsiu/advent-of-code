@@ -5,17 +5,14 @@
   "sources": [
     {
       "dir": "src",
-      "subdirs": true,
-      "type": "dev"
+      "subdirs": true
     },
     {
-      "dir": "interop",
-      "type": "dev"
+      "dir": "interop"
     },
     {
       "dir": "__tests__",
-      "subdirs": true,
-      "type": "dev"
+      "subdirs": true
     }
   ],
   "package-specs": {
@@ -25,13 +22,12 @@
   "suffix": ".mjs",
   "bs-dependencies": [
     "rescript-nodejs",
-    "rationale",
     "rescript-bag",
     "@dsiu/rescript-stdlib-fp",
-    "@dsiu/rescript-graphology"
+    "@dsiu/rescript-graphology",
+    "@glennsl/rescript-jest"
   ],
   "bs-dev-dependencies": [
-    "@glennsl/rescript-jest"
   ],
   "warnings": {
     "error": "+101"
