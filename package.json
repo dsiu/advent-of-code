@@ -43,8 +43,8 @@
     ]
   },
   "dependencies": {
-    "@dsiu/rescript-graphology": "git@github.com:dsiu/rescript-graphology.git#ffa1e000c26d72e7e5967568fbbc2104e6b71312",
-    "@dsiu/rescript-stdlib-fp": "git@github.com:dsiu/rescript-stdlib-fp.git#commit=da5b78f372543dc0282e6a13536951a70df7cd1f",
+    "@dsiu/rescript-graphology": "workspace:",
+    "@dsiu/rescript-stdlib-fp": "workspace:",
     "@jmagaram/rescript-extras": "^4.1.0",
     "@jmagaram/rescript-seq": "^4.4.1",
     "@rolandpeelen/rewatch": "^1.0.9",
