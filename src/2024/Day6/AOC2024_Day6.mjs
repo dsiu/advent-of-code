@@ -140,7 +140,13 @@ function parse(data) {
 
 function solvePart1(data) {
   let grid = fromArray(parse(data));
-  findValueWithKey(grid, (k, v) => v === "^");
+  let guard_pos = Stdlib__Option.flatMap(findValueWithKey(grid, (k, v) => v === "^"), Coord_V2$AdventOfCode.fromString);
+  let guard = {
+    pos: guard_pos,
+    dir: up
+  };
+  let prim = walk(grid, guard);
+  console.log(prim);
   return 1;
 }
 

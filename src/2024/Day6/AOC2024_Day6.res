@@ -87,7 +87,8 @@ let parse = data =>
 
 let solvePart1 = data => {
   let grid: grid = data->parse->CoordMap.fromArray
-  let guard = (grid->CoordMap.findValueWithKey((k, v) => v == #"^"), up)
+  let guard = {pos:grid->CoordMap.findValueWithKey((k, v) => v == #"^")->Option.flatMap(Coord_V2.fromString)->Option.getUnsafe, dir:up}
+  walk(grid, guard)->log
   1
 }
 
