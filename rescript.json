@@ -22,7 +22,7 @@
   "suffix": ".mjs",
   "bs-dependencies": [
     "rescript-nodejs",
-    "rescript-bag",
+    "@dsiu/rescript-bag",
     "@dsiu/rescript-stdlib-fp",
     "@dsiu/rescript-graphology",
     "@glennsl/rescript-jest"
