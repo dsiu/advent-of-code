@@ -15,55 +15,6 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-function fromArray(arr) {
-  return new Map(arr.map((row, i) => row.map((col, j) => [
-    Coord_V2$AdventOfCode.toString([
-      i,
-      j
-    ]),
-    col
-  ])).flat());
-}
-
-function findValueWithKey(map, f) {
-  return Stdlib__Option.map(Stdlib__Array.find(Array.from(map.entries()), param => f(param[0], param[1])), param => param[0]);
-}
-
-function bounds(map) {
-  let keys = Array.from(map.keys()).map(Coord_V2$AdventOfCode.fromString);
-  let rows = keys.map(Stdlib__Tuple2.first);
-  let cols = keys.map(Stdlib__Tuple2.second);
-  return [
-    [
-      Utils$AdventOfCode.minIntInArray(rows),
-      Utils$AdventOfCode.minIntInArray(cols)
-    ],
-    [
-      Utils$AdventOfCode.maxIntInArray(rows),
-      Utils$AdventOfCode.maxIntInArray(cols)
-    ]
-  ];
-}
-
-function inRange(param, c) {
-  let max = param[1];
-  let min = param[0];
-  let c$1 = c[1];
-  let r = c[0];
-  if (r >= min[0] && r <= max[0] && c$1 >= min[1]) {
-    return c$1 <= max[1];
-  } else {
-    return false;
-  }
-}
-
-let CoordMap = {
-  fromArray: fromArray,
-  findValueWithKey: findValueWithKey,
-  bounds: bounds,
-  inRange: inRange
-};
-
 function fromString(s) {
   switch (s) {
     case "#" :
@@ -79,6 +30,70 @@ function fromString(s) {
 
 let MapValue = {
   fromString: fromString
+};
+
+function bounds(grid) {
+  let keys = Array.from(grid.keys()).map(Coord_V2$AdventOfCode.fromString);
+  let rows = keys.map(Stdlib__Tuple2.first);
+  let cols = keys.map(Stdlib__Tuple2.second);
+  return [
+    [
+      Utils$AdventOfCode.minIntInArray(rows),
+      Utils$AdventOfCode.minIntInArray(cols)
+    ],
+    [
+      Utils$AdventOfCode.maxIntInArray(rows),
+      Utils$AdventOfCode.maxIntInArray(cols)
+    ]
+  ];
+}
+
+function fromArray(arr) {
+  let grid = new Map(arr.map((row, i) => row.map((col, j) => [
+    Coord_V2$AdventOfCode.toString([
+      i,
+      j
+    ]),
+    col
+  ])).flat());
+  let bounds$1 = bounds(grid);
+  return {
+    grid: grid,
+    bounds: bounds$1
+  };
+}
+
+function find(grid, f) {
+  return Stdlib__Array.find(Array.from(grid.entries()), param => f(param[0], param[1]));
+}
+
+function inRange(param, c) {
+  let max = param[1];
+  let min = param[0];
+  let c$1 = c[1];
+  let r = c[0];
+  if (r >= min[0] && r <= max[0] && c$1 >= min[1]) {
+    return c$1 <= max[1];
+  } else {
+    return false;
+  }
+}
+
+function walkAble(grid, c) {
+  let y = Stdlib__Option.map(find(grid, (k, v) => k === Coord_V2$AdventOfCode.toString(c)), Stdlib__Tuple2.second);
+  if (y !== undefined) {
+    return y !== "#";
+  } else {
+    return true;
+  }
+}
+
+let CoordMap = {
+  bounds: bounds,
+  fromArray: fromArray,
+  find: find,
+  inRange: inRange,
+  walkAble: walkAble
 };
 
 let up = {
@@ -113,6 +128,10 @@ let right = {
   ]
 };
 
+function delta(dir) {
+  return dir._0;
+}
+
 function turnRight(dir) {
   switch (dir.TAG) {
     case "Up" :
@@ -126,12 +145,33 @@ function turnRight(dir) {
   }
 }
 
-function step(grid, guard) {
+function step(param, guard) {
+  let bounds = param.bounds;
+  let ahead = Coord_V2$AdventOfCode.add(guard.pos, guard.dir._0);
+  if (inRange(bounds, guard.pos)) {
+    if (!inRange(bounds, ahead) || walkAble(param.grid, ahead)) {
+      return [
+        guard.pos,
+        {
+          pos: ahead,
+          dir: guard.dir
+        }
+      ];
+    } else {
+      return [
+        guard.pos,
+        {
+          pos: guard.pos,
+          dir: turnRight(guard.dir)
+        }
+      ];
+    }
+  }
   
 }
 
-function walk(grid, guard) {
-  return Stdlib__Array.unfoldr(guard, __x => {});
+function walk(map, guard) {
+  return Stdlib__Array.unfoldr(guard, __x => step(map, __x));
 }
 
 function parse(data) {
@@ -139,15 +179,14 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  let grid = fromArray(parse(data));
-  let guard_pos = Stdlib__Option.flatMap(findValueWithKey(grid, (k, v) => v === "^"), Coord_V2$AdventOfCode.fromString);
+  let m = fromArray(parse(data));
+  let guard_pos = Stdlib__Option.flatMap(Stdlib__Option.map(find(m.grid, (k, v) => v === "^"), param => param[0]), Coord_V2$AdventOfCode.fromString);
   let guard = {
     pos: guard_pos,
     dir: up
   };
-  let prim = walk(grid, guard);
-  console.log(prim);
-  return 1;
+  let ret = walk(m, guard);
+  return Stdlib__Array.uniq(ret).length;
 }
 
 function solvePart2(data) {
@@ -157,12 +196,13 @@ function solvePart2(data) {
 export {
   log,
   log2,
-  CoordMap,
   MapValue,
+  CoordMap,
   up,
   down,
   left,
   right,
+  delta,
   turnRight,
   step,
   walk,
