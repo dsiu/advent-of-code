@@ -73,7 +73,7 @@ function isSafeWithTolerance(xs) {
     acc.push(removeNthElem(xs, i));
     return acc;
   });
-  return Stdlib__Option.orElse(isSafe(xs), Stdlib__Array.find(subReports, r => Stdlib__Option.isSome(isSafe(r))));
+  return Stdlib__Option.orElse(isSafe(xs), subReports.find(r => Stdlib__Option.isSome(isSafe(r))));
 }
 
 function countCondMet(xs, cond) {

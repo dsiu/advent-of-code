@@ -91,7 +91,7 @@ function toString$2(t) {
 }
 
 function getMap(t, src) {
-  return Stdlib__Option.getExn(Stdlib__Array.find(t.maps, m => m.srcCategory === src), undefined);
+  return Stdlib__Option.getExn(t.maps.find(m => m.srcCategory === src), undefined);
 }
 
 let Almanac = {

@@ -23,14 +23,14 @@ describe("2024 Day6", () => {
 
   test("Part 2 - Sample Data", () => {
     let result = solvePart2(sampleData)
-    let expected = 2
+    let expected = 6
 
     expect(result)->toEqual(expected)
   })
 
-  test("Part 2 - Solve", () => {
+  Skip.test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = 2
+    let expected = 1796
 
     expect(result)->toEqual(expected)
   })

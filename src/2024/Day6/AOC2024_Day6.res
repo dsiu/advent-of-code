@@ -25,9 +25,13 @@ module CoordMap = {
 
   // todo: should refactor bounds - it was used in multiple places
   let bounds: grid => (Coord_V2.t, Coord_V2.t) = grid => {
-    let keys = grid->Map.keys->Iterator.toArray->Array.map(Coord_V2.fromString)
-    let rows = keys->Array.map(r => r->Option.getUnsafe->Tuple2.first)
-    let cols = keys->Array.map(c => c->Option.getUnsafe->Tuple2.second)
+    let keys =
+      grid
+      ->Map.keys
+      ->Iterator.toArray
+      ->Array.map(x => x->Coord_V2.fromString->Option.getExn)
+    let rows = keys->Array.map(Tuple2.first)
+    let cols = keys->Array.map(Tuple2.second)
     ((rows->minIntInArray, cols->minIntInArray), (rows->maxIntInArray, cols->maxIntInArray))
   }
 
@@ -45,10 +49,13 @@ module CoordMap = {
     {grid, bounds}
   }
 
-  // should move to Std Map
+  // todo: should move to Std Map
   let find: (grid, (key, 'a) => bool) => option<(key, 'a)> = (grid, f) => {
     grid->Map.entries->Iterator.toArray->Array.find(((k, v)) => f(k, v))
   }
+
+  // todo: should move to Std Map
+  let clone = Fn.compose(Map.entries, Map.fromIterator, _)
 
   let inRange: ((Coord_V2.t, Coord_V2.t), Coord_V2.t) => bool = ((min, max), c) => {
     let (r, c) = c
@@ -57,10 +64,21 @@ module CoordMap = {
     r >= minR && r <= maxR && c >= minC && c <= maxC
   }
 
+  let toString: grid => string = grid => {
+    let bounds = grid->bounds
+    let ((minR, minC), (maxR, maxC)) = bounds
+    let rows = Array.fromInitializer(~length=maxR - minR + 1, i => {
+      let cols = Array.fromInitializer(~length=maxC - minC + 1, j => {
+        let c = (i + minR, j + minC)
+        grid->Map.get(c->Coord_V2.toString)->Option.getExn->String.make
+      })
+      cols->Array.join("")
+    })
+    rows->Array.join("\n")
+  }
+
   let walkAble: (grid, Coord_V2.t) => bool = (grid, c) => {
-    let y = find(grid, (k, v) => {
-      k == c->Coord_V2.toString
-    })->Option.map(Tuple2.second)
+    let y = grid->Map.get(c->Coord_V2.toString)
     switch y {
     | Some(#"#") => false
     | Some(_)
@@ -94,7 +112,18 @@ let turnRight: direction => direction = dir => {
   }
 }
 
+let dirEq = (a, b) => {
+  switch (a, b) {
+  | (Up(_), Up(_)) => true
+  | (Down(_), Down(_)) => true
+  | (Left(_), Left(_)) => true
+  | (Right(_), Right(_)) => true
+  | _ => false
+  }
+}
+
 type guard = {pos: position, dir: direction}
+let guardEq = (a, b) => Coord_V2.compare(a.pos, b.pos) == 0 && dirEq(a.dir, b.dir)
 
 let step: (CoordMap.t<'a>, guard) => option<(position, guard)> = ({grid, bounds}, guard) => {
   let ahead = Coord_V2.add(guard.pos, guard.dir->delta)
@@ -112,12 +141,34 @@ let walk: (CoordMap.t<'a>, guard) => array<position> = (map, guard) => {
   Array.unfoldr(guard, step(map, _))
 }
 
+let rec isLoop: (guard, array<guard>, CoordMap.t<'a>) => bool = (
+  guard,
+  trail,
+  {grid, bounds} as map,
+) => {
+  let stepped = step(map, guard)
+  Option.isNone(stepped)
+    ? false
+    : {
+        let (_, guard') = stepped->Option.getExn
+        let hasTurned = guard.dir != guard'.dir
+        let beenThere = trail->Array.find(guardEq(guard, _))->Option.isSome
+        hasTurned && beenThere
+          ? true
+          : hasTurned
+          ? {
+            isLoop(guard', [guard, ...trail], map)
+          }
+          : isLoop(guard', trail, map)
+      }
+}
+
 let parse = data =>
   data
   ->splitNewline
   ->Array.map(l => l->String.trim->String.split("")->Array.map(MapValue.fromString))
 
-let solvePart1 = data => {
+let init = data => {
   let m: CoordMap.t<'a> = data->parse->CoordMap.fromArray
   let {grid, bounds} = m
   let guard = {
@@ -125,17 +176,42 @@ let solvePart1 = data => {
     ->CoordMap.find((k, v) => v == #"^")
     ->Option.map(((k, v)) => k)
     ->Option.flatMap(Coord_V2.fromString)
-    ->Option.getUnsafe,
+    ->Option.getExn,
     dir: up,
   }
-  let ret = walk(m, guard)
-  let ret' = ret->Array.uniq
-  //  ret->log
-  //  ret'->log
-  ret'->Array.length
+  (m, guard)
+}
+
+let solvePart1 = data => {
+  let (m, guard) = init(data)
+  let {grid, bounds} = m
+
+  let ret = walk(m, guard)->Array.uniq
+  ret->Array.length
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let (m, guard) = init(data)
+  let {grid, bounds} = m
+
+  // excluding the starting point
+  let news = walk(m, guard)->Array.uniq->Array.filter(x => Coord_V2.compare(x, guard.pos) != 0)
+
+  // [ ] this is allocating too much memory and causes Node to crash with default heap size. need to optimize
+  //  let modifiedGrids: array<CoordMap.t<'a>> = news->Array.map(g => {
+  //    let m' = CoordMap.clone(grid)
+  //    m'->Map.set(g->Coord_V2.toString, #"#")
+  //    {CoordMap.grid: m', bounds}
+  //  })
+
+  //  modifiedGrids->Array.filter(x => isLoop(guard, [], x))->Array.length
+
+  // this version fixed the heap issue but is still slow
+  let gridsHaveLoop = news->Array.filter(g => {
+    let m' = CoordMap.clone(grid)
+    m'->Map.set(g->Coord_V2.toString, #"#")
+    isLoop(guard, [], {CoordMap.grid: m', bounds})
+  })
+
+  gridsHaveLoop->Array.length
 }

@@ -143,7 +143,7 @@ function connectorsToPosition(map, pos) {
     nbr,
     neighbours(map, nbr)
   ]);
-  let connectors = nbrsNbrs.filter(param => Stdlib__Option.isSome(Stdlib__Array.find(param[1], n => Coord_V2$AdventOfCode.compare(n, pos) === 0)));
+  let connectors = nbrsNbrs.filter(param => Stdlib__Option.isSome(param[1].find(n => Coord_V2$AdventOfCode.compare(n, pos) === 0)));
   return connectors.map(prim => prim[0]);
 }
 
