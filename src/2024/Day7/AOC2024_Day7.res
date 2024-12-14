@@ -62,5 +62,5 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->parse->Array.map(isValidC)->Array.keepSome->sumBigIntArray->log
+  data->parse->Array.map(isValidC)->Array.keepSome->sumBigIntArray
 }

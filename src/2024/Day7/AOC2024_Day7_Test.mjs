@@ -20,7 +20,7 @@ Jest.describe("2024 Day7", () => {
   });
   Jest.test("Part 2 - Solve", () => {
     let result = AOC2024_Day7$AdventOfCode.solvePart2(AOC2024_Day7_Data$AdventOfCode.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 2n);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 104824810233437n);
   });
 });
 

@@ -78,8 +78,7 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  let prim = sumBigIntArray(Stdlib__Array.keepSome(parse(data).map(isValidC)));
-  console.log(prim);
+  return sumBigIntArray(Stdlib__Array.keepSome(parse(data).map(isValidC)));
 }
 
 export {
