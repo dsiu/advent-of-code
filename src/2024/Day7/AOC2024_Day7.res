@@ -21,10 +21,7 @@ let isValid = ((target, factors)) => {
 }
 
 let concatBigInt: (bigint, bigint) => bigint = (a, b) => {
-  let aStr = a->BigInt.toString
-  let bStr = b->BigInt.toString
-  let cStr = aStr ++ bStr
-  cStr->BigInt.fromStringExn
+  (a->BigInt.toString ++ b->BigInt.toString)->BigInt.fromStringExn
 }
 
 let extendOneC: (array<bigint>, bigint) => array<bigint> = (partials, next) => {
@@ -47,12 +44,8 @@ let parse = data =>
   ->splitNewline
   ->Array.map(l => {
     let arr = l->String.trim->String.split(": ")
-    let first = arr[0]->Option.getExn
-    let second = arr[1]->Option.getExn
-    (
-      first->BigInt.fromStringExn,
-      second->String.split(" ")->Array.map(x => x->BigInt.fromStringExn),
-    )
+    let [first, second] = arr
+    (first->BigInt.fromStringExn, second->String.split(" ")->Array.map(BigInt.fromStringExn))
   })
 
 let sumBigIntArray = Array.reduce(_, 0n, (a: bigint, b: bigint) => a + b)
