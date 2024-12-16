@@ -26,6 +26,13 @@ function add(param, param$1) {
   ];
 }
 
+function sub(param, param$1) {
+  return [
+    param[0] - param$1[0] | 0,
+    param[1] - param$1[1] | 0
+  ];
+}
+
 function mul(param, x) {
   return [
     Math.imul(param[0], x),
@@ -53,6 +60,7 @@ export {
   compare,
   comparator,
   add,
+  sub,
   mul,
   toString,
   fromString,

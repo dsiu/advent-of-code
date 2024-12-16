@@ -8,7 +8,7 @@ import * as AOC2024_Day8_Data_Sample$AdventOfCode from "./AOC2024_Day8_Data_Samp
 Jest.describe("2024 Day8", () => {
   Jest.test("Part 1 - Sample Data", () => {
     let result = AOC2024_Day8$AdventOfCode.solvePart1(AOC2024_Day8_Data_Sample$AdventOfCode.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 14);
   });
   Jest.test("Part 1 - Solve", () => {
     let result = AOC2024_Day8$AdventOfCode.solvePart1(AOC2024_Day8_Data$AdventOfCode.data);

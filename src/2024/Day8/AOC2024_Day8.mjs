@@ -4,6 +4,7 @@ import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
+import * as Coord_V2$AdventOfCode from "../../Coord_V2.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -15,6 +16,36 @@ function log2(prim0, prim1) {
 
 function getWithDefault(m, k, d) {
   return Stdlib__Option.getWithDefault(m.get(k), d);
+}
+
+function inRange(param, c) {
+  let max = param[1];
+  let min = param[0];
+  let c$1 = c[1];
+  let r = c[0];
+  if (r >= min[0] && r <= max[0] && c$1 >= min[1]) {
+    return c$1 <= max[1];
+  } else {
+    return false;
+  }
+}
+
+function antinodeOf(a, b) {
+  return Coord_V2$AdventOfCode.sub(Coord_V2$AdventOfCode.mul(a, 2), b);
+}
+
+function antinodesOf(bounds, ps) {
+  return Stdlib__Array.combinationIf2(ps, ps, (a, b) => {
+    let match = Coord_V2$AdventOfCode.compare(a, b);
+    if (match !== 0) {
+      return antinodeOf(a, b);
+    }
+    
+  }).filter(p => inRange(bounds, p));
+}
+
+function allFreqAntinodes(bounds, grid) {
+  return Array.from(grid.values()).flatMap(ps => antinodesOf(bounds, ps));
 }
 
 function parse(data) {
@@ -58,9 +89,7 @@ function parse(data) {
 
 function solvePart1(data) {
   let match = parse(data);
-  console.log(match[0]);
-  console.log(match[1]);
-  return 1;
+  return Stdlib__Array.uniq(allFreqAntinodes(match[1], match[0])).length;
 }
 
 function solvePart2(data) {
@@ -71,6 +100,10 @@ export {
   log,
   log2,
   getWithDefault,
+  inRange,
+  antinodeOf,
+  antinodesOf,
+  allFreqAntinodes,
   parse,
   solvePart1,
   solvePart2,

@@ -12,6 +12,33 @@ let getWithDefault = (m, k, d) => {
   Map.get(m, k)->Option.getWithDefault(d)
 }
 
+let inRange: (bounds, position) => bool = ((min, max), c) => {
+  let (r, c) = c
+  let (minR, minC) = min
+  let (maxR, maxC) = max
+  r >= minR && r <= maxR && c >= minC && c <= maxC
+}
+
+let antinodeOf: (position, position) => position = (a, b) => {
+  Coord_V2.mul(a, 2)->(Coord_V2.sub(_, b))
+}
+
+let antinodesOf: (bounds, array<position>) => array<position> = (bounds, ps) => {
+  Array.combinationIf2(ps, ps, (a, b) => {
+    switch Coord_V2.compare(a, b) {
+    | 0 => None
+    | _ => Some(antinodeOf(a, b))
+    }
+  })->Array.filter(p => inRange(bounds, p))
+}
+
+let allFreqAntinodes: (bounds, grid) => array<position> = (bounds, grid) => {
+  grid
+  ->Map.values
+  ->Iterator.toArray
+  ->Array.flatMap(ps => antinodesOf(bounds, ps))
+}
+
 let parse: string => (grid, bounds) = data => {
   let rows = data->splitNewline->Array.map(r => r->String.trim->String.split(""))
   let rMax = rows->Array.length - 1
@@ -38,9 +65,7 @@ let parse: string => (grid, bounds) = data => {
 
 let solvePart1 = data => {
   let (grid, bounds) = data->parse
-  grid->log
-  bounds->log
-  1
+  grid->(allFreqAntinodes(bounds, _))->Array.uniq->Array.length
 }
 
 let solvePart2 = data => {

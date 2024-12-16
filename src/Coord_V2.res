@@ -13,6 +13,7 @@ include TC.Comparator.Make({
 })
 
 let add = ((a, b), (a', b')) => (a + a', b + b')
+let sub = ((a, b), (a', b')) => (a - a', b - b')
 let mul = ((a, b), x) => (a * x, b * x)
 
 // serialization
