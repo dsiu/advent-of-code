@@ -30,7 +30,7 @@ function inRange(param, c) {
   }
 }
 
-function antinodeOf(a, b) {
+function antinodeOfNode(a, b) {
   return Coord_V2$AdventOfCode.sub(Coord_V2$AdventOfCode.mul(a, 2), b);
 }
 
@@ -38,7 +38,7 @@ function antinodesOf(bounds, ps) {
   return Stdlib__Array.combinationIf2(ps, ps, (a, b) => {
     let match = Coord_V2$AdventOfCode.compare(a, b);
     if (match !== 0) {
-      return antinodeOf(a, b);
+      return antinodeOfNode(a, b);
     }
     
   }).filter(p => inRange(bounds, p));
@@ -46,6 +46,24 @@ function antinodesOf(bounds, ps) {
 
 function allFreqAntinodes(bounds, grid) {
   return Array.from(grid.values()).flatMap(ps => antinodesOf(bounds, ps));
+}
+
+function harmonicAntinodesOfNode(bounds, a, b) {
+  return Stdlib__Array.fromInitializer(bounds[1][0], k => Coord_V2$AdventOfCode.sub(a, Coord_V2$AdventOfCode.mul(Coord_V2$AdventOfCode.sub(a, b), k)));
+}
+
+function harmonicAntinodesOf(bounds, ps) {
+  return Stdlib__Array.combinationIf2(ps, ps, (a, b) => {
+    let match = Coord_V2$AdventOfCode.compare(a, b);
+    if (match !== 0) {
+      return harmonicAntinodesOfNode(bounds, a, b);
+    }
+    
+  }).flatMap(x => x).filter(p => inRange(bounds, p));
+}
+
+function allFreqHarmonicAntinodes(bounds, grid) {
+  return Array.from(grid.values()).flatMap(ps => harmonicAntinodesOf(bounds, ps));
 }
 
 function parse(data) {
@@ -93,7 +111,8 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  return 2;
+  let match = parse(data);
+  return Stdlib__Array.uniq(allFreqHarmonicAntinodes(match[1], match[0])).length;
 }
 
 export {
@@ -101,9 +120,12 @@ export {
   log2,
   getWithDefault,
   inRange,
-  antinodeOf,
+  antinodeOfNode,
   antinodesOf,
   allFreqAntinodes,
+  harmonicAntinodesOfNode,
+  harmonicAntinodesOf,
+  allFreqHarmonicAntinodes,
   parse,
   solvePart1,
   solvePart2,

@@ -19,7 +19,7 @@ let inRange: (bounds, position) => bool = ((min, max), c) => {
   r >= minR && r <= maxR && c >= minC && c <= maxC
 }
 
-let antinodeOf: (position, position) => position = (a, b) => {
+let antinodeOfNode: (position, position) => position = (a, b) => {
   Coord_V2.mul(a, 2)->(Coord_V2.sub(_, b))
 }
 
@@ -27,7 +27,7 @@ let antinodesOf: (bounds, array<position>) => array<position> = (bounds, ps) => 
   Array.combinationIf2(ps, ps, (a, b) => {
     switch Coord_V2.compare(a, b) {
     | 0 => None
-    | _ => Some(antinodeOf(a, b))
+    | _ => Some(antinodeOfNode(a, b))
     }
   })->Array.filter(p => inRange(bounds, p))
 }
@@ -37,6 +37,31 @@ let allFreqAntinodes: (bounds, grid) => array<position> = (bounds, grid) => {
   ->Map.values
   ->Iterator.toArray
   ->Array.flatMap(ps => antinodesOf(bounds, ps))
+}
+
+let harmonicAntinodesOfNode: (bounds, position, position) => array<position> = (bounds, a, b) => {
+  let (_, (kMax, _)) = bounds
+  Array.fromInitializer(~length=kMax, k => {
+    Coord_V2.sub(a, Coord_V2.sub(a, b)->Coord_V2.mul(k))
+  })
+}
+
+let harmonicAntinodesOf: (bounds, array<position>) => array<position> = (bounds, ps) => {
+  Array.combinationIf2(ps, ps, (a, b) => {
+    switch Coord_V2.compare(a, b) {
+    | 0 => None
+    | _ => Some(harmonicAntinodesOfNode(bounds, a, b))
+    }
+  })
+  ->Array.flatMap(x => x)
+  ->Array.filter(p => inRange(bounds, p))
+}
+
+let allFreqHarmonicAntinodes: (bounds, grid) => array<position> = (bounds, grid) => {
+  grid
+  ->Map.values
+  ->Iterator.toArray
+  ->Array.flatMap(ps => harmonicAntinodesOf(bounds, ps))
 }
 
 let parse: string => (grid, bounds) = data => {
@@ -69,6 +94,6 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let (grid, bounds) = data->parse
+  grid->(allFreqHarmonicAntinodes(bounds, _))->Array.uniq->Array.length
 }
