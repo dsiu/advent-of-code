@@ -3,10 +3,7 @@
 
 open Stdlib
 
-let identity = Stdlib.Function.identity
-
 // Logging
-let log = Console.log
 @val @scope("console") external consoleDir: 'a => unit = "dir"
 
 /**
@@ -24,7 +21,7 @@ module Printable = {
       })
     }
     module String = {
-      let toString = m => toString(m, identity)
+      let toString = m => toString(m, Fn.identity)
     }
 
     module Int = {
@@ -43,7 +40,7 @@ module Printable = {
       })
     }
     module String = {
-      let toString = m => toString(m, identity)
+      let toString = m => toString(m, Fn.identity)
     }
 
     module Int = {

@@ -12,4 +12,4 @@
 
 //let result = solvePart2(aToz, charArray)
 let result = AOC2018_Day5.solvePart2(AOC2018_Day5.aTod, AOC2018_Day5.testCharArray)
-result->Utils.log
+result->Console.log

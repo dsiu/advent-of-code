@@ -68,7 +68,7 @@ let scenicScore: (forest, int, int) => int = (forest, row, col) => {
 }
 
 let part2: forest => int = forest => {
-  let id = Function.identity
+  let id = Fn.identity
   let nrows = forest->A.length
   let ncols = forest->A.headUnsafe->A.length
   let scores = A.combination2(A.makeBy(nrows - 1, id), A.makeBy(ncols - 1, id), (r, c) =>

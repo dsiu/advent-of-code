@@ -21,7 +21,7 @@ let getCratesForWharf = (crates, wharf) => {
   })
 }
 
-let catMaybes = Array.filterMap(_, Function.identity)
+let catMaybes = Array.filterMap(_, Fn.identity)
 
 let makeWharf = (wharfLines, colNames) => {
   colNames->A.reduce(M.empty, (acc, colName) => {

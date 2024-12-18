@@ -36,7 +36,7 @@ let part1 = ticketErrorRate
   A ticket is valid if every value is valid for some rule.
   */
 let isValidTicket = (RuleSet(rules), ticket) => {
-  Array.every(ticket->Array.map(validForAnyField(RuleSet(rules), _)), identity)
+  Array.every(ticket->Array.map(validForAnyField(RuleSet(rules), _)), Fn.identity)
 }
 
 /**
@@ -49,7 +49,7 @@ let possibleColumns = (ticketCols, body) => {
     Array.every(col, matchesRule(body, _))
   }
 
-  let idx = Array.fromInitializer(~length=ticketCols->Array.length, identity)
+  let idx = Array.fromInitializer(~length=ticketCols->Array.length, Fn.identity)
   Array.zip(idx, ticketCols)->Array.filter(columnMatches)->Array.map(fst)
 }
 

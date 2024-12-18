@@ -16,12 +16,10 @@ let parse = data =>
     l
     ->String.trim
     ->String.split("   ")
+    ->Array.map(s => s->Int.fromString->Option.getExn)
   )
-  ->Array.map(l => [
-    l->Array.get(0)->Option.flatMap(Int.fromString(_))->Option.getExn,
-    l->Array.get(1)->Option.flatMap(Int.fromString(_))->Option.getExn,
-  ])
   ->Array.transpose
+
 let part1 = (l1, l2) => {
   Array.zipWith(l1->Array.toSorted(Int.compare), l2->Array.toSorted(Int.compare), (a, b) =>
     Math.Int.abs(a - b)
@@ -37,7 +35,7 @@ let part1 = (l1, l2) => {
  */
 let part2 = (l1, l2) => {
   l1
-  ->Array.map(a => a * l2->Array.filter(b => b == a)->Array.length)
+  ->Array.map(a => a * l2->Array.count(b => b == a))
   ->Utils.sumIntArray
 }
 

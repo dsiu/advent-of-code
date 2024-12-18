@@ -1,6 +1,6 @@
 open Belt
 open Utils
-let log = Utils.log
+let log = Console.log
 
 module Xmax = {
   type t = {
@@ -18,9 +18,7 @@ module Xmax = {
   let preambles = t => t->codes->Array.slice(~offset=0, ~len=t->runLength)
 
   let make = (codes, runLength): Result.t<'a, xmaxError> => {
-    codes->Array.size > runLength
-      ? Ok({codes: codes, runLength: runLength})
-      : Error(InvalidRunLength)
+    codes->Array.size > runLength ? Ok({codes, runLength}) : Error(InvalidRunLength)
   }
 
   // return array of matches if ~sum is sum of x with one of xs

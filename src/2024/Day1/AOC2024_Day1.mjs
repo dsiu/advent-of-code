@@ -15,10 +15,7 @@ function log2(prim0, prim1) {
 }
 
 function parse(data) {
-  return Stdlib__Array.transpose(Utils$AdventOfCode.splitNewline(data).map(l => l.trim().split("   ")).map(l => [
-    Stdlib__Option.getExn(Stdlib__Option.flatMap(l[0], __x => Stdlib__Int.fromString(__x, undefined)), undefined),
-    Stdlib__Option.getExn(Stdlib__Option.flatMap(l[1], __x => Stdlib__Int.fromString(__x, undefined)), undefined)
-  ]));
+  return Stdlib__Array.transpose(Utils$AdventOfCode.splitNewline(data).map(l => l.trim().split("   ").map(s => Stdlib__Option.getExn(Stdlib__Int.fromString(s, undefined), undefined))));
 }
 
 function part1(l1, l2) {
@@ -26,7 +23,7 @@ function part1(l1, l2) {
 }
 
 function part2(l1, l2) {
-  return Utils$AdventOfCode.sumIntArray(l1.map(a => Math.imul(a, l2.filter(b => b === a).length)));
+  return Utils$AdventOfCode.sumIntArray(l1.map(a => Math.imul(a, Stdlib__Array.count(l2, b => b === a))));
 }
 
 function solvePart1(data) {
@@ -36,7 +33,7 @@ function solvePart1(data) {
       RE_EXN_ID: "Match_failure",
       _1: [
         "AOC2024_Day1.res",
-        45,
+        43,
         6
       ],
       Error: new Error()
@@ -54,7 +51,7 @@ function solvePart2(data) {
       RE_EXN_ID: "Match_failure",
       _1: [
         "AOC2024_Day1.res",
-        51,
+        49,
         6
       ],
       Error: new Error()

@@ -23,7 +23,7 @@ module Scanner = {
     Coord(0., 0., 0.)->trans->coordToString
   }
 
-  let nullTrans = identity
+  let nullTrans = Stdlib.Fn.identity
 
   let rotX: transform = (Coord(x, y, z)) => Coord(x, -.z, y)
   let rotY: transform = (Coord(x, y, z)) => Coord(z, y, -.x)
