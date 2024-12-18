@@ -82,7 +82,7 @@ let scoreGrid: grid => int = grid => {
     Array.fromInitializer(~length=l, i => i + 1),
     normalizedGrid->Array.toReversed,
   )
-  let scoreRow = ((i, row)) => i * row->Array.filter(el => el == Round)->Array.length
+  let scoreRow = ((i, row)) => i * row->Array.count(el => el == Round)
   indexedGird->Array.map(scoreRow)->Array.sum(module(Int))
 }
 

@@ -46,7 +46,7 @@ module SeatMap = {
   }
 
   let countSeat = (xs, seatStatus: SeatStatus.t) => {
-    xs->Array.filter(isSeatEq(_, seatStatus))->Array.length
+    xs->Array.count(isSeatEq(_, seatStatus))
   }
 
   let countEmptySeat = countSeat(_, #L)

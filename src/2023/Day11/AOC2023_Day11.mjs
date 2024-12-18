@@ -95,9 +95,9 @@ function emptyRowCol(g) {
   let match = maxCoord(g);
   let galaxies = Stdlib__Set.toArray(g._0);
   let xs = Stdlib__Array.fromInitializer(Stdlib__BigInt.toInt(match[0]), Stdlib__Function.id);
-  let cols = xs.filter(x => galaxies.filter(param => param._0[0] === BigInt(x)).length === 0);
+  let cols = xs.filter(x => Stdlib__Array.count(galaxies, param => param._0[0] === BigInt(x)) === 0);
   let ys = Stdlib__Array.fromInitializer(Stdlib__BigInt.toInt(match[1]), Stdlib__Function.id);
-  let rows = ys.filter(y => galaxies.filter(param => param._0[1] === BigInt(y)).length === 0);
+  let rows = ys.filter(y => Stdlib__Array.count(galaxies, param => param._0[1] === BigInt(y)) === 0);
   return [
     cols,
     rows

@@ -75,7 +75,7 @@ function isSeatEq(s, to_be) {
 }
 
 function countSeat(xs, seatStatus) {
-  return xs.filter(__x => __x === seatStatus).length;
+  return Stdlib__Array.count(xs, __x => __x === seatStatus);
 }
 
 function countEmptySeat(__x) {

@@ -51,7 +51,7 @@ let isSafeWithTolerance = xs => {
   })
 }
 
-let countCondMet = (xs, cond) => xs->Array.filter(x => cond(x)->Option.isSome)->Array.length
+let countCondMet = (xs, cond) => xs->Array.count(x => cond(x)->Option.isSome)
 
 let part1 = reports => {
   reports->countCondMet(isSafe)

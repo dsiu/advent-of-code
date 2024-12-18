@@ -54,12 +54,12 @@ let emptyRowCol = (Galaxies(galaxies) as g) => {
 
   let xs = Array.fromInitializer(~length=toInt(maxX), Function.id)
   let cols = xs->Array.filter(x => {
-    galaxies->Array.filter((Position((x', _))) => x' == fromInt(x))->Array.length == 0
+    galaxies->Array.count((Position((x', _))) => x' == fromInt(x)) == 0
   })
 
   let ys = Array.fromInitializer(~length=toInt(maxY), Function.id)
   let rows = ys->Array.filter(y => {
-    galaxies->Array.filter((Position((_, y'))) => y' == fromInt(y))->Array.length == 0
+    galaxies->Array.count((Position((_, y'))) => y' == fromInt(y)) == 0
   })
 
   (cols, rows)

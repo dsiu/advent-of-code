@@ -204,7 +204,7 @@ let solvePart2 = data => {
   //    {CoordMap.grid: m', bounds}
   //  })
 
-  //  modifiedGrids->Array.filter(x => isLoop(guard, [], x))->Array.length
+  //  modifiedGrids->Array.count(x => isLoop(guard, [], x))
 
   // this version fixed the heap issue but is still slow
   let gridsHaveLoop = news->Array.filter(g => {

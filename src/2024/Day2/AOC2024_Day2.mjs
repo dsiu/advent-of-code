@@ -77,7 +77,7 @@ function isSafeWithTolerance(xs) {
 }
 
 function countCondMet(xs, cond) {
-  return xs.filter(x => Stdlib__Option.isSome(cond(x))).length;
+  return Stdlib__Array.count(xs, x => Stdlib__Option.isSome(cond(x)));
 }
 
 function part1(reports) {
