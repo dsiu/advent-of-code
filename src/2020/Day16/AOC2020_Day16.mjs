@@ -49,12 +49,12 @@ function isValidTicket(rules, ticket) {
   return ticket.map(__x => validForAnyField({
     TAG: "RuleSet",
     _0: rules$1
-  }, __x)).every(Utils$AdventOfCode.identity);
+  }, __x)).every(prim => prim);
 }
 
 function possibleColumns(ticketCols, body) {
   let columnMatches = param => param[1].every(__x => matchesRule(body, __x));
-  let idx = Stdlib__Array.fromInitializer(ticketCols.length, Utils$AdventOfCode.identity);
+  let idx = Stdlib__Array.fromInitializer(ticketCols.length, prim => prim);
   return Stdlib__Array.zip(idx, ticketCols).filter(columnMatches).map(prim => prim[0]);
 }
 

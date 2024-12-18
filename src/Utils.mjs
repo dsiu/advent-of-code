@@ -17,20 +17,12 @@ import * as Belt_HashMapString from "rescript/lib/es6/Belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/Belt_MutableMapInt.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/Belt_MutableMapString.js";
 
-function identity(prim) {
-  return prim;
-}
-
-function log(prim) {
-  console.log(prim);
-}
-
 function toString(m, f) {
   return Belt_MapString.reduce(m, "", (a, k, v) => a + ("key:" + k + ", val:" + f(v) + "\n"));
 }
 
 function toString$1(m) {
-  return toString(m, identity);
+  return toString(m, prim => prim);
 }
 
 let $$String = {
@@ -59,7 +51,7 @@ function toString$3(m, f) {
 }
 
 function toString$4(m) {
-  return toString$3(m, identity);
+  return toString$3(m, prim => prim);
 }
 
 let $$String$1 = {
@@ -386,8 +378,6 @@ function mutableMapStringUpdate(h, k, f) {
 }
 
 export {
-  identity,
-  log,
   Printable,
   base2,
   compose,

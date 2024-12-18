@@ -6,6 +6,10 @@ import * as Belt_Result from "rescript/lib/es6/Belt_Result.js";
 import * as Belt_SortArrayInt from "rescript/lib/es6/Belt_SortArrayInt.js";
 import * as Utils$AdventOfCode from "../../Utils.mjs";
 
+function log(prim) {
+  console.log(prim);
+}
+
 function codes(t) {
   return t.codes;
 }
@@ -172,8 +176,6 @@ function solvePart2(data, preambleSize) {
   let max = Belt_Option.getExn(Belt_Array.get(sorted, sorted.length - 1 | 0));
   return min + max | 0;
 }
-
-let log = Utils$AdventOfCode.log;
 
 export {
   log,

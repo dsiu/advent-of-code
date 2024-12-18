@@ -37,6 +37,10 @@ function transformToString(trans) {
   }));
 }
 
+function nullTrans(prim) {
+  return prim;
+}
+
 function rotX(param) {
   let match = param._0;
   return {
@@ -87,7 +91,7 @@ function translate(param, param$1) {
 }
 
 let ras = [
-  Utils$AdventOfCode.identity,
+  nullTrans,
   rotY,
   extra => Stdlib__Function.compose(rotY, rotY, extra),
   extra => Stdlib__Function.compose3(rotY, rotY, rotY, extra),
@@ -96,7 +100,7 @@ let ras = [
 ];
 
 let rbs = [
-  Utils$AdventOfCode.identity,
+  nullTrans,
   rotX,
   extra => Stdlib__Function.compose(rotX, rotX, extra),
   extra => Stdlib__Function.compose3(rotX, rotX, rotX, extra)
@@ -306,7 +310,7 @@ function make(param) {
   return {
     scannerName: param[0],
     beacons: beacons,
-    transformation: Utils$AdventOfCode.identity,
+    transformation: nullTrans,
     signature: sign(beacons)
   };
 }
@@ -314,7 +318,7 @@ function make(param) {
 let Scanner = {
   coordToString: coordToString,
   transformToString: transformToString,
-  nullTrans: Utils$AdventOfCode.identity,
+  nullTrans: nullTrans,
   rotX: rotX,
   rotY: rotY,
   rotZ: rotZ,
