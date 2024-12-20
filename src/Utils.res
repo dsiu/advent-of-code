@@ -3,9 +3,6 @@
 
 open Stdlib
 
-// Logging
-@val @scope("console") external consoleDir: 'a => unit = "dir"
-
 /**
  Printable
  */
@@ -147,6 +144,8 @@ let splitDoubleNewline = String.split(_, "\n\n")
 //
 // array
 //
+
+// todo: should use Array.sum(Module(Int))
 let sumIntArray = Array.reduce(_, 0, add)
 let mulIntArray = Array.reduce(_, 1, mul)
 let join = Array.join(_, "")
