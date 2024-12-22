@@ -8,11 +8,11 @@ import * as AOC2024_Day9_Data_Sample$AdventOfCode from "./AOC2024_Day9_Data_Samp
 Jest.describe("2024 Day9", () => {
   Jest.test("Part 1 - Sample Data", () => {
     let result = AOC2024_Day9$AdventOfCode.solvePart1(AOC2024_Day9_Data_Sample$AdventOfCode.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1928n);
   });
   Jest.test("Part 1 - Solve", () => {
     let result = AOC2024_Day9$AdventOfCode.solvePart1(AOC2024_Day9_Data$AdventOfCode.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 6200294120911n);
   });
   Jest.test("Part 2 - Sample Data", () => {
     let result = AOC2024_Day9$AdventOfCode.solvePart2(AOC2024_Day9_Data_Sample$AdventOfCode.data);

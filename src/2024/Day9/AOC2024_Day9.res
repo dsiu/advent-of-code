@@ -22,6 +22,18 @@ let union: (M.t<'a>, M.t<'a>) => M.t<'a> = (a, b) => {
   })
 }
 
+// todo: put in StdLib
+let mapDeleteFindMax: M.t<'a> => ((int, 'a), M.t<'a>) = m => {
+  let (k, v) = M.maximum(m)->Option.getUnsafe
+  ((k, v), m->M.remove(k))
+}
+
+// todo: put in StdLib
+let setDeleteFindMin: S.t => (int, S.t) = s => {
+  let k = S.minimum(s)->Option.getUnsafe
+  (k, s->S.remove(k))
+}
+
 let expandMapItem: ((bool, int, int, disk, free), int) => (bool, int, int, disk, free) = (
   acc,
   size,
@@ -77,9 +89,35 @@ let showDiskFree: (disk, free) => string = (disk, free) => {
   showDisk(disk) ++ "\n" ++ showFree(free)
 }
 
-//let expand: array<int> => (disk, free) = (disk, free) => {
-//  let diskMap = (disk, free)
-//}
+let isPackedBlock: (disk, free) => bool = (disk, free) => {
+  let dMax = M.maxKey(disk)->Option.getUnsafe
+  let fMin = S.minimum(free)->Option.getUnsafe
+  dMax < fMin
+}
+
+let packBlocksStep: (disk, free) => (disk, free) = (disk, free) => {
+  isPackedBlock(disk, free)
+    ? (disk, free)
+    : {
+        // continue here
+        let ((from, fID), disk') = mapDeleteFindMax(disk)
+        let (to, free') = setDeleteFindMin(free)
+
+        (disk'->M.set(to, fID), free'->S.add(from))
+      }
+}
+
+let packBlocks: (disk, free) => (disk, free) = (disk, free) => {
+  let rec iterate = (disk, free) => {
+    isPackedBlock(disk, free)
+      ? (disk, free)
+      : {
+          let (disk', free') = packBlocksStep(disk, free)
+          iterate(disk', free')
+        }
+  }
+  iterate(disk, free)
+}
 
 let parse = data =>
   data
@@ -90,8 +128,15 @@ let parse = data =>
 let solvePart1 = data => {
   let diskMap = data->parse
   let (disk, free) = diskMap->expand
-  showDiskFree(disk, free)->log
-  1
+  let (disk', free') = packBlocks(disk, free)
+  showDiskFree(disk', free')->log
+
+  // todo: the sum is too big for int, use sumBigIntArray
+  disk'->M.toArray->log
+  disk'
+  ->M.toArray
+  ->Array.map(((k, v)) => k->BigInt.fromInt * v->BigInt.fromInt)
+  ->(Array.reduce(_, 0n, BigInt.add))
 }
 
 let solvePart2 = data => {

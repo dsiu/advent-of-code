@@ -9,14 +9,14 @@ let {solvePart1, solvePart2} = module(AOC2024_Day9)
 describe("2024 Day9", () => {
   test("Part 1 - Sample Data", () => {
     let result = solvePart1(sampleData)
-    let expected = 1
+    let expected = 1928n
 
     expect(result)->toEqual(expected)
   })
 
   test("Part 1 - Solve", () => {
     let result = solvePart1(data)
-    let expected = 1
+    let expected = 6200294120911n
 
     expect(result)->toEqual(expected)
   })

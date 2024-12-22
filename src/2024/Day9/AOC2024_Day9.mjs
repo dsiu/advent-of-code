@@ -26,6 +26,26 @@ function union(a, b) {
   });
 }
 
+function mapDeleteFindMax(m) {
+  let match = Belt_MapInt.maximum(m);
+  let k = match[0];
+  return [
+    [
+      k,
+      match[1]
+    ],
+    Belt_MapInt.remove(m, k)
+  ];
+}
+
+function setDeleteFindMin(s) {
+  let k = Belt_SetInt.minimum(s);
+  return [
+    k,
+    Belt_SetInt.remove(s, k)
+  ];
+}
+
 function expandMapItem(acc, size) {
   let free = acc[4];
   let disk = acc[3];
@@ -93,6 +113,47 @@ function showDiskFree(disk, free) {
   return showDisk(disk) + "\n" + showFree(free);
 }
 
+function isPackedBlock(disk, free) {
+  let dMax = Belt_MapInt.maxKey(disk);
+  let fMin = Belt_SetInt.minimum(free);
+  return dMax < fMin;
+}
+
+function packBlocksStep(disk, free) {
+  if (isPackedBlock(disk, free)) {
+    return [
+      disk,
+      free
+    ];
+  }
+  let match = mapDeleteFindMax(disk);
+  let match$1 = match[0];
+  let match$2 = setDeleteFindMin(free);
+  return [
+    Belt_MapInt.set(match[1], match$2[0], match$1[1]),
+    Belt_SetInt.add(match$2[1], match$1[0])
+  ];
+}
+
+function packBlocks(disk, free) {
+  let _disk = disk;
+  let _free = free;
+  while (true) {
+    let free$1 = _free;
+    let disk$1 = _disk;
+    if (isPackedBlock(disk$1, free$1)) {
+      return [
+        disk$1,
+        free$1
+      ];
+    }
+    let match = packBlocksStep(disk$1, free$1);
+    _free = match[1];
+    _disk = match[0];
+    continue;
+  };
+}
+
 function parse(data) {
   return data.trim().split("").map(s => Stdlib__Int.fromString(s, undefined));
 }
@@ -100,9 +161,14 @@ function parse(data) {
 function solvePart1(data) {
   let diskMap = parse(data);
   let match = expand(diskMap);
-  let prim = showDiskFree(match[0], match[1]);
+  let match$1 = packBlocks(match[0], match[1]);
+  let disk$p = match$1[0];
+  let prim = showDiskFree(disk$p, match$1[1]);
   console.log(prim);
-  return 1;
+  let prim$1 = Belt_MapInt.toArray(disk$p);
+  console.log(prim$1);
+  let __x = Belt_MapInt.toArray(disk$p).map(param => BigInt(param[0]) * BigInt(param[1]));
+  return Stdlib__Array.reduce(__x, 0n, (prim0, prim1) => prim0 + prim1);
 }
 
 function solvePart2(data) {
@@ -119,11 +185,16 @@ export {
   M,
   S,
   union,
+  mapDeleteFindMax,
+  setDeleteFindMin,
   expandMapItem,
   expand,
   showDisk,
   showFree,
   showDiskFree,
+  isPackedBlock,
+  packBlocksStep,
+  packBlocks,
   parse,
   solvePart1,
   solvePart2,
