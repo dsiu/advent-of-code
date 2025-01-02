@@ -100,7 +100,7 @@ function conv34Cell(param) {
     _1: [
       "AOC2020_Day17.res",
       56,
-      18
+      17
     ],
     Error: new Error()
   };

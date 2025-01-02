@@ -303,7 +303,7 @@ function part2(games) {
       _1: [
         "AOC2023_Day2.res",
         123,
-        15
+        14
       ],
       Error: new Error()
     };
