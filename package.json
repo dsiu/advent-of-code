@@ -46,12 +46,13 @@
     "@dsiu/rescript-bag": "*",
     "@dsiu/rescript-graphology": "*",
     "@dsiu/rescript-stdlib-fp": "*",
-    "@jmagaram/rescript-extras": "^4.1.0",
-    "@jmagaram/rescript-seq": "^4.4.1",
+    "@jmagaram/rescript-extras": "*",
+    "@jmagaram/rescript-seq": "*",
     "@rolandpeelen/rewatch": "^1.0.9",
     "debug": "^4.3.7",
     "ms": "^2.1.3",
     "rescript-nodejs": "^16.1.0",
+    "rescript-schema": "^9.0.1",
     "rescript-vector": "^0.4.0"
   }
 }

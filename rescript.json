@@ -25,7 +25,8 @@
     "@dsiu/rescript-bag",
     "@dsiu/rescript-stdlib-fp",
     "@dsiu/rescript-graphology",
-    "@glennsl/rescript-jest"
+    "@glennsl/rescript-jest",
+    "rescript-schema"
   ],
   "bs-dev-dependencies": [
   ],
