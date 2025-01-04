@@ -1,6 +1,3 @@
-@@uncurried
-
-open Stdlib
 
 let log = Console.log
 let data = AOC2023_Day14_Data.data

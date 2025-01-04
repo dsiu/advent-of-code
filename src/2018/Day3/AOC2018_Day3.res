@@ -69,11 +69,11 @@ module Claim: Claim = {
     ->(
       xs =>
         make(
-          ~id=xs->Array.getExn(1)->int_of_string,
-          ~x=xs->Array.getExn(2)->int_of_string,
-          ~y=xs->Array.getExn(3)->int_of_string,
-          ~w=xs->Array.getExn(4)->int_of_string,
-          ~h=xs->Array.getExn(5)->int_of_string,
+          ~id=xs->Array.getExn(1)->Int.fromString->Option.getExn,
+          ~x=xs->Array.getExn(2)->Int.fromString->Option.getExn,
+          ~y=xs->Array.getExn(3)->Int.fromString->Option.getExn,
+          ~w=xs->Array.getExn(4)->Int.fromString->Option.getExn,
+          ~h=xs->Array.getExn(5)->Int.fromString->Option.getExn,
         )
     )
   }
@@ -125,8 +125,8 @@ module Fabric = {
     ->matrix
     ->Map.Int.forEach((x, col) => {
       col->MutableMap.Int.forEach((y, vs) => {
-        Js.Console.log(`x:${x->string_of_int} y:${y->string_of_int}`)
-        vs->Array.forEach(v => Js.Console.log("  " ++ v->string_of_int))
+        Js.Console.log(`x:${x->Int.toString} y:${y->Int.toString}`)
+        vs->Array.forEach(v => Js.Console.log("  " ++ v->Int.toString))
       })
     })
   }
@@ -191,7 +191,7 @@ module Fabric = {
         ->Array.reduce([], (accY, y) =>
           switch t->getPoint(~x, ~y) {
           | Some(p) =>
-            //              Js.Console.log(`x: ${x->string_of_int} y: ${y->string_of_int}`)
+            //              Js.Console.log(`x: ${x->Int.toString(_)} y: ${y->Int.toString(_)}`)
             //              Js.Console.log("point")
             //              Js.Console.log(p)
             accY->Array.concat([p])

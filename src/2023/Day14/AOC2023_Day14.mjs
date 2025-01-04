@@ -194,7 +194,7 @@ function part2(grid) {
         RE_EXN_ID: "Match_failure",
         _1: [
           "AOC2023_Day14.res",
-          145,
+          146,
           10
         ],
         Error: new Error()

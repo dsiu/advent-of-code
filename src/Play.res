@@ -1,5 +1,3 @@
-open Belt
-open Array2D
 let log = Js.Console.log
 
 type nonEmpty<'a> = {head: 'a, more: list<'a>}

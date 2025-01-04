@@ -1,5 +1,3 @@
-open Stdlib
-
 let log2 = Console.log2
 
 // Min

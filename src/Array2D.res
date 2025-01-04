@@ -89,7 +89,7 @@ let reduceWithIndex = (t, a, f) => {
 let flatten = t => {
   let ret = ref([])
   for i in 0 to t->lengthY - 1 {
-    ret := [...ret.contents, ...t->getYEquals(i)->Option.getWithDefault([])]
+    ret := [...ret.contents, ...t->getYEquals(i)->Option.getOr([])]
   }
   ret.contents
 }
@@ -110,7 +110,7 @@ let crop = (t, (x, y), ~len_x, ~len_y) => {
               ...ret.contents,
               t
               ->getYEquals(i)
-              ->Option.getWithDefault([])
+              ->Option.getOr([])
               ->Array.slice(~start=x, ~end=x + adj_len_x),
             ] //              [t->getYEquals(i)->Option.getWithDefault([])->Array.slice(~offset=x, ~len=adj_len_x)],
         }

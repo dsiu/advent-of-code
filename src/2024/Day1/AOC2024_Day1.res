@@ -39,12 +39,14 @@ let part2 = (l1, l2) => {
   ->Utils.sumIntArray
 }
 
+@warning("-8")
 let solvePart1 = data => {
   let [l1, l2] = data->parse
   let result = part1(l1, l2)
   result
 }
 
+@warning("-8")
 let solvePart2 = data => {
   let [l1, l2] = data->parse
   let result = part2(l1, l2)

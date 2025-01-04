@@ -337,7 +337,7 @@ describe("reduceWithIndex", () => {
 
   test("should correctly use the index in the reduction function", () => {
     let array2D = Array2D.make((3, 2), 1)
-    let result = array2D->Array2D.reduceWithIndex(0, (acc, x, (xi, yi)) => acc + xi + yi)
+    let result = array2D->Array2D.reduceWithIndex(0, (acc, _x, (xi, yi)) => acc + xi + yi)
     expect(result)->toEqual(9)
   })
 })
@@ -357,7 +357,7 @@ describe("reduceWithIndexU", () => {
 
   test("should correctly use the index in the reduction function", () => {
     let array2D = Array2D.make((3, 2), 1)
-    let result = array2D->Array2D.reduceWithIndex(0, (acc, x, (xi, yi)) => acc + xi + yi)
+    let result = array2D->Array2D.reduceWithIndex(0, (acc, _x, (xi, yi)) => acc + xi + yi)
     expect(result)->toEqual(9)
   })
 })

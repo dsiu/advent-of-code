@@ -1,5 +1,3 @@
-open Stdlib
-
 let log = Console.log
 let data = AOC2023_DayX_Data.data
 let sampleData = AOC2023_DayX_Data_Sample.data

@@ -142,7 +142,7 @@ module Scanner = {
       let t = minus(b1, rot(b2)) // apply rot to b2
       let translation = translate(t, ...)
 
-      let transB2 = beacons2->Array.mapU(b => {b->rot->translation})
+      let transB2 = beacons2->Array.map(b => {b->rot->translation})
 
       let len = interact(beacons1, transB2)->Belt.Set.size
       len >= 12 ? Some(compose(rot, translation, ...)) : None
@@ -169,7 +169,7 @@ module Scanner = {
 
   let transformScanner = ((s, trans)) => {
     ...s,
-    beacons: s.beacons->Array.mapU(b => {
+    beacons: s.beacons->Array.map(b => {
       Option.getExn(trans)(b)
     }),
     transformation: trans->Option.getExn,
@@ -182,14 +182,14 @@ module Scanner = {
         let matches =
           List.zip(
             passMatches,
-            List.mapU(passMatches, x => matchingTransform(current, x)),
+            List.map(passMatches, x => matchingTransform(current, x)),
           )->List.keep(x => x->snd->Option.isSome)
 
         let waiting' = waiting->List.keep(s => {
           matches->List.map(fst)->List.has(s, eq) ? false : true
         })
 
-        let newWorker = matches->List.mapU(transformScanner)
+        let newWorker = matches->List.map(transformScanner)
 
         Reconstruction({
           found: list{current, ...found},
@@ -250,11 +250,11 @@ let reconstructScanners = scanners => {
 }
 
 let part1 = scanners => {
-  let bSets = scanners->List.mapU(s => {
+  let bSets = scanners->List.map(s => {
     v3SetFromArray(s.beacons)
   })
 
-  let result = bSets->List.reduceU(v3SetMake, (a, b) => {
+  let result = bSets->List.reduce(v3SetMake, (a, b) => {
     Belt.Set.union(a, b)
   })
 
@@ -264,11 +264,11 @@ let part1 = scanners => {
 
 let part2 = scanners => {
   let extractOrigin = sc => sc.transformation(Coord(0.0, 0.0, 0.0))
-  let origins = scanners->List.mapU(extractOrigin)
+  let origins = scanners->List.map(extractOrigin)
 
   let manhatton = (Coord(a)) => {
     let (x1, y1, z1) = a
-    abs_float(x1) +. abs_float(y1) +. abs_float(z1)
+    Math.abs(x1) +. Math.abs(y1) +. Math.abs(z1)
   }
 
   Stdlib.List.combination2(origins, origins, (a, b) => {

@@ -46,7 +46,7 @@ let Appear = {
 };
 
 function solve(xs, total_turn) {
-  let spoken = Belt_Array.reduceWithIndexU(xs, undefined, (a, x, i) => Belt_MapInt.set(a, x, [i + 1 | 0]));
+  let spoken = Belt_Array.reduceWithIndex(xs, undefined, (a, x, i) => Belt_MapInt.set(a, x, [i + 1 | 0]));
   let len = xs.length;
   let _spoken = spoken;
   let _last_num = Belt_Array.getExn(xs, len - 1 | 0);

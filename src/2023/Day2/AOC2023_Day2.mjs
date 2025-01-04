@@ -143,7 +143,7 @@ function maxNumColorsEachGame(draws) {
       RE_EXN_ID: "Match_failure",
       _1: [
         "AOC2023_Day2.res",
-        75,
+        76,
         8
       ],
       Error: new Error()
@@ -206,7 +206,7 @@ function maxColorWithLimits(games, colorLimits) {
                     RE_EXN_ID: "Match_failure",
                     _1: [
                       "AOC2023_Day2.res",
-                      107,
+                      109,
                       8
                     ],
                     Error: new Error()
@@ -228,7 +228,7 @@ function maxColorWithLimits(games, colorLimits) {
       RE_EXN_ID: "Match_failure",
       _1: [
         "AOC2023_Day2.res",
-        106,
+        108,
         8
       ],
       Error: new Error()
@@ -302,7 +302,7 @@ function part2(games) {
       RE_EXN_ID: "Match_failure",
       _1: [
         "AOC2023_Day2.res",
-        123,
+        126,
         14
       ],
       Error: new Error()

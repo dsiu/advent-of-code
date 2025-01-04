@@ -18,7 +18,7 @@ module Cave = {
   let getAdjacents = (t, (x, y)) => {
     (x, y)
     ->adjCoords
-    ->List.keepMapU(c => {
+    ->List.keepMap(c => {
       t->Array2D.isValidXY(c) ? Some(CoordAndVal(c, t->Array2D.getExn(c))) : None
     })
   }

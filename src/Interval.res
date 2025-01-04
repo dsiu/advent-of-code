@@ -152,7 +152,7 @@ let intersect: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as
  * let isBelow = Interval.below(interval1, interval2)
  * // isBelow is now true
  */
-let below: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+let below: (t, t) => bool = ((_aLower, aUpper) as _a, (bLower, _bUpper) as _b) => {
   aUpper < bLower
 }
 
@@ -173,7 +173,7 @@ let below: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
  * let isAdjacent = Interval.adjacent(interval1, interval2)
  * // isAdjacent is now true
  */
-let adjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+let adjacent: (t, t) => bool = ((aLower, aUpper) as _a, (bLower, bUpper) as _b) => {
   // make sure t1 is all below t2 and both are not connected
   open! BigInt
   aUpper + 1n === bLower || bUpper + 1n === aLower
@@ -195,7 +195,7 @@ let adjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) =>
  * let isBelowAndAdjacent = Interval.belowAndAdjacent(interval1, interval2)
  * // isBelowAndAdjacent is now true
  */
-let belowAndAdjacent: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
+let belowAndAdjacent: (t, t) => bool = ((_aLower, _aUpper) as a, (_bLower, _bUpper) as b) => {
   below(a, b) && adjacent(a, b)
 }
 

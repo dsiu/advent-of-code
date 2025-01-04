@@ -91,7 +91,7 @@ module Make = (BASE: BASE): (S with type e := BASE.e and type c := BASE.c and ty
 
   let toString = t => {
     let str = ref("")
-    t->MutableMap.String.forEachU((k, v) => {
+    t->MutableMap.String.forEach((k, v) => {
       str := `${str.contents}${k}: [ ${v->containerToArray->(Js.Array2.joinWith(_, ","))} ]\n`
     })
     str.contents

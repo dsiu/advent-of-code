@@ -38,7 +38,7 @@ let solvePart2BruteForce = xs => {
   let big_one = BigInt.fromInt(1)
 
   let rec helper = (time, xs) => {
-    xs->Belt.Array.reduceU(true, (acc, (bus, delta)) => {
+    xs->Belt.Array.reduce(true, (acc, (bus, delta)) => {
       acc && BigInt.mod(BigInt.add(time, delta), bus) === big_zero ? true : false
     })
       ? time

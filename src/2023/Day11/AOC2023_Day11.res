@@ -49,7 +49,7 @@ let maxCoord = (Galaxies(galaxies)) => {
 
 let emptyRowCol = (Galaxies(galaxies) as g) => {
   let (maxX, maxY) = g->maxCoord
-  let origin = (0n, 0n)
+  let _origin = (0n, 0n)
   let galaxies = galaxies->Set.toArray
 
   let xs = Array.fromInitializer(~length=toInt(maxX), Function.id)

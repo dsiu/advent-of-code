@@ -32,7 +32,7 @@ function adjCoords(c) {
 }
 
 function getAdjacents(t, param) {
-  return Belt_List.keepMapU(adjCoords([
+  return Belt_List.keepMap(adjCoords([
     param[0],
     param[1]
   ]), c => {

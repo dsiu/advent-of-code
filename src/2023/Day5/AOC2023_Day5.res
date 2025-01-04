@@ -178,6 +178,7 @@ let parse: string => Almanac.t = data => {
     line->String.split(": ")->Array.get(1)->Option.getExn->splitSpace->Array.map(BigInt.fromString)
   }
 
+  @warning("-8")
   let parseMap: array<string> => AlmanacMap.t = lines => {
     let categoryLine = lines[0]->Option.getExn
     let srcDestLines = lines->Array.sliceToEnd(~start=1)

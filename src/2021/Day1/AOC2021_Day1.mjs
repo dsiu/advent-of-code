@@ -10,14 +10,14 @@ function log(prim) {
 }
 
 function findDiff(xs) {
-  let match = Belt_Array.reduceU(Belt_Array.sliceToEnd(xs, 1), [
+  let match = Belt_Array.reduce(Belt_Array.sliceToEnd(xs, 1), [
     Belt_Option.getExn(Belt_Array.get(xs, 0)),
     []
   ], (param, x) => [
     x,
     Belt_Array.concat(param[1], [x - param[0] | 0])
   ]);
-  return Belt_Array.keepU(match[1], x => x > 0);
+  return Belt_Array.keep(match[1], x => x > 0);
 }
 
 function findDiff2(xs) {

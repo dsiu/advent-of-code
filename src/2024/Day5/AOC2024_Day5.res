@@ -53,7 +53,7 @@ let isOrderValid = (update: array<int>, rules) => {
 }
 
 let printable: (rules, Set.t<page>, page) => bool = (rules, unprinted, page) => {
-  let (beforeSet, afterSet) = rules->Map.get(page)->Option.getUnsafe
+  let (_beforeSet, afterSet) = rules->Map.get(page)->Option.getUnsafe
   unprinted->Set.isSubsetOf(afterSet)
 }
 
@@ -87,6 +87,7 @@ let middlePage: array<page> => page = pages => {
   pages->Array.getUnsafe(middle)
 }
 
+@warning("-8")
 let parse = data => {
   let [rules, updates] = data->splitDoubleNewline->Array.map(splitNewline)
   (

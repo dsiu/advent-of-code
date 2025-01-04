@@ -66,7 +66,7 @@ module Map = {
   }
 }
 
-let neighbours: (Map.t, position) => array<position> = ({grid, start}, p) => {
+let neighbours: (Map.t, position) => array<position> = ({grid, _}, p) => {
   grid
   ->Array2D.getExn(p)
   ->deltas
@@ -77,11 +77,11 @@ let neighbours: (Map.t, position) => array<position> = ({grid, start}, p) => {
 }
 
 // find connectors that connections to a location
-let connectorsToPosition: (Map.t, position) => array<position> = ({grid, start} as map, pos) => {
+let connectorsToPosition: (Map.t, position) => array<position> = (map, pos) => {
   let startNbrs = neighbours(map, pos)
 
   let nbrsNbrs = startNbrs->Array.map(nbr => (nbr, neighbours(map, nbr)))
-  let connectors = nbrsNbrs->Array.filter(((snbr, nbr)) => {
+  let connectors = nbrsNbrs->Array.filter(((_snbr, nbr)) => {
     nbr
     ->Array.find(n => {
       Coord_V2.compare(n, pos) == 0
@@ -92,12 +92,12 @@ let connectorsToPosition: (Map.t, position) => array<position> = ({grid, start} 
   connectors->Array.map(fst)
 }
 
-let connectorsToStart: Map.t => array<position> = ({grid, start} as map) => {
+let connectorsToStart: Map.t => array<position> = ({_, start} as map) => {
   connectorsToPosition(map, start)
 }
 
 // find path from start. path must be a loop
-let followPath: (Map.t, position) => array<position> = ({grid, start} as map, start) => {
+let followPath: (Map.t, position) => array<position> = (map, start) => {
   let rec loop: (array<position>, position, position) => array<position> = (
     acc,
     thisPos,
@@ -149,7 +149,7 @@ let shoelaceFormula: array<position> => int = v => {
   ->Math.Int.abs / 2
 }
 
-let part2: Map.t => int = ({grid, start} as map) => {
+let part2: Map.t => int = ({_, start} as map) => {
   let path = map->followPath(start)
   let boundaryPointsCount = path->Array.length
   let vertices = path->Array.filter(pos => map.grid->Array2D.getExn(pos)->isVertex)

@@ -15,7 +15,7 @@ function log2(prim0, prim1) {
 }
 
 function getWithDefault(m, k, d) {
-  return Stdlib__Option.getWithDefault(m.get(k), d);
+  return Stdlib__Option.getOr(m.get(k), d);
 }
 
 function inRange(param, c) {

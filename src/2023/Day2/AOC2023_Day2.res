@@ -69,6 +69,7 @@ let parse: string => array<game> = data =>
  * let draws = [|Red(5), Green(3), Blue(7), Red(6), Green(4), Blue(2)|]
  * maxNumColorsEachGame(draws) // Returns (Red(6), Green(4), Blue(7))
  */
+ @warning("-8")
 let maxNumColorsEachGame: array<draw> => (draw, draw, draw) = draws => {
   let init = (Red(0), Green(0), Blue(0))
   draws->Array.reduce(init, (acc, x) => {
@@ -77,7 +78,6 @@ let maxNumColorsEachGame: array<draw> => (draw, draw, draw) = draws => {
     | Red(n) => (Red(max(n, r)), Green(g), Blue(b))
     | Green(n) => (Red(r), Green(max(n, g)), Blue(b))
     | Blue(n) => (Red(r), Green(g), Blue(max(n, b)))
-    | _ => acc
     }
   })
 }
@@ -97,6 +97,8 @@ let maxNumColorsEachGame: array<draw> => (draw, draw, draw) = draws => {
  * let colorLimits = (Red(10), Green(10), Blue(10))
  * maxColorWithLimits(games, colorLimits) // Returns an array of tuples where each tuple contains the id of a game and the maximum number of each color in its draws.
  */
+
+@warning("-8")
 let maxColorWithLimits: (array<game>, (draw, draw, draw)) => array<(int, (draw, draw, draw))> = (
   games,
   colorLimits,
@@ -115,6 +117,7 @@ let part1: array<game> => int = games => {
   maxColorWithLimits(games, colorLimits)->Array.map(((game, _)) => game)->sumIntArray
 }
 
+@warning("-8")
 let part2: array<game> => int = games => {
   let maxInt = Int.Constants.maxValue
   let colorLimits = (Red(maxInt), Green(maxInt), Blue(maxInt))

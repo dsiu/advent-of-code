@@ -704,7 +704,7 @@ Jest.describe("reduceWithIndex", () => {
       3,
       2
     ], 1);
-    let result = Array2D$AdventOfCode.reduceWithIndex(array2D, 0, (acc, x, param) => (acc + param[0] | 0) + param[1] | 0);
+    let result = Array2D$AdventOfCode.reduceWithIndex(array2D, 0, (acc, _x, param) => (acc + param[0] | 0) + param[1] | 0);
     return Jest.Expect.toEqual(Jest.Expect.expect(result), 9);
   });
 });
@@ -731,7 +731,7 @@ Jest.describe("reduceWithIndexU", () => {
       3,
       2
     ], 1);
-    let result = Array2D$AdventOfCode.reduceWithIndex(array2D, 0, (acc, x, param) => (acc + param[0] | 0) + param[1] | 0);
+    let result = Array2D$AdventOfCode.reduceWithIndex(array2D, 0, (acc, _x, param) => (acc + param[0] | 0) + param[1] | 0);
     return Jest.Expect.toEqual(Jest.Expect.expect(result), 9);
   });
 });

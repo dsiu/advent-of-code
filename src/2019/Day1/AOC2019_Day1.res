@@ -4,7 +4,7 @@ let log = Js.Console.log
 module TC = Tablecloth
 
 let fuel = mass => {
-  (mass->float_of_int /. 3.)->int_of_float - 2
+  (mass->Float.fromInt /. 3.)->Float.toInt - 2
 }
 
 let part1 = xs => {

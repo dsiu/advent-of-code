@@ -97,7 +97,7 @@ let parse = data => {
   ->splitNewline
   ->Array.map(x => {
     let [dStr, steps] = x->S.trim->S.split(" ")
-    switch (dStr, steps->int_of_string) {
+    switch (dStr, steps->Int.fromString->Option.getExn) {
     | ("U", s) => U(s)
     | ("L", s) => L(s)
     | ("D", s) => D(s)

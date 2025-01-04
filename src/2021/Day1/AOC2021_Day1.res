@@ -6,11 +6,11 @@ let findDiff = xs => {
   let (_, result) =
     xs
     ->Array.sliceToEnd(1)
-    ->Array.reduceU((xs->Array.get(0)->Option.getExn, []), (. (last, result), x) => {
+    ->Array.reduce((xs->Array.get(0)->Option.getExn, []), (. (last, result), x) => {
       (x, Array.concat(result, [x - last]))
     })
 
-  result->Array.keepU((. x) => x > 0)
+  result->Array.keep((. x) => x > 0)
 }
 
 // use zip to find the differences between the two arrays

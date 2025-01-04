@@ -21,7 +21,7 @@ module Octopus = {
   let getAdjacents = (t, (x, y)) => {
     (x, y)
     ->adjCoords
-    ->Array.keepMapU(c => {
+    ->Array.keepMap(c => {
       t->Array2D.isValidXY(c) ? Some(t->Array2D.getExn(c)) : None
     })
   }
@@ -45,7 +45,7 @@ module Octopus = {
   let performFlash = (t, coord) => {
     let neighbors = getAdjacentCoords(t, coord)
 
-    neighbors->Array.forEachU(n_addr => {
+    neighbors->Array.forEach(n_addr => {
       let orig = Array2D.getExn(t, n_addr)
       Array2D.set(t, n_addr, {orig > 0 ? orig + 1 : orig})
     })
@@ -66,7 +66,7 @@ module Octopus = {
 
       switch flashings->Array.size > 0 {
       | true => {
-          flashings->Array.forEachU(flash_coord => {
+          flashings->Array.forEach(flash_coord => {
             t->performFlash(flash_coord)->dim(flash_coord)->ignore
           })
           inner(t)

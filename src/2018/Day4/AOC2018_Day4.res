@@ -111,10 +111,10 @@ module Attendance = {
 
   let toString = gAtt => {
     gAtt->MutableMap.Int.forEach((gid, drs) => {
-      Js.Console.log(`gid:${gid->string_of_int}`)
+      Js.Console.log(`gid:${gid->Int.toString}`)
       drs->MutableMap.String.forEach((date, hr) => {
         Js.Console.log(`  date:${date}`)
-        Js.Console.log(`    Set Size:${hr->MutableSet.Int.size->string_of_int}`)
+        Js.Console.log(`    Set Size:${hr->MutableSet.Int.size->Int.toString}`)
         hr->MutableSet.Int.toArray->Js.Console.log
       })
     })
@@ -147,17 +147,17 @@ module Parser = {
 
   let unboxBeginLine = l => {
     let [raw, date, h, m, gid] = l
-    {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: gid->int_of_string}
+    {raw: raw, date: date, h: h->Int.fromString->Option.getExn, m: m->Int.fromString->Option.getExn, gid: gid->Int.fromString->Option.getExn}
   }
 
   let unboxAsleepLine = l => {
     let [raw, date, h, m] = l
-    {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: -1}
+    {raw: raw, date: date, h: h->Int.fromString->Option.getExn, m: m->Int.fromString->Option.getExn, gid: -1}
   }
 
   let unboxAwakeLine = l => {
     let [raw, date, h, m] = l
-    {raw: raw, date: date, h: h->int_of_string, m: m->int_of_string, gid: -1}
+    {raw: raw, date: date, h: h->Int.fromString->Option.getExn, m: m->Int.fromString->Option.getExn, gid: -1}
   }
 
   let parseLine = l => {

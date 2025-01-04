@@ -35,7 +35,7 @@ function getAdjacentCoords(t, c) {
 }
 
 function getAdjacents(t, param) {
-  return Belt_Array.keepMapU(adjCoords([
+  return Belt_Array.keepMap(adjCoords([
     param[0],
     param[1]
   ]), c => {
@@ -70,7 +70,7 @@ function getFlashingCoords(t) {
 
 function performFlash(t, coord) {
   let neighbors = getAdjacentCoords(t, coord);
-  Belt_Array.forEachU(neighbors, n_addr => {
+  Belt_Array.forEach(neighbors, n_addr => {
     let orig = Array2D$AdventOfCode.getExn(t, n_addr);
     Array2D$AdventOfCode.set(t, n_addr, orig > 0 ? orig + 1 | 0 : orig);
   });
@@ -88,7 +88,7 @@ function iterate(t) {
     if (flashings.length === 0) {
       return next;
     }
-    Belt_Array.forEachU(flashings, flash_coord => {
+    Belt_Array.forEach(flashings, flash_coord => {
       Array2D$AdventOfCode.set(performFlash(next, flash_coord), flash_coord, 0);
     });
     continue;

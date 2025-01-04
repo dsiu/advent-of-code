@@ -3,7 +3,6 @@
 //
 // requires Haskell's PatternSynonyms extension so ReScript won't work....
 
-open Stdlib
 
 let log = Console.log
 let log2 = Console.log2
@@ -19,6 +18,7 @@ let nonZero: 'a => option<nonZero<'a>> = a => {
   }
 }
 
+@warning("-8")
 let safeDivide: (int, option<nonZero<int>>) => int = (a, b) => {
   switch b {
   | Some(UnsafeNonZero(b)) => a / b

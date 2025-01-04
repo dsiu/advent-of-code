@@ -61,7 +61,7 @@ function score(l) {
 }
 
 function solve(xs, nDiff) {
-  return Stdlib__Array.sum(xs.map((x, i) => reflections(x, nDiff)).map(score), {
+  return Stdlib__Array.sum(xs.map((x, _i) => reflections(x, nDiff)).map(score), {
     zero: Stdlib__Int.zero,
     add: Stdlib__Int.add
   });

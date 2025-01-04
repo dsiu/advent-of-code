@@ -28,7 +28,7 @@ let Position = {
   cmp: cmp
 };
 
-let PositionCmp = Belt_Id.MakeComparableU({
+let PositionCmp = Belt_Id.MakeComparable({
   cmp: cmp
 });
 
@@ -48,7 +48,7 @@ let BeamHead = {
   cmp: cmp$1
 };
 
-let BeamHeadCmp = Belt_Id.MakeComparableU(BeamHead);
+let BeamHeadCmp = Belt_Id.MakeComparable(BeamHead);
 
 function showBeamHead(param) {
   let match = param._0;

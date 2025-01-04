@@ -117,6 +117,7 @@ let part1 = grid => {
   grid->rollToCompletion->scoreGrid
 }
 
+@warning("-8")
 let part2 = grid => {
   let cycles = 1000000000
 
@@ -141,7 +142,7 @@ let part2 = grid => {
       let finalIndex = Int.mod(cycles - repeatStart, repeatLen) + repeatStart
 
       let ret =
-        cache->Map.entries->Iterator.toArray->Array.filter(((k, (g, i))) => i == finalIndex - 1)
+        cache->Map.entries->Iterator.toArray->Array.filter(((_k, (_g, i))) => i == finalIndex - 1)
       let Some(_, (result, _)) = ret[0]
 
       result

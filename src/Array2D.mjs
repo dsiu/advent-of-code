@@ -105,7 +105,7 @@ function flatten(t) {
   for (let i = 0, i_finish = t.length; i < i_finish; ++i) {
     ret = Belt_Array.concatMany([
       ret,
-      Stdlib__Option.getWithDefault(t[i], [])
+      Stdlib__Option.getOr(t[i], [])
     ]);
   }
   return ret;
@@ -130,7 +130,7 @@ function crop(t, param, len_x, len_y) {
   for (let i = y; i <= adj_y; ++i) {
     ret = Belt_Array.concatMany([
       ret,
-      [Stdlib__Option.getWithDefault(t[i], []).slice(x, x + adj_len_x | 0)]
+      [Stdlib__Option.getOr(t[i], []).slice(x, x + adj_len_x | 0)]
     ]);
   }
   return ret;

@@ -20,7 +20,7 @@ module Position = {
   let compare = Coord_V2.compare
   let cmp: (t, t) => int = (a, b) => compare(a, b)
 }
-module PositionCmp = Belt.Id.MakeComparableU(Position) // (r,c)
+module PositionCmp = Belt.Id.MakeComparable(Position) // (r,c)
 
 type grid = Map.t<PositionCmp.t, element, PositionCmp.identity>
 
@@ -36,7 +36,7 @@ module BeamHead = {
     posEq == 0 ? dirEq : posEq
   }
 }
-module BeamHeadCmp = Belt.Id.MakeComparableU(BeamHead)
+module BeamHeadCmp = Belt.Id.MakeComparable(BeamHead)
 
 //type energized = Set.t<beamHead>
 type energized = Set.t<beamHead, BeamHeadCmp.identity>

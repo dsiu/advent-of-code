@@ -6,7 +6,6 @@ let filename = "index.res"
 let flag = "-l"
 let result = await sh`ls ${filename} ${flag}`
 
-open Array
 module Array = Array
 let animals = ["🐶", "🐱", "🐷"]
 let moreAnimals = [...animals, "🐔", "🐴", "🐮"]

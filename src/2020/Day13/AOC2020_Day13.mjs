@@ -53,7 +53,7 @@ function solvePart2BruteForce(xs) {
   let _time = BigInt("100000000000000");
   while (true) {
     let time = _time;
-    if (Belt_Array.reduceU(xs, true, (acc, param) => {
+    if (Belt_Array.reduce(xs, true, (acc, param) => {
         if (acc) {
           return Primitive_bigint.mod_(time + param[1], param[0]) === big_zero;
         } else {

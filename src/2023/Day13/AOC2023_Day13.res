@@ -59,7 +59,7 @@ let score: line => int = l => {
 
 let solve: (array<pattern>, int) => int = (xs, nDiff) => {
   xs
-  ->Array.mapWithIndex((x, i) => {
+  ->Array.mapWithIndex((x, _i) => {
     //    i->(log2("i", _))
     x->reflections(nDiff)
   })

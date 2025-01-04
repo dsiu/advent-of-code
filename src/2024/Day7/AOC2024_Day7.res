@@ -39,6 +39,7 @@ let isValidC = ((target, factors)) => {
   factors->extendC->Array.find(x => x == target)
 }
 
+@warning("-8")
 let parse = data =>
   data
   ->splitNewline

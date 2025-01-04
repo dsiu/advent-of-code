@@ -80,15 +80,15 @@ function intersect(a, b) {
   
 }
 
-function below(a, b) {
-  return a[1] < b[0];
+function below(_a, _b) {
+  return _a[1] < _b[0];
 }
 
-function adjacent(a, b) {
-  if (a[1] + 1n === b[0]) {
+function adjacent(_a, _b) {
+  if (_a[1] + 1n === _b[0]) {
     return true;
   } else {
-    return b[1] + 1n === a[0];
+    return _b[1] + 1n === _a[0];
   }
 }
 

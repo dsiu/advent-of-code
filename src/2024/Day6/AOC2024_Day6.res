@@ -144,7 +144,7 @@ let walk: (CoordMap.t<'a>, guard) => array<position> = (map, guard) => {
 let rec isLoop: (guard, array<guard>, CoordMap.t<'a>) => bool = (
   guard,
   trail,
-  {grid, bounds} as map,
+  map,
 ) => {
   let stepped = step(map, guard)
   Option.isNone(stepped)
@@ -170,11 +170,11 @@ let parse = data =>
 
 let init = data => {
   let m: CoordMap.t<'a> = data->parse->CoordMap.fromArray
-  let {grid, bounds} = m
+  let {grid, _} = m
   let guard = {
     pos: grid
-    ->CoordMap.find((k, v) => v == #"^")
-    ->Option.map(((k, v)) => k)
+    ->CoordMap.find((_k, v) => v == #"^")
+    ->Option.map(((k, _v)) => k)
     ->Option.flatMap(Coord_V2.fromString)
     ->Option.getExn,
     dir: up,
@@ -184,7 +184,6 @@ let init = data => {
 
 let solvePart1 = data => {
   let (m, guard) = init(data)
-  let {grid, bounds} = m
 
   let ret = walk(m, guard)->Array.uniq
   ret->Array.length

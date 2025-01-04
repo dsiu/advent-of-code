@@ -260,7 +260,7 @@ function parse(data) {
 
 function init(data) {
   let m = fromArray(parse(data));
-  let guard_pos = Stdlib__Option.getExn(Stdlib__Option.flatMap(Stdlib__Option.map(find(m.grid, (k, v) => v === "^"), param => param[0]), Coord_V2$AdventOfCode.fromString), undefined);
+  let guard_pos = Stdlib__Option.getExn(Stdlib__Option.flatMap(Stdlib__Option.map(find(m.grid, (_k, v) => v === "^"), param => param[0]), Coord_V2$AdventOfCode.fromString), undefined);
   let guard = {
     pos: guard_pos,
     dir: up

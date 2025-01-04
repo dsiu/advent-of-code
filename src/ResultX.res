@@ -1,7 +1,6 @@
 // Result for handling async promise
 //
 
-open Stdlib
 
 let asyncFlatMap = (result, fn) => {
   switch result {

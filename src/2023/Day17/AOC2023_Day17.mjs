@@ -52,7 +52,7 @@ let DirectedPosition = {
   cmp: cmp
 };
 
-let DirectedPositionCmp = Belt_Id.MakeComparableU(DirectedPosition);
+let DirectedPositionCmp = Belt_Id.MakeComparable(DirectedPosition);
 
 function delta(dir) {
   switch (dir) {

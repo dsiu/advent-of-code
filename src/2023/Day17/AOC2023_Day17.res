@@ -27,7 +27,7 @@ module DirectedPosition = {
   }
 }
 
-module DirectedPositionCmp = Belt.Id.MakeComparableU(DirectedPosition)
+module DirectedPositionCmp = Belt.Id.MakeComparable(DirectedPosition)
 
 type exploredStates = Set.t<directedPosition>
 

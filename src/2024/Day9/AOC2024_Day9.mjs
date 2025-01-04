@@ -15,7 +15,7 @@ function log2(prim0, prim1) {
 }
 
 function union(a, b) {
-  return Belt_MapInt.merge(a, b, (k, v1, v2) => {
+  return Belt_MapInt.merge(a, b, (_k, v1, v2) => {
     if (v1 !== undefined) {
       return Primitive_option.some(Primitive_option.valFromOption(v1));
     } else if (v2 !== undefined) {

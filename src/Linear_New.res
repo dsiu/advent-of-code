@@ -44,7 +44,7 @@ module IntElem = {
 
 module FloatElem = {
   type t = float
-  let cmp = (a, b) => int_of_float(a -. b)
+  let cmp = (a, b) => Float.toInt(a -. b)
   let add = (a, b) => a +. b
 }
 

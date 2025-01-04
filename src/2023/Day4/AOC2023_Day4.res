@@ -156,6 +156,7 @@ let part2: array<card> => int = cards => {
  * let data = "Card 1: 1 2 3 | 2 3 4\nCard 2: 4 5 6 | 5 6 7"
  * parse(data) // Returns an array of card objects where each card has an id, winners array, and actuals array.
  */
+@warning("-8")
 let parse = data =>
   data
   ->splitNewline

@@ -61,7 +61,7 @@ let parse = data => {
       ? Noop
       : {
           let [_a, v] = l->String.split(" ")
-          Addx(v->int_of_string)
+          Addx(v->Int.fromString->Option.getExn)
         }
   })
 }

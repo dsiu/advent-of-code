@@ -9,7 +9,7 @@ type grid = Map.t<string, array<position>>
 
 // todo: put in Std map
 let getWithDefault = (m, k, d) => {
-  Map.get(m, k)->Option.getWithDefault(d)
+  Map.get(m, k)->Option.getOr(d)
 }
 
 let inRange: (bounds, position) => bool = ((min, max), c) => {

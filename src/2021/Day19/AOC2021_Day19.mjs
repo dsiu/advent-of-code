@@ -219,7 +219,7 @@ function matchingTransformAll(scanner1, scanner2) {
   return Stdlib__Array.combinationIf3(beacons1, beacons2, rotations, (b1, b2, rot) => {
     let t = minus(b1, rot(b2));
     let translation = extra => translate(t, extra);
-    let transB2 = Belt_Array.mapU(beacons2, b => translate(t, rot(b)));
+    let transB2 = Belt_Array.map(beacons2, b => translate(t, rot(b)));
     let len = Belt_Set.size(interact(beacons1, transB2));
     if (len >= 12) {
       return extra => Stdlib__Function.compose(rot, translation, extra);
@@ -256,7 +256,7 @@ function transformScanner(param) {
   let s = param[0];
   return {
     scannerName: s.scannerName,
-    beacons: Belt_Array.mapU(s.beacons, b => Belt_Option.getExn(trans)(b)),
+    beacons: Belt_Array.map(s.beacons, b => Belt_Option.getExn(trans)(b)),
     transformation: Belt_Option.getExn(trans),
     signature: s.signature
   };
@@ -268,7 +268,7 @@ function reconstructStep(param) {
     let current = working.hd;
     let waiting = param.waiting;
     let passMatches = Belt_List.keep(waiting, x => vagueMatch(current, x));
-    let matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.mapU(passMatches, x => Stdlib__Array.arrayToOption(matchingTransformAll(current, x)))), x => Belt_Option.isSome(x[1]));
+    let matches = Belt_List.keep(Belt_List.zip(passMatches, Belt_List.map(passMatches, x => Stdlib__Array.arrayToOption(matchingTransformAll(current, x)))), x => Belt_Option.isSome(x[1]));
     let waiting$p = Belt_List.keep(waiting, s => {
       if (Belt_List.has(Belt_List.map(matches, prim => prim[0]), s, eq)) {
         return false;
@@ -276,7 +276,7 @@ function reconstructStep(param) {
         return true;
       }
     });
-    let newWorker = Belt_List.mapU(matches, transformScanner);
+    let newWorker = Belt_List.map(matches, transformScanner);
     return {
       TAG: "Reconstruction",
       found: {
@@ -377,8 +377,8 @@ function reconstructScanners(scanners) {
 }
 
 function part1(scanners) {
-  let bSets = Belt_List.mapU(scanners, s => Belt_Set.fromArray(s.beacons, V3Comparator));
-  return Belt_Set.size(Belt_List.reduceU(bSets, v3SetMake, Belt_Set.union));
+  let bSets = Belt_List.map(scanners, s => Belt_Set.fromArray(s.beacons, V3Comparator));
+  return Belt_Set.size(Belt_List.reduce(bSets, v3SetMake, Belt_Set.union));
 }
 
 function part2(scanners) {
@@ -390,7 +390,7 @@ function part2(scanners) {
       0.0
     ]
   });
-  let origins = Belt_List.mapU(scanners, extractOrigin);
+  let origins = Belt_List.map(scanners, extractOrigin);
   return Belt_Option.getExn(Stdlib__List.listToOption(Belt_List.sort(Stdlib__List.combination2(origins, origins, (a, b) => {
     let a$1 = minus(a, b);
     let a$2 = a$1._0;

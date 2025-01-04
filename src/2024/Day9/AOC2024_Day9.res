@@ -1,5 +1,4 @@
 open Stdlib
-open Utils
 let log = Console.log
 let log2 = Console.log2
 
@@ -12,7 +11,7 @@ type free = S.t
 // ref: https://hackage.haskell.org/package/containers-0.5.5.1/docs/Data-IntMap-Lazy.html#v:union
 // O(n+m). The (left-biased) union of two maps. It prefers the first map when duplicate keys are encountered
 let union: (M.t<'a>, M.t<'a>) => M.t<'a> = (a, b) => {
-  M.merge(a, b, (k, v1, v2) => {
+  M.merge(a, b, (_k, v1, v2) => {
     switch (v1, v2) {
     | (Some(v1), Some(_)) => Some(v1) // left-biased
     | (Some(v1), None) => Some(v1)

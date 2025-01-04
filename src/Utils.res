@@ -169,8 +169,6 @@ let minIntInArray = xs => {
 }
 
 module BigIntExt = {
-  open BigInt
-
   let compare = (a: bigint, b: bigint) =>
     a < b ? Ordering.less : a > b ? Ordering.greater : Ordering.equal
 }

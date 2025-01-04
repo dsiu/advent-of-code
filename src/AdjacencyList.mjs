@@ -54,7 +54,7 @@ function Make(BASE) {
     let str = {
       contents: ""
     };
-    Belt_MutableMapString.forEachU(t, (k, v) => {
+    Belt_MutableMapString.forEach(t, (k, v) => {
       str.contents = str.contents + k + ": [ " + containerToArray(v).join(",") + " ]\n";
     });
     return str.contents;
@@ -123,7 +123,7 @@ function toString(t) {
   let str = {
     contents: ""
   };
-  Belt_MutableMapString.forEachU(t, (k, v) => {
+  Belt_MutableMapString.forEach(t, (k, v) => {
     str.contents = str.contents + k + ": [ " + Belt_MutableSetString.toArray(v).join(",") + " ]\n";
   });
   return str.contents;
@@ -219,7 +219,7 @@ function toString$1(t) {
   let str = {
     contents: ""
   };
-  Belt_MutableMapString.forEachU(t, (k, v) => {
+  Belt_MutableMapString.forEach(t, (k, v) => {
     str.contents = str.contents + k + ": [ " + Belt_MutableSet.toArray(v).join(",") + " ]\n";
   });
   return str.contents;

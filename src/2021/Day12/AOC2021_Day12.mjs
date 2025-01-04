@@ -17,7 +17,7 @@ let ParseError = /* @__PURE__ */Primitive_exceptions.create("AOC2021_Day12-Adven
 
 function make(edges) {
   let maze = AdjacencyList$AdventOfCode.$$String.make();
-  Belt_Array.forEachU(edges, edge => {
+  Belt_Array.forEach(edges, edge => {
     if (edge.length !== 2) {
       throw {
         RE_EXN_ID: ParseError,
@@ -42,7 +42,7 @@ let Maze = {
 };
 
 function is_visited(visited, node) {
-  return Belt_Option.mapWithDefaultU(Belt_HashMapString.get(visited, node), false, v => v > 0);
+  return Belt_Option.mapWithDefault(Belt_HashMapString.get(visited, node), false, v => v > 0);
 }
 
 function inc_visited(visited, node) {
@@ -62,7 +62,7 @@ function is_small_case(c) {
 }
 
 function has_any_small_cave_been_visited_twice(visited) {
-  let smalls = Belt_HashMapString.reduceU(visited, [], (acc, key, value) => {
+  let smalls = Belt_HashMapString.reduce(visited, [], (acc, key, value) => {
     if (key.toLowerCase() === key && value > 1) {
       return Belt_Array.concat(acc, [[
           key,
@@ -112,7 +112,7 @@ function dfs(visit_func, t, start_node, end_node) {
       return [acc];
     }
     let edges = AdjacencyList$AdventOfCode.$$String.neighbors(t, node);
-    return Belt_MutableSetString.reduceU(edges, [], (a, e) => {
+    return Belt_MutableSetString.reduce(edges, [], (a, e) => {
       if (visit_func(visited$p, e)) {
         return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));
       } else {

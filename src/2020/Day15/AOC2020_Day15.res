@@ -28,7 +28,7 @@ module Appear = {
 }
 
 let solve = (xs, total_turn) => {
-  let spoken = xs->Array.reduceWithIndexU(Map.Int.empty, (. a, x, i) => a->Map.Int.set(x, [i + 1]))
+  let spoken = xs->Array.reduceWithIndex(Map.Int.empty, (. a, x, i) => a->Map.Int.set(x, [i + 1]))
 
   let len = xs->Array.length
   let rec inner = (spoken, last_num, this_turn: int, total_turn) => {

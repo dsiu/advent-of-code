@@ -93,7 +93,6 @@ module Paper = {
 
     t->Array2D.reduceWithIndex(t', (a, mark, coord) => {
       let coord' = transformCoord(coord, f)
-      let (xx, yy) = coord'
 
       let new_mark = t->Array2D.get(coord')
       // must check if the new_mark is within the folded paper, if not, discard it.
