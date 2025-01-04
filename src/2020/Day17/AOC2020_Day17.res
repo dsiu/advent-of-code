@@ -1,18 +1,13 @@
 // ref: https://work.njae.me.uk/2020/12/26/advent-of-code-2020-day-17/
 
-@@uncurried
-@@uncurried.swap
-
-open Belt
 open Utils
+open Stdlib
 
 let log = Js.Console.log
 
-// todo: migrate to Stdlib
 module TC = Tablecloth
 
 module Coord = {
-  open TC
   type t =
     | Coord_V3(Coord_V3.t)
     | Coord_V4(Coord_V4.t)
@@ -25,7 +20,7 @@ module Coord = {
     }
   }
 
-  include Comparator.Make({
+  include TC.Comparator.Make({
     type t = t
     let compare = compare
   })
@@ -43,12 +38,12 @@ type grid = TC.Set.t<Coord.t, Coord.identity>
 
 let makeGrid = (lines: array<array<string>>) => {
   let createActive = (x, y) => {
-    lines->Array.getExn(y)->Array.getExn(x) === "#" ? Some(Coord.Coord_V3(x, y, 0)) : None
+    lines->Array.getUnsafe(y)->Array.getUnsafe(x) === "#" ? Some(Coord.Coord_V3(x, y, 0)) : None
   }
-  let maxX = lines->Array.getExn(0)->Array.length - 1
-  let maxY = lines->Array.length - 1
-  let xs = Array.range(0, maxX)
-  let ys = Array.range(0, maxY)
+  let maxX = lines->Array.getUnsafe(0)->Array.length
+  let maxY = lines->Array.length
+  let xs = Array.range(~from=0, maxX)
+  let ys = Array.range(~from=0, maxY)
   Stdlib.Array.combinationIf2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
 }
 

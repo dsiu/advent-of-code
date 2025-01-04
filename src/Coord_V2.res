@@ -2,6 +2,7 @@ open Stdlib
 
 module TC = Tablecloth
 
+// todo: make it works with types other than int
 type t = Tuple2.t<int, int>
 
 let intCompare = (a, b) => Int.compare(a, b)->Ordering.toInt
