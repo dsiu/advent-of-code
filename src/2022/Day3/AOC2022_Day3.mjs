@@ -22,10 +22,12 @@ function stringToChar(s) {
 
 function charToPriority(item) {
   let c = Belt_Option.getExn(TableclothChar.fromString(item));
+  let lowerA = "a".charCodeAt(0) | 0;
+  let upperA = "A".charCodeAt(0) | 0;
   if (TableclothChar.isUppercase(c)) {
-    return ((TableclothChar.toCode(c) - /* 'A' */65 | 0) + 1 | 0) + 26 | 0;
+    return ((TableclothChar.toCode(c) - upperA | 0) + 1 | 0) + 26 | 0;
   } else {
-    return (TableclothChar.toCode(c) - /* 'a' */97 | 0) + 1 | 0;
+    return (TableclothChar.toCode(c) - lowerA | 0) + 1 | 0;
   }
 }
 

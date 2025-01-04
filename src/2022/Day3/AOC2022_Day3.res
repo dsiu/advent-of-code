@@ -20,8 +20,8 @@ let stringToChar = s => TC.Char.fromString(s)->Option.getExn
 
 let charToPriority: string => int = item => {
   let c = item->stringToChar
-  let lowerA = Char.code('a')
-  let upperA = Char.code('A')
+  let lowerA = String.charCodeAt("a",0)->Float.toInt
+  let upperA = String.charCodeAt("A",0)->Float.toInt
   c->TC.Char.isUppercase ? c->TC.Char.toCode - upperA + 1 + 26 : c->TC.Char.toCode - lowerA + 1
 }
 
