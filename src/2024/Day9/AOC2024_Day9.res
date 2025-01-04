@@ -136,7 +136,7 @@ let solvePart1 = data => {
   disk'
   ->M.toArray
   ->Array.map(((k, v)) => k->BigInt.fromInt * v->BigInt.fromInt)
-  ->(Array.reduce(_, 0n, BigInt.add))
+  ->Array.reduce(_, 0n, BigInt.add)
 }
 
 let solvePart2 = data => {

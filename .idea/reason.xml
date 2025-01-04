@@ -3,7 +3,6 @@
   <component name="ReasonSettings">
     <option name="isFormatOnSaveEnabled" value="false" />
     <option name="formatColumnWidth" value="80" />
-    <option name="isBsEnabled" value="false" />
     <option name="switchName" value="default" />
   </component>
 </project>
