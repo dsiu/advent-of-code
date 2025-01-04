@@ -12,8 +12,15 @@ let tail = l => {
   }
 }
 
-x->tail->log
+//x->tail->log
 
 let c = x => x
 
 //type nonEmpty_1<'a> = First('a) | c('a)
+
+open Stdlib
+List.foldLeft0(list{10, 7, 5, 1}, (a, b) => a - b)->log
+List.foldRight0(list{10, 7, 5, 1}, (a, b) => a - b)->log
+
+List.foldLeft0(list{"a", "b", "c", "d"}, (a, b) => a ++ b)->log
+List.foldRight0(list{"a", "b", "c", "d"}, (a, b) => a ++ b)->log
