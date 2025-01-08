@@ -2,7 +2,7 @@
 
 import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
 
-let Not_Expected = /* @__PURE__ */Primitive_exceptions.create("Tree-AdventOfCode.Not_Expected");
+let Not_Expected = /* @__PURE__ */Primitive_exceptions.create("Tree.Not_Expected");
 
 function treeToString(e) {
   if (e.TAG === "Leaf") {

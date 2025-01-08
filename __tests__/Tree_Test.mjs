@@ -2,7 +2,7 @@
 
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as List from "rescript/lib/es6/List.js";
-import * as Tree$AdventOfCode from "../src/Tree.mjs";
+import * as Tree from "../src/Tree.mjs";
 
 Jest.describe("Tree", () => {
   let tl_1 = {
@@ -78,12 +78,12 @@ Jest.describe("Tree", () => {
     _1: tr_2
   };
   let toString = __x => List.map(__x, param => [
-    Tree$AdventOfCode.locToString(param[0]),
-    Tree$AdventOfCode.locToString(param[1])
+    Tree.locToString(param[0]),
+    Tree.locToString(param[1])
   ]);
   let left_tests = toString({
     hd: [
-      Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)),
+      Tree.left(Tree.top(tree_1)),
       {
         TAG: "Loc",
         _0: tl_1,
@@ -96,7 +96,7 @@ Jest.describe("Tree", () => {
     ],
     tl: {
       hd: [
-        Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
+        Tree.left(Tree.left(Tree.top(tree_2))),
         {
           TAG: "Loc",
           _0: tll_2,
@@ -120,7 +120,7 @@ Jest.describe("Tree", () => {
   Jest.testAll("left", left_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
   let right_tests = toString({
     hd: [
-      Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)),
+      Tree.right(Tree.top(tree_1)),
       {
         TAG: "Loc",
         _0: tr_1,
@@ -133,7 +133,7 @@ Jest.describe("Tree", () => {
     ],
     tl: {
       hd: [
-        Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
+        Tree.right(Tree.right(Tree.top(tree_2))),
         {
           TAG: "Loc",
           _0: trr_2,
@@ -157,7 +157,7 @@ Jest.describe("Tree", () => {
   Jest.testAll("right", right_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
   let left_right_tests = toString({
     hd: [
-      Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1))),
+      Tree.right(Tree.left(Tree.top(tree_1))),
       {
         TAG: "Loc",
         _0: {
@@ -180,7 +180,7 @@ Jest.describe("Tree", () => {
     ],
     tl: {
       hd: [
-        Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1))),
+        Tree.left(Tree.right(Tree.top(tree_1))),
         {
           TAG: "Loc",
           _0: {
@@ -203,7 +203,7 @@ Jest.describe("Tree", () => {
       ],
       tl: {
         hd: [
-          Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
+          Tree.right(Tree.left(Tree.top(tree_2))),
           {
             TAG: "Loc",
             _0: {
@@ -223,7 +223,7 @@ Jest.describe("Tree", () => {
         ],
         tl: {
           hd: [
-            Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
+            Tree.left(Tree.right(Tree.top(tree_2))),
             {
               TAG: "Loc",
               _0: {
@@ -249,7 +249,7 @@ Jest.describe("Tree", () => {
   Jest.testAll("left right", left_right_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
   let upmost_tests = toString({
     hd: [
-      Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
+      Tree.upmost(Tree.right(Tree.left(Tree.top(tree_1)))),
       {
         TAG: "Loc",
         _0: tree_1,
@@ -258,7 +258,7 @@ Jest.describe("Tree", () => {
     ],
     tl: {
       hd: [
-        Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+        Tree.upmost(Tree.right(Tree.right(Tree.top(tree_1)))),
         {
           TAG: "Loc",
           _0: tree_1,
@@ -267,7 +267,7 @@ Jest.describe("Tree", () => {
       ],
       tl: {
         hd: [
-          Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
+          Tree.upmost(Tree.left(Tree.left(Tree.top(tree_1)))),
           {
             TAG: "Loc",
             _0: tree_1,
@@ -276,7 +276,7 @@ Jest.describe("Tree", () => {
         ],
         tl: {
           hd: [
-            Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+            Tree.upmost(Tree.left(Tree.right(Tree.top(tree_1)))),
             {
               TAG: "Loc",
               _0: tree_1,
@@ -285,7 +285,7 @@ Jest.describe("Tree", () => {
           ],
           tl: {
             hd: [
-              Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))),
+              Tree.upmost(Tree.left(Tree.top(tree_2))),
               {
                 TAG: "Loc",
                 _0: tree_2,
@@ -294,7 +294,7 @@ Jest.describe("Tree", () => {
             ],
             tl: {
               hd: [
-                Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))),
+                Tree.upmost(Tree.right(Tree.top(tree_2))),
                 {
                   TAG: "Loc",
                   _0: tree_2,
@@ -303,7 +303,7 @@ Jest.describe("Tree", () => {
               ],
               tl: {
                 hd: [
-                  Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2)))),
+                  Tree.upmost(Tree.left(Tree.left(Tree.top(tree_2)))),
                   {
                     TAG: "Loc",
                     _0: tree_2,
@@ -312,7 +312,7 @@ Jest.describe("Tree", () => {
                 ],
                 tl: {
                   hd: [
-                    Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2)))),
+                    Tree.upmost(Tree.right(Tree.left(Tree.top(tree_2)))),
                     {
                       TAG: "Loc",
                       _0: tree_2,
@@ -321,7 +321,7 @@ Jest.describe("Tree", () => {
                   ],
                   tl: {
                     hd: [
-                      Tree$AdventOfCode.upmost(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
+                      Tree.upmost(Tree.left(Tree.right(Tree.top(tree_2)))),
                       {
                         TAG: "Loc",
                         _0: tree_2,
@@ -330,7 +330,7 @@ Jest.describe("Tree", () => {
                     ],
                     tl: {
                       hd: [
-                        Tree$AdventOfCode.upmost(Tree$AdventOfCode.right(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
+                        Tree.upmost(Tree.right(Tree.right(Tree.top(tree_2)))),
                         {
                           TAG: "Loc",
                           _0: tree_2,
@@ -351,7 +351,7 @@ Jest.describe("Tree", () => {
   Jest.testAll("upmost", upmost_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
   let up_tests = toString({
     hd: [
-      Tree$AdventOfCode.up(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1)))),
+      Tree.up(Tree.right(Tree.left(Tree.top(tree_1)))),
       {
         TAG: "Loc",
         _0: tl_1,
@@ -364,7 +364,7 @@ Jest.describe("Tree", () => {
     ],
     tl: {
       hd: [
-        Tree$AdventOfCode.up(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1)))),
+        Tree.up(Tree.left(Tree.right(Tree.top(tree_1)))),
         {
           TAG: "Loc",
           _0: tr_1,
@@ -377,7 +377,7 @@ Jest.describe("Tree", () => {
       ],
       tl: {
         hd: [
-          Tree$AdventOfCode.up(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))))),
+          Tree.up(Tree.right(Tree.left(Tree.left(Tree.top(tree_2))))),
           {
             TAG: "Loc",
             _0: tll_2,
@@ -397,7 +397,7 @@ Jest.describe("Tree", () => {
         ],
         tl: {
           hd: [
-            Tree$AdventOfCode.up(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2)))),
+            Tree.up(Tree.left(Tree.right(Tree.top(tree_2)))),
             {
               TAG: "Loc",
               _0: tr_2,
@@ -416,7 +416,7 @@ Jest.describe("Tree", () => {
   Jest.testAll("up", up_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
   let modify_tests = toString({
     hd: [
-      Tree$AdventOfCode.modify(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_1))), param => ({
+      Tree.modify(Tree.right(Tree.left(Tree.top(tree_1))), param => ({
         TAG: "Leaf",
         _0: 5
       })),
@@ -442,7 +442,7 @@ Jest.describe("Tree", () => {
     ],
     tl: {
       hd: [
-        Tree$AdventOfCode.modify(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_1))), param => ({
+        Tree.modify(Tree.left(Tree.right(Tree.top(tree_1))), param => ({
           TAG: "Pair",
           _0: {
             TAG: "Leaf",
@@ -482,7 +482,7 @@ Jest.describe("Tree", () => {
       ],
       tl: {
         hd: [
-          Tree$AdventOfCode.modify(Tree$AdventOfCode.right(Tree$AdventOfCode.left(Tree$AdventOfCode.top(tree_2))), param => ({
+          Tree.modify(Tree.right(Tree.left(Tree.top(tree_2))), param => ({
             TAG: "Leaf",
             _0: 9
           })),
@@ -505,7 +505,7 @@ Jest.describe("Tree", () => {
         ],
         tl: {
           hd: [
-            Tree$AdventOfCode.modify(Tree$AdventOfCode.left(Tree$AdventOfCode.right(Tree$AdventOfCode.top(tree_2))), param => ({
+            Tree.modify(Tree.left(Tree.right(Tree.top(tree_2))), param => ({
               TAG: "Pair",
               _0: {
                 TAG: "Leaf",

@@ -6,8 +6,8 @@ import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Belt_MapInt from "rescript/lib/es6/Belt_MapInt.js";
 import * as Belt_Option from "rescript/lib/es6/Belt_Option.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
+import * as AOC2018_Day3_Data from "./AOC2018_Day3_Data.mjs";
 import * as Belt_MutableMapInt from "rescript/lib/es6/Belt_MutableMapInt.js";
-import * as AOC2018_Day3_Data$AdventOfCode from "./AOC2018_Day3_Data.mjs";
 
 function id(t) {
   return t.id;
@@ -246,14 +246,14 @@ let Fabric = {
 };
 
 function solvePart1() {
-  let allClaims = Js_array.map(makeClaim, AOC2018_Day3_Data$AdventOfCode.data.split("\n"));
+  let allClaims = Js_array.map(makeClaim, AOC2018_Day3_Data.data.split("\n"));
   let fab = make$2(findMax(allClaims, maxX), findMax(allClaims, maxY));
   let fab$1 = Belt_Array.reduce(allClaims, fab, (acc, i) => claimAreaIter(i, acc, addClaimIdToPoint));
   return countOverlap(fab$1, twoOrMore);
 }
 
 function solvePart2() {
-  let allClaims = Js_array.map(makeClaim, AOC2018_Day3_Data$AdventOfCode.data.split("\n"));
+  let allClaims = Js_array.map(makeClaim, AOC2018_Day3_Data.data.split("\n"));
   let fab = make$2(findMax(allClaims, maxX), findMax(allClaims, maxY));
   let fab$1 = Belt_Array.reduce(allClaims, fab, (acc, i) => claimAreaIter(i, acc, addClaimIdToPoint));
   return countNonOverlapClaim(fab$1, allClaims);
@@ -275,7 +275,7 @@ let test_fab$1 = Belt_Array.reduce(allClaims, test_fab, (acc, i) => claimAreaIte
 
 let solvePart2Demo = undefined === (countNonOverlapClaim(test_fab$1, allClaims), undefined);
 
-let data = AOC2018_Day3_Data$AdventOfCode.data;
+let data = AOC2018_Day3_Data.data;
 
 export {
   data,

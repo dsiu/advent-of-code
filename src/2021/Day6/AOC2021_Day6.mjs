@@ -3,15 +3,15 @@
 import * as $$Array from "rescript/lib/es6/Array.js";
 import * as Option from "rescript/lib/es6/Option.js";
 import * as Belt_Int from "rescript/lib/es6/Belt_Int.js";
+import * as JS_Debug from "../../JS_Debug.mjs";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/Belt_Option.js";
-import * as JS_Debug$AdventOfCode from "../../JS_Debug.mjs";
 
 function log(prim) {
   console.log(prim);
 }
 
-let Log = JS_Debug$AdventOfCode.make("AOC2021_Day6-AdventOfCode");
+let Log = JS_Debug.make("AOC2021_Day6");
 
 function add(prim0, prim1) {
   return prim0 + prim1;

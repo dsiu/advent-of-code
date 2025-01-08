@@ -5,12 +5,12 @@ import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Belt_Range from "rescript/lib/es6/Belt_Range.js";
 import * as Belt_Option from "rescript/lib/es6/Belt_Option.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
+import * as AOC2018_Day4_Data from "./AOC2018_Day4_Data.mjs";
 import * as Belt_MutableMapInt from "rescript/lib/es6/Belt_MutableMapInt.js";
 import * as Belt_MutableSetInt from "rescript/lib/es6/Belt_MutableSetInt.js";
 import * as Belt_SortArrayString from "rescript/lib/es6/Belt_SortArrayString.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/Belt_MutableMapString.js";
-import * as AOC2018_Day4_Data$AdventOfCode from "./AOC2018_Day4_Data.mjs";
-import * as AOC2018_Day4_Data_Sample$AdventOfCode from "./AOC2018_Day4_Data_Sample.mjs";
+import * as AOC2018_Day4_Data_Sample from "./AOC2018_Day4_Data_Sample.mjs";
 
 function insertHourRec(hr, from_min, to_min) {
   Belt_Range.forEach(from_min, to_min, i => Belt_MutableSetInt.add(hr, i));
@@ -369,9 +369,9 @@ function solvePart2(data) {
   return Math.imul(match$1[0], match$1[1][0]);
 }
 
-let data = AOC2018_Day4_Data$AdventOfCode.data;
+let data = AOC2018_Day4_Data.data;
 
-let sampleData = AOC2018_Day4_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2018_Day4_Data_Sample.data;
 
 export {
   data,

@@ -2,19 +2,19 @@
 
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Option from "rescript/lib/es6/Option.js";
+import * as AOC2018_Day2 from "./AOC2018_Day2.mjs";
 import * as Belt_MapString from "rescript/lib/es6/Belt_MapString.js";
-import * as AOC2018_Day2$AdventOfCode from "./AOC2018_Day2.mjs";
-import * as AOC2018_Day2_Data$AdventOfCode from "./AOC2018_Day2_Data.mjs";
+import * as AOC2018_Day2_Data from "./AOC2018_Day2_Data.mjs";
 
 Jest.describe("2018 Day2", () => {
-  let lines = AOC2018_Day2_Data$AdventOfCode.data.split("\n");
+  let lines = AOC2018_Day2_Data.data.split("\n");
   let len = lines.length;
   Jest.describe("Part1", () => {
     Jest.test("number of lines", () => Jest.Expect.toEqual(Jest.Expect.expect(len), 250));
     Jest.test("first line", () => Jest.Expect.toEqual(Jest.Expect.expect(Option.getExn(lines[0], undefined)), "crruafyzloguvxwctqmphenbkd"));
     Jest.test("last line", () => Jest.Expect.toEqual(Jest.Expect.expect(Option.getExn(lines[len - 1 | 0], undefined)), "hrijafyzloguvxectqmpheybkd"));
     let test_string = "abbbcc";
-    Jest.test("string to char[]", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.string_to_charStr(test_string)), [
+    Jest.test("string to char[]", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.string_to_charStr(test_string)), [
       "a",
       "b",
       "b",
@@ -24,10 +24,10 @@ Jest.describe("2018 Day2", () => {
     ]));
     Jest.test("char freq", () => {
       let expected = Belt_MapString.set(Belt_MapString.set(Belt_MapString.set(undefined, "a", 1), "b", 3), "c", 2);
-      return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.char_freq(AOC2018_Day2$AdventOfCode.string_to_charStr(test_string))), expected);
+      return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.char_freq(AOC2018_Day2.string_to_charStr(test_string))), expected);
     });
-    Jest.test("char freq match", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.n_char_matched_freq(3, test_string)), 1));
-    Jest.test("threeTimesCounter", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.threeTimesCounter("aabbbccccccddddd")), 1));
+    Jest.test("char freq match", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.n_char_matched_freq(3, test_string)), 1));
+    Jest.test("threeTimesCounter", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.threeTimesCounter("aabbbccccccddddd")), 1));
   });
   Jest.describe("Part2", () => {
     Jest.test("diffOfTwoCharStr", () => {
@@ -58,20 +58,20 @@ Jest.describe("2018 Day2", () => {
           _1: "g"
         }
       ];
-      return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg")), expected);
+      return Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.diffOfTwoCharStr("abcdef", "abcdeg")), expected);
     });
-    Jest.test("count true", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.countTrue(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))), 5));
-    Jest.test("count false", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.countTrue(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))), 5));
-    Jest.test("diff by 1 char strs", () => Jest.Expect.toBe(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.isDiffBy1(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("abcdef", "abcdeg"))), true));
-    Jest.test("diff by 5 char strs", () => Jest.Expect.toBe(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.isDiffBy5(AOC2018_Day2$AdventOfCode.diffOfTwoCharStr("zzzzzz", "zabcde"))), true));
-    Jest.test("run part2 test", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.runDay2Part2([
+    Jest.test("count true", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.countTrue(AOC2018_Day2.diffOfTwoCharStr("abcdef", "abcdeg"))), 5));
+    Jest.test("count false", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.countTrue(AOC2018_Day2.diffOfTwoCharStr("abcdef", "abcdeg"))), 5));
+    Jest.test("diff by 1 char strs", () => Jest.Expect.toBe(Jest.Expect.expect(AOC2018_Day2.isDiffBy1(AOC2018_Day2.diffOfTwoCharStr("abcdef", "abcdeg"))), true));
+    Jest.test("diff by 5 char strs", () => Jest.Expect.toBe(Jest.Expect.expect(AOC2018_Day2.isDiffBy5(AOC2018_Day2.diffOfTwoCharStr("zzzzzz", "zabcde"))), true));
+    Jest.test("run part2 test", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.runDay2Part2([
       "abcdef",
       "abcdee"
     ])), [
       "abcde",
       "abcde"
     ]));
-    Jest.test("run part2", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2$AdventOfCode.runDay2Part2(AOC2018_Day2_Data$AdventOfCode.data.split("\n"))), [
+    Jest.test("run part2", () => Jest.Expect.toEqual(Jest.Expect.expect(AOC2018_Day2.runDay2Part2(AOC2018_Day2_Data.data.split("\n"))), [
       "srijafjzloguvlntqmphenbkd",
       "srijafjzloguvlntqmphenbkd"
     ]));

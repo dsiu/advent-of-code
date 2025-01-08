@@ -3,46 +3,46 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Belt_List from "rescript/lib/es6/Belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
-import * as AOC2018_Day5$AdventOfCode from "./AOC2018_Day5.mjs";
-import * as AOC2018_Day5_Data$AdventOfCode from "./AOC2018_Day5_Data.mjs";
-import * as AOC2018_Day5_Data_Sample$AdventOfCode from "./AOC2018_Day5_Data_Sample.mjs";
+import * as AOC2018_Day5 from "./AOC2018_Day5.mjs";
+import * as AOC2018_Day5_Data from "./AOC2018_Day5_Data.mjs";
+import * as AOC2018_Day5_Data_Sample from "./AOC2018_Day5_Data_Sample.mjs";
 
-let testCharArray = AOC2018_Day5_Data_Sample$AdventOfCode.data.split("");
+let testCharArray = AOC2018_Day5_Data_Sample.data.split("");
 
 let testCharList = Belt_List.fromArray(testCharArray);
 
-let charArray = AOC2018_Day5_Data$AdventOfCode.data.split("");
+let charArray = AOC2018_Day5_Data.data.split("");
 
 let charList = Belt_List.fromArray(charArray);
 
 Jest.describe("2018 Day5", () => {
   Jest.describe("Part 1", () => {
     Jest.test("fuse", () => {
-      let result_0 = AOC2018_Day5$AdventOfCode.fuse([
+      let result_0 = AOC2018_Day5.fuse([
         "a",
         "b"
       ]);
-      let result_1 = AOC2018_Day5$AdventOfCode.fuse([
+      let result_1 = AOC2018_Day5.fuse([
         "a",
         "A"
       ]);
-      let result_2 = AOC2018_Day5$AdventOfCode.fuse([
+      let result_2 = AOC2018_Day5.fuse([
         "a",
         "B"
       ]);
-      let result_3 = AOC2018_Day5$AdventOfCode.fuse([
+      let result_3 = AOC2018_Day5.fuse([
         "c",
         "C"
       ]);
-      let result_4 = AOC2018_Day5$AdventOfCode.fuse([
+      let result_4 = AOC2018_Day5.fuse([
         "D",
         "d"
       ]);
-      let result_5 = AOC2018_Day5$AdventOfCode.fuse([
+      let result_5 = AOC2018_Day5.fuse([
         "E",
         "Z"
       ]);
-      let result_6 = AOC2018_Day5$AdventOfCode.fuse([
+      let result_6 = AOC2018_Day5.fuse([
         "A",
         "a"
       ]);
@@ -66,23 +66,23 @@ Jest.describe("2018 Day5", () => {
       ]);
     });
     Jest.test("Solve Part 1 - sampleData list", () => {
-      let result = Belt_List.toArray(AOC2018_Day5$AdventOfCode.defuse(testCharList)).join("");
+      let result = Belt_List.toArray(AOC2018_Day5.defuse(testCharList)).join("");
       return Jest.Expect.toEqual(Jest.Expect.expect(result), "dabCBAcaDA");
     });
     Jest.test("Solve Part 1 - sampleData array", () => {
-      let result = AOC2018_Day5$AdventOfCode.defuse_array(testCharArray).join("");
+      let result = AOC2018_Day5.defuse_array(testCharArray).join("");
       return Jest.Expect.toEqual(Jest.Expect.expect(result), "dabCBAcaDA");
     });
     Jest.Skip.test("Solve Part 1 - Data array", () => {
-      let result = AOC2018_Day5$AdventOfCode.defuse_array(charArray).join("").length;
-      let expected = AOC2018_Day5_Data$AdventOfCode.result.length;
+      let result = AOC2018_Day5.defuse_array(charArray).join("").length;
+      let expected = AOC2018_Day5_Data.result.length;
       return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
     });
   });
   Jest.describe("Part 2", () => {
     Jest.test("notIsLetterAndUpper", () => {
-      let result_0 = Belt_Array.keep(testCharArray, __x => AOC2018_Day5$AdventOfCode.notIsLetterAndUpper(__x, "a"));
-      let result_1 = Belt_Array.keep(testCharArray, __x => AOC2018_Day5$AdventOfCode.notIsLetterAndUpper(__x, "b"));
+      let result_0 = Belt_Array.keep(testCharArray, __x => AOC2018_Day5.notIsLetterAndUpper(__x, "a"));
+      let result_1 = Belt_Array.keep(testCharArray, __x => AOC2018_Day5.notIsLetterAndUpper(__x, "b"));
       let result = [
         result_0,
         result_1
@@ -96,19 +96,19 @@ Jest.describe("2018 Day5", () => {
       return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
     });
     Jest.test("Solve Part 2 - sampleData", () => {
-      let result = AOC2018_Day5$AdventOfCode.solvePart2(AOC2018_Day5$AdventOfCode.aTod, testCharArray);
+      let result = AOC2018_Day5.solvePart2(AOC2018_Day5.aTod, testCharArray);
       return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
     });
     Jest.Skip.test("Solve Part 2 - Data", () => {
-      let result = AOC2018_Day5$AdventOfCode.solvePart2(AOC2018_Day5$AdventOfCode.aToz, charArray);
+      let result = AOC2018_Day5.solvePart2(AOC2018_Day5.aToz, charArray);
       return Jest.Expect.toEqual(Jest.Expect.expect(result), 4282);
     });
   });
 });
 
-let data = AOC2018_Day5_Data$AdventOfCode.data;
+let data = AOC2018_Day5_Data.data;
 
-let sampleData = AOC2018_Day5_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2018_Day5_Data_Sample.data;
 
 export {
   data,

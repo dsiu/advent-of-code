@@ -8,7 +8,7 @@ module type S = {
   type c // container type for edges
   type t // container type for vertexes
 
-  let make: (. unit) => t
+  let make: unit => t
 
   let addVertex: (t, string) => unit
   let removeVertex: (t, string) => unit
@@ -25,14 +25,14 @@ module type BASE = {
   type e
 
   type c
-  let containerMake: (. unit) => c
-  let containerAdd: (. c, e) => unit
-  let containerRemove: (. c, e) => unit
-  let containerHas: (. c, e) => bool
-  let containerToArray: (. c) => array<e>
+  let containerMake: unit => c
+  let containerAdd: (c, e) => unit
+  let containerRemove: (c, e) => unit
+  let containerHas: (c, e) => bool
+  let containerToArray: c => array<e>
 
   type t = MutableMap.String.t<c>
-  let make: (. unit) => t
+  let make: unit => t
 }
 
 module Make = (BASE: BASE): (S with type e := BASE.e and type c := BASE.c and type t = BASE.t) => {
@@ -92,7 +92,7 @@ module Make = (BASE: BASE): (S with type e := BASE.e and type c := BASE.c and ty
   let toString = t => {
     let str = ref("")
     t->MutableMap.String.forEach((k, v) => {
-      str := `${str.contents}${k}: [ ${v->containerToArray->(Js.Array2.joinWith(_, ","))} ]\n`
+      str := `${str.contents}${k}: [ ${v->containerToArray->Js.Array2.joinWith(_, ",")} ]\n`
     })
     str.contents
   }
@@ -115,7 +115,7 @@ module TupleImpl = {
   module T = {
     type t = (string, int)
     let eq = ((s1, _): t, (s2, _): t) => s1 === s2
-    let cmp = (. (s1, _): t, (s2, _): t) => compare(s1, s2)
+    let cmp = ((s1, _): t, (s2, _): t) => compare(s1, s2)
 
     type seed = int
 
@@ -136,7 +136,7 @@ module Tuple = Make({
   type e = T.t
   type c = MutableSet.t<MutableSetTuple.t, MutableSetTuple.identity>
 
-  let containerMake = (. ()) => MutableSet.make(~id=module(MutableSetTuple))
+  let containerMake = () => MutableSet.make(~id=module(MutableSetTuple))
   let containerAdd = MutableSet.add
   let containerRemove = MutableSet.remove
   let containerHas = MutableSet.has

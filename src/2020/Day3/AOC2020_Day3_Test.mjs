@@ -2,36 +2,36 @@
 
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
-import * as AOC2020_Day3$AdventOfCode from "./AOC2020_Day3.mjs";
-import * as AOC2020_Day3_Data$AdventOfCode from "./AOC2020_Day3_Data.mjs";
-import * as AOC2020_Day3_Data_Sample$AdventOfCode from "./AOC2020_Day3_Data_Sample.mjs";
+import * as AOC2020_Day3 from "./AOC2020_Day3.mjs";
+import * as AOC2020_Day3_Data from "./AOC2020_Day3_Data.mjs";
+import * as AOC2020_Day3_Data_Sample from "./AOC2020_Day3_Data_Sample.mjs";
 
 Jest.describe("2020 Day3", () => {
   Jest.test("Part 1 - Test Data", () => {
-    let parsed = Belt_Array.map(AOC2020_Day3_Data_Sample$AdventOfCode.data.split("\n"), prim => prim.trim());
-    let result = AOC2020_Day3$AdventOfCode.TreeMap.walk(AOC2020_Day3$AdventOfCode.TreeMap.make(parsed), [
+    let parsed = Belt_Array.map(AOC2020_Day3_Data_Sample.data.split("\n"), prim => prim.trim());
+    let result = AOC2020_Day3.TreeMap.walk(AOC2020_Day3.TreeMap.make(parsed), [
       3,
       1
     ]);
     return Jest.Expect.toEqual(Jest.Expect.expect(result), 7);
   });
   Jest.test("Part 1 - Solve", () => {
-    let parsed = Belt_Array.map(AOC2020_Day3_Data$AdventOfCode.data.split("\n"), prim => prim.trim());
-    let result = AOC2020_Day3$AdventOfCode.TreeMap.walk(AOC2020_Day3$AdventOfCode.TreeMap.make(parsed), [
+    let parsed = Belt_Array.map(AOC2020_Day3_Data.data.split("\n"), prim => prim.trim());
+    let result = AOC2020_Day3.TreeMap.walk(AOC2020_Day3.TreeMap.make(parsed), [
       3,
       1
     ]);
     return Jest.Expect.toEqual(Jest.Expect.expect(result), 162);
   });
   Jest.test("Part 2 - Solve", () => {
-    let result = AOC2020_Day3$AdventOfCode.solvePart2(AOC2020_Day3_Data$AdventOfCode.data);
+    let result = AOC2020_Day3.solvePart2(AOC2020_Day3_Data.data);
     return Jest.Expect.toBe(Jest.Expect.expect(result), "3064612320");
   });
 });
 
-let data = AOC2020_Day3_Data$AdventOfCode.data;
+let data = AOC2020_Day3_Data.data;
 
-let sampleData = AOC2020_Day3_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2020_Day3_Data_Sample.data;
 
 export {
   data,

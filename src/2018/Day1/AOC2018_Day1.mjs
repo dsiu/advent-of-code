@@ -2,13 +2,13 @@
 
 import * as Belt_MapInt from "rescript/lib/es6/Belt_MapInt.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
-import * as AOC2018_Day1_Data$AdventOfCode from "./AOC2018_Day1_Data.mjs";
+import * as AOC2018_Day1_Data from "./AOC2018_Day1_Data.mjs";
 
 function sum(x, y) {
   return x + y | 0;
 }
 
-let part1 = Stdlib__Array.reduce(AOC2018_Day1_Data$AdventOfCode.data, 0, sum);
+let part1 = Stdlib__Array.reduce(AOC2018_Day1_Data.data, 0, sum);
 
 let init = {
   sum: 0,
@@ -49,7 +49,7 @@ function runDay1Part2(__x) {
   return solve_part2(__x, init, reducer);
 }
 
-let part2_result = solve_part2(AOC2018_Day1_Data$AdventOfCode.data, init, reducer);
+let part2_result = solve_part2(AOC2018_Day1_Data.data, init, reducer);
 
 let $$Map;
 

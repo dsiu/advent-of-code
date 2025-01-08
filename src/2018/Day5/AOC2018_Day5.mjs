@@ -5,18 +5,18 @@ import * as Belt_List from "rescript/lib/es6/Belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/Belt_Option.js";
 import * as Belt_MapString from "rescript/lib/es6/Belt_MapString.js";
-import * as AOC2018_Day5_Data$AdventOfCode from "./AOC2018_Day5_Data.mjs";
-import * as AOC2018_Day5_Data_Sample$AdventOfCode from "./AOC2018_Day5_Data_Sample.mjs";
+import * as AOC2018_Day5_Data from "./AOC2018_Day5_Data.mjs";
+import * as AOC2018_Day5_Data_Sample from "./AOC2018_Day5_Data_Sample.mjs";
 
 function log(prim) {
   console.log(prim);
 }
 
-let charArray = AOC2018_Day5_Data$AdventOfCode.data.split("");
+let charArray = AOC2018_Day5_Data.data.split("");
 
 let charList = Belt_List.fromArray(charArray);
 
-let testCharArray = AOC2018_Day5_Data_Sample$AdventOfCode.data.split("");
+let testCharArray = AOC2018_Day5_Data_Sample.data.split("");
 
 let testCharList = Belt_List.fromArray(testCharArray);
 
@@ -232,9 +232,9 @@ function solvePart2(polymars, d) {
   });
 }
 
-let data = AOC2018_Day5_Data$AdventOfCode.data;
+let data = AOC2018_Day5_Data.data;
 
-let sampleData = AOC2018_Day5_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2018_Day5_Data_Sample.data;
 
 export {
   data,

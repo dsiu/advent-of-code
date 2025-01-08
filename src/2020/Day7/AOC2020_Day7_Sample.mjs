@@ -2,9 +2,9 @@
 
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
-import * as AOC2020_Day7$AdventOfCode from "./AOC2020_Day7.mjs";
-import * as AOC2020_Day7_Data$AdventOfCode from "./AOC2020_Day7_Data.mjs";
-import * as AOC2020_Day7_Data_Sample$AdventOfCode from "./AOC2020_Day7_Data_Sample.mjs";
+import * as AOC2020_Day7 from "./AOC2020_Day7.mjs";
+import * as AOC2020_Day7_Data from "./AOC2020_Day7_Data.mjs";
+import * as AOC2020_Day7_Data_Sample from "./AOC2020_Day7_Data_Sample.mjs";
 
 Jest.describe("2020 Day7", () => {
   Jest.test("parseBag", () => {
@@ -13,31 +13,31 @@ Jest.describe("2020 Day7", () => {
       "no other bags.  ",
       "1 shiny gold bag."
     ];
-    let result = Belt_Array.map(inputs, AOC2020_Day7$AdventOfCode.Rules.parseNumBag);
+    let result = Belt_Array.map(inputs, AOC2020_Day7.Rules.parseNumBag);
     let expected = [
-      AOC2020_Day7$AdventOfCode.Bag.make(2, "muted yellow"),
-      AOC2020_Day7$AdventOfCode.Bag.make(0, ""),
-      AOC2020_Day7$AdventOfCode.Bag.make(1, "shiny gold")
+      AOC2020_Day7.Bag.make(2, "muted yellow"),
+      AOC2020_Day7.Bag.make(0, ""),
+      AOC2020_Day7.Bag.make(1, "shiny gold")
     ];
     return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
   });
   Jest.test("Part 1 - Test Data", () => {
-    let result = AOC2020_Day7$AdventOfCode.solvePart1(AOC2020_Day7_Data_Sample$AdventOfCode.data);
+    let result = AOC2020_Day7.solvePart1(AOC2020_Day7_Data_Sample.data);
     return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
   });
   Jest.test("Part 1 - Solve", () => {
-    let result = AOC2020_Day7$AdventOfCode.solvePart1(AOC2020_Day7_Data$AdventOfCode.data);
+    let result = AOC2020_Day7.solvePart1(AOC2020_Day7_Data.data);
     return Jest.Expect.toEqual(Jest.Expect.expect(result), 115);
   });
   Jest.test("Part 2 - Solve", () => {
-    let result = AOC2020_Day7$AdventOfCode.solvePart2(AOC2020_Day7_Data$AdventOfCode.data);
+    let result = AOC2020_Day7.solvePart2(AOC2020_Day7_Data.data);
     return Jest.Expect.toEqual(Jest.Expect.expect(result), 1250);
   });
 });
 
-let data = AOC2020_Day7_Data$AdventOfCode.data;
+let data = AOC2020_Day7_Data.data;
 
-let sampleData = AOC2020_Day7_Data_Sample$AdventOfCode.data;
+let sampleData = AOC2020_Day7_Data_Sample.data;
 
 export {
   data,
