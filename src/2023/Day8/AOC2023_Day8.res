@@ -1,13 +1,12 @@
 @@uncurried
 
 open Stdlib
-open Utils
 let log = Console.log
 let log2 = Console.log2
 
 type direction = L | R
 type node = Node(string, string)
-type desert = Stdlib.Map.t<string, node>
+type desert = Map.t<string, node>
 
 module State = {
   type t = {here: string, steps: int}
@@ -58,7 +57,7 @@ let isGoal: State.t => bool = ({here, steps: _}) => {
  * @return {State.t} - The updated state after taking the step in the given direction.
  */
 let step: (desert, State.t, direction) => State.t = (desert, {here, steps}, direction) => {
-  let Node(thereL, thereR) = desert->Stdlib.Map.get(here)->Option.getExn
+  let Node(thereL, thereR) = desert->Map.get(here)->Option.getExn
   switch direction {
   | L => {here: thereL, steps: steps + 1}
   | R => {here: thereR, steps: steps + 1}
@@ -115,7 +114,7 @@ let part1: ((array<direction>, desert)) => int = ((directions, desert)) => {
 let part2: ((array<direction>, desert)) => bigint = ((directions, desert)) => {
   open State
   desert
-  ->Stdlib.Map.keys
+  ->Map.keys
   ->Iterator.toArray
   ->Array.filter(Fn.compose3(String.last, String.compare("A", ...), Ordering.isEqual, ...))
   ->Array.map(s => walk(desert, directions, {here: s, steps: 0}).steps)
@@ -129,13 +128,15 @@ module ProblemParser = {
   let justSpace: P.t<unit> = P.void(P.many(P.str(" ")))
   let debug = P.tapLog
 
-  let mkNode = a => b => {
-    Node(a, b)
-  }
+  let mkNode = a =>
+    b => {
+      Node(a, b)
+    }
 
-  let mkDesertLine = a => b => {
-    (a, b)
-  }
+  let mkDesertLine = a =>
+    b => {
+      (a, b)
+    }
 
   let nameP = P.\"<$$>"(P.many(P.anyAlphaOrDigit), l => l->List.toArray->Array.join(""))
 
@@ -146,18 +147,17 @@ module ProblemParser = {
     mkDesertLine->\"<$>"(justSpace->\"*>"(nameP)->\"<*"(P.str(" = ")))->\"<*>"(nodeP)
 
   let mkDesert = a => {
-    Stdlib.Map.fromArray(a->List.toArray)
+    Map.fromArray(a->List.toArray)
   }
 
   let desertP = mkDesert->\"<$>"(P.sepBy(P.eol, desertLineP))
 
   let directionP = L->\"<$"(P.str("L"))->\"<|>"(R->\"<$"(P.str("R")))
 
-  let mkProblem: list<direction> => desert => (array<direction>, desert) = (a: list<direction>) => (
-    b: desert,
-  ) => {
-    (a->List.toArray, b)
-  }
+  let mkProblem: list<direction> => desert => (array<direction>, desert) = (a: list<direction>) =>
+    (b: desert) => {
+      (a->List.toArray, b)
+    }
 
   let problemP = mkProblem->\"<$>"(P.many(directionP)->\"<*"(P.many1(P.eol)))->\"<*>"(desertP)
 

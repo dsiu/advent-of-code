@@ -1,7 +1,6 @@
 // @@uncurried
 
 open Stdlib
-open Utils
 let log = Console.log
 let log2 = Console.log2
 
@@ -249,10 +248,11 @@ module HandsParser = {
   open P.Infix
   let justSpace: P.t<unit> = P.void(P.many(P.str(" ")))
 
-  let handC = a => b => {
-    let cards = a->List.toArray
-    Hand(cards, b)
-  }
+  let handC = a =>
+    b => {
+      let cards = a->List.toArray
+      Hand(cards, b)
+    }
 
   //  let cardP =
   //    Two

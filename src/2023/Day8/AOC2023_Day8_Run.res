@@ -1,11 +1,8 @@
-@@uncurried
-
-open Stdlib
-
 let log = Console.log
-let data = AOC2023_Day7_Data.data
-let sampleData = AOC2023_Day7_Data_Sample.data
-let {solvePart1, solvePart2} = module(AOC2023_Day7)
+let data = AOC2023_Day8_Data.data
+let sampleData = AOC2023_Day8_Data_Sample.data
+let sampleData2 = AOC2023_Day8_Data_Sample.data2
+let {solvePart1, solvePart2} = module(AOC2023_Day8)
 
 Console.time("Part 1")
 
@@ -20,7 +17,7 @@ Console.timeEnd("Part 1")
 
 Console.time("Part 2")
 
-//let part2 = solvePart2(sampleData)
+//let part2 = solvePart2(sampleData2)
 let part2 = solvePart2(data)
 
 "Part 2 Result"->log

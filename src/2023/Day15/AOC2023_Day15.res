@@ -1,5 +1,4 @@
 open Stdlib
-open Utils
 let log = Console.log
 let log2 = Console.log2
 
@@ -135,9 +134,10 @@ module InstructionParser = {
 
   let removeP = mkRemove->\"<$>"(\"<*"(P.many1(P.anyAlpha), P.str("-")))
 
-  let mkInsert = a => b => {
-    Insert(a->nonEmptyListToString, b)
-  }
+  let mkInsert = a =>
+    b => {
+      Insert(a->nonEmptyListToString, b)
+    }
   //  let insertP = P.many1(P.anyAlpha)->\"<*"(P.str("="))->\"<*>"(P.many1(P.anyDigit))
   let insertP = mkInsert->\"<$>"(P.many1(P.anyAlpha)->\"<*"(P.str("=")))->\"<*>"(P.anyInt)
 
@@ -148,7 +148,7 @@ module InstructionParser = {
   // would stack overflow if the input str is too long (ie: too many "," seperated items)
   // instead, just parse 1 instruction at a time.
   let run = str => {
-    instructionP->P.runParser(str, _)->Result.getExn
+    instructionP->(P.runParser(str, _))->Result.getExn
   }
 }
 
