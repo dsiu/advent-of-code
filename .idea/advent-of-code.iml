@@ -6,10 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/__tests__" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/interop" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint" />
-      <excludeFolder url="file://$MODULE_DIR$/.yarn" />
-      <excludeFolder url="file://$MODULE_DIR$/coverage" />
-      <excludeFolder url="file://$MODULE_DIR$/lib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

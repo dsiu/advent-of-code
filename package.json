@@ -26,7 +26,7 @@
       "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@rescript/core|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rescript-bag|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|@dsiu/rescript-stdlib-fp|@dsiu/rescript-graphology|@greenlabs/garter|relude|bs-bastet|relude-parse|)/)"
+      "<rootDir>/node_modules/(?!(rescript|@rescript/core|@glennsl/rescript-jest|@ryyppy/rescript-promise|re-fp|rescript-bag|@resinfo/parser|rescript-js|js-array2-ex|tablecloth-rescript|@dsiu/rescript-stdlib-fp|@dsiu/rescript-graphology|@greenlabs/garter|rescript-relude|rescript-bastet|rescript-relude-parse|)/)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -49,12 +49,12 @@
     "@jmagaram/rescript-extras": "*",
     "@jmagaram/rescript-seq": "*",
     "@rolandpeelen/rewatch": "^1.0.9",
-    "bs-bastet": "*",
     "debug": "^4.4.0",
     "ms": "^2.1.3",
-    "relude": "*",
-    "relude-parse": "*",
+    "rescript-bastet": "*",
     "rescript-nodejs": "^16.1.0",
+    "rescript-relude": "*",
+    "rescript-relude-parse": "*",
     "rescript-schema": "^9.0.1"
   }
 }

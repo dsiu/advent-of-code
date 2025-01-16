@@ -5,8 +5,8 @@ import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
 import * as Stdlib__Result from "@dsiu/rescript-stdlib-fp/src/Stdlib__Result.mjs";
-import * as Relude_NonEmpty from "relude/src/Relude_NonEmpty.mjs";
-import * as ReludeParse_Parser from "relude-parse/src/ReludeParse_Parser.mjs";
+import * as Relude_NonEmpty from "rescript-relude/src/Relude_NonEmpty.mjs";
+import * as ReludeParse_Parser from "rescript-relude-parse/src/ReludeParse_Parser.mjs";
 
 function log(prim) {
   console.log(prim);

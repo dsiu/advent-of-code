@@ -9,7 +9,7 @@ import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Stdlib__Result from "@dsiu/rescript-stdlib-fp/src/Stdlib__Result.mjs";
 import * as Primitive_object from "rescript/lib/es6/Primitive_object.js";
 import * as Stdlib__Ordering from "@dsiu/rescript-stdlib-fp/src/Stdlib__Ordering.mjs";
-import * as ReludeParse_Parser from "relude-parse/src/ReludeParse_Parser.mjs";
+import * as ReludeParse_Parser from "rescript-relude-parse/src/ReludeParse_Parser.mjs";
 import * as TableclothComparator from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothComparator.mjs";
 
 function log(prim) {

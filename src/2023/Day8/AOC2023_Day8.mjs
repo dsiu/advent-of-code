@@ -9,7 +9,7 @@ import * as Stdlib__Result from "@dsiu/rescript-stdlib-fp/src/Stdlib__Result.mjs
 import * as Stdlib__String from "@dsiu/rescript-stdlib-fp/src/Stdlib__String.mjs";
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 import * as Stdlib__Ordering from "@dsiu/rescript-stdlib-fp/src/Stdlib__Ordering.mjs";
-import * as ReludeParse_Parser from "relude-parse/src/ReludeParse_Parser.mjs";
+import * as ReludeParse_Parser from "rescript-relude-parse/src/ReludeParse_Parser.mjs";
 
 function log(prim) {
   console.log(prim);
