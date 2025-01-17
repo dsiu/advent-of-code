@@ -27,22 +27,21 @@ let raceArrayToString = Utils.Printable.Array.toString(_, raceToString)
 // copy from RescriptCore.Array and make it work with BigInt
 //
 module BigArray = {
-  open BigInt
   @new external makeUninitializedUnsafe: bigint => array<'a> = "Array"
   external setUnsafe: (array<'a>, bigint, 'a) => unit = "%array_unsafe_set"
 
   let fromInitializer = (~length: bigint, f) =>
-    if length <= 0->fromInt {
+    if length <= 0->BigInt.fromInt {
       []
     } else {
       let arr = makeUninitializedUnsafe(length)
-      let init = 0->fromInt
-      let end = length - 1->fromInt
+      let init = 0->BigInt.fromInt
+      let end = length - 1->BigInt.fromInt
 
       let i = ref(init)
       while i.contents <= end {
         arr->setUnsafe(i.contents, f(i.contents))
-        i := i.contents + 1->fromInt
+        i := i.contents + 1->BigInt.fromInt
       }
       arr
     }
@@ -62,8 +61,7 @@ module BigArray = {
  * The length of the resulting array is the number of ways to win the race.
  */
 let waysToWinBurteForce: race => int = ({time, distance}) => {
-  open BigInt
-  let h = BigArray.fromInitializer(~length=time - 1->fromInt, i => i + 1->fromInt)
+  let h = BigArray.fromInitializer(~length=time - 1->BigInt.fromInt, i => i + 1->BigInt.fromInt)
 
   h
   ->Array.filterMap(h => {
@@ -164,9 +162,10 @@ module SheetParser = {
 
   // A function that takes two lists of integers (representing times and distances) and returns a list of `race` objects.
   // Each `race` object is created by calling the `mkRaceFromInt` function with a pair of corresponding time and distance.
-  let mkRace = a => b => {
-    List.map2(a, b, (time, distance) => mkRaceFromInt(time, distance))
-  }
+  let mkRace = a =>
+    b => {
+      List.map2(a, b, (time, distance) => mkRaceFromInt(time, distance))
+    }
 
   // A parser that matches a sequence of races in the input string.
   // Each race is represented by a "Time:" line followed by a "Distance:" line.
