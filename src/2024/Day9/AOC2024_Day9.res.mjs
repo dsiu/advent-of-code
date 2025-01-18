@@ -162,12 +162,7 @@ function solvePart1(data) {
   let diskMap = parse(data);
   let match = expand(diskMap);
   let match$1 = packBlocks(match[0], match[1]);
-  let disk$p = match$1[0];
-  let prim = showDiskFree(disk$p, match$1[1]);
-  console.log(prim);
-  let prim$1 = Belt_MapInt.toArray(disk$p);
-  console.log(prim$1);
-  let __x = Belt_MapInt.toArray(disk$p).map(param => BigInt(param[0]) * BigInt(param[1]));
+  let __x = Belt_MapInt.toArray(match$1[0]).map(param => BigInt(param[0]) * BigInt(param[1]));
   return Stdlib__Array.reduce(__x, 0n, (prim0, prim1) => prim0 + prim1);
 }
 

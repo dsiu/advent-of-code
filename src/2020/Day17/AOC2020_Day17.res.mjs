@@ -232,10 +232,7 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  let prim = parse(data);
-  console.log(prim);
   let grid0 = makeGrid(parse(data));
-  console.log(grid0);
   return TableclothSet.length(iterate(grid0, update, 6));
 }
 

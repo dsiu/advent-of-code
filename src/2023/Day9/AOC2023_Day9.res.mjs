@@ -72,15 +72,6 @@ function parse(data) {
 }
 
 function solvePart1(data) {
-  let prim = expand([
-    10,
-    13,
-    16,
-    21,
-    30,
-    45
-  ]);
-  console.log(prim);
   return part1(parse(data));
 }
 
