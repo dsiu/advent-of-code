@@ -2,9 +2,9 @@
   "name": "advent-of-code",
   "version": "0.1.0",
   "scripts": {
-    "build": "rewatch build .",
-    "watch": "rewatch watch .",
-    "clean": "rewatch clean .",
+    "clean": "rescript clean",
+    "build": "rescript",
+    "watch": "rescript build -w",
     "test": "jest",
     "reformat": "./scripts/reformat.sh"
   },
