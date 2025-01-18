@@ -109,9 +109,9 @@ let rec iterate = (grid, f, times) => {
 let parse = data => data->splitNewline->Array.map(compose(Stdlib.String.trim, splitChars))
 
 let solvePart1 = data => {
-  data->parse->log
+  //  data->parse->log
   let grid0 = data->parse->makeGrid
-  grid0->log
+  //  grid0->log
   let finalGrid = iterate(grid0, update, 6)
   TC.Set.length(finalGrid)
 }

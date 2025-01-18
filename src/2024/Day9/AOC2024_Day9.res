@@ -128,10 +128,10 @@ let solvePart1 = data => {
   let diskMap = data->parse
   let (disk, free) = diskMap->expand
   let (disk', free') = packBlocks(disk, free)
-  showDiskFree(disk', free')->log
+  //  showDiskFree(disk', free')->log
 
   // todo: the sum is too big for int, use sumBigIntArray
-  disk'->M.toArray->log
+  //  disk'->M.toArray->log
   disk'
   ->M.toArray
   ->Array.map(((k, v)) => k->BigInt.fromInt * v->BigInt.fromInt)

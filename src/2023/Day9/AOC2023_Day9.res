@@ -131,7 +131,7 @@ let parse = data => {
 }
 
 let solvePart1 = data => {
-  expand([10, 13, 16, 21, 30, 45])->log
+  //  expand([10, 13, 16, 21, 30, 45])->log
   data->parse->part1
 }
 
