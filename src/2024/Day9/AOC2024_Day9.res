@@ -127,7 +127,7 @@ let parse = data =>
 let solvePart1 = data => {
   let diskMap = data->parse
   let (disk, free) = diskMap->expand
-  let (disk', free') = packBlocks(disk, free)
+  let (disk', _free') = packBlocks(disk, free)
   //  showDiskFree(disk', free')->log
 
   // todo: the sum is too big for int, use sumBigIntArray
