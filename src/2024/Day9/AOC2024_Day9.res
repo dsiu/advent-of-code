@@ -7,6 +7,9 @@ module S = Belt.Set.Int
 type disk = M.t<int>
 type free = S.t
 
+type region = Free(int) | Used(int, int)
+type rDisk = array<region>
+
 // todo: put in StdLib
 // ref: https://hackage.haskell.org/package/containers-0.5.5.1/docs/Data-IntMap-Lazy.html#v:union
 // O(n+m). The (left-biased) union of two maps. It prefers the first map when duplicate keys are encountered
@@ -33,6 +36,55 @@ let setDeleteFindMin: S.t => (int, S.t) = s => {
   (k, s->S.remove(k))
 }
 
+let fileID: region => int = r => {
+  switch r {
+  | Used(_, fID) => fID
+  | _ => -1
+  }
+}
+
+let freeSize: region => int = r => {
+  switch r {
+  | Free(size) => size
+  | _ => 0
+  }
+}
+
+let expandRegion: ((bool, int, int, rDisk), int) => (bool, int, int, rDisk) = (acc, size) => {
+  let (_isFile, _pos, _fID, _disk) = acc
+  switch (acc, size) {
+  | ((true, pos, fID, disk), size) => (false, pos + size, fID + 1, [Used(size, fID), ...disk])
+  | ((false, pos, fID, disk), 0) => (true, pos, fID, disk)
+  | ((false, pos, fID, disk), size) => (true, pos + size, fID, [Free(size), ...disk])
+  }
+}
+
+let toBlock: ((int, disk, free), region) => (int, disk, free) = (acc, r) => {
+  let (_pos, _disk, _free) = acc
+  switch (acc, r) {
+  | ((pos, disk, free), Free(size)) => {
+      let gap = List.fromInitializer(~length=size, i => pos + i)
+      let free' = S.union(free, gap->List.toArray->S.fromArray)
+      (pos + size, disk, free')
+    }
+  | ((pos, disk, free), Used(size, fileID)) => {
+      let fileExtent = Array.zip(
+        Array.fromInitializer(~length=size, i => pos + i),
+        Array.make(~length=size, fileID),
+      )
+
+      let file = M.fromArray(fileExtent)
+      let disk' = union(disk, file)
+      (pos + size, disk', free)
+    }
+  }
+}
+
+let toBlocks: rDisk => (disk, free) = rdisk => {
+  let (_, disk, free) = rdisk->Array.reduce((0, M.empty, S.empty), toBlock)
+  (disk, free)
+}
+
 let expandMapItem: ((bool, int, int, disk, free), int) => (bool, int, int, disk, free) = (
   acc,
   size,
@@ -57,7 +109,8 @@ let expandMapItem: ((bool, int, int, disk, free), int) => (bool, int, int, disk,
 }
 
 let expand: array<int> => (disk, free) = diskMap => {
-  let (_, _, _, disk, free) = diskMap->Array.reduce((true, 0, 0, M.empty, S.empty), expandMapItem)
+  let (_isFile, _pos, _fileID, disk, free) =
+    diskMap->Array.reduce((true, 0, 0, M.empty, S.empty), expandMapItem)
   (disk, free)
 }
 
