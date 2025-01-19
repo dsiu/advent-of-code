@@ -2,8 +2,8 @@ open Stdlib
 let log = Console.log
 let log2 = Console.log2
 
-module M = Belt.Map.Int
-module S = Belt.Set.Int
+module M = Relude.Map.WithOrd(Relude.Int.Ord)
+module S = Relude.Set.WithOrd(Relude.Int.Ord)
 type disk = M.t<int>
 type free = S.t
 
@@ -14,26 +14,26 @@ type rDisk = array<region>
 // ref: https://hackage.haskell.org/package/containers-0.5.5.1/docs/Data-IntMap-Lazy.html#v:union
 // O(n+m). The (left-biased) union of two maps. It prefers the first map when duplicate keys are encountered
 let union: (M.t<'a>, M.t<'a>) => M.t<'a> = (a, b) => {
-  M.merge(a, b, (_k, v1, v2) => {
+  M.merge((_k, v1, v2) => {
     switch (v1, v2) {
     | (Some(v1), Some(_)) => Some(v1) // left-biased
     | (Some(v1), None) => Some(v1)
     | (None, Some(v2)) => Some(v2)
     | (None, None) => None
     }
-  })
+  }, a, b)
 }
 
 // todo: put in StdLib
 let mapDeleteFindMax: M.t<'a> => ((int, 'a), M.t<'a>) = m => {
-  let (k, v) = M.maximum(m)->Option.getUnsafe
-  ((k, v), m->M.remove(k))
+  let (k, v) = M.max(m)->Option.getUnsafe
+  ((k, v), m->M.remove(k, _))
 }
 
 // todo: put in StdLib
 let setDeleteFindMin: S.t => (int, S.t) = s => {
   let k = S.minimum(s)->Option.getUnsafe
-  (k, s->S.remove(k))
+  (k, s->S.remove(k, _))
 }
 
 let fileID: region => int = r => {
@@ -59,6 +59,12 @@ let expandRegion: ((bool, int, int, rDisk), int) => (bool, int, int, rDisk) = (a
   }
 }
 
+let expandRDisk: array<int> => rDisk = diskMap => {
+  let diskMap = Array.toReversed(diskMap)
+  let (_isFile, _pos, _fID, disk) = diskMap->Array.reduce((true, 0, 0, []), expandRegion)
+  disk
+}
+
 let toBlock: ((int, disk, free), region) => (int, disk, free) = (acc, r) => {
   let (_pos, _disk, _free) = acc
   switch (acc, r) {
@@ -81,8 +87,71 @@ let toBlock: ((int, disk, free), region) => (int, disk, free) = (acc, r) => {
 }
 
 let toBlocks: rDisk => (disk, free) = rdisk => {
-  let (_, disk, free) = rdisk->Array.reduce((0, M.empty, S.empty), toBlock)
+  let (_, disk, free) = rdisk->Array.reduce((0, M.make(), S.empty), toBlock)
   (disk, free)
+}
+
+let findFree: (int, rDisk) => Option.t<(rDisk, region, rDisk)> = (size, disk) => {
+  let (prefix, suffix) = disk->Array.break(r => freeSize(r) >= size)
+
+  switch (size, disk) {
+  | (0, _suffix) => None
+  | _ => (prefix, Array.headUnsafe(suffix), Array.tail(suffix))->Some
+  }
+}
+
+exception Impossible(string)
+let rec tidyRegion: (rDisk, region) => rDisk = (rdisk, r) => {
+  switch (r, rdisk) {
+  | (Free(0), rdisk) => rdisk
+  | (Free(size) as region, rdisk) => {
+      let head = rdisk[0]
+
+      switch head {
+      | Some(Free(size1)) => {
+          let rdisk' = Array.tail(rdisk)
+
+          tidyRegion(rdisk', Free(size + size1))
+        }
+      | Some(Used(_, _))
+      | None =>
+        [region, ...rdisk]
+      }
+    }
+  | (region, rdisk) => [region, ...rdisk]
+  }
+}
+
+let tidy: rDisk => rDisk = disk => Array.reduceRight(disk, [], tidyRegion)
+
+let packFile: (int, rDisk) => rDisk = (fid, disk) => {
+  let (prefixMid, suffix0) = disk->Array.span(r => fileID(r) != fid)
+  let Used(fSize, _) = suffix0[0]->Option.getUnsafe
+  let suffix = Array.tail(suffix0)
+
+  let gap = findFree(fSize, prefixMid)
+
+  switch gap {
+  | None => disk
+  | Some(prefix, Free(gapSize), mid) =>
+    [...prefix, Used(fSize, fid), Free(gapSize - fSize), ...mid, Free(fSize), ...suffix]
+  }
+}
+
+let rec packBelow: (int, rDisk) => rDisk = (fid, disk) => {
+  switch (fid, disk) {
+  | (_, []) => []
+  | (0, disk) => disk
+  | (fid, disk) => {
+      let disk' = packFile(fid, disk)->tidy
+      packBelow(fid - 1, disk')
+    }
+  }
+}
+
+let packFiles: rDisk => rDisk = disk => {
+  let maxID = disk->Array.map(fileID)->Utils.maxIntInArray
+  packBelow(maxID, disk)
 }
 
 let expandMapItem: ((bool, int, int, disk, free), int) => (bool, int, int, disk, free) = (
@@ -110,7 +179,7 @@ let expandMapItem: ((bool, int, int, disk, free), int) => (bool, int, int, disk,
 
 let expand: array<int> => (disk, free) = diskMap => {
   let (_isFile, _pos, _fileID, disk, free) =
-    diskMap->Array.reduce((true, 0, 0, M.empty, S.empty), expandMapItem)
+    diskMap->Array.reduce((true, 0, 0, M.make(), S.empty), expandMapItem)
   (disk, free)
 }
 
@@ -118,7 +187,7 @@ let showDisk: disk => string = disk => {
   let pMax = M.maxKey(disk)->Option.getUnsafe
   let str = ref("")
   for i in 0 to pMax {
-    let char = switch M.get(disk, i) {
+    let char = switch M.get(i, disk) {
     | Some(v) => v->Int.toString
     | None => "."
     }
@@ -131,7 +200,7 @@ let showFree: free => string = free => {
   let pMax = S.maximum(free)->Option.getUnsafe
   let str = ref("")
   for i in 0 to pMax {
-    let char = S.has(free, i) ? "+" : "."
+    let char = S.contains(i, free) ? "+" : "."
     str.contents = str.contents ++ char
   }
   str.contents
@@ -155,7 +224,7 @@ let packBlocksStep: (disk, free) => (disk, free) = (disk, free) => {
         let ((from, fID), disk') = mapDeleteFindMax(disk)
         let (to, free') = setDeleteFindMin(free)
 
-        (disk'->M.set(to, fID), free'->S.add(from))
+        (disk'->M.set(to, fID, _), free'->S.add(from, _))
       }
 }
 
@@ -192,6 +261,19 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  data->ignore
-  2
+  let diskMap = data->parse
+  diskMap->log2("diskMap", _)
+  let rDisk = diskMap->expandRDisk
+  rDisk->log2("rDisk", _)
+  let rDisk' = packFiles(rDisk)
+  rDisk'->log2("rDisk'", _)
+
+  let (disk, free) = rDisk'->toBlocks
+
+  // todo: the sum is too big for int, use sumBigIntArray
+  //  disk'->M.toArray->log
+  disk
+  ->M.toArray
+  ->Array.map(((k, v)) => k->BigInt.fromInt * v->BigInt.fromInt)
+  ->Array.reduce(_, 0n, BigInt.add)
 }

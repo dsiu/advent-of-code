@@ -10,16 +10,6 @@ function log(prim) {
 
 console.time("Part 1");
 
-let part1 = AOC2024_Day9.solvePart1(AOC2024_Day9_Data.data);
-
-console.log("Part 1 Result");
-
-console.log(part1);
-
-console.timeEnd("Part 1");
-
-console.log("----------");
-
 console.time("Part 2");
 
 let part2 = AOC2024_Day9.solvePart2(AOC2024_Day9_Data_Sample.data);
@@ -44,7 +34,6 @@ export {
   sampleData,
   solvePart1,
   solvePart2,
-  part1,
   part2,
 }
 /*  Not a pure module */
