@@ -23,6 +23,16 @@ let M = Relude_Map.WithOrd(Relude_Int.Ord);
 
 let S = Relude_Set.WithOrd(Relude_Int.Ord);
 
+function rDiskToString(rDisk) {
+  return rDisk.map(r => {
+    if (r.TAG === "Free") {
+      return ".".repeat(r._0);
+    } else {
+      return r._1.toString().repeat(r._0);
+    }
+  }).join("");
+}
+
 function union(a, b) {
   return M.merge((_k, v1, v2) => {
     if (v1 !== undefined) {
@@ -115,13 +125,13 @@ function expandRegion(acc, size) {
 }
 
 function expandRDisk(diskMap) {
-  let diskMap$1 = diskMap.toReversed();
-  return Stdlib__Array.reduce(diskMap$1, [
-      true,
-      0,
-      0,
-      []
-    ], expandRegion)[3];
+  let match = Stdlib__Array.reduce(diskMap, [
+    true,
+    0,
+    0,
+    []
+  ], expandRegion);
+  return match[3].toReversed();
 }
 
 function toBlock(acc, r) {
@@ -164,46 +174,56 @@ function toBlocks(rdisk) {
 function findFree(size, disk) {
   let match = Stdlib__Array.$$break(disk, r => freeSize(r) >= size);
   let suffix = match[1];
-  if (size !== 0) {
+  if (Stdlib__Array.isEmpty(suffix)) {
+    return;
+  } else {
     return [
       match[0],
       Stdlib__Array.headUnsafe(suffix),
       Stdlib__Array.tail(suffix)
     ];
   }
-  
 }
 
 let Impossible = /* @__PURE__ */Primitive_exceptions.create("AOC2024_Day9.Impossible");
 
-function tidyRegion(_rdisk, _r) {
+function tidyRegion(rdisk, r) {
+  let _rdisk = rdisk;
+  let _r = r;
+  let acc = [];
   while (true) {
-    let r = _r;
-    let rdisk = _rdisk;
-    if (r.TAG !== "Free") {
+    let r$1 = _r;
+    let rdisk$1 = _rdisk;
+    if (r$1.TAG !== "Free") {
       return Belt_Array.concatMany([
-        [r],
-        rdisk
+        acc,
+        [r$1],
+        rdisk$1
       ]);
     }
-    let size = r._0;
+    let size = r$1._0;
     if (size === 0) {
-      return rdisk;
+      return Belt_Array.concatMany([
+        acc,
+        rdisk$1
+      ]);
     }
-    let head = rdisk[0];
+    let head = rdisk$1[0];
     if (head === undefined) {
       return Belt_Array.concatMany([
-        [r],
-        rdisk
+        acc,
+        [r$1],
+        rdisk$1
       ]);
     }
     if (head.TAG !== "Free") {
       return Belt_Array.concatMany([
-        [r],
-        rdisk
+        acc,
+        [r$1],
+        rdisk$1
       ]);
     }
-    let rdisk$p = Stdlib__Array.tail(rdisk);
+    let rdisk$p = Stdlib__Array.tail(rdisk$1);
     _r = {
       TAG: "Free",
       _0: size + head._0 | 0
@@ -220,19 +240,16 @@ function tidy(disk) {
 function packFile(fid, disk) {
   let match = Stdlib__Array.span(disk, r => fileID(r) !== fid);
   let suffix0 = match[1];
-  let match$1 = suffix0[0];
-  if (match$1.TAG === "Free") {
+  let r = suffix0[0];
+  let fSize;
+  if (r.TAG === "Free") {
     throw {
-      RE_EXN_ID: "Match_failure",
-      _1: [
-        "AOC2024_Day9.res",
-        129,
-        6
-      ],
+      RE_EXN_ID: Impossible,
+      _1: "damn",
       Error: new Error()
     };
   }
-  let fSize = match$1._0;
+  fSize = r._0;
   let suffix = Stdlib__Array.tail(suffix0);
   let gap = findFree(fSize, match[0]);
   if (gap === undefined) {
@@ -262,30 +279,32 @@ function packFile(fid, disk) {
     ]);
   }
   throw {
-    RE_EXN_ID: "Match_failure",
-    _1: [
-      "AOC2024_Day9.res",
-      134,
-      2
-    ],
+    RE_EXN_ID: Impossible,
+    _1: "damn",
     Error: new Error()
   };
 }
 
-function packBelow(_fid, _disk) {
+function packBelow(fid, disk) {
+  let _fid = fid;
+  let _disk = disk;
+  let acc = [];
   while (true) {
-    let disk = _disk;
-    let fid = _fid;
-    if (disk.length === 0) {
-      return [];
+    let disk$1 = _disk;
+    let fid$1 = _fid;
+    if (disk$1.length === 0) {
+      return acc;
     }
-    if (fid === 0) {
-      return disk;
+    if (fid$1 === 0) {
+      return Belt_Array.concatMany([
+        acc,
+        disk$1
+      ]);
     }
-    let disk$1 = packFile(fid, disk);
-    let disk$p = Stdlib__Array.reduceRight(disk$1, [], tidyRegion);
+    let disk$2 = packFile(fid$1, disk$1);
+    let disk$p = Stdlib__Array.reduceRight(disk$2, [], tidyRegion);
     _disk = disk$p;
-    _fid = fid - 1 | 0;
+    _fid = fid$1 - 1 | 0;
     continue;
   };
 }
@@ -416,12 +435,18 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
+  let prim = Stdlib__Array.takeWhile([
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ], x => x < 3);
+  console.log(prim);
   let diskMap = parse(data);
-  console.log("diskMap", diskMap);
   let rDisk = expandRDisk(diskMap);
-  console.log("rDisk", rDisk);
   let rDisk$p = packFiles(rDisk);
-  console.log("rDisk'", rDisk$p);
   let match = toBlocks(rDisk$p);
   let __x = M.toArray(match[0]).map(param => BigInt(param[0]) * BigInt(param[1]));
   return Stdlib__Array.reduce(__x, 0n, (prim0, prim1) => prim0 + prim1);
@@ -432,6 +457,7 @@ export {
   log2,
   M,
   S,
+  rDiskToString,
   union,
   mapDeleteFindMax,
   setDeleteFindMin,

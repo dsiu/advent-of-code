@@ -12,7 +12,7 @@ console.time("Part 1");
 
 console.time("Part 2");
 
-let part2 = AOC2024_Day9.solvePart2(AOC2024_Day9_Data_Sample.data);
+let part2 = AOC2024_Day9.solvePart2(AOC2024_Day9_Data.data);
 
 console.log("Part 2 Result");
 

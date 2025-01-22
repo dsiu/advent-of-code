@@ -7,8 +7,20 @@ module S = Relude.Set.WithOrd(Relude.Int.Ord)
 type disk = M.t<int>
 type free = S.t
 
-type region = Free(int) | Used(int, int)
+type region =
+  | Free(int) // size
+  | Used(int, int) // size, fileID
+
 type rDisk = array<region>
+
+let rDiskToString : rDisk=>string = rDisk => {
+  rDisk->Array.map(r => {
+    switch r {
+    | Free(size) => String.repeat(".", size)
+    | Used(size, fileID) => String.repeat(fileID->Int.toString(_),size)
+    }
+  })->Array.join("")
+  }
 
 // todo: put in StdLib
 // ref: https://hackage.haskell.org/package/containers-0.5.5.1/docs/Data-IntMap-Lazy.html#v:union
@@ -60,9 +72,8 @@ let expandRegion: ((bool, int, int, rDisk), int) => (bool, int, int, rDisk) = (a
 }
 
 let expandRDisk: array<int> => rDisk = diskMap => {
-  let diskMap = Array.toReversed(diskMap)
   let (_isFile, _pos, _fID, disk) = diskMap->Array.reduce((true, 0, 0, []), expandRegion)
-  disk
+  disk->Array.toReversed
 }
 
 let toBlock: ((int, disk, free), region) => (int, disk, free) = (acc, r) => {
@@ -93,60 +104,74 @@ let toBlocks: rDisk => (disk, free) = rdisk => {
 
 let findFree: (int, rDisk) => Option.t<(rDisk, region, rDisk)> = (size, disk) => {
   let (prefix, suffix) = disk->Array.break(r => freeSize(r) >= size)
-
-  switch (size, disk) {
-  | (0, _suffix) => None
-  | _ => (prefix, Array.headUnsafe(suffix), Array.tail(suffix))->Some
-  }
+//  prefix->rDiskToString->log2("    prefix: ", _)
+//  suffix->rDiskToString->log2("    suffix: ", _)
+  suffix->Array.isEmpty ? None : (prefix, Array.headUnsafe(suffix), Array.tail(suffix))->Some
 }
 
 exception Impossible(string)
-let rec tidyRegion: (rDisk, region) => rDisk = (rdisk, r) => {
-  switch (r, rdisk) {
-  | (Free(0), rdisk) => rdisk
-  | (Free(size) as region, rdisk) => {
-      let head = rdisk[0]
 
-      switch head {
-      | Some(Free(size1)) => {
-          let rdisk' = Array.tail(rdisk)
-
-          tidyRegion(rdisk', Free(size + size1))
+let tidyRegion = (rdisk, r) => {
+  let rec tidyRegionAux = (rdisk, r, acc) => {
+    switch (r, rdisk) {
+    | (Free(0), rdisk) => [...acc, ...rdisk]
+    | (Free(size) as region, rdisk) => {
+        let head = rdisk[0]
+        switch head {
+        | Some(Free(size1)) => {
+            let rdisk' = Array.tail(rdisk)
+            tidyRegionAux(rdisk', Free(size + size1), acc)
+          }
+        | Some(Used(_, _))
+        | None => [...acc, region, ...rdisk]
         }
-      | Some(Used(_, _))
-      | None =>
-        [region, ...rdisk]
       }
+    | (region, rdisk) => [...acc, region, ...rdisk]
     }
-  | (region, rdisk) => [region, ...rdisk]
   }
+  tidyRegionAux(rdisk, r, [])
 }
 
 let tidy: rDisk => rDisk = disk => Array.reduceRight(disk, [], tidyRegion)
 
 let packFile: (int, rDisk) => rDisk = (fid, disk) => {
   let (prefixMid, suffix0) = disk->Array.span(r => fileID(r) != fid)
-  let Used(fSize, _) = suffix0[0]->Option.getUnsafe
+//  fid->Int.toString->log2("        fid: ", _)
+//  prefixMid->rDiskToString->log2("  prefixMid: ", _)
+//  suffix0->rDiskToString->log2("    suffix0: ", _)
+  let r = suffix0[0]->Option.getUnsafe
+  let fSize = switch r {
+  | Free(_) => raise(Impossible("damn"))
+  | Used(fSize, _) => fSize
+  }
+
   let suffix = Array.tail(suffix0)
 
   let gap = findFree(fSize, prefixMid)
 
-  switch gap {
+  let ret = switch gap {
   | None => disk
   | Some(prefix, Free(gapSize), mid) =>
     [...prefix, Used(fSize, fid), Free(gapSize - fSize), ...mid, Free(fSize), ...suffix]
+  | Some(_, Used(_, _), _) => raise(Impossible("damn"))
   }
+
+//  ret->rDiskToString->log2("    returns: ", _)
+  ret
 }
 
-let rec packBelow: (int, rDisk) => rDisk = (fid, disk) => {
-  switch (fid, disk) {
-  | (_, []) => []
-  | (0, disk) => disk
-  | (fid, disk) => {
-      let disk' = packFile(fid, disk)->tidy
-      packBelow(fid - 1, disk')
+let packBelow = (fid, disk) => {
+  let rec packBelowAux = (fid, disk, acc) => {
+    switch (fid, disk) {
+    | (_, []) => acc
+    | (0, disk) => [...acc, ...disk]
+    | (fid, disk) => {
+        let disk' = packFile(fid, disk)->tidy
+        packBelowAux(fid - 1, disk', acc)
+      }
     }
   }
+  packBelowAux(fid, disk, [])
 }
 
 let packFiles: rDisk => rDisk = disk => {
@@ -261,14 +286,17 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-  let diskMap = data->parse
-  diskMap->log2("diskMap", _)
-  let rDisk = diskMap->expandRDisk
-  rDisk->log2("rDisk", _)
-  let rDisk' = packFiles(rDisk)
-  rDisk'->log2("rDisk'", _)
 
-  let (disk, free) = rDisk'->toBlocks
+  [1,2,3,4,5,6]->Array.takeWhile(x => x < 3)->log
+
+  let diskMap = data->parse
+//  diskMap->log2("diskMap", _)
+  let rDisk = diskMap->expandRDisk
+//  rDisk->rDiskToString->log2("rDisk ", _)
+  let rDisk' = packFiles(rDisk)
+//  rDisk'->rDiskToString->log2("rDisk'", _)
+
+  let (disk, _free) = rDisk'->toBlocks
 
   // todo: the sum is too big for int, use sumBigIntArray
   //  disk'->M.toArray->log
