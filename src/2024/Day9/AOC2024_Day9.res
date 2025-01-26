@@ -13,14 +13,16 @@ type region =
 
 type rDisk = array<region>
 
-let rDiskToString : rDisk=>string = rDisk => {
-  rDisk->Array.map(r => {
+let rDiskToString: rDisk => string = rDisk => {
+  rDisk
+  ->Array.map(r => {
     switch r {
     | Free(size) => String.repeat(".", size)
-    | Used(size, fileID) => String.repeat(fileID->Int.toString(_),size)
+    | Used(size, fileID) => String.repeat(fileID->Int.toString(_), size)
     }
-  })->Array.join("")
-  }
+  })
+  ->Array.join("")
+}
 
 // todo: put in StdLib
 // ref: https://hackage.haskell.org/package/containers-0.5.5.1/docs/Data-IntMap-Lazy.html#v:union
@@ -104,8 +106,8 @@ let toBlocks: rDisk => (disk, free) = rdisk => {
 
 let findFree: (int, rDisk) => Option.t<(rDisk, region, rDisk)> = (size, disk) => {
   let (prefix, suffix) = disk->Array.break(r => freeSize(r) >= size)
-//  prefix->rDiskToString->log2("    prefix: ", _)
-//  suffix->rDiskToString->log2("    suffix: ", _)
+  //  prefix->rDiskToString->log2("    prefix: ", _)
+  //  suffix->rDiskToString->log2("    suffix: ", _)
   suffix->Array.isEmpty ? None : (prefix, Array.headUnsafe(suffix), Array.tail(suffix))->Some
 }
 
@@ -123,7 +125,8 @@ let tidyRegion = (rdisk, r) => {
             tidyRegionAux(rdisk', Free(size + size1), acc)
           }
         | Some(Used(_, _))
-        | None => [...acc, region, ...rdisk]
+        | None =>
+          [...acc, region, ...rdisk]
         }
       }
     | (region, rdisk) => [...acc, region, ...rdisk]
@@ -136,9 +139,9 @@ let tidy: rDisk => rDisk = disk => Array.reduceRight(disk, [], tidyRegion)
 
 let packFile: (int, rDisk) => rDisk = (fid, disk) => {
   let (prefixMid, suffix0) = disk->Array.span(r => fileID(r) != fid)
-//  fid->Int.toString->log2("        fid: ", _)
-//  prefixMid->rDiskToString->log2("  prefixMid: ", _)
-//  suffix0->rDiskToString->log2("    suffix0: ", _)
+  //  fid->Int.toString->log2("        fid: ", _)
+  //  prefixMid->rDiskToString->log2("  prefixMid: ", _)
+  //  suffix0->rDiskToString->log2("    suffix0: ", _)
   let r = suffix0[0]->Option.getUnsafe
   let fSize = switch r {
   | Free(_) => raise(Impossible("damn"))
@@ -156,7 +159,7 @@ let packFile: (int, rDisk) => rDisk = (fid, disk) => {
   | Some(_, Used(_, _), _) => raise(Impossible("damn"))
   }
 
-//  ret->rDiskToString->log2("    returns: ", _)
+  //  ret->rDiskToString->log2("    returns: ", _)
   ret
 }
 
@@ -286,15 +289,14 @@ let solvePart1 = data => {
 }
 
 let solvePart2 = data => {
-
-  [1,2,3,4,5,6]->Array.takeWhile(x => x < 3)->log
+  [1, 2, 3, 4, 5, 6]->Array.takeWhile(x => x < 3)->log
 
   let diskMap = data->parse
-//  diskMap->log2("diskMap", _)
+  //  diskMap->log2("diskMap", _)
   let rDisk = diskMap->expandRDisk
-//  rDisk->rDiskToString->log2("rDisk ", _)
+  //  rDisk->rDiskToString->log2("rDisk ", _)
   let rDisk' = packFiles(rDisk)
-//  rDisk'->rDiskToString->log2("rDisk'", _)
+  //  rDisk'->rDiskToString->log2("rDisk'", _)
 
   let (disk, _free) = rDisk'->toBlocks
 
