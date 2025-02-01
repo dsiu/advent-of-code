@@ -22,6 +22,7 @@ type agendum = {
 
 type agenda = array<agendum>
 
+
 let parse = data => {
   data
   ->splitNewline

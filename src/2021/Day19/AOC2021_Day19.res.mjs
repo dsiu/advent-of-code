@@ -233,7 +233,7 @@ function matchingTransform(scanner1, scanner2) {
 }
 
 function mkReconstruction(scanners) {
-  if (scanners) {
+  if (scanners !== 0) {
     return {
       TAG: "Reconstruction",
       found: /* [] */0,
@@ -264,7 +264,7 @@ function transformScanner(param) {
 
 function reconstructStep(param) {
   let working = param.working;
-  if (working) {
+  if (working !== 0) {
     let current = working.hd;
     let waiting = param.waiting;
     let passMatches = Belt_List.keep(waiting, x => vagueMatch(current, x));
@@ -297,7 +297,7 @@ function reconstructStep(param) {
 function reconstruct(_r) {
   while (true) {
     let r = _r;
-    if (!r.working) {
+    if (r.working === 0) {
       return r;
     }
     _r = reconstructStep(r);

@@ -35,12 +35,12 @@ function morph(a, b, rules) {
 
 function iterate_no_tail_opt(param) {
   let inner = (l, rules) => {
-    if (!l) {
+    if (l === 0) {
       return /* [] */0;
     }
     let match = l.tl;
     let last = l.hd;
-    if (!match) {
+    if (match === 0) {
       return {
         hd: last,
         tl: /* [] */0
@@ -68,12 +68,12 @@ function iterate_tail_opt(param) {
   while (true) {
     let acc = _acc;
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       return acc;
     }
     let match = l.tl;
     let last = l.hd;
-    if (!match) {
+    if (match === 0) {
       return Belt_List.concat(acc, {
         hd: last,
         tl: /* [] */0
@@ -127,12 +127,12 @@ function genPairsMap(template) {
   let _l = template;
   while (true) {
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       return acc;
     }
     let match = l.tl;
     let last = l.hd;
-    if (!match) {
+    if (match === 0) {
       return Utils.mutableMapStringUpdate(acc, last, Utils.increaseBy1L);
     }
     let h2 = match.hd;

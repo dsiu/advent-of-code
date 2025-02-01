@@ -12,7 +12,7 @@ function head(x) {
 
 function tail(l) {
   let match = l.more;
-  if (match) {
+  if (match !== 0) {
     return {
       head: match.hd,
       more: match.tl

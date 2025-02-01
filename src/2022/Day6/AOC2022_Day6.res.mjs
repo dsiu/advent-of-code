@@ -2,6 +2,7 @@
 
 import * as Utils from "../../Utils.res.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
+import * as Primitive_object from "rescript/lib/es6/Primitive_object.js";
 
 function log(prim) {
   console.log(prim);
@@ -10,7 +11,7 @@ function log(prim) {
 let parse = Utils.splitChars;
 
 function allDifferent(cs) {
-  return Stdlib__Array.equal(Stdlib__Array.uniq(cs), cs, (prim0, prim1) => prim0 === prim1);
+  return Stdlib__Array.equal(Stdlib__Array.uniq(cs), cs, Primitive_object.equal);
 }
 
 function hasSame(x) {

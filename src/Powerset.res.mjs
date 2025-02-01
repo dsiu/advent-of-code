@@ -4,7 +4,7 @@ import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.res.mjs
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 
 function powersetListMap_(set) {
-  if (!set) {
+  if (set === 0) {
     return {
       hd: /* [] */0,
       tl: /* [] */0
@@ -20,7 +20,7 @@ function powersetListMap_(set) {
 }
 
 function powersetListFlatMap_(set) {
-  if (!set) {
+  if (set === 0) {
     return {
       hd: /* [] */0,
       tl: /* [] */0

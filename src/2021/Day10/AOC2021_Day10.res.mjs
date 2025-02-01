@@ -272,7 +272,7 @@ function add(a, b) {
 function makeParseTree(xs) {
   let match = Belt_List.fromArray(tokenize(xs));
   let match$1;
-  if (match) {
+  if (match !== 0) {
     match$1 = [
       match.hd,
       match.tl
@@ -291,7 +291,7 @@ function makeParseTree(xs) {
     let stack = _stack;
     let tree = _tree;
     let inputs = _inputs;
-    if (!inputs) {
+    if (inputs === 0) {
       return [
         tree,
         stack
@@ -339,7 +339,7 @@ let ParseTree = {
 function process(xs) {
   let match = Belt_List.fromArray(tokenize(xs));
   let match$1;
-  if (match) {
+  if (match !== 0) {
     match$1 = [
       match.hd,
       match.tl
@@ -356,7 +356,7 @@ function process(xs) {
   while (true) {
     let stack = _stack;
     let inputs = _inputs;
-    if (!inputs) {
+    if (inputs === 0) {
       return {
         TAG: "Incomplete",
         _0: stack

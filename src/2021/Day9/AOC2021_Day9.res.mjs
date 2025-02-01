@@ -51,7 +51,7 @@ function getAdjacents(t, param) {
 function isLowest(x, _adjs) {
   while (true) {
     let adjs = _adjs;
-    if (!adjs) {
+    if (adjs === 0) {
       return true;
     }
     if (x >= adjs.hd._1) {

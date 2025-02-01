@@ -13,7 +13,7 @@ function MakeStack(Item) {
   });
   let pop = contents => {
     let contents$1 = contents._0;
-    if (contents$1) {
+    if (contents$1 !== 0) {
       let newStack = {
         TAG: "Contents",
         _0: contents$1.tl
@@ -148,7 +148,7 @@ function push(contents, x) {
 
 function pop(contents) {
   let contents$1 = contents._0;
-  if (contents$1) {
+  if (contents$1 !== 0) {
     let newStack = {
       TAG: "Contents",
       _0: contents$1.tl
@@ -334,7 +334,7 @@ function push$1(contents, x) {
 
 function pop$1(contents) {
   let contents$1 = contents._0;
-  if (contents$1) {
+  if (contents$1 !== 0) {
     let newStack = {
       TAG: "Contents",
       _0: contents$1.tl
