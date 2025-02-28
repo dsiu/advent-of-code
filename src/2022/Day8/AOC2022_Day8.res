@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 open Utils
 let log = Js.Console.log
 
@@ -36,8 +36,8 @@ let countVisible: forest => int = forest => {
 let part1: forest => int = compose(setVisibilityForest, countVisible)
 
 let tracks: (forest, int, int) => forest = (forest, row, col) => {
-  let (l, r) = forest->A.getUnsafe(row)->(A.splitAt(_, ~index=col))
-  let (u, d) = forest->A.transpose->A.getUnsafe(col)->(A.splitAt(_, ~index=row))
+  let (l, r) = forest->A.getUnsafe(row)->A.splitAt(_, ~index=col)
+  let (u, d) = forest->A.transpose->A.getUnsafe(col)->A.splitAt(_, ~index=row)
 
   [l->A.toReversed, r->A.drop(1), u->A.toReversed, d->A.drop(1)]
 }

@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 open Utils
 let log = Console.log
 let log2 = Console.log2
@@ -20,7 +20,7 @@ let inRange: (bounds, position) => bool = ((min, max), c) => {
 }
 
 let antinodeOfNode: (position, position) => position = (a, b) => {
-  Coord_V2.mul(a, 2)->(Coord_V2.sub(_, b))
+  Coord_V2.mul(a, 2)->Coord_V2.sub(_, b)
 }
 
 let antinodesOf: (bounds, array<position>) => array<position> = (bounds, ps) => {

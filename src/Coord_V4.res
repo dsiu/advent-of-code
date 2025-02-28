@@ -1,10 +1,10 @@
-open Stdlib
+open StdlibFp
 
 module TC = Tablecloth
 
 type t = TableclothTuple4.t<int, int, int, int>
 
-let intCompare = (a, b) => Int.compare(a, b)->Stdlib.Ordering.toInt
+let intCompare = (a, b) => Int.compare(a, b)->StdlibFp.Ordering.toInt
 let compare = (a, b) =>
   TableclothTuple4.compare(~f=intCompare, ~g=intCompare, ~h=intCompare, ~i=intCompare, a, b)
 

@@ -2,8 +2,7 @@
 
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/Pervasives.js";
-import * as Stdlib__Math from "@dsiu/rescript-stdlib-fp/src/Stdlib__Math.res.mjs";
-import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
+import * as Primitive_bigint from "rescript/lib/es6/Primitive_bigint.js";
 
 function log(prim) {
   console.log(prim);
@@ -75,7 +74,7 @@ function isOverlap(a, b) {
 
 function intersect(a, b) {
   if (isOverlap(a, b)) {
-    return make(Stdlib__Math.$$BigInt.max(a[0], b[0]), Stdlib__Math.$$BigInt.min(a[1], b[1]));
+    return make(Primitive_bigint.max(a[0], b[0]), Primitive_bigint.min(a[1], b[1]));
   }
   
 }
@@ -138,8 +137,8 @@ function merge(a, b) {
   if (!(adjacent(a, b) || isOverlap(a, b))) {
     return Pervasives.failwith("intervals must be adjacent or overlapping");
   }
-  let lower = Stdlib__Math.$$BigInt.min(a[0], b[0]);
-  let upper = Stdlib__Math.$$BigInt.max(a[1], b[1]);
+  let lower = Primitive_bigint.min(a[0], b[0]);
+  let upper = Primitive_bigint.max(a[1], b[1]);
   return make(lower, upper);
 }
 
@@ -176,8 +175,8 @@ function sortAndMergeOverlaps(intervals) {
       if (len === 0) {
         return [];
       }
-      let a = Stdlib__Array.getUnsafe(sortedIntervals, 0);
-      let b = Stdlib__Array.getUnsafe(sortedIntervals, 1);
+      let a = sortedIntervals[0];
+      let b = sortedIntervals[1];
       if (below(a, b) && !adjacent(a, b)) {
         return Belt_Array.concatMany([
           [a],
@@ -217,4 +216,4 @@ export {
   sort,
   sortAndMergeOverlaps,
 }
-/* Stdlib__Array Not a pure module */
+/* No side effect */

@@ -3,11 +3,11 @@
 import * as Utils from "../../Utils.res.mjs";
 import * as Coord_V2 from "../../Coord_V2.res.mjs";
 import * as Pervasives from "rescript/lib/es6/Pervasives.js";
-import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.res.mjs";
+import * as Stdlib_Int from "rescript/lib/es6/Stdlib_Int.js";
+import * as Stdlib_Array from "rescript/lib/es6/Stdlib_Array.js";
 import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
-import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
+import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as TableclothSet from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothSet.res.mjs";
-import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
 import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
 
 function log(prim) {
@@ -25,7 +25,7 @@ function newRope(n) {
       0,
       0
     ],
-    knots: Stdlib__Array.make(n, [
+    knots: Stdlib_Array.make(n, [
       0,
       0
     ]),
@@ -42,22 +42,22 @@ function expandPath(directions) {
   let expandStep = step => {
     switch (step.TAG) {
       case "U" :
-        return Stdlib__Array.make(step._0, [
+        return Stdlib_Array.make(step._0, [
           0,
           1
         ]);
       case "R" :
-        return Stdlib__Array.make(step._0, [
+        return Stdlib_Array.make(step._0, [
           1,
           0
         ]);
       case "D" :
-        return Stdlib__Array.make(step._0, [
+        return Stdlib_Array.make(step._0, [
           0,
           -1
         ]);
       case "L" :
-        return Stdlib__Array.make(step._0, [
+        return Stdlib_Array.make(step._0, [
           -1,
           0
         ]);
@@ -96,7 +96,7 @@ function knotStep(param, kt) {
 
 function ropeStep(rope, step) {
   let h = Coord_V2.add(rope.headK, step);
-  let match = Stdlib__Array.reduce(rope.knots, [
+  let match = Stdlib_Array.reduce(rope.knots, [
     h,
     []
   ], knotStep);
@@ -109,16 +109,16 @@ function ropeStep(rope, step) {
 }
 
 function ropeSteps(rope, steps) {
-  return Stdlib__Array.reduce(steps, rope, ropeStep);
+  return Stdlib_Array.reduce(steps, rope, ropeStep);
 }
 
 function part1(steps) {
-  let rope = Stdlib__Array.reduce(steps, newRope(1), ropeStep);
+  let rope = Stdlib_Array.reduce(steps, newRope(1), ropeStep);
   return TableclothSet.length(rope.trace);
 }
 
 function part2(steps) {
-  let rope = Stdlib__Array.reduce(steps, newRope(9), ropeStep);
+  let rope = Stdlib_Array.reduce(steps, newRope(9), ropeStep);
   return TableclothSet.length(rope.trace);
 }
 
@@ -138,7 +138,7 @@ function parse(data) {
     }
     let dStr = match[0];
     let steps = match[1];
-    let match$1 = Stdlib__Option.getExn(Stdlib__Int.fromString(steps, undefined), undefined);
+    let match$1 = Stdlib_Option.getExn(Stdlib_Int.fromString(steps, undefined), undefined);
     switch (dStr) {
       case "D" :
         return {

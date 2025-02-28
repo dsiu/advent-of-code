@@ -3,8 +3,8 @@
 import * as Utils from "../../Utils.res.mjs";
 import * as Belt_Id from "rescript/lib/es6/Belt_Id.js";
 import * as Coord_V2 from "../../Coord_V2.res.mjs";
-import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
-import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
+import * as Stdlib_Array from "rescript/lib/es6/Stdlib_Array.js";
+import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 
 function log(prim) {
   console.log(prim);
@@ -81,13 +81,13 @@ function delta(dir) {
 
 function toPositions(here, param) {
   let d = delta(param._0);
-  return Stdlib__Array.fromInitializer(param._1 - 1 | 0, i => i + 1 | 0).map(i => Coord_V2.add(here, Coord_V2.mul(d, i)));
+  return Stdlib_Array.fromInitializer(param._1 - 1 | 0, i => i + 1 | 0).map(i => Coord_V2.add(here, Coord_V2.mul(d, i)));
 }
 
 function endingDirPos(here, move) {
   return [
     move._0,
-    Stdlib__Option.getExn(Stdlib__Array.last(toPositions(here, move)), undefined)
+    Stdlib_Option.getExn(Stdlib_Array.last(toPositions(here, move)), undefined)
   ];
 }
 

@@ -9,7 +9,7 @@
     https://gist.github.com/JadenGeller/6174b3461a34465791c5
 
 */
-module List = Stdlib.List
+module List = StdlibFp.List
 
 //
 // powerset with map (easier to understand)

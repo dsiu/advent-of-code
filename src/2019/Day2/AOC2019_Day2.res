@@ -3,7 +3,7 @@ open Utils
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
-let parse = data => data->Js.String2.split(_, ",")->Array.map(intFromStringExn)
+let parse = data => data->(Js.String2.split(_, ","))->Array.map(intFromStringExn)
 
 module IntCode = {
   type t = {
@@ -93,7 +93,7 @@ let part2 = xs => {
   //    }
   //  }
 
-  let {combinationIf2} = module(Stdlib.Array)
+  let {combinationIf2} = module(StdlibFp.Array)
 
   combinationIf2(Array.range(0, 99), Array.range(0, 99), (noun, verb) => {
     executeWithNounVerb(make(xs->Array.copy), noun, verb) == 19690720

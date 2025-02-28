@@ -2,7 +2,7 @@
 // https://work.njae.me.uk/2020/12/25/advent-of-code-2020-day-16/
 //
 
-open Stdlib
+open StdlibFp
 open Utils
 
 module Map = Belt.Map
@@ -62,7 +62,7 @@ type colCandidateSet = ColCandidateSet(Map.String.t<array<int>>)
 
 let possibleColumnsAll = (RuleSet(rules), tickets: array<ticket>) => {
   let validTickets = tickets->Array.filter(isValidTicket(RuleSet(rules), _))
-  let ticketCols = Stdlib.Array.transpose(validTickets)
+  let ticketCols = StdlibFp.Array.transpose(validTickets)
   rules->Map.String.map(possibleColumns(ticketCols, _))
 }
 

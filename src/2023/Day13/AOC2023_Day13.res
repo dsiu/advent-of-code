@@ -1,6 +1,6 @@
 @@uncurried
 
-open Stdlib
+open StdlibFp
 open Utils
 let log = Console.log
 let log2 = Console.log2

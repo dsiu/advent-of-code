@@ -3,6 +3,7 @@
 import * as Utils from "../../Utils.res.mjs";
 import * as Belt_Map from "rescript/lib/es6/Belt_Map.js";
 import * as Coord_V2 from "../../Coord_V2.res.mjs";
+import * as Stdlib_List from "rescript/lib/es6/Stdlib_List.js";
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.res.mjs";
 import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.res.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
@@ -109,7 +110,7 @@ function travelSegment(path, segment) {
       return TableclothMap.add(visits, loc, param[0]);
     }
   };
-  let visited$p = TableclothList.fold(Stdlib__List.zip(TableclothList.initialize(distance, x => (x + len | 0) + 1 | 0), Stdlib__List.unfold(param => param[0] >= distance, param => {
+  let visited$p = TableclothList.fold(Stdlib_List.zip(TableclothList.initialize(distance, x => (x + len | 0) + 1 | 0), Stdlib__List.unfold(param => param[0] >= distance, param => {
     let x = param[1];
     return [
       Coord_V2.add(x, delta),

@@ -26,9 +26,9 @@ module Octopus = {
     })
   }
 
-  let count9Plus = t => t->Array.keep(_, b => b >= 9)->Array.size
+  let count9Plus = t => t->(Array.keep(_, b => b >= 9))->Array.size
 
-  let countZero = t => t->Array.keep(_, b => b == 0)->Array.size
+  let countZero = t => t->(Array.keep(_, b => b == 0))->Array.size
 
   let increaseEnergy = t => t->Array2D.map(x => add(1, x))
 
@@ -114,11 +114,11 @@ module Octopus = {
       ret :=
         Array.concat(
           ret.contents,
-          [row->Array.map(x => x->Js.Int.toString)->(Js.Array2.joinWith(_, ""))],
+          [row->Array.map(x => x->Js.Int.toString)->Js.Array2.joinWith(_, "")],
         )
     }
 
-    ret.contents->(Js.Array2.joinWith(_, "\n"))
+    ret.contents->Js.Array2.joinWith(_, "\n")
   }
 }
 
@@ -126,7 +126,7 @@ let parse = data =>
   data
   ->splitNewline
   ->Array.map(
-    Stdlib.Function.compose(
+    StdlibFp.Function.compose(
       Stdlib.String.trim,
       x => x->Utils.splitChars->Array.map(intFromStringExn),
       ...
@@ -142,14 +142,14 @@ let solvePart1_try = data => {
   let i = 1
   Js.log(`iterate ${i->Int.toString} ----`)
 
-  let e = d->(Octopus.iterateN(_, i))
+  let e = d->Octopus.iterateN(_, i)
   e->Octopus.toString->Js.log
   Js.log(`iterate ${i->Int.toString} ----`)
 
   let i = 100
   Js.log(`iterate ${i->Int.toString} ----`)
 
-  let e = d->(Octopus.iterateN(_, i))
+  let e = d->Octopus.iterateN(_, i)
   e->Octopus.toString->Js.log
   Js.log(`iterate ${i->Int.toString} ----`)
 }
@@ -158,7 +158,7 @@ let solvePart1 = data => {
   let d = data->parse
   let i = 100
 
-  d->(Octopus.countFlashN(_, i))
+  d->Octopus.countFlashN(_, i)
 }
 
 let solvePart2 = data => {
@@ -172,7 +172,7 @@ let solvePart2 = data => {
 
   while c.contents < 100 {
     //    Js.log(`iterate ${i.contents->Int.toString} ----`)
-    c := d->(Octopus.flashesAtN(_, i.contents))
+    c := d->Octopus.flashesAtN(_, i.contents)
     i := i.contents + 1
   }
 

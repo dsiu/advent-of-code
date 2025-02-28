@@ -2,9 +2,9 @@
 
 import * as Utils from "../../Utils.res.mjs";
 import * as Pervasives from "rescript/lib/es6/Pervasives.js";
-import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.res.mjs";
+import * as Stdlib_Int from "rescript/lib/es6/Stdlib_Int.js";
+import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
-import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -85,7 +85,7 @@ function parse(data) {
     let v = match[1];
     return {
       TAG: "Addx",
-      _0: Stdlib__Option.getExn(Stdlib__Int.fromString(v, undefined), undefined)
+      _0: Stdlib_Option.getExn(Stdlib_Int.fromString(v, undefined), undefined)
     };
   });
 }

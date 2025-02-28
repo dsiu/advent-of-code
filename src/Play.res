@@ -18,7 +18,7 @@ let c = x => x
 
 //type nonEmpty_1<'a> = First('a) | c('a)
 
-open Stdlib
+open StdlibFp
 List.foldLeft0(list{10, 7, 5, 1}, (a, b) => a - b)->log
 List.foldRight0(list{10, 7, 5, 1}, (a, b) => a - b)->log
 

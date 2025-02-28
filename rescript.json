@@ -35,6 +35,7 @@
   "bs-dev-dependencies": [
   ],
   "warnings": {
+    "number": "-44",
     "error": "+101"
   },
   "refmt": 3

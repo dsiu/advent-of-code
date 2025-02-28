@@ -127,7 +127,7 @@ module MakeStack = (Item: StackItem) => {
   // Words based on composition
   // ==============================================
 
-  let {compose, compose4} = module(Stdlib.Function)
+  let {compose, compose4} = module(StdlibFp.Function)
   let square = compose(dup, mul, ...)
 
   let cube = compose4(dup, dup, mul, mul, ...)

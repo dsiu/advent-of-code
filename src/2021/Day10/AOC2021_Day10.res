@@ -208,7 +208,7 @@ let process = xs => {
 let parse = data =>
   data
   ->splitNewline
-  ->Array.map(Stdlib.Function.compose(Stdlib.String.trim, Utils.splitChars, ...))
+  ->Array.map(StdlibFp.Function.compose(Stdlib.String.trim, Utils.splitChars, ...))
 
 let examples = () => {
   let parent = ParseTree.makeNodeFromStr("(", 1, ")", 2)
@@ -283,7 +283,7 @@ let solvePart2 = data => {
 
   //  let bigIntCompare = (a, b) =>
   //    Stdlib.Float.compare(BigInt.toFloat(a), BigInt.toFloat(b))->Stdlib.Ordering.toInt
-  let bigIntCompare = (a, b) => Stdlib.BigInt.compare(a, b)->Stdlib.Ordering.toInt
+  let bigIntCompare = (a, b) => StdlibFp.BigInt.compare(a, b)->StdlibFp.Ordering.toInt
 
   data
   ->parse

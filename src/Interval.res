@@ -1,8 +1,7 @@
 //
 // Todo: - make Interval generic that works with float / Int / BigInt
 //
-open Stdlib
-module BigInt = Stdlib.BigInt
+module BigInt = StdlibFp.BigInt
 
 let log = Console.log
 let log2 = Console.log2
@@ -132,7 +131,7 @@ let isOverlap: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) =
  * // intersection is now `Some(Interval(2, 3))`
  */
 let intersect: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
-  open! Math.BigInt
+  open! BigInt
   isOverlap(a, b) ? make(max(aLower, bLower), min(aUpper, bUpper))->Some : None
 }
 
@@ -272,7 +271,7 @@ let remove: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b)
  * // merged is now a tuple (1, 3)
  */
 let merge: (t, t) => t = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
-  open! Math.BigInt
+  open! BigInt
 
   adjacent(a, b) || isOverlap(a, b)
     ? {

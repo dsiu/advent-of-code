@@ -20,8 +20,8 @@ let stringToChar = s => TC.Char.fromString(s)->Option.getExn
 
 let charToPriority: string => int = item => {
   let c = item->stringToChar
-  let lowerA = String.charCodeAt("a",0)->Float.toInt
-  let upperA = String.charCodeAt("A",0)->Float.toInt
+  let lowerA = String.charCodeAt("a", 0)->Float.toInt
+  let upperA = String.charCodeAt("A", 0)->Float.toInt
   c->TC.Char.isUppercase ? c->TC.Char.toCode - upperA + 1 + 26 : c->TC.Char.toCode - lowerA + 1
 }
 
@@ -41,7 +41,7 @@ let merge: rucksack => contents = (Rucksack(a, b)) => {
 
 let badgeOf: array<rucksack> => string = rucksacks => {
   module S = Belt.Set.String
-  let foldLeft = Stdlib.Array.foldl1
+  let foldLeft = StdlibFp.Array.foldl1
   rucksacks->Array.map(merge)->foldLeft((a, b) => S.intersect(a, b))->S.toArray->Array.getExn(0)
 }
 

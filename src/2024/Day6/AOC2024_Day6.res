@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 open Utils
 let log = Console.log
 let log2 = Console.log2
@@ -141,11 +141,7 @@ let walk: (CoordMap.t<'a>, guard) => array<position> = (map, guard) => {
   Array.unfoldr(guard, step(map, _))
 }
 
-let rec isLoop: (guard, array<guard>, CoordMap.t<'a>) => bool = (
-  guard,
-  trail,
-  map,
-) => {
+let rec isLoop: (guard, array<guard>, CoordMap.t<'a>) => bool = (guard, trail, map) => {
   let stepped = step(map, guard)
   Option.isNone(stepped)
     ? false

@@ -1,5 +1,5 @@
 // Functions for manipulating a 2D array in a functional programming style
-open Stdlib
+open StdlibFp
 
 type t<'a> = array<array<'a>>
 

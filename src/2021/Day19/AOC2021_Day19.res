@@ -23,7 +23,7 @@ module Scanner = {
     Coord(0., 0., 0.)->trans->coordToString
   }
 
-  let nullTrans = Stdlib.Fn.identity
+  let nullTrans = StdlibFp.Fn.identity
 
   let rotX: transform = (Coord(x, y, z)) => Coord(x, -.z, y)
   let rotY: transform = (Coord(x, y, z)) => Coord(z, y, -.x)
@@ -42,7 +42,7 @@ module Scanner = {
     ]
     let rbs = [nullTrans, rotX, compose(rotX, rotX, ...), compose3(rotX, rotX, rotX, ...)]
 
-    Stdlib.Array.combination2(ras, rbs, (a, b) => compose(a, b, ...))
+    StdlibFp.Array.combination2(ras, rbs, (a, b) => compose(a, b, ...))
   }
 
   //  rotations->Array.length->log
@@ -59,13 +59,13 @@ module Scanner = {
   module Bag = Bag.Bag
   module B = Bag.Make(F) // MultiSet Bag of int
 
-  let bagFromArray = Array.reduce(_, B.empty, (acc, x) => acc->(B.add(x, _)))
+  let bagFromArray = Array.reduce(_, B.empty, (acc, x) => acc->B.add(x, _))
 
   let bagToString = b => {
     let str = ref("")
-    b->(B.iter((x, m) => {
-        str := str.contents ++ `@ ${x->Float.toString}:${m->Int.toString},`
-      }, _))
+    b->B.iter((x, m) => {
+      str := str.contents ++ `@ ${x->Float.toString}:${m->Int.toString},`
+    }, _)
     "{" ++ str.contents ++ "}"
   }
 
@@ -104,7 +104,7 @@ module Scanner = {
       x *. x +. y *. y +. z *. z
     }
 
-    Stdlib.Array.combinationIf2(bcns, bcns, (Coord(a), Coord(b)) => {
+    StdlibFp.Array.combinationIf2(bcns, bcns, (Coord(a), Coord(b)) => {
       V3.cmp(b, a) > 0 ? Some(pythag(minus(Coord(a), Coord(b)))) : None
     })->bagFromArray
   }
@@ -138,7 +138,7 @@ module Scanner = {
     let beacons1 = scanner1.beacons
     let beacons2 = scanner2.beacons
 
-    Stdlib.Array.combinationIf3(beacons1, beacons2, rotations, (b1, b2, rot) => {
+    StdlibFp.Array.combinationIf3(beacons1, beacons2, rotations, (b1, b2, rot) => {
       let t = minus(b1, rot(b2)) // apply rot to b2
       let translation = translate(t, ...)
 
@@ -150,7 +150,7 @@ module Scanner = {
   }
 
   let matchingTransform = (scanner1, scanner2): option<transform> => {
-    matchingTransformAll(scanner1, scanner2)->Stdlib.Array.arrayToOption
+    matchingTransformAll(scanner1, scanner2)->StdlibFp.Array.arrayToOption
   }
 
   type reconstruction = Reconstruction({found: list<t>, working: list<t>, waiting: list<t>})
@@ -271,11 +271,11 @@ let part2 = scanners => {
     Math.abs(x1) +. Math.abs(y1) +. Math.abs(z1)
   }
 
-  Stdlib.List.combination2(origins, origins, (a, b) => {
+  StdlibFp.List.combination2(origins, origins, (a, b) => {
     minus(a, b)->manhatton
   })
   ->List.sort((a, b) => Float.toInt(b -. a))
-  ->Stdlib.List.listToOption
+  ->StdlibFp.List.listToOption
   ->Option.getExn
 }
 

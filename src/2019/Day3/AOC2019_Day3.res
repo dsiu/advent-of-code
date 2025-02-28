@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 open Utils
 let log = Console.log
 let log2 = Console.log2
@@ -68,7 +68,7 @@ let travelSegment: (path, segment) => path = (path, segment) => {
     visits->TC.Map.includes(loc) ? visits : visits->TC.Map.add(~key=loc, ~value=dist)
   }
 
-  let unfold = Stdlib.List.unfold
+  let unfold = StdlibFp.List.unfold
 
   let visited' = Stdlib.List.zip(
     TC.List.initialize(distance, ~f=x => x + len + 1),
@@ -101,7 +101,7 @@ let closest: visited => int = points => {
 let crossovers: array<path> => visited = travelledPaths => {
   travelledPaths
   ->Array.map(({visited}) => visited)
-  ->Stdlib.Array.foldl1((m1, m2) =>
+  ->StdlibFp.Array.foldl1((m1, m2) =>
     TC.Map.merge(m1, m2, ~f=(_k, a, b) => {
       switch (a, b) {
       | (Some(a), Some(b)) => Some(a + b)

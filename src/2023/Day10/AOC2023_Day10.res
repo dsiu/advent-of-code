@@ -1,6 +1,6 @@
 @@uncurried
 
-open Stdlib
+open StdlibFp
 open Utils
 let log = Console.log
 let log2 = Console.log2
@@ -92,7 +92,7 @@ let connectorsToPosition: (Map.t, position) => array<position> = (map, pos) => {
   connectors->Array.map(fst)
 }
 
-let connectorsToStart: Map.t => array<position> = ({_, start} as map) => {
+let connectorsToStart: Map.t => array<position> = ({start} as map) => {
   connectorsToPosition(map, start)
 }
 
@@ -149,7 +149,7 @@ let shoelaceFormula: array<position> => int = v => {
   ->Math.Int.abs / 2
 }
 
-let part2: Map.t => int = ({_, start} as map) => {
+let part2: Map.t => int = ({start} as map) => {
   let path = map->followPath(start)
   let boundaryPointsCount = path->Array.length
   let vertices = path->Array.filter(pos => map.grid->Array2D.getExn(pos)->isVertex)

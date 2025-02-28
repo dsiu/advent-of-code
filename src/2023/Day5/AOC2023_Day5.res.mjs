@@ -2,8 +2,8 @@
 
 import * as Utils from "../../Utils.res.mjs";
 import * as Interval from "../../Interval.res.mjs";
-import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
-import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
+import * as Stdlib_Array from "rescript/lib/es6/Stdlib_Array.js";
+import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 
 function log(prim) {
   console.log(prim);
@@ -26,8 +26,8 @@ function run(t, srcNum) {
 
 function runWithInterval(t, src) {
   let intersection = Interval.intersect(src, t.srcInterval);
-  let newSrc = Stdlib__Option.getOr(Stdlib__Option.map(intersection, i => Interval.remove(src, i)), src);
-  let newDest = Stdlib__Option.map(intersection, i => Interval.add(i, t.offset));
+  let newSrc = Stdlib_Option.getOr(Stdlib_Option.map(intersection, i => Interval.remove(src, i)), src);
+  let newDest = Stdlib_Option.map(intersection, i => Interval.add(i, t.offset));
   return [
     newSrc,
     newDest
@@ -45,11 +45,11 @@ function toString$1(t) {
 }
 
 function runRules(t, srcNum) {
-  return Stdlib__Option.getOr(Stdlib__Array.findMap(t.rules, __x => run(__x, srcNum)), srcNum);
+  return Stdlib_Option.getOr(Stdlib_Array.findMap(t.rules, __x => run(__x, srcNum)), srcNum);
 }
 
 function runRulesWithInterval(t, src) {
-  return Stdlib__Array.reduce(t.rules, [
+  return Stdlib_Array.reduce(t.rules, [
     src,
     []
   ], (param, r) => {
@@ -74,7 +74,7 @@ function runRulesWithInterval(t, src) {
 function runRulesWithMultiIntervals(t, xs) {
   return xs.flatMap(x => {
     let match = runRulesWithInterval(t, x);
-    let newSrc = Stdlib__Option.getOr(Stdlib__Option.flatMap(match[0], s => [s]), []);
+    let newSrc = Stdlib_Option.getOr(Stdlib_Option.flatMap(match[0], s => [s]), []);
     return newSrc.concat(match[1]);
   });
 }
@@ -91,7 +91,7 @@ function toString$2(t) {
 }
 
 function getMap(t, src) {
-  return Stdlib__Option.getExn(t.maps.find(m => m.srcCategory === src), undefined);
+  return Stdlib_Option.getExn(t.maps.find(m => m.srcCategory === src), undefined);
 }
 
 let Almanac = {
@@ -101,13 +101,13 @@ let Almanac = {
 
 function parse(data) {
   let lines = Utils.splitDoubleNewline(data).map(l => Utils.splitNewline(l).map(prim => prim.trim()));
-  let seedLine = Stdlib__Option.getExn(Stdlib__Option.flatMap(lines[0], __x => __x[0]), undefined);
+  let seedLine = Stdlib_Option.getExn(Stdlib_Option.flatMap(lines[0], __x => __x[0]), undefined);
   let mapLines = lines.slice(1);
-  let parseSeed = line => Utils.splitSpace(Stdlib__Option.getExn(line.split(": ")[1], undefined)).map(prim => BigInt(prim));
+  let parseSeed = line => Utils.splitSpace(Stdlib_Option.getExn(line.split(": ")[1], undefined)).map(prim => BigInt(prim));
   let parseMap = lines => {
-    let categoryLine = Stdlib__Option.getExn(lines[0], undefined);
+    let categoryLine = Stdlib_Option.getExn(lines[0], undefined);
     let srcDestLines = lines.slice(1);
-    let match = Stdlib__Option.getExn(Stdlib__Option.flatMap(Utils.splitSpace(categoryLine)[0], s => s.split("-to-")), undefined);
+    let match = Stdlib_Option.getExn(Stdlib_Option.flatMap(Utils.splitSpace(categoryLine)[0], s => s.split("-to-")), undefined);
     if (match.length !== 2) {
       throw {
         RE_EXN_ID: "Match_failure",
@@ -214,9 +214,9 @@ function makeSeedsPair(seeds) {
     if (i % 2 !== 0) {
       return;
     }
-    let b = Stdlib__Option.getExn(seeds[i + 1 | 0], undefined);
+    let b = Stdlib_Option.getExn(seeds[i + 1 | 0], undefined);
     return Interval.makeWithLength(a, b);
-  }).filter(Stdlib__Option.isSome).map(__x => Stdlib__Option.getExn(__x, undefined));
+  }).filter(Stdlib_Option.isSome).map(__x => Stdlib_Option.getExn(__x, undefined));
 }
 
 function part1(__x) {

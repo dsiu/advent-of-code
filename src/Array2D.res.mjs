@@ -3,6 +3,7 @@
 import * as Utils from "./Utils.res.mjs";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
+import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
 
@@ -20,7 +21,7 @@ function lengthY(t) {
 }
 
 function lengthX(t) {
-  return Stdlib__Option.mapOr(t[0], 0, a => a.length);
+  return Stdlib_Option.mapOr(t[0], 0, a => a.length);
 }
 
 function isValidXY(t, param) {

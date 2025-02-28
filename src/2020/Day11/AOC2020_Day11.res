@@ -1,7 +1,7 @@
 @@uncurried
 @@uncurried.swap
 
-open Stdlib
+open StdlibFp
 let log = Console.log
 //open Utils
 

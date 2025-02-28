@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 open Utils
 let log = Console.log
 let log2 = Console.log2
@@ -22,13 +22,15 @@ type agendum = {
 
 type agenda = array<agendum>
 
-
 let parse = data => {
   data
   ->splitNewline
   ->Array.map(Fn.compose(String.trim, Utils.splitChars, _))
   ->Array.reduceWithIndex([], (acc, row, r) => {
-    [...acc,...row->Array.mapWithIndex((col, c) => ((r, c), Int.fromString(col)->Option.getOr(-1)))]
+    [
+      ...acc,
+      ...row->Array.mapWithIndex((col, c) => ((r, c), Int.fromString(col)->Option.getOr(-1))),
+    ]
   })
 }
 

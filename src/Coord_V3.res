@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 
 module TC = Tablecloth
 

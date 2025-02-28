@@ -1,7 +1,7 @@
 // ref: https://work.njae.me.uk/2020/12/26/advent-of-code-2020-day-17/
 
 open Utils
-open Stdlib
+open StdlibFp
 
 let log = Js.Console.log
 
@@ -44,7 +44,7 @@ let makeGrid = (lines: array<array<string>>) => {
   let maxY = lines->Array.length
   let xs = Array.range(~from=0, maxX)
   let ys = Array.range(~from=0, maxY)
-  Stdlib.Array.combinationIf2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
+  StdlibFp.Array.combinationIf2(xs, ys, createActive)->TC.Set.fromArray(module(Coord))
 }
 
 @@warning("-8")
@@ -55,7 +55,7 @@ let conv34 = grid => {
 }
 
 let neighbourSpaces = (here: Coord.t) => {
-  open Stdlib.Array
+  open StdlibFp.Array
   switch here {
   | Coord_V3(_) as here =>
     combinationIf3([-1, 0, 1], [-1, 0, 1], [-1, 0, 1], (x, y, z) => {

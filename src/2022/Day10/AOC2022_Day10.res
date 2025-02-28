@@ -2,7 +2,7 @@ open Stdlib
 open Utils
 let log = Js.Console.log
 
-module A = Stdlib.Array
+module A = StdlibFp.Array
 type operation =
   | Noop
   | Addx(int)
@@ -48,7 +48,7 @@ let isLit: signal => bool = ((n, x)) => {
 
 let part2 = regVals => {
   let pixels = regVals->A.map(compose(isLit, showPixel))
-  pixels->Stdlib.Array.chunksOf(~size=40)->A.map(x => x->A.join(""))
+  pixels->StdlibFp.Array.chunksOf(~size=40)->A.map(x => x->A.join(""))
 }
 
 @@warning("-8")

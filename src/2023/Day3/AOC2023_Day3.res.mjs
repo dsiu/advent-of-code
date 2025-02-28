@@ -4,10 +4,10 @@ import * as Utils from "../../Utils.res.mjs";
 import * as Array2D from "../../Array2D.res.mjs";
 import * as Coordinate from "../../Coordinate.res.mjs";
 import * as Pervasives from "rescript/lib/es6/Pervasives.js";
-import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.res.mjs";
+import * as Stdlib_Int from "rescript/lib/es6/Stdlib_Int.js";
+import * as Stdlib_Array from "rescript/lib/es6/Stdlib_Array.js";
 import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
-import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
-import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
+import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Primitive_object from "rescript/lib/es6/Primitive_object.js";
 
 function log(prim) {
@@ -19,7 +19,7 @@ function log2(prim0, prim1) {
 }
 
 function makeElem(char) {
-  let d = Stdlib__Int.fromString(char, 10);
+  let d = Stdlib_Int.fromString(char, 10);
   if (d !== undefined) {
     return {
       TAG: "Digit",
@@ -70,11 +70,11 @@ function getNeighborsIf(c, fn) {
     Coordinate.Direction.southEast,
     Coordinate.Direction.southWest
   ];
-  return Stdlib__Array.filterMap(directions, dir => fn(dir(c)));
+  return Stdlib_Array.filterMap(directions, dir => fn(dir(c)));
 }
 
 function isElemDigit(engine, p) {
-  return Stdlib__Option.flatMap(Array2D.get(engine, p), e => {
+  return Stdlib_Option.flatMap(Array2D.get(engine, p), e => {
     if (isDigit(e)) {
       return p;
     }
@@ -96,7 +96,7 @@ function engineFilter(engine, fn) {
 }
 
 function rowsFromRegion(region) {
-  return Stdlib__Array.reduce(region.map(param => param[1]).toSorted(Primitive_int.compare), [], (acc, e) => {
+  return Stdlib_Array.reduce(region.map(param => param[1]).toSorted(Primitive_int.compare), [], (acc, e) => {
     let last = acc.at(acc.length - 1 | 0);
     if (last !== undefined && last === e) {
       return acc;
@@ -116,7 +116,7 @@ function findNumbers(engine) {
       0,
       0
     ]);
-    return Stdlib__Array.reduce(l, [
+    return Stdlib_Array.reduce(l, [
         [],
         []
       ], (param, param$1) => {
@@ -165,7 +165,7 @@ function isNumberTouched(number, symTouched) {
 }
 
 function getNumber(engine, number) {
-  return Stdlib__Array.reduce(number.map(n => {
+  return Stdlib_Array.reduce(number.map(n => {
     let match = Array2D.get(engine, n);
     if (typeof match === "object" && match.TAG !== "Symbol") {
       return match._0;
@@ -176,7 +176,7 @@ function getNumber(engine, number) {
 }
 
 function findNumbersTouched(engine, numbers, symTouched) {
-  return Stdlib__Array.filterMap(numbers, num => {
+  return Stdlib_Array.filterMap(numbers, num => {
     if (isNumberTouched(num, symTouched)) {
       return getNumber(engine, num);
     }
@@ -194,14 +194,14 @@ function part1(engine) {
 function part2(engine) {
   let stars = engineFilter(engine, isStar);
   let numbers = findNumbers(engine);
-  let starTouched = Stdlib__Array.filterMap(stars, s => {
+  let starTouched = Stdlib_Array.filterMap(stars, s => {
     let t = touchedDigit(engine, [s]);
     if (t.length >= 2) {
       return t;
     }
     
   });
-  return Utils.sumIntArray(Stdlib__Array.filterMap(starTouched, x => {
+  return Utils.sumIntArray(Stdlib_Array.filterMap(starTouched, x => {
     let touchedNums = findNumbersTouched(engine, numbers, x);
     if (touchedNums.length === 2) {
       return Utils.mulIntArray(touchedNums);

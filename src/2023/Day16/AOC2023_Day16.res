@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 open Utils
 module Map = Belt.Map
 module Set = Belt.Set

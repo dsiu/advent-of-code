@@ -1,4 +1,5 @@
-open Stdlib
+open StdlibFp
+
 let log = Console.log
 let log2 = Console.log2
 
