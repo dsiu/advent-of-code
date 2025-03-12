@@ -12,11 +12,11 @@ module type S = {
 
   let addVertex: (t, string) => unit
   let removeVertex: (t, string) => unit
-  let getVertex: (t, string) => c
+  let getVertex: (t, string) => array<e>
   let addEdge: (t, string, e) => unit
   let removeEdge: (t, string, e) => unit
   let adjacent: (t, string, e) => bool
-  let neighbors: (t, string) => c
+  let neighbors: (t, string) => array<e>
 
   let toString: t => string
 }
@@ -58,23 +58,26 @@ module Make = (BASE: BASE): (S with type e := BASE.e and type c := BASE.c and ty
     t->MutableMap.String.remove(x)
   }
 
-  // will create vertex if not exist
   let getVertex = (t, x) => {
-    t->addVertex(x)
     switch t->MutableMap.String.get(x) {
-    | Some(v) => v
+    | Some(v) => v->containerToArray
     | None => raise(Not_found) // shouldn't really happen
     }
   }
 
+  // will also add the vertex if it doesn't exist
   let addEdge = (t, x, e) => {
-    t->getVertex(x)->containerAdd(e)
+    t->addVertex(x)
+    switch t->MutableMap.String.get(x) {
+    | Some(c) => c->containerAdd(e)
+    | None => raise(Not_found) // shouldn't really happen
+    }
   }
 
   let removeEdge = (t, x, y) => {
-    switch t->MutableMap.String.has(x) {
-    | true => t->getVertex(x)->containerRemove(y)
-    | false => ()
+    switch t->MutableMap.String.get(x) {
+    | Some(v) => v->containerRemove(y)
+    | None => ()
     }
   }
 
@@ -86,7 +89,7 @@ module Make = (BASE: BASE): (S with type e := BASE.e and type c := BASE.c and ty
   }
 
   let neighbors = (t, x) => {
-    t->MutableMap.String.get(x)->Option.getWithDefault(containerMake())
+    t->MutableMap.String.get(x)->Option.getWithDefault(containerMake())->containerToArray
   }
 
   let toString = t => {

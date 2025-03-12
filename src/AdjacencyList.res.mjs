@@ -24,20 +24,30 @@ function Make(BASE) {
   };
   let removeVertex = Belt_MutableMapString.remove;
   let getVertex = (t, x) => {
-    addVertex(t, x);
     let v = Belt_MutableMapString.get(t, x);
     if (v !== undefined) {
-      return Primitive_option.valFromOption(v);
+      return containerToArray(Primitive_option.valFromOption(v));
     }
     throw {
       RE_EXN_ID: "Not_found",
       Error: new Error()
     };
   };
-  let addEdge = (t, x, e) => containerAdd(getVertex(t, x), e);
+  let addEdge = (t, x, e) => {
+    addVertex(t, x);
+    let c = Belt_MutableMapString.get(t, x);
+    if (c !== undefined) {
+      return containerAdd(Primitive_option.valFromOption(c), e);
+    }
+    throw {
+      RE_EXN_ID: "Not_found",
+      Error: new Error()
+    };
+  };
   let removeEdge = (t, x, y) => {
-    if (Belt_MutableMapString.has(t, x)) {
-      return containerRemove(getVertex(t, x), y);
+    let v = Belt_MutableMapString.get(t, x);
+    if (v !== undefined) {
+      return containerRemove(Primitive_option.valFromOption(v), y);
     }
     
   };
@@ -49,7 +59,7 @@ function Make(BASE) {
       return false;
     }
   };
-  let neighbors = (t, x) => Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), containerMake());
+  let neighbors = (t, x) => containerToArray(Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), containerMake()));
   let toString = t => {
     let str = {
       contents: ""
@@ -84,10 +94,9 @@ function addVertex(t, x) {
 let removeVertex = Belt_MutableMapString.remove;
 
 function getVertex(t, x) {
-  addVertex(t, x);
   let v = Belt_MutableMapString.get(t, x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v);
+    return Belt_MutableSetString.toArray(Primitive_option.valFromOption(v));
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -96,12 +105,21 @@ function getVertex(t, x) {
 }
 
 function addEdge(t, x, e) {
-  Belt_MutableSetString.add(getVertex(t, x), e);
+  addVertex(t, x);
+  let c = Belt_MutableMapString.get(t, x);
+  if (c !== undefined) {
+    return Belt_MutableSetString.add(Primitive_option.valFromOption(c), e);
+  }
+  throw {
+    RE_EXN_ID: "Not_found",
+    Error: new Error()
+  };
 }
 
 function removeEdge(t, x, y) {
-  if (Belt_MutableMapString.has(t, x)) {
-    return Belt_MutableSetString.remove(getVertex(t, x), y);
+  let v = Belt_MutableMapString.get(t, x);
+  if (v !== undefined) {
+    return Belt_MutableSetString.remove(Primitive_option.valFromOption(v), y);
   }
   
 }
@@ -116,7 +134,7 @@ function adjacent(t, x, y) {
 }
 
 function neighbors(t, x) {
-  return Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), Belt_MutableSetString.make());
+  return Belt_MutableSetString.toArray(Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), Belt_MutableSetString.make()));
 }
 
 function toString(t) {
@@ -180,10 +198,9 @@ function addVertex$1(t, x) {
 let removeVertex$1 = Belt_MutableMapString.remove;
 
 function getVertex$1(t, x) {
-  addVertex$1(t, x);
   let v = Belt_MutableMapString.get(t, x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v);
+    return Belt_MutableSet.toArray(Primitive_option.valFromOption(v));
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -192,12 +209,21 @@ function getVertex$1(t, x) {
 }
 
 function addEdge$1(t, x, e) {
-  Belt_MutableSet.add(getVertex$1(t, x), e);
+  addVertex$1(t, x);
+  let c = Belt_MutableMapString.get(t, x);
+  if (c !== undefined) {
+    return Belt_MutableSet.add(Primitive_option.valFromOption(c), e);
+  }
+  throw {
+    RE_EXN_ID: "Not_found",
+    Error: new Error()
+  };
 }
 
 function removeEdge$1(t, x, y) {
-  if (Belt_MutableMapString.has(t, x)) {
-    return Belt_MutableSet.remove(getVertex$1(t, x), y);
+  let v = Belt_MutableMapString.get(t, x);
+  if (v !== undefined) {
+    return Belt_MutableSet.remove(Primitive_option.valFromOption(v), y);
   }
   
 }
@@ -212,7 +238,7 @@ function adjacent$1(t, x, y) {
 }
 
 function neighbors$1(t, x) {
-  return Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), Belt_MutableSet.make(MutableSetTuple));
+  return Belt_MutableSet.toArray(Belt_Option.getWithDefault(Belt_MutableMapString.get(t, x), Belt_MutableSet.make(MutableSetTuple)));
 }
 
 function toString$1(t) {

@@ -88,7 +88,7 @@ let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
 
     switch node == end_node {
     | false => {
-        let edges = t->get_edges(node)
+        let edges = t->get_edges(node)->MutableSet.String.fromArray
         edges->MutableSet.String.reduce([], (a, e) => {
           visit_func(visited', e)
             ? {

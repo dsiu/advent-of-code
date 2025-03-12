@@ -111,7 +111,7 @@ function dfs(visit_func, t, start_node, end_node) {
     if (node === end_node) {
       return [acc];
     }
-    let edges = AdjacencyList.$$String.neighbors(t, node);
+    let edges = Belt_MutableSetString.fromArray(AdjacencyList.$$String.neighbors(t, node));
     return Belt_MutableSetString.reduce(edges, [], (a, e) => {
       if (visit_func(visited$p, e)) {
         return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));
