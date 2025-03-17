@@ -9,7 +9,7 @@ module Maze = {
   //  module AdjList = AdjacencyList.AdjList_String
   //  type t = AdjList.t
 
-  module AdjList = AdjacencyList.String
+  module AdjList = AdjacencyList.Node.String
   type t = AdjList.t
 
   exception ParseError
@@ -19,8 +19,10 @@ module Maze = {
     edges->Array.forEach(edge => {
       switch edge {
       | [a, b] => {
-          maze->AdjList.addEdge(a, b)
-          maze->AdjList.addEdge(b, a)
+          maze->AdjList.addNode(a)
+          maze->AdjList.addNode(b)
+          maze->AdjList.addDirectedEdge(a, b)
+          maze->AdjList.addDirectedEdge(b, a)
         }
 
       | _ => raise(ParseError)
@@ -29,7 +31,7 @@ module Maze = {
     maze
   }
 
-  let toString = AdjList.toString
+  // let toString = AdjList.toString
 }
 
 //let array_count = (xs, predicate) => xs->Array.keep(predicate)->Array.size

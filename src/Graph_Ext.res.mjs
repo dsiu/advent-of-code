@@ -5,7 +5,6 @@ import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Belt_MutableQueue from "rescript/lib/es6/Belt_MutableQueue.js";
 import * as Belt_MutableStack from "rescript/lib/es6/Belt_MutableStack.js";
 import * as Graphology__Graph from "@dsiu/rescript-graphology/src/Graphology__Graph.res.mjs";
-import * as Belt_MutableSetString from "rescript/lib/es6/Belt_MutableSetString.js";
 
 function log(prim) {
   console.log(prim);
@@ -60,7 +59,7 @@ function bfs(graph, rootNode, cb) {
     depth: 0
   });
   let acc = [];
-  let visited = Belt_MutableSetString.make();
+  let visited = new Set();
   while (true) {
     if (Belt_MutableQueue.isEmpty(queue)) {
       return acc;
@@ -68,7 +67,7 @@ function bfs(graph, rootNode, cb) {
     let match = Belt_MutableQueue.popExn(queue);
     let depth = match.depth;
     let node = match.node;
-    if (Belt_MutableSetString.has(visited, node)) {
+    if (visited.has(node)) {
       continue;
     }
     acc.push({
@@ -76,7 +75,7 @@ function bfs(graph, rootNode, cb) {
       node: node,
       depth: depth
     });
-    Belt_MutableSetString.add(visited, node);
+    visited.add(node);
     if (!cb(node, depth)) {
       G.NeighborsIter.forEachOutboundNeighbor(graph, {
         TAG: "Node",
@@ -100,7 +99,7 @@ function dfs(graph, rootNode, cb) {
     depth: 0
   });
   let acc = [];
-  let visited = Belt_MutableSetString.make();
+  let visited = new Set();
   while (true) {
     if (Belt_MutableStack.isEmpty(stack)) {
       return acc;
@@ -108,7 +107,7 @@ function dfs(graph, rootNode, cb) {
     let match = Stdlib_Option.getExn(Belt_MutableStack.pop(stack), undefined);
     let depth = match.depth;
     let node = match.node;
-    if (Belt_MutableSetString.has(visited, node)) {
+    if (visited.has(node)) {
       continue;
     }
     acc.push({
@@ -116,7 +115,7 @@ function dfs(graph, rootNode, cb) {
       node: node,
       depth: depth
     });
-    Belt_MutableSetString.add(visited, node);
+    visited.add(node);
     if (!cb(node, depth)) {
       G.NeighborsIter.forEachOutboundNeighbor(graph, {
         TAG: "Node",
@@ -161,7 +160,7 @@ G.mergeEdge(g, "7", "11", undefined);
 
 G.mergeEdge(g, "7", "12", undefined);
 
-console.log("BFS");
+console.log("Graphology BFS");
 
 let bfsRes = bfs(g, "1", (node, depth) => {
   G.setNodeAttribute(g, node, "depth", depth);
@@ -196,7 +195,7 @@ G.mergeEdge(g$1, "7", "11", undefined);
 
 G.mergeEdge(g$1, "7", "12", undefined);
 
-console.log("DFS");
+console.log("Graphology DFS");
 
 let dfsRes = dfs(g$1, "1", (node, depth) => {
   G.setNodeAttribute(g$1, node, "depth", depth);
@@ -207,21 +206,18 @@ console.log("dfsRes", dfsRes);
 
 writeToFile(g$1, "graph-dfs.gexf", G);
 
-let Queue;
-
-let Stack;
-
-let $$Set;
+let GraphologyImpl = {
+  Queue: undefined,
+  Stack: undefined,
+  stringToFile: stringToFile,
+  GEXF: GEXF,
+  G: G,
+  Traversal: Traversal
+};
 
 export {
   log,
   log2,
-  Queue,
-  Stack,
-  $$Set,
-  stringToFile,
-  GEXF,
-  G,
-  Traversal,
+  GraphologyImpl,
 }
 /* G Not a pure module */

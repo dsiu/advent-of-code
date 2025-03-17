@@ -2,7 +2,6 @@
 
 import * as Utils from "../../Utils.res.mjs";
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.res.mjs";
-import * as Stdlib__Set from "@dsiu/rescript-stdlib-fp/src/Stdlib__Set.res.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Stdlib__Tuple2 from "@dsiu/rescript-stdlib-fp/src/Stdlib__Tuple2.res.mjs";
 
@@ -72,8 +71,8 @@ function printable(rules, unprinted, page) {
 }
 
 function printCandidate(rules, unprinted) {
-  return new Set(Stdlib__Set.toArray(unprinted).filter(x => {
-    let unprinted$p = new Set(Stdlib__Set.toArray(unprinted).filter(i => i !== x));
+  return new Set(Array.from(unprinted).filter(x => {
+    let unprinted$p = new Set(Array.from(unprinted).filter(i => i !== x));
     return printable(rules, unprinted$p, x);
   }));
 }
@@ -86,7 +85,7 @@ function reorder(rules, _printed, unprinted) {
       return printed;
     }
     let candidate = printCandidate(rules, unprinted);
-    let next = Utils.minIntInArray(Stdlib__Set.toArray(candidate));
+    let next = Utils.minIntInArray(Array.from(candidate));
     unprinted.delete(next);
     let printed$p = printed.concat([next]);
     _printed = printed$p;

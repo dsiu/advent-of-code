@@ -16,7 +16,7 @@ function log(prim) {
 let ParseError = /* @__PURE__ */Primitive_exceptions.create("AOC2021_Day12.Maze.ParseError");
 
 function make(edges) {
-  let maze = AdjacencyList.$$String.make();
+  let maze = AdjacencyList.Node.$$String.make();
   Belt_Array.forEach(edges, edge => {
     if (edge.length !== 2) {
       throw {
@@ -26,19 +26,18 @@ function make(edges) {
     }
     let a = edge[0];
     let b = edge[1];
-    AdjacencyList.$$String.addEdge(maze, a, b);
-    AdjacencyList.$$String.addEdge(maze, b, a);
+    AdjacencyList.Node.$$String.addNode(maze, a);
+    AdjacencyList.Node.$$String.addNode(maze, b);
+    AdjacencyList.Node.$$String.addDirectedEdge(maze, a, b);
+    AdjacencyList.Node.$$String.addDirectedEdge(maze, b, a);
   });
   return maze;
 }
 
-let toString = AdjacencyList.$$String.toString;
-
 let Maze = {
   AdjList: undefined,
   ParseError: ParseError,
-  make: make,
-  toString: toString
+  make: make
 };
 
 function is_visited(visited, node) {
@@ -76,7 +75,7 @@ function has_any_small_cave_been_visited_twice(visited) {
 }
 
 function get_edges(t, node) {
-  return AdjacencyList.$$String.neighbors(t, node);
+  return AdjacencyList.Node.$$String.neighbors(t, node);
 }
 
 function can_visit_part1(visited, node) {
@@ -111,7 +110,7 @@ function dfs(visit_func, t, start_node, end_node) {
     if (node === end_node) {
       return [acc];
     }
-    let edges = Belt_MutableSetString.fromArray(AdjacencyList.$$String.neighbors(t, node));
+    let edges = Belt_MutableSetString.fromArray(get_edges(t, node));
     return Belt_MutableSetString.reduce(edges, [], (a, e) => {
       if (visit_func(visited$p, e)) {
         return Belt_Array.concat(a, explore(e, Belt_HashMapString.copy(visited$p), Belt_Array.concat(acc, [e]), end_node));

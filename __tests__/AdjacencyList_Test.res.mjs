@@ -5,31 +5,31 @@ import * as AdjacencyList from "../src/AdjacencyList.res.mjs";
 
 Jest.describe("AdjacencyList String Implementation", () => {
   let graph = {
-    contents: AdjacencyList.$$String.make()
+    contents: AdjacencyList.Node.$$String.make()
   };
   beforeEach(() => {
-    graph.contents = AdjacencyList.$$String.make();
-    AdjacencyList.$$String.addVertex(graph.contents, "A");
-    AdjacencyList.$$String.addVertex(graph.contents, "B");
-    AdjacencyList.$$String.addVertex(graph.contents, "C");
-    AdjacencyList.$$String.addVertex(graph.contents, "D");
-    AdjacencyList.$$String.addVertex(graph.contents, "E");
-    AdjacencyList.$$String.addEdge(graph.contents, "A", "B");
-    AdjacencyList.$$String.addEdge(graph.contents, "B", "C");
-    AdjacencyList.$$String.addEdge(graph.contents, "C", "D");
-    AdjacencyList.$$String.addEdge(graph.contents, "D", "E");
-    AdjacencyList.$$String.addEdge(graph.contents, "E", "A");
-    AdjacencyList.$$String.addEdge(graph.contents, "A", "C");
-    AdjacencyList.$$String.addEdge(graph.contents, "B", "D");
+    graph.contents = AdjacencyList.Node.$$String.make();
+    AdjacencyList.Node.$$String.addNode(graph.contents, "A");
+    AdjacencyList.Node.$$String.addNode(graph.contents, "B");
+    AdjacencyList.Node.$$String.addNode(graph.contents, "C");
+    AdjacencyList.Node.$$String.addNode(graph.contents, "D");
+    AdjacencyList.Node.$$String.addNode(graph.contents, "E");
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "A", "B");
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "B", "C");
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "C", "D");
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "D", "E");
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "E", "A");
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "A", "C");
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "B", "D");
   });
   Jest.test("add vertex", () => {
-    AdjacencyList.$$String.addVertex(graph.contents, "F");
-    return Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.$$String.getVertex(graph.contents, "F")), []);
+    AdjacencyList.Node.$$String.addNode(graph.contents, "F");
+    return Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.$$String.getNode(graph.contents, "F")), []);
   });
-  Jest.test("add edge", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.$$String.adjacent(graph.contents, "A", "B")), true));
+  Jest.test("add edge", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.$$String.adjacent(graph.contents, "A", "B")), true));
   Jest.test("remove edge", () => {
-    AdjacencyList.$$String.removeEdge(graph.contents, "A", "B");
-    return Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.$$String.adjacent(graph.contents, "A", "B")), false);
+    AdjacencyList.Node.$$String.removeDirectedEdge(graph.contents, "A", "B");
+    return Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.$$String.adjacent(graph.contents, "A", "B")), false);
   });
   let neighbors_tests_0 = [
     "A",
@@ -70,122 +70,187 @@ Jest.describe("AdjacencyList String Implementation", () => {
     hd: neighbors_tests_0,
     tl: neighbors_tests_1
   };
-  Jest.testAll("neighbors", neighbors_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.$$String.neighbors(graph.contents, param[0])), param[1]));
+  Jest.testAll("neighbors", neighbors_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.$$String.neighbors(graph.contents, param[0])), param[1]));
   Jest.test("remove vertex", () => {
-    AdjacencyList.$$String.removeVertex(graph.contents, "A");
-    let fn = () => AdjacencyList.$$String.getVertex(graph.contents, "A");
+    AdjacencyList.Node.$$String.removeNode(graph.contents, "A");
+    let fn = () => AdjacencyList.Node.$$String.getNode(graph.contents, "A");
     return Jest.Expect.toThrow(Jest.Expect.expect(fn));
   });
-  Jest.test("toString", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.$$String.toString(graph.contents)), "A: [ B,C ]\nB: [ C,D ]\nC: [ D ]\nD: [ E ]\nE: [ A ]\n"));
 });
 
 Jest.describe("AdjacencyList Tuple Implementation", () => {
   let graph = {
-    contents: AdjacencyList.Tuple.make()
+    contents: AdjacencyList.Node.Tuple2.StringInt.make()
   };
   beforeEach(() => {
-    graph.contents = AdjacencyList.Tuple.make();
-    AdjacencyList.Tuple.addVertex(graph.contents, "A");
-    AdjacencyList.Tuple.addVertex(graph.contents, "B");
-    AdjacencyList.Tuple.addVertex(graph.contents, "C");
-    AdjacencyList.Tuple.addVertex(graph.contents, "D");
-    AdjacencyList.Tuple.addVertex(graph.contents, "E");
-    AdjacencyList.Tuple.addEdge(graph.contents, "A", [
-      "B",
+    graph.contents = AdjacencyList.Node.Tuple2.StringInt.make();
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "A",
       1
     ]);
-    AdjacencyList.Tuple.addEdge(graph.contents, "B", [
-      "C",
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "B",
       2
     ]);
-    AdjacencyList.Tuple.addEdge(graph.contents, "C", [
-      "D",
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "C",
       3
     ]);
-    AdjacencyList.Tuple.addEdge(graph.contents, "D", [
-      "E",
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "D",
       4
     ]);
-    AdjacencyList.Tuple.addEdge(graph.contents, "E", [
-      "A",
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "E",
       5
     ]);
-    AdjacencyList.Tuple.addEdge(graph.contents, "A", [
-      "C",
-      6
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "A",
+      1
+    ], [
+      "B",
+      2
     ]);
-    AdjacencyList.Tuple.addEdge(graph.contents, "B", [
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "B",
+      2
+    ], [
+      "C",
+      3
+    ]);
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "C",
+      3
+    ], [
       "D",
-      7
+      4
+    ]);
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "D",
+      4
+    ], [
+      "E",
+      5
+    ]);
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "E",
+      5
+    ], [
+      "A",
+      1
+    ]);
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "A",
+      1
+    ], [
+      "C",
+      3
+    ]);
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "B",
+      2
+    ], [
+      "D",
+      4
     ]);
   });
   Jest.test("add vertex", () => {
-    AdjacencyList.Tuple.addVertex(graph.contents, "F");
-    return Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Tuple.getVertex(graph.contents, "F")), []);
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "F",
+      6
+    ]);
+    return Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.getNode(graph.contents, [
+      "F",
+      6
+    ])), []);
   });
-  Jest.test("add edge", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Tuple.adjacent(graph.contents, "A", [
-    "B",
+  Jest.test("add edge", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.adjacent(graph.contents, [
+    "A",
     1
+  ], [
+    "B",
+    2
   ])), true));
   Jest.test("remove edge", () => {
-    AdjacencyList.Tuple.removeEdge(graph.contents, "A", [
-      "B",
+    AdjacencyList.Node.Tuple2.StringInt.removeDirectedEdge(graph.contents, [
+      "A",
       1
+    ], [
+      "B",
+      2
     ]);
-    return Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Tuple.adjacent(graph.contents, "A", [
-      "B",
+    return Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.adjacent(graph.contents, [
+      "A",
       1
+    ], [
+      "B",
+      2
     ])), false);
   });
   let neighbors_tests_0 = [
-    "A",
+    [
+      "A",
+      1
+    ],
     [
       [
         "B",
-        1
+        2
       ],
       [
         "C",
-        6
+        3
       ]
     ]
   ];
   let neighbors_tests_1 = {
     hd: [
-      "B",
+      [
+        "B",
+        2
+      ],
       [
         [
           "C",
-          2
+          3
         ],
         [
           "D",
-          7
+          4
         ]
       ]
     ],
     tl: {
       hd: [
-        "C",
+        [
+          "C",
+          3
+        ],
         [[
             "D",
-            3
+            4
           ]]
       ],
       tl: {
         hd: [
-          "D",
+          [
+            "D",
+            4
+          ],
           [[
               "E",
-              4
+              5
             ]]
         ],
         tl: {
           hd: [
-            "E",
+            [
+              "E",
+              5
+            ],
             [[
                 "A",
-                5
+                1
               ]]
           ],
           tl: /* [] */0
@@ -197,13 +262,18 @@ Jest.describe("AdjacencyList Tuple Implementation", () => {
     hd: neighbors_tests_0,
     tl: neighbors_tests_1
   };
-  Jest.testAll("neighbors", neighbors_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Tuple.neighbors(graph.contents, param[0])), param[1]));
+  Jest.testAll("neighbors", neighbors_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, param[0])), param[1]));
   Jest.test("remove vertex", () => {
-    AdjacencyList.Tuple.removeVertex(graph.contents, "A");
-    let fn = () => AdjacencyList.Tuple.getVertex(graph.contents, "A");
+    AdjacencyList.Node.Tuple2.StringInt.removeNode(graph.contents, [
+      "A",
+      1
+    ]);
+    let fn = () => AdjacencyList.Node.Tuple2.StringInt.getNode(graph.contents, [
+      "A",
+      1
+    ]);
     return Jest.Expect.toThrow(Jest.Expect.expect(fn));
   });
-  Jest.test("toString", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Tuple.toString(graph.contents)), "A: [ B,1,C,6 ]\nB: [ C,2,D,7 ]\nC: [ D,3 ]\nD: [ E,4 ]\nE: [ A,5 ]\n"));
 });
 
 let StringAdjList;
