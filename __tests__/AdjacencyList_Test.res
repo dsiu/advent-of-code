@@ -25,7 +25,7 @@ describe("AdjacencyList String Implementation", () => {
 
   test("add vertex", () => {
     StringAdjList.addNode(graph.contents, "F")
-    expect(StringAdjList.getNode(graph.contents, "F"))->toEqual([])
+    expect(StringAdjList.hasNode(graph.contents, "F"))->toEqual(true)
   })
 
   test("add edge", () => {
@@ -51,8 +51,7 @@ describe("AdjacencyList String Implementation", () => {
 
   test("remove vertex", () => {
     StringAdjList.removeNode(graph.contents, "A")->ignore
-    let fn = () => StringAdjList.getNode(graph.contents, "A")
-    expect(fn)->toThrow
+    expect(StringAdjList.hasNode(graph.contents, "A"))->toBe(false)
   })
 
   //  test("toString", () => {
@@ -83,7 +82,7 @@ describe("AdjacencyList Tuple Implementation", () => {
 
   test("add vertex", () => {
     TupleAdjList.addNode(graph.contents, ("F", 6))
-    expect(TupleAdjList.getNode(graph.contents, ("F", 6)))->toEqual([])
+    expect(TupleAdjList.hasNode(graph.contents, ("F", 6)))->toEqual(true)
   })
 
   test("add edge", () => {
@@ -109,8 +108,7 @@ describe("AdjacencyList Tuple Implementation", () => {
 
   test("remove vertex", () => {
     TupleAdjList.removeNode(graph.contents, ("A", 1))->ignore
-    let fn = () => TupleAdjList.getNode(graph.contents, ("A", 1))
-    expect(fn)->toThrow
+    expect(TupleAdjList.hasNode(graph.contents, ("A", 1)))->toBe(false)
   })
 
   //  test("toString", () => {

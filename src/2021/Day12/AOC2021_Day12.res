@@ -10,7 +10,7 @@ module Maze = {
   //  type t = AdjList.t
 
   module AdjList = AdjacencyList.Node.String
-  type t = AdjList.t
+  type t<'a> = AdjList.t<'a>
 
   exception ParseError
 
@@ -84,7 +84,7 @@ let can_visit_part2 = (visited, node) => {
 
 let get_visited_nodes = HashMap.String.keysToArray
 
-let dfs = (visit_func, t: Maze.t, start_node, end_node) => {
+let dfs = (visit_func, t: Maze.t<'a>, start_node, end_node) => {
   let rec explore = (node, visited, acc, end_node) => {
     let visited' = inc_visited(visited, node)
 

@@ -28,8 +28,8 @@ function make(edges) {
     let b = edge[1];
     AdjacencyList.Node.$$String.addNode(maze, a);
     AdjacencyList.Node.$$String.addNode(maze, b);
-    AdjacencyList.Node.$$String.addDirectedEdge(maze, a, b);
-    AdjacencyList.Node.$$String.addDirectedEdge(maze, b, a);
+    AdjacencyList.Node.$$String.addDirectedEdge(maze, a, b, undefined);
+    AdjacencyList.Node.$$String.addDirectedEdge(maze, b, a, undefined);
   });
   return maze;
 }

@@ -4,23 +4,24 @@ module JSONSerializable = StdlibFp.JSONSerializable
 module type S = {
   type node
 
-  type t
+  type t<'a>
 
-  let make: unit => t
+  let make: unit => t<'a>
 
-  let addNode: (t, node) => unit
-  let removeNode: (t, node) => bool
-  // todo: is getNode doing the right thing??
-  let getNode: (t, node) => array<node>
+  let addNode: (t<'a>, node) => unit
+  let removeNode: (t<'a>, node) => bool
+  let hasNode: (t<'a>, node) => bool
 
-  let addUndirectedEdge: (t, node, node) => unit
-  let addDirectedEdge: (t, node, node) => unit
-  let removeUndirectedEdge: (t, node, node) => bool
-  let removeDirectedEdge: (t, node, node) => bool
+  let addUndirectedEdge: (t<'a>, node, node, ~weight: option<'a>=?) => unit
+  let addDirectedEdge: (t<'a>, node, node, ~weight: option<'a>=?) => unit
+  let removeUndirectedEdge: (t<'a>, node, node) => bool
+  let removeDirectedEdge: (t<'a>, node, node) => bool
 
-  let adjacent: (t, node, node) => bool
+  let getWeight: (t<'a>, node, node) => option<'a>
 
-  let neighbors: (t, node) => array<node>
+  let adjacent: (t<'a>, node, node) => bool
+
+  let neighbors: (t<'a>, node) => array<node>
 }
 
 module type T = {
@@ -28,15 +29,13 @@ module type T = {
 }
 
 module MakeImpl = (NodeC: StdlibFp.Map.S): (
-  S with type node = NodeC.key and type t = NodeC.t<NodeC.key, NodeC.t<NodeC.key, int>>
+  S with type node = NodeC.key and type t<'a> = NodeC.t<NodeC.key, NodeC.t<NodeC.key, option<'a>>>
 ) => {
   type node = NodeC.key
   //  type edgeContainer = EdgeC.t<NodeC.key>
-  type t = NodeC.t<NodeC.key, NodeC.t<NodeC.key, int>>
+  type t<'a> = NodeC.t<NodeC.key, NodeC.t<NodeC.key, option<'a>>>
 
   let make = NodeC.make
-
-  let weight = 0
 
   let addNode = (t, node) => {
     switch t->NodeC.get(node) {
@@ -44,6 +43,8 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
     | None => t->NodeC.set(node, NodeC.make())
     }
   }
+
+  let hasNode = (t, node) => t->NodeC.has(node)
 
   let adjacent = (t, a, b) => {
     switch t->NodeC.get(a) {
@@ -54,13 +55,6 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
 
   let neighbors = (t, node) => {
     t->NodeC.get(node)->Option.getOr(NodeC.make())->NodeC.keys->Iterator.toArray
-  }
-
-  let getNode = (t, node) => {
-    switch t->NodeC.get(node) {
-    | Some(ec) => ec->NodeC.keys->Iterator.toArray
-    | None => raise(Not_found)
-    }
   }
 
   let removeNode = (t, node) => {
@@ -74,7 +68,7 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
     t->NodeC.delete(node)
   }
 
-  let addDirectedEdge = (t, a, b) => {
+  let addDirectedEdge = (t, a, b, ~weight: option<'a>=None) => {
     addNode(t, a)
     addNode(t, b)
     switch t->NodeC.get(a) {
@@ -83,9 +77,15 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
     }
   }
 
-  let addUndirectedEdge: (t, node, node) => unit = (t, a, b) => {
-    addDirectedEdge(t, a, b)
-    addDirectedEdge(t, b, a)
+  //  let addUndirectedEdge: (t<'a>, node, node, ~weight) => unit = (t, a, b) => {
+  let addUndirectedEdge: (t<'a>, node, node, ~weight: option<'a>=?) => unit = (
+    t,
+    a,
+    b,
+    ~weight=None,
+  ) => {
+    addDirectedEdge(t, a, b, ~weight)
+    addDirectedEdge(t, b, a, ~weight)
   }
 
   let removeUndirectedEdge = (t, a, b) => {
@@ -103,6 +103,13 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
     switch t->NodeC.get(a) {
     | Some(ec) => ec->NodeC.delete(b)
     | None => false
+    }
+  }
+
+  let getWeight: (t<'a>, node, node) => option<'a> = (t, a, b) => {
+    switch t->NodeC.get(a) {
+    | Some(ec) => ec->NodeC.get(b)->Option.getOr(None)
+    | None => None
     }
   }
 }
