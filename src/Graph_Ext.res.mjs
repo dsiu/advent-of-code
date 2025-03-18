@@ -4,6 +4,7 @@ import * as AdjacencyList from "./AdjacencyList.res.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
 import * as Stdlib_Iterator from "rescript/lib/es6/Stdlib_Iterator.js";
+import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Belt_MutableQueue from "rescript/lib/es6/Belt_MutableQueue.js";
 import * as Belt_MutableStack from "rescript/lib/es6/Belt_MutableStack.js";
 
@@ -14,6 +15,187 @@ function log(prim) {
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
+
+function TraversalImpl(A) {
+  let bfs = (graph, rootNode, cb) => {
+    let queue = Belt_MutableQueue.make();
+    Belt_MutableQueue.add(queue, {
+      TAG: "TraversalRecord",
+      node: rootNode,
+      depth: 0
+    });
+    let acc = [];
+    let visited = new Set();
+    while (true) {
+      if (Belt_MutableQueue.isEmpty(queue)) {
+        return acc;
+      }
+      let match = Belt_MutableQueue.popExn(queue);
+      let depth = match.depth;
+      let node = match.node;
+      if (visited.has(node)) {
+        continue;
+      }
+      acc.push({
+        TAG: "TraversalRecord",
+        node: node,
+        depth: depth
+      });
+      visited.add(node);
+      if (!cb(node, depth)) {
+        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+          if (neighbor !== undefined) {
+            return Belt_MutableQueue.add(queue, {
+              TAG: "TraversalRecord",
+              node: Primitive_option.valFromOption(neighbor),
+              depth: depth + 1 | 0
+            });
+          }
+          
+        });
+      }
+      continue;
+    };
+  };
+  let dfs = (graph, rootNode, cb) => {
+    let stack = Belt_MutableStack.make();
+    Belt_MutableStack.push(stack, {
+      TAG: "TraversalRecord",
+      node: rootNode,
+      depth: 0
+    });
+    let acc = [];
+    let visited = new Set();
+    while (true) {
+      if (Belt_MutableStack.isEmpty(stack)) {
+        return acc;
+      }
+      let match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
+      let depth = match.depth;
+      let node = match.node;
+      if (visited.has(node)) {
+        continue;
+      }
+      acc.push({
+        TAG: "TraversalRecord",
+        node: node,
+        depth: depth
+      });
+      visited.add(node);
+      if (!cb(node, depth)) {
+        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+          if (neighbor !== undefined) {
+            return Belt_MutableStack.push(stack, {
+              TAG: "TraversalRecord",
+              node: Primitive_option.valFromOption(neighbor),
+              depth: depth + 1 | 0
+            });
+          }
+          
+        });
+      }
+      continue;
+    };
+  };
+  return {
+    bfs: bfs,
+    dfs: dfs
+  };
+}
+
+function Make(A) {
+  let bfs = (graph, rootNode, cb) => {
+    let queue = Belt_MutableQueue.make();
+    Belt_MutableQueue.add(queue, {
+      TAG: "TraversalRecord",
+      node: rootNode,
+      depth: 0
+    });
+    let acc = [];
+    let visited = new Set();
+    while (true) {
+      if (Belt_MutableQueue.isEmpty(queue)) {
+        return acc;
+      }
+      let match = Belt_MutableQueue.popExn(queue);
+      let depth = match.depth;
+      let node = match.node;
+      if (visited.has(node)) {
+        continue;
+      }
+      acc.push({
+        TAG: "TraversalRecord",
+        node: node,
+        depth: depth
+      });
+      visited.add(node);
+      if (!cb(node, depth)) {
+        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+          if (neighbor !== undefined) {
+            return Belt_MutableQueue.add(queue, {
+              TAG: "TraversalRecord",
+              node: Primitive_option.valFromOption(neighbor),
+              depth: depth + 1 | 0
+            });
+          }
+          
+        });
+      }
+      continue;
+    };
+  };
+  let dfs = (graph, rootNode, cb) => {
+    let stack = Belt_MutableStack.make();
+    Belt_MutableStack.push(stack, {
+      TAG: "TraversalRecord",
+      node: rootNode,
+      depth: 0
+    });
+    let acc = [];
+    let visited = new Set();
+    while (true) {
+      if (Belt_MutableStack.isEmpty(stack)) {
+        return acc;
+      }
+      let match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
+      let depth = match.depth;
+      let node = match.node;
+      if (visited.has(node)) {
+        continue;
+      }
+      acc.push({
+        TAG: "TraversalRecord",
+        node: node,
+        depth: depth
+      });
+      visited.add(node);
+      if (!cb(node, depth)) {
+        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+          if (neighbor !== undefined) {
+            return Belt_MutableStack.push(stack, {
+              TAG: "TraversalRecord",
+              node: Primitive_option.valFromOption(neighbor),
+              depth: depth + 1 | 0
+            });
+          }
+          
+        });
+      }
+      continue;
+    };
+  };
+  let Traversal = {
+    bfs: bfs,
+    dfs: dfs
+  };
+  return {
+    Traversal: Traversal
+  };
+}
+
+console.log("AdjacencyList - String");
+
+let A = AdjacencyList.Node.$$String;
 
 function bfs(graph, rootNode, cb) {
   let queue = Belt_MutableQueue.make();
@@ -41,11 +223,11 @@ function bfs(graph, rootNode, cb) {
     });
     visited.add(node);
     if (!cb(node, depth)) {
-      Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(AdjacencyList.Node.$$String.neighbors(graph, node)), neighbor => {
+      Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
         if (neighbor !== undefined) {
           return Belt_MutableQueue.add(queue, {
             TAG: "TraversalRecord",
-            node: neighbor,
+            node: Primitive_option.valFromOption(neighbor),
             depth: depth + 1 | 0
           });
         }
@@ -82,11 +264,11 @@ function dfs(graph, rootNode, cb) {
     });
     visited.add(node);
     if (!cb(node, depth)) {
-      Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(AdjacencyList.Node.$$String.neighbors(graph, node)), neighbor => {
+      Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
         if (neighbor !== undefined) {
           return Belt_MutableStack.push(stack, {
             TAG: "TraversalRecord",
-            node: neighbor,
+            node: Primitive_option.valFromOption(neighbor),
             depth: depth + 1 | 0
           });
         }
@@ -96,11 +278,6 @@ function dfs(graph, rootNode, cb) {
     continue;
   };
 }
-
-let Traversal = {
-  bfs: bfs,
-  dfs: dfs
-};
 
 let g = AdjacencyList.Node.$$String.make();
 
@@ -126,43 +303,167 @@ AdjacencyList.Node.$$String.addDirectedEdge(g, "7", "11");
 
 AdjacencyList.Node.$$String.addDirectedEdge(g, "7", "12");
 
+console.log(g, g);
+
 console.log("AdjacencyList BFS");
 
 let bfsRes = bfs(g, "1", (_node, _depth) => false);
 
 console.log("bfsRes", bfsRes);
 
-let g$1 = AdjacencyList.Node.$$String.make();
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "1", "2");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "1", "3");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "1", "4");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "2", "5");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "2", "6");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "4", "7");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "4", "8");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "5", "9");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "5", "10");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "7", "11");
-
-AdjacencyList.Node.$$String.addDirectedEdge(g$1, "7", "12");
-
 console.log("AdjacencyList DFS");
 
-let dfsRes = dfs(g$1, "1", (_node, _depth) => false);
+let dfsRes = dfs(g, "1", (_node, _depth) => false);
 
 console.log("dfsRes", dfsRes);
 
-let A;
+console.log("AdjacencyList - (int, int)");
+
+let A$1 = AdjacencyList.Node.Tuple2.IntInt;
+
+function dfs$1(graph, rootNode, cb) {
+  let stack = Belt_MutableStack.make();
+  Belt_MutableStack.push(stack, {
+    TAG: "TraversalRecord",
+    node: rootNode,
+    depth: 0
+  });
+  let acc = [];
+  let visited = new Set();
+  while (true) {
+    if (Belt_MutableStack.isEmpty(stack)) {
+      return acc;
+    }
+    let match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
+    let depth = match.depth;
+    let node = match.node;
+    if (visited.has(node)) {
+      continue;
+    }
+    acc.push({
+      TAG: "TraversalRecord",
+      node: node,
+      depth: depth
+    });
+    visited.add(node);
+    if (!cb(node, depth)) {
+      Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A$1.neighbors(graph, node)), neighbor => {
+        if (neighbor !== undefined) {
+          return Belt_MutableStack.push(stack, {
+            TAG: "TraversalRecord",
+            node: Primitive_option.valFromOption(neighbor),
+            depth: depth + 1 | 0
+          });
+        }
+        
+      });
+    }
+    continue;
+  };
+}
+
+let g$1 = AdjacencyList.Node.Tuple2.IntInt.make();
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  1,
+  2
+], [
+  2,
+  3
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  1,
+  2
+], [
+  3,
+  4
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  1,
+  2
+], [
+  4,
+  5
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  2,
+  3
+], [
+  5,
+  6
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  2,
+  3
+], [
+  6,
+  7
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  4,
+  5
+], [
+  7,
+  8
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  4,
+  5
+], [
+  8,
+  9
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  5,
+  6
+], [
+  9,
+  10
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  5,
+  6
+], [
+  10,
+  11
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  7,
+  8
+], [
+  11,
+  12
+]);
+
+AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g$1, [
+  7,
+  8
+], [
+  12,
+  13
+]);
+
+console.log(g$1, g$1);
+
+console.log("AdjacencyList DFS");
+
+let dfsRes$1 = dfs$1(g$1, [
+  1,
+  2
+], (_node, _depth) => false);
+
+console.log("dfsRes", dfsRes$1);
+
+let A$2;
 
 let Queue;
 
@@ -171,9 +472,10 @@ let Stack;
 export {
   log,
   log2,
-  A,
+  A$2 as A,
   Queue,
   Stack,
-  Traversal,
+  TraversalImpl,
+  Make,
 }
-/* g Not a pure module */
+/*  Not a pure module */
