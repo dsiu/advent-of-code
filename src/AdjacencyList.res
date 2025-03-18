@@ -12,9 +12,9 @@ module type S = {
   let removeNode: (t, node) => bool
   let getNode: (t, node) => array<node>
 
-  //  let addUndirectedEdge: (t, node, node) => unit
+  let addUndirectedEdge: (t, node, node) => unit
   let addDirectedEdge: (t, node, node) => unit
-  //  let removeUndirectedEdge: (t, node, node) => bool
+  let removeUndirectedEdge: (t, node, node) => bool
   let removeDirectedEdge: (t, node, node) => bool
 
   let adjacent: (t, node, node) => bool
@@ -26,82 +26,87 @@ module type T = {
   type t
 }
 
-module MakeImpl = (NodeC: StdlibFp.Map.S, EdgeC: StdlibFp.Set.S) => {
-  //  type node = NodeC.key
-  type edgeContainer = EdgeC.t<NodeC.key>
-  type nodeContainer<'edgeContainer> = NodeC.t<NodeC.key, EdgeC.t<NodeC.key>>
-
-  type t = nodeContainer<edgeContainer>
+module MakeImpl = (NodeC: StdlibFp.Map.S): (
+  S with type node = NodeC.key and type t = NodeC.t<NodeC.key, NodeC.t<NodeC.key, int>>
+) => {
+  type node = NodeC.key
+  //  type edgeContainer = EdgeC.t<NodeC.key>
+  type t = NodeC.t<NodeC.key, NodeC.t<NodeC.key, int>>
 
   let make = NodeC.make
+
+  let weight = 0
 
   let addNode = (t, node) => {
     switch t->NodeC.get(node) {
     | Some(_) => ()
-    | None => t->NodeC.set(node, EdgeC.make())
+    | None => t->NodeC.set(node, NodeC.make())
     }
   }
   let removeNode = (t, node) => t->NodeC.delete(node)
 
   let getNode = (t, node) => {
     switch t->NodeC.get(node) {
-    | Some(ec) => ec->EdgeC.values->Iterator.toArray
+    | Some(ec) => ec->NodeC.keys->Iterator.toArray
     | None => raise(Not_found)
     }
   }
-
-  // NOT working yet since type of node != type of edge
 
   let addDirectedEdge = (t, a, b) => {
+    addNode(t, a)
+    addNode(t, b)
     switch t->NodeC.get(a) {
-    | Some(ec) => ec->EdgeC.add(b)
+    | Some(ec) => ec->NodeC.set(b, weight)
     | None => raise(Not_found)
     }
   }
 
-  //  let addUndirectedEdge: (t, node, node) => unit = (t, a, b) => {
-  //    addDirectedEdge(t, a, b)
-  //    addDirectedEdge(t, b, a)
-  //  }
+  let addUndirectedEdge: (t, node, node) => unit = (t, a, b) => {
+    addDirectedEdge(t, a, b)
+    addDirectedEdge(t, b, a)
+  }
 
-  //  let removeUndirectedEdge = (t, a, b) => {
-  //    switch t->NodeC.get(a) {
-  //    | Some(ec) => ec->EdgeC.delete(b)
-  //    | None => false
-  //    }
-  //  }
+  let removeUndirectedEdge = (t, a, b) => {
+    switch t->NodeC.get(a) {
+    | Some(ec) => ec->NodeC.delete(b)
+    | None => false
+    } &&
+    switch t->NodeC.get(b) {
+    | Some(ec) => ec->NodeC.delete(a)
+    | None => false
+    }
+  }
 
   let removeDirectedEdge = (t, a, b) => {
     switch t->NodeC.get(a) {
-    | Some(ec) => ec->EdgeC.delete(b)
+    | Some(ec) => ec->NodeC.delete(b)
     | None => false
     }
   }
 
   let adjacent = (t, a, b) => {
     switch t->NodeC.get(a) {
-    | Some(ec) => ec->EdgeC.has(b)
+    | Some(ec) => ec->NodeC.has(b)
     | None => false
     }
   }
 
   let neighbors = (t, node) => {
-    t->NodeC.get(node)->Option.getOr(EdgeC.make())->EdgeC.values->Iterator.toArray
+    t->NodeC.get(node)->Option.getOr(NodeC.make())->NodeC.keys->Iterator.toArray
   }
 }
 
-module MakeWithPrimitive = (T: T): (S with type node := T.t) => {
+module MakeWithPrimitive = (T: T): (S with type node = T.t) => {
   module NodeC = StdlibFp.Map.MakeWithPrimitive(T)
-  module EdgeC = StdlibFp.Set.MakeWithPrimitive(T)
-
-  include MakeImpl(NodeC, EdgeC)
+  //  module EdgeC = StdlibFp.Set.MakeWithPrimitive(T)
+  include MakeImpl(NodeC)
 }
 
-module Make = (Serializable: Serializable.S): (S with type node := Serializable.t) => {
+module Make = (Serializable: Serializable.S): (S with type node = Serializable.t) => {
   module NodeC = StdlibFp.Map.Make(Serializable)
-  module EdgeC = StdlibFp.Set.Make(Serializable)
+  //  module EdgeC = StdlibFp.Set.Make(Serializable)
 
-  include MakeImpl(NodeC, EdgeC)
+  include MakeImpl(NodeC)
 }
 
 module Node = {

@@ -2,88 +2,24 @@
 
 import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Stdlib__Map_Ext from "@dsiu/rescript-stdlib-fp/src/Stdlib__Map_Ext.res.mjs";
-import * as Stdlib__Set_Ext from "@dsiu/rescript-stdlib-fp/src/Stdlib__Set_Ext.res.mjs";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Stdlib__Serializable from "@dsiu/rescript-stdlib-fp/src/Stdlib__Serializable.res.mjs";
 import * as Stdlib__JSONSerializable from "@dsiu/rescript-stdlib-fp/src/Stdlib__JSONSerializable.res.mjs";
 
 function MakeImpl(NodeC) {
-  return EdgeC => {
-    let addNode = (t, node) => {
-      let match = NodeC.get(t, node);
-      if (match !== undefined) {
-        return;
-      } else {
-        return NodeC.set(t, node, EdgeC.make());
-      }
-    };
-    let removeNode = (t, node) => NodeC.$$delete(t, node);
-    let getNode = (t, node) => {
-      let ec = NodeC.get(t, node);
-      if (ec !== undefined) {
-        return Array.from(EdgeC.values(Primitive_option.valFromOption(ec)));
-      }
-      throw {
-        RE_EXN_ID: "Not_found",
-        Error: new Error()
-      };
-    };
-    let addDirectedEdge = (t, a, b) => {
-      let ec = NodeC.get(t, a);
-      if (ec !== undefined) {
-        return EdgeC.add(Primitive_option.valFromOption(ec), b);
-      }
-      throw {
-        RE_EXN_ID: "Not_found",
-        Error: new Error()
-      };
-    };
-    let removeDirectedEdge = (t, a, b) => {
-      let ec = NodeC.get(t, a);
-      if (ec !== undefined) {
-        return EdgeC.$$delete(Primitive_option.valFromOption(ec), b);
-      } else {
-        return false;
-      }
-    };
-    let adjacent = (t, a, b) => {
-      let ec = NodeC.get(t, a);
-      if (ec !== undefined) {
-        return EdgeC.has(Primitive_option.valFromOption(ec), b);
-      } else {
-        return false;
-      }
-    };
-    let neighbors = (t, node) => Array.from(EdgeC.values(Stdlib_Option.getOr(NodeC.get(t, node), EdgeC.make())));
-    return {
-      make: NodeC.make,
-      addNode: addNode,
-      removeNode: removeNode,
-      getNode: getNode,
-      addDirectedEdge: addDirectedEdge,
-      removeDirectedEdge: removeDirectedEdge,
-      adjacent: adjacent,
-      neighbors: neighbors
-    };
-  };
-}
-
-function MakeWithPrimitive(T) {
-  let NodeC = Stdlib__Map_Ext.MakeWithPrimitive(T);
-  let EdgeC = Stdlib__Set_Ext.MakeWithPrimitive(T);
   let addNode = (t, node) => {
     let match = NodeC.get(t, node);
     if (match !== undefined) {
       return;
     } else {
-      return NodeC.set(t, node, EdgeC.make());
+      return NodeC.set(t, node, NodeC.make());
     }
   };
   let removeNode = (t, node) => NodeC.$$delete(t, node);
   let getNode = (t, node) => {
     let ec = NodeC.get(t, node);
     if (ec !== undefined) {
-      return Array.from(EdgeC.values(Primitive_option.valFromOption(ec)));
+      return Array.from(NodeC.keys(Primitive_option.valFromOption(ec)));
     }
     throw {
       RE_EXN_ID: "Not_found",
@@ -91,19 +27,39 @@ function MakeWithPrimitive(T) {
     };
   };
   let addDirectedEdge = (t, a, b) => {
+    addNode(t, a);
+    addNode(t, b);
     let ec = NodeC.get(t, a);
     if (ec !== undefined) {
-      return EdgeC.add(Primitive_option.valFromOption(ec), b);
+      return NodeC.set(Primitive_option.valFromOption(ec), b, 0);
     }
     throw {
       RE_EXN_ID: "Not_found",
       Error: new Error()
     };
   };
+  let addUndirectedEdge = (t, a, b) => {
+    addDirectedEdge(t, a, b);
+    addDirectedEdge(t, b, a);
+  };
+  let removeUndirectedEdge = (t, a, b) => {
+    let ec = NodeC.get(t, a);
+    if (!(
+        ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+      )) {
+      return false;
+    }
+    let ec$1 = NodeC.get(t, b);
+    if (ec$1 !== undefined) {
+      return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+    } else {
+      return false;
+    }
+  };
   let removeDirectedEdge = (t, a, b) => {
     let ec = NodeC.get(t, a);
     if (ec !== undefined) {
-      return EdgeC.$$delete(Primitive_option.valFromOption(ec), b);
+      return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
@@ -111,18 +67,102 @@ function MakeWithPrimitive(T) {
   let adjacent = (t, a, b) => {
     let ec = NodeC.get(t, a);
     if (ec !== undefined) {
-      return EdgeC.has(Primitive_option.valFromOption(ec), b);
+      return NodeC.has(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
   };
-  let neighbors = (t, node) => Array.from(EdgeC.values(Stdlib_Option.getOr(NodeC.get(t, node), EdgeC.make())));
+  let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
   return {
     make: NodeC.make,
     addNode: addNode,
     removeNode: removeNode,
     getNode: getNode,
+    addUndirectedEdge: addUndirectedEdge,
     addDirectedEdge: addDirectedEdge,
+    removeUndirectedEdge: removeUndirectedEdge,
+    removeDirectedEdge: removeDirectedEdge,
+    adjacent: adjacent,
+    neighbors: neighbors
+  };
+}
+
+function MakeWithPrimitive(T) {
+  let NodeC = Stdlib__Map_Ext.MakeWithPrimitive(T);
+  let addNode = (t, node) => {
+    let match = NodeC.get(t, node);
+    if (match !== undefined) {
+      return;
+    } else {
+      return NodeC.set(t, node, NodeC.make());
+    }
+  };
+  let removeNode = (t, node) => NodeC.$$delete(t, node);
+  let getNode = (t, node) => {
+    let ec = NodeC.get(t, node);
+    if (ec !== undefined) {
+      return Array.from(NodeC.keys(Primitive_option.valFromOption(ec)));
+    }
+    throw {
+      RE_EXN_ID: "Not_found",
+      Error: new Error()
+    };
+  };
+  let addDirectedEdge = (t, a, b) => {
+    addNode(t, a);
+    addNode(t, b);
+    let ec = NodeC.get(t, a);
+    if (ec !== undefined) {
+      return NodeC.set(Primitive_option.valFromOption(ec), b, 0);
+    }
+    throw {
+      RE_EXN_ID: "Not_found",
+      Error: new Error()
+    };
+  };
+  let addUndirectedEdge = (t, a, b) => {
+    addDirectedEdge(t, a, b);
+    addDirectedEdge(t, b, a);
+  };
+  let removeUndirectedEdge = (t, a, b) => {
+    let ec = NodeC.get(t, a);
+    if (!(
+        ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+      )) {
+      return false;
+    }
+    let ec$1 = NodeC.get(t, b);
+    if (ec$1 !== undefined) {
+      return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+    } else {
+      return false;
+    }
+  };
+  let removeDirectedEdge = (t, a, b) => {
+    let ec = NodeC.get(t, a);
+    if (ec !== undefined) {
+      return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
+    } else {
+      return false;
+    }
+  };
+  let adjacent = (t, a, b) => {
+    let ec = NodeC.get(t, a);
+    if (ec !== undefined) {
+      return NodeC.has(Primitive_option.valFromOption(ec), b);
+    } else {
+      return false;
+    }
+  };
+  let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
+  return {
+    make: NodeC.make,
+    addNode: addNode,
+    removeNode: removeNode,
+    getNode: getNode,
+    addUndirectedEdge: addUndirectedEdge,
+    addDirectedEdge: addDirectedEdge,
+    removeUndirectedEdge: removeUndirectedEdge,
     removeDirectedEdge: removeDirectedEdge,
     adjacent: adjacent,
     neighbors: neighbors
@@ -131,20 +171,19 @@ function MakeWithPrimitive(T) {
 
 function Make(Serializable) {
   let NodeC = Stdlib__Map_Ext.Make(Serializable);
-  let EdgeC = Stdlib__Set_Ext.Make(Serializable);
   let addNode = (t, node) => {
     let match = NodeC.get(t, node);
     if (match !== undefined) {
       return;
     } else {
-      return NodeC.set(t, node, EdgeC.make());
+      return NodeC.set(t, node, NodeC.make());
     }
   };
   let removeNode = (t, node) => NodeC.$$delete(t, node);
   let getNode = (t, node) => {
     let ec = NodeC.get(t, node);
     if (ec !== undefined) {
-      return Array.from(EdgeC.values(Primitive_option.valFromOption(ec)));
+      return Array.from(NodeC.keys(Primitive_option.valFromOption(ec)));
     }
     throw {
       RE_EXN_ID: "Not_found",
@@ -152,19 +191,39 @@ function Make(Serializable) {
     };
   };
   let addDirectedEdge = (t, a, b) => {
+    addNode(t, a);
+    addNode(t, b);
     let ec = NodeC.get(t, a);
     if (ec !== undefined) {
-      return EdgeC.add(Primitive_option.valFromOption(ec), b);
+      return NodeC.set(Primitive_option.valFromOption(ec), b, 0);
     }
     throw {
       RE_EXN_ID: "Not_found",
       Error: new Error()
     };
   };
+  let addUndirectedEdge = (t, a, b) => {
+    addDirectedEdge(t, a, b);
+    addDirectedEdge(t, b, a);
+  };
+  let removeUndirectedEdge = (t, a, b) => {
+    let ec = NodeC.get(t, a);
+    if (!(
+        ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+      )) {
+      return false;
+    }
+    let ec$1 = NodeC.get(t, b);
+    if (ec$1 !== undefined) {
+      return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+    } else {
+      return false;
+    }
+  };
   let removeDirectedEdge = (t, a, b) => {
     let ec = NodeC.get(t, a);
     if (ec !== undefined) {
-      return EdgeC.$$delete(Primitive_option.valFromOption(ec), b);
+      return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
@@ -172,18 +231,20 @@ function Make(Serializable) {
   let adjacent = (t, a, b) => {
     let ec = NodeC.get(t, a);
     if (ec !== undefined) {
-      return EdgeC.has(Primitive_option.valFromOption(ec), b);
+      return NodeC.has(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
   };
-  let neighbors = (t, node) => Array.from(EdgeC.values(Stdlib_Option.getOr(NodeC.get(t, node), EdgeC.make())));
+  let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
   return {
     make: NodeC.make,
     addNode: addNode,
     removeNode: removeNode,
     getNode: getNode,
+    addUndirectedEdge: addUndirectedEdge,
     addDirectedEdge: addDirectedEdge,
+    removeUndirectedEdge: removeUndirectedEdge,
     removeDirectedEdge: removeDirectedEdge,
     adjacent: adjacent,
     neighbors: neighbors
@@ -194,14 +255,12 @@ let T = {};
 
 let NodeC = Stdlib__Map_Ext.MakeWithPrimitive(T);
 
-let EdgeC = Stdlib__Set_Ext.MakeWithPrimitive(T);
-
 function addNode(t, node) {
   let match = NodeC.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC.set(t, node, EdgeC.make());
+    return NodeC.set(t, node, NodeC.make());
   }
 }
 
@@ -212,7 +271,7 @@ function removeNode(t, node) {
 function getNode(t, node) {
   let ec = NodeC.get(t, node);
   if (ec !== undefined) {
-    return Array.from(EdgeC.values(Primitive_option.valFromOption(ec)));
+    return Array.from(NodeC.keys(Primitive_option.valFromOption(ec)));
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -221,9 +280,11 @@ function getNode(t, node) {
 }
 
 function addDirectedEdge(t, a, b) {
+  addNode(t, a);
+  addNode(t, b);
   let ec = NodeC.get(t, a);
   if (ec !== undefined) {
-    return EdgeC.add(Primitive_option.valFromOption(ec), b);
+    return NodeC.set(Primitive_option.valFromOption(ec), b, 0);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -231,10 +292,30 @@ function addDirectedEdge(t, a, b) {
   };
 }
 
+function addUndirectedEdge(t, a, b) {
+  addDirectedEdge(t, a, b);
+  addDirectedEdge(t, b, a);
+}
+
+function removeUndirectedEdge(t, a, b) {
+  let ec = NodeC.get(t, a);
+  if (!(
+      ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+    )) {
+    return false;
+  }
+  let ec$1 = NodeC.get(t, b);
+  if (ec$1 !== undefined) {
+    return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+  } else {
+    return false;
+  }
+}
+
 function removeDirectedEdge(t, a, b) {
   let ec = NodeC.get(t, a);
   if (ec !== undefined) {
-    return EdgeC.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
@@ -243,14 +324,14 @@ function removeDirectedEdge(t, a, b) {
 function adjacent(t, a, b) {
   let ec = NodeC.get(t, a);
   if (ec !== undefined) {
-    return EdgeC.has(Primitive_option.valFromOption(ec), b);
+    return NodeC.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function neighbors(t, node) {
-  return Array.from(EdgeC.values(Stdlib_Option.getOr(NodeC.get(t, node), EdgeC.make())));
+  return Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
 }
 
 let String_make = NodeC.make;
@@ -260,7 +341,9 @@ let $$String = {
   addNode: addNode,
   removeNode: removeNode,
   getNode: getNode,
+  addUndirectedEdge: addUndirectedEdge,
   addDirectedEdge: addDirectedEdge,
+  removeUndirectedEdge: removeUndirectedEdge,
   removeDirectedEdge: removeDirectedEdge,
   adjacent: adjacent,
   neighbors: neighbors
@@ -270,20 +353,19 @@ function Make$1(A) {
   return B => {
     let Serializable = Stdlib__Serializable.MakeTuple2(A)(B);
     let NodeC = Stdlib__Map_Ext.Make(Serializable);
-    let EdgeC = Stdlib__Set_Ext.Make(Serializable);
     let addNode = (t, node) => {
       let match = NodeC.get(t, node);
       if (match !== undefined) {
         return;
       } else {
-        return NodeC.set(t, node, EdgeC.make());
+        return NodeC.set(t, node, NodeC.make());
       }
     };
     let removeNode = (t, node) => NodeC.$$delete(t, node);
     let getNode = (t, node) => {
       let ec = NodeC.get(t, node);
       if (ec !== undefined) {
-        return Array.from(EdgeC.values(Primitive_option.valFromOption(ec)));
+        return Array.from(NodeC.keys(Primitive_option.valFromOption(ec)));
       }
       throw {
         RE_EXN_ID: "Not_found",
@@ -291,19 +373,39 @@ function Make$1(A) {
       };
     };
     let addDirectedEdge = (t, a, b) => {
+      addNode(t, a);
+      addNode(t, b);
       let ec = NodeC.get(t, a);
       if (ec !== undefined) {
-        return EdgeC.add(Primitive_option.valFromOption(ec), b);
+        return NodeC.set(Primitive_option.valFromOption(ec), b, 0);
       }
       throw {
         RE_EXN_ID: "Not_found",
         Error: new Error()
       };
     };
+    let addUndirectedEdge = (t, a, b) => {
+      addDirectedEdge(t, a, b);
+      addDirectedEdge(t, b, a);
+    };
+    let removeUndirectedEdge = (t, a, b) => {
+      let ec = NodeC.get(t, a);
+      if (!(
+          ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+        )) {
+        return false;
+      }
+      let ec$1 = NodeC.get(t, b);
+      if (ec$1 !== undefined) {
+        return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+      } else {
+        return false;
+      }
+    };
     let removeDirectedEdge = (t, a, b) => {
       let ec = NodeC.get(t, a);
       if (ec !== undefined) {
-        return EdgeC.$$delete(Primitive_option.valFromOption(ec), b);
+        return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
       } else {
         return false;
       }
@@ -311,18 +413,20 @@ function Make$1(A) {
     let adjacent = (t, a, b) => {
       let ec = NodeC.get(t, a);
       if (ec !== undefined) {
-        return EdgeC.has(Primitive_option.valFromOption(ec), b);
+        return NodeC.has(Primitive_option.valFromOption(ec), b);
       } else {
         return false;
       }
     };
-    let neighbors = (t, node) => Array.from(EdgeC.values(Stdlib_Option.getOr(NodeC.get(t, node), EdgeC.make())));
+    let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
     return {
       make: NodeC.make,
       addNode: addNode,
       removeNode: removeNode,
       getNode: getNode,
+      addUndirectedEdge: addUndirectedEdge,
       addDirectedEdge: addDirectedEdge,
+      removeUndirectedEdge: removeUndirectedEdge,
       removeDirectedEdge: removeDirectedEdge,
       adjacent: adjacent,
       neighbors: neighbors
@@ -334,14 +438,12 @@ let Serializable = Stdlib__Serializable.MakeTuple2(Stdlib__JSONSerializable.Int)
 
 let NodeC$1 = Stdlib__Map_Ext.Make(Serializable);
 
-let EdgeC$1 = Stdlib__Set_Ext.Make(Serializable);
-
 function addNode$1(t, node) {
   let match = NodeC$1.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC$1.set(t, node, EdgeC$1.make());
+    return NodeC$1.set(t, node, NodeC$1.make());
   }
 }
 
@@ -352,7 +454,7 @@ function removeNode$1(t, node) {
 function getNode$1(t, node) {
   let ec = NodeC$1.get(t, node);
   if (ec !== undefined) {
-    return Array.from(EdgeC$1.values(Primitive_option.valFromOption(ec)));
+    return Array.from(NodeC$1.keys(Primitive_option.valFromOption(ec)));
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -361,9 +463,11 @@ function getNode$1(t, node) {
 }
 
 function addDirectedEdge$1(t, a, b) {
+  addNode$1(t, a);
+  addNode$1(t, b);
   let ec = NodeC$1.get(t, a);
   if (ec !== undefined) {
-    return EdgeC$1.add(Primitive_option.valFromOption(ec), b);
+    return NodeC$1.set(Primitive_option.valFromOption(ec), b, 0);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -371,10 +475,30 @@ function addDirectedEdge$1(t, a, b) {
   };
 }
 
+function addUndirectedEdge$1(t, a, b) {
+  addDirectedEdge$1(t, a, b);
+  addDirectedEdge$1(t, b, a);
+}
+
+function removeUndirectedEdge$1(t, a, b) {
+  let ec = NodeC$1.get(t, a);
+  if (!(
+      ec !== undefined ? NodeC$1.$$delete(Primitive_option.valFromOption(ec), b) : false
+    )) {
+    return false;
+  }
+  let ec$1 = NodeC$1.get(t, b);
+  if (ec$1 !== undefined) {
+    return NodeC$1.$$delete(Primitive_option.valFromOption(ec$1), a);
+  } else {
+    return false;
+  }
+}
+
 function removeDirectedEdge$1(t, a, b) {
   let ec = NodeC$1.get(t, a);
   if (ec !== undefined) {
-    return EdgeC$1.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeC$1.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
@@ -383,14 +507,14 @@ function removeDirectedEdge$1(t, a, b) {
 function adjacent$1(t, a, b) {
   let ec = NodeC$1.get(t, a);
   if (ec !== undefined) {
-    return EdgeC$1.has(Primitive_option.valFromOption(ec), b);
+    return NodeC$1.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function neighbors$1(t, node) {
-  return Array.from(EdgeC$1.values(Stdlib_Option.getOr(NodeC$1.get(t, node), EdgeC$1.make())));
+  return Array.from(NodeC$1.keys(Stdlib_Option.getOr(NodeC$1.get(t, node), NodeC$1.make())));
 }
 
 let IntInt_make = NodeC$1.make;
@@ -400,7 +524,9 @@ let IntInt = {
   addNode: addNode$1,
   removeNode: removeNode$1,
   getNode: getNode$1,
+  addUndirectedEdge: addUndirectedEdge$1,
   addDirectedEdge: addDirectedEdge$1,
+  removeUndirectedEdge: removeUndirectedEdge$1,
   removeDirectedEdge: removeDirectedEdge$1,
   adjacent: adjacent$1,
   neighbors: neighbors$1
@@ -410,14 +536,12 @@ let Serializable$1 = Stdlib__Serializable.MakeTuple2(Stdlib__JSONSerializable.$$
 
 let NodeC$2 = Stdlib__Map_Ext.Make(Serializable$1);
 
-let EdgeC$2 = Stdlib__Set_Ext.Make(Serializable$1);
-
 function addNode$2(t, node) {
   let match = NodeC$2.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC$2.set(t, node, EdgeC$2.make());
+    return NodeC$2.set(t, node, NodeC$2.make());
   }
 }
 
@@ -428,7 +552,7 @@ function removeNode$2(t, node) {
 function getNode$2(t, node) {
   let ec = NodeC$2.get(t, node);
   if (ec !== undefined) {
-    return Array.from(EdgeC$2.values(Primitive_option.valFromOption(ec)));
+    return Array.from(NodeC$2.keys(Primitive_option.valFromOption(ec)));
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -437,9 +561,11 @@ function getNode$2(t, node) {
 }
 
 function addDirectedEdge$2(t, a, b) {
+  addNode$2(t, a);
+  addNode$2(t, b);
   let ec = NodeC$2.get(t, a);
   if (ec !== undefined) {
-    return EdgeC$2.add(Primitive_option.valFromOption(ec), b);
+    return NodeC$2.set(Primitive_option.valFromOption(ec), b, 0);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -447,10 +573,30 @@ function addDirectedEdge$2(t, a, b) {
   };
 }
 
+function addUndirectedEdge$2(t, a, b) {
+  addDirectedEdge$2(t, a, b);
+  addDirectedEdge$2(t, b, a);
+}
+
+function removeUndirectedEdge$2(t, a, b) {
+  let ec = NodeC$2.get(t, a);
+  if (!(
+      ec !== undefined ? NodeC$2.$$delete(Primitive_option.valFromOption(ec), b) : false
+    )) {
+    return false;
+  }
+  let ec$1 = NodeC$2.get(t, b);
+  if (ec$1 !== undefined) {
+    return NodeC$2.$$delete(Primitive_option.valFromOption(ec$1), a);
+  } else {
+    return false;
+  }
+}
+
 function removeDirectedEdge$2(t, a, b) {
   let ec = NodeC$2.get(t, a);
   if (ec !== undefined) {
-    return EdgeC$2.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeC$2.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
@@ -459,14 +605,14 @@ function removeDirectedEdge$2(t, a, b) {
 function adjacent$2(t, a, b) {
   let ec = NodeC$2.get(t, a);
   if (ec !== undefined) {
-    return EdgeC$2.has(Primitive_option.valFromOption(ec), b);
+    return NodeC$2.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function neighbors$2(t, node) {
-  return Array.from(EdgeC$2.values(Stdlib_Option.getOr(NodeC$2.get(t, node), EdgeC$2.make())));
+  return Array.from(NodeC$2.keys(Stdlib_Option.getOr(NodeC$2.get(t, node), NodeC$2.make())));
 }
 
 let StringInt_make = NodeC$2.make;
@@ -476,7 +622,9 @@ let StringInt = {
   addNode: addNode$2,
   removeNode: removeNode$2,
   getNode: getNode$2,
+  addUndirectedEdge: addUndirectedEdge$2,
   addDirectedEdge: addDirectedEdge$2,
+  removeUndirectedEdge: removeUndirectedEdge$2,
   removeDirectedEdge: removeDirectedEdge$2,
   adjacent: adjacent$2,
   neighbors: neighbors$2
