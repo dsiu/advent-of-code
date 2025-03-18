@@ -10,6 +10,7 @@ module type S = {
 
   let addNode: (t, node) => unit
   let removeNode: (t, node) => bool
+  // todo: is getNode doing the right thing??
   let getNode: (t, node) => array<node>
 
   let addUndirectedEdge: (t, node, node) => unit
@@ -43,13 +44,34 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
     | None => t->NodeC.set(node, NodeC.make())
     }
   }
-  let removeNode = (t, node) => t->NodeC.delete(node)
+
+  let adjacent = (t, a, b) => {
+    switch t->NodeC.get(a) {
+    | Some(ec) => ec->NodeC.has(b)
+    | None => false
+    }
+  }
+
+  let neighbors = (t, node) => {
+    t->NodeC.get(node)->Option.getOr(NodeC.make())->NodeC.keys->Iterator.toArray
+  }
 
   let getNode = (t, node) => {
     switch t->NodeC.get(node) {
     | Some(ec) => ec->NodeC.keys->Iterator.toArray
     | None => raise(Not_found)
     }
+  }
+
+  let removeNode = (t, node) => {
+    let children = t->neighbors(node)
+    children->Array.forEach(child => {
+      switch t->NodeC.get(child) {
+      | Some(c) => c->NodeC.delete(node)->ignore
+      | None => ()
+      }
+    })
+    t->NodeC.delete(node)
   }
 
   let addDirectedEdge = (t, a, b) => {
@@ -82,17 +104,6 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
     | Some(ec) => ec->NodeC.delete(b)
     | None => false
     }
-  }
-
-  let adjacent = (t, a, b) => {
-    switch t->NodeC.get(a) {
-    | Some(ec) => ec->NodeC.has(b)
-    | None => false
-    }
-  }
-
-  let neighbors = (t, node) => {
-    t->NodeC.get(node)->Option.getOr(NodeC.make())->NodeC.keys->Iterator.toArray
   }
 }
 
