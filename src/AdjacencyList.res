@@ -11,6 +11,7 @@ module type S = {
   let addNode: (t<'a>, node) => unit
   let removeNode: (t<'a>, node) => bool
   let hasNode: (t<'a>, node) => bool
+  let getAllNodes: t<'a> => array<node>
 
   let addUndirectedEdge: (t<'a>, node, node, ~weight: option<'a>=?) => unit
   let addDirectedEdge: (t<'a>, node, node, ~weight: option<'a>=?) => unit
@@ -52,6 +53,8 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
     | None => false
     }
   }
+
+  let getAllNodes = t => t->NodeC.keys->Iterator.toArray
 
   let neighbors = (t, node) => {
     t->NodeC.get(node)->Option.getOr(NodeC.make())->NodeC.keys->Iterator.toArray
@@ -116,14 +119,11 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
 
 module MakeWithPrimitive = (T: T): (S with type node = T.t) => {
   module NodeC = StdlibFp.Map.MakeWithPrimitive(T)
-  //  module EdgeC = StdlibFp.Set.MakeWithPrimitive(T)
   include MakeImpl(NodeC)
 }
 
 module Make = (Serializable: Serializable.S): (S with type node = Serializable.t) => {
   module NodeC = StdlibFp.Map.Make(Serializable)
-  //  module EdgeC = StdlibFp.Set.Make(Serializable)
-
   include MakeImpl(NodeC)
 }
 

@@ -66,7 +66,7 @@ module type GRAPH = {
 
   module Make: (V: VERT) =>
   {
-    include S with type vertex_t = V.t and type extern_t = list<(V.t, list<(V.t, float)>)>
+    include S with type vertex_t = V.t and type extern_t = array<(V.t, array<(V.t, float)>)>
   }
 }
 
@@ -103,10 +103,9 @@ module Graph: GRAPH = {
      * types vertext_t, t and extern_t. The modules Map and Set are available due to modules of type
      * VERT being comparable in their type t. */
     //    module Map = V.Map
-    open Belt
-    module Map = Map
+    module Map = Belt.Map
     //    module Set = V.Set
-    module Set = Set
+    module Set = Belt.Set
 
     type vertex_t = V.t
     type t = Map.t<vertex_t, array<(vertex_t, float)>, vertex_t>
@@ -126,7 +125,7 @@ module Graph: GRAPH = {
       //      | Belt.Result.Ok(t) => t
       //      | Belt.Result.Error(c) => raise(Load_error(#Duplicate_vertex(c)))
       //      }
-      Map.fromArray(l)
+      Map.fromArray(l, ~id=module(V))
     }
 
     let of_adjacency = l => {
@@ -154,6 +153,9 @@ module Graph: GRAPH = {
          s : Set.t, the set S of nodes for which the lower bound shortest path weight is known;
          v_s : (vertex_t * float) Heap.t, V - {S}, , the set of nodes of g for which the lower bound of the shortest path weight is not yet known ordered on their estimates.
        */
+      module Queue = Belt.MutableQueue
+      module Heap = PriorityQueue.MinPriorityQueue
+
       type state = {
         src: vertex_t,
         g: t,
@@ -174,7 +176,7 @@ module Graph: GRAPH = {
           if V.equal(src, x) {
             0.0
           } else {
-            RescriptCore.Float.Constants.positiveInfinity
+            Float.Constants.positiveInfinity
           }
         let d =
           Map.keysToArray(g)->Belt.Array.reduceWithIndex(Map.make(~id=module(V)), (acc, x, _) =>

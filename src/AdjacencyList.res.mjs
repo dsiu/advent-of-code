@@ -24,6 +24,7 @@ function MakeImpl(NodeC) {
       return false;
     }
   };
+  let getAllNodes = t => Array.from(NodeC.keys(t));
   let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
   let removeNode = (t, node) => {
     let children = neighbors(t, node);
@@ -89,6 +90,7 @@ function MakeImpl(NodeC) {
     addNode: addNode,
     removeNode: removeNode,
     hasNode: hasNode,
+    getAllNodes: getAllNodes,
     addUndirectedEdge: addUndirectedEdge,
     addDirectedEdge: addDirectedEdge,
     removeUndirectedEdge: removeUndirectedEdge,
@@ -118,6 +120,7 @@ function MakeWithPrimitive(T) {
       return false;
     }
   };
+  let getAllNodes = t => Array.from(NodeC.keys(t));
   let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
   let removeNode = (t, node) => {
     let children = neighbors(t, node);
@@ -183,6 +186,7 @@ function MakeWithPrimitive(T) {
     addNode: addNode,
     removeNode: removeNode,
     hasNode: hasNode,
+    getAllNodes: getAllNodes,
     addUndirectedEdge: addUndirectedEdge,
     addDirectedEdge: addDirectedEdge,
     removeUndirectedEdge: removeUndirectedEdge,
@@ -212,6 +216,7 @@ function Make(Serializable) {
       return false;
     }
   };
+  let getAllNodes = t => Array.from(NodeC.keys(t));
   let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
   let removeNode = (t, node) => {
     let children = neighbors(t, node);
@@ -277,6 +282,7 @@ function Make(Serializable) {
     addNode: addNode,
     removeNode: removeNode,
     hasNode: hasNode,
+    getAllNodes: getAllNodes,
     addUndirectedEdge: addUndirectedEdge,
     addDirectedEdge: addDirectedEdge,
     removeUndirectedEdge: removeUndirectedEdge,
@@ -311,6 +317,10 @@ function adjacent(t, a, b) {
   } else {
     return false;
   }
+}
+
+function getAllNodes(t) {
+  return Array.from(NodeC.keys(t));
 }
 
 function neighbors(t, node) {
@@ -389,6 +399,7 @@ let $$String = {
   addNode: addNode,
   removeNode: removeNode,
   hasNode: hasNode,
+  getAllNodes: getAllNodes,
   addUndirectedEdge: addUndirectedEdge,
   addDirectedEdge: addDirectedEdge,
   removeUndirectedEdge: removeUndirectedEdge,
@@ -419,6 +430,7 @@ function Make$1(A) {
         return false;
       }
     };
+    let getAllNodes = t => Array.from(NodeC.keys(t));
     let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
     let removeNode = (t, node) => {
       let children = neighbors(t, node);
@@ -484,6 +496,7 @@ function Make$1(A) {
       addNode: addNode,
       removeNode: removeNode,
       hasNode: hasNode,
+      getAllNodes: getAllNodes,
       addUndirectedEdge: addUndirectedEdge,
       addDirectedEdge: addDirectedEdge,
       removeUndirectedEdge: removeUndirectedEdge,
@@ -519,6 +532,10 @@ function adjacent$1(t, a, b) {
   } else {
     return false;
   }
+}
+
+function getAllNodes$1(t) {
+  return Array.from(NodeC$1.keys(t));
 }
 
 function neighbors$1(t, node) {
@@ -597,6 +614,7 @@ let IntInt = {
   addNode: addNode$1,
   removeNode: removeNode$1,
   hasNode: hasNode$1,
+  getAllNodes: getAllNodes$1,
   addUndirectedEdge: addUndirectedEdge$1,
   addDirectedEdge: addDirectedEdge$1,
   removeUndirectedEdge: removeUndirectedEdge$1,
@@ -630,6 +648,10 @@ function adjacent$2(t, a, b) {
   } else {
     return false;
   }
+}
+
+function getAllNodes$2(t) {
+  return Array.from(NodeC$2.keys(t));
 }
 
 function neighbors$2(t, node) {
@@ -708,6 +730,7 @@ let StringInt = {
   addNode: addNode$2,
   removeNode: removeNode$2,
   hasNode: hasNode$2,
+  getAllNodes: getAllNodes$2,
   addUndirectedEdge: addUndirectedEdge$2,
   addDirectedEdge: addDirectedEdge$2,
   removeUndirectedEdge: removeUndirectedEdge$2,
