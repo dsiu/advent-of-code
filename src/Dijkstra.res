@@ -2,8 +2,6 @@
 //
 
 module Dijkstra = (A: AdjacencyList.S, NodeMap: StdlibFp.Map.S with type key = A.node) => {
-  type t<'a>
-  type node = A.node
   module PriorityQueue = PriorityQueue.MinPriorityQueue
 
   //  type nodeMap<'a> = NodeMap.t<A.node, option<'a>>
