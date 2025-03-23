@@ -11,7 +11,7 @@ module A = AdjacencyList.Node.String
 module Queue = Belt.MutableQueue
 module Stack = Belt.MutableStack
 
-module TraversalImpl = (A: AdjacencyList.S) => {
+module Traversal = (A: AdjacencyList.S, NodeSet: StdlibFp.Set.S with type a = A.node) => {
   type traversalRecord<'a> = TraversalRecord({node: A.node, depth: int, from: option<A.node>})
   type callback = (A.node, int) => bool // return true to stop the traversal
 
@@ -24,10 +24,10 @@ module TraversalImpl = (A: AdjacencyList.S) => {
         ? acc
         : {
             let TraversalRecord({node, depth, from}) = toVisit->Queue.popExn
-            visited->Set.has(node)
+            visited->NodeSet.has(node)
               ? loop(graph, acc, visited, toVisit) // tail recursion
               : {
-                  visited->Set.add(node)
+                  visited->NodeSet.add(node)
                   acc->Array.push(TraversalRecord({node, depth, from}))
 
                   !cb(node, depth)
@@ -56,7 +56,7 @@ module TraversalImpl = (A: AdjacencyList.S) => {
           }
     }
 
-    loop(graph, [], Set.make(), queue)
+    loop(graph, [], NodeSet.make(), queue)
   }
 
   let dfs: (A.t<'a>, A.node, callback) => array<traversalRecord<'a>> = (graph, rootNode, cb) => {
@@ -68,10 +68,10 @@ module TraversalImpl = (A: AdjacencyList.S) => {
         ? acc
         : {
             let TraversalRecord({node, depth, from}) = toVisit->Stack.pop->Option.getExn
-            visited->Set.has(node)
+            visited->NodeSet.has(node)
               ? loop(graph, acc, visited, toVisit) // tail recursion
               : {
-                  visited->Set.add(node)
+                  visited->NodeSet.add(node)
                   acc->Array.push(TraversalRecord({node, depth, from}))
 
                   !cb(node, depth)
@@ -100,10 +100,10 @@ module TraversalImpl = (A: AdjacencyList.S) => {
           }
     }
 
-    loop(graph, [], Set.make(), stack)
+    loop(graph, [], NodeSet.make(), stack)
   }
 
-  let convertToPaths = (records: array<traversalRecord<'a>>): array<array<A.node>> => {
+  let paths: array<traversalRecord<'a>> => array<array<A.node>> = records => {
     let rec buildPath = (record: traversalRecord<'a>, acc: array<A.node>): array<A.node> => {
       let TraversalRecord({node, depth: _depth, from}) = record
       switch from {
@@ -117,8 +117,16 @@ module TraversalImpl = (A: AdjacencyList.S) => {
 
     records->Array.map(record => buildPath(record, []))
   }
-}
 
-module Make = (A: AdjacencyList.S) => {
-  module Traversal = TraversalImpl(A)
+  let path: (array<traversalRecord<'a>>, A.node, A.node) => option<array<A.node>> = (
+    records,
+    a,
+    b,
+  ) => {
+    let paths = paths(records)
+    paths->Array.find(path => {
+      path[0]->Option.filter(node => node == a)->Option.isSome &&
+        path->Array.last->Option.filter(node => node == b)->Option.isSome
+    })
+  }
 }

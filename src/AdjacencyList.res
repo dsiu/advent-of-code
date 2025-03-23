@@ -8,7 +8,8 @@ module type S = {
 
   let make: unit => t<'a>
 
-  let nodeC: module(StdlibFp.Map.S with type key = node)
+  let nodeMap: module(StdlibFp.Map.S with type key = node)
+  let nodeSet: module(StdlibFp.Set.S with type a = node)
 
   let addNode: (t<'a>, node) => unit
   let removeNode: (t<'a>, node) => bool
@@ -31,55 +32,58 @@ module type T = {
   type t
 }
 
-module MakeImpl = (NodeC: StdlibFp.Map.S): (
-  S with type node = NodeC.key and type t<'a> = NodeC.t<NodeC.key, NodeC.t<NodeC.key, option<'a>>>
+module MakeImpl = (NodeMap: StdlibFp.Map.S, NodeSet: StdlibFp.Set.S with type a = NodeMap.key): (
+  S
+    with type node = NodeMap.key
+    and type t<'a> = NodeMap.t<NodeMap.key, NodeMap.t<NodeMap.key, option<'a>>>
 ) => {
-  type node = NodeC.key
-  //  type edgeContainer = EdgeC.t<NodeC.key>
-  type t<'a> = NodeC.t<NodeC.key, NodeC.t<NodeC.key, option<'a>>>
+  type node = NodeMap.key
+  //  type edgeContainer = EdgeC.t<NodeMap.key>
+  type t<'a> = NodeMap.t<NodeMap.key, NodeMap.t<NodeMap.key, option<'a>>>
 
-  let nodeC = module(NodeC: StdlibFp.Map.S with type key = node)
+  let nodeMap = module(NodeMap: StdlibFp.Map.S with type key = node)
+  let nodeSet = module(NodeSet: StdlibFp.Set.S with type a = node)
 
-  let make = NodeC.make
+  let make = NodeMap.make
 
   let addNode = (t, node) => {
-    switch t->NodeC.get(node) {
+    switch t->NodeMap.get(node) {
     | Some(_) => ()
-    | None => t->NodeC.set(node, NodeC.make())
+    | None => t->NodeMap.set(node, NodeMap.make())
     }
   }
 
-  let hasNode = (t, node) => t->NodeC.has(node)
+  let hasNode = (t, node) => t->NodeMap.has(node)
 
   let adjacent = (t, a, b) => {
-    switch t->NodeC.get(a) {
-    | Some(ec) => ec->NodeC.has(b)
+    switch t->NodeMap.get(a) {
+    | Some(ec) => ec->NodeMap.has(b)
     | None => false
     }
   }
 
-  let getAllNodes = t => t->NodeC.keys->Iterator.toArray
+  let getAllNodes = t => t->NodeMap.keys->Iterator.toArray
 
   let neighbors = (t, node) => {
-    t->NodeC.get(node)->Option.getOr(NodeC.make())->NodeC.keys->Iterator.toArray
+    t->NodeMap.get(node)->Option.getOr(NodeMap.make())->NodeMap.keys->Iterator.toArray
   }
 
   let removeNode = (t, node) => {
     let children = t->neighbors(node)
     children->Array.forEach(child => {
-      switch t->NodeC.get(child) {
-      | Some(c) => c->NodeC.delete(node)->ignore
+      switch t->NodeMap.get(child) {
+      | Some(c) => c->NodeMap.delete(node)->ignore
       | None => ()
       }
     })
-    t->NodeC.delete(node)
+    t->NodeMap.delete(node)
   }
 
   let addDirectedEdge = (t, a, b, ~weight: option<'a>=None) => {
     addNode(t, a)
     addNode(t, b)
-    switch t->NodeC.get(a) {
-    | Some(ec) => ec->NodeC.set(b, weight)
+    switch t->NodeMap.get(a) {
+    | Some(ec) => ec->NodeMap.set(b, weight)
     | None => raise(Not_found)
     }
   }
@@ -96,39 +100,41 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
   }
 
   let removeUndirectedEdge = (t, a, b) => {
-    switch t->NodeC.get(a) {
-    | Some(ec) => ec->NodeC.delete(b)
+    switch t->NodeMap.get(a) {
+    | Some(ec) => ec->NodeMap.delete(b)
     | None => false
     } &&
-    switch t->NodeC.get(b) {
-    | Some(ec) => ec->NodeC.delete(a)
+    switch t->NodeMap.get(b) {
+    | Some(ec) => ec->NodeMap.delete(a)
     | None => false
     }
   }
 
   let removeDirectedEdge = (t, a, b) => {
-    switch t->NodeC.get(a) {
-    | Some(ec) => ec->NodeC.delete(b)
+    switch t->NodeMap.get(a) {
+    | Some(ec) => ec->NodeMap.delete(b)
     | None => false
     }
   }
 
   let getWeight: (t<'a>, node, node) => option<'a> = (t, a, b) => {
-    switch t->NodeC.get(a) {
-    | Some(ec) => ec->NodeC.get(b)->Option.getOr(None)
+    switch t->NodeMap.get(a) {
+    | Some(ec) => ec->NodeMap.get(b)->Option.getOr(None)
     | None => None
     }
   }
 }
 
 module MakeWithPrimitive = (T: T): (S with type node = T.t) => {
-  module NodeC = StdlibFp.Map.MakeWithPrimitive(T)
-  include MakeImpl(NodeC)
+  module NodeMap = StdlibFp.Map.MakeWithPrimitive(T)
+  module NodeSet = StdlibFp.Set.MakeWithPrimitive(T)
+  include MakeImpl(NodeMap, NodeSet)
 }
 
 module Make = (Serializable: Serializable.S): (S with type node = Serializable.t) => {
-  module NodeC = StdlibFp.Map.Make(Serializable)
-  include MakeImpl(NodeC)
+  module NodeMap = StdlibFp.Map.Make(Serializable)
+  module NodeSet = StdlibFp.Set.Make(Serializable)
+  include MakeImpl(NodeMap, NodeSet)
 }
 
 module Node = {

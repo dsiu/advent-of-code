@@ -5,7 +5,7 @@ import * as Dijkstra from "../src/Dijkstra.res.mjs";
 import * as AdjacencyList from "../src/AdjacencyList.res.mjs";
 
 Jest.describe("Dijkstra Algorithm with StringAdjList", () => {
-  let NodeMap = AdjacencyList.Node.$$String.nodeC;
+  let NodeMap = AdjacencyList.Node.$$String.nodeMap;
   let Dijkstra$1 = Dijkstra.Dijkstra(AdjacencyList.Node.$$String)(NodeMap);
   let graph = {
     contents: AdjacencyList.Node.$$String.make()
@@ -65,9 +65,7 @@ Jest.describe("Dijkstra Algorithm with StringAdjList", () => {
   Jest.test("handles unreachable nodes", () => {
     AdjacencyList.Node.$$String.addNode(graph.contents, "7");
     let match = Dijkstra$1.dijkstra(graph.contents, "1");
-    let distances = match[0];
-    console.log("distances: ", distances);
-    return Jest.Expect.toEqual(Jest.Expect.expect(NodeMap.get(distances, "7")), undefined);
+    return Jest.Expect.toEqual(Jest.Expect.expect(NodeMap.get(match[0], "7")), undefined);
   });
   Jest.test("returns correct path", () => {
     let path = Dijkstra$1.shortestPath(graph.contents, "1", "5");
@@ -148,7 +146,7 @@ Jest.describe("Dijkstra Algorithm with StringAdjList", () => {
 });
 
 Jest.describe("Dijkstra Algorithm with TupleAdjList", () => {
-  let NodeMap = AdjacencyList.Node.Tuple2.StringInt.nodeC;
+  let NodeMap = AdjacencyList.Node.Tuple2.StringInt.nodeMap;
   let Dijkstra$1 = Dijkstra.Dijkstra(AdjacencyList.Node.Tuple2.StringInt)(NodeMap);
   let graph = {
     contents: AdjacencyList.Node.Tuple2.StringInt.make()
@@ -289,9 +287,7 @@ Jest.describe("Dijkstra Algorithm with TupleAdjList", () => {
       "1",
       1
     ]);
-    let distances = match[0];
-    console.log("distances: ", distances);
-    return Jest.Expect.toEqual(Jest.Expect.expect(NodeMap.get(distances, [
+    return Jest.Expect.toEqual(Jest.Expect.expect(NodeMap.get(match[0], [
       "7",
       7
     ])), undefined);

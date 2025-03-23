@@ -17,246 +17,136 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-function TraversalImpl(A) {
-  let bfs = (graph, rootNode, cb) => {
-    let queue = Belt_MutableQueue.make();
-    Belt_MutableQueue.add(queue, {
-      TAG: "TraversalRecord",
-      node: rootNode,
-      depth: 0,
-      from: undefined
-    });
-    let acc = [];
-    let visited = new Set();
-    while (true) {
-      if (Belt_MutableQueue.isEmpty(queue)) {
-        return acc;
-      }
-      let match = Belt_MutableQueue.popExn(queue);
-      let depth = match.depth;
-      let node = match.node;
-      if (visited.has(node)) {
-        continue;
-      }
-      visited.add(node);
-      acc.push({
+function Traversal(A) {
+  return NodeSet => {
+    let bfs = (graph, rootNode, cb) => {
+      let queue = Belt_MutableQueue.make();
+      Belt_MutableQueue.add(queue, {
         TAG: "TraversalRecord",
-        node: node,
-        depth: depth,
-        from: match.from
+        node: rootNode,
+        depth: 0,
+        from: undefined
       });
-      if (!cb(node, depth)) {
-        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
-          if (neighbor !== undefined) {
-            return Belt_MutableQueue.add(queue, {
-              TAG: "TraversalRecord",
-              node: Primitive_option.valFromOption(neighbor),
-              depth: depth + 1 | 0,
-              from: Primitive_option.some(node)
-            });
-          }
-          
-        });
-      }
-      continue;
-    };
-  };
-  let dfs = (graph, rootNode, cb) => {
-    let stack = Belt_MutableStack.make();
-    Belt_MutableStack.push(stack, {
-      TAG: "TraversalRecord",
-      node: rootNode,
-      depth: 0,
-      from: undefined
-    });
-    let acc = [];
-    let visited = new Set();
-    while (true) {
-      if (Belt_MutableStack.isEmpty(stack)) {
-        return acc;
-      }
-      let match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
-      let depth = match.depth;
-      let node = match.node;
-      if (visited.has(node)) {
-        continue;
-      }
-      visited.add(node);
-      acc.push({
-        TAG: "TraversalRecord",
-        node: node,
-        depth: depth,
-        from: match.from
-      });
-      if (!cb(node, depth)) {
-        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
-          if (neighbor !== undefined) {
-            return Belt_MutableStack.push(stack, {
-              TAG: "TraversalRecord",
-              node: Primitive_option.valFromOption(neighbor),
-              depth: depth + 1 | 0,
-              from: Primitive_option.some(node)
-            });
-          }
-          
-        });
-      }
-      continue;
-    };
-  };
-  let convertToPaths = records => {
-    return records.map(record => {
-      let _record = record;
-      let _acc = [];
+      let acc = [];
+      let visited = NodeSet.make();
       while (true) {
-        let acc = _acc;
-        let record$1 = _record;
-        let from = record$1.from;
-        let node = record$1.node;
-        if (from === undefined) {
-          return Belt_Array.concatMany([
+        if (Belt_MutableQueue.isEmpty(queue)) {
+          return acc;
+        }
+        let match = Belt_MutableQueue.popExn(queue);
+        let depth = match.depth;
+        let node = match.node;
+        if (NodeSet.has(visited, node)) {
+          continue;
+        }
+        NodeSet.add(visited, node);
+        acc.push({
+          TAG: "TraversalRecord",
+          node: node,
+          depth: depth,
+          from: match.from
+        });
+        if (!cb(node, depth)) {
+          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+            if (neighbor !== undefined) {
+              return Belt_MutableQueue.add(queue, {
+                TAG: "TraversalRecord",
+                node: Primitive_option.valFromOption(neighbor),
+                depth: depth + 1 | 0,
+                from: Primitive_option.some(node)
+              });
+            }
+            
+          });
+        }
+        continue;
+      };
+    };
+    let dfs = (graph, rootNode, cb) => {
+      let stack = Belt_MutableStack.make();
+      Belt_MutableStack.push(stack, {
+        TAG: "TraversalRecord",
+        node: rootNode,
+        depth: 0,
+        from: undefined
+      });
+      let acc = [];
+      let visited = NodeSet.make();
+      while (true) {
+        if (Belt_MutableStack.isEmpty(stack)) {
+          return acc;
+        }
+        let match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
+        let depth = match.depth;
+        let node = match.node;
+        if (NodeSet.has(visited, node)) {
+          continue;
+        }
+        NodeSet.add(visited, node);
+        acc.push({
+          TAG: "TraversalRecord",
+          node: node,
+          depth: depth,
+          from: match.from
+        });
+        if (!cb(node, depth)) {
+          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+            if (neighbor !== undefined) {
+              return Belt_MutableStack.push(stack, {
+                TAG: "TraversalRecord",
+                node: Primitive_option.valFromOption(neighbor),
+                depth: depth + 1 | 0,
+                from: Primitive_option.some(node)
+              });
+            }
+            
+          });
+        }
+        continue;
+      };
+    };
+    let paths = records => {
+      return records.map(record => {
+        let _record = record;
+        let _acc = [];
+        while (true) {
+          let acc = _acc;
+          let record$1 = _record;
+          let from = record$1.from;
+          let node = record$1.node;
+          if (from === undefined) {
+            return Belt_Array.concatMany([
+              [node],
+              acc
+            ]);
+          }
+          let fromNode = Primitive_option.valFromOption(from);
+          let fromRecord = Stdlib__Option.getExn(records.find(param => Primitive_object.equal(param.node, fromNode)), undefined);
+          _acc = Belt_Array.concatMany([
             [node],
             acc
           ]);
-        }
-        let fromNode = Primitive_option.valFromOption(from);
-        let fromRecord = Stdlib__Option.getExn(records.find(param => Primitive_object.equal(param.node, fromNode)), undefined);
-        _acc = Belt_Array.concatMany([
-          [node],
-          acc
-        ]);
-        _record = fromRecord;
-        continue;
-      };
-    });
-  };
-  return {
-    bfs: bfs,
-    dfs: dfs,
-    convertToPaths: convertToPaths
-  };
-}
-
-function Make(A) {
-  let bfs = (graph, rootNode, cb) => {
-    let queue = Belt_MutableQueue.make();
-    Belt_MutableQueue.add(queue, {
-      TAG: "TraversalRecord",
-      node: rootNode,
-      depth: 0,
-      from: undefined
-    });
-    let acc = [];
-    let visited = new Set();
-    while (true) {
-      if (Belt_MutableQueue.isEmpty(queue)) {
-        return acc;
-      }
-      let match = Belt_MutableQueue.popExn(queue);
-      let depth = match.depth;
-      let node = match.node;
-      if (visited.has(node)) {
-        continue;
-      }
-      visited.add(node);
-      acc.push({
-        TAG: "TraversalRecord",
-        node: node,
-        depth: depth,
-        from: match.from
+          _record = fromRecord;
+          continue;
+        };
       });
-      if (!cb(node, depth)) {
-        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
-          if (neighbor !== undefined) {
-            return Belt_MutableQueue.add(queue, {
-              TAG: "TraversalRecord",
-              node: Primitive_option.valFromOption(neighbor),
-              depth: depth + 1 | 0,
-              from: Primitive_option.some(node)
-            });
-          }
-          
-        });
-      }
-      continue;
     };
-  };
-  let dfs = (graph, rootNode, cb) => {
-    let stack = Belt_MutableStack.make();
-    Belt_MutableStack.push(stack, {
-      TAG: "TraversalRecord",
-      node: rootNode,
-      depth: 0,
-      from: undefined
-    });
-    let acc = [];
-    let visited = new Set();
-    while (true) {
-      if (Belt_MutableStack.isEmpty(stack)) {
-        return acc;
-      }
-      let match = Stdlib__Option.getExn(Belt_MutableStack.pop(stack), undefined);
-      let depth = match.depth;
-      let node = match.node;
-      if (visited.has(node)) {
-        continue;
-      }
-      visited.add(node);
-      acc.push({
-        TAG: "TraversalRecord",
-        node: node,
-        depth: depth,
-        from: match.from
-      });
-      if (!cb(node, depth)) {
-        Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
-          if (neighbor !== undefined) {
-            return Belt_MutableStack.push(stack, {
-              TAG: "TraversalRecord",
-              node: Primitive_option.valFromOption(neighbor),
-              depth: depth + 1 | 0,
-              from: Primitive_option.some(node)
-            });
-          }
-          
-        });
-      }
-      continue;
-    };
-  };
-  let convertToPaths = records => {
-    return records.map(record => {
-      let _record = record;
-      let _acc = [];
-      while (true) {
-        let acc = _acc;
-        let record$1 = _record;
-        let from = record$1.from;
-        let node = record$1.node;
-        if (from === undefined) {
-          return Belt_Array.concatMany([
-            [node],
-            acc
-          ]);
+    let path = (records, a, b) => {
+      let paths$1 = paths(records);
+      return paths$1.find(path => {
+        if (Stdlib__Option.isSome(Stdlib__Option.filter(path[0], node => Primitive_object.equal(node, a)))) {
+          return Stdlib__Option.isSome(Stdlib__Option.filter(Stdlib__Array.last(path), node => Primitive_object.equal(node, b)));
+        } else {
+          return false;
         }
-        let fromNode = Primitive_option.valFromOption(from);
-        let fromRecord = Stdlib__Option.getExn(records.find(param => Primitive_object.equal(param.node, fromNode)), undefined);
-        _acc = Belt_Array.concatMany([
-          [node],
-          acc
-        ]);
-        _record = fromRecord;
-        continue;
-      };
-    });
-  };
-  let Traversal = {
-    bfs: bfs,
-    dfs: dfs,
-    convertToPaths: convertToPaths
-  };
-  return {
-    Traversal: Traversal
+      });
+    };
+    return {
+      bfs: bfs,
+      dfs: dfs,
+      paths: paths,
+      path: path
+    };
   };
 }
 
@@ -272,7 +162,6 @@ export {
   A,
   Queue,
   Stack,
-  TraversalImpl,
-  Make,
+  Traversal,
 }
 /* Stdlib__Array Not a pure module */

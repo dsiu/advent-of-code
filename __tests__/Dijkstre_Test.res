@@ -6,7 +6,7 @@ module TupleAdjList = AdjacencyList.Node.Tuple2.StringInt
 
 describe("Dijkstra Algorithm with StringAdjList", () => {
   module A = StringAdjList
-  module NodeMap = unpack(A.nodeC)
+  module NodeMap = unpack(A.nodeMap)
   module Dijkstra = Dijkstra.Dijkstra(A, NodeMap)
 
   let graph = ref(A.make())
@@ -41,7 +41,6 @@ describe("Dijkstra Algorithm with StringAdjList", () => {
   test("handles unreachable nodes", () => {
     graph.contents->A.addNode("7")
     let (distances, _) = Dijkstra.dijkstra(graph.contents, "1")
-    distances->Console.log2("distances: ", _)
     expect(distances->NodeMap.get("7"))->toEqual(None)
   })
 
@@ -73,7 +72,7 @@ describe("Dijkstra Algorithm with StringAdjList", () => {
 
 describe("Dijkstra Algorithm with TupleAdjList", () => {
   module A = TupleAdjList
-  module NodeMap = unpack(A.nodeC)
+  module NodeMap = unpack(A.nodeMap)
   module Dijkstra = Dijkstra.Dijkstra(A, NodeMap)
 
   let graph = ref(A.make())
@@ -108,7 +107,6 @@ describe("Dijkstra Algorithm with TupleAdjList", () => {
   test("handles unreachable nodes", () => {
     graph.contents->A.addNode(("7", 7))
     let (distances, _) = Dijkstra.dijkstra(graph.contents, ("1", 1))
-    distances->Console.log2("distances: ", _)
     expect(distances->NodeMap.get(("7", 7)))->toEqual(None)
   })
 

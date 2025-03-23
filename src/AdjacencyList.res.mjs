@@ -2,146 +2,151 @@
 
 import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Stdlib__Map_Ext from "@dsiu/rescript-stdlib-fp/src/Stdlib__Map_Ext.res.mjs";
+import * as Stdlib__Set_Ext from "@dsiu/rescript-stdlib-fp/src/Stdlib__Set_Ext.res.mjs";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Stdlib__Serializable from "@dsiu/rescript-stdlib-fp/src/Stdlib__Serializable.res.mjs";
 import * as Stdlib__JSONSerializable from "@dsiu/rescript-stdlib-fp/src/Stdlib__JSONSerializable.res.mjs";
 
-function MakeImpl(NodeC) {
-  let addNode = (t, node) => {
-    let match = NodeC.get(t, node);
-    if (match !== undefined) {
-      return;
-    } else {
-      return NodeC.set(t, node, NodeC.make());
-    }
-  };
-  let hasNode = (t, node) => NodeC.has(t, node);
-  let adjacent = (t, a, b) => {
-    let ec = NodeC.get(t, a);
-    if (ec !== undefined) {
-      return NodeC.has(Primitive_option.valFromOption(ec), b);
-    } else {
-      return false;
-    }
-  };
-  let getAllNodes = t => Array.from(NodeC.keys(t));
-  let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
-  let removeNode = (t, node) => {
-    let children = neighbors(t, node);
-    children.forEach(child => {
-      let c = NodeC.get(t, child);
-      if (c !== undefined) {
-        NodeC.$$delete(Primitive_option.valFromOption(c), node);
+function MakeImpl(NodeMap) {
+  return NodeSet => {
+    let addNode = (t, node) => {
+      let match = NodeMap.get(t, node);
+      if (match !== undefined) {
         return;
+      } else {
+        return NodeMap.set(t, node, NodeMap.make());
+      }
+    };
+    let hasNode = (t, node) => NodeMap.has(t, node);
+    let adjacent = (t, a, b) => {
+      let ec = NodeMap.get(t, a);
+      if (ec !== undefined) {
+        return NodeMap.has(Primitive_option.valFromOption(ec), b);
+      } else {
+        return false;
+      }
+    };
+    let getAllNodes = t => Array.from(NodeMap.keys(t));
+    let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
+    let removeNode = (t, node) => {
+      let children = neighbors(t, node);
+      children.forEach(child => {
+        let c = NodeMap.get(t, child);
+        if (c !== undefined) {
+          NodeMap.$$delete(Primitive_option.valFromOption(c), node);
+          return;
+        }
+        
+      });
+      return NodeMap.$$delete(t, node);
+    };
+    let addDirectedEdge = (t, a, b, weightOpt) => {
+      let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
+      addNode(t, a);
+      addNode(t, b);
+      let ec = NodeMap.get(t, a);
+      if (ec !== undefined) {
+        return NodeMap.set(Primitive_option.valFromOption(ec), b, weight);
+      }
+      throw {
+        RE_EXN_ID: "Not_found",
+        Error: new Error()
+      };
+    };
+    let addUndirectedEdge = (t, a, b, weightOpt) => {
+      let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
+      addDirectedEdge(t, a, b, Primitive_option.some(weight));
+      addDirectedEdge(t, b, a, Primitive_option.some(weight));
+    };
+    let removeUndirectedEdge = (t, a, b) => {
+      let ec = NodeMap.get(t, a);
+      if (!(
+          ec !== undefined ? NodeMap.$$delete(Primitive_option.valFromOption(ec), b) : false
+        )) {
+        return false;
+      }
+      let ec$1 = NodeMap.get(t, b);
+      if (ec$1 !== undefined) {
+        return NodeMap.$$delete(Primitive_option.valFromOption(ec$1), a);
+      } else {
+        return false;
+      }
+    };
+    let removeDirectedEdge = (t, a, b) => {
+      let ec = NodeMap.get(t, a);
+      if (ec !== undefined) {
+        return NodeMap.$$delete(Primitive_option.valFromOption(ec), b);
+      } else {
+        return false;
+      }
+    };
+    let getWeight = (t, a, b) => {
+      let ec = NodeMap.get(t, a);
+      if (ec !== undefined) {
+        return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
       }
       
-    });
-    return NodeC.$$delete(t, node);
-  };
-  let addDirectedEdge = (t, a, b, weightOpt) => {
-    let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
-    addNode(t, a);
-    addNode(t, b);
-    let ec = NodeC.get(t, a);
-    if (ec !== undefined) {
-      return NodeC.set(Primitive_option.valFromOption(ec), b, weight);
-    }
-    throw {
-      RE_EXN_ID: "Not_found",
-      Error: new Error()
     };
-  };
-  let addUndirectedEdge = (t, a, b, weightOpt) => {
-    let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
-    addDirectedEdge(t, a, b, Primitive_option.some(weight));
-    addDirectedEdge(t, b, a, Primitive_option.some(weight));
-  };
-  let removeUndirectedEdge = (t, a, b) => {
-    let ec = NodeC.get(t, a);
-    if (!(
-        ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
-      )) {
-      return false;
-    }
-    let ec$1 = NodeC.get(t, b);
-    if (ec$1 !== undefined) {
-      return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
-    } else {
-      return false;
-    }
-  };
-  let removeDirectedEdge = (t, a, b) => {
-    let ec = NodeC.get(t, a);
-    if (ec !== undefined) {
-      return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
-    } else {
-      return false;
-    }
-  };
-  let getWeight = (t, a, b) => {
-    let ec = NodeC.get(t, a);
-    if (ec !== undefined) {
-      return Stdlib_Option.getOr(NodeC.get(Primitive_option.valFromOption(ec), b), undefined);
-    }
-    
-  };
-  return {
-    make: NodeC.make,
-    nodeC: NodeC,
-    addNode: addNode,
-    removeNode: removeNode,
-    hasNode: hasNode,
-    getAllNodes: getAllNodes,
-    addUndirectedEdge: addUndirectedEdge,
-    addDirectedEdge: addDirectedEdge,
-    removeUndirectedEdge: removeUndirectedEdge,
-    removeDirectedEdge: removeDirectedEdge,
-    getWeight: getWeight,
-    adjacent: adjacent,
-    neighbors: neighbors
+    return {
+      make: NodeMap.make,
+      nodeMap: NodeMap,
+      nodeSet: NodeSet,
+      addNode: addNode,
+      removeNode: removeNode,
+      hasNode: hasNode,
+      getAllNodes: getAllNodes,
+      addUndirectedEdge: addUndirectedEdge,
+      addDirectedEdge: addDirectedEdge,
+      removeUndirectedEdge: removeUndirectedEdge,
+      removeDirectedEdge: removeDirectedEdge,
+      getWeight: getWeight,
+      adjacent: adjacent,
+      neighbors: neighbors
+    };
   };
 }
 
 function MakeWithPrimitive(T) {
-  let NodeC = Stdlib__Map_Ext.MakeWithPrimitive(T);
+  let NodeMap = Stdlib__Map_Ext.MakeWithPrimitive(T);
+  let NodeSet = Stdlib__Set_Ext.MakeWithPrimitive(T);
   let addNode = (t, node) => {
-    let match = NodeC.get(t, node);
+    let match = NodeMap.get(t, node);
     if (match !== undefined) {
       return;
     } else {
-      return NodeC.set(t, node, NodeC.make());
+      return NodeMap.set(t, node, NodeMap.make());
     }
   };
-  let hasNode = (t, node) => NodeC.has(t, node);
+  let hasNode = (t, node) => NodeMap.has(t, node);
   let adjacent = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return NodeC.has(Primitive_option.valFromOption(ec), b);
+      return NodeMap.has(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
   };
-  let getAllNodes = t => Array.from(NodeC.keys(t));
-  let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
+  let getAllNodes = t => Array.from(NodeMap.keys(t));
+  let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
   let removeNode = (t, node) => {
     let children = neighbors(t, node);
     children.forEach(child => {
-      let c = NodeC.get(t, child);
+      let c = NodeMap.get(t, child);
       if (c !== undefined) {
-        NodeC.$$delete(Primitive_option.valFromOption(c), node);
+        NodeMap.$$delete(Primitive_option.valFromOption(c), node);
         return;
       }
       
     });
-    return NodeC.$$delete(t, node);
+    return NodeMap.$$delete(t, node);
   };
   let addDirectedEdge = (t, a, b, weightOpt) => {
     let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
     addNode(t, a);
     addNode(t, b);
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return NodeC.set(Primitive_option.valFromOption(ec), b, weight);
+      return NodeMap.set(Primitive_option.valFromOption(ec), b, weight);
     }
     throw {
       RE_EXN_ID: "Not_found",
@@ -154,37 +159,38 @@ function MakeWithPrimitive(T) {
     addDirectedEdge(t, b, a, Primitive_option.some(weight));
   };
   let removeUndirectedEdge = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (!(
-        ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+        ec !== undefined ? NodeMap.$$delete(Primitive_option.valFromOption(ec), b) : false
       )) {
       return false;
     }
-    let ec$1 = NodeC.get(t, b);
+    let ec$1 = NodeMap.get(t, b);
     if (ec$1 !== undefined) {
-      return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+      return NodeMap.$$delete(Primitive_option.valFromOption(ec$1), a);
     } else {
       return false;
     }
   };
   let removeDirectedEdge = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
+      return NodeMap.$$delete(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
   };
   let getWeight = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return Stdlib_Option.getOr(NodeC.get(Primitive_option.valFromOption(ec), b), undefined);
+      return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
     }
     
   };
   return {
-    make: NodeC.make,
-    nodeC: NodeC,
+    make: NodeMap.make,
+    nodeMap: NodeMap,
+    nodeSet: NodeSet,
     addNode: addNode,
     removeNode: removeNode,
     hasNode: hasNode,
@@ -200,45 +206,46 @@ function MakeWithPrimitive(T) {
 }
 
 function Make(Serializable) {
-  let NodeC = Stdlib__Map_Ext.Make(Serializable);
+  let NodeMap = Stdlib__Map_Ext.Make(Serializable);
+  let NodeSet = Stdlib__Set_Ext.Make(Serializable);
   let addNode = (t, node) => {
-    let match = NodeC.get(t, node);
+    let match = NodeMap.get(t, node);
     if (match !== undefined) {
       return;
     } else {
-      return NodeC.set(t, node, NodeC.make());
+      return NodeMap.set(t, node, NodeMap.make());
     }
   };
-  let hasNode = (t, node) => NodeC.has(t, node);
+  let hasNode = (t, node) => NodeMap.has(t, node);
   let adjacent = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return NodeC.has(Primitive_option.valFromOption(ec), b);
+      return NodeMap.has(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
   };
-  let getAllNodes = t => Array.from(NodeC.keys(t));
-  let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
+  let getAllNodes = t => Array.from(NodeMap.keys(t));
+  let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
   let removeNode = (t, node) => {
     let children = neighbors(t, node);
     children.forEach(child => {
-      let c = NodeC.get(t, child);
+      let c = NodeMap.get(t, child);
       if (c !== undefined) {
-        NodeC.$$delete(Primitive_option.valFromOption(c), node);
+        NodeMap.$$delete(Primitive_option.valFromOption(c), node);
         return;
       }
       
     });
-    return NodeC.$$delete(t, node);
+    return NodeMap.$$delete(t, node);
   };
   let addDirectedEdge = (t, a, b, weightOpt) => {
     let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
     addNode(t, a);
     addNode(t, b);
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return NodeC.set(Primitive_option.valFromOption(ec), b, weight);
+      return NodeMap.set(Primitive_option.valFromOption(ec), b, weight);
     }
     throw {
       RE_EXN_ID: "Not_found",
@@ -251,37 +258,38 @@ function Make(Serializable) {
     addDirectedEdge(t, b, a, Primitive_option.some(weight));
   };
   let removeUndirectedEdge = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (!(
-        ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+        ec !== undefined ? NodeMap.$$delete(Primitive_option.valFromOption(ec), b) : false
       )) {
       return false;
     }
-    let ec$1 = NodeC.get(t, b);
+    let ec$1 = NodeMap.get(t, b);
     if (ec$1 !== undefined) {
-      return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+      return NodeMap.$$delete(Primitive_option.valFromOption(ec$1), a);
     } else {
       return false;
     }
   };
   let removeDirectedEdge = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
+      return NodeMap.$$delete(Primitive_option.valFromOption(ec), b);
     } else {
       return false;
     }
   };
   let getWeight = (t, a, b) => {
-    let ec = NodeC.get(t, a);
+    let ec = NodeMap.get(t, a);
     if (ec !== undefined) {
-      return Stdlib_Option.getOr(NodeC.get(Primitive_option.valFromOption(ec), b), undefined);
+      return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
     }
     
   };
   return {
-    make: NodeC.make,
-    nodeC: NodeC,
+    make: NodeMap.make,
+    nodeMap: NodeMap,
+    nodeSet: NodeSet,
     addNode: addNode,
     removeNode: removeNode,
     hasNode: hasNode,
@@ -298,58 +306,60 @@ function Make(Serializable) {
 
 let T = {};
 
-let NodeC = Stdlib__Map_Ext.MakeWithPrimitive(T);
+let NodeMap = Stdlib__Map_Ext.MakeWithPrimitive(T);
+
+let NodeSet = Stdlib__Set_Ext.MakeWithPrimitive(T);
 
 function addNode(t, node) {
-  let match = NodeC.get(t, node);
+  let match = NodeMap.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC.set(t, node, NodeC.make());
+    return NodeMap.set(t, node, NodeMap.make());
   }
 }
 
 function hasNode(t, node) {
-  return NodeC.has(t, node);
+  return NodeMap.has(t, node);
 }
 
 function adjacent(t, a, b) {
-  let ec = NodeC.get(t, a);
+  let ec = NodeMap.get(t, a);
   if (ec !== undefined) {
-    return NodeC.has(Primitive_option.valFromOption(ec), b);
+    return NodeMap.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getAllNodes(t) {
-  return Array.from(NodeC.keys(t));
+  return Array.from(NodeMap.keys(t));
 }
 
 function neighbors(t, node) {
-  return Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
+  return Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
 }
 
 function removeNode(t, node) {
   let children = neighbors(t, node);
   children.forEach(child => {
-    let c = NodeC.get(t, child);
+    let c = NodeMap.get(t, child);
     if (c !== undefined) {
-      NodeC.$$delete(Primitive_option.valFromOption(c), node);
+      NodeMap.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
     
   });
-  return NodeC.$$delete(t, node);
+  return NodeMap.$$delete(t, node);
 }
 
 function addDirectedEdge(t, a, b, weightOpt) {
   let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
   addNode(t, a);
   addNode(t, b);
-  let ec = NodeC.get(t, a);
+  let ec = NodeMap.get(t, a);
   if (ec !== undefined) {
-    return NodeC.set(Primitive_option.valFromOption(ec), b, weight);
+    return NodeMap.set(Primitive_option.valFromOption(ec), b, weight);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -364,42 +374,43 @@ function addUndirectedEdge(t, a, b, weightOpt) {
 }
 
 function removeUndirectedEdge(t, a, b) {
-  let ec = NodeC.get(t, a);
+  let ec = NodeMap.get(t, a);
   if (!(
-      ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+      ec !== undefined ? NodeMap.$$delete(Primitive_option.valFromOption(ec), b) : false
     )) {
     return false;
   }
-  let ec$1 = NodeC.get(t, b);
+  let ec$1 = NodeMap.get(t, b);
   if (ec$1 !== undefined) {
-    return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+    return NodeMap.$$delete(Primitive_option.valFromOption(ec$1), a);
   } else {
     return false;
   }
 }
 
 function removeDirectedEdge(t, a, b) {
-  let ec = NodeC.get(t, a);
+  let ec = NodeMap.get(t, a);
   if (ec !== undefined) {
-    return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeMap.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getWeight(t, a, b) {
-  let ec = NodeC.get(t, a);
+  let ec = NodeMap.get(t, a);
   if (ec !== undefined) {
-    return Stdlib_Option.getOr(NodeC.get(Primitive_option.valFromOption(ec), b), undefined);
+    return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
   }
   
 }
 
-let String_make = NodeC.make;
+let String_make = NodeMap.make;
 
 let $$String = {
   make: String_make,
-  nodeC: NodeC,
+  nodeMap: NodeMap,
+  nodeSet: NodeSet,
   addNode: addNode,
   removeNode: removeNode,
   hasNode: hasNode,
@@ -415,58 +426,60 @@ let $$String = {
 
 let T$1 = {};
 
-let NodeC$1 = Stdlib__Map_Ext.MakeWithPrimitive(T$1);
+let NodeMap$1 = Stdlib__Map_Ext.MakeWithPrimitive(T$1);
+
+let NodeSet$1 = Stdlib__Set_Ext.MakeWithPrimitive(T$1);
 
 function addNode$1(t, node) {
-  let match = NodeC$1.get(t, node);
+  let match = NodeMap$1.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC$1.set(t, node, NodeC$1.make());
+    return NodeMap$1.set(t, node, NodeMap$1.make());
   }
 }
 
 function hasNode$1(t, node) {
-  return NodeC$1.has(t, node);
+  return NodeMap$1.has(t, node);
 }
 
 function adjacent$1(t, a, b) {
-  let ec = NodeC$1.get(t, a);
+  let ec = NodeMap$1.get(t, a);
   if (ec !== undefined) {
-    return NodeC$1.has(Primitive_option.valFromOption(ec), b);
+    return NodeMap$1.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getAllNodes$1(t) {
-  return Array.from(NodeC$1.keys(t));
+  return Array.from(NodeMap$1.keys(t));
 }
 
 function neighbors$1(t, node) {
-  return Array.from(NodeC$1.keys(Stdlib_Option.getOr(NodeC$1.get(t, node), NodeC$1.make())));
+  return Array.from(NodeMap$1.keys(Stdlib_Option.getOr(NodeMap$1.get(t, node), NodeMap$1.make())));
 }
 
 function removeNode$1(t, node) {
   let children = neighbors$1(t, node);
   children.forEach(child => {
-    let c = NodeC$1.get(t, child);
+    let c = NodeMap$1.get(t, child);
     if (c !== undefined) {
-      NodeC$1.$$delete(Primitive_option.valFromOption(c), node);
+      NodeMap$1.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
     
   });
-  return NodeC$1.$$delete(t, node);
+  return NodeMap$1.$$delete(t, node);
 }
 
 function addDirectedEdge$1(t, a, b, weightOpt) {
   let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
   addNode$1(t, a);
   addNode$1(t, b);
-  let ec = NodeC$1.get(t, a);
+  let ec = NodeMap$1.get(t, a);
   if (ec !== undefined) {
-    return NodeC$1.set(Primitive_option.valFromOption(ec), b, weight);
+    return NodeMap$1.set(Primitive_option.valFromOption(ec), b, weight);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -481,42 +494,43 @@ function addUndirectedEdge$1(t, a, b, weightOpt) {
 }
 
 function removeUndirectedEdge$1(t, a, b) {
-  let ec = NodeC$1.get(t, a);
+  let ec = NodeMap$1.get(t, a);
   if (!(
-      ec !== undefined ? NodeC$1.$$delete(Primitive_option.valFromOption(ec), b) : false
+      ec !== undefined ? NodeMap$1.$$delete(Primitive_option.valFromOption(ec), b) : false
     )) {
     return false;
   }
-  let ec$1 = NodeC$1.get(t, b);
+  let ec$1 = NodeMap$1.get(t, b);
   if (ec$1 !== undefined) {
-    return NodeC$1.$$delete(Primitive_option.valFromOption(ec$1), a);
+    return NodeMap$1.$$delete(Primitive_option.valFromOption(ec$1), a);
   } else {
     return false;
   }
 }
 
 function removeDirectedEdge$1(t, a, b) {
-  let ec = NodeC$1.get(t, a);
+  let ec = NodeMap$1.get(t, a);
   if (ec !== undefined) {
-    return NodeC$1.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeMap$1.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getWeight$1(t, a, b) {
-  let ec = NodeC$1.get(t, a);
+  let ec = NodeMap$1.get(t, a);
   if (ec !== undefined) {
-    return Stdlib_Option.getOr(NodeC$1.get(Primitive_option.valFromOption(ec), b), undefined);
+    return Stdlib_Option.getOr(NodeMap$1.get(Primitive_option.valFromOption(ec), b), undefined);
   }
   
 }
 
-let Int_make = NodeC$1.make;
+let Int_make = NodeMap$1.make;
 
 let Int = {
   make: Int_make,
-  nodeC: NodeC$1,
+  nodeMap: NodeMap$1,
+  nodeSet: NodeSet$1,
   addNode: addNode$1,
   removeNode: removeNode$1,
   hasNode: hasNode$1,
@@ -532,58 +546,60 @@ let Int = {
 
 let T$2 = {};
 
-let NodeC$2 = Stdlib__Map_Ext.MakeWithPrimitive(T$2);
+let NodeMap$2 = Stdlib__Map_Ext.MakeWithPrimitive(T$2);
+
+let NodeSet$2 = Stdlib__Set_Ext.MakeWithPrimitive(T$2);
 
 function addNode$2(t, node) {
-  let match = NodeC$2.get(t, node);
+  let match = NodeMap$2.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC$2.set(t, node, NodeC$2.make());
+    return NodeMap$2.set(t, node, NodeMap$2.make());
   }
 }
 
 function hasNode$2(t, node) {
-  return NodeC$2.has(t, node);
+  return NodeMap$2.has(t, node);
 }
 
 function adjacent$2(t, a, b) {
-  let ec = NodeC$2.get(t, a);
+  let ec = NodeMap$2.get(t, a);
   if (ec !== undefined) {
-    return NodeC$2.has(Primitive_option.valFromOption(ec), b);
+    return NodeMap$2.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getAllNodes$2(t) {
-  return Array.from(NodeC$2.keys(t));
+  return Array.from(NodeMap$2.keys(t));
 }
 
 function neighbors$2(t, node) {
-  return Array.from(NodeC$2.keys(Stdlib_Option.getOr(NodeC$2.get(t, node), NodeC$2.make())));
+  return Array.from(NodeMap$2.keys(Stdlib_Option.getOr(NodeMap$2.get(t, node), NodeMap$2.make())));
 }
 
 function removeNode$2(t, node) {
   let children = neighbors$2(t, node);
   children.forEach(child => {
-    let c = NodeC$2.get(t, child);
+    let c = NodeMap$2.get(t, child);
     if (c !== undefined) {
-      NodeC$2.$$delete(Primitive_option.valFromOption(c), node);
+      NodeMap$2.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
     
   });
-  return NodeC$2.$$delete(t, node);
+  return NodeMap$2.$$delete(t, node);
 }
 
 function addDirectedEdge$2(t, a, b, weightOpt) {
   let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
   addNode$2(t, a);
   addNode$2(t, b);
-  let ec = NodeC$2.get(t, a);
+  let ec = NodeMap$2.get(t, a);
   if (ec !== undefined) {
-    return NodeC$2.set(Primitive_option.valFromOption(ec), b, weight);
+    return NodeMap$2.set(Primitive_option.valFromOption(ec), b, weight);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -598,42 +614,43 @@ function addUndirectedEdge$2(t, a, b, weightOpt) {
 }
 
 function removeUndirectedEdge$2(t, a, b) {
-  let ec = NodeC$2.get(t, a);
+  let ec = NodeMap$2.get(t, a);
   if (!(
-      ec !== undefined ? NodeC$2.$$delete(Primitive_option.valFromOption(ec), b) : false
+      ec !== undefined ? NodeMap$2.$$delete(Primitive_option.valFromOption(ec), b) : false
     )) {
     return false;
   }
-  let ec$1 = NodeC$2.get(t, b);
+  let ec$1 = NodeMap$2.get(t, b);
   if (ec$1 !== undefined) {
-    return NodeC$2.$$delete(Primitive_option.valFromOption(ec$1), a);
+    return NodeMap$2.$$delete(Primitive_option.valFromOption(ec$1), a);
   } else {
     return false;
   }
 }
 
 function removeDirectedEdge$2(t, a, b) {
-  let ec = NodeC$2.get(t, a);
+  let ec = NodeMap$2.get(t, a);
   if (ec !== undefined) {
-    return NodeC$2.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeMap$2.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getWeight$2(t, a, b) {
-  let ec = NodeC$2.get(t, a);
+  let ec = NodeMap$2.get(t, a);
   if (ec !== undefined) {
-    return Stdlib_Option.getOr(NodeC$2.get(Primitive_option.valFromOption(ec), b), undefined);
+    return Stdlib_Option.getOr(NodeMap$2.get(Primitive_option.valFromOption(ec), b), undefined);
   }
   
 }
 
-let Float_make = NodeC$2.make;
+let Float_make = NodeMap$2.make;
 
 let Float = {
   make: Float_make,
-  nodeC: NodeC$2,
+  nodeMap: NodeMap$2,
+  nodeSet: NodeSet$2,
   addNode: addNode$2,
   removeNode: removeNode$2,
   hasNode: hasNode$2,
@@ -649,58 +666,60 @@ let Float = {
 
 let T$3 = {};
 
-let NodeC$3 = Stdlib__Map_Ext.MakeWithPrimitive(T$3);
+let NodeMap$3 = Stdlib__Map_Ext.MakeWithPrimitive(T$3);
+
+let NodeSet$3 = Stdlib__Set_Ext.MakeWithPrimitive(T$3);
 
 function addNode$3(t, node) {
-  let match = NodeC$3.get(t, node);
+  let match = NodeMap$3.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC$3.set(t, node, NodeC$3.make());
+    return NodeMap$3.set(t, node, NodeMap$3.make());
   }
 }
 
 function hasNode$3(t, node) {
-  return NodeC$3.has(t, node);
+  return NodeMap$3.has(t, node);
 }
 
 function adjacent$3(t, a, b) {
-  let ec = NodeC$3.get(t, a);
+  let ec = NodeMap$3.get(t, a);
   if (ec !== undefined) {
-    return NodeC$3.has(Primitive_option.valFromOption(ec), b);
+    return NodeMap$3.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getAllNodes$3(t) {
-  return Array.from(NodeC$3.keys(t));
+  return Array.from(NodeMap$3.keys(t));
 }
 
 function neighbors$3(t, node) {
-  return Array.from(NodeC$3.keys(Stdlib_Option.getOr(NodeC$3.get(t, node), NodeC$3.make())));
+  return Array.from(NodeMap$3.keys(Stdlib_Option.getOr(NodeMap$3.get(t, node), NodeMap$3.make())));
 }
 
 function removeNode$3(t, node) {
   let children = neighbors$3(t, node);
   children.forEach(child => {
-    let c = NodeC$3.get(t, child);
+    let c = NodeMap$3.get(t, child);
     if (c !== undefined) {
-      NodeC$3.$$delete(Primitive_option.valFromOption(c), node);
+      NodeMap$3.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
     
   });
-  return NodeC$3.$$delete(t, node);
+  return NodeMap$3.$$delete(t, node);
 }
 
 function addDirectedEdge$3(t, a, b, weightOpt) {
   let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
   addNode$3(t, a);
   addNode$3(t, b);
-  let ec = NodeC$3.get(t, a);
+  let ec = NodeMap$3.get(t, a);
   if (ec !== undefined) {
-    return NodeC$3.set(Primitive_option.valFromOption(ec), b, weight);
+    return NodeMap$3.set(Primitive_option.valFromOption(ec), b, weight);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -715,42 +734,43 @@ function addUndirectedEdge$3(t, a, b, weightOpt) {
 }
 
 function removeUndirectedEdge$3(t, a, b) {
-  let ec = NodeC$3.get(t, a);
+  let ec = NodeMap$3.get(t, a);
   if (!(
-      ec !== undefined ? NodeC$3.$$delete(Primitive_option.valFromOption(ec), b) : false
+      ec !== undefined ? NodeMap$3.$$delete(Primitive_option.valFromOption(ec), b) : false
     )) {
     return false;
   }
-  let ec$1 = NodeC$3.get(t, b);
+  let ec$1 = NodeMap$3.get(t, b);
   if (ec$1 !== undefined) {
-    return NodeC$3.$$delete(Primitive_option.valFromOption(ec$1), a);
+    return NodeMap$3.$$delete(Primitive_option.valFromOption(ec$1), a);
   } else {
     return false;
   }
 }
 
 function removeDirectedEdge$3(t, a, b) {
-  let ec = NodeC$3.get(t, a);
+  let ec = NodeMap$3.get(t, a);
   if (ec !== undefined) {
-    return NodeC$3.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeMap$3.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getWeight$3(t, a, b) {
-  let ec = NodeC$3.get(t, a);
+  let ec = NodeMap$3.get(t, a);
   if (ec !== undefined) {
-    return Stdlib_Option.getOr(NodeC$3.get(Primitive_option.valFromOption(ec), b), undefined);
+    return Stdlib_Option.getOr(NodeMap$3.get(Primitive_option.valFromOption(ec), b), undefined);
   }
   
 }
 
-let BigInt_make = NodeC$3.make;
+let BigInt_make = NodeMap$3.make;
 
 let $$BigInt = {
   make: BigInt_make,
-  nodeC: NodeC$3,
+  nodeMap: NodeMap$3,
+  nodeSet: NodeSet$3,
   addNode: addNode$3,
   removeNode: removeNode$3,
   hasNode: hasNode$3,
@@ -767,45 +787,46 @@ let $$BigInt = {
 function Make$1(A) {
   return B => {
     let Serializable = Stdlib__Serializable.MakeTuple2(A)(B);
-    let NodeC = Stdlib__Map_Ext.Make(Serializable);
+    let NodeMap = Stdlib__Map_Ext.Make(Serializable);
+    let NodeSet = Stdlib__Set_Ext.Make(Serializable);
     let addNode = (t, node) => {
-      let match = NodeC.get(t, node);
+      let match = NodeMap.get(t, node);
       if (match !== undefined) {
         return;
       } else {
-        return NodeC.set(t, node, NodeC.make());
+        return NodeMap.set(t, node, NodeMap.make());
       }
     };
-    let hasNode = (t, node) => NodeC.has(t, node);
+    let hasNode = (t, node) => NodeMap.has(t, node);
     let adjacent = (t, a, b) => {
-      let ec = NodeC.get(t, a);
+      let ec = NodeMap.get(t, a);
       if (ec !== undefined) {
-        return NodeC.has(Primitive_option.valFromOption(ec), b);
+        return NodeMap.has(Primitive_option.valFromOption(ec), b);
       } else {
         return false;
       }
     };
-    let getAllNodes = t => Array.from(NodeC.keys(t));
-    let neighbors = (t, node) => Array.from(NodeC.keys(Stdlib_Option.getOr(NodeC.get(t, node), NodeC.make())));
+    let getAllNodes = t => Array.from(NodeMap.keys(t));
+    let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
     let removeNode = (t, node) => {
       let children = neighbors(t, node);
       children.forEach(child => {
-        let c = NodeC.get(t, child);
+        let c = NodeMap.get(t, child);
         if (c !== undefined) {
-          NodeC.$$delete(Primitive_option.valFromOption(c), node);
+          NodeMap.$$delete(Primitive_option.valFromOption(c), node);
           return;
         }
         
       });
-      return NodeC.$$delete(t, node);
+      return NodeMap.$$delete(t, node);
     };
     let addDirectedEdge = (t, a, b, weightOpt) => {
       let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
       addNode(t, a);
       addNode(t, b);
-      let ec = NodeC.get(t, a);
+      let ec = NodeMap.get(t, a);
       if (ec !== undefined) {
-        return NodeC.set(Primitive_option.valFromOption(ec), b, weight);
+        return NodeMap.set(Primitive_option.valFromOption(ec), b, weight);
       }
       throw {
         RE_EXN_ID: "Not_found",
@@ -818,37 +839,38 @@ function Make$1(A) {
       addDirectedEdge(t, b, a, Primitive_option.some(weight));
     };
     let removeUndirectedEdge = (t, a, b) => {
-      let ec = NodeC.get(t, a);
+      let ec = NodeMap.get(t, a);
       if (!(
-          ec !== undefined ? NodeC.$$delete(Primitive_option.valFromOption(ec), b) : false
+          ec !== undefined ? NodeMap.$$delete(Primitive_option.valFromOption(ec), b) : false
         )) {
         return false;
       }
-      let ec$1 = NodeC.get(t, b);
+      let ec$1 = NodeMap.get(t, b);
       if (ec$1 !== undefined) {
-        return NodeC.$$delete(Primitive_option.valFromOption(ec$1), a);
+        return NodeMap.$$delete(Primitive_option.valFromOption(ec$1), a);
       } else {
         return false;
       }
     };
     let removeDirectedEdge = (t, a, b) => {
-      let ec = NodeC.get(t, a);
+      let ec = NodeMap.get(t, a);
       if (ec !== undefined) {
-        return NodeC.$$delete(Primitive_option.valFromOption(ec), b);
+        return NodeMap.$$delete(Primitive_option.valFromOption(ec), b);
       } else {
         return false;
       }
     };
     let getWeight = (t, a, b) => {
-      let ec = NodeC.get(t, a);
+      let ec = NodeMap.get(t, a);
       if (ec !== undefined) {
-        return Stdlib_Option.getOr(NodeC.get(Primitive_option.valFromOption(ec), b), undefined);
+        return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
       }
       
     };
     return {
-      make: NodeC.make,
-      nodeC: NodeC,
+      make: NodeMap.make,
+      nodeMap: NodeMap,
+      nodeSet: NodeSet,
       addNode: addNode,
       removeNode: removeNode,
       hasNode: hasNode,
@@ -866,58 +888,60 @@ function Make$1(A) {
 
 let Serializable = Stdlib__Serializable.MakeTuple2(Stdlib__JSONSerializable.Int)(Stdlib__JSONSerializable.Int);
 
-let NodeC$4 = Stdlib__Map_Ext.Make(Serializable);
+let NodeMap$4 = Stdlib__Map_Ext.Make(Serializable);
+
+let NodeSet$4 = Stdlib__Set_Ext.Make(Serializable);
 
 function addNode$4(t, node) {
-  let match = NodeC$4.get(t, node);
+  let match = NodeMap$4.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC$4.set(t, node, NodeC$4.make());
+    return NodeMap$4.set(t, node, NodeMap$4.make());
   }
 }
 
 function hasNode$4(t, node) {
-  return NodeC$4.has(t, node);
+  return NodeMap$4.has(t, node);
 }
 
 function adjacent$4(t, a, b) {
-  let ec = NodeC$4.get(t, a);
+  let ec = NodeMap$4.get(t, a);
   if (ec !== undefined) {
-    return NodeC$4.has(Primitive_option.valFromOption(ec), b);
+    return NodeMap$4.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getAllNodes$4(t) {
-  return Array.from(NodeC$4.keys(t));
+  return Array.from(NodeMap$4.keys(t));
 }
 
 function neighbors$4(t, node) {
-  return Array.from(NodeC$4.keys(Stdlib_Option.getOr(NodeC$4.get(t, node), NodeC$4.make())));
+  return Array.from(NodeMap$4.keys(Stdlib_Option.getOr(NodeMap$4.get(t, node), NodeMap$4.make())));
 }
 
 function removeNode$4(t, node) {
   let children = neighbors$4(t, node);
   children.forEach(child => {
-    let c = NodeC$4.get(t, child);
+    let c = NodeMap$4.get(t, child);
     if (c !== undefined) {
-      NodeC$4.$$delete(Primitive_option.valFromOption(c), node);
+      NodeMap$4.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
     
   });
-  return NodeC$4.$$delete(t, node);
+  return NodeMap$4.$$delete(t, node);
 }
 
 function addDirectedEdge$4(t, a, b, weightOpt) {
   let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
   addNode$4(t, a);
   addNode$4(t, b);
-  let ec = NodeC$4.get(t, a);
+  let ec = NodeMap$4.get(t, a);
   if (ec !== undefined) {
-    return NodeC$4.set(Primitive_option.valFromOption(ec), b, weight);
+    return NodeMap$4.set(Primitive_option.valFromOption(ec), b, weight);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -932,42 +956,43 @@ function addUndirectedEdge$4(t, a, b, weightOpt) {
 }
 
 function removeUndirectedEdge$4(t, a, b) {
-  let ec = NodeC$4.get(t, a);
+  let ec = NodeMap$4.get(t, a);
   if (!(
-      ec !== undefined ? NodeC$4.$$delete(Primitive_option.valFromOption(ec), b) : false
+      ec !== undefined ? NodeMap$4.$$delete(Primitive_option.valFromOption(ec), b) : false
     )) {
     return false;
   }
-  let ec$1 = NodeC$4.get(t, b);
+  let ec$1 = NodeMap$4.get(t, b);
   if (ec$1 !== undefined) {
-    return NodeC$4.$$delete(Primitive_option.valFromOption(ec$1), a);
+    return NodeMap$4.$$delete(Primitive_option.valFromOption(ec$1), a);
   } else {
     return false;
   }
 }
 
 function removeDirectedEdge$4(t, a, b) {
-  let ec = NodeC$4.get(t, a);
+  let ec = NodeMap$4.get(t, a);
   if (ec !== undefined) {
-    return NodeC$4.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeMap$4.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getWeight$4(t, a, b) {
-  let ec = NodeC$4.get(t, a);
+  let ec = NodeMap$4.get(t, a);
   if (ec !== undefined) {
-    return Stdlib_Option.getOr(NodeC$4.get(Primitive_option.valFromOption(ec), b), undefined);
+    return Stdlib_Option.getOr(NodeMap$4.get(Primitive_option.valFromOption(ec), b), undefined);
   }
   
 }
 
-let IntInt_make = NodeC$4.make;
+let IntInt_make = NodeMap$4.make;
 
 let IntInt = {
   make: IntInt_make,
-  nodeC: NodeC$4,
+  nodeMap: NodeMap$4,
+  nodeSet: NodeSet$4,
   addNode: addNode$4,
   removeNode: removeNode$4,
   hasNode: hasNode$4,
@@ -983,58 +1008,60 @@ let IntInt = {
 
 let Serializable$1 = Stdlib__Serializable.MakeTuple2(Stdlib__JSONSerializable.$$String)(Stdlib__JSONSerializable.Int);
 
-let NodeC$5 = Stdlib__Map_Ext.Make(Serializable$1);
+let NodeMap$5 = Stdlib__Map_Ext.Make(Serializable$1);
+
+let NodeSet$5 = Stdlib__Set_Ext.Make(Serializable$1);
 
 function addNode$5(t, node) {
-  let match = NodeC$5.get(t, node);
+  let match = NodeMap$5.get(t, node);
   if (match !== undefined) {
     return;
   } else {
-    return NodeC$5.set(t, node, NodeC$5.make());
+    return NodeMap$5.set(t, node, NodeMap$5.make());
   }
 }
 
 function hasNode$5(t, node) {
-  return NodeC$5.has(t, node);
+  return NodeMap$5.has(t, node);
 }
 
 function adjacent$5(t, a, b) {
-  let ec = NodeC$5.get(t, a);
+  let ec = NodeMap$5.get(t, a);
   if (ec !== undefined) {
-    return NodeC$5.has(Primitive_option.valFromOption(ec), b);
+    return NodeMap$5.has(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getAllNodes$5(t) {
-  return Array.from(NodeC$5.keys(t));
+  return Array.from(NodeMap$5.keys(t));
 }
 
 function neighbors$5(t, node) {
-  return Array.from(NodeC$5.keys(Stdlib_Option.getOr(NodeC$5.get(t, node), NodeC$5.make())));
+  return Array.from(NodeMap$5.keys(Stdlib_Option.getOr(NodeMap$5.get(t, node), NodeMap$5.make())));
 }
 
 function removeNode$5(t, node) {
   let children = neighbors$5(t, node);
   children.forEach(child => {
-    let c = NodeC$5.get(t, child);
+    let c = NodeMap$5.get(t, child);
     if (c !== undefined) {
-      NodeC$5.$$delete(Primitive_option.valFromOption(c), node);
+      NodeMap$5.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
     
   });
-  return NodeC$5.$$delete(t, node);
+  return NodeMap$5.$$delete(t, node);
 }
 
 function addDirectedEdge$5(t, a, b, weightOpt) {
   let weight = weightOpt !== undefined ? Primitive_option.valFromOption(weightOpt) : undefined;
   addNode$5(t, a);
   addNode$5(t, b);
-  let ec = NodeC$5.get(t, a);
+  let ec = NodeMap$5.get(t, a);
   if (ec !== undefined) {
-    return NodeC$5.set(Primitive_option.valFromOption(ec), b, weight);
+    return NodeMap$5.set(Primitive_option.valFromOption(ec), b, weight);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -1049,42 +1076,43 @@ function addUndirectedEdge$5(t, a, b, weightOpt) {
 }
 
 function removeUndirectedEdge$5(t, a, b) {
-  let ec = NodeC$5.get(t, a);
+  let ec = NodeMap$5.get(t, a);
   if (!(
-      ec !== undefined ? NodeC$5.$$delete(Primitive_option.valFromOption(ec), b) : false
+      ec !== undefined ? NodeMap$5.$$delete(Primitive_option.valFromOption(ec), b) : false
     )) {
     return false;
   }
-  let ec$1 = NodeC$5.get(t, b);
+  let ec$1 = NodeMap$5.get(t, b);
   if (ec$1 !== undefined) {
-    return NodeC$5.$$delete(Primitive_option.valFromOption(ec$1), a);
+    return NodeMap$5.$$delete(Primitive_option.valFromOption(ec$1), a);
   } else {
     return false;
   }
 }
 
 function removeDirectedEdge$5(t, a, b) {
-  let ec = NodeC$5.get(t, a);
+  let ec = NodeMap$5.get(t, a);
   if (ec !== undefined) {
-    return NodeC$5.$$delete(Primitive_option.valFromOption(ec), b);
+    return NodeMap$5.$$delete(Primitive_option.valFromOption(ec), b);
   } else {
     return false;
   }
 }
 
 function getWeight$5(t, a, b) {
-  let ec = NodeC$5.get(t, a);
+  let ec = NodeMap$5.get(t, a);
   if (ec !== undefined) {
-    return Stdlib_Option.getOr(NodeC$5.get(Primitive_option.valFromOption(ec), b), undefined);
+    return Stdlib_Option.getOr(NodeMap$5.get(Primitive_option.valFromOption(ec), b), undefined);
   }
   
 }
 
-let StringInt_make = NodeC$5.make;
+let StringInt_make = NodeMap$5.make;
 
 let StringInt = {
   make: StringInt_make,
-  nodeC: NodeC$5,
+  nodeMap: NodeMap$5,
+  nodeSet: NodeSet$5,
   addNode: addNode$5,
   removeNode: removeNode$5,
   hasNode: hasNode$5,
@@ -1124,4 +1152,4 @@ export {
   Make,
   Node,
 }
-/* NodeC Not a pure module */
+/* NodeMap Not a pure module */
