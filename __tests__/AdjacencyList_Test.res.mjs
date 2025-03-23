@@ -14,15 +14,25 @@ Jest.describe("AdjacencyList String Implementation", () => {
     AdjacencyList.Node.$$String.addNode(graph.contents, "C");
     AdjacencyList.Node.$$String.addNode(graph.contents, "D");
     AdjacencyList.Node.$$String.addNode(graph.contents, "E");
-    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "A", "B", undefined);
-    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "B", "C", undefined);
-    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "C", "D", undefined);
-    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "D", "E", undefined);
-    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "E", "A", undefined);
-    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "A", "C", undefined);
-    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "B", "D", undefined);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "A", "B", 1.0);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "B", "C", 2.0);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "C", "D", 3.0);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "D", "E", 4.0);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "E", "A", 5.0);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "A", "C", 6.0);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "B", "D", 7.0);
   });
-  Jest.test("add vertex", () => {
+  Jest.test("get all nodes", () => {
+    let nodes = AdjacencyList.Node.$$String.getAllNodes(graph.contents);
+    return Jest.Expect.toEqual(Jest.Expect.expect(nodes), [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ]);
+  });
+  Jest.test("add node", () => {
     AdjacencyList.Node.$$String.addNode(graph.contents, "F");
     return Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.$$String.hasNode(graph.contents, "F")), true);
   });
@@ -31,6 +41,9 @@ Jest.describe("AdjacencyList String Implementation", () => {
     AdjacencyList.Node.$$String.removeDirectedEdge(graph.contents, "A", "B");
     return Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.$$String.adjacent(graph.contents, "A", "B")), false);
   });
+  Jest.test("get weight", () => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.$$String.getWeight(graph.contents, "A", "B")), 1.0));
+  Jest.test("adjacent returns true for existing edge", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.$$String.adjacent(graph.contents, "A", "B")), true));
+  Jest.test("adjacent returns false for non-existing edge", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.$$String.adjacent(graph.contents, "A", "D")), false));
   let neighbors_tests_0 = [
     "A",
     [
@@ -71,7 +84,7 @@ Jest.describe("AdjacencyList String Implementation", () => {
     tl: neighbors_tests_1
   };
   Jest.testAll("neighbors", neighbors_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.$$String.neighbors(graph.contents, param[0])), param[1]));
-  Jest.test("remove vertex", () => {
+  Jest.test("remove node", () => {
     AdjacencyList.Node.$$String.removeNode(graph.contents, "A");
     return Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.$$String.hasNode(graph.contents, "A")), false);
   });
@@ -109,51 +122,76 @@ Jest.describe("AdjacencyList Tuple Implementation", () => {
     ], [
       "B",
       2
-    ], undefined);
+    ], 1.0);
     AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
       "B",
       2
     ], [
       "C",
       3
-    ], undefined);
+    ], 2.0);
     AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
       "C",
       3
     ], [
       "D",
       4
-    ], undefined);
+    ], 3.0);
     AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
       "D",
       4
     ], [
       "E",
       5
-    ], undefined);
+    ], 4.0);
     AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
       "E",
       5
     ], [
       "A",
       1
-    ], undefined);
+    ], 5.0);
     AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
       "A",
       1
     ], [
       "C",
       3
-    ], undefined);
+    ], 6.0);
     AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
       "B",
       2
     ], [
       "D",
       4
-    ], undefined);
+    ], 7.0);
   });
-  Jest.test("add vertex", () => {
+  Jest.test("get all nodes", () => {
+    let nodes = AdjacencyList.Node.Tuple2.StringInt.getAllNodes(graph.contents);
+    return Jest.Expect.toEqual(Jest.Expect.expect(nodes), [
+      [
+        "A",
+        1
+      ],
+      [
+        "B",
+        2
+      ],
+      [
+        "C",
+        3
+      ],
+      [
+        "D",
+        4
+      ],
+      [
+        "E",
+        5
+      ]
+    ]);
+  });
+  Jest.test("add node", () => {
     AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
       "F",
       6
@@ -186,6 +224,27 @@ Jest.describe("AdjacencyList Tuple Implementation", () => {
       2
     ])), false);
   });
+  Jest.test("get weight", () => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.getWeight(graph.contents, [
+    "A",
+    1
+  ], [
+    "B",
+    2
+  ])), 1.0));
+  Jest.test("adjacent returns true for existing edge in TupleAdjList", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.adjacent(graph.contents, [
+    "A",
+    1
+  ], [
+    "B",
+    2
+  ])), true));
+  Jest.test("adjacent returns false for non-existing edge in TupleAdjList", () => Jest.Expect.toBe(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.adjacent(graph.contents, [
+    "A",
+    1
+  ], [
+    "D",
+    4
+  ])), false));
   let neighbors_tests_0 = [
     [
       "A",
@@ -262,7 +321,7 @@ Jest.describe("AdjacencyList Tuple Implementation", () => {
     tl: neighbors_tests_1
   };
   Jest.testAll("neighbors", neighbors_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, param[0])), param[1]));
-  Jest.test("remove vertex", () => {
+  Jest.test("remove node", () => {
     AdjacencyList.Node.Tuple2.StringInt.removeNode(graph.contents, [
       "A",
       1

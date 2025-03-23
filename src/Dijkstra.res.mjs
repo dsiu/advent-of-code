@@ -31,8 +31,6 @@ function Dijkstra(A) {
         let newQueue = val[2];
         let u = val[1];
         let uDist = val[0];
-        let __x = A.neighbors(graph, u);
-        console.log("dijkstra:", u, "has neighbors: ", __x);
         A.neighbors(graph, u).forEach(v => {
           let edgeWeight = Stdlib_Option.getExn(A.getWeight(graph, u, v), undefined);
           let alt = uDist + edgeWeight | 0;
@@ -61,6 +59,7 @@ function Dijkstra(A) {
     let shortestPaths = (graph, startNode) => {
       let match = dijkstra(graph, startNode);
       let prev = match[1];
+      let dist = match[0];
       let reconstructPath = (prev, _node, _path) => {
         while (true) {
           let path = _path;
@@ -84,6 +83,13 @@ function Dijkstra(A) {
       };
       let paths = NodeMap.make();
       A.getAllNodes(graph).forEach(node => {
+        let match = NodeMap.get(dist, node);
+        if (match === undefined) {
+          return;
+        }
+        if (Primitive_option.valFromOption(match) === undefined) {
+          return;
+        }
         let path = reconstructPath(prev, node, [node]);
         NodeMap.set(paths, node, path);
       });

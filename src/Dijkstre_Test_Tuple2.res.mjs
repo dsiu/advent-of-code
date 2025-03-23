@@ -2,6 +2,7 @@
 
 import * as Dijkstra from "./Dijkstra.res.mjs";
 import * as AdjacencyList from "./AdjacencyList.res.mjs";
+import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 
 function log(prim) {
   console.log(prim);
@@ -91,6 +92,11 @@ AdjacencyList.Node.Tuple2.IntInt.addDirectedEdge(g, [
   6
 ], 9);
 
+AdjacencyList.Node.Tuple2.IntInt.addNode(g, [
+  7,
+  7
+]);
+
 console.log("Graph: ", g);
 
 let match = Dijkstra$1.dijkstra(g, [
@@ -105,6 +111,18 @@ let distances = match[0];
 console.log("distances: ", distances);
 
 console.log("previousNodes: ", previousNodes);
+
+let x = NodeMap.get(distances, [
+  7,
+  7
+]);
+
+if (x !== undefined) {
+  let __x = Primitive_option.valFromOption(x);
+  console.log("Distance from (1,1) to (7,7): ", __x);
+} else {
+  console.log("Node (7,7) is unreachable from (1,1)");
+}
 
 Array.from(NodeMap.entries(distances)).forEach(param => {
   let distance = param[1];
@@ -142,6 +160,16 @@ let shortestPath = Dijkstra$1.shortestPath(g, [
 ]);
 
 console.log("Shortest path from (1,1) to (5,5): ", shortestPath);
+
+let shortestPath17 = Dijkstra$1.shortestPath(g, [
+  1,
+  1
+], [
+  7,
+  7
+]);
+
+console.log("Shortest path from (1,1) to (7,7): ", shortestPath17);
 
 console.log("");
 

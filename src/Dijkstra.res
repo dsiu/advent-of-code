@@ -33,33 +33,31 @@ module Dijkstra = (A: AdjacencyList.S, NodeMap: StdlibFp.Map.S with type key = A
     let rec loop = (dist, prev, pq) => {
       switch PriorityQueue.pop(pq) {
       | exception Not_found => ()
-      | (uDist, u, newQueue) => {
-          graph->A.neighbors(u)->Console.log4("dijkstra:", u, "has neighbors: ", _)
-          graph
-          ->A.neighbors(u)
-          ->Array.forEach(v => {
-            // need to check if the neighbor is still in the queue
-            let edgeWeight: int = graph->A.getWeight(u, v)->Option.getExn
-            //let dist_u: int = dist->Map.get(u)->Option.getExn->Option.getExn
-            let alt: int = uDist + edgeWeight
+      | (uDist, u, newQueue) =>
+        graph
+        ->A.neighbors(u)
+        ->Array.forEach(v => {
+          // need to check if the neighbor is still in the queue
+          let edgeWeight: int = graph->A.getWeight(u, v)->Option.getExn
+          //let dist_u: int = dist->Map.get(u)->Option.getExn->Option.getExn
+          let alt: int = uDist + edgeWeight
 
-            switch dist->NodeMap.get(v) {
-            | Some(Some(dist_v)) if alt < dist_v => {
-                dist->NodeMap.set(v, Some(alt))
-                prev->NodeMap.set(v, Some(u))
-                loop(dist, prev, PriorityQueue.push(newQueue, alt, v))
-              }
-
-            | None => {
-                // infinity
-                dist->NodeMap.set(v, Some(alt))
-                prev->NodeMap.set(v, Some(u))
-                loop(dist, prev, PriorityQueue.push(newQueue, alt, v))
-              }
-            | _ => ()
+          switch dist->NodeMap.get(v) {
+          | Some(Some(dist_v)) if alt < dist_v => {
+              dist->NodeMap.set(v, Some(alt))
+              prev->NodeMap.set(v, Some(u))
+              loop(dist, prev, PriorityQueue.push(newQueue, alt, v))
             }
-          })
-        }
+
+          | None => {
+              // infinity
+              dist->NodeMap.set(v, Some(alt))
+              prev->NodeMap.set(v, Some(u))
+              loop(dist, prev, PriorityQueue.push(newQueue, alt, v))
+            }
+          | _ => ()
+          }
+        })
       }
     }
 
@@ -69,6 +67,7 @@ module Dijkstra = (A: AdjacencyList.S, NodeMap: StdlibFp.Map.S with type key = A
 
   let shortestPaths = (graph: A.t<'a>, startNode: A.node) => {
     let (dist, prev) = dijkstra(graph, startNode)
+
     let rec reconstructPath = (prev, node, path) => {
       switch prev->NodeMap.get(node) {
       | None => path
@@ -76,13 +75,21 @@ module Dijkstra = (A: AdjacencyList.S, NodeMap: StdlibFp.Map.S with type key = A
       | Some(Some(prevNode)) => reconstructPath(prev, prevNode, [prevNode, ...path])
       }
     }
+
     let paths: NodeMap.t<A.node, array<A.node>> = NodeMap.make()
+
     graph
     ->A.getAllNodes
     ->Array.forEach(node => {
-      let path = reconstructPath(prev, node, [node])
-      paths->NodeMap.set(node, path)
+      switch dist->NodeMap.get(node) {
+      | None | Some(None) => () // Skip unreachable nodes
+      | Some(Some(_)) => {
+          let path = reconstructPath(prev, node, [node])
+          paths->NodeMap.set(node, path)
+        }
+      }
     })
+
     paths
   }
 

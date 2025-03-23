@@ -17,6 +17,7 @@ let _ = {
   g->A.addDirectedEdge((3, 3), (6, 6), ~weight=Some(2))
   g->A.addDirectedEdge((4, 4), (5, 5), ~weight=Some(6))
   g->A.addDirectedEdge((5, 5), (6, 6), ~weight=Some(9))
+  g->A.addNode((7, 7))
 
   g->log2("Graph: ", _)
 
@@ -24,6 +25,11 @@ let _ = {
 
   log2("distances: ", distances)
   log2("previousNodes: ", previousNodes)
+
+  switch distances->NodeMap.get((7, 7)) {
+  | Some(x) => x->Console.log2("Distance from (1,1) to (7,7): ", _)
+  | None => Console.log("Node (7,7) is unreachable from (1,1)")
+  }
 
   distances
   ->NodeMap.entries
@@ -50,6 +56,9 @@ let _ = {
 
   let shortestPath = Dijkstra.shortestPath(g, (1, 1), (5, 5))
   shortestPath->log2("Shortest path from (1,1) to (5,5): ", _)
+
+  let shortestPath17 = Dijkstra.shortestPath(g, (1, 1), (7, 7))
+  shortestPath17->log2("Shortest path from (1,1) to (7,7): ", _)
 
   log("")
 }
