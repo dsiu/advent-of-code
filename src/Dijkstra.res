@@ -1,12 +1,6 @@
 // ref: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#cite_note-Note2-20
 //
 
-module type S = {
-  type t<'a>
-  type node
-  let dijkstra: (t<'a>, node) => int
-}
-
 module Dijkstra = (A: AdjacencyList.S, NodeMap: StdlibFp.Map.S with type key = A.node) => {
   type t<'a>
   type node = A.node
