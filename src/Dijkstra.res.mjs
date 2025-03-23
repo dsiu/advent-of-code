@@ -7,89 +7,95 @@ import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
 
 function Dijkstra(A) {
-  let dijkstra = (graph, startNode) => {
-    let dist = new Map();
-    let prev = new Map();
-    A.getAllNodes(graph).forEach(node => {
-      dist.set(node, undefined);
-      prev.set(node, undefined);
-    });
-    dist.set(startNode, 0);
-    let pq = PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.empty, 0, startNode);
-    let loop = (dist, prev, pq) => {
-      let val;
-      try {
-        val = PriorityQueue.MinPriorityQueue.pop(pq);
-      } catch (raw_exn) {
-        let exn = Primitive_exceptions.internalToException(raw_exn);
-        if (exn.RE_EXN_ID === "Not_found") {
-          return;
-        }
-        throw exn;
-      }
-      let newQueue = val[2];
-      let u = val[1];
-      let uDist = val[0];
-      A.neighbors(graph, u).forEach(v => {
-        let edgeWeight = Stdlib_Option.getExn(A.getWeight(graph, u, v), undefined);
-        let alt = uDist + edgeWeight | 0;
-        let match = dist.get(v);
-        if (match !== undefined) {
-          let dist_v = Primitive_option.valFromOption(match);
-          if (dist_v !== undefined && alt < dist_v) {
-            dist.set(v, alt);
-            prev.set(v, Primitive_option.some(u));
-            return loop(dist, prev, PriorityQueue.MinPriorityQueue.push(newQueue, alt, v));
-          } else {
+  return NodeMap => {
+    let dijkstra = (graph, startNode) => {
+      let dist = NodeMap.make();
+      let prev = NodeMap.make();
+      A.getAllNodes(graph).forEach(node => {
+        NodeMap.set(dist, node, undefined);
+        NodeMap.set(prev, node, undefined);
+      });
+      NodeMap.set(dist, startNode, 0);
+      let pq = PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.empty, 0, startNode);
+      let loop = (dist, prev, pq) => {
+        let val;
+        try {
+          val = PriorityQueue.MinPriorityQueue.pop(pq);
+        } catch (raw_exn) {
+          let exn = Primitive_exceptions.internalToException(raw_exn);
+          if (exn.RE_EXN_ID === "Not_found") {
             return;
           }
+          throw exn;
         }
-        dist.set(v, alt);
-        prev.set(v, Primitive_option.some(u));
-        loop(dist, prev, PriorityQueue.MinPriorityQueue.push(newQueue, alt, v));
-      });
-    };
-    loop(dist, prev, pq);
-    return [
-      dist,
-      prev
-    ];
-  };
-  let shortestPaths = (graph, startNode) => {
-    let match = dijkstra(graph, startNode);
-    let prev = match[1];
-    let reconstructPath = (prev, _node, _path) => {
-      while (true) {
-        let path = _path;
-        let node = _node;
-        let match = prev.get(node);
-        if (match === undefined) {
-          return path;
-        }
-        let prevNode = Primitive_option.valFromOption(match);
-        if (prevNode === undefined) {
-          return path;
-        }
-        let prevNode$1 = Primitive_option.valFromOption(prevNode);
-        _path = Belt_Array.concatMany([
-          [prevNode$1],
-          path
-        ]);
-        _node = prevNode$1;
-        continue;
+        let newQueue = val[2];
+        let u = val[1];
+        let uDist = val[0];
+        let __x = A.neighbors(graph, u);
+        console.log("dijkstra:", u, "has neighbors: ", __x);
+        A.neighbors(graph, u).forEach(v => {
+          let edgeWeight = Stdlib_Option.getExn(A.getWeight(graph, u, v), undefined);
+          let alt = uDist + edgeWeight | 0;
+          let match = NodeMap.get(dist, v);
+          if (match !== undefined) {
+            let dist_v = Primitive_option.valFromOption(match);
+            if (dist_v !== undefined && alt < dist_v) {
+              NodeMap.set(dist, v, alt);
+              NodeMap.set(prev, v, Primitive_option.some(u));
+              return loop(dist, prev, PriorityQueue.MinPriorityQueue.push(newQueue, alt, v));
+            } else {
+              return;
+            }
+          }
+          NodeMap.set(dist, v, alt);
+          NodeMap.set(prev, v, Primitive_option.some(u));
+          loop(dist, prev, PriorityQueue.MinPriorityQueue.push(newQueue, alt, v));
+        });
       };
+      loop(dist, prev, pq);
+      return [
+        dist,
+        prev
+      ];
     };
-    let paths = new Map();
-    A.getAllNodes(graph).forEach(node => {
-      let path = reconstructPath(prev, node, [node]);
-      paths.set(node, path);
-    });
-    return paths;
-  };
-  return {
-    PriorityQueue: undefined,
-    dijkstra: dijkstra,
-    shortestPaths: shortestPaths
+    let shortestPaths = (graph, startNode) => {
+      let match = dijkstra(graph, startNode);
+      let prev = match[1];
+      let reconstructPath = (prev, _node, _path) => {
+        while (true) {
+          let path = _path;
+          let node = _node;
+          let match = NodeMap.get(prev, node);
+          if (match === undefined) {
+            return path;
+          }
+          let prevNode = Primitive_option.valFromOption(match);
+          if (prevNode === undefined) {
+            return path;
+          }
+          let prevNode$1 = Primitive_option.valFromOption(prevNode);
+          _path = Belt_Array.concatMany([
+            [prevNode$1],
+            path
+          ]);
+          _node = prevNode$1;
+          continue;
+        };
+      };
+      let paths = NodeMap.make();
+      A.getAllNodes(graph).forEach(node => {
+        let path = reconstructPath(prev, node, [node]);
+        NodeMap.set(paths, node, path);
+      });
+      return paths;
+    };
+    let shortestPath = (graph, startNode, endNode) => NodeMap.get(shortestPaths(graph, startNode), endNode);
+    return {
+      PriorityQueue: undefined,
+      dijkstra: dijkstra,
+      shortestPaths: shortestPaths,
+      shortestPath: shortestPath
+    };
   };
 }
 

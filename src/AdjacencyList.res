@@ -8,6 +8,8 @@ module type S = {
 
   let make: unit => t<'a>
 
+  let nodeC: module(StdlibFp.Map.S with type key = node)
+
   let addNode: (t<'a>, node) => unit
   let removeNode: (t<'a>, node) => bool
   let hasNode: (t<'a>, node) => bool
@@ -35,6 +37,8 @@ module MakeImpl = (NodeC: StdlibFp.Map.S): (
   type node = NodeC.key
   //  type edgeContainer = EdgeC.t<NodeC.key>
   type t<'a> = NodeC.t<NodeC.key, NodeC.t<NodeC.key, option<'a>>>
+
+  let nodeC = module(NodeC: StdlibFp.Map.S with type key = node)
 
   let make = NodeC.make
 
@@ -130,6 +134,18 @@ module Make = (Serializable: Serializable.S): (S with type node = Serializable.t
 module Node = {
   module String = MakeWithPrimitive({
     type t = string
+  })
+
+  module Int = MakeWithPrimitive({
+    type t = int
+  })
+
+  module Float = MakeWithPrimitive({
+    type t = float
+  })
+
+  module BigInt = MakeWithPrimitive({
+    type t = bigint
   })
 
   module Tuple2 = {
