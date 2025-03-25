@@ -4,6 +4,7 @@ import * as Utils from "../../Utils.res.mjs";
 import * as Belt_List from "rescript/lib/es6/Belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/Belt_Option.js";
+import * as Primitive_bigint from "rescript/lib/es6/Primitive_bigint.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/Belt_MutableMapString.js";
 
 function log(prim) {
@@ -197,7 +198,7 @@ function countPolymers(m, template) {
   }));
   let first_poly = Belt_List.headExn(template);
   Belt_MutableMapString.forEach(r, (k, v) => {
-    let v$p = k === first_poly ? (v + 1n) / 2n : v / 2n;
+    let v$p = k === first_poly ? Primitive_bigint.div(v + 1n, 2n) : Primitive_bigint.div(v, 2n);
     Belt_MutableMapString.set(r, k, v$p);
   });
   return r;

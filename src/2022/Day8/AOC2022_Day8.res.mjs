@@ -95,7 +95,7 @@ function viewDistance(trees, h) {
 function scenicScore(forest, row, col) {
   let directions = tracks(forest, row, col);
   let h = treeHeight(Stdlib__Array.getUnsafe(Stdlib__Array.getUnsafe(forest, row), col));
-  return Stdlib__Array.reduce(directions.map(__x => viewDistance(__x, h)), 1, (a, x) => Math.imul(a, x));
+  return Stdlib__Array.reduce(directions.map(__x => viewDistance(__x, h)), 1, (a, x) => a * x | 0);
 }
 
 function part2(forest) {

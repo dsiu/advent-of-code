@@ -41,7 +41,7 @@ function executeInstr(t, instr) {
       Error: new Error()
     };
   }
-  return saveVal(t, instr.out, Math.imul(Belt_Array.getExn(t.prog, instr.arg1), Belt_Array.getExn(t.prog, instr.arg2)));
+  return saveVal(t, instr.out, Belt_Array.getExn(t.prog, instr.arg1) * Belt_Array.getExn(t.prog, instr.arg2) | 0);
 }
 
 function getInstr(t) {
@@ -131,7 +131,7 @@ function part2(xs) {
         prog: xs.slice(0),
         pc: 0
       }, noun, verb) === 19690720) {
-      return Math.imul(noun, 100) + verb | 0;
+      return (noun * 100 | 0) + verb | 0;
     }
     
   }), 0);

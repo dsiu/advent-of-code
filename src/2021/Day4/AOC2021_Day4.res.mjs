@@ -161,13 +161,13 @@ function parse(data) {
 function solvePart1$1(data) {
   let match = parse(data);
   let match$1 = Belt_Option.getExn(solvePart1(match[1], match[0]));
-  return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, Utils.add));
+  return match$1[0] * Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, Utils.add) | 0;
 }
 
 function solvePart2$1(data) {
   let match = parse(data);
   let match$1 = Belt_Option.getExn(solvePart2(match[1], match[0]));
-  return Math.imul(match$1[0], Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, Utils.add));
+  return match$1[0] * Belt_Array.reduce(Belt_Option.getExn(match$1[1]), 0, Utils.add) | 0;
 }
 
 export {

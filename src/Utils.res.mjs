@@ -201,7 +201,7 @@ function sub(x, y) {
 }
 
 function mul(x, y) {
-  return Math.imul(x, y);
+  return x * y | 0;
 }
 
 let div = Primitive_int.div;

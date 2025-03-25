@@ -86,11 +86,16 @@ function pop(queue, cmp) {
   };
 }
 
+function isEmpty(queue) {
+  return queue === "Empty";
+}
+
 let Impl = {
   empty: "Empty",
   push: push,
   remove_top: remove_top,
-  pop: pop
+  pop: pop,
+  isEmpty: isEmpty
 };
 
 let cmp = Primitive_object.lessequal;
@@ -108,6 +113,7 @@ function pop$1(queue) {
 }
 
 let MinPriorityQueue = {
+  isEmpty: isEmpty,
   cmp: cmp,
   empty: "Empty",
   push: push$1,
@@ -130,6 +136,7 @@ function pop$2(queue) {
 }
 
 let MaxPriorityQueue = {
+  isEmpty: isEmpty,
   cmp: cmp$1,
   empty: "Empty",
   push: push$2,

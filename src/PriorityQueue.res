@@ -46,6 +46,8 @@ module Impl = {
     | Node(priority, element, _, _) as queue => (priority, element, remove_top(queue, cmp))
     }
   }
+
+  let isEmpty = queue => queue == Empty
 }
 
 module MinPriorityQueue = {

@@ -233,8 +233,8 @@ function moveWayPoint(t, direction, n) {
 function moveShipTowardWayPoint(t, n) {
   return {
     coord: {
-      x: t.coord.x + Math.imul(t.wayPoint.x, n) | 0,
-      y: t.coord.y + Math.imul(t.wayPoint.y, n) | 0
+      x: t.coord.x + (t.wayPoint.x * n | 0) | 0,
+      y: t.coord.y + (t.wayPoint.y * n | 0) | 0
     },
     facing: t.facing,
     wayPoint: t.wayPoint

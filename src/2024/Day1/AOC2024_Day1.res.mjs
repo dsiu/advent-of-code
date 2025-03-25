@@ -23,7 +23,7 @@ function part1(l1, l2) {
 }
 
 function part2(l1, l2) {
-  return Utils.sumIntArray(l1.map(a => Math.imul(a, Stdlib__Array.count(l2, b => b === a))));
+  return Utils.sumIntArray(l1.map(a => a * Stdlib__Array.count(l2, b => b === a) | 0));
 }
 
 function solvePart1(data) {

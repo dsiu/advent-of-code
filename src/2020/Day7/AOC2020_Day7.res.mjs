@@ -145,7 +145,7 @@ function countBagsInside(t, bag) {
     if (isEmpty(x)) {
       return a;
     } else {
-      return a + Math.imul(x.count, countBagsInside(t, x)) | 0;
+      return a + (x.count * countBagsInside(t, x) | 0) | 0;
     }
   });
 }

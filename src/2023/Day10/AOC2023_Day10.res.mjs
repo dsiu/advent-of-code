@@ -179,7 +179,7 @@ function part1(map) {
 
 function shoelaceFormula(v) {
   let v$p = Stdlib__Array.drop(v, 1).concat(Stdlib__Array.take(v, 1));
-  return Math.abs(Stdlib__Array.sum(Stdlib__Array.map2(v, v$p, (param, param$1) => Math.imul(param[0], param$1[1]) - Math.imul(param[1], param$1[0]) | 0), {
+  return Math.abs(Stdlib__Array.sum(Stdlib__Array.map2(v, v$p, (param, param$1) => (param[0] * param$1[1] | 0) - (param[1] * param$1[0] | 0) | 0), {
     zero: Stdlib__Int.zero,
     add: Stdlib__Int.add
   })) / 2 | 0;

@@ -196,7 +196,7 @@ function getClaimIdsFromArea(t, c) {
       return accY;
     }
   }))));
-  if (Math.imul(c.w, c.h) === cids.length) {
+  if ((c.w * c.h | 0) === cids.length) {
     return Primitive_option.some(Belt_Array.get(cids, 0));
   }
   

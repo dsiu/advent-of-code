@@ -172,7 +172,7 @@ function getNumber(engine, number) {
     } else {
       return Pervasives.failwith("expected digit");
     }
-  }), 0, (acc, d) => Math.imul(acc, 10) + d | 0);
+  }), 0, (acc, d) => (acc * 10 | 0) + d | 0);
 }
 
 function findNumbersTouched(engine, numbers, symTouched) {

@@ -110,7 +110,7 @@ function add(x, y) {
 }
 
 function mul(x, y) {
-  return Math.imul(x, y);
+  return x * y | 0;
 }
 
 function sub(x, y) {

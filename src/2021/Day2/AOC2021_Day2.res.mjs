@@ -77,7 +77,7 @@ function moveWithAim(t, move) {
       let n = move._0;
       return {
         h: t.h + n | 0,
-        d: t.d + Math.imul(t.aim, n) | 0,
+        d: t.d + (t.aim * n | 0) | 0,
         aim: t.aim
       };
     case "Down" :
@@ -121,7 +121,7 @@ function parse(data) {
 }
 
 function answer(t) {
-  return Math.imul(t.h, t.d);
+  return t.h * t.d | 0;
 }
 
 function solvePart1(data) {

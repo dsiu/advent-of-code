@@ -110,7 +110,7 @@ function scoreGrid(grid) {
   let normalizedGrid = Stdlib__Array.transpose(grid);
   let l = normalizedGrid.length;
   let indexedGird = Stdlib__Array.zip(Stdlib__Array.fromInitializer(l, i => i + 1 | 0), normalizedGrid.toReversed());
-  let scoreRow = param => Math.imul(param[0], Stdlib__Array.count(param[1], el => el === "Round"));
+  let scoreRow = param => param[0] * Stdlib__Array.count(param[1], el => el === "Round") | 0;
   return Stdlib__Array.sum(indexedGird.map(scoreRow), {
     zero: Stdlib__Int.zero,
     add: Stdlib__Int.add

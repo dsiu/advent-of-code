@@ -99,8 +99,8 @@ function solve(param) {
 function expand(map_orig, x_times, y_times) {
   let sz_x_orig = Array2D.lengthX(map_orig);
   let sz_y_orig = Array2D.lengthY(map_orig);
-  let sz_x_final = Math.imul(sz_x_orig, x_times);
-  let sz_y_final = Math.imul(sz_y_orig, y_times);
+  let sz_x_final = sz_x_orig * x_times | 0;
+  let sz_y_final = sz_y_orig * y_times | 0;
   let map = Array2D.make([
     sz_x_final,
     sz_y_final
@@ -108,8 +108,8 @@ function expand(map_orig, x_times, y_times) {
   for (let x_ep = 0; x_ep < x_times; ++x_ep) {
     for (let y_ep = 0; y_ep < y_times; ++y_ep) {
       Array2D.reduceWithIndex(map_orig, 0, (_a, e, param) => {
-        let x_new = param[0] + Math.imul(x_ep, sz_x_orig) | 0;
-        let y_new = param[1] + Math.imul(y_ep, sz_y_orig) | 0;
+        let x_new = param[0] + (x_ep * sz_x_orig | 0) | 0;
+        let y_new = param[1] + (y_ep * sz_y_orig | 0) | 0;
         let e$p = ((e + x_ep | 0) + y_ep | 0) % 9;
         let e_new = e$p === 0 ? 9 : e$p;
         Array2D.set(map, [

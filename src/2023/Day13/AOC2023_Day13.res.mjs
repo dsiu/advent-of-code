@@ -54,7 +54,7 @@ function reflections(patt, nDiff) {
 
 function score(l) {
   if (l.TAG === "Horiz") {
-    return Math.imul(100, l._0);
+    return 100 * l._0 | 0;
   } else {
     return l._0;
   }

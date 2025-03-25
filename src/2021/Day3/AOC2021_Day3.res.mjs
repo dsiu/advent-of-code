@@ -95,7 +95,7 @@ function calEpsilon(xs) {
 function part1(xs) {
   let gamma = calGamma(xs);
   let epsilon = calEpsilon(xs);
-  return Math.imul(bitArrayToInt(gamma), bitArrayToInt(epsilon));
+  return bitArrayToInt(gamma) * bitArrayToInt(epsilon) | 0;
 }
 
 function findRating(xs, func) {
@@ -134,7 +134,7 @@ function calCO2(__x) {
 function part2(xs) {
   let oxygen = findRating(xs, calGamma);
   let co2 = findRating(xs, calEpsilon);
-  return Math.imul(bitArrayToInt(oxygen), bitArrayToInt(co2));
+  return bitArrayToInt(oxygen) * bitArrayToInt(co2) | 0;
 }
 
 function parse(data) {

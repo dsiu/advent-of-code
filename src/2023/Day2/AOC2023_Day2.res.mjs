@@ -285,7 +285,7 @@ function part2(games) {
             let b = match[2];
             switch (b.TAG) {
               case "Blue" :
-                return Math.imul(Math.imul(r._0, g._0), b._0);
+                return (r._0 * g._0 | 0) * b._0 | 0;
               case "Red" :
               case "Green" :
                 break;

@@ -98,7 +98,7 @@ function parse2(data) {
 
 function solvePart1(data) {
   let match = findEarliestBus(parse(data));
-  return Math.imul(match[0], match[1]);
+  return match[0] * match[1] | 0;
 }
 
 function solvePart2(data) {

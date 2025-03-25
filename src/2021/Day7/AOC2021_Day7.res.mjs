@@ -23,7 +23,7 @@ function distance(xs, m) {
 }
 
 function cost(a, b) {
-  return Math.imul(Math.abs(b - a | 0), Math.abs(b - a | 0) + 1 | 0) / 2 | 0;
+  return (Math.abs(b - a | 0) * (Math.abs(b - a | 0) + 1 | 0) | 0) / 2 | 0;
 }
 
 function costAll(xs, p) {

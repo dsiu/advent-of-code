@@ -9,7 +9,7 @@ function solvePart1(data) {
     let candidates = Belt_Array.keep(entries, y => (y + x | 0) === 2020);
     let y = Belt_Array.get(candidates, 0);
     if (y !== undefined) {
-      return Belt_Array.concat(a, [Math.imul(y, x)]);
+      return Belt_Array.concat(a, [y * x | 0]);
     } else {
       return a;
     }
@@ -23,7 +23,7 @@ function solvePart2(data) {
       let candidates = Belt_Array.keep(entries, z => ((z + y | 0) + x | 0) === 2020);
       let z = Belt_Array.get(candidates, 0);
       if (z !== undefined) {
-        return Belt_Array.concat(ay, [Math.imul(Math.imul(x, y), z)]);
+        return Belt_Array.concat(ay, [(x * y | 0) * z | 0]);
       } else {
         return ay;
       }

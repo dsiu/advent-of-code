@@ -81,7 +81,7 @@ function solvePart1(data) {
   let b = Belt_Array.concat(adapters, [Utils.maxIntInArray(adapters) + 3 | 0]);
   let diffs$1 = diffs(a, b);
   let tally$1 = tally(diffs$1);
-  return Math.imul(Belt_MutableMapInt.getExn(tally$1, 1), Belt_MutableMapInt.getExn(tally$1, 3));
+  return Belt_MutableMapInt.getExn(tally$1, 1) * Belt_MutableMapInt.getExn(tally$1, 3) | 0;
 }
 
 function solvePart2(data) {

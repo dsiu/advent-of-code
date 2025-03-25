@@ -34,7 +34,7 @@ function calculateSixSignals(signals) {
   return Utils.sumIntArray(Stdlib__Array.filterMap(signals, param => {
     let t = param[0];
     if (t <= 220) {
-      return Math.imul(t, param[1]);
+      return t * param[1] | 0;
     }
     
   }));

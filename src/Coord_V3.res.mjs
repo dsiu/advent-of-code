@@ -27,9 +27,9 @@ function add(param, param$1) {
 
 function mul(param, x) {
   return [
-    Math.imul(param[0], x),
-    Math.imul(param[1], x),
-    Math.imul(param[2], x)
+    param[0] * x | 0,
+    param[1] * x | 0,
+    param[2] * x | 0
   ];
 }
 

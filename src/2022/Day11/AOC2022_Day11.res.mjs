@@ -199,7 +199,7 @@ function updateWorry(current, param, threshold) {
   if (param._0 === "Plus") {
     return threshold(current + n | 0);
   } else {
-    return threshold(Math.imul(current, n));
+    return threshold(current * n | 0);
   }
 }
 

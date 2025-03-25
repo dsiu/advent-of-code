@@ -352,7 +352,7 @@ function solvePart1(data) {
   let laziestMins = perGuardMostSleptMin(gAtt);
   let laziestGid = laziest[0];
   let match$1 = Belt_Option.getExn(Belt_MutableMapInt.get(laziestMins, laziestGid));
-  return Math.imul(laziestGid, match$1[0]);
+  return laziestGid * match$1[0] | 0;
 }
 
 function solvePart2(data) {
@@ -366,7 +366,7 @@ function solvePart2(data) {
   };
   let match = Belt_Array.reduce(sortLines, initState, processLineReducer);
   let match$1 = busiestMin(match.gAtt);
-  return Math.imul(match$1[0], match$1[1][0]);
+  return match$1[0] * match$1[1][0] | 0;
 }
 
 let data = AOC2018_Day4_Data.data;

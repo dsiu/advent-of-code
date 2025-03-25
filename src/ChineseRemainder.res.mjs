@@ -20,7 +20,7 @@ function mulInv(a, b) {
     aa = bb;
     bb = c;
     let tmp = x0;
-    x0 = x1 - Math.imul(q, x0) | 0;
+    x0 = x1 - (q * x0 | 0) | 0;
     x1 = tmp;
   };
   if (x1 < 0) {
@@ -31,12 +31,12 @@ function mulInv(a, b) {
 
 function crt(rem, num) {
   let sum = 0;
-  let prod = Belt_Array.reduce(num, 1, (a, c) => Math.imul(a, c));
+  let prod = Belt_Array.reduce(num, 1, (a, c) => a * c | 0);
   for (let i = 0, i_finish = num.length; i < i_finish; ++i) {
     let ni = Belt_Option.getExn(Belt_Array.get(num, i));
     let ri = Belt_Option.getExn(Belt_Array.get(rem, i));
     let p = Js_math.floor_int(prod / ni);
-    sum = sum + Math.imul(Math.imul(ri, p), mulInv(p, ni)) | 0;
+    sum = sum + ((ri * p | 0) * mulInv(p, ni) | 0) | 0;
   }
   return Primitive_int.mod_(sum, prod);
 }
@@ -53,9 +53,7 @@ function mul(prim0, prim1) {
   return prim0 * prim1;
 }
 
-function div(prim0, prim1) {
-  return prim0 / prim1;
-}
+let div = Primitive_bigint.div;
 
 let mod = Primitive_bigint.mod_;
 
@@ -68,7 +66,7 @@ function mulInvBigInt(a, b) {
   let aa = a;
   let bb = b;
   while ((aa > big_one)) {
-    let q = aa / bb;
+    let q = Primitive_bigint.div(aa, bb);
     let c = Primitive_bigint.mod_(aa, bb);
     aa = bb;
     bb = c;
@@ -88,7 +86,7 @@ function crtBigInt(rem, num) {
   for (let i = 0, i_finish = num.length; i < i_finish; ++i) {
     let ni = Belt_Option.getExn(Belt_Array.get(num, i));
     let ri = Belt_Option.getExn(Belt_Array.get(rem, i));
-    let p = prod / ni;
+    let p = Primitive_bigint.div(prod, ni);
     sum = sum + ri * p * mulInvBigInt(p, ni);
   }
   return Primitive_bigint.mod_(sum, prod);

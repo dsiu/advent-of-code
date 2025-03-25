@@ -254,7 +254,7 @@ function part1(hands) {
     }
   });
   let rankedHands = Stdlib__Array.zip(Stdlib__Array.range(1, sortedHands.length + 1 | 0), sortedHands);
-  let score = param => Math.imul(param[0], param[1]._2);
+  let score = param => param[0] * param[1]._2 | 0;
   return Stdlib__Array.sum(rankedHands.map(score), {
     zero: Stdlib__Int.zero,
     add: Stdlib__Int.add

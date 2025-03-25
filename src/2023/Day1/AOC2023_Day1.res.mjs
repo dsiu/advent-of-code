@@ -74,7 +74,7 @@ function get2Digits(str) {
 }
 
 function combineFirstAndLast(param) {
-  return Math.imul(param[0], 10) + param[1] | 0;
+  return (param[0] * 10 | 0) + param[1] | 0;
 }
 
 function part2(xs) {

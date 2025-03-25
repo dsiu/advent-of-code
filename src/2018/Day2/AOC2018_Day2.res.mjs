@@ -62,7 +62,7 @@ function runDay2Part1(lines) {
     twoTimes: acc.twoTimes + nonZero(n_char_matched_freq(2, l)) | 0,
     threeTimes: acc.threeTimes + nonZero(n_char_matched_freq(3, l)) | 0
   }));
-  return Math.imul(result.twoTimes, result.threeTimes);
+  return result.twoTimes * result.threeTimes | 0;
 }
 
 function diffOfTwoCharStr(s1, s2) {

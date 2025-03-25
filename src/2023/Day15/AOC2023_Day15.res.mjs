@@ -21,7 +21,7 @@ function charToASCII(s) {
 }
 
 function hash(str) {
-  return Stdlib__Array.reduce(str.split(""), 0, (acc, c) => Math.imul(acc + charToASCII(c) | 0, 17) % 256);
+  return Stdlib__Array.reduce(str.split(""), 0, (acc, c) => ((acc + charToASCII(c) | 0) * 17 | 0) % 256);
 }
 
 function process(facility, instruction) {
@@ -54,7 +54,7 @@ function processAll(xs) {
 
 function powerCell(param) {
   let i = param[0];
-  return Stdlib__Array.sum(param[1].map((lens, index) => Math.imul(Math.imul(index + 1 | 0, lens.lensPower), i + 1 | 0)), {
+  return Stdlib__Array.sum(param[1].map((lens, index) => ((index + 1 | 0) * lens.lensPower | 0) * (i + 1 | 0) | 0), {
     zero: Stdlib__Int.zero,
     add: Stdlib__Int.add
   });
