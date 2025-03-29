@@ -162,3 +162,29 @@ module Node = {
     module StringInt = Make(JSONSerializable.String, JSONSerializable.Int)
   }
 }
+
+module Import = {
+  module A = Node.Tuple2.IntInt
+
+  let fromArray2D = (array2D: Array2D.t<'a>): A.t<'a> => {
+    let addEdges = (adjList, x, y) => {
+      let currentNode = (x, y)
+      adjList->A.addNode(currentNode)
+
+      let neighbors = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+
+      neighbors
+      ->Array.filter(((nx, ny)) => array2D->Array2D.isValidXY((nx, ny)))
+      ->Array.forEach(((nx, ny)) => {
+        let neighborNode = (nx, ny)
+        adjList->A.addNode(neighborNode)
+        adjList->A.addDirectedEdge(currentNode, neighborNode)
+      })
+    }
+
+    array2D->Array2D.reduceWithIndex(A.make(), (acc, _, (x, y)) => {
+      acc->addEdges(x, y)
+      acc
+    })
+  }
+}

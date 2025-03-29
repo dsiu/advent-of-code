@@ -71,6 +71,43 @@ describe("AStar Algorithm with string", () => {
     let paths = AStar.aStar("1", node, neighbors, cost, heuristic)
     expect(paths)->toEqual(expected)
   })
+
+  // Additional tests for edge cases
+
+  test("handles empty graph", () => {
+    graph := A.make()
+    let path = AStar.aStar("1", "2", neighbors, cost, heuristic)
+    expect(path)->toEqual(None)
+  })
+
+  test("handles single node graph", () => {
+    graph := A.make()
+    graph.contents->A.addNode("1")
+    let path = AStar.aStar("1", "1", neighbors, cost, heuristic)
+    expect(path)->toEqual(Some(["1"]))
+  })
+
+  test("handles disconnected graph", () => {
+    graph := A.make()
+    graph.contents->A.addNode("1")
+    graph.contents->A.addNode("2")
+    let path = AStar.aStar("1", "2", neighbors, cost, heuristic)
+    expect(path)->toEqual(None)
+  })
+
+  test("handles negative weights", () => {
+    graph := A.make()
+    graph.contents->A.addDirectedEdge("1", "2", ~weight=Some(-1))
+    graph.contents->A.addDirectedEdge("2", "3", ~weight=Some(-1))
+    let path = AStar.aStar("1", "3", neighbors, cost, heuristic)
+    expect(path)->toEqual(Some(["1", "2", "3"]))
+  })
+
+  test("works with different heuristic functions", () => {
+    let heuristic = (a, b) => 1.0
+    let path = AStar.aStar("1", "5", neighbors, cost, heuristic)
+    expect(path)->toEqual(Some(["1", "3", "4", "5"]))
+  })
 })
 
 describe("AStar Algorithm with Tuple2 (string,int)", () => {
@@ -136,5 +173,42 @@ describe("AStar Algorithm with Tuple2 (string,int)", () => {
   testAll("returns correct paths for all nodes", shortestPathsTestData, ((node, expected)) => {
     let paths = AStar.aStar(("1", 1), node, neighbors, cost, heuristic)
     expect(paths)->toEqual(expected)
+  })
+
+  // Additional tests for edge cases
+
+  test("handles empty graph", () => {
+    graph := A.make()
+    let path = AStar.aStar(("1", 1), ("2", 2), neighbors, cost, heuristic)
+    expect(path)->toEqual(None)
+  })
+
+  test("handles single node graph", () => {
+    graph := A.make()
+    graph.contents->A.addNode(("1", 1))
+    let path = AStar.aStar(("1", 1), ("1", 1), neighbors, cost, heuristic)
+    expect(path)->toEqual(Some([("1", 1)]))
+  })
+
+  test("handles disconnected graph", () => {
+    graph := A.make()
+    graph.contents->A.addNode(("1", 1))
+    graph.contents->A.addNode(("2", 2))
+    let path = AStar.aStar(("1", 1), ("2", 2), neighbors, cost, heuristic)
+    expect(path)->toEqual(None)
+  })
+
+  test("handles negative weights", () => {
+    graph := A.make()
+    graph.contents->A.addDirectedEdge(("1", 1), ("2", 2), ~weight=Some(-1))
+    graph.contents->A.addDirectedEdge(("2", 2), ("3", 3), ~weight=Some(-1))
+    let path = AStar.aStar(("1", 1), ("3", 3), neighbors, cost, heuristic)
+    expect(path)->toEqual(Some([("1", 1), ("2", 2), ("3", 3)]))
+  })
+
+  test("works with different heuristic functions", () => {
+    let heuristic = (a, b) => 1.0
+    let path = AStar.aStar(("1", 1), ("5", 5), neighbors, cost, heuristic)
+    expect(path)->toEqual(Some([("1", 1), ("3", 3), ("4", 4), ("5", 5)]))
   })
 })

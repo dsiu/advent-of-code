@@ -124,6 +124,45 @@ Jest.describe("AStar Algorithm with string", () => {
     let paths = AStar$1.aStar("1", param[0], neighbors, cost, heuristic);
     return Jest.Expect.toEqual(Jest.Expect.expect(paths), param[1]);
   });
+  Jest.test("handles empty graph", () => {
+    graph.contents = AdjacencyList.Node.$$String.make();
+    let path = AStar$1.aStar("1", "2", neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), undefined);
+  });
+  Jest.test("handles single node graph", () => {
+    graph.contents = AdjacencyList.Node.$$String.make();
+    AdjacencyList.Node.$$String.addNode(graph.contents, "1");
+    let path = AStar$1.aStar("1", "1", neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), ["1"]);
+  });
+  Jest.test("handles disconnected graph", () => {
+    graph.contents = AdjacencyList.Node.$$String.make();
+    AdjacencyList.Node.$$String.addNode(graph.contents, "1");
+    AdjacencyList.Node.$$String.addNode(graph.contents, "2");
+    let path = AStar$1.aStar("1", "2", neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), undefined);
+  });
+  Jest.test("handles negative weights", () => {
+    graph.contents = AdjacencyList.Node.$$String.make();
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "1", "2", -1);
+    AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "2", "3", -1);
+    let path = AStar$1.aStar("1", "3", neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), [
+      "1",
+      "2",
+      "3"
+    ]);
+  });
+  Jest.test("works with different heuristic functions", () => {
+    let heuristic = (a, b) => 1.0;
+    let path = AStar$1.aStar("1", "5", neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), [
+      "1",
+      "3",
+      "4",
+      "5"
+    ]);
+  });
 });
 
 Jest.describe("AStar Algorithm with Tuple2 (string,int)", () => {
@@ -393,6 +432,120 @@ Jest.describe("AStar Algorithm with Tuple2 (string,int)", () => {
       1
     ], param[0], neighbors, cost, heuristic);
     return Jest.Expect.toEqual(Jest.Expect.expect(paths), param[1]);
+  });
+  Jest.test("handles empty graph", () => {
+    graph.contents = AdjacencyList.Node.Tuple2.StringInt.make();
+    let path = AStar$1.aStar([
+      "1",
+      1
+    ], [
+      "2",
+      2
+    ], neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), undefined);
+  });
+  Jest.test("handles single node graph", () => {
+    graph.contents = AdjacencyList.Node.Tuple2.StringInt.make();
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "1",
+      1
+    ]);
+    let path = AStar$1.aStar([
+      "1",
+      1
+    ], [
+      "1",
+      1
+    ], neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), [[
+        "1",
+        1
+      ]]);
+  });
+  Jest.test("handles disconnected graph", () => {
+    graph.contents = AdjacencyList.Node.Tuple2.StringInt.make();
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "1",
+      1
+    ]);
+    AdjacencyList.Node.Tuple2.StringInt.addNode(graph.contents, [
+      "2",
+      2
+    ]);
+    let path = AStar$1.aStar([
+      "1",
+      1
+    ], [
+      "2",
+      2
+    ], neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), undefined);
+  });
+  Jest.test("handles negative weights", () => {
+    graph.contents = AdjacencyList.Node.Tuple2.StringInt.make();
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "1",
+      1
+    ], [
+      "2",
+      2
+    ], -1);
+    AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph.contents, [
+      "2",
+      2
+    ], [
+      "3",
+      3
+    ], -1);
+    let path = AStar$1.aStar([
+      "1",
+      1
+    ], [
+      "3",
+      3
+    ], neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), [
+      [
+        "1",
+        1
+      ],
+      [
+        "2",
+        2
+      ],
+      [
+        "3",
+        3
+      ]
+    ]);
+  });
+  Jest.test("works with different heuristic functions", () => {
+    let heuristic = (a, b) => 1.0;
+    let path = AStar$1.aStar([
+      "1",
+      1
+    ], [
+      "5",
+      5
+    ], neighbors, cost, heuristic);
+    return Jest.Expect.toEqual(Jest.Expect.expect(path), [
+      [
+        "1",
+        1
+      ],
+      [
+        "3",
+        3
+      ],
+      [
+        "4",
+        4
+      ],
+      [
+        "5",
+        5
+      ]
+    ]);
   });
 });
 
