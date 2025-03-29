@@ -37,10 +37,7 @@ function push(queue, priority, element, cmp) {
 
 function remove_top(queue, cmp) {
   if (typeof queue !== "object") {
-    throw {
-      RE_EXN_ID: "Not_found",
-      Error: new Error()
-    };
+    return "Empty";
   }
   let left = queue._2;
   let tmp = queue._3;
@@ -73,17 +70,15 @@ function remove_top(queue, cmp) {
 }
 
 function pop(queue, cmp) {
-  if (typeof queue === "object") {
+  if (typeof queue !== "object") {
+    return;
+  } else {
     return [
       queue._0,
       queue._1,
       remove_top(queue, cmp)
     ];
   }
-  throw {
-    RE_EXN_ID: "Not_found",
-    Error: new Error()
-  };
 }
 
 function isEmpty(queue) {

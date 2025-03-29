@@ -24,8 +24,8 @@ module Dijkstra = (A: AdjacencyList.S, NodeMap: StdlibFp.Map.S with type key = A
 
     let rec loop = (dist, prev, pq) => {
       switch PriorityQueue.pop(pq) {
-      | exception Not_found => ()
-      | (uDist, u, newQueue) =>
+      | None => ()
+      | Some(uDist, u, newQueue) =>
         graph
         ->A.neighbors(u)
         ->Array.forEach(v => {

@@ -23,7 +23,7 @@ module Impl = {
 
   let rec remove_top = (queue, cmp) => {
     switch queue {
-    | Empty => raise(Not_found)
+    | Empty => Empty
     | Node(_, _, left, Empty) => left
     | Node(_, _, Empty, right) => right
     | Node(
@@ -42,8 +42,8 @@ module Impl = {
 
   let pop = (queue, cmp) => {
     switch queue {
-    | Empty => raise(Not_found)
-    | Node(priority, element, _, _) as queue => (priority, element, remove_top(queue, cmp))
+    | Empty => None
+    | Node(priority, element, _, _) as queue => (priority, element, remove_top(queue, cmp))->Some
     }
   }
 

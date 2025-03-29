@@ -4,7 +4,6 @@ import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as PriorityQueue from "./PriorityQueue.res.mjs";
 import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
-import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
 
 function Dijkstra(A) {
   return NodeMap => {
@@ -18,19 +17,13 @@ function Dijkstra(A) {
       NodeMap.set(dist, startNode, 0);
       let pq = PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.empty, 0, startNode);
       let loop = (dist, prev, pq) => {
-        let val;
-        try {
-          val = PriorityQueue.MinPriorityQueue.pop(pq);
-        } catch (raw_exn) {
-          let exn = Primitive_exceptions.internalToException(raw_exn);
-          if (exn.RE_EXN_ID === "Not_found") {
-            return;
-          }
-          throw exn;
+        let match = PriorityQueue.MinPriorityQueue.pop(pq);
+        if (match === undefined) {
+          return;
         }
-        let newQueue = val[2];
-        let u = val[1];
-        let uDist = val[0];
+        let newQueue = match[2];
+        let u = match[1];
+        let uDist = match[0];
         A.neighbors(graph, u).forEach(v => {
           let edgeWeight = Stdlib_Option.getExn(A.getWeight(graph, u, v), undefined);
           let alt = uDist + edgeWeight | 0;
