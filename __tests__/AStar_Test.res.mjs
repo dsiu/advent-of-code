@@ -15,7 +15,7 @@ function log2(prim0, prim1) {
 Jest.describe("AStar Algorithm with string", () => {
   let NodeMap = AdjacencyList.Node.$$String.nodeMap;
   let NodeSet = AdjacencyList.Node.$$String.nodeSet;
-  let AStar$1 = AStar.AStar(AdjacencyList.Node.$$String)(NodeMap)(NodeSet);
+  let AStar$1 = AStar.AStar({})(NodeMap)(NodeSet);
   let graph = {
     contents: AdjacencyList.Node.$$String.make()
   };
@@ -31,7 +31,7 @@ Jest.describe("AStar Algorithm with string", () => {
     AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "4", "5", 6);
     AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "5", "6", 9);
   });
-  let heuristic = (a, b) => 0.0;
+  let heuristic = (_a, _b) => 0.0;
   let cost = (a, b) => {
     let weight = AdjacencyList.Node.$$String.getWeight(graph.contents, a, b);
     if (weight !== undefined) {
@@ -154,7 +154,7 @@ Jest.describe("AStar Algorithm with string", () => {
     ]);
   });
   Jest.test("works with different heuristic functions", () => {
-    let heuristic = (a, b) => 1.0;
+    let heuristic = (_a, _b) => 1.0;
     let path = AStar$1.aStar("1", "5", neighbors, cost, heuristic);
     return Jest.Expect.toEqual(Jest.Expect.expect(path), [
       "1",
@@ -168,7 +168,7 @@ Jest.describe("AStar Algorithm with string", () => {
 Jest.describe("AStar Algorithm with Tuple2 (string,int)", () => {
   let NodeMap = AdjacencyList.Node.Tuple2.StringInt.nodeMap;
   let NodeSet = AdjacencyList.Node.Tuple2.StringInt.nodeSet;
-  let AStar$1 = AStar.AStar(AdjacencyList.Node.Tuple2.StringInt)(NodeMap)(NodeSet);
+  let AStar$1 = AStar.AStar({})(NodeMap)(NodeSet);
   let graph = {
     contents: AdjacencyList.Node.Tuple2.StringInt.make()
   };
@@ -238,7 +238,7 @@ Jest.describe("AStar Algorithm with Tuple2 (string,int)", () => {
       6
     ], 9);
   });
-  let heuristic = (a, b) => 0.0;
+  let heuristic = (_a, _b) => 0.0;
   let cost = (a, b) => {
     let weight = AdjacencyList.Node.Tuple2.StringInt.getWeight(graph.contents, a, b);
     if (weight !== undefined) {
@@ -520,7 +520,7 @@ Jest.describe("AStar Algorithm with Tuple2 (string,int)", () => {
     ]);
   });
   Jest.test("works with different heuristic functions", () => {
-    let heuristic = (a, b) => 1.0;
+    let heuristic = (_a, _b) => 1.0;
     let path = AStar$1.aStar([
       "1",
       1

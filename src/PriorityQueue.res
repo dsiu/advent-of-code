@@ -3,6 +3,11 @@
 //
 // ref: https://www.reddit.com/r/rescript/comments/r3rtu9/comment/hmeuvjf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 //
+// This implementation keeps ONLY partial order for the heap, not TOTAL order.
+// ie: node need to be smaller than its children, but the relationship between
+// children doesn't matter.
+// ref: http://typeocaml.com/2015/03/12/heap-leftist-tree/
+//
 
 module Impl = {
   type rec queue<'p, 'a> = Empty | Node('p, 'a, queue<'p, 'a>, queue<'p, 'a>)

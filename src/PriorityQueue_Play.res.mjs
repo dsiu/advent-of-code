@@ -6,6 +6,12 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
+let qInt = PriorityQueue.MinPriorityQueue.empty;
+
+let qInt$1 = PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(qInt, 10, "e"), 5, "d"), 8, "c"), 3, "b"), 2, "a"), 4, "f"), 6, "g"), 7, "h");
+
+console.log(qInt$1, "qInt");
+
 let qIntString = PriorityQueue.MinPriorityQueue.empty;
 
 let qIntString$1 = PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(PriorityQueue.MinPriorityQueue.push(qIntString, 3, "a"), 2, "b"), 1, "c");
@@ -45,9 +51,10 @@ let PQMax;
 export {
   log2,
   PQMin,
+  qInt$1 as qInt,
   qFloatString$1 as qFloatString,
   qBignumString$1 as qBignumString,
   PQMax,
   qIntString$3 as qIntString,
 }
-/* qIntString Not a pure module */
+/* qInt Not a pure module */

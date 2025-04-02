@@ -7,7 +7,7 @@ import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Primitive_object from "rescript/lib/es6/Primitive_object.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 
-function AStar(A) {
+function AStar(S) {
   return NodeMap => (NodeSet => {
     let s = NodeSet.make();
     let infinity = Number.POSITIVE_INFINITY;

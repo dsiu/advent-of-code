@@ -28,7 +28,7 @@ describe("AStar Algorithm with string", () => {
     graph.contents->A.addDirectedEdge("5", "6", ~weight=Some(9))
   })
 
-  let heuristic = (a, b) => 0.0
+  let heuristic = (_a, _b) => 0.0
 
   let cost = (a, b) => {
     switch graph.contents->A.getWeight(a, b) {
@@ -104,7 +104,7 @@ describe("AStar Algorithm with string", () => {
   })
 
   test("works with different heuristic functions", () => {
-    let heuristic = (a, b) => 1.0
+    let heuristic = (_a, _b) => 1.0
     let path = AStar.aStar("1", "5", neighbors, cost, heuristic)
     expect(path)->toEqual(Some(["1", "3", "4", "5"]))
   })
@@ -131,7 +131,7 @@ describe("AStar Algorithm with Tuple2 (string,int)", () => {
     graph.contents->A.addDirectedEdge(("5", 5), ("6", 6), ~weight=Some(9))
   })
 
-  let heuristic = (a, b) => 0.0
+  let heuristic = (_a, _b) => 0.0
 
   let cost = (a, b) => {
     switch graph.contents->A.getWeight(a, b) {
@@ -207,7 +207,7 @@ describe("AStar Algorithm with Tuple2 (string,int)", () => {
   })
 
   test("works with different heuristic functions", () => {
-    let heuristic = (a, b) => 1.0
+    let heuristic = (_a, _b) => 1.0
     let path = AStar.aStar(("1", 1), ("5", 5), neighbors, cost, heuristic)
     expect(path)->toEqual(Some([("1", 1), ("3", 3), ("4", 4), ("5", 5)]))
   })

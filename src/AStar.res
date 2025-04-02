@@ -1,13 +1,17 @@
 // ref:https://en.wikipedia.org/wiki/A*_search_algorithm
 
+module type S = {
+  type node
+}
+
 module AStar = (
-  A: AdjacencyList.S,
-  NodeMap: StdlibFp.Map.S with type key = A.node,
-  NodeSet: StdlibFp.Set.S with type a = A.node,
+  S: S,
+  NodeMap: StdlibFp.Map.S with type key = S.node,
+  NodeSet: StdlibFp.Set.S with type a = S.node,
 ) => {
   module PriorityQueue = PriorityQueue.MinPriorityQueue
 
-  type node = A.node
+  type node = S.node
   type gScore = NodeMap.t<node, float>
   type fScore = NodeMap.t<node, float>
   type cameFrom = NodeMap.t<node, node>
@@ -20,7 +24,7 @@ module AStar = (
   let infinity = Float.Constants.positiveInfinity
 
   // helper function to add a node to the open set
-  let addToOpenSet = (os: openSet, node: A.node, fValue: float) => {
+  let addToOpenSet = (os: openSet, node: node, fValue: float) => {
     let (queue, set) = os
     (
       queue->PriorityQueue.push(fValue, node),
@@ -59,17 +63,11 @@ module AStar = (
     }
   }
 
-  type heuristic = (A.node, A.node) => float
-  type cost = (A.node, A.node) => float
-  type neighbors = A.node => array<A.node>
+  type heuristic = (node, node) => float
+  type cost = (node, node) => float
+  type neighbors = node => array<node>
 
-  let aStar = (
-    start: A.node,
-    goal: A.node,
-    neighbors: neighbors,
-    cost: cost,
-    heuristic: heuristic,
-  ) => {
+  let aStar = (start: node, goal: node, neighbors: neighbors, cost: cost, heuristic: heuristic) => {
     let initialOpenSet = addToOpenSet(
       (PriorityQueue.empty, NodeSet.make()),
       start,

@@ -3,6 +3,20 @@ let log2 = Console.log2
 // Min
 module PQMin = PriorityQueue.MinPriorityQueue
 
+// Int
+let qInt = PQMin.empty
+let qInt =
+  qInt
+  ->PQMin.push(10, "e")
+  ->PQMin.push(5, "d")
+  ->PQMin.push(8, "c")
+  ->PQMin.push(3, "b")
+  ->PQMin.push(2, "a")
+  ->PQMin.push(4, "f")
+  ->PQMin.push(6, "g")
+  ->PQMin.push(7, "h")
+qInt->log2("qInt")
+
 // Int String
 let qIntString = PQMin.empty
 let qIntString = qIntString->PQMin.push(3, "a")->PQMin.push(2, "b")->PQMin.push(1, "c")
