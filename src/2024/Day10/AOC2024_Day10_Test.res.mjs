@@ -8,11 +8,11 @@ import * as AOC2024_Day10_Data_Sample from "./AOC2024_Day10_Data_Sample.res.mjs"
 Jest.describe("2024 Day10", () => {
   Jest.test("Part 1 - Sample Data", () => {
     let result = AOC2024_Day10.solvePart1(AOC2024_Day10_Data_Sample.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 36);
   });
   Jest.test("Part 1 - Solve", () => {
     let result = AOC2024_Day10.solvePart1(AOC2024_Day10_Data.data);
-    return Jest.Expect.toEqual(Jest.Expect.expect(result), 1);
+    return Jest.Expect.toEqual(Jest.Expect.expect(result), 820);
   });
   Jest.test("Part 2 - Sample Data", () => {
     let result = AOC2024_Day10.solvePart2(AOC2024_Day10_Data_Sample.data);

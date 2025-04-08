@@ -2,11 +2,15 @@
 
 import * as Utils from "../../Utils.res.mjs";
 import * as Array2D from "../../Array2D.res.mjs";
+import * as Graph_Ext from "../../Graph_Ext.res.mjs";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.res.mjs";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
+import * as Stdlib__Set_Ext from "@dsiu/rescript-stdlib-fp/src/Stdlib__Set_Ext.res.mjs";
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.res.mjs";
+import * as Stdlib__Serializable from "@dsiu/rescript-stdlib-fp/src/Stdlib__Serializable.res.mjs";
+import * as Stdlib__JSONSerializable from "@dsiu/rescript-stdlib-fp/src/Stdlib__JSONSerializable.res.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -23,6 +27,51 @@ function parse(data) {
   ]));
 }
 
+function part1(tMap) {
+  let Tuple2 = Stdlib__Serializable.MakeTuple2(Stdlib__JSONSerializable.Int)(Stdlib__JSONSerializable.Int);
+  let NodeSet = Stdlib__Set_Ext.Make(Tuple2);
+  let Traversal = Graph_Ext.Traversal({})(NodeSet);
+  return Stdlib__Array.reduce(tMap.starts, [], (acc, start) => {
+    let bfsResult = Traversal.bfs(start, __x => {
+      let grid = tMap.grid;
+      let r = __x[1];
+      let c = __x[0];
+      let cur = Array2D.get(grid, __x);
+      return [
+        [
+          c - 1 | 0,
+          r
+        ],
+        [
+          c + 1 | 0,
+          r
+        ],
+        [
+          c,
+          r - 1 | 0
+        ],
+        [
+          c,
+          r + 1 | 0
+        ]
+      ].filter(n => {
+        if (Array2D.isValidXY(grid, n)) {
+          return Stdlib__Option.getOr(Stdlib__Option.flatMap(Array2D.get(grid, n), next => next === (cur + 1 | 0)), false);
+        } else {
+          return false;
+        }
+      });
+    }, (_node, _distance) => false);
+    return Belt_Array.concatMany([
+      [Stdlib__Array.reduce(tMap.goals, [], (acc, end) => Belt_Array.concatMany([
+          [Traversal.path(bfsResult, start, end)],
+          acc
+        ]))],
+      acc
+    ]);
+  });
+}
+
 function solvePart1(data) {
   let grid = parse(data);
   let starts = Array2D.reduceWithIndex(grid, [], (acc, v, param) => {
@@ -30,8 +79,8 @@ function solvePart1(data) {
       return Belt_Array.concatMany([
         acc,
         [[
-            param[1],
-            param[0]
+            param[0],
+            param[1]
           ]]
       ]);
     } else {
@@ -43,8 +92,8 @@ function solvePart1(data) {
       return Belt_Array.concatMany([
         acc,
         [[
-            param[1],
-            param[0]
+            param[0],
+            param[1]
           ]]
       ]);
     } else {
@@ -56,8 +105,11 @@ function solvePart1(data) {
     starts: starts,
     goals: goals
   };
-  console.log(tMap);
-  return 1;
+  let paths = part1(tMap);
+  return Stdlib__Array.sum(paths.map(Stdlib__Array.keepSome).map(prim => prim.length), {
+    zero: Stdlib__Int.zero,
+    add: Stdlib__Int.add
+  });
 }
 
 function solvePart2(data) {
@@ -68,6 +120,7 @@ export {
   log,
   log2,
   parse,
+  part1,
   solvePart1,
   solvePart2,
 }

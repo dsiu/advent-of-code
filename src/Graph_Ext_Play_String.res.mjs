@@ -39,6 +39,10 @@ let bfsResult = Traversal.bfs("1", __x => AdjacencyList.Node.$$String.neighbors(
 
 console.log("BFS String traversal:", bfsResult);
 
+let __x = Traversal.path(bfsResult, "1", "5");
+
+console.log("Path from 1 to 5:", __x);
+
 export {
   log,
   log2,

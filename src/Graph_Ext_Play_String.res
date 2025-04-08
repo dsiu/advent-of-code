@@ -20,4 +20,6 @@ let _ = {
   let bfsResult = Traversal.bfs("1", A.neighbors(graph, _), (_node, _distance) => false)
 
   bfsResult->Console.log2("BFS String traversal:", _)
+
+  bfsResult->Traversal.path("1", "5")->Console.log2("Path from 1 to 5:", _)
 }
