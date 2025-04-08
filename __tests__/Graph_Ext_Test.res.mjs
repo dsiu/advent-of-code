@@ -6,7 +6,7 @@ import * as AdjacencyList from "../src/AdjacencyList.res.mjs";
 
 Jest.describe("Graph_Ext with StringAdjList", () => {
   let NodeSet = AdjacencyList.Node.$$String.nodeSet;
-  let Traversal = Graph_Ext.Traversal(AdjacencyList.Node.$$String)(NodeSet);
+  let Traversal = Graph_Ext.Traversal({})(NodeSet);
   let graph = {
     contents: AdjacencyList.Node.$$String.make()
   };
@@ -23,7 +23,7 @@ Jest.describe("Graph_Ext with StringAdjList", () => {
     AdjacencyList.Node.$$String.addDirectedEdge(graph.contents, "5", "6", 9);
   });
   Jest.test("BFS traversal", () => {
-    let bfsResult = Traversal.bfs(graph.contents, "1", (_node, _distance) => false);
+    let bfsResult = Traversal.bfs("1", __x => AdjacencyList.Node.$$String.neighbors(graph.contents, __x), (_node, _distance) => false);
     let expected = [
       {
         TAG: "TraversalRecord",
@@ -65,7 +65,7 @@ Jest.describe("Graph_Ext with StringAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(bfsResult), expected);
   });
   Jest.test("BFS all paths", () => {
-    let bfsResult = Traversal.bfs(graph.contents, "1", (_node, _distance) => false);
+    let bfsResult = Traversal.bfs("1", __x => AdjacencyList.Node.$$String.neighbors(graph.contents, __x), (_node, _distance) => false);
     let paths = Traversal.paths(bfsResult);
     let expected = [
       ["1"],
@@ -96,7 +96,7 @@ Jest.describe("Graph_Ext with StringAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(paths), expected);
   });
   Jest.test("BFS path between nodes", () => {
-    let bfsResult = Traversal.bfs(graph.contents, "1", (_node, _distance) => false);
+    let bfsResult = Traversal.bfs("1", __x => AdjacencyList.Node.$$String.neighbors(graph.contents, __x), (_node, _distance) => false);
     let path = Traversal.path(bfsResult, "1", "5");
     let expected = [
       "1",
@@ -107,7 +107,7 @@ Jest.describe("Graph_Ext with StringAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(path), expected);
   });
   Jest.test("DFS traversal", () => {
-    let dfsResult = Traversal.dfs(graph.contents, "1", (_node, _distance) => false);
+    let dfsResult = Traversal.dfs("1", __x => AdjacencyList.Node.$$String.neighbors(graph.contents, __x), (_node, _distance) => false);
     let expected = [
       {
         TAG: "TraversalRecord",
@@ -149,7 +149,7 @@ Jest.describe("Graph_Ext with StringAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(dfsResult), expected);
   });
   Jest.test("DFS all paths", () => {
-    let dfsResult = Traversal.dfs(graph.contents, "1", (_node, _distance) => false);
+    let dfsResult = Traversal.dfs("1", __x => AdjacencyList.Node.$$String.neighbors(graph.contents, __x), (_node, _distance) => false);
     let paths = Traversal.paths(dfsResult);
     let expected = [
       ["1"],
@@ -180,7 +180,7 @@ Jest.describe("Graph_Ext with StringAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(paths), expected);
   });
   Jest.test("DFS path between nodes", () => {
-    let dfsResult = Traversal.dfs(graph.contents, "1", (_node, _distance) => false);
+    let dfsResult = Traversal.dfs("1", __x => AdjacencyList.Node.$$String.neighbors(graph.contents, __x), (_node, _distance) => false);
     let path = Traversal.path(dfsResult, "1", "5");
     let expected = [
       "1",
@@ -194,7 +194,7 @@ Jest.describe("Graph_Ext with StringAdjList", () => {
 
 Jest.describe("Graph_Ext with TupleAdjList", () => {
   let NodeSet = AdjacencyList.Node.Tuple2.StringInt.nodeSet;
-  let Traversal = Graph_Ext.Traversal(AdjacencyList.Node.Tuple2.StringInt)(NodeSet);
+  let Traversal = Graph_Ext.Traversal({})(NodeSet);
   let graph = {
     contents: AdjacencyList.Node.Tuple2.StringInt.make()
   };
@@ -265,10 +265,10 @@ Jest.describe("Graph_Ext with TupleAdjList", () => {
     ], 9);
   });
   Jest.test("BFS traversal", () => {
-    let bfsResult = Traversal.bfs(graph.contents, [
+    let bfsResult = Traversal.bfs([
       "1",
       1
-    ], (_node, _distance) => false);
+    ], __x => AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, __x), (_node, _distance) => false);
     let expected = [
       {
         TAG: "TraversalRecord",
@@ -343,10 +343,10 @@ Jest.describe("Graph_Ext with TupleAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(bfsResult), expected);
   });
   Jest.test("BFS all paths", () => {
-    let bfsResult = Traversal.bfs(graph.contents, [
+    let bfsResult = Traversal.bfs([
       "1",
       1
-    ], (_node, _distance) => false);
+    ], __x => AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, __x), (_node, _distance) => false);
     let paths = Traversal.paths(bfsResult);
     let expected = [
       [[
@@ -419,10 +419,10 @@ Jest.describe("Graph_Ext with TupleAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(paths), expected);
   });
   Jest.test("BFS path between nodes", () => {
-    let bfsResult = Traversal.bfs(graph.contents, [
+    let bfsResult = Traversal.bfs([
       "1",
       1
-    ], (_node, _distance) => false);
+    ], __x => AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, __x), (_node, _distance) => false);
     let path = Traversal.path(bfsResult, [
       "1",
       1
@@ -451,10 +451,10 @@ Jest.describe("Graph_Ext with TupleAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(path), expected);
   });
   Jest.test("DFS traversal", () => {
-    let dfsResult = Traversal.dfs(graph.contents, [
+    let dfsResult = Traversal.dfs([
       "1",
       1
-    ], (_node, _distance) => false);
+    ], __x => AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, __x), (_node, _distance) => false);
     let expected = [
       {
         TAG: "TraversalRecord",
@@ -529,10 +529,10 @@ Jest.describe("Graph_Ext with TupleAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(dfsResult), expected);
   });
   Jest.test("DFS all paths", () => {
-    let dfsResult = Traversal.dfs(graph.contents, [
+    let dfsResult = Traversal.dfs([
       "1",
       1
-    ], (_node, _distance) => false);
+    ], __x => AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, __x), (_node, _distance) => false);
     let paths = Traversal.paths(dfsResult);
     let expected = [
       [[
@@ -605,10 +605,10 @@ Jest.describe("Graph_Ext with TupleAdjList", () => {
     return Jest.Expect.toEqual(Jest.Expect.expect(paths), expected);
   });
   Jest.test("DFS path between nodes", () => {
-    let dfsResult = Traversal.dfs(graph.contents, [
+    let dfsResult = Traversal.dfs([
       "1",
       1
-    ], (_node, _distance) => false);
+    ], __x => AdjacencyList.Node.Tuple2.StringInt.neighbors(graph.contents, __x), (_node, _distance) => false);
     let path = Traversal.path(dfsResult, [
       "1",
       1

@@ -13,7 +13,7 @@ function log2(prim0, prim1) {
 
 let NodeSet = AdjacencyList.Node.$$String.nodeSet;
 
-let Traversal = Graph_Ext.Traversal(AdjacencyList.Node.$$String)(NodeSet);
+let Traversal = Graph_Ext.Traversal({})(NodeSet);
 
 let graph = AdjacencyList.Node.$$String.make();
 
@@ -35,7 +35,7 @@ AdjacencyList.Node.$$String.addDirectedEdge(graph, "4", "5", 6);
 
 AdjacencyList.Node.$$String.addDirectedEdge(graph, "5", "6", 9);
 
-let bfsResult = Traversal.bfs(graph, "1", (_node, _distance) => false);
+let bfsResult = Traversal.bfs("1", __x => AdjacencyList.Node.$$String.neighbors(graph, __x), (_node, _distance) => false);
 
 console.log("BFS String traversal:", bfsResult);
 

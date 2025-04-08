@@ -25,7 +25,7 @@ describe("Graph_Ext with StringAdjList", () => {
   })
 
   test("BFS traversal", () => {
-    let bfsResult = graph.contents->Traversal.bfs("1", (_node, _distance) => false)
+    let bfsResult = Traversal.bfs("1", A.neighbors(graph.contents, _), (_node, _distance) => false)
     let expected = [
       Traversal.TraversalRecord({node: "1", depth: 0, from: None}),
       Traversal.TraversalRecord({node: "2", depth: 1, from: Some("1")}),
@@ -38,7 +38,7 @@ describe("Graph_Ext with StringAdjList", () => {
   })
 
   test("BFS all paths", () => {
-    let bfsResult = graph.contents->Traversal.bfs("1", (_node, _distance) => false)
+    let bfsResult = Traversal.bfs("1", A.neighbors(graph.contents, _), (_node, _distance) => false)
     let paths = bfsResult->Traversal.paths
     let expected = [
       ["1"],
@@ -52,14 +52,14 @@ describe("Graph_Ext with StringAdjList", () => {
   })
 
   test("BFS path between nodes", () => {
-    let bfsResult = graph.contents->Traversal.bfs("1", (_node, _distance) => false)
+    let bfsResult = Traversal.bfs("1", A.neighbors(graph.contents, _), (_node, _distance) => false)
     let path = Traversal.path(bfsResult, "1", "5")
     let expected = Some(["1", "2", "4", "5"])
     expect(path)->toEqual(expected)
   })
 
   test("DFS traversal", () => {
-    let dfsResult = graph.contents->Traversal.dfs("1", (_node, _distance) => false)
+    let dfsResult = Traversal.dfs("1", A.neighbors(graph.contents, _), (_node, _distance) => false)
     let expected = [
       Traversal.TraversalRecord({node: "1", depth: 0, from: None}),
       Traversal.TraversalRecord({node: "6", depth: 1, from: Some("1")}),
@@ -72,7 +72,7 @@ describe("Graph_Ext with StringAdjList", () => {
   })
 
   test("DFS all paths", () => {
-    let dfsResult = graph.contents->Traversal.dfs("1", (_node, _distance) => false)
+    let dfsResult = Traversal.dfs("1", A.neighbors(graph.contents, _), (_node, _distance) => false)
     let paths = dfsResult->Traversal.paths
     let expected = [
       ["1"],
@@ -86,7 +86,7 @@ describe("Graph_Ext with StringAdjList", () => {
   })
 
   test("DFS path between nodes", () => {
-    let dfsResult = graph.contents->Traversal.dfs("1", (_node, _distance) => false)
+    let dfsResult = Traversal.dfs("1", A.neighbors(graph.contents, _), (_node, _distance) => false)
     let path = Traversal.path(dfsResult, "1", "5")
     let expected = Some(["1", "3", "4", "5"])
     expect(path)->toEqual(expected)
@@ -115,7 +115,11 @@ describe("Graph_Ext with TupleAdjList", () => {
   })
 
   test("BFS traversal", () => {
-    let bfsResult = graph.contents->Traversal.bfs(("1", 1), (_node, _distance) => false)
+    let bfsResult = Traversal.bfs(
+      ("1", 1),
+      A.neighbors(graph.contents, _),
+      (_node, _distance) => false,
+    )
 
     let expected = [
       Traversal.TraversalRecord({node: ("1", 1), depth: 0, from: None}),
@@ -130,7 +134,11 @@ describe("Graph_Ext with TupleAdjList", () => {
   })
 
   test("BFS all paths", () => {
-    let bfsResult = graph.contents->Traversal.bfs(("1", 1), (_node, _distance) => false)
+    let bfsResult = Traversal.bfs(
+      ("1", 1),
+      A.neighbors(graph.contents, _),
+      (_node, _distance) => false,
+    )
     let paths = bfsResult->Traversal.paths
     let expected = [
       [("1", 1)],
@@ -144,14 +152,22 @@ describe("Graph_Ext with TupleAdjList", () => {
   })
 
   test("BFS path between nodes", () => {
-    let bfsResult = graph.contents->Traversal.bfs(("1", 1), (_node, _distance) => false)
+    let bfsResult = Traversal.bfs(
+      ("1", 1),
+      A.neighbors(graph.contents, _),
+      (_node, _distance) => false,
+    )
     let path = Traversal.path(bfsResult, ("1", 1), ("5", 5))
     let expected = Some([("1", 1), ("2", 2), ("4", 4), ("5", 5)])
     expect(path)->toEqual(expected)
   })
 
   test("DFS traversal", () => {
-    let dfsResult = graph.contents->Traversal.dfs(("1", 1), (_node, _distance) => false)
+    let dfsResult = Traversal.dfs(
+      ("1", 1),
+      A.neighbors(graph.contents, _),
+      (_node, _distance) => false,
+    )
     let expected = [
       Traversal.TraversalRecord({node: ("1", 1), depth: 0, from: None}),
       Traversal.TraversalRecord({node: ("6", 6), depth: 1, from: Some(("1", 1))}),
@@ -164,7 +180,11 @@ describe("Graph_Ext with TupleAdjList", () => {
   })
 
   test("DFS all paths", () => {
-    let dfsResult = graph.contents->Traversal.dfs(("1", 1), (_node, _distance) => false)
+    let dfsResult = Traversal.dfs(
+      ("1", 1),
+      A.neighbors(graph.contents, _),
+      (_node, _distance) => false,
+    )
     let paths = dfsResult->Traversal.paths
     let expected = [
       [("1", 1)],
@@ -178,7 +198,11 @@ describe("Graph_Ext with TupleAdjList", () => {
   })
 
   test("DFS path between nodes", () => {
-    let dfsResult = graph.contents->Traversal.dfs(("1", 1), (_node, _distance) => false)
+    let dfsResult = Traversal.dfs(
+      ("1", 1),
+      A.neighbors(graph.contents, _),
+      (_node, _distance) => false,
+    )
     let path = Traversal.path(dfsResult, ("1", 1), ("5", 5))
     let expected = Some([("1", 1), ("3", 3), ("4", 4), ("5", 5)])
     expect(path)->toEqual(expected)

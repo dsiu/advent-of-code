@@ -3,37 +3,44 @@ open StdlibFp
 let log = Console.log
 let log2 = Console.log2
 
-//module type S { type t module Sub : sig type t val to_outer : t/1 -> t/2 end end
-
-module A = AdjacencyList.Node.String
+module type S = {
+  type node
+}
 
 // Belt's MutableQueue seems to be quite performant
 module Queue = Belt.MutableQueue
 module Stack = Belt.MutableStack
 
-module Traversal = (A: AdjacencyList.S, NodeSet: StdlibFp.Set.S with type a = A.node) => {
-  type traversalRecord<'a> = TraversalRecord({node: A.node, depth: int, from: option<A.node>})
-  type callback = (A.node, int) => bool // return true to stop the traversal
+module Traversal = (S: S, NodeSet: StdlibFp.Set.S with type a = S.node) => {
+  type node = S.node
 
-  let bfs: (A.t<'a>, A.node, callback) => array<traversalRecord<'a>> = (graph, rootNode, cb) => {
+  type traversalRecord<'a> = TraversalRecord({node: node, depth: int, from: option<node>})
+  type callback = (node, int) => bool // return true to stop the traversal
+
+  type neighbors = node => array<node>
+
+  let bfs: (node, neighbors, callback) => array<traversalRecord<'a>> = (
+    rootNode,
+    neighbors,
+    cb,
+  ) => {
     let queue = Queue.make()
     queue->Queue.add(TraversalRecord({node: rootNode, depth: 0, from: None}))
 
-    let rec loop = (graph, acc, visited, toVisit) => {
+    let rec loop = (acc, visited, toVisit) => {
       toVisit->Queue.isEmpty
         ? acc
         : {
             let TraversalRecord({node, depth, from}) = toVisit->Queue.popExn
             visited->NodeSet.has(node)
-              ? loop(graph, acc, visited, toVisit) // tail recursion
+              ? loop(acc, visited, toVisit) // tail recursion
               : {
                   visited->NodeSet.add(node)
                   acc->Array.push(TraversalRecord({node, depth, from}))
 
                   !cb(node, depth)
                     ? {
-                        graph
-                        ->A.neighbors(node)
+                        neighbors(node)
                         ->Array.valuesIter
                         ->Iterator.forEach(neighbor => {
                           switch neighbor {
@@ -51,33 +58,36 @@ module Traversal = (A: AdjacencyList.S, NodeSet: StdlibFp.Set.S with type a = A.
                       }
                     : ()
                   // tail recursion
-                  loop(graph, acc, visited, toVisit)
+                  loop(acc, visited, toVisit)
                 }
           }
     }
 
-    loop(graph, [], NodeSet.make(), queue)
+    loop([], NodeSet.make(), queue)
   }
 
-  let dfs: (A.t<'a>, A.node, callback) => array<traversalRecord<'a>> = (graph, rootNode, cb) => {
+  let dfs: (node, neighbors, callback) => array<traversalRecord<'a>> = (
+    rootNode,
+    neighbors,
+    cb,
+  ) => {
     let stack = Stack.make()
     stack->Stack.push(TraversalRecord({node: rootNode, depth: 0, from: None}))
 
-    let rec loop = (graph, acc, visited, toVisit) => {
+    let rec loop = (acc, visited, toVisit) => {
       toVisit->Stack.isEmpty
         ? acc
         : {
             let TraversalRecord({node, depth, from}) = toVisit->Stack.pop->Option.getExn
             visited->NodeSet.has(node)
-              ? loop(graph, acc, visited, toVisit) // tail recursion
+              ? loop(acc, visited, toVisit) // tail recursion
               : {
                   visited->NodeSet.add(node)
                   acc->Array.push(TraversalRecord({node, depth, from}))
 
                   !cb(node, depth)
                     ? {
-                        graph
-                        ->A.neighbors(node)
+                        neighbors(node)
                         ->Array.valuesIter
                         ->Iterator.forEach(neighbor => {
                           switch neighbor {
@@ -95,16 +105,16 @@ module Traversal = (A: AdjacencyList.S, NodeSet: StdlibFp.Set.S with type a = A.
                       }
                     : ()
                   // tail recursion
-                  loop(graph, acc, visited, toVisit)
+                  loop(acc, visited, toVisit)
                 }
           }
     }
 
-    loop(graph, [], NodeSet.make(), stack)
+    loop([], NodeSet.make(), stack)
   }
 
-  let paths: array<traversalRecord<'a>> => array<array<A.node>> = records => {
-    let rec buildPath = (record: traversalRecord<'a>, acc: array<A.node>): array<A.node> => {
+  let paths: array<traversalRecord<'a>> => array<array<node>> = records => {
+    let rec buildPath = (record: traversalRecord<'a>, acc: array<node>): array<node> => {
       let TraversalRecord({node, depth: _depth, from}) = record
       switch from {
       | None => [node, ...acc]
@@ -118,11 +128,7 @@ module Traversal = (A: AdjacencyList.S, NodeSet: StdlibFp.Set.S with type a = A.
     records->Array.map(record => buildPath(record, []))
   }
 
-  let path: (array<traversalRecord<'a>>, A.node, A.node) => option<array<A.node>> = (
-    records,
-    a,
-    b,
-  ) => {
+  let path: (array<traversalRecord<'a>>, node, node) => option<array<node>> = (records, a, b) => {
     let paths = paths(records)
     paths->Array.find(path => {
       path[0]->Option.filter(node => node == a)->Option.isSome &&

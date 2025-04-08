@@ -13,7 +13,7 @@ function log2(prim0, prim1) {
 
 let NodeSet = AdjacencyList.Node.Tuple2.StringInt.nodeSet;
 
-let Traversal = Graph_Ext.Traversal(AdjacencyList.Node.Tuple2.StringInt)(NodeSet);
+let Traversal = Graph_Ext.Traversal({})(NodeSet);
 
 let graph = AdjacencyList.Node.Tuple2.StringInt.make();
 
@@ -89,10 +89,10 @@ AdjacencyList.Node.Tuple2.StringInt.addDirectedEdge(graph, [
   6
 ], 9);
 
-let bfsResult = Traversal.bfs(graph, [
+let bfsResult = Traversal.bfs([
   "1",
   1
-], (_node, _distance) => false);
+], __x => AdjacencyList.Node.Tuple2.StringInt.neighbors(graph, __x), (_node, _distance) => false);
 
 console.log("BFS Tuple2 traversal:", bfsResult);
 

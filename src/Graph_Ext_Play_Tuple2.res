@@ -18,7 +18,7 @@ let _ = {
   graph->A.addDirectedEdge(("4", 4), ("5", 5), ~weight=Some(6))
   graph->A.addDirectedEdge(("5", 5), ("6", 6), ~weight=Some(9))
 
-  let bfsResult = graph->Traversal.bfs(("1", 1), (_node, _distance) => false)
+  let bfsResult = Traversal.bfs(("1", 1), A.neighbors(graph, _), (_node, _distance) => false)
 
   bfsResult->Console.log2("BFS Tuple2 traversal:", _)
 }

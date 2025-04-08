@@ -17,9 +17,9 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-function Traversal(A) {
+function Traversal(S) {
   return NodeSet => {
-    let bfs = (graph, rootNode, cb) => {
+    let bfs = (rootNode, neighbors, cb) => {
       let queue = Belt_MutableQueue.make();
       Belt_MutableQueue.add(queue, {
         TAG: "TraversalRecord",
@@ -47,7 +47,7 @@ function Traversal(A) {
           from: match.from
         });
         if (!cb(node, depth)) {
-          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(neighbors(node)), neighbor => {
             if (neighbor !== undefined) {
               return Belt_MutableQueue.add(queue, {
                 TAG: "TraversalRecord",
@@ -62,7 +62,7 @@ function Traversal(A) {
         continue;
       };
     };
-    let dfs = (graph, rootNode, cb) => {
+    let dfs = (rootNode, neighbors, cb) => {
       let stack = Belt_MutableStack.make();
       Belt_MutableStack.push(stack, {
         TAG: "TraversalRecord",
@@ -90,7 +90,7 @@ function Traversal(A) {
           from: match.from
         });
         if (!cb(node, depth)) {
-          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(A.neighbors(graph, node)), neighbor => {
+          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(neighbors(node)), neighbor => {
             if (neighbor !== undefined) {
               return Belt_MutableStack.push(stack, {
                 TAG: "TraversalRecord",
@@ -150,8 +150,6 @@ function Traversal(A) {
   };
 }
 
-let A;
-
 let Queue;
 
 let Stack;
@@ -159,7 +157,6 @@ let Stack;
 export {
   log,
   log2,
-  A,
   Queue,
   Stack,
   Traversal,
