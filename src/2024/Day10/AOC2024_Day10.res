@@ -36,9 +36,9 @@ let solvePart1 = data => {
 
   // todo: refactor to Array2D.filterWithIndex ??
   let starts =
-    grid->Array2D.reduceWithIndex([], (acc, v, (c, r)) => {v == 0 ? [...acc, (r, c)] : acc})
+    grid->Array2D.reduceWithIndex([], (acc, v, (c, r)) => {v == 0 ? [...acc, (r, c)] : acc}) // remember position is (row, col)
   let goals =
-    grid->Array2D.reduceWithIndex([], (acc, v, (c, r)) => {v == 9 ? [...acc, (r, c)] : acc})
+    grid->Array2D.reduceWithIndex([], (acc, v, (c, r)) => {v == 9 ? [...acc, (r, c)] : acc}) // remember position is (row, col)
   let tMap = {grid, starts, goals}
   tMap->log
   1

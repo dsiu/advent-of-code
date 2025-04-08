@@ -73,7 +73,7 @@ module Program = {
       let prog_line_re = /mem\[(\d+)\]\s*=\s*(\d+)/i
       let parsed =
         prog_line_re
-        ->(Js.Re.exec_(_, str))
+        ->Js.Re.exec_(_, str)
         ->Option.getExn
         ->Js.Re.captures
         ->Array.map(l => l->Js.Nullable.toOption->Option.getExn)
@@ -128,9 +128,9 @@ module Program = {
 
   // part 1: change memory value based on mask
   let decodeMemory = (mask: Mask.t, mem_value) => {
-    BigInt.land(mask.mask_x, mem_value)
-    ->BigInt.lor(mask.mask_one)
-    ->BigInt.land(mask.mask_zero->BigInt.lnot)
+    BigInt.bitwiseAnd(mask.mask_x, mem_value)
+    ->BigInt.bitwiseOr(mask.mask_one)
+    ->BigInt.bitwiseAnd(mask.mask_zero->BigInt.bitwiseNot)
   }
 
   let part1Algo = (space: memory_space, mask: Mask.t, mem: Memory.t) => {
@@ -151,17 +151,17 @@ module Program = {
   }
 
   let decodeAddress = (mask: Mask.t, mem_address) => {
-    let pos_mask = mask.mask_x->BigInt.lnot
-    let base = BigInt.land(BigInt.lor(mem_address, mask.mask_one), pos_mask)
+    let pos_mask = mask.mask_x->BigInt.bitwiseNot
+    let base = BigInt.bitwiseAnd(BigInt.bitwiseOr(mem_address, mask.mask_one), pos_mask)
 
     let pos = mask.mask_x_str->bit1Index
     let all_pos = pos->Powerset.powersetArray
 
     let decoded_addresses = all_pos->Array.map(pos => {
       let m = pos->Array.reduce(0n, (acc, x) => {
-        BigInt.lor(acc, BigInt.lsl(1n, BigInt.fromInt(x)))
+        BigInt.bitwiseOr(acc, BigInt.shiftLeft(1n, BigInt.fromInt(x)))
       })
-      BigInt.lor(base, m)->BigInt.toString
+      BigInt.bitwiseOr(base, m)->BigInt.toString
     })
     decoded_addresses
   }
