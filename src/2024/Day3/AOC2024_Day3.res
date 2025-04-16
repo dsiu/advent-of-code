@@ -15,7 +15,7 @@ let calMultiplication = s => {
     RegExp.exec(argsPattern, args->Option.getExn)->Option.mapOr([0], r =>
       r
       ->RegExp.Result.matches
-      ->Array.map(a => a->(Int.fromString(_))->Option.getExn)
+      ->Array.map(a => a->Option.flatMap(Int.fromString(_))->Option.getExn)
     )
   })
   result->Array.map(mulIntArray)

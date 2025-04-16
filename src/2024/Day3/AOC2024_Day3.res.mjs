@@ -23,7 +23,7 @@ function calMultiplication(s) {
   let muls = s.match(mulPattern);
   let result = (
     (muls == null) ? undefined : Primitive_option.some(muls)
-  ).map(args => Stdlib_Option.mapOr(Primitive_option.fromNullable(argsPattern.exec(Stdlib_Option.getExn(args, undefined))), [0], r => r.slice(1).map(a => Stdlib_Option.getExn(Stdlib_Int.fromString(a, undefined), undefined))));
+  ).map(args => Stdlib_Option.mapOr(Primitive_option.fromNullable(argsPattern.exec(Stdlib_Option.getExn(args, undefined))), [0], r => r.slice(1).map(a => Stdlib_Option.getExn(Stdlib_Option.flatMap(a, __x => Stdlib_Int.fromString(__x, undefined)), undefined))));
   return result.map(Utils.mulIntArray);
 }
 
