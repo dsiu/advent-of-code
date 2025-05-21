@@ -47,15 +47,15 @@ let include = TableclothComparator.Make({
 
 function add(param, param$1) {
   return [
-    param[0] + param$1[0],
-    param[1] + param$1[1]
+    param[0] + param$1[0] | 0,
+    param[1] + param$1[1] | 0
   ];
 }
 
 function mul(param, x) {
   return [
-    param[0] * x,
-    param[1] * x
+    param[0] * x | 0,
+    param[1] * x | 0
   ];
 }
 

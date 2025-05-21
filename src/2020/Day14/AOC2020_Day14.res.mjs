@@ -4,7 +4,6 @@ import * as Utils from "../../Utils.res.mjs";
 import * as Powerset from "../../Powerset.res.mjs";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/Belt_Option.js";
-import * as Stdlib_BigInt from "rescript/lib/es6/Stdlib_BigInt.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/Belt_MutableMapString.js";
@@ -142,7 +141,7 @@ function make$2(instructions) {
 }
 
 function decodeMemory(mask, mem_value) {
-  return (mask.mask_x & mem_value | mask.mask_one) & Stdlib_BigInt.bitwiseNot(mask.mask_zero);
+  return (mask.mask_x & mem_value | mask.mask_one) & ~mask.mask_zero;
 }
 
 function part1Algo(space, mask, mem) {
@@ -162,7 +161,7 @@ function bit1Index(m) {
 }
 
 function decodeAddress(mask, mem_address) {
-  let pos_mask = Stdlib_BigInt.bitwiseNot(mask.mask_x);
+  let pos_mask = ~mask.mask_x;
   let base = (mem_address | mask.mask_one) & pos_mask;
   let pos = bit1Index(mask.mask_x_str);
   let all_pos = Powerset.powersetArray(pos);

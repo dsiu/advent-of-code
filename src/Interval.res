@@ -45,8 +45,7 @@ let makeWithLength: (bigint, ~length: bigint) => t = (lower, ~length) => {
   if length < BigInt.fromInt(0) {
     failwith("length must be non-negative")
   }
-  open! BigInt
-  let upper = lower + length - fromInt(1)
+  let upper = lower + length - 1n
   make(lower, upper)
 }
 
@@ -65,9 +64,8 @@ let makeWithLength: (bigint, ~length: bigint) => t = (lower, ~length) => {
  * let length = Interval.length(interval)
  * // length is now a BigInt 2
  */
-let length = ((lower, upper)) => {
-  open! BigInt
-  upper > lower ? upper - lower + fromInt(1) : lower - upper + fromInt(1)
+let length = ((lower:bigint, upper:bigint)) => {
+  upper > lower ? upper - lower + 1n : lower - upper + 1n
 }
 
 let equals = ((aLower, aUpper), (bLower, bUpper)) => {
@@ -131,7 +129,6 @@ let isOverlap: (t, t) => bool = ((aLower, aUpper) as a, (bLower, bUpper) as b) =
  * // intersection is now `Some(Interval(2, 3))`
  */
 let intersect: (t, t) => option<t> = ((aLower, aUpper) as a, (bLower, bUpper) as b) => {
-  open! BigInt
   isOverlap(a, b) ? make(max(aLower, bLower), min(aUpper, bUpper))->Some : None
 }
 

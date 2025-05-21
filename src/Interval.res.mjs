@@ -34,7 +34,7 @@ function makeWithLength(lower, length) {
   if (length < BigInt(0)) {
     Pervasives.failwith("length must be non-negative");
   }
-  let upper = lower + length - BigInt(1);
+  let upper = lower + length - 1n;
   return make(lower, upper);
 }
 
@@ -42,9 +42,9 @@ function length(param) {
   let upper = param[1];
   let lower = param[0];
   if (upper > lower) {
-    return upper - lower + BigInt(1);
+    return upper - lower + 1n;
   } else {
-    return lower - upper + BigInt(1);
+    return lower - upper + 1n;
   }
 }
 

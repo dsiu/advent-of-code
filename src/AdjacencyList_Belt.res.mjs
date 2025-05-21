@@ -2,7 +2,6 @@
 
 import * as Belt_Id from "rescript/lib/es6/Belt_Id.js";
 import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
-import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Primitive_string from "rescript/lib/es6/Primitive_string.js";
 
 function Make(BASE) {
@@ -26,7 +25,7 @@ function Make(BASE) {
   let getVertex = (t, x) => {
     let v = t.get(x);
     if (v !== undefined) {
-      return containerToArray(Primitive_option.valFromOption(v));
+      return containerToArray(v);
     }
     throw {
       RE_EXN_ID: "Not_found",
@@ -37,7 +36,7 @@ function Make(BASE) {
     addVertex(t, x);
     let c = t.get(x);
     if (c !== undefined) {
-      return containerAdd(Primitive_option.valFromOption(c), e);
+      return containerAdd(c, e);
     }
     throw {
       RE_EXN_ID: "Not_found",
@@ -47,7 +46,7 @@ function Make(BASE) {
   let removeEdge = (t, x, y) => {
     let v = t.get(x);
     if (v !== undefined) {
-      return containerRemove(Primitive_option.valFromOption(v), y);
+      return containerRemove(v, y);
     } else {
       return false;
     }
@@ -55,7 +54,7 @@ function Make(BASE) {
   let adjacent = (t, x, y) => {
     let v = t.get(x);
     if (v !== undefined) {
-      return containerHas(Primitive_option.valFromOption(v), y);
+      return containerHas(v, y);
     } else {
       return false;
     }
@@ -152,7 +151,7 @@ function removeVertex(t, x) {
 function getVertex(t, x) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Array.from(Primitive_option.valFromOption(v));
+    return Array.from(v);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -164,7 +163,7 @@ function addEdge(t, x, e) {
   addVertex(t, x);
   let c = t.get(x);
   if (c !== undefined) {
-    Primitive_option.valFromOption(c).add(e);
+    c.add(e);
     return;
   }
   throw {
@@ -176,7 +175,7 @@ function addEdge(t, x, e) {
 function removeEdge(t, x, y) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v).delete(y);
+    return v.delete(y);
   } else {
     return false;
   }
@@ -185,7 +184,7 @@ function removeEdge(t, x, y) {
 function adjacent(t, x, y) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v).has(y);
+    return v.has(y);
   } else {
     return false;
   }
@@ -265,7 +264,7 @@ function removeVertex$1(t, x) {
 function getVertex$1(t, x) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Array.from(Primitive_option.valFromOption(v));
+    return Array.from(v);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -277,7 +276,7 @@ function addEdge$1(t, x, e) {
   addVertex$1(t, x);
   let c = t.get(x);
   if (c !== undefined) {
-    Primitive_option.valFromOption(c).add(e);
+    c.add(e);
     return;
   }
   throw {
@@ -289,7 +288,7 @@ function addEdge$1(t, x, e) {
 function removeEdge$1(t, x, y) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v).delete(y);
+    return v.delete(y);
   } else {
     return false;
   }
@@ -298,7 +297,7 @@ function removeEdge$1(t, x, y) {
 function adjacent$1(t, x, y) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v).has(y);
+    return v.has(y);
   } else {
     return false;
   }
@@ -351,7 +350,7 @@ function removeVertex$2(t, x) {
 function getVertex$2(t, x) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Array.from(Primitive_option.valFromOption(v));
+    return Array.from(v);
   }
   throw {
     RE_EXN_ID: "Not_found",
@@ -363,7 +362,7 @@ function addEdge$2(t, x, e) {
   addVertex$2(t, x);
   let c = t.get(x);
   if (c !== undefined) {
-    Primitive_option.valFromOption(c).add(e);
+    c.add(e);
     return;
   }
   throw {
@@ -375,7 +374,7 @@ function addEdge$2(t, x, e) {
 function removeEdge$2(t, x, y) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v).delete(y);
+    return v.delete(y);
   } else {
     return false;
   }
@@ -384,7 +383,7 @@ function removeEdge$2(t, x, y) {
 function adjacent$2(t, x, y) {
   let v = t.get(x);
   if (v !== undefined) {
-    return Primitive_option.valFromOption(v).has(y);
+    return v.has(y);
   } else {
     return false;
   }
