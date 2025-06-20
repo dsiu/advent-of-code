@@ -36,7 +36,7 @@ let MapValue = {
 };
 
 function bounds(grid) {
-  let keys = Array.from(grid.keys()).map(x => Stdlib__Option.getExn(Coord_V2.fromString(x), undefined));
+  let keys = grid.keys().toArray().map(x => Stdlib__Option.getExn(Coord_V2.fromString(x), undefined));
   let rows = keys.map(Stdlib__Tuple2.first);
   let cols = keys.map(Stdlib__Tuple2.second);
   return [
@@ -67,7 +67,7 @@ function fromArray(arr) {
 }
 
 function find(grid, f) {
-  return Array.from(grid.entries()).find(param => f(param[0], param[1]));
+  return grid.entries().toArray().find(param => f(param[0], param[1]));
 }
 
 function clone(__x) {

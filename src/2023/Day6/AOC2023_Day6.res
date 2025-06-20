@@ -136,7 +136,7 @@ let part2: array<race> => int = races => {
   let (t', d') = r'
 
   // there is only 1 race to test
-  waysToWin({time: t'->BigInt.fromString, distance: d'->BigInt.fromString})
+  waysToWin({time: t'->BigInt.fromStringOrThrow, distance: d'->BigInt.fromStringOrThrow})
 }
 
 // This module provides functionality to parse a string representing a race into an array of `race` objects.

@@ -24,15 +24,15 @@ describe("ChineseRemainder", () => {
     (
       crtBigInt(
         [
-          BigInt.fromString("507483274265132509471575639764027"),
-          BigInt.fromString("27723967616827289286920296659419136"),
+          BigInt.fromStringOrThrow("507483274265132509471575639764027"),
+          BigInt.fromStringOrThrow("27723967616827289286920296659419136"),
         ],
         [
-          BigInt.fromString("269916455047188404153874847098609926219"),
-          BigInt.fromString("170141183460469231731687303715884105728"),
+          BigInt.fromStringOrThrow("269916455047188404153874847098609926219"),
+          BigInt.fromStringOrThrow("170141183460469231731687303715884105728"),
         ],
       ),
-      BigInt.fromString(
+      BigInt.fromStringOrThrow(
         "26140225850797799686267310622940276042186008390341917470797088078891078123520",
       ),
     ),

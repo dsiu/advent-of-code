@@ -3,7 +3,6 @@
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
-import * as Stdlib_Iterator from "rescript/lib/es6/Stdlib_Iterator.js";
 import * as Primitive_object from "rescript/lib/es6/Primitive_object.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Belt_MutableQueue from "rescript/lib/es6/Belt_MutableQueue.js";
@@ -47,17 +46,12 @@ function Traversal(S) {
           from: match.from
         });
         if (!cb(node, depth)) {
-          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(neighbors(node)), neighbor => {
-            if (neighbor !== undefined) {
-              return Belt_MutableQueue.add(queue, {
-                TAG: "TraversalRecord",
-                node: Primitive_option.valFromOption(neighbor),
-                depth: depth + 1 | 0,
-                from: Primitive_option.some(node)
-              });
-            }
-            
-          });
+          Stdlib__Array.valuesIter(neighbors(node)).forEach(neighbor => Belt_MutableQueue.add(queue, {
+            TAG: "TraversalRecord",
+            node: neighbor,
+            depth: depth + 1 | 0,
+            from: Primitive_option.some(node)
+          }));
         }
         continue;
       };
@@ -90,17 +84,12 @@ function Traversal(S) {
           from: match.from
         });
         if (!cb(node, depth)) {
-          Stdlib_Iterator.forEach(Stdlib__Array.valuesIter(neighbors(node)), neighbor => {
-            if (neighbor !== undefined) {
-              return Belt_MutableStack.push(stack, {
-                TAG: "TraversalRecord",
-                node: Primitive_option.valFromOption(neighbor),
-                depth: depth + 1 | 0,
-                from: Primitive_option.some(node)
-              });
-            }
-            
-          });
+          Stdlib__Array.valuesIter(neighbors(node)).forEach(neighbor => Belt_MutableStack.push(stack, {
+            TAG: "TraversalRecord",
+            node: neighbor,
+            depth: depth + 1 | 0,
+            from: Primitive_option.some(node)
+          }));
         }
         continue;
       };

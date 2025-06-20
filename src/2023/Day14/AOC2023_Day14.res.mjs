@@ -185,7 +185,7 @@ function part2(grid) {
     let repeatStart = firstSeen[1];
     let repeatLen = repeatEnd - repeatStart | 0;
     let finalIndex = Primitive_int.mod_(1000000000 - repeatStart | 0, repeatLen) + repeatStart | 0;
-    let ret = Array.from(cache.entries()).filter(param => param[1][1] === (finalIndex - 1 | 0));
+    let ret = cache.entries().toArray().filter(param => param[1][1] === (finalIndex - 1 | 0));
     let match$1 = ret[0];
     if (match$1 !== undefined) {
       tmp = match$1[1][0];

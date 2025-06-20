@@ -163,9 +163,9 @@ module Parser = {
   let parseLine = l => {
     let trimmed = l->Js.String.trim
     switch (
-      trimmed |> Js.Re.exec_(guardBeginsRe),
-      trimmed |> Js.Re.exec_(guardAsleepRe),
-      trimmed |> Js.Re.exec_(guardWakeRe),
+      trimmed -> Js.Re.exec_(guardBeginsRe, _),
+      trimmed -> Js.Re.exec_(guardAsleepRe, _),
+      trimmed -> Js.Re.exec_(guardWakeRe, _),
     ) {
     | (Some(x), None, None) => Begin(x->parseRegexResult->unboxBeginLine)
     | (None, Some(x), None) => Asleep(x->parseRegexResult->unboxAsleepLine)

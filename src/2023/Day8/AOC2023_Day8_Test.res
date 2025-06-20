@@ -33,7 +33,7 @@ describe("2023 Day8", () => {
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = "12324145107121"->Stdlib.BigInt.fromString
+    let expected = "12324145107121"->Stdlib.BigInt.fromStringOrThrow
 
     expect(result)->toEqual(expected)
   })

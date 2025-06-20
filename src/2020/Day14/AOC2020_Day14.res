@@ -1,7 +1,7 @@
 open Belt
 open Utils
 
-let toBigInt = str => BigInt.fromString("0b" ++ str)
+let toBigInt = str => BigInt.fromStringOrThrow("0b" ++ str)
 
 module Program = {
   module Mask = {
@@ -79,8 +79,8 @@ module Program = {
         ->Array.map(l => l->Js.Nullable.toOption->Option.getExn)
 
       {
-        address: parsed[1]->Option.map(BigInt.fromString)->Option.getExn,
-        value: parsed[2]->Option.map(BigInt.fromString)->Option.getExn,
+        address: parsed[1]->Option.map(BigInt.fromStringOrThrow)->Option.getExn,
+        value: parsed[2]->Option.map(BigInt.fromStringOrThrow)->Option.getExn,
       }
     }
 

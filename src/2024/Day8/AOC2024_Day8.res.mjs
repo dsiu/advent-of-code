@@ -45,7 +45,7 @@ function antinodesOf(bounds, ps) {
 }
 
 function allFreqAntinodes(bounds, grid) {
-  return Array.from(grid.values()).flatMap(ps => antinodesOf(bounds, ps));
+  return grid.values().toArray().flatMap(ps => antinodesOf(bounds, ps));
 }
 
 function harmonicAntinodesOfNode(bounds, a, b) {
@@ -63,7 +63,7 @@ function harmonicAntinodesOf(bounds, ps) {
 }
 
 function allFreqHarmonicAntinodes(bounds, grid) {
-  return Array.from(grid.values()).flatMap(ps => harmonicAntinodesOf(bounds, ps));
+  return grid.values().toArray().flatMap(ps => harmonicAntinodesOf(bounds, ps));
 }
 
 function parse(data) {

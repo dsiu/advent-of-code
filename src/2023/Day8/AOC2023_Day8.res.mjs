@@ -77,7 +77,7 @@ function part1(param) {
 function part2(param) {
   let desert = param[1];
   let directions = param[0];
-  return Stdlib__Array.foldl1(Array.from(desert.keys()).filter(extra => Stdlib__Function.compose3(Stdlib__String.last, extra => Stdlib__String.compare("A", extra), Stdlib__Ordering.isEqual, extra)).map(s => walk(desert, directions, {
+  return Stdlib__Array.foldl1(desert.keys().toArray().filter(extra => Stdlib__Function.compose3(Stdlib__String.last, extra => Stdlib__String.compare("A", extra), Stdlib__Ordering.isEqual, extra)).map(s => walk(desert, directions, {
     here: s,
     steps: 0
   }).steps).map(prim => BigInt(prim)), Stdlib__Math.$$BigInt.lcm);

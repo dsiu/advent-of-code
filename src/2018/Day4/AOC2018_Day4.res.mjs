@@ -228,17 +228,17 @@ function unboxAwakeLine(l) {
 
 function parseLine(l) {
   let trimmed = l.trim();
-  let match = guardBeginsRe.exec(trimmed);
-  let match$1 = guardAsleepRe.exec(trimmed);
-  let match$2 = guardWakeRe.exec(trimmed);
-  if (match !== null) {
-    if (match$1 !== null) {
+  let match = Primitive_option.fromNull(guardBeginsRe.exec(trimmed));
+  let match$1 = Primitive_option.fromNull(guardAsleepRe.exec(trimmed));
+  let match$2 = Primitive_option.fromNull(guardWakeRe.exec(trimmed));
+  if (match !== undefined) {
+    if (match$1 !== undefined) {
       throw {
         RE_EXN_ID: "Not_found",
         Error: new Error()
       };
     }
-    if (match$2 !== null) {
+    if (match$2 !== undefined) {
       throw {
         RE_EXN_ID: "Not_found",
         Error: new Error()
@@ -246,11 +246,11 @@ function parseLine(l) {
     }
     return {
       TAG: "Begin",
-      _0: unboxBeginLine(parseRegexResult(match))
+      _0: unboxBeginLine(parseRegexResult(Primitive_option.valFromOption(match)))
     };
   }
-  if (match$1 !== null) {
-    if (match$2 !== null) {
+  if (match$1 !== undefined) {
+    if (match$2 !== undefined) {
       throw {
         RE_EXN_ID: "Not_found",
         Error: new Error()
@@ -258,13 +258,13 @@ function parseLine(l) {
     }
     return {
       TAG: "Asleep",
-      _0: unboxAsleepLine(parseRegexResult(match$1))
+      _0: unboxAsleepLine(parseRegexResult(Primitive_option.valFromOption(match$1)))
     };
   }
-  if (match$2 !== null) {
+  if (match$2 !== undefined) {
     return {
       TAG: "Awake",
-      _0: unboxAwakeLine(parseRegexResult(match$2))
+      _0: unboxAwakeLine(parseRegexResult(Primitive_option.valFromOption(match$2)))
     };
   }
   throw {

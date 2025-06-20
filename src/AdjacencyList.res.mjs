@@ -27,8 +27,8 @@ function MakeImpl(NodeMap) {
         return false;
       }
     };
-    let getAllNodes = t => Array.from(NodeMap.keys(t));
-    let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
+    let getAllNodes = t => NodeMap.keys(t).toArray();
+    let neighbors = (t, node) => NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())).toArray();
     let removeNode = (t, node) => {
       let children = neighbors(t, node);
       children.forEach(child => {
@@ -127,8 +127,8 @@ function MakeWithPrimitive(T) {
       return false;
     }
   };
-  let getAllNodes = t => Array.from(NodeMap.keys(t));
-  let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
+  let getAllNodes = t => NodeMap.keys(t).toArray();
+  let neighbors = (t, node) => NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())).toArray();
   let removeNode = (t, node) => {
     let children = neighbors(t, node);
     children.forEach(child => {
@@ -226,8 +226,8 @@ function Make(Serializable) {
       return false;
     }
   };
-  let getAllNodes = t => Array.from(NodeMap.keys(t));
-  let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
+  let getAllNodes = t => NodeMap.keys(t).toArray();
+  let neighbors = (t, node) => NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())).toArray();
   let removeNode = (t, node) => {
     let children = neighbors(t, node);
     children.forEach(child => {
@@ -334,11 +334,11 @@ function adjacent(t, a, b) {
 }
 
 function getAllNodes(t) {
-  return Array.from(NodeMap.keys(t));
+  return NodeMap.keys(t).toArray();
 }
 
 function neighbors(t, node) {
-  return Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
+  return NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())).toArray();
 }
 
 function removeNode(t, node) {
@@ -454,11 +454,11 @@ function adjacent$1(t, a, b) {
 }
 
 function getAllNodes$1(t) {
-  return Array.from(NodeMap$1.keys(t));
+  return NodeMap$1.keys(t).toArray();
 }
 
 function neighbors$1(t, node) {
-  return Array.from(NodeMap$1.keys(Stdlib_Option.getOr(NodeMap$1.get(t, node), NodeMap$1.make())));
+  return NodeMap$1.keys(Stdlib_Option.getOr(NodeMap$1.get(t, node), NodeMap$1.make())).toArray();
 }
 
 function removeNode$1(t, node) {
@@ -574,11 +574,11 @@ function adjacent$2(t, a, b) {
 }
 
 function getAllNodes$2(t) {
-  return Array.from(NodeMap$2.keys(t));
+  return NodeMap$2.keys(t).toArray();
 }
 
 function neighbors$2(t, node) {
-  return Array.from(NodeMap$2.keys(Stdlib_Option.getOr(NodeMap$2.get(t, node), NodeMap$2.make())));
+  return NodeMap$2.keys(Stdlib_Option.getOr(NodeMap$2.get(t, node), NodeMap$2.make())).toArray();
 }
 
 function removeNode$2(t, node) {
@@ -694,11 +694,11 @@ function adjacent$3(t, a, b) {
 }
 
 function getAllNodes$3(t) {
-  return Array.from(NodeMap$3.keys(t));
+  return NodeMap$3.keys(t).toArray();
 }
 
 function neighbors$3(t, node) {
-  return Array.from(NodeMap$3.keys(Stdlib_Option.getOr(NodeMap$3.get(t, node), NodeMap$3.make())));
+  return NodeMap$3.keys(Stdlib_Option.getOr(NodeMap$3.get(t, node), NodeMap$3.make())).toArray();
 }
 
 function removeNode$3(t, node) {
@@ -807,8 +807,8 @@ function Make$1(A) {
         return false;
       }
     };
-    let getAllNodes = t => Array.from(NodeMap.keys(t));
-    let neighbors = (t, node) => Array.from(NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())));
+    let getAllNodes = t => NodeMap.keys(t).toArray();
+    let neighbors = (t, node) => NodeMap.keys(Stdlib_Option.getOr(NodeMap.get(t, node), NodeMap.make())).toArray();
     let removeNode = (t, node) => {
       let children = neighbors(t, node);
       children.forEach(child => {
@@ -918,11 +918,11 @@ function adjacent$4(t, a, b) {
 }
 
 function getAllNodes$4(t) {
-  return Array.from(NodeMap$4.keys(t));
+  return NodeMap$4.keys(t).toArray();
 }
 
 function neighbors$4(t, node) {
-  return Array.from(NodeMap$4.keys(Stdlib_Option.getOr(NodeMap$4.get(t, node), NodeMap$4.make())));
+  return NodeMap$4.keys(Stdlib_Option.getOr(NodeMap$4.get(t, node), NodeMap$4.make())).toArray();
 }
 
 function removeNode$4(t, node) {
@@ -1036,11 +1036,11 @@ function adjacent$5(t, a, b) {
 }
 
 function getAllNodes$5(t) {
-  return Array.from(NodeMap$5.keys(t));
+  return NodeMap$5.keys(t).toArray();
 }
 
 function neighbors$5(t, node) {
-  return Array.from(NodeMap$5.keys(Stdlib_Option.getOr(NodeMap$5.get(t, node), NodeMap$5.make())));
+  return NodeMap$5.keys(Stdlib_Option.getOr(NodeMap$5.get(t, node), NodeMap$5.make())).toArray();
 }
 
 function removeNode$5(t, node) {

@@ -43,17 +43,13 @@ module Traversal = (S: S, NodeSet: StdlibFp.Set.S with type a = S.node) => {
                         neighbors(node)
                         ->Array.valuesIter
                         ->Iterator.forEach(neighbor => {
-                          switch neighbor {
-                          | Some(neighborNode) =>
                             queue->Queue.add(
                               TraversalRecord({
-                                node: neighborNode,
+                                node: neighbor,
                                 depth: depth + 1,
                                 from: Some(node),
                               }),
                             )
-                          | None => ()
-                          }
                         })
                       }
                     : ()
@@ -90,17 +86,13 @@ module Traversal = (S: S, NodeSet: StdlibFp.Set.S with type a = S.node) => {
                         neighbors(node)
                         ->Array.valuesIter
                         ->Iterator.forEach(neighbor => {
-                          switch neighbor {
-                          | Some(neighborNode) =>
                             stack->Stack.push(
                               TraversalRecord({
-                                node: neighborNode,
+                                node: neighbor,
                                 depth: depth + 1,
                                 from: Some(node),
                               }),
                             )
-                          | None => ()
-                          }
                         })
                       }
                     : ()

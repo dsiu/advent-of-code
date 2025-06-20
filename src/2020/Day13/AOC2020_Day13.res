@@ -46,7 +46,7 @@ let solvePart2BruteForce = xs => {
   }
 
   //  helper(BigInt.fromInt(1068773), xs)
-  helper("100000000000000"->BigInt.fromString, xs)
+  helper("100000000000000"->BigInt.fromStringOrThrow, xs)
   //  helper("1000000000"->BigInt.fromString, xs)
 }
 
@@ -88,7 +88,7 @@ let parse2 = data => {
     ->Option.getExn
     ->Js.String2.split(",")
     ->Array.reduceWithIndex([], (acc, x, i) => {
-      x !== "x" ? acc->Array.concat([(x->Stdlib.BigInt.fromString, i->Stdlib.BigInt.fromInt)]) : acc
+      x !== "x" ? acc->Array.concat([(x->Stdlib.BigInt.fromStringOrThrow, i->Stdlib.BigInt.fromInt)]) : acc
     })
   bus_list
 }

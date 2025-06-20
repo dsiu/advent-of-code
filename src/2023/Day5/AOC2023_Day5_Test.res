@@ -20,7 +20,7 @@ describe("2023 Day5", () => {
 
   test("Part 1 - Solve", () => {
     let result = solvePart1(data)
-    let expected = BigInt.fromString("227653707")
+    let expected = BigInt.fromStringOrThrow("227653707")
 
     expect(result)->toEqual(expected)
   })
@@ -34,7 +34,7 @@ describe("2023 Day5", () => {
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = BigInt.fromString("78775051")
+    let expected = BigInt.fromStringOrThrow("78775051")
 
     expect(result)->toEqual(expected)
   })

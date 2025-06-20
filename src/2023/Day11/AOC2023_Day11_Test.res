@@ -35,7 +35,7 @@ describe("2023 Day11", () => {
 
   test("Part 2 - Solve", () => {
     let result = solvePart2(data)
-    let expected = fromString("742305960572")
+    let expected = fromStringOrThrow("742305960572")
 
     expect(result)->toEqual(expected)
   })

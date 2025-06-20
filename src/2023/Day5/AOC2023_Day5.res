@@ -175,7 +175,7 @@ let parse: string => Almanac.t = data => {
   let mapLines = lines->(Array.sliceToEnd(_, ~start=1))
 
   let parseSeed: string => array<bigint> = line => {
-    line->String.split(": ")->Array.get(1)->Option.getExn->splitSpace->Array.map(BigInt.fromString)
+    line->String.split(": ")->Array.get(1)->Option.getExn->splitSpace->Array.map(BigInt.fromStringOrThrow)
   }
 
   @warning("-8")
@@ -191,7 +191,7 @@ let parse: string => Almanac.t = data => {
       ->Option.getExn
 
     let parseIntervalLine: string => Rule.t = l => {
-      let [destStart, srcStart, len] = l->splitSpace->Array.map(BigInt.fromString)
+      let [destStart, srcStart, len] = l->splitSpace->Array.map(BigInt.fromStringOrThrow)
       let one = BigInt.fromInt(1)
       open! BigInt
       {
