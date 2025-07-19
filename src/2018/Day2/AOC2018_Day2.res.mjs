@@ -4,7 +4,7 @@ import * as Js_string from "rescript/lib/es6/Js_string.js";
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Belt_MapString from "rescript/lib/es6/Belt_MapString.js";
-import * as AOC2018_Day2_Data from "./AOC2018_Day2_Data.res.mjs";
+import * as AOC2018_Day2_Data$AdventOfCode from "./AOC2018_Day2_Data.res.mjs";
 
 function string_to_charStr(__x) {
   return Js_string.split("", __x);
@@ -146,7 +146,7 @@ function runDay2Part2(lines) {
   }).join(""));
 }
 
-let data = AOC2018_Day2_Data.data;
+let data = AOC2018_Day2_Data$AdventOfCode.data;
 
 let test_string = "aabbbccccccddddd";
 

@@ -2,10 +2,10 @@
 
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Stdlib_Array from "rescript/lib/es6/Stdlib_Array.js";
-import * as PriorityQueue from "./PriorityQueue.res.mjs";
 import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Primitive_object from "rescript/lib/es6/Primitive_object.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
+import * as PriorityQueue$AdventOfCode from "./PriorityQueue.res.mjs";
 
 function AStar(S) {
   return NodeMap => (NodeSet => {
@@ -13,7 +13,7 @@ function AStar(S) {
     let addToOpenSet = (os, node, fValue) => {
       let set = os[1];
       return [
-        PriorityQueue.MinPriorityQueue.push(os[0], fValue, node),
+        PriorityQueue$AdventOfCode.MinPriorityQueue.push(os[0], fValue, node),
         (NodeSet.add(set, node), set)
       ];
     };
@@ -21,7 +21,7 @@ function AStar(S) {
     let removeFromOpenSet = param => {
       let set = param[1];
       let queue = param[0];
-      let queueOpt = PriorityQueue.MinPriorityQueue.pop(queue);
+      let queueOpt = PriorityQueue$AdventOfCode.MinPriorityQueue.pop(queue);
       if (queueOpt === undefined) {
         return [
           undefined,
@@ -123,7 +123,7 @@ function AStar(S) {
         return [start];
       }
       let initialOpenSet = addToOpenSet([
-        PriorityQueue.MinPriorityQueue.empty,
+        PriorityQueue$AdventOfCode.MinPriorityQueue.empty,
         NodeSet.make()
       ], start, heuristic(start, goal));
       let initGScore = NodeMap.make();
