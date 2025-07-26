@@ -95,7 +95,7 @@ let instructionP = ReludeParse_Parser.Infix.$less$pipe$great(ReludeParse_Parser.
 let instructionsP = ReludeParse_Parser.sepBy(ReludeParse_Parser.str(","), instructionP);
 
 function run(str) {
-  return Stdlib__Result.getExn(ReludeParse_Parser.runParser(str, instructionP));
+  return Stdlib__Result.getExn(ReludeParse_Parser.runParser(str, instructionP), undefined);
 }
 
 let InstructionParser = {

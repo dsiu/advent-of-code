@@ -124,7 +124,7 @@ function mkProblem(a) {
 let problemP = ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$$great(mkProblem, ReludeParse_Parser.Infix.$less$star(ReludeParse_Parser.many(directionP), ReludeParse_Parser.many1(ReludeParse_Parser.eol))), desertP);
 
 function run(data) {
-  return Stdlib__Result.getExn(ReludeParse_Parser.runParser(data, problemP));
+  return Stdlib__Result.getExn(ReludeParse_Parser.runParser(data, problemP), undefined);
 }
 
 let ProblemParser = {
@@ -145,11 +145,11 @@ let ProblemParser = {
 };
 
 function solvePart1(data) {
-  return part1(Stdlib__Result.getExn(ReludeParse_Parser.runParser(data, problemP)));
+  return part1(run(data));
 }
 
 function solvePart2(data) {
-  return part2(Stdlib__Result.getExn(ReludeParse_Parser.runParser(data, problemP)));
+  return part2(run(data));
 }
 
 export {

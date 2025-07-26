@@ -300,7 +300,7 @@ let handP = ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$
 let handsP = ReludeParse_Parser.sepBy(ReludeParse_Parser.eol, handP);
 
 function run(str) {
-  return Stdlib__List.toArray(Stdlib__Result.getExn(ReludeParse_Parser.runParser(str, handsP)));
+  return Stdlib__List.toArray(Stdlib__Result.getExn(ReludeParse_Parser.runParser(str, handsP), undefined));
 }
 
 let HandsParser = {

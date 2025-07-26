@@ -113,7 +113,7 @@ function mkRace(a) {
 let racesP = ReludeParse_Parser.Infix.$less$star$great(ReludeParse_Parser.Infix.$less$$great(mkRace, ReludeParse_Parser.Infix.$less$star(timesP, ReludeParse_Parser.eol)), distancesP);
 
 function run(str) {
-  return Stdlib__List.toArray(Stdlib__Result.getExn(ReludeParse_Parser.runParser(str, racesP)));
+  return Stdlib__List.toArray(Stdlib__Result.getExn(ReludeParse_Parser.runParser(str, racesP), undefined));
 }
 
 let SheetParser = {
