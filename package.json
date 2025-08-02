@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "clean": "rescript clean",
-    "build": "rescript",
-    "watch": "rescript build -w",
+    "build": "rescript --dev",
+    "watch": "rescript watch --dev",
     "test": "jest",
     "reformat": "./scripts/reformat.sh"
   },
