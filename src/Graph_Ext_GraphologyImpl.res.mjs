@@ -2,8 +2,8 @@
 
 import * as Nodefs from "node:fs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
-import * as Belt_MutableQueue from "rescript/lib/es6/Belt_MutableQueue.js";
-import * as Belt_MutableStack from "rescript/lib/es6/Belt_MutableStack.js";
+import * as Belt_MutableQueue from "@rescript/runtime/lib/es6/Belt_MutableQueue.js";
+import * as Belt_MutableStack from "@rescript/runtime/lib/es6/Belt_MutableStack.js";
 import * as Graphology__Graph from "@dsiu/rescript-graphology/src/Graphology__Graph.res.mjs";
 
 function log(prim) {

@@ -2,7 +2,7 @@
 
 import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.res.mjs";
 import * as Stdlib__Math from "@dsiu/rescript-stdlib-fp/src/Stdlib__Math.res.mjs";
-import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
+import * as Primitive_int from "@rescript/runtime/lib/es6/Primitive_int.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
 import * as Stdlib__Result from "@dsiu/rescript-stdlib-fp/src/Stdlib__Result.res.mjs";

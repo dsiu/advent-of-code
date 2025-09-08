@@ -27,7 +27,7 @@ function mkRaceFromInt(time, distance) {
 }
 
 function raceToString(param) {
-  return "(time: " + param.time.toString() + ", distance: " + param.distance.toString() + ")";
+  return `(time: ` + param.time.toString() + `, distance: ` + param.distance.toString() + `)`;
 }
 
 function raceListToString(__x) {

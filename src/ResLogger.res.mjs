@@ -6,7 +6,7 @@ function prependDate(message) {
   let hours = now.getHours().toString().padStart(2, "0");
   let minutes = now.getMinutes().toString().padStart(2, "0");
   let seconds = now.getSeconds().toString().padStart(2, "0");
-  return hours + ":" + minutes + ":" + seconds + " " + message;
+  return hours + `:` + minutes + `:` + seconds + ` ` + message;
 }
 
 function log(level, msg) {
@@ -67,7 +67,7 @@ function setLoggerImpl(impl) {
 }
 
 function make(moduleName) {
-  let prefix = "[" + moduleName + "] ";
+  let prefix = `[` + moduleName + `] `;
   let debug = message => {
     let I = loggerImpl.contents;
     I.log("Debug", prefix + message);

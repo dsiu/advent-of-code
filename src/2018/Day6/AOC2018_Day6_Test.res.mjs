@@ -13,17 +13,23 @@ Jest.describe("2018 Day6", () => {
         AOC2018_Day6$AdventOfCode.Coord.make(3, 4),
         AOC2018_Day6$AdventOfCode.Coord.make(5, 6)
       ];
-      let result = AOC2018_Day6$AdventOfCode.Coord.parseCoords("1,2\n      3,4\n      5,6".split("\n"));
+      let result = AOC2018_Day6$AdventOfCode.Coord.parseCoords(`1,2
+      3,4
+      5,6`.split("\n"));
       return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
     });
     Jest.test("maxXY", () => {
       let expected = AOC2018_Day6$AdventOfCode.Coord.make(5, 8);
-      let result = AOC2018_Day6$AdventOfCode.Coord.maxXY(AOC2018_Day6$AdventOfCode.Coord.parseCoords("0,2\n      3,8\n      5,6".split("\n")));
+      let result = AOC2018_Day6$AdventOfCode.Coord.maxXY(AOC2018_Day6$AdventOfCode.Coord.parseCoords(`0,2
+      3,8
+      5,6`.split("\n")));
       return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
     });
     Jest.test("minXY", () => {
       let expected = AOC2018_Day6$AdventOfCode.Coord.make(0, 1);
-      let result = AOC2018_Day6$AdventOfCode.Coord.minXY(AOC2018_Day6$AdventOfCode.Coord.parseCoords("0,2\n          3,8\n          5,1".split("\n")));
+      let result = AOC2018_Day6$AdventOfCode.Coord.minXY(AOC2018_Day6$AdventOfCode.Coord.parseCoords(`0,2
+          3,8
+          5,1`.split("\n")));
       return Jest.Expect.toEqual(Jest.Expect.expect(result), expected);
     });
     Jest.test("dist", () => {

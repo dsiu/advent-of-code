@@ -4,7 +4,7 @@ import * as Relude_Int from "rescript-relude/src/Relude_Int.res.mjs";
 import * as Relude_Map from "rescript-relude/src/Relude_Map.res.mjs";
 import * as Relude_List from "rescript-relude/src/Relude_List.res.mjs";
 import * as Relude_Array from "rescript-relude/src/Relude_Array.res.mjs";
-import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
+import * as Primitive_int from "@rescript/runtime/lib/es6/Primitive_int.js";
 import * as Relude_Result from "rescript-relude/src/Relude_Result.res.mjs";
 import * as Relude_Function from "rescript-relude/src/Relude_Function.res.mjs";
 import * as ReludeParse_Parser from "rescript-relude-parse/src/ReludeParse_Parser.res.mjs";

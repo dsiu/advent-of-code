@@ -2,10 +2,10 @@
 
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
-import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
+import * as Primitive_option from "@rescript/runtime/lib/es6/Primitive_option.js";
 import * as Utils$AdventOfCode from "../../Utils.res.mjs";
 import * as Array2D$AdventOfCode from "../../Array2D.res.mjs";
-import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
+import * as Primitive_exceptions from "@rescript/runtime/lib/es6/Primitive_exceptions.js";
 import * as Coordinate$AdventOfCode from "../../Coordinate.res.mjs";
 
 function log(prim) {

@@ -8,7 +8,11 @@ import * as AOC2021_Day4_Data_Sample$AdventOfCode from "./AOC2021_Day4_Data_Samp
 
 Jest.describe("2021 Day4", () => {
   Jest.describe("board", () => {
-    let board = AOC2021_Day4$AdventOfCode.Board.make(Utils$AdventOfCode.splitNewline("14 21 17 24  4\n             10 16 15  9 19\n             18  8 23 26 20\n             22 11 13  6  5\n             2  0 12  3  7"));
+    let board = AOC2021_Day4$AdventOfCode.Board.make(Utils$AdventOfCode.splitNewline(`14 21 17 24  4
+             10 16 15  9 19
+             18  8 23 26 20
+             22 11 13  6  5
+             2  0 12  3  7`));
     let board_tests_0 = [
       AOC2021_Day4$AdventOfCode.Board.solve(board, [
         7,

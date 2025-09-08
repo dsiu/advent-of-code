@@ -130,7 +130,15 @@ Jest.describe("2020 Day11", () => {
     Jest.testAll("getAdjacents", getAdj_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
   });
   Jest.describe("next seat given a direction", () => {
-    let map = AOC2020_Day11$AdventOfCode.parse(".......#.\n                 ...#.....\n                 .#.......\n                 .........\n                 ..#L....#\n                 ....#....\n                 .........\n                 #........\n                 ...#.....");
+    let map = AOC2020_Day11$AdventOfCode.parse(`.......#.
+                 ...#.....
+                 .#.......
+                 .........
+                 ..#L....#
+                 ....#....
+                 .........
+                 #........
+                 ...#.....`);
     let init_1 = [
       3,
       4
@@ -355,7 +363,9 @@ Jest.describe("2020 Day11", () => {
       tl: nextSeat_test4_1
     };
     Jest.testAll("test 4", nextSeat_test4, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
-    let map_2 = AOC2020_Day11$AdventOfCode.parse(".............\n                  .L.L.#.#.#.#.\n                  .............");
+    let map_2 = AOC2020_Day11$AdventOfCode.parse(`.............
+                  .L.L.#.#.#.#.
+                  .............`);
     let nextSeat_test5_0 = [
       AOC2020_Day11$AdventOfCode.SeatMap.nextSeatIn(map_2, [
         1,

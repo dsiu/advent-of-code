@@ -83,7 +83,7 @@ Jest.describe("Step Functions", () => {
     hd: singleStep_tests_0,
     tl: singleStep_tests_1
   };
-  Jest.testAll("Single Step", singleStep_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  Jest.testAll(`Single Step`, singleStep_tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
   let multipleStep_test_0 = [
     Coordinate$AdventOfCode.StepFunctions.stepN(Coordinate$AdventOfCode.StepFunctions.stepN(init)),
     [
@@ -132,7 +132,7 @@ Jest.describe("Step Functions", () => {
     hd: multipleStep_test_0,
     tl: multipleStep_test_1
   };
-  Jest.testAll("Multiple Steps", multipleStep_test, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
+  Jest.testAll(`Multiple Steps`, multipleStep_test, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
 });
 
 /*  Not a pure module */
