@@ -2,6 +2,7 @@
 
 import * as Belt_Array from "@rescript/runtime/lib/es6/Belt_Array.js";
 import * as Belt_Option from "@rescript/runtime/lib/es6/Belt_Option.js";
+import * as Stdlib_String from "@rescript/runtime/lib/es6/Stdlib_String.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Belt_SetString from "@rescript/runtime/lib/es6/Belt_SetString.js";
 import * as TableclothChar from "@dsiu/rescript-stdlib-fp/src/Tablecloth/TableclothChar.res.mjs";
@@ -22,8 +23,8 @@ function stringToChar(s) {
 
 function charToPriority(item) {
   let c = Belt_Option.getExn(TableclothChar.fromString(item));
-  let lowerA = "a".charCodeAt(0) | 0;
-  let upperA = "A".charCodeAt(0) | 0;
+  let lowerA = Stdlib_String.charCodeAt("a", 0);
+  let upperA = Stdlib_String.charCodeAt("A", 0);
   if (TableclothChar.isUppercase(c)) {
     return ((TableclothChar.toCode(c) - upperA | 0) + 1 | 0) + 26 | 0;
   } else {

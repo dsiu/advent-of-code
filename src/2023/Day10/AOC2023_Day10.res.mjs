@@ -174,7 +174,7 @@ function followPath(map, start) {
 
 function part1(map) {
   let path = followPath(map, map.start);
-  return path.length / 2 | 0;
+  return (path.length >> 1);
 }
 
 function shoelaceFormula(v) {
