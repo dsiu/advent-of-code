@@ -295,7 +295,6 @@ function solve(data, filter) {
     if (filter(x)) {
       return toPoints(x);
     }
-    
   });
   let add1 = __x => Utils$AdventOfCode.add(__x, 1);
   let vents = Array2D$AdventOfCode.make([

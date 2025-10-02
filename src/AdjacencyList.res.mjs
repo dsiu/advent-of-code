@@ -37,7 +37,6 @@ function MakeImpl(NodeMap) {
           NodeMap.$$delete(Primitive_option.valFromOption(c), node);
           return;
         }
-        
       });
       return NodeMap.$$delete(t, node);
     };
@@ -86,7 +85,6 @@ function MakeImpl(NodeMap) {
       if (ec !== undefined) {
         return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
       }
-      
     };
     return {
       make: NodeMap.make,
@@ -137,7 +135,6 @@ function MakeWithPrimitive(T) {
         NodeMap.$$delete(Primitive_option.valFromOption(c), node);
         return;
       }
-      
     });
     return NodeMap.$$delete(t, node);
   };
@@ -186,7 +183,6 @@ function MakeWithPrimitive(T) {
     if (ec !== undefined) {
       return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
     }
-    
   };
   return {
     make: NodeMap.make,
@@ -236,7 +232,6 @@ function Make(Serializable) {
         NodeMap.$$delete(Primitive_option.valFromOption(c), node);
         return;
       }
-      
     });
     return NodeMap.$$delete(t, node);
   };
@@ -285,7 +280,6 @@ function Make(Serializable) {
     if (ec !== undefined) {
       return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
     }
-    
   };
   return {
     make: NodeMap.make,
@@ -349,7 +343,6 @@ function removeNode(t, node) {
       NodeMap.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
-    
   });
   return NodeMap.$$delete(t, node);
 }
@@ -403,7 +396,6 @@ function getWeight(t, a, b) {
   if (ec !== undefined) {
     return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
   }
-  
 }
 
 let String_make = NodeMap.make;
@@ -469,7 +461,6 @@ function removeNode$1(t, node) {
       NodeMap$1.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
-    
   });
   return NodeMap$1.$$delete(t, node);
 }
@@ -523,7 +514,6 @@ function getWeight$1(t, a, b) {
   if (ec !== undefined) {
     return Stdlib_Option.getOr(NodeMap$1.get(Primitive_option.valFromOption(ec), b), undefined);
   }
-  
 }
 
 let Int_make = NodeMap$1.make;
@@ -589,7 +579,6 @@ function removeNode$2(t, node) {
       NodeMap$2.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
-    
   });
   return NodeMap$2.$$delete(t, node);
 }
@@ -643,7 +632,6 @@ function getWeight$2(t, a, b) {
   if (ec !== undefined) {
     return Stdlib_Option.getOr(NodeMap$2.get(Primitive_option.valFromOption(ec), b), undefined);
   }
-  
 }
 
 let Float_make = NodeMap$2.make;
@@ -709,7 +697,6 @@ function removeNode$3(t, node) {
       NodeMap$3.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
-    
   });
   return NodeMap$3.$$delete(t, node);
 }
@@ -763,7 +750,6 @@ function getWeight$3(t, a, b) {
   if (ec !== undefined) {
     return Stdlib_Option.getOr(NodeMap$3.get(Primitive_option.valFromOption(ec), b), undefined);
   }
-  
 }
 
 let BigInt_make = NodeMap$3.make;
@@ -817,7 +803,6 @@ function Make$1(A) {
           NodeMap.$$delete(Primitive_option.valFromOption(c), node);
           return;
         }
-        
       });
       return NodeMap.$$delete(t, node);
     };
@@ -866,7 +851,6 @@ function Make$1(A) {
       if (ec !== undefined) {
         return Stdlib_Option.getOr(NodeMap.get(Primitive_option.valFromOption(ec), b), undefined);
       }
-      
     };
     return {
       make: NodeMap.make,
@@ -933,7 +917,6 @@ function removeNode$4(t, node) {
       NodeMap$4.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
-    
   });
   return NodeMap$4.$$delete(t, node);
 }
@@ -987,7 +970,6 @@ function getWeight$4(t, a, b) {
   if (ec !== undefined) {
     return Stdlib_Option.getOr(NodeMap$4.get(Primitive_option.valFromOption(ec), b), undefined);
   }
-  
 }
 
 let IntInt = {
@@ -1051,7 +1033,6 @@ function removeNode$5(t, node) {
       NodeMap$5.$$delete(Primitive_option.valFromOption(c), node);
       return;
     }
-    
   });
   return NodeMap$5.$$delete(t, node);
 }
@@ -1105,7 +1086,6 @@ function getWeight$5(t, a, b) {
   if (ec !== undefined) {
     return Stdlib_Option.getOr(NodeMap$5.get(Primitive_option.valFromOption(ec), b), undefined);
   }
-  
 }
 
 let StringInt_make = NodeMap$5.make;

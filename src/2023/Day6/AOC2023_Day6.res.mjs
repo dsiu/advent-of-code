@@ -66,7 +66,6 @@ function waysToWinBurteForce(param) {
     if (d > distance) {
       return d;
     }
-    
   }).length;
 }
 

@@ -28,7 +28,6 @@ function make$1(lines) {
     if (s.length > 0) {
       return Belt_Int.fromString(s.trim());
     }
-    
   }));
 }
 
@@ -38,7 +37,6 @@ function match(candidates, match_draws) {
   if (Belt_SetInt.subset(can_set, draws_set)) {
     return Belt_SetInt.toArray(can_set);
   }
-  
 }
 
 function solve(t, match_draws) {
@@ -53,7 +51,6 @@ function solve(t, match_draws) {
         }
       });
     }
-    
   };
   let matchY = helper(t, 0, Array2D$AdventOfCode.getYEquals, Array2D$AdventOfCode.lengthY(t));
   let matchX = helper(t, 0, Array2D$AdventOfCode.getXEquals, Array2D$AdventOfCode.lengthX(t));
@@ -61,7 +58,6 @@ function solve(t, match_draws) {
   if (matchX !== undefined || matchY !== undefined) {
     return remove_marked(t, match_draws);
   }
-  
 }
 
 let Board = {

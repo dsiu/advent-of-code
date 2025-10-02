@@ -61,7 +61,6 @@ function isSafe(xs) {
   if (safe) {
     return xs;
   }
-  
 }
 
 function removeNthElem(xs, i) {

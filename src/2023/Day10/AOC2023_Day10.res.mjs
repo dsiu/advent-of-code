@@ -133,7 +133,6 @@ function neighbours(param, p) {
     if (Array2D$AdventOfCode.isValidXY(grid, nbr)) {
       return nbr;
     }
-    
   });
 }
 

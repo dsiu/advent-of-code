@@ -97,7 +97,6 @@ function findPairIndex(l) {
   if (match[2]) {
     return match[3];
   }
-  
 }
 
 function findPairIndex_array(l) {

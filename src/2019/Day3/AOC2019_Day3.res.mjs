@@ -157,7 +157,6 @@ function crossovers(travelledPaths) {
     if (a !== undefined && b !== undefined) {
       return a + b | 0;
     }
-    
   }));
 }
 

@@ -76,7 +76,6 @@ function intersect(a, b) {
   if (isOverlap(a, b)) {
     return make(Primitive_bigint.max(a[0], b[0]), Primitive_bigint.min(a[1], b[1]));
   }
-  
 }
 
 function below(_a, _b) {

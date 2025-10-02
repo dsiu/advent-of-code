@@ -42,7 +42,6 @@ function set(t, param, e) {
     y[param[0]] = e;
     return;
   }
-  
 }
 
 function setYEquals(t, y, e) {
@@ -54,7 +53,6 @@ function get(t, param) {
   if (y !== undefined) {
     return y[param[0]];
   }
-  
 }
 
 function getExn(t, param) {
@@ -76,7 +74,6 @@ function getXEquals(t, x) {
   if (ret.length === t.length) {
     return ret;
   }
-  
 }
 
 function map(t, f) {

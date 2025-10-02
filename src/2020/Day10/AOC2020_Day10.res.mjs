@@ -28,7 +28,6 @@ function tally(xs) {
     if (n > 0) {
       return Belt_MutableMapInt.set(result, k, n);
     }
-    
   });
   return result;
 }

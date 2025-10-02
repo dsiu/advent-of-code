@@ -70,7 +70,6 @@ function makeGrid(lines) {
         ]
       };
     }
-    
   };
   let maxX = Stdlib__Array.getUnsafe(lines, 0).length;
   let maxY = lines.length;

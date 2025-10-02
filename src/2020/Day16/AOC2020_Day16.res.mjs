@@ -212,7 +212,6 @@ function solvePart2(data) {
     if (param[0].startsWith("departure")) {
       return Stdlib__Array.getUnsafe(myTicket, param[1]);
     }
-    
   }), 1, (acc, x) => x * acc);
 }
 

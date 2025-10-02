@@ -219,7 +219,6 @@ function step(param, guard) {
       ];
     }
   }
-  
 }
 
 function walk(map, guard) {

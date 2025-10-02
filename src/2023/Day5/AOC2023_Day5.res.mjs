@@ -21,7 +21,6 @@ function run(t, srcNum) {
   if (Interval$AdventOfCode.contains(t.srcInterval, srcNum)) {
     return srcNum + t.offset;
   }
-  
 }
 
 function runWithInterval(t, src) {

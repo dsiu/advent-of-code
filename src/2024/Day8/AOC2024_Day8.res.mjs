@@ -40,7 +40,6 @@ function antinodesOf(bounds, ps) {
     if (match !== 0) {
       return antinodeOfNode(a, b);
     }
-    
   }).filter(p => inRange(bounds, p));
 }
 
@@ -58,7 +57,6 @@ function harmonicAntinodesOf(bounds, ps) {
     if (match !== 0) {
       return harmonicAntinodesOfNode(bounds, a, b);
     }
-    
   }).flatMap(x => x).filter(p => inRange(bounds, p));
 }
 

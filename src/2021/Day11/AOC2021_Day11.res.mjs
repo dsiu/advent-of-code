@@ -30,7 +30,6 @@ function getAdjacentCoords(t, c) {
     if (Array2D$AdventOfCode.isValidXY(t, c)) {
       return c;
     }
-    
   });
 }
 
@@ -42,7 +41,6 @@ function getAdjacents(t, param) {
     if (Array2D$AdventOfCode.isValidXY(t, c)) {
       return Primitive_option.some(Array2D$AdventOfCode.getExn(t, c));
     }
-    
   });
 }
 

@@ -78,7 +78,6 @@ function isElemDigit(engine, p) {
     if (isDigit(e)) {
       return p;
     }
-    
   });
 }
 
@@ -180,7 +179,6 @@ function findNumbersTouched(engine, numbers, symTouched) {
     if (isNumberTouched(num, symTouched)) {
       return getNumber(engine, num);
     }
-    
   });
 }
 
@@ -199,14 +197,12 @@ function part2(engine) {
     if (t.length >= 2) {
       return t;
     }
-    
   });
   return Utils$AdventOfCode.sumIntArray(Stdlib_Array.filterMap(starTouched, x => {
     let touchedNums = findNumbersTouched(engine, numbers, x);
     if (touchedNums.length === 2) {
       return Utils$AdventOfCode.mulIntArray(touchedNums);
     }
-    
   }));
 }
 

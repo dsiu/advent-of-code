@@ -107,7 +107,6 @@ function iterate(vx_start, vx_end, vy_start, vy_end, target) {
             r
           ]]);
       }
-      
     }
   }
   return result;

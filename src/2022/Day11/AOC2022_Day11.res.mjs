@@ -212,7 +212,6 @@ function receivesItem(mId, worry, items) {
     if (maybeItems !== undefined) {
       return Relude_Array.concat(maybeItems, [worry]);
     }
-    
   }, items);
 }
 

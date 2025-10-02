@@ -43,7 +43,6 @@ function getAdjacents(t, param) {
         _1: Array2D$AdventOfCode.getExn(t, c)
       };
     }
-    
   });
 }
 

@@ -36,7 +36,6 @@ function calculateSixSignals(signals) {
     if (t <= 220) {
       return t * param[1] | 0;
     }
-    
   }));
 }
 

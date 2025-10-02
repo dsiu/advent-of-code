@@ -133,7 +133,6 @@ function part2(xs) {
       }, noun, verb) === 19690720) {
       return (noun * 100 | 0) + verb | 0;
     }
-    
   }), 0);
 }
 

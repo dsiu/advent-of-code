@@ -133,7 +133,6 @@ function findAllMatch(predicate, lines) {
     if (match !== 0) {
       return res;
     }
-    
   });
 }
 
@@ -142,7 +141,6 @@ function runDay2Part2(lines) {
     if (x.TAG === "Match") {
       return x._0;
     }
-    
   }).join(""));
 }
 

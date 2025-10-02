@@ -21,7 +21,6 @@ function nonZero(a) {
       _0: a
     };
   }
-  
 }
 
 function safeDivide(a, b) {

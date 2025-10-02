@@ -464,7 +464,6 @@ function solvePart1(data) {
     if (r.TAG === "Corrupted") {
       return r._0;
     }
-    
   };
   return Belt_Array.reduce(Belt_Array.map(Belt_Array.keepMap(Belt_Array.map(parse(data), process), corruptedOnly), getCorruptedScore), 0, Utils$AdventOfCode.add);
 }

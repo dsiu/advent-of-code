@@ -184,7 +184,6 @@ function getClaimIdFromPointIf(t, _c, x, y, _c$1) {
   if (len === 1) {
     return Primitive_option.some(point);
   }
-  
 }
 
 function getClaimIdsFromArea(t, c) {
@@ -199,7 +198,6 @@ function getClaimIdsFromArea(t, c) {
   if ((c.w * c.h | 0) === cids.length) {
     return Primitive_option.some(Belt_Array.get(cids, 0));
   }
-  
 }
 
 function countNonOverlapClaim(t, xs) {

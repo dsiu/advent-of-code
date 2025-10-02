@@ -182,7 +182,6 @@ function sign(bcns) {
         _0: b$1
       }));
     }
-    
   }));
 }
 
@@ -224,7 +223,6 @@ function matchingTransformAll(scanner1, scanner2) {
     if (len >= 12) {
       return extra => Stdlib__Function.compose(rot, translation, extra);
     }
-    
   });
 }
 
