@@ -91,7 +91,11 @@ module Cave = {
         ~weight=#Attr("weight"),
       )
 
-    let edges = g->G.ShortestPath.Utils.edgePathFromNodePath(path)
+    let edges =
+    switch path->Nullable.toOption {
+    | None => []
+    | Some(nodes) => g->G.ShortestPath.Utils.edgePathFromNodePath(nodes)
+    }
 
     //    List.forEach(path, e => {
     //      Js.log4("src: ", e->G.E.src->G.V.label, " dst:", e->G.E.dst->G.V.label)

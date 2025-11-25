@@ -43,6 +43,7 @@ module Traversal = (S: S, NodeSet: StdlibFp.Set.S with type a = S.node) => {
                         neighbors(node)
                         ->Array.valuesIter
                         ->Iterator.forEach(neighbor => {
+                            // TODO: shouldn't queue be toVisit??
                             queue->Queue.add(
                               TraversalRecord({
                                 node: neighbor,

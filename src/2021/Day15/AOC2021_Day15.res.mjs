@@ -91,7 +91,7 @@ function solve(param) {
     NAME: "Attr",
     VAL: "weight"
   });
-  let edges = G.ShortestPath.Utils.edgePathFromNodePath(g, path);
+  let edges = (path == null) ? [] : G.ShortestPath.Utils.edgePathFromNodePath(g, path);
   return Belt_Array.reduce(edges, 0, (acc, e) => acc + G.getEdgeAttribute(g, e, "weight") | 0);
 }
 
