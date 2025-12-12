@@ -1,7 +1,6 @@
 {
   "name": "advent-of-code",
   "namespace": true,
-  "version": "0.1.0",
   "sources": [
     {
       "dir": "src",
@@ -38,6 +37,5 @@
   "warnings": {
     "number": "-44-3",
     "error": "+101"
-  },
-  "refmt": 3
+  }
 }
