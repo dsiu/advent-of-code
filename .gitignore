@@ -18,3 +18,7 @@ rewatch.lock
 !.yarn/sdks
 !.yarn/versions
 /coverage/
+
+# claude
+.claude/
+**/.claude/settings.local.json
