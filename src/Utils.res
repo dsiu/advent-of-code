@@ -174,6 +174,8 @@ module BigIntExt = {
     a < b ? Ordering.less : a > b ? Ordering.greater : Ordering.equal
 }
 
+let sumBigIntArray = Array.reduce(_, 0n, BigInt.add)
+
 let maxBigIntInArray = xs => {
   let sorted = xs->Array.toSorted(BigIntExt.compare)
   sorted->Array.getUnsafe(sorted->Array.length - 1)

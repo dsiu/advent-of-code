@@ -289,6 +289,10 @@ let BigIntExt = {
   compare: compare
 };
 
+function sumBigIntArray(__x) {
+  return Stdlib_Array.reduce(__x, 0n, (prim0, prim1) => prim0 + prim1);
+}
+
 function maxBigIntInArray(xs) {
   let sorted = xs.toSorted(compare);
   return sorted[sorted.length - 1 | 0];
@@ -402,6 +406,7 @@ export {
   maxIntInArray,
   minIntInArray,
   BigIntExt,
+  sumBigIntArray,
   maxBigIntInArray,
   minBigIntInArray,
   flatten,
