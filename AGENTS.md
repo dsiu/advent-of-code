@@ -5,15 +5,20 @@
 **IMPORTANT**: When working with code in this repository, always refer to these official documentation sources:
 
 ### ReScript Language Reference
+- **ALWAYS USE THIS FOR RESCRIPT CODE**: https://rescript-lang.org/llms/manual/llms.txt
+- **LLM Full Documentation**: https://rescript-lang.org/llms/manual/llm-full.txt
 - **Language Manual**: https://rescript-lang.org/docs/manual/introduction
-- **LLM-Full.txt**: https://rescript-lang.org/llms/manual/llm-full.txt
 - **Use for**:
   - ReScript syntax and language features
   - Standard library APIs
   - Type system details
   - External bindings and interop patterns
   - Best practices and idioms
-- Ensure suggestions match ReScript v12
+- Ensure suggestions match this version. Refer to the indexed ReScript manual and LLM documentation.
+- When dealing with promises, prefer using `async/await` syntax.
+- Never ever use the `Belt` or `Js` modules, these are legacy.
+- Always use the `JSON.t` type for json.
+- Module with React components do require a signature file (`.resi`) for Vite HMR to work. Only the React components can be exposed from the javascript.
 
 ## Build Commands
 
