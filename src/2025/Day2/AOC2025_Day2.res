@@ -51,7 +51,7 @@ let solvePart1 = data => {
   ->Array.map(((start, end)) => {
     let nums = bigIntRange(start, end)
     // nums->Array.filter(isInvalidId)
-    nums->log2("nums", _)
+  //    nums->log2("nums", _)
     [1n,2n]
   })
   ret->Array.map(sumBigIntArray)->sumBigIntArray
