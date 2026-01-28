@@ -53,8 +53,7 @@ function isInvalidId(id) {
 
 function solvePart1(data) {
   let ret = parse(data).map(param => {
-    let nums = bigIntRange(param[0], param[1]);
-    console.log("nums", nums);
+    bigIntRange(param[0], param[1]);
     return [
       1n,
       2n
