@@ -59,5 +59,5 @@ let solvePart1 = data => {
 
 let solvePart2 = data => {
   data->ignore
-  2
+  2n
 }

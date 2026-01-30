@@ -63,7 +63,7 @@ function solvePart1(data) {
 }
 
 function solvePart2(data) {
-  return 2;
+  return 2n;
 }
 
 let Tuple2;
