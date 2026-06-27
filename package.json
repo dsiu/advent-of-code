@@ -12,7 +12,7 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "packageManager": "yarn@4.13.0",
+  "packageManager": "yarn@4.17.0",
   "keywords": [
     "rescript"
   ],
@@ -59,7 +59,7 @@
     "babel-jest": "^27.3.1",
     "jest": "^27.3.1",
     "nodemon": "^3.1.9",
-    "rescript": "^12.2.0"
+    "rescript": "^12.3.0"
   },
   "dependencies": {
     "@dsiu/rescript-bag": "workspace:^",
