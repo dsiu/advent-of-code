@@ -24,10 +24,7 @@ let parse: string => array<(bigint, bigint)> = data =>
   ->Array.map(s =>
     s
     ->String.split("-")
-    ->Array.map(
-      s => {
-      s->BigInt.fromString(_)->Option.getExn
-      })
+    ->Array.map(s => s->BigInt.fromString(_)->Option.getExn)
     ->Tuple2.fromArray
     ->Option.getExn
   )
@@ -46,14 +43,15 @@ let isInvalidId: bigint => bool = id => {
 }
 
 let solvePart1 = data => {
-  let ret = data
-  ->parse
-  ->Array.map(((start, end)) => {
-    let nums = bigIntRange(start, end)
-    // nums->Array.filter(isInvalidId)
-  //    nums->log2("nums", _)
-    [1n,2n]
-  })
+  let ret =
+    data
+    ->parse
+    ->Array.map(((start, end)) => {
+      let nums = bigIntRange(start, end)
+      // nums->Array.filter(isInvalidId)
+      //    nums->log2("nums", _)
+      [1n, 2n]
+    })
   ret->Array.map(sumBigIntArray)->sumBigIntArray
 }
 
